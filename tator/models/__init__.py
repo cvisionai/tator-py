@@ -57,7 +57,9 @@ from tator.models.body6 import Body6
 from tator.models.body7 import Body7
 from tator.models.body8 import Body8
 from tator.models.body9 import Body9
+from tator.models.box import Box
 from tator.models.create_response import CreateResponse
+from tator.models.dot import Dot
 from tator.models.entity_type_schema import EntityTypeSchema
 from tator.models.inline_response200 import InlineResponse200
 from tator.models.inline_response2001 import InlineResponse2001
@@ -86,6 +88,7 @@ from tator.models.inline_response2012 import InlineResponse2012
 from tator.models.inline_response2013 import InlineResponse2013
 from tator.models.inline_response400 import InlineResponse400
 from tator.models.inline_response404 import InlineResponse404
+from tator.models.line import Line
 from tator.models.localization import Localization
 from tator.models.localization_association import LocalizationAssociation
 from tator.models.localization_association_update import LocalizationAssociationUpdate
