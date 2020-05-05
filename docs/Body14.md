@@ -3,8 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**user** | **int** | Unique integer identifying a user. | [optional] 
-**permission** | **str** | User permission level for the project. | [optional] 
+**name** | **str** | Name of the state type. | 
+**description** | **str** | Description of the state type. | [optional] [default to '']
+**association** | **str** | Type of object this state type is associated with. | 
+**media_types** | **list[int]** | List of integers identifying media types that this state type may apply to. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

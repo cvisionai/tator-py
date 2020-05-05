@@ -29,70 +29,72 @@ class Body28(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str'
+        'message': 'str',
+        'send_as_file': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description'
+        'message': 'message',
+        'send_as_file': 'sendAsFile'
     }
 
-    def __init__(self, name=None, description=''):  # noqa: E501
+    def __init__(self, message=None, send_as_file=None):  # noqa: E501
         """Body28 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
+        self._message = None
+        self._send_as_file = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
+        self.message = message
+        self.send_as_file = send_as_file
 
     @property
-    def name(self):
-        """Gets the name of this Body28.  # noqa: E501
+    def message(self):
+        """Gets the message of this Body28.  # noqa: E501
 
-        Name of the tree leaf type.  # noqa: E501
+        Message to send to administrators.  # noqa: E501
 
-        :return: The name of this Body28.  # noqa: E501
+        :return: The message of this Body28.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._message
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body28.
+    @message.setter
+    def message(self, message):
+        """Sets the message of this Body28.
 
-        Name of the tree leaf type.  # noqa: E501
+        Message to send to administrators.  # noqa: E501
 
-        :param name: The name of this Body28.  # noqa: E501
+        :param message: The message of this Body28.  # noqa: E501
         :type: str
         """
+        if message is None:
+            raise ValueError("Invalid value for `message`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        self._message = message
 
     @property
-    def description(self):
-        """Gets the description of this Body28.  # noqa: E501
+    def send_as_file(self):
+        """Gets the send_as_file of this Body28.  # noqa: E501
 
-        Description of the tree leaf type.  # noqa: E501
+        Whether to send message as a file.  # noqa: E501
 
-        :return: The description of this Body28.  # noqa: E501
+        :return: The send_as_file of this Body28.  # noqa: E501
         :rtype: str
         """
-        return self._description
+        return self._send_as_file
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body28.
+    @send_as_file.setter
+    def send_as_file(self, send_as_file):
+        """Sets the send_as_file of this Body28.
 
-        Description of the tree leaf type.  # noqa: E501
+        Whether to send message as a file.  # noqa: E501
 
-        :param description: The description of this Body28.  # noqa: E501
+        :param send_as_file: The send_as_file of this Body28.  # noqa: E501
         :type: str
         """
+        if send_as_file is None:
+            raise ValueError("Invalid value for `send_as_file`, must not be `None`")  # noqa: E501
 
-        self._description = description
+        self._send_as_file = send_as_file
 
     def to_dict(self):
         """Returns the model properties as a dict"""

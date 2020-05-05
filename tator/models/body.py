@@ -29,100 +29,70 @@ class Body(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'data_type': 'int',
-        'data_query': 'str'
+        'frame': 'int',
+        'extracted': 'int'
     }
 
     attribute_map = {
-        'name': 'name',
-        'data_type': 'data_type',
-        'data_query': 'data_query'
+        'frame': 'frame',
+        'extracted': 'extracted'
     }
 
-    def __init__(self, name=None, data_type=None, data_query='*'):  # noqa: E501
+    def __init__(self, frame=None, extracted=None):  # noqa: E501
         """Body - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._data_type = None
-        self._data_query = None
+        self._frame = None
+        self._extracted = None
         self.discriminator = None
-        self.name = name
-        self.data_type = data_type
-        if data_query is not None:
-            self.data_query = data_query
+        if frame is not None:
+            self.frame = frame
+        if extracted is not None:
+            self.extracted = extracted
 
     @property
-    def name(self):
-        """Gets the name of this Body.  # noqa: E501
+    def frame(self):
+        """Gets the frame of this Body.  # noqa: E501
 
-        Name of analysis.  # noqa: E501
+        Video frame number for this association.  # noqa: E501
 
-        :return: The name of this Body.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body.
-
-        Name of analysis.  # noqa: E501
-
-        :param name: The name of this Body.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def data_type(self):
-        """Gets the data_type of this Body.  # noqa: E501
-
-        A unique integer identifying an entity type to analyze.  # noqa: E501
-
-        :return: The data_type of this Body.  # noqa: E501
+        :return: The frame of this Body.  # noqa: E501
         :rtype: int
         """
-        return self._data_type
+        return self._frame
 
-    @data_type.setter
-    def data_type(self, data_type):
-        """Sets the data_type of this Body.
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this Body.
 
-        A unique integer identifying an entity type to analyze.  # noqa: E501
+        Video frame number for this association.  # noqa: E501
 
-        :param data_type: The data_type of this Body.  # noqa: E501
+        :param frame: The frame of this Body.  # noqa: E501
         :type: int
         """
-        if data_type is None:
-            raise ValueError("Invalid value for `data_type`, must not be `None`")  # noqa: E501
 
-        self._data_type = data_type
+        self._frame = frame
 
     @property
-    def data_query(self):
-        """Gets the data_query of this Body.  # noqa: E501
+    def extracted(self):
+        """Gets the extracted of this Body.  # noqa: E501
 
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
+        Unique integer identifying an extracted image.  # noqa: E501
 
-        :return: The data_query of this Body.  # noqa: E501
-        :rtype: str
+        :return: The extracted of this Body.  # noqa: E501
+        :rtype: int
         """
-        return self._data_query
+        return self._extracted
 
-    @data_query.setter
-    def data_query(self, data_query):
-        """Sets the data_query of this Body.
+    @extracted.setter
+    def extracted(self, extracted):
+        """Sets the extracted of this Body.
 
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
+        Unique integer identifying an extracted image.  # noqa: E501
 
-        :param data_query: The data_query of this Body.  # noqa: E501
-        :type: str
+        :param extracted: The extracted of this Body.  # noqa: E501
+        :type: int
         """
 
-        self._data_query = data_query
+        self._extracted = extracted
 
     def to_dict(self):
         """Returns the model properties as a dict"""

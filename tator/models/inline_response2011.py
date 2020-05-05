@@ -52,7 +52,7 @@ class InlineResponse2011(object):
     def message(self):
         """Gets the message of this InlineResponse2011.  # noqa: E501
 
-        Message indicating successful creation.  # noqa: E501
+        Message indicating successful creation of membership.  # noqa: E501
 
         :return: The message of this InlineResponse2011.  # noqa: E501
         :rtype: str
@@ -63,7 +63,7 @@ class InlineResponse2011(object):
     def message(self, message):
         """Sets the message of this InlineResponse2011.
 
-        Message indicating successful creation.  # noqa: E501
+        Message indicating successful creation of membership.  # noqa: E501
 
         :param message: The message of this InlineResponse2011.  # noqa: E501
         :type: str
@@ -75,7 +75,7 @@ class InlineResponse2011(object):
     def id(self):
         """Gets the id of this InlineResponse2011.  # noqa: E501
 
-        Unique integer identifying created object.  # noqa: E501
+        Unique integer identifying created membership.  # noqa: E501
 
         :return: The id of this InlineResponse2011.  # noqa: E501
         :rtype: int
@@ -86,7 +86,7 @@ class InlineResponse2011(object):
     def id(self, id):
         """Sets the id of this InlineResponse2011.
 
-        Unique integer identifying created object.  # noqa: E501
+        Unique integer identifying created membership.  # noqa: E501
 
         :param id: The id of this InlineResponse2011.  # noqa: E501
         :type: int

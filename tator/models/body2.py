@@ -52,7 +52,7 @@ class Body2(object):
     def name(self):
         """Gets the name of this Body2.  # noqa: E501
 
-        Name of the attribute.  # noqa: E501
+        Name of the localization type.  # noqa: E501
 
         :return: The name of this Body2.  # noqa: E501
         :rtype: str
@@ -63,7 +63,7 @@ class Body2(object):
     def name(self, name):
         """Sets the name of this Body2.
 
-        Name of the attribute.  # noqa: E501
+        Name of the localization type.  # noqa: E501
 
         :param name: The name of this Body2.  # noqa: E501
         :type: str
@@ -75,7 +75,7 @@ class Body2(object):
     def description(self):
         """Gets the description of this Body2.  # noqa: E501
 
-        Description of the attribute.  # noqa: E501
+        Description of the localization type.  # noqa: E501
 
         :return: The description of this Body2.  # noqa: E501
         :rtype: str
@@ -86,7 +86,7 @@ class Body2(object):
     def description(self, description):
         """Sets the description of this Body2.
 
-        Description of the attribute.  # noqa: E501
+        Description of the localization type.  # noqa: E501
 
         :param description: The description of this Body2.  # noqa: E501
         :type: str

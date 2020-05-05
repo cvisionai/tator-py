@@ -109,7 +109,7 @@ Method | HTTP request | Description
 [**who_am_i**](TatorApi.md#who_am_i) | **GET** /rest/User/GetCurrent | 
 
 # **algorithm_launch**
-> InlineResponse20110 algorithm_launch(project, body=body)
+> AlgorithmLaunchResponse algorithm_launch(project, body=body)
 
 
 
@@ -132,7 +132,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body35() # Body35 |  (optional)
+body = tator.AlgorithmLaunchSpec() # AlgorithmLaunchSpec |  (optional)
 
 try:
     api_response = api_instance.algorithm_launch(project, body=body)
@@ -146,11 +146,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body35**](Body35.md)|  | [optional] 
+ **body** | [**AlgorithmLaunchSpec**](AlgorithmLaunchSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20110**](InlineResponse20110.md)
+[**AlgorithmLaunchResponse**](AlgorithmLaunchResponse.md)
 
 ### Authorization
 
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_analysis**
-> InlineResponse201 create_analysis(project, body=body)
+> CreateResponse create_analysis(project, body=body)
 
 
 
@@ -187,7 +187,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body() # Body |  (optional)
+body = tator.AnalysisSpec() # AnalysisSpec |  (optional)
 
 try:
     api_response = api_instance.create_analysis(project, body=body)
@@ -201,11 +201,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body**](Body.md)|  | [optional] 
+ **body** | [**AnalysisSpec**](AnalysisSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -219,7 +219,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_attribute_type**
-> InlineResponse2011 create_attribute_type(project, body=body)
+> CreateResponse create_attribute_type(project, body=body)
 
 
 
@@ -242,7 +242,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body1() # Body1 |  (optional)
+body = tator.AttributeTypeSpec() # AttributeTypeSpec |  (optional)
 
 try:
     api_response = api_instance.create_attribute_type(project, body=body)
@@ -256,11 +256,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body1**](Body1.md)|  | [optional] 
+ **body** | [**AttributeTypeSpec**](AttributeTypeSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2011**](InlineResponse2011.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -274,7 +274,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization**
-> InlineResponse2012 create_localization(project, body=body)
+> MessageResponse create_localization(project, body=body)
 
 
 
@@ -297,7 +297,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body5() # Body5 |  (optional)
+body = tator.LocalizationSpec() # LocalizationSpec |  (optional)
 
 try:
     api_response = api_instance.create_localization(project, body=body)
@@ -311,11 +311,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body5**](Body5.md)|  | [optional] 
+ **body** | [**LocalizationSpec**](LocalizationSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2012**](InlineResponse2012.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization_type**
-> InlineResponse2011 create_localization_type(project, body=body)
+> InlineResponse201 create_localization_type(project, body=body)
 
 
 
@@ -352,7 +352,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body8() # Body8 |  (optional)
+body = tator.Body1() # Body1 |  (optional)
 
 try:
     api_response = api_instance.create_localization_type(project, body=body)
@@ -366,11 +366,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body8**](Body8.md)|  | [optional] 
+ **body** | [**Body1**](Body1.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2011**](InlineResponse2011.md)
+[**InlineResponse201**](InlineResponse201.md)
 
 ### Authorization
 
@@ -384,7 +384,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_media_type**
-> InlineResponse2011 create_media_type(project, body=body)
+> InlineResponse201 create_media_type(project, body=body)
 
 
 
@@ -407,7 +407,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body12() # Body12 |  (optional)
+body = tator.Body5() # Body5 |  (optional)
 
 try:
     api_response = api_instance.create_media_type(project, body=body)
@@ -421,11 +421,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body12**](Body12.md)|  | [optional] 
+ **body** | [**Body5**](Body5.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2011**](InlineResponse2011.md)
+[**InlineResponse201**](InlineResponse201.md)
 
 ### Authorization
 
@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_membership**
-> InlineResponse2013 create_membership(project, body=body)
+> InlineResponse2011 create_membership(project, body=body)
 
 
 
@@ -462,7 +462,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body14() # Body14 |  (optional)
+body = tator.Body7() # Body7 |  (optional)
 
 try:
     api_response = api_instance.create_membership(project, body=body)
@@ -476,11 +476,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body14**](Body14.md)|  | [optional] 
+ **body** | [**Body7**](Body7.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2013**](InlineResponse2013.md)
+[**InlineResponse2011**](InlineResponse2011.md)
 
 ### Authorization
 
@@ -494,7 +494,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_obtain_auth_token**
-> InlineResponse20042 create_obtain_auth_token(body=body)
+> InlineResponse20020 create_obtain_auth_token(body=body)
 
 
 
@@ -514,7 +514,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body34() # Body34 |  (optional)
+body = tator.Body27() # Body27 |  (optional)
 
 try:
     api_response = api_instance.create_obtain_auth_token(body=body)
@@ -527,11 +527,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body34**](Body34.md)|  | [optional] 
+ **body** | [**Body27**](Body27.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20042**](InlineResponse20042.md)
+[**InlineResponse20020**](InlineResponse20020.md)
 
 ### Authorization
 
@@ -545,7 +545,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_project**
-> InlineResponse2014 create_project(body=body)
+> InlineResponse2012 create_project(body=body)
 
 
 
@@ -567,7 +567,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body16() # Body16 |  (optional)
+body = tator.Body9() # Body9 |  (optional)
 
 try:
     api_response = api_instance.create_project(body=body)
@@ -580,11 +580,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body16**](Body16.md)|  | [optional] 
+ **body** | [**Body9**](Body9.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2014**](InlineResponse2014.md)
+[**InlineResponse2012**](InlineResponse2012.md)
 
 ### Authorization
 
@@ -598,7 +598,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state**
-> InlineResponse2015 create_state(project, body=body)
+> CreateResponse create_state(project, body=body)
 
 
 
@@ -648,7 +648,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2015**](InlineResponse2015.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -662,7 +662,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state_type**
-> InlineResponse2016 create_state_type(project, body=body)
+> CreateResponse create_state_type(project, body=body)
 
 
 
@@ -685,7 +685,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body21() # Body21 |  (optional)
+body = tator.Body14() # Body14 |  (optional)
 
 try:
     api_response = api_instance.create_state_type(project, body=body)
@@ -699,11 +699,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body21**](Body21.md)|  | [optional] 
+ **body** | [**Body14**](Body14.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2016**](InlineResponse2016.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -717,7 +717,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_temporary_file**
-> InlineResponse20030 create_temporary_file(project, body=body)
+> InlineResponse20012 create_temporary_file(project, body=body)
 
 
 
@@ -740,7 +740,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body23() # Body23 |  (optional)
+body = tator.Body16() # Body16 |  (optional)
 
 try:
     api_response = api_instance.create_temporary_file(project, body=body)
@@ -754,11 +754,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body23**](Body23.md)|  | [optional] 
+ **body** | [**Body16**](Body16.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20030**](InlineResponse20030.md)
+[**InlineResponse20012**](InlineResponse20012.md)
 
 ### Authorization
 
@@ -772,7 +772,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_tree_leaf**
-> InlineResponse2017 create_tree_leaf(project, body=body)
+> CreateResponse create_tree_leaf(project, body=body)
 
 
 
@@ -813,7 +813,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2017**](InlineResponse2017.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -827,7 +827,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_tree_leaf_type**
-> InlineResponse2018 create_tree_leaf_type(project, body=body)
+> CreateResponse create_tree_leaf_type(project, body=body)
 
 
 
@@ -850,7 +850,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body27() # Body27 |  (optional)
+body = tator.Body20() # Body20 |  (optional)
 
 try:
     api_response = api_instance.create_tree_leaf_type(project, body=body)
@@ -864,11 +864,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body27**](Body27.md)|  | [optional] 
+ **body** | [**Body20**](Body20.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2018**](InlineResponse2018.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -882,7 +882,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_version**
-> InlineResponse2019 create_version(project, body=body)
+> CreateResponse create_version(project, body=body)
 
 
 
@@ -905,7 +905,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body32() # Body32 |  (optional)
+body = tator.Body25() # Body25 |  (optional)
 
 try:
     api_response = api_instance.create_version(project, body=body)
@@ -919,11 +919,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body32**](Body32.md)|  | [optional] 
+ **body** | [**Body25**](Body25.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2019**](InlineResponse2019.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -1041,7 +1041,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_job**
-> InlineResponse2044 delete_job(run_uid)
+> MessageResponse delete_job(run_uid)
 
 
 
@@ -1080,7 +1080,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2044**](InlineResponse2044.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1094,7 +1094,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_job_group**
-> InlineResponse2045 delete_job_group(group_id)
+> MessageResponse delete_job_group(group_id)
 
 
 
@@ -1133,7 +1133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2045**](InlineResponse2045.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1251,7 +1251,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_localization_list**
-> InlineResponse204 delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -1326,7 +1326,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse204**](InlineResponse204.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1444,7 +1444,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_media_list**
-> InlineResponse2041 delete_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse delete_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -1517,7 +1517,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2041**](InlineResponse2041.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1739,7 +1739,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_state_list**
-> InlineResponse2042 delete_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse delete_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -1814,7 +1814,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2042**](InlineResponse2042.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -2038,7 +2038,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_tree_leaf_list**
-> InlineResponse2043 delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -2105,7 +2105,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2043**](InlineResponse2043.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -2223,7 +2223,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_algorithm_list**
-> list[InlineResponse200] get_algorithm_list(project)
+> AlgorithmList get_algorithm_list(project)
 
 
 
@@ -2262,7 +2262,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse200]**](InlineResponse200.md)
+[**AlgorithmList**](AlgorithmList.md)
 
 ### Authorization
 
@@ -2276,7 +2276,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_analysis_list**
-> list[InlineResponse2001] get_analysis_list(project)
+> AnalysisList get_analysis_list(project)
 
 
 
@@ -2315,7 +2315,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2001]**](InlineResponse2001.md)
+[**AnalysisList**](AnalysisList.md)
 
 ### Authorization
 
@@ -2329,7 +2329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_attribute_type**
-> Body1 get_attribute_type(id)
+> AttributeType get_attribute_type(id)
 
 
 
@@ -2368,7 +2368,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Body1**](Body1.md)
+[**AttributeType**](AttributeType.md)
 
 ### Authorization
 
@@ -2382,7 +2382,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_attribute_type_list**
-> list[Object] get_attribute_type_list(project, applies_to=applies_to)
+> AttributeTypeList get_attribute_type_list(project, applies_to=applies_to)
 
 
 
@@ -2423,7 +2423,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[Object]**](Object.md)
+[**AttributeTypeList**](AttributeTypeList.md)
 
 ### Authorization
 
@@ -2494,7 +2494,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_entity_type_schema**
-> InlineResponse2003 get_entity_type_schema(id)
+> EntityTypeSchema get_entity_type_schema(id)
 
 
 
@@ -2533,7 +2533,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**EntityTypeSchema**](EntityTypeSchema.md)
 
 ### Authorization
 
@@ -2663,7 +2663,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization**
-> InlineResponse2007 get_localization(id)
+> Localization get_localization(id)
 
 
 
@@ -2702,7 +2702,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2007**](InlineResponse2007.md)
+[**Localization**](Localization.md)
 
 ### Authorization
 
@@ -2716,7 +2716,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_association**
-> dict(str, object) get_localization_association(id)
+> LocalizationAssociation get_localization_association(id)
 
 
 
@@ -2755,7 +2755,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**dict(str, object)**
+[**LocalizationAssociation**](LocalizationAssociation.md)
 
 ### Authorization
 
@@ -2769,7 +2769,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_list**
-> list[Object] get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> LocalizationList get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -2844,7 +2844,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[Object]**](Object.md)
+[**LocalizationList**](LocalizationList.md)
 
 ### Authorization
 
@@ -2858,7 +2858,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_type**
-> InlineResponse20010 get_localization_type(id)
+> InlineResponse2001 get_localization_type(id)
 
 
 
@@ -2897,7 +2897,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20010**](InlineResponse20010.md)
+[**InlineResponse2001**](InlineResponse2001.md)
 
 ### Authorization
 
@@ -2911,7 +2911,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_type_list**
-> list[InlineResponse2009] get_localization_type_list(project, media_id=media_id, type=type)
+> list[InlineResponse200] get_localization_type_list(project, media_id=media_id, type=type)
 
 
 
@@ -2954,7 +2954,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2009]**](InlineResponse2009.md)
+[**list[InlineResponse200]**](InlineResponse200.md)
 
 ### Authorization
 
@@ -2968,7 +2968,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media**
-> InlineResponse20012 get_media(id)
+> InlineResponse2002 get_media(id)
 
 
 
@@ -3007,7 +3007,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20012**](InlineResponse20012.md)
+[**InlineResponse2002**](InlineResponse2002.md)
 
 ### Authorization
 
@@ -3021,7 +3021,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_list**
-> list[InlineResponse20012] get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[InlineResponse2002] get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -3094,7 +3094,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20012]**](InlineResponse20012.md)
+[**list[InlineResponse2002]**](InlineResponse2002.md)
 
 ### Authorization
 
@@ -3108,7 +3108,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_next**
-> InlineResponse20015 get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> InlineResponse2003 get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -3181,7 +3181,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20015**](InlineResponse20015.md)
+[**InlineResponse2003**](InlineResponse2003.md)
 
 ### Authorization
 
@@ -3195,7 +3195,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_prev**
-> InlineResponse20016 get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> InlineResponse2004 get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -3268,7 +3268,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20016**](InlineResponse20016.md)
+[**InlineResponse2004**](InlineResponse2004.md)
 
 ### Authorization
 
@@ -3369,7 +3369,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_type**
-> InlineResponse20018 get_media_type(id)
+> InlineResponse2006 get_media_type(id)
 
 
 
@@ -3408,7 +3408,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20018**](InlineResponse20018.md)
+[**InlineResponse2006**](InlineResponse2006.md)
 
 ### Authorization
 
@@ -3422,7 +3422,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_type_list**
-> list[InlineResponse20017] get_media_type_list(project)
+> list[InlineResponse2005] get_media_type_list(project)
 
 
 
@@ -3461,7 +3461,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20017]**](InlineResponse20017.md)
+[**list[InlineResponse2005]**](InlineResponse2005.md)
 
 ### Authorization
 
@@ -3475,7 +3475,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_membership**
-> InlineResponse20020 get_membership(id)
+> InlineResponse2007 get_membership(id)
 
 
 
@@ -3514,7 +3514,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20020**](InlineResponse20020.md)
+[**InlineResponse2007**](InlineResponse2007.md)
 
 ### Authorization
 
@@ -3528,7 +3528,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_membership_list**
-> list[InlineResponse20020] get_membership_list(project)
+> list[InlineResponse2007] get_membership_list(project)
 
 
 
@@ -3567,7 +3567,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20020]**](InlineResponse20020.md)
+[**list[InlineResponse2007]**](InlineResponse2007.md)
 
 ### Authorization
 
@@ -3581,7 +3581,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project**
-> InlineResponse20022 get_project(id)
+> InlineResponse2008 get_project(id)
 
 
 
@@ -3620,7 +3620,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20022**](InlineResponse20022.md)
+[**InlineResponse2008**](InlineResponse2008.md)
 
 ### Authorization
 
@@ -3634,7 +3634,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_list**
-> list[InlineResponse20022] get_project_list()
+> list[InlineResponse2008] get_project_list()
 
 
 
@@ -3669,7 +3669,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[InlineResponse20022]**](InlineResponse20022.md)
+[**list[InlineResponse2008]**](InlineResponse2008.md)
 
 ### Authorization
 
@@ -3814,7 +3814,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_list**
-> list[InlineResponse20024] get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[InlineResponse2009] get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -3889,7 +3889,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20024]**](InlineResponse20024.md)
+[**list[InlineResponse2009]**](InlineResponse2009.md)
 
 ### Authorization
 
@@ -3903,7 +3903,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_type**
-> InlineResponse20028 get_state_type(id)
+> InlineResponse20011 get_state_type(id)
 
 
 
@@ -3942,7 +3942,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20028**](InlineResponse20028.md)
+[**InlineResponse20011**](InlineResponse20011.md)
 
 ### Authorization
 
@@ -3956,7 +3956,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_type_list**
-> list[InlineResponse20027] get_state_type_list(project, media_id=media_id, type=type)
+> list[InlineResponse20010] get_state_type_list(project, media_id=media_id, type=type)
 
 
 
@@ -3999,7 +3999,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20027]**](InlineResponse20027.md)
+[**list[InlineResponse20010]**](InlineResponse20010.md)
 
 ### Authorization
 
@@ -4013,7 +4013,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_temporary_file**
-> InlineResponse20030 get_temporary_file(id)
+> InlineResponse20012 get_temporary_file(id)
 
 
 
@@ -4052,7 +4052,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20030**](InlineResponse20030.md)
+[**InlineResponse20012**](InlineResponse20012.md)
 
 ### Authorization
 
@@ -4066,7 +4066,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_temporary_file_list**
-> InlineResponse20030 get_temporary_file_list(project, expired=expired)
+> InlineResponse20012 get_temporary_file_list(project, expired=expired)
 
 
 
@@ -4107,7 +4107,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20030**](InlineResponse20030.md)
+[**InlineResponse20012**](InlineResponse20012.md)
 
 ### Authorization
 
@@ -4121,7 +4121,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tree_leaf**
-> InlineResponse20032 get_tree_leaf(id)
+> InlineResponse20014 get_tree_leaf(id)
 
 
 
@@ -4160,7 +4160,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20032**](InlineResponse20032.md)
+[**InlineResponse20014**](InlineResponse20014.md)
 
 ### Authorization
 
@@ -4174,7 +4174,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tree_leaf_list**
-> list[InlineResponse20032] get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[InlineResponse20014] get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -4241,7 +4241,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20032]**](InlineResponse20032.md)
+[**list[InlineResponse20014]**](InlineResponse20014.md)
 
 ### Authorization
 
@@ -4255,7 +4255,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tree_leaf_type**
-> InlineResponse20036 get_tree_leaf_type(id)
+> InlineResponse20016 get_tree_leaf_type(id)
 
 
 
@@ -4294,7 +4294,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20036**](InlineResponse20036.md)
+[**InlineResponse20016**](InlineResponse20016.md)
 
 ### Authorization
 
@@ -4308,7 +4308,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tree_leaf_type_list**
-> list[InlineResponse20035] get_tree_leaf_type_list(project)
+> list[InlineResponse20015] get_tree_leaf_type_list(project)
 
 
 
@@ -4347,7 +4347,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20035]**](InlineResponse20035.md)
+[**list[InlineResponse20015]**](InlineResponse20015.md)
 
 ### Authorization
 
@@ -4361,7 +4361,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user**
-> InlineResponse20038 get_user(id)
+> InlineResponse20017 get_user(id)
 
 
 
@@ -4400,7 +4400,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20038**](InlineResponse20038.md)
+[**InlineResponse20017**](InlineResponse20017.md)
 
 ### Authorization
 
@@ -4414,7 +4414,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_version**
-> InlineResponse20040 get_version(id)
+> InlineResponse20019 get_version(id)
 
 
 
@@ -4453,7 +4453,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20040**](InlineResponse20040.md)
+[**InlineResponse20019**](InlineResponse20019.md)
 
 ### Authorization
 
@@ -4489,7 +4489,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body36() # Body36 |  (optional)
+body = tator.Body28() # Body28 |  (optional)
 
 try:
     api_instance.notify(body=body)
@@ -4501,7 +4501,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Body36**](Body36.md)|  | [optional] 
+ **body** | [**Body28**](Body28.md)|  | [optional] 
 
 ### Return type
 
@@ -4573,7 +4573,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **progress**
-> InlineResponse20043 progress(project, body=body)
+> MessageResponse progress(project, body=body)
 
 
 
@@ -4596,7 +4596,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = [tator.Body37()] # list[Body37] |  (optional)
+body = [tator.Body29()] # list[Body29] |  (optional)
 
 try:
     api_response = api_instance.progress(project, body=body)
@@ -4610,11 +4610,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**list[Body37]**](Body37.md)|  | [optional] 
+ **body** | [**list[Body29]**](Body29.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20043**](InlineResponse20043.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -4687,7 +4687,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **retrieve_version_list**
-> list[InlineResponse20040] retrieve_version_list(project, media_id=media_id)
+> list[InlineResponse20019] retrieve_version_list(project, media_id=media_id)
 
 
 
@@ -4728,7 +4728,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20040]**](InlineResponse20040.md)
+[**list[InlineResponse20019]**](InlineResponse20019.md)
 
 ### Authorization
 
@@ -4742,7 +4742,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **save_image**
-> InlineResponse20111 save_image(project, body=body)
+> CreateResponse save_image(project, body=body)
 
 
 
@@ -4765,7 +4765,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body38() # Body38 |  (optional)
+body = tator.Body30() # Body30 |  (optional)
 
 try:
     api_response = api_instance.save_image(project, body=body)
@@ -4779,11 +4779,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body38**](Body38.md)|  | [optional] 
+ **body** | [**Body30**](Body30.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20111**](InlineResponse20111.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -4797,7 +4797,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **save_video**
-> InlineResponse20112 save_video(project, body=body)
+> CreateResponse save_video(project, body=body)
 
 
 
@@ -4838,7 +4838,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20112**](InlineResponse20112.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -4852,7 +4852,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transcode**
-> InlineResponse20113 transcode(project, body=body)
+> InlineResponse2013 transcode(project, body=body)
 
 
 
@@ -4875,7 +4875,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body39() # Body39 |  (optional)
+body = tator.Body31() # Body31 |  (optional)
 
 try:
     api_response = api_instance.transcode(project, body=body)
@@ -4889,11 +4889,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body39**](Body39.md)|  | [optional] 
+ **body** | [**Body31**](Body31.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20113**](InlineResponse20113.md)
+[**InlineResponse2013**](InlineResponse2013.md)
 
 ### Authorization
 
@@ -4907,7 +4907,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **tree_leaf_suggestion**
-> list[InlineResponse20031] tree_leaf_suggestion(project, ancestor, query, min_level=min_level)
+> list[InlineResponse20013] tree_leaf_suggestion(project, ancestor, query, min_level=min_level)
 
 
 
@@ -4952,7 +4952,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20031]**](InlineResponse20031.md)
+[**list[InlineResponse20013]**](InlineResponse20013.md)
 
 ### Authorization
 
@@ -4966,7 +4966,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_attribute_type**
-> InlineResponse2002 update_attribute_type(id, body=body)
+> MessageResponse update_attribute_type(id, body=body)
 
 
 
@@ -4989,7 +4989,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an attribute type.
-body = tator.Body2() # Body2 |  (optional)
+body = tator.AttributeTypeUpdate() # AttributeTypeUpdate |  (optional)
 
 try:
     api_response = api_instance.update_attribute_type(id, body=body)
@@ -5003,11 +5003,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an attribute type. | 
- **body** | [**Body2**](Body2.md)|  | [optional] 
+ **body** | [**AttributeTypeUpdate**](AttributeTypeUpdate.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2002**](InlineResponse2002.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5021,7 +5021,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_frame_association**
-> InlineResponse2004 update_frame_association(id, body=body)
+> MessageResponse update_frame_association(id, body=body)
 
 
 
@@ -5044,7 +5044,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a frame association.
-body = tator.Body3() # Body3 |  (optional)
+body = tator.Body() # Body |  (optional)
 
 try:
     api_response = api_instance.update_frame_association(id, body=body)
@@ -5058,11 +5058,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a frame association. | 
- **body** | [**Body3**](Body3.md)|  | [optional] 
+ **body** | [**Body**](Body.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2004**](InlineResponse2004.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5076,7 +5076,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization**
-> InlineResponse2008 update_localization(id, body=body)
+> MessageResponse update_localization(id, body=body)
 
 
 
@@ -5099,7 +5099,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a localization.
-body = tator.Body7() # Body7 |  (optional)
+body = tator.LocalizationUpdate() # LocalizationUpdate |  (optional)
 
 try:
     api_response = api_instance.update_localization(id, body=body)
@@ -5113,11 +5113,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization. | 
- **body** | [**Body7**](Body7.md)|  | [optional] 
+ **body** | [**LocalizationUpdate**](LocalizationUpdate.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2008**](InlineResponse2008.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5131,7 +5131,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_association**
-> InlineResponse2005 update_localization_association(id, body=body)
+> MessageResponse update_localization_association(id, body=body)
 
 
 
@@ -5154,7 +5154,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a localization association.
-body = tator.Body4() # Body4 |  (optional)
+body = tator.LocalizationAssociationUpdate() # LocalizationAssociationUpdate |  (optional)
 
 try:
     api_response = api_instance.update_localization_association(id, body=body)
@@ -5168,11 +5168,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization association. | 
- **body** | [**Body4**](Body4.md)|  | [optional] 
+ **body** | [**LocalizationAssociationUpdate**](LocalizationAssociationUpdate.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2005**](InlineResponse2005.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5186,7 +5186,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_list**
-> InlineResponse2006 update_localization_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse update_localization_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -5209,7 +5209,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body6() # Body6 |  (optional)
+body = tator.LocalizationListUpdate() # LocalizationListUpdate |  (optional)
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
@@ -5241,7 +5241,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body6**](Body6.md)|  | [optional] 
+ **body** | [**LocalizationListUpdate**](LocalizationListUpdate.md)|  | [optional] 
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
@@ -5263,7 +5263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2006**](InlineResponse2006.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5277,7 +5277,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_type**
-> InlineResponse20011 update_localization_type(id, body=body)
+> MessageResponse update_localization_type(id, body=body)
 
 
 
@@ -5300,7 +5300,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an localization type.
-body = tator.Body9() # Body9 |  (optional)
+body = tator.Body2() # Body2 |  (optional)
 
 try:
     api_response = api_instance.update_localization_type(id, body=body)
@@ -5314,11 +5314,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an localization type. | 
- **body** | [**Body9**](Body9.md)|  | [optional] 
+ **body** | [**Body2**](Body2.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20011**](InlineResponse20011.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5332,7 +5332,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media**
-> InlineResponse20014 update_media(id, body=body)
+> MessageResponse update_media(id, body=body)
 
 
 
@@ -5355,7 +5355,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a media.
-body = tator.Body11() # Body11 |  (optional)
+body = tator.Body4() # Body4 |  (optional)
 
 try:
     api_response = api_instance.update_media(id, body=body)
@@ -5369,11 +5369,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a media. | 
- **body** | [**Body11**](Body11.md)|  | [optional] 
+ **body** | [**Body4**](Body4.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20014**](InlineResponse20014.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5387,7 +5387,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_list**
-> InlineResponse20013 update_media_list(project, body=body, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse update_media_list(project, body=body, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -5410,7 +5410,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body10() # Body10 |  (optional)
+body = tator.Body3() # Body3 |  (optional)
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
 name = 'name_example' # str | Name of the media to filter on. (optional)
@@ -5441,7 +5441,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body10**](Body10.md)|  | [optional] 
+ **body** | [**Body3**](Body3.md)|  | [optional] 
  **media_id** | [**list[int]**](int.md)| List of integers identifying media. | [optional] 
  **type** | **int**| Unique integer identifying media type. | [optional] 
  **name** | **str**| Name of the media to filter on. | [optional] 
@@ -5462,7 +5462,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20013**](InlineResponse20013.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5476,7 +5476,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_type**
-> InlineResponse20019 update_media_type(id, body=body)
+> MessageResponse update_media_type(id, body=body)
 
 
 
@@ -5499,7 +5499,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an media type.
-body = tator.Body13() # Body13 |  (optional)
+body = tator.Body6() # Body6 |  (optional)
 
 try:
     api_response = api_instance.update_media_type(id, body=body)
@@ -5513,11 +5513,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an media type. | 
- **body** | [**Body13**](Body13.md)|  | [optional] 
+ **body** | [**Body6**](Body6.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20019**](InlineResponse20019.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5531,7 +5531,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_membership**
-> InlineResponse20021 update_membership(id, body=body)
+> MessageResponse update_membership(id, body=body)
 
 
 
@@ -5554,7 +5554,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a membership.
-body = tator.Body15() # Body15 |  (optional)
+body = tator.Body8() # Body8 |  (optional)
 
 try:
     api_response = api_instance.update_membership(id, body=body)
@@ -5568,11 +5568,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a membership. | 
- **body** | [**Body15**](Body15.md)|  | [optional] 
+ **body** | [**Body8**](Body8.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20021**](InlineResponse20021.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5586,7 +5586,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_project**
-> InlineResponse20023 update_project(id, body=body)
+> MessageResponse update_project(id, body=body)
 
 
 
@@ -5609,7 +5609,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a project.
-body = tator.Body17() # Body17 |  (optional)
+body = tator.Body10() # Body10 |  (optional)
 
 try:
     api_response = api_instance.update_project(id, body=body)
@@ -5623,11 +5623,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a project. | 
- **body** | [**Body17**](Body17.md)|  | [optional] 
+ **body** | [**Body10**](Body10.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20023**](InlineResponse20023.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5641,7 +5641,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state**
-> InlineResponse20026 update_state(id, body=body)
+> MessageResponse update_state(id, body=body)
 
 
 
@@ -5664,7 +5664,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a state.
-body = tator.Body20() # Body20 |  (optional)
+body = tator.Body13() # Body13 |  (optional)
 
 try:
     api_response = api_instance.update_state(id, body=body)
@@ -5678,11 +5678,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state. | 
- **body** | [**Body20**](Body20.md)|  | [optional] 
+ **body** | [**Body13**](Body13.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20026**](InlineResponse20026.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5696,7 +5696,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_list**
-> InlineResponse20025 update_state_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse update_state_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -5719,7 +5719,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body19() # Body19 |  (optional)
+body = tator.Body12() # Body12 |  (optional)
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
@@ -5751,7 +5751,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body19**](Body19.md)|  | [optional] 
+ **body** | [**Body12**](Body12.md)|  | [optional] 
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
@@ -5773,7 +5773,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20025**](InlineResponse20025.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5787,7 +5787,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_type**
-> InlineResponse20029 update_state_type(id, body=body)
+> MessageResponse update_state_type(id, body=body)
 
 
 
@@ -5810,7 +5810,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a state type.
-body = tator.Body22() # Body22 |  (optional)
+body = tator.Body15() # Body15 |  (optional)
 
 try:
     api_response = api_instance.update_state_type(id, body=body)
@@ -5824,11 +5824,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state type. | 
- **body** | [**Body22**](Body22.md)|  | [optional] 
+ **body** | [**Body15**](Body15.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20029**](InlineResponse20029.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5842,7 +5842,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_tree_leaf**
-> InlineResponse20034 update_tree_leaf(id, body=body)
+> MessageResponse update_tree_leaf(id, body=body)
 
 
 
@@ -5865,7 +5865,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a tree leaf.
-body = tator.Body26() # Body26 |  (optional)
+body = tator.Body19() # Body19 |  (optional)
 
 try:
     api_response = api_instance.update_tree_leaf(id, body=body)
@@ -5879,11 +5879,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a tree leaf. | 
- **body** | [**Body26**](Body26.md)|  | [optional] 
+ **body** | [**Body19**](Body19.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20034**](InlineResponse20034.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5897,7 +5897,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_tree_leaf_list**
-> InlineResponse20033 update_tree_leaf_list(project, body=body, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse update_tree_leaf_list(project, body=body, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -5920,7 +5920,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body25() # Body25 |  (optional)
+body = tator.Body18() # Body18 |  (optional)
 ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a tree leaf type. (optional)
 name = 'name_example' # str | Name of the tree leaf element. (optional)
@@ -5948,7 +5948,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body25**](Body25.md)|  | [optional] 
+ **body** | [**Body18**](Body18.md)|  | [optional] 
  **ancestor** | **str**| Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
  **type** | **int**| Unique integer identifying a tree leaf type. | [optional] 
  **name** | **str**| Name of the tree leaf element. | [optional] 
@@ -5966,7 +5966,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20033**](InlineResponse20033.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -5980,7 +5980,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_tree_leaf_type**
-> InlineResponse20037 update_tree_leaf_type(id, body=body)
+> MessageResponse update_tree_leaf_type(id, body=body)
 
 
 
@@ -6003,7 +6003,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an tree_leaf type.
-body = tator.Body28() # Body28 |  (optional)
+body = tator.Body21() # Body21 |  (optional)
 
 try:
     api_response = api_instance.update_tree_leaf_type(id, body=body)
@@ -6017,11 +6017,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an tree_leaf type. | 
- **body** | [**Body28**](Body28.md)|  | [optional] 
+ **body** | [**Body21**](Body21.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20037**](InlineResponse20037.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -6035,7 +6035,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user**
-> InlineResponse20038 update_user(id, body=body)
+> InlineResponse20017 update_user(id, body=body)
 
 
 
@@ -6058,7 +6058,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a localization association.
-body = tator.Body29() # Body29 |  (optional)
+body = tator.Body22() # Body22 |  (optional)
 
 try:
     api_response = api_instance.update_user(id, body=body)
@@ -6072,11 +6072,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization association. | 
- **body** | [**Body29**](Body29.md)|  | [optional] 
+ **body** | [**Body22**](Body22.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20038**](InlineResponse20038.md)
+[**InlineResponse20017**](InlineResponse20017.md)
 
 ### Authorization
 
@@ -6090,7 +6090,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_version**
-> InlineResponse20041 update_version(id, body=body)
+> MessageResponse update_version(id, body=body)
 
 
 
@@ -6113,7 +6113,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a version.
-body = tator.Body33() # Body33 |  (optional)
+body = tator.Body26() # Body26 |  (optional)
 
 try:
     api_response = api_instance.update_version(id, body=body)
@@ -6127,11 +6127,11 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a version. | 
- **body** | [**Body33**](Body33.md)|  | [optional] 
+ **body** | [**Body26**](Body26.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20041**](InlineResponse20041.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -6145,7 +6145,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **who_am_i**
-> InlineResponse20039 who_am_i()
+> InlineResponse20018 who_am_i()
 
 
 
@@ -6180,7 +6180,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse20039**](InlineResponse20039.md)
+[**InlineResponse20018**](InlineResponse20018.md)
 
 ### Authorization
 

@@ -29,43 +29,71 @@ class Body25(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)'
+        'name': 'str',
+        'description': 'str'
     }
 
     attribute_map = {
-        'attributes': 'attributes'
+        'name': 'name',
+        'description': 'description'
     }
 
-    def __init__(self, attributes=None):  # noqa: E501
+    def __init__(self, name=None, description=''):  # noqa: E501
         """Body25 - a model defined in Swagger"""  # noqa: E501
-        self._attributes = None
+        self._name = None
+        self._description = None
         self.discriminator = None
-        self.attributes = attributes
+        self.name = name
+        if description is not None:
+            self.description = description
 
     @property
-    def attributes(self):
-        """Gets the attributes of this Body25.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body25.  # noqa: E501
 
-        Attribute values to bulk update.  # noqa: E501
+        Name of the version.  # noqa: E501
 
-        :return: The attributes of this Body25.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The name of this Body25.  # noqa: E501
+        :rtype: str
         """
-        return self._attributes
+        return self._name
 
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body25.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body25.
 
-        Attribute values to bulk update.  # noqa: E501
+        Name of the version.  # noqa: E501
 
-        :param attributes: The attributes of this Body25.  # noqa: E501
-        :type: dict(str, object)
+        :param name: The name of this Body25.  # noqa: E501
+        :type: str
         """
-        if attributes is None:
-            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._attributes = attributes
+        self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this Body25.  # noqa: E501
+
+        Description of the version.  # noqa: E501
+
+        :return: The description of this Body25.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body25.
+
+        Description of the version.  # noqa: E501
+
+        :param description: The description of this Body25.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
 
     def to_dict(self):
         """Returns the model properties as a dict"""

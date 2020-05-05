@@ -29,120 +29,217 @@ class Body31(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'username': 'str',
-        'first_name': 'str',
-        'last_name': 'str',
-        'email': 'str'
+        'type': 'int',
+        'gid': 'str',
+        'uid': 'str',
+        'url': 'str',
+        'section': 'str',
+        'name': 'str',
+        'md5': 'str'
     }
 
     attribute_map = {
-        'username': 'username',
-        'first_name': 'first_name',
-        'last_name': 'last_name',
-        'email': 'email'
+        'type': 'type',
+        'gid': 'gid',
+        'uid': 'uid',
+        'url': 'url',
+        'section': 'section',
+        'name': 'name',
+        'md5': 'md5'
     }
 
-    def __init__(self, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
+    def __init__(self, type=None, gid=None, uid=None, url=None, section=None, name=None, md5=None):  # noqa: E501
         """Body31 - a model defined in Swagger"""  # noqa: E501
-        self._username = None
-        self._first_name = None
-        self._last_name = None
-        self._email = None
+        self._type = None
+        self._gid = None
+        self._uid = None
+        self._url = None
+        self._section = None
+        self._name = None
+        self._md5 = None
         self.discriminator = None
-        if username is not None:
-            self.username = username
-        if first_name is not None:
-            self.first_name = first_name
-        if last_name is not None:
-            self.last_name = last_name
-        if email is not None:
-            self.email = email
+        self.type = type
+        self.gid = gid
+        self.uid = uid
+        self.url = url
+        self.section = section
+        self.name = name
+        self.md5 = md5
 
     @property
-    def username(self):
-        """Gets the username of this Body31.  # noqa: E501
+    def type(self):
+        """Gets the type of this Body31.  # noqa: E501
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Unique integer identifying a video type.  # noqa: E501
 
-        :return: The username of this Body31.  # noqa: E501
-        :rtype: str
+        :return: The type of this Body31.  # noqa: E501
+        :rtype: int
         """
-        return self._username
+        return self._type
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this Body31.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this Body31.
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Unique integer identifying a video type.  # noqa: E501
 
-        :param username: The username of this Body31.  # noqa: E501
-        :type: str
+        :param type: The type of this Body31.  # noqa: E501
+        :type: int
         """
+        if type is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
 
-        self._username = username
+        self._type = type
 
     @property
-    def first_name(self):
-        """Gets the first_name of this Body31.  # noqa: E501
+    def gid(self):
+        """Gets the gid of this Body31.  # noqa: E501
 
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
-        :return: The first_name of this Body31.  # noqa: E501
+        :return: The gid of this Body31.  # noqa: E501
         :rtype: str
         """
-        return self._first_name
+        return self._gid
 
-    @first_name.setter
-    def first_name(self, first_name):
-        """Sets the first_name of this Body31.
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this Body31.
 
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
-        :param first_name: The first_name of this Body31.  # noqa: E501
+        :param gid: The gid of this Body31.  # noqa: E501
         :type: str
         """
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
 
-        self._first_name = first_name
+        self._gid = gid
 
     @property
-    def last_name(self):
-        """Gets the last_name of this Body31.  # noqa: E501
+    def uid(self):
+        """Gets the uid of this Body31.  # noqa: E501
 
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
-        :return: The last_name of this Body31.  # noqa: E501
+        :return: The uid of this Body31.  # noqa: E501
         :rtype: str
         """
-        return self._last_name
+        return self._uid
 
-    @last_name.setter
-    def last_name(self, last_name):
-        """Sets the last_name of this Body31.
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this Body31.
 
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
-        :param last_name: The last_name of this Body31.  # noqa: E501
+        :param uid: The uid of this Body31.  # noqa: E501
         :type: str
         """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
 
-        self._last_name = last_name
+        self._uid = uid
 
     @property
-    def email(self):
-        """Gets the email of this Body31.  # noqa: E501
+    def url(self):
+        """Gets the url of this Body31.  # noqa: E501
 
+        Upload URL for the raw video.  # noqa: E501
 
-        :return: The email of this Body31.  # noqa: E501
+        :return: The url of this Body31.  # noqa: E501
         :rtype: str
         """
-        return self._email
+        return self._url
 
-    @email.setter
-    def email(self, email):
-        """Sets the email of this Body31.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body31.
 
+        Upload URL for the raw video.  # noqa: E501
 
-        :param email: The email of this Body31.  # noqa: E501
+        :param url: The url of this Body31.  # noqa: E501
         :type: str
         """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
-        self._email = email
+        self._url = url
+
+    @property
+    def section(self):
+        """Gets the section of this Body31.  # noqa: E501
+
+        Media section name to upload to.  # noqa: E501
+
+        :return: The section of this Body31.  # noqa: E501
+        :rtype: str
+        """
+        return self._section
+
+    @section.setter
+    def section(self, section):
+        """Sets the section of this Body31.
+
+        Media section name to upload to.  # noqa: E501
+
+        :param section: The section of this Body31.  # noqa: E501
+        :type: str
+        """
+        if section is None:
+            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
+
+        self._section = section
+
+    @property
+    def name(self):
+        """Gets the name of this Body31.  # noqa: E501
+
+        Name of the file.  # noqa: E501
+
+        :return: The name of this Body31.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body31.
+
+        Name of the file.  # noqa: E501
+
+        :param name: The name of this Body31.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
+
+    @property
+    def md5(self):
+        """Gets the md5 of this Body31.  # noqa: E501
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :return: The md5 of this Body31.  # noqa: E501
+        :rtype: str
+        """
+        return self._md5
+
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this Body31.
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :param md5: The md5 of this Body31.  # noqa: E501
+        :type: str
+        """
+        if md5 is None:
+            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
+
+        self._md5 = md5
 
     def to_dict(self):
         """Returns the model properties as a dict"""

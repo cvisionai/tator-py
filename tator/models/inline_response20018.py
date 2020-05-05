@@ -29,68 +29,154 @@ class InlineResponse20018(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestMediaTypesprojectType',
-        'columns': 'list[OneOfinlineResponse20018ColumnsItems]'
+        'id': 'int',
+        'username': 'str',
+        'first_name': 'str',
+        'last_name': 'str',
+        'email': 'str'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'id': 'id',
+        'username': 'username',
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'email': 'email'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
         """InlineResponse20018 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._id = None
+        self._username = None
+        self._first_name = None
+        self._last_name = None
+        self._email = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if id is not None:
+            self.id = id
+        if username is not None:
+            self.username = username
+        if first_name is not None:
+            self.first_name = first_name
+        if last_name is not None:
+            self.last_name = last_name
+        if email is not None:
+            self.email = email
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse20018.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20018.  # noqa: E501
 
+        Unique integer identifying current user.  # noqa: E501
 
-        :return: The type of this InlineResponse20018.  # noqa: E501
-        :rtype: RestMediaTypesprojectType
+        :return: The id of this InlineResponse20018.  # noqa: E501
+        :rtype: int
         """
-        return self._type
+        return self._id
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse20018.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20018.
 
+        Unique integer identifying current user.  # noqa: E501
 
-        :param type: The type of this InlineResponse20018.  # noqa: E501
-        :type: RestMediaTypesprojectType
+        :param id: The id of this InlineResponse20018.  # noqa: E501
+        :type: int
         """
 
-        self._type = type
+        self._id = id
 
     @property
-    def columns(self):
-        """Gets the columns of this InlineResponse20018.  # noqa: E501
+    def username(self):
+        """Gets the username of this InlineResponse20018.  # noqa: E501
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Username of current user.  # noqa: E501
 
-        :return: The columns of this InlineResponse20018.  # noqa: E501
-        :rtype: list[OneOfinlineResponse20018ColumnsItems]
+        :return: The username of this InlineResponse20018.  # noqa: E501
+        :rtype: str
         """
-        return self._columns
+        return self._username
 
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse20018.
+    @username.setter
+    def username(self, username):
+        """Sets the username of this InlineResponse20018.
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Username of current user.  # noqa: E501
 
-        :param columns: The columns of this InlineResponse20018.  # noqa: E501
-        :type: list[OneOfinlineResponse20018ColumnsItems]
+        :param username: The username of this InlineResponse20018.  # noqa: E501
+        :type: str
         """
 
-        self._columns = columns
+        self._username = username
+
+    @property
+    def first_name(self):
+        """Gets the first_name of this InlineResponse20018.  # noqa: E501
+
+        First name of current user.  # noqa: E501
+
+        :return: The first_name of this InlineResponse20018.  # noqa: E501
+        :rtype: str
+        """
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, first_name):
+        """Sets the first_name of this InlineResponse20018.
+
+        First name of current user.  # noqa: E501
+
+        :param first_name: The first_name of this InlineResponse20018.  # noqa: E501
+        :type: str
+        """
+
+        self._first_name = first_name
+
+    @property
+    def last_name(self):
+        """Gets the last_name of this InlineResponse20018.  # noqa: E501
+
+        Last name of current user.  # noqa: E501
+
+        :return: The last_name of this InlineResponse20018.  # noqa: E501
+        :rtype: str
+        """
+        return self._last_name
+
+    @last_name.setter
+    def last_name(self, last_name):
+        """Sets the last_name of this InlineResponse20018.
+
+        Last name of current user.  # noqa: E501
+
+        :param last_name: The last_name of this InlineResponse20018.  # noqa: E501
+        :type: str
+        """
+
+        self._last_name = last_name
+
+    @property
+    def email(self):
+        """Gets the email of this InlineResponse20018.  # noqa: E501
+
+        Email address of current user.  # noqa: E501
+
+        :return: The email of this InlineResponse20018.  # noqa: E501
+        :rtype: str
+        """
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        """Sets the email of this InlineResponse20018.
+
+        Email address of current user.  # noqa: E501
+
+        :param email: The email of this InlineResponse20018.  # noqa: E501
+        :type: str
+        """
+
+        self._email = email
 
     def to_dict(self):
         """Returns the model properties as a dict"""

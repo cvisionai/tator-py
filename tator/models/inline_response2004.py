@@ -29,42 +29,40 @@ class InlineResponse2004(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'prev': 'int'
     }
 
     attribute_map = {
-        'message': 'message'
+        'prev': 'prev'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, prev=None):  # noqa: E501
         """InlineResponse2004 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._prev = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if prev is not None:
+            self.prev = prev
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse2004.  # noqa: E501
+    def prev(self):
+        """Gets the prev of this InlineResponse2004.  # noqa: E501
 
-        Message indicating successful update of frame association.  # noqa: E501
 
-        :return: The message of this InlineResponse2004.  # noqa: E501
-        :rtype: str
+        :return: The prev of this InlineResponse2004.  # noqa: E501
+        :rtype: int
         """
-        return self._message
+        return self._prev
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse2004.
+    @prev.setter
+    def prev(self, prev):
+        """Sets the prev of this InlineResponse2004.
 
-        Message indicating successful update of frame association.  # noqa: E501
 
-        :param message: The message of this InlineResponse2004.  # noqa: E501
-        :type: str
+        :param prev: The prev of this InlineResponse2004.  # noqa: E501
+        :type: int
         """
 
-        self._message = message
+        self._prev = prev
 
     def to_dict(self):
         """Returns the model properties as a dict"""

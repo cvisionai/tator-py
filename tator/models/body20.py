@@ -29,126 +29,71 @@ class Body20(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'media_ids': 'list[int]',
-        'localization_ids': 'list[int]',
-        'frame': 'int',
-        'attributes': 'dict(str, object)'
+        'name': 'str',
+        'description': 'str'
     }
 
     attribute_map = {
-        'media_ids': 'media_ids',
-        'localization_ids': 'localization_ids',
-        'frame': 'frame',
-        'attributes': 'attributes'
+        'name': 'name',
+        'description': 'description'
     }
 
-    def __init__(self, media_ids=None, localization_ids=None, frame=None, attributes=None):  # noqa: E501
+    def __init__(self, name=None, description=''):  # noqa: E501
         """Body20 - a model defined in Swagger"""  # noqa: E501
-        self._media_ids = None
-        self._localization_ids = None
-        self._frame = None
-        self._attributes = None
+        self._name = None
+        self._description = None
         self.discriminator = None
-        if media_ids is not None:
-            self.media_ids = media_ids
-        if localization_ids is not None:
-            self.localization_ids = localization_ids
-        if frame is not None:
-            self.frame = frame
-        if attributes is not None:
-            self.attributes = attributes
+        self.name = name
+        if description is not None:
+            self.description = description
 
     @property
-    def media_ids(self):
-        """Gets the media_ids of this Body20.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body20.  # noqa: E501
 
-        List of media IDs that this state applies to.  # noqa: E501
+        Name of the tree leaf type.  # noqa: E501
 
-        :return: The media_ids of this Body20.  # noqa: E501
-        :rtype: list[int]
+        :return: The name of this Body20.  # noqa: E501
+        :rtype: str
         """
-        return self._media_ids
+        return self._name
 
-    @media_ids.setter
-    def media_ids(self, media_ids):
-        """Sets the media_ids of this Body20.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body20.
 
-        List of media IDs that this state applies to.  # noqa: E501
+        Name of the tree leaf type.  # noqa: E501
 
-        :param media_ids: The media_ids of this Body20.  # noqa: E501
-        :type: list[int]
+        :param name: The name of this Body20.  # noqa: E501
+        :type: str
         """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._media_ids = media_ids
+        self._name = name
 
     @property
-    def localization_ids(self):
-        """Gets the localization_ids of this Body20.  # noqa: E501
+    def description(self):
+        """Gets the description of this Body20.  # noqa: E501
 
-        List of localization IDs that this state applies to.  # noqa: E501
+        Description of the tree leaf type.  # noqa: E501
 
-        :return: The localization_ids of this Body20.  # noqa: E501
-        :rtype: list[int]
+        :return: The description of this Body20.  # noqa: E501
+        :rtype: str
         """
-        return self._localization_ids
+        return self._description
 
-    @localization_ids.setter
-    def localization_ids(self, localization_ids):
-        """Sets the localization_ids of this Body20.
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body20.
 
-        List of localization IDs that this state applies to.  # noqa: E501
+        Description of the tree leaf type.  # noqa: E501
 
-        :param localization_ids: The localization_ids of this Body20.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._localization_ids = localization_ids
-
-    @property
-    def frame(self):
-        """Gets the frame of this Body20.  # noqa: E501
-
-        Frame number this state applies to.  # noqa: E501
-
-        :return: The frame of this Body20.  # noqa: E501
-        :rtype: int
-        """
-        return self._frame
-
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this Body20.
-
-        Frame number this state applies to.  # noqa: E501
-
-        :param frame: The frame of this Body20.  # noqa: E501
-        :type: int
+        :param description: The description of this Body20.  # noqa: E501
+        :type: str
         """
 
-        self._frame = frame
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this Body20.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this Body20.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body20.
-
-        Object containing attribute values.  # noqa: E501
-
-        :param attributes: The attributes of this Body20.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._attributes = attributes
+        self._description = description
 
     def to_dict(self):
         """Returns the model properties as a dict"""

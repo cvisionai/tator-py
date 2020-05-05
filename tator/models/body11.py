@@ -29,154 +29,19 @@ class Body11(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'last_edit_start': 'datetime',
-        'last_edit_end': 'datetime',
-        'media_files': 'list[str]',
-        'attributes': 'dict(str, object)'
     }
+    if hasattr(dict, "swagger_types"):
+        swagger_types.update(dict.swagger_types)
 
     attribute_map = {
-        'name': 'name',
-        'last_edit_start': 'last_edit_start',
-        'last_edit_end': 'last_edit_end',
-        'media_files': 'media_files',
-        'attributes': 'attributes'
     }
+    if hasattr(dict, "attribute_map"):
+        attribute_map.update(dict.attribute_map)
 
-    def __init__(self, name=None, last_edit_start=None, last_edit_end=None, media_files=None, attributes=None):  # noqa: E501
+    def __init__(self, *args, **kwargs):  # noqa: E501
         """Body11 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._last_edit_start = None
-        self._last_edit_end = None
-        self._media_files = None
-        self._attributes = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if last_edit_start is not None:
-            self.last_edit_start = last_edit_start
-        if last_edit_end is not None:
-            self.last_edit_end = last_edit_end
-        if media_files is not None:
-            self.media_files = media_files
-        if attributes is not None:
-            self.attributes = attributes
-
-    @property
-    def name(self):
-        """Gets the name of this Body11.  # noqa: E501
-
-        Name of the media.  # noqa: E501
-
-        :return: The name of this Body11.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body11.
-
-        Name of the media.  # noqa: E501
-
-        :param name: The name of this Body11.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
-    def last_edit_start(self):
-        """Gets the last_edit_start of this Body11.  # noqa: E501
-
-        Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
-
-        :return: The last_edit_start of this Body11.  # noqa: E501
-        :rtype: datetime
-        """
-        return self._last_edit_start
-
-    @last_edit_start.setter
-    def last_edit_start(self, last_edit_start):
-        """Sets the last_edit_start of this Body11.
-
-        Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
-
-        :param last_edit_start: The last_edit_start of this Body11.  # noqa: E501
-        :type: datetime
-        """
-
-        self._last_edit_start = last_edit_start
-
-    @property
-    def last_edit_end(self):
-        """Gets the last_edit_end of this Body11.  # noqa: E501
-
-        Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
-
-        :return: The last_edit_end of this Body11.  # noqa: E501
-        :rtype: datetime
-        """
-        return self._last_edit_end
-
-    @last_edit_end.setter
-    def last_edit_end(self, last_edit_end):
-        """Sets the last_edit_end of this Body11.
-
-        Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
-
-        :param last_edit_end: The last_edit_end of this Body11.  # noqa: E501
-        :type: datetime
-        """
-
-        self._last_edit_end = last_edit_end
-
-    @property
-    def media_files(self):
-        """Gets the media_files of this Body11.  # noqa: E501
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :return: The media_files of this Body11.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._media_files
-
-    @media_files.setter
-    def media_files(self, media_files):
-        """Sets the media_files of this Body11.
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :param media_files: The media_files of this Body11.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._media_files = media_files
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this Body11.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this Body11.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body11.
-
-        Object containing attribute values.  # noqa: E501
-
-        :param attributes: The attributes of this Body11.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._attributes = attributes
+        dict.__init__(self, *args, **kwargs)
 
     def to_dict(self):
         """Returns the model properties as a dict"""

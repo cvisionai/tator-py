@@ -30,29 +30,28 @@ class Body9(object):
     """
     swagger_types = {
         'name': 'str',
-        'description': 'str'
+        'summary': 'str'
     }
 
     attribute_map = {
         'name': 'name',
-        'description': 'description'
+        'summary': 'summary'
     }
 
-    def __init__(self, name=None, description=None):  # noqa: E501
+    def __init__(self, name=None, summary=''):  # noqa: E501
         """Body9 - a model defined in Swagger"""  # noqa: E501
         self._name = None
-        self._description = None
+        self._summary = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
+        self.name = name
+        if summary is not None:
+            self.summary = summary
 
     @property
     def name(self):
         """Gets the name of this Body9.  # noqa: E501
 
-        Name of the localization type.  # noqa: E501
+        Name of the project.  # noqa: E501
 
         :return: The name of this Body9.  # noqa: E501
         :rtype: str
@@ -63,36 +62,38 @@ class Body9(object):
     def name(self, name):
         """Sets the name of this Body9.
 
-        Name of the localization type.  # noqa: E501
+        Name of the project.  # noqa: E501
 
         :param name: The name of this Body9.  # noqa: E501
         :type: str
         """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def description(self):
-        """Gets the description of this Body9.  # noqa: E501
+    def summary(self):
+        """Gets the summary of this Body9.  # noqa: E501
 
-        Description of the localization type.  # noqa: E501
+        Summary of the project.  # noqa: E501
 
-        :return: The description of this Body9.  # noqa: E501
+        :return: The summary of this Body9.  # noqa: E501
         :rtype: str
         """
-        return self._description
+        return self._summary
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body9.
+    @summary.setter
+    def summary(self, summary):
+        """Sets the summary of this Body9.
 
-        Description of the localization type.  # noqa: E501
+        Summary of the project.  # noqa: E501
 
-        :param description: The description of this Body9.  # noqa: E501
+        :param summary: The summary of this Body9.  # noqa: E501
         :type: str
         """
 
-        self._description = description
+        self._summary = summary
 
     def to_dict(self):
         """Returns the model properties as a dict"""

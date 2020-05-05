@@ -29,14 +29,76 @@ class Body7(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'user': 'int',
+        'permission': 'str'
     }
 
     attribute_map = {
+        'user': 'user',
+        'permission': 'permission'
     }
 
-    def __init__(self):  # noqa: E501
+    def __init__(self, user=None, permission=None):  # noqa: E501
         """Body7 - a model defined in Swagger"""  # noqa: E501
+        self._user = None
+        self._permission = None
         self.discriminator = None
+        if user is not None:
+            self.user = user
+        if permission is not None:
+            self.permission = permission
+
+    @property
+    def user(self):
+        """Gets the user of this Body7.  # noqa: E501
+
+        Unique integer identifying a user.  # noqa: E501
+
+        :return: The user of this Body7.  # noqa: E501
+        :rtype: int
+        """
+        return self._user
+
+    @user.setter
+    def user(self, user):
+        """Sets the user of this Body7.
+
+        Unique integer identifying a user.  # noqa: E501
+
+        :param user: The user of this Body7.  # noqa: E501
+        :type: int
+        """
+
+        self._user = user
+
+    @property
+    def permission(self):
+        """Gets the permission of this Body7.  # noqa: E501
+
+        User permission level for the project.  # noqa: E501
+
+        :return: The permission of this Body7.  # noqa: E501
+        :rtype: str
+        """
+        return self._permission
+
+    @permission.setter
+    def permission(self, permission):
+        """Sets the permission of this Body7.
+
+        User permission level for the project.  # noqa: E501
+
+        :param permission: The permission of this Body7.  # noqa: E501
+        :type: str
+        """
+        allowed_values = ["View Only", "Can Edit", "Can Transfer", "Can Execute", "Full Control"]  # noqa: E501
+        if permission not in allowed_values:
+            raise ValueError(
+                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
+                .format(permission, allowed_values)
+            )
+
+        self._permission = permission
 
     def to_dict(self):
         """Returns the model properties as a dict"""

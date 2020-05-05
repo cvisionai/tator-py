@@ -30,36 +30,29 @@ class Body21(object):
     """
     swagger_types = {
         'name': 'str',
-        'description': 'str',
-        'association': 'str',
-        'media_types': 'list[int]'
+        'description': 'str'
     }
 
     attribute_map = {
         'name': 'name',
-        'description': 'description',
-        'association': 'association',
-        'media_types': 'media_types'
+        'description': 'description'
     }
 
-    def __init__(self, name=None, description='', association=None, media_types=None):  # noqa: E501
+    def __init__(self, name=None, description=''):  # noqa: E501
         """Body21 - a model defined in Swagger"""  # noqa: E501
         self._name = None
         self._description = None
-        self._association = None
-        self._media_types = None
         self.discriminator = None
-        self.name = name
+        if name is not None:
+            self.name = name
         if description is not None:
             self.description = description
-        self.association = association
-        self.media_types = media_types
 
     @property
     def name(self):
         """Gets the name of this Body21.  # noqa: E501
 
-        Name of the state type.  # noqa: E501
+        Name of the tree leaf type.  # noqa: E501
 
         :return: The name of this Body21.  # noqa: E501
         :rtype: str
@@ -70,13 +63,11 @@ class Body21(object):
     def name(self, name):
         """Sets the name of this Body21.
 
-        Name of the state type.  # noqa: E501
+        Name of the tree leaf type.  # noqa: E501
 
         :param name: The name of this Body21.  # noqa: E501
         :type: str
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
@@ -84,7 +75,7 @@ class Body21(object):
     def description(self):
         """Gets the description of this Body21.  # noqa: E501
 
-        Description of the state type.  # noqa: E501
+        Description of the tree leaf type.  # noqa: E501
 
         :return: The description of this Body21.  # noqa: E501
         :rtype: str
@@ -95,69 +86,13 @@ class Body21(object):
     def description(self, description):
         """Sets the description of this Body21.
 
-        Description of the state type.  # noqa: E501
+        Description of the tree leaf type.  # noqa: E501
 
         :param description: The description of this Body21.  # noqa: E501
         :type: str
         """
 
         self._description = description
-
-    @property
-    def association(self):
-        """Gets the association of this Body21.  # noqa: E501
-
-        Type of object this state type is associated with.  # noqa: E501
-
-        :return: The association of this Body21.  # noqa: E501
-        :rtype: str
-        """
-        return self._association
-
-    @association.setter
-    def association(self, association):
-        """Sets the association of this Body21.
-
-        Type of object this state type is associated with.  # noqa: E501
-
-        :param association: The association of this Body21.  # noqa: E501
-        :type: str
-        """
-        if association is None:
-            raise ValueError("Invalid value for `association`, must not be `None`")  # noqa: E501
-        allowed_values = ["Media", "Frame", "Localization"]  # noqa: E501
-        if association not in allowed_values:
-            raise ValueError(
-                "Invalid value for `association` ({0}), must be one of {1}"  # noqa: E501
-                .format(association, allowed_values)
-            )
-
-        self._association = association
-
-    @property
-    def media_types(self):
-        """Gets the media_types of this Body21.  # noqa: E501
-
-        List of integers identifying media types that this state type may apply to.  # noqa: E501
-
-        :return: The media_types of this Body21.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_types
-
-    @media_types.setter
-    def media_types(self, media_types):
-        """Sets the media_types of this Body21.
-
-        List of integers identifying media types that this state type may apply to.  # noqa: E501
-
-        :param media_types: The media_types of this Body21.  # noqa: E501
-        :type: list[int]
-        """
-        if media_types is None:
-            raise ValueError("Invalid value for `media_types`, must not be `None`")  # noqa: E501
-
-        self._media_types = media_types
 
     def to_dict(self):
         """Returns the model properties as a dict"""

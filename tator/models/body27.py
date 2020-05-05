@@ -29,71 +29,72 @@ class Body27(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str'
+        'username': 'str',
+        'password': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description'
+        'username': 'username',
+        'password': 'password'
     }
 
-    def __init__(self, name=None, description=''):  # noqa: E501
+    def __init__(self, username=None, password=None):  # noqa: E501
         """Body27 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
+        self._username = None
+        self._password = None
         self.discriminator = None
-        self.name = name
-        if description is not None:
-            self.description = description
+        self.username = username
+        self.password = password
 
     @property
-    def name(self):
-        """Gets the name of this Body27.  # noqa: E501
+    def username(self):
+        """Gets the username of this Body27.  # noqa: E501
 
-        Name of the tree leaf type.  # noqa: E501
+        Account username.  # noqa: E501
 
-        :return: The name of this Body27.  # noqa: E501
+        :return: The username of this Body27.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._username
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body27.
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Body27.
 
-        Name of the tree leaf type.  # noqa: E501
+        Account username.  # noqa: E501
 
-        :param name: The name of this Body27.  # noqa: E501
+        :param username: The username of this Body27.  # noqa: E501
         :type: str
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+        if username is None:
+            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        self._username = username
 
     @property
-    def description(self):
-        """Gets the description of this Body27.  # noqa: E501
+    def password(self):
+        """Gets the password of this Body27.  # noqa: E501
 
-        Description of the tree leaf type.  # noqa: E501
+        Account password.  # noqa: E501
 
-        :return: The description of this Body27.  # noqa: E501
+        :return: The password of this Body27.  # noqa: E501
         :rtype: str
         """
-        return self._description
+        return self._password
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body27.
+    @password.setter
+    def password(self, password):
+        """Sets the password of this Body27.
 
-        Description of the tree leaf type.  # noqa: E501
+        Account password.  # noqa: E501
 
-        :param description: The description of this Body27.  # noqa: E501
+        :param password: The password of this Body27.  # noqa: E501
         :type: str
         """
+        if password is None:
+            raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
 
-        self._description = description
+        self._password = password
 
     def to_dict(self):
         """Returns the model properties as a dict"""

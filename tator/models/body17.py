@@ -29,70 +29,19 @@ class Body17(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'summary': 'str'
     }
+    if hasattr(dict, "swagger_types"):
+        swagger_types.update(dict.swagger_types)
 
     attribute_map = {
-        'name': 'name',
-        'summary': 'summary'
     }
+    if hasattr(dict, "attribute_map"):
+        attribute_map.update(dict.attribute_map)
 
-    def __init__(self, name=None, summary=''):  # noqa: E501
+    def __init__(self, *args, **kwargs):  # noqa: E501
         """Body17 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._summary = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if summary is not None:
-            self.summary = summary
-
-    @property
-    def name(self):
-        """Gets the name of this Body17.  # noqa: E501
-
-        Name of the project.  # noqa: E501
-
-        :return: The name of this Body17.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body17.
-
-        Name of the project.  # noqa: E501
-
-        :param name: The name of this Body17.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
-    def summary(self):
-        """Gets the summary of this Body17.  # noqa: E501
-
-        Summary of the project.  # noqa: E501
-
-        :return: The summary of this Body17.  # noqa: E501
-        :rtype: str
-        """
-        return self._summary
-
-    @summary.setter
-    def summary(self, summary):
-        """Sets the summary of this Body17.
-
-        Summary of the project.  # noqa: E501
-
-        :param summary: The summary of this Body17.  # noqa: E501
-        :type: str
-        """
-
-        self._summary = summary
+        dict.__init__(self, *args, **kwargs)
 
     def to_dict(self):
         """Returns the model properties as a dict"""

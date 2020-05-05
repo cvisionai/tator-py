@@ -30,29 +30,34 @@ class InlineResponse2013(object):
     """
     swagger_types = {
         'message': 'str',
-        'id': 'int'
+        'run_uid': 'str',
+        'group_id': 'str'
     }
 
     attribute_map = {
         'message': 'message',
-        'id': 'id'
+        'run_uid': 'run_uid',
+        'group_id': 'group_id'
     }
 
-    def __init__(self, message=None, id=None):  # noqa: E501
+    def __init__(self, message=None, run_uid=None, group_id=None):  # noqa: E501
         """InlineResponse2013 - a model defined in Swagger"""  # noqa: E501
         self._message = None
-        self._id = None
+        self._run_uid = None
+        self._group_id = None
         self.discriminator = None
         if message is not None:
             self.message = message
-        if id is not None:
-            self.id = id
+        if run_uid is not None:
+            self.run_uid = run_uid
+        if group_id is not None:
+            self.group_id = group_id
 
     @property
     def message(self):
         """Gets the message of this InlineResponse2013.  # noqa: E501
 
-        Message indicating successful creation of membership.  # noqa: E501
+        Message indicating transcode started successfully.  # noqa: E501
 
         :return: The message of this InlineResponse2013.  # noqa: E501
         :rtype: str
@@ -63,7 +68,7 @@ class InlineResponse2013(object):
     def message(self, message):
         """Sets the message of this InlineResponse2013.
 
-        Message indicating successful creation of membership.  # noqa: E501
+        Message indicating transcode started successfully.  # noqa: E501
 
         :param message: The message of this InlineResponse2013.  # noqa: E501
         :type: str
@@ -72,27 +77,50 @@ class InlineResponse2013(object):
         self._message = message
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse2013.  # noqa: E501
+    def run_uid(self):
+        """Gets the run_uid of this InlineResponse2013.  # noqa: E501
 
-        Unique integer identifying created membership.  # noqa: E501
+        UUID identifying the job.  # noqa: E501
 
-        :return: The id of this InlineResponse2013.  # noqa: E501
-        :rtype: int
+        :return: The run_uid of this InlineResponse2013.  # noqa: E501
+        :rtype: str
         """
-        return self._id
+        return self._run_uid
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse2013.
+    @run_uid.setter
+    def run_uid(self, run_uid):
+        """Sets the run_uid of this InlineResponse2013.
 
-        Unique integer identifying created membership.  # noqa: E501
+        UUID identifying the job.  # noqa: E501
 
-        :param id: The id of this InlineResponse2013.  # noqa: E501
-        :type: int
+        :param run_uid: The run_uid of this InlineResponse2013.  # noqa: E501
+        :type: str
         """
 
-        self._id = id
+        self._run_uid = run_uid
+
+    @property
+    def group_id(self):
+        """Gets the group_id of this InlineResponse2013.  # noqa: E501
+
+        UUID identifying the job group.  # noqa: E501
+
+        :return: The group_id of this InlineResponse2013.  # noqa: E501
+        :rtype: str
+        """
+        return self._group_id
+
+    @group_id.setter
+    def group_id(self, group_id):
+        """Sets the group_id of this InlineResponse2013.
+
+        UUID identifying the job group.  # noqa: E501
+
+        :param group_id: The group_id of this InlineResponse2013.  # noqa: E501
+        :type: str
+        """
+
+        self._group_id = group_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

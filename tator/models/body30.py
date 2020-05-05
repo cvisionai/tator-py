@@ -29,120 +29,245 @@ class Body30(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'username': 'str',
-        'first_name': 'str',
-        'last_name': 'str',
-        'email': 'str'
+        'type': 'int',
+        'gid': 'str',
+        'uid': 'str',
+        'url': 'str',
+        'thumbnail_url': 'str',
+        'section': 'str',
+        'name': 'str',
+        'md5': 'str'
     }
 
     attribute_map = {
-        'username': 'username',
-        'first_name': 'first_name',
-        'last_name': 'last_name',
-        'email': 'email'
+        'type': 'type',
+        'gid': 'gid',
+        'uid': 'uid',
+        'url': 'url',
+        'thumbnail_url': 'thumbnail_url',
+        'section': 'section',
+        'name': 'name',
+        'md5': 'md5'
     }
 
-    def __init__(self, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
+    def __init__(self, type=None, gid=None, uid=None, url=None, thumbnail_url=None, section=None, name=None, md5=None):  # noqa: E501
         """Body30 - a model defined in Swagger"""  # noqa: E501
-        self._username = None
-        self._first_name = None
-        self._last_name = None
-        self._email = None
+        self._type = None
+        self._gid = None
+        self._uid = None
+        self._url = None
+        self._thumbnail_url = None
+        self._section = None
+        self._name = None
+        self._md5 = None
         self.discriminator = None
-        if username is not None:
-            self.username = username
-        if first_name is not None:
-            self.first_name = first_name
-        if last_name is not None:
-            self.last_name = last_name
-        if email is not None:
-            self.email = email
+        self.type = type
+        self.gid = gid
+        self.uid = uid
+        self.url = url
+        if thumbnail_url is not None:
+            self.thumbnail_url = thumbnail_url
+        self.section = section
+        self.name = name
+        self.md5 = md5
 
     @property
-    def username(self):
-        """Gets the username of this Body30.  # noqa: E501
+    def type(self):
+        """Gets the type of this Body30.  # noqa: E501
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Unique integer identifying an image type. Use -1 to automatically select the image type if only one image type exists in a project.  # noqa: E501
 
-        :return: The username of this Body30.  # noqa: E501
+        :return: The type of this Body30.  # noqa: E501
+        :rtype: int
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this Body30.
+
+        Unique integer identifying an image type. Use -1 to automatically select the image type if only one image type exists in a project.  # noqa: E501
+
+        :param type: The type of this Body30.  # noqa: E501
+        :type: int
+        """
+        if type is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
+
+        self._type = type
+
+    @property
+    def gid(self):
+        """Gets the gid of this Body30.  # noqa: E501
+
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The gid of this Body30.  # noqa: E501
         :rtype: str
         """
-        return self._username
+        return self._gid
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this Body30.
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this Body30.
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
-        :param username: The username of this Body30.  # noqa: E501
+        :param gid: The gid of this Body30.  # noqa: E501
+        :type: str
+        """
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
+
+        self._gid = gid
+
+    @property
+    def uid(self):
+        """Gets the uid of this Body30.  # noqa: E501
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The uid of this Body30.  # noqa: E501
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this Body30.
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param uid: The uid of this Body30.  # noqa: E501
+        :type: str
+        """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
+
+        self._uid = uid
+
+    @property
+    def url(self):
+        """Gets the url of this Body30.  # noqa: E501
+
+        Upload URL for the image.  # noqa: E501
+
+        :return: The url of this Body30.  # noqa: E501
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body30.
+
+        Upload URL for the image.  # noqa: E501
+
+        :param url: The url of this Body30.  # noqa: E501
+        :type: str
+        """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
+
+        self._url = url
+
+    @property
+    def thumbnail_url(self):
+        """Gets the thumbnail_url of this Body30.  # noqa: E501
+
+        Upload URL for the thumbnail if already generated.  # noqa: E501
+
+        :return: The thumbnail_url of this Body30.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumbnail_url
+
+    @thumbnail_url.setter
+    def thumbnail_url(self, thumbnail_url):
+        """Sets the thumbnail_url of this Body30.
+
+        Upload URL for the thumbnail if already generated.  # noqa: E501
+
+        :param thumbnail_url: The thumbnail_url of this Body30.  # noqa: E501
         :type: str
         """
 
-        self._username = username
+        self._thumbnail_url = thumbnail_url
 
     @property
-    def first_name(self):
-        """Gets the first_name of this Body30.  # noqa: E501
+    def section(self):
+        """Gets the section of this Body30.  # noqa: E501
 
+        Media section name.  # noqa: E501
 
-        :return: The first_name of this Body30.  # noqa: E501
+        :return: The section of this Body30.  # noqa: E501
         :rtype: str
         """
-        return self._first_name
+        return self._section
 
-    @first_name.setter
-    def first_name(self, first_name):
-        """Sets the first_name of this Body30.
+    @section.setter
+    def section(self, section):
+        """Sets the section of this Body30.
 
+        Media section name.  # noqa: E501
 
-        :param first_name: The first_name of this Body30.  # noqa: E501
+        :param section: The section of this Body30.  # noqa: E501
         :type: str
         """
+        if section is None:
+            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
 
-        self._first_name = first_name
+        self._section = section
 
     @property
-    def last_name(self):
-        """Gets the last_name of this Body30.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body30.  # noqa: E501
 
+        Name of the file.  # noqa: E501
 
-        :return: The last_name of this Body30.  # noqa: E501
+        :return: The name of this Body30.  # noqa: E501
         :rtype: str
         """
-        return self._last_name
+        return self._name
 
-    @last_name.setter
-    def last_name(self, last_name):
-        """Sets the last_name of this Body30.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body30.
 
+        Name of the file.  # noqa: E501
 
-        :param last_name: The last_name of this Body30.  # noqa: E501
+        :param name: The name of this Body30.  # noqa: E501
         :type: str
         """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._last_name = last_name
+        self._name = name
 
     @property
-    def email(self):
-        """Gets the email of this Body30.  # noqa: E501
+    def md5(self):
+        """Gets the md5 of this Body30.  # noqa: E501
 
+        MD5 sum of the media file.  # noqa: E501
 
-        :return: The email of this Body30.  # noqa: E501
+        :return: The md5 of this Body30.  # noqa: E501
         :rtype: str
         """
-        return self._email
+        return self._md5
 
-    @email.setter
-    def email(self, email):
-        """Sets the email of this Body30.
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this Body30.
 
+        MD5 sum of the media file.  # noqa: E501
 
-        :param email: The email of this Body30.  # noqa: E501
+        :param md5: The md5 of this Body30.  # noqa: E501
         :type: str
         """
+        if md5 is None:
+            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
 
-        self._email = email
+        self._md5 = md5
 
     def to_dict(self):
         """Returns the model properties as a dict"""

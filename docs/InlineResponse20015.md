@@ -3,7 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**next** | **int** |  | [optional] 
+**type** | [**RestTreeLeafTypesprojectType**](RestTreeLeafTypesprojectType.md) |  | [optional] 
+**columns** | [**list[OneOfinlineResponse20015ColumnsItems]**](Object.md) | Attribute types associated with this tree leaf type. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

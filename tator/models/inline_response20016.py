@@ -29,40 +29,68 @@ class InlineResponse20016(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'prev': 'int'
+        'type': 'RestTreeLeafTypesprojectType',
+        'columns': 'list[OneOfinlineResponse20016ColumnsItems]'
     }
 
     attribute_map = {
-        'prev': 'prev'
+        'type': 'type',
+        'columns': 'columns'
     }
 
-    def __init__(self, prev=None):  # noqa: E501
+    def __init__(self, type=None, columns=None):  # noqa: E501
         """InlineResponse20016 - a model defined in Swagger"""  # noqa: E501
-        self._prev = None
+        self._type = None
+        self._columns = None
         self.discriminator = None
-        if prev is not None:
-            self.prev = prev
+        if type is not None:
+            self.type = type
+        if columns is not None:
+            self.columns = columns
 
     @property
-    def prev(self):
-        """Gets the prev of this InlineResponse20016.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse20016.  # noqa: E501
 
 
-        :return: The prev of this InlineResponse20016.  # noqa: E501
-        :rtype: int
+        :return: The type of this InlineResponse20016.  # noqa: E501
+        :rtype: RestTreeLeafTypesprojectType
         """
-        return self._prev
+        return self._type
 
-    @prev.setter
-    def prev(self, prev):
-        """Sets the prev of this InlineResponse20016.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse20016.
 
 
-        :param prev: The prev of this InlineResponse20016.  # noqa: E501
-        :type: int
+        :param type: The type of this InlineResponse20016.  # noqa: E501
+        :type: RestTreeLeafTypesprojectType
         """
 
-        self._prev = prev
+        self._type = type
+
+    @property
+    def columns(self):
+        """Gets the columns of this InlineResponse20016.  # noqa: E501
+
+        Attribute types associated with this tree leaf type.  # noqa: E501
+
+        :return: The columns of this InlineResponse20016.  # noqa: E501
+        :rtype: list[OneOfinlineResponse20016ColumnsItems]
+        """
+        return self._columns
+
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse20016.
+
+        Attribute types associated with this tree leaf type.  # noqa: E501
+
+        :param columns: The columns of this InlineResponse20016.  # noqa: E501
+        :type: list[OneOfinlineResponse20016ColumnsItems]
+        """
+
+        self._columns = columns
 
     def to_dict(self):
         """Returns the model properties as a dict"""

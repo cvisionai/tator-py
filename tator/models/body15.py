@@ -29,48 +29,70 @@ class Body15(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'permission': 'str'
+        'name': 'str',
+        'description': 'str'
     }
 
     attribute_map = {
-        'permission': 'permission'
+        'name': 'name',
+        'description': 'description'
     }
 
-    def __init__(self, permission=None):  # noqa: E501
+    def __init__(self, name=None, description=None):  # noqa: E501
         """Body15 - a model defined in Swagger"""  # noqa: E501
-        self._permission = None
+        self._name = None
+        self._description = None
         self.discriminator = None
-        if permission is not None:
-            self.permission = permission
+        if name is not None:
+            self.name = name
+        if description is not None:
+            self.description = description
 
     @property
-    def permission(self):
-        """Gets the permission of this Body15.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body15.  # noqa: E501
 
-        User permission level for the project.  # noqa: E501
+        Name of the state type.  # noqa: E501
 
-        :return: The permission of this Body15.  # noqa: E501
+        :return: The name of this Body15.  # noqa: E501
         :rtype: str
         """
-        return self._permission
+        return self._name
 
-    @permission.setter
-    def permission(self, permission):
-        """Sets the permission of this Body15.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body15.
 
-        User permission level for the project.  # noqa: E501
+        Name of the state type.  # noqa: E501
 
-        :param permission: The permission of this Body15.  # noqa: E501
+        :param name: The name of this Body15.  # noqa: E501
         :type: str
         """
-        allowed_values = ["View Only", "Can Edit", "Can Transfer", "Can Execute", "Full Control"]  # noqa: E501
-        if permission not in allowed_values:
-            raise ValueError(
-                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
-                .format(permission, allowed_values)
-            )
 
-        self._permission = permission
+        self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this Body15.  # noqa: E501
+
+        Description of the state type.  # noqa: E501
+
+        :return: The description of this Body15.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body15.
+
+        Description of the state type.  # noqa: E501
+
+        :param description: The description of this Body15.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
 
     def to_dict(self):
         """Returns the model properties as a dict"""

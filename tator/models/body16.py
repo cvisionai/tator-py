@@ -30,28 +30,36 @@ class Body16(object):
     """
     swagger_types = {
         'name': 'str',
-        'summary': 'str'
+        'url': 'str',
+        'lookup': 'str',
+        'hours': 'int'
     }
 
     attribute_map = {
         'name': 'name',
-        'summary': 'summary'
+        'url': 'url',
+        'lookup': 'lookup',
+        'hours': 'hours'
     }
 
-    def __init__(self, name=None, summary=''):  # noqa: E501
+    def __init__(self, name=None, url=None, lookup=None, hours=24):  # noqa: E501
         """Body16 - a model defined in Swagger"""  # noqa: E501
         self._name = None
-        self._summary = None
+        self._url = None
+        self._lookup = None
+        self._hours = None
         self.discriminator = None
         self.name = name
-        if summary is not None:
-            self.summary = summary
+        self.url = url
+        self.lookup = lookup
+        if hours is not None:
+            self.hours = hours
 
     @property
     def name(self):
         """Gets the name of this Body16.  # noqa: E501
 
-        Name of the project.  # noqa: E501
+        Unique name for the temporary file  # noqa: E501
 
         :return: The name of this Body16.  # noqa: E501
         :rtype: str
@@ -62,7 +70,7 @@ class Body16(object):
     def name(self, name):
         """Sets the name of this Body16.
 
-        Name of the project.  # noqa: E501
+        Unique name for the temporary file  # noqa: E501
 
         :param name: The name of this Body16.  # noqa: E501
         :type: str
@@ -73,27 +81,77 @@ class Body16(object):
         self._name = name
 
     @property
-    def summary(self):
-        """Gets the summary of this Body16.  # noqa: E501
+    def url(self):
+        """Gets the url of this Body16.  # noqa: E501
 
-        Summary of the project.  # noqa: E501
+        URL for the temporary file  # noqa: E501
 
-        :return: The summary of this Body16.  # noqa: E501
+        :return: The url of this Body16.  # noqa: E501
         :rtype: str
         """
-        return self._summary
+        return self._url
 
-    @summary.setter
-    def summary(self, summary):
-        """Sets the summary of this Body16.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body16.
 
-        Summary of the project.  # noqa: E501
+        URL for the temporary file  # noqa: E501
 
-        :param summary: The summary of this Body16.  # noqa: E501
+        :param url: The url of this Body16.  # noqa: E501
         :type: str
         """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
-        self._summary = summary
+        self._url = url
+
+    @property
+    def lookup(self):
+        """Gets the lookup of this Body16.  # noqa: E501
+
+        md5hash of lookup parameters  # noqa: E501
+
+        :return: The lookup of this Body16.  # noqa: E501
+        :rtype: str
+        """
+        return self._lookup
+
+    @lookup.setter
+    def lookup(self, lookup):
+        """Sets the lookup of this Body16.
+
+        md5hash of lookup parameters  # noqa: E501
+
+        :param lookup: The lookup of this Body16.  # noqa: E501
+        :type: str
+        """
+        if lookup is None:
+            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
+
+        self._lookup = lookup
+
+    @property
+    def hours(self):
+        """Gets the hours of this Body16.  # noqa: E501
+
+        Number of hours file is to be kept alive  # noqa: E501
+
+        :return: The hours of this Body16.  # noqa: E501
+        :rtype: int
+        """
+        return self._hours
+
+    @hours.setter
+    def hours(self, hours):
+        """Sets the hours of this Body16.
+
+        Number of hours file is to be kept alive  # noqa: E501
+
+        :param hours: The hours of this Body16.  # noqa: E501
+        :type: int
+        """
+
+        self._hours = hours
 
     def to_dict(self):
         """Returns the model properties as a dict"""

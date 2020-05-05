@@ -29,154 +29,126 @@ class Body13(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str',
-        'file_format': 'str',
-        'uploadable': 'bool',
-        'keep_original': 'bool'
+        'media_ids': 'list[int]',
+        'localization_ids': 'list[int]',
+        'frame': 'int',
+        'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description',
-        'file_format': 'file_format',
-        'uploadable': 'uploadable',
-        'keep_original': 'keep_original'
+        'media_ids': 'media_ids',
+        'localization_ids': 'localization_ids',
+        'frame': 'frame',
+        'attributes': 'attributes'
     }
 
-    def __init__(self, name=None, description='', file_format=None, uploadable=True, keep_original=True):  # noqa: E501
+    def __init__(self, media_ids=None, localization_ids=None, frame=None, attributes=None):  # noqa: E501
         """Body13 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
-        self._file_format = None
-        self._uploadable = None
-        self._keep_original = None
+        self._media_ids = None
+        self._localization_ids = None
+        self._frame = None
+        self._attributes = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
-        if file_format is not None:
-            self.file_format = file_format
-        if uploadable is not None:
-            self.uploadable = uploadable
-        if keep_original is not None:
-            self.keep_original = keep_original
+        if media_ids is not None:
+            self.media_ids = media_ids
+        if localization_ids is not None:
+            self.localization_ids = localization_ids
+        if frame is not None:
+            self.frame = frame
+        if attributes is not None:
+            self.attributes = attributes
 
     @property
-    def name(self):
-        """Gets the name of this Body13.  # noqa: E501
+    def media_ids(self):
+        """Gets the media_ids of this Body13.  # noqa: E501
 
-        Name of the media type.  # noqa: E501
+        List of media IDs that this state applies to.  # noqa: E501
 
-        :return: The name of this Body13.  # noqa: E501
-        :rtype: str
+        :return: The media_ids of this Body13.  # noqa: E501
+        :rtype: list[int]
         """
-        return self._name
+        return self._media_ids
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body13.
+    @media_ids.setter
+    def media_ids(self, media_ids):
+        """Sets the media_ids of this Body13.
 
-        Name of the media type.  # noqa: E501
+        List of media IDs that this state applies to.  # noqa: E501
 
-        :param name: The name of this Body13.  # noqa: E501
-        :type: str
+        :param media_ids: The media_ids of this Body13.  # noqa: E501
+        :type: list[int]
         """
 
-        self._name = name
+        self._media_ids = media_ids
 
     @property
-    def description(self):
-        """Gets the description of this Body13.  # noqa: E501
+    def localization_ids(self):
+        """Gets the localization_ids of this Body13.  # noqa: E501
 
-        Description of the media type.  # noqa: E501
+        List of localization IDs that this state applies to.  # noqa: E501
 
-        :return: The description of this Body13.  # noqa: E501
-        :rtype: str
+        :return: The localization_ids of this Body13.  # noqa: E501
+        :rtype: list[int]
         """
-        return self._description
+        return self._localization_ids
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body13.
+    @localization_ids.setter
+    def localization_ids(self, localization_ids):
+        """Sets the localization_ids of this Body13.
 
-        Description of the media type.  # noqa: E501
+        List of localization IDs that this state applies to.  # noqa: E501
 
-        :param description: The description of this Body13.  # noqa: E501
-        :type: str
+        :param localization_ids: The localization_ids of this Body13.  # noqa: E501
+        :type: list[int]
         """
 
-        self._description = description
+        self._localization_ids = localization_ids
 
     @property
-    def file_format(self):
-        """Gets the file_format of this Body13.  # noqa: E501
+    def frame(self):
+        """Gets the frame of this Body13.  # noqa: E501
 
-        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
+        Frame number this state applies to.  # noqa: E501
 
-        :return: The file_format of this Body13.  # noqa: E501
-        :rtype: str
+        :return: The frame of this Body13.  # noqa: E501
+        :rtype: int
         """
-        return self._file_format
+        return self._frame
 
-    @file_format.setter
-    def file_format(self, file_format):
-        """Sets the file_format of this Body13.
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this Body13.
 
-        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
+        Frame number this state applies to.  # noqa: E501
 
-        :param file_format: The file_format of this Body13.  # noqa: E501
-        :type: str
+        :param frame: The frame of this Body13.  # noqa: E501
+        :type: int
         """
 
-        self._file_format = file_format
+        self._frame = frame
 
     @property
-    def uploadable(self):
-        """Gets the uploadable of this Body13.  # noqa: E501
+    def attributes(self):
+        """Gets the attributes of this Body13.  # noqa: E501
 
-        Whether this media can be uploaded.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :return: The uploadable of this Body13.  # noqa: E501
-        :rtype: bool
+        :return: The attributes of this Body13.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._uploadable
+        return self._attributes
 
-    @uploadable.setter
-    def uploadable(self, uploadable):
-        """Sets the uploadable of this Body13.
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this Body13.
 
-        Whether this media can be uploaded.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :param uploadable: The uploadable of this Body13.  # noqa: E501
-        :type: bool
-        """
-
-        self._uploadable = uploadable
-
-    @property
-    def keep_original(self):
-        """Gets the keep_original of this Body13.  # noqa: E501
-
-        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
-
-        :return: The keep_original of this Body13.  # noqa: E501
-        :rtype: bool
-        """
-        return self._keep_original
-
-    @keep_original.setter
-    def keep_original(self, keep_original):
-        """Sets the keep_original of this Body13.
-
-        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
-
-        :param keep_original: The keep_original of this Body13.  # noqa: E501
-        :type: bool
+        :param attributes: The attributes of this Body13.  # noqa: E501
+        :type: dict(str, object)
         """
 
-        self._keep_original = keep_original
+        self._attributes = attributes
 
     def to_dict(self):
         """Returns the model properties as a dict"""

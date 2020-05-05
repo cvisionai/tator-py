@@ -29,25 +29,30 @@ class InlineResponse2012(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'message': 'str',
+        'id': 'int'
     }
 
     attribute_map = {
-        'message': 'message'
+        'message': 'message',
+        'id': 'id'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, message=None, id=None):  # noqa: E501
         """InlineResponse2012 - a model defined in Swagger"""  # noqa: E501
         self._message = None
+        self._id = None
         self.discriminator = None
         if message is not None:
             self.message = message
+        if id is not None:
+            self.id = id
 
     @property
     def message(self):
         """Gets the message of this InlineResponse2012.  # noqa: E501
 
-        Message indicating successful creation of localization(s).  # noqa: E501
+        Message indicating successful creation of project.  # noqa: E501
 
         :return: The message of this InlineResponse2012.  # noqa: E501
         :rtype: str
@@ -58,13 +63,36 @@ class InlineResponse2012(object):
     def message(self, message):
         """Sets the message of this InlineResponse2012.
 
-        Message indicating successful creation of localization(s).  # noqa: E501
+        Message indicating successful creation of project.  # noqa: E501
 
         :param message: The message of this InlineResponse2012.  # noqa: E501
         :type: str
         """
 
         self._message = message
+
+    @property
+    def id(self):
+        """Gets the id of this InlineResponse2012.  # noqa: E501
+
+        ID of created project.  # noqa: E501
+
+        :return: The id of this InlineResponse2012.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse2012.
+
+        ID of created project.  # noqa: E501
+
+        :param id: The id of this InlineResponse2012.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

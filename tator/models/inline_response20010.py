@@ -29,7 +29,7 @@ class InlineResponse20010(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestLocalizationTypesprojectType',
+        'type': 'RestStateTypesprojectType',
         'columns': 'list[OneOfinlineResponse20010ColumnsItems]'
     }
 
@@ -54,7 +54,7 @@ class InlineResponse20010(object):
 
 
         :return: The type of this InlineResponse20010.  # noqa: E501
-        :rtype: RestLocalizationTypesprojectType
+        :rtype: RestStateTypesprojectType
         """
         return self._type
 
@@ -64,7 +64,7 @@ class InlineResponse20010(object):
 
 
         :param type: The type of this InlineResponse20010.  # noqa: E501
-        :type: RestLocalizationTypesprojectType
+        :type: RestStateTypesprojectType
         """
 
         self._type = type
@@ -73,7 +73,7 @@ class InlineResponse20010(object):
     def columns(self):
         """Gets the columns of this InlineResponse20010.  # noqa: E501
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Attribute types associated with this state type.  # noqa: E501
 
         :return: The columns of this InlineResponse20010.  # noqa: E501
         :rtype: list[OneOfinlineResponse20010ColumnsItems]
@@ -84,7 +84,7 @@ class InlineResponse20010(object):
     def columns(self, columns):
         """Sets the columns of this InlineResponse20010.
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Attribute types associated with this state type.  # noqa: E501
 
         :param columns: The columns of this InlineResponse20010.  # noqa: E501
         :type: list[OneOfinlineResponse20010ColumnsItems]

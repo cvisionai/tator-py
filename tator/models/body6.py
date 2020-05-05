@@ -29,43 +29,154 @@ class Body6(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)'
+        'name': 'str',
+        'description': 'str',
+        'file_format': 'str',
+        'uploadable': 'bool',
+        'keep_original': 'bool'
     }
 
     attribute_map = {
-        'attributes': 'attributes'
+        'name': 'name',
+        'description': 'description',
+        'file_format': 'file_format',
+        'uploadable': 'uploadable',
+        'keep_original': 'keep_original'
     }
 
-    def __init__(self, attributes=None):  # noqa: E501
+    def __init__(self, name=None, description='', file_format=None, uploadable=True, keep_original=True):  # noqa: E501
         """Body6 - a model defined in Swagger"""  # noqa: E501
-        self._attributes = None
+        self._name = None
+        self._description = None
+        self._file_format = None
+        self._uploadable = None
+        self._keep_original = None
         self.discriminator = None
-        self.attributes = attributes
+        if name is not None:
+            self.name = name
+        if description is not None:
+            self.description = description
+        if file_format is not None:
+            self.file_format = file_format
+        if uploadable is not None:
+            self.uploadable = uploadable
+        if keep_original is not None:
+            self.keep_original = keep_original
 
     @property
-    def attributes(self):
-        """Gets the attributes of this Body6.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body6.  # noqa: E501
 
-        Attribute values to bulk update.  # noqa: E501
+        Name of the media type.  # noqa: E501
 
-        :return: The attributes of this Body6.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The name of this Body6.  # noqa: E501
+        :rtype: str
         """
-        return self._attributes
+        return self._name
 
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body6.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body6.
 
-        Attribute values to bulk update.  # noqa: E501
+        Name of the media type.  # noqa: E501
 
-        :param attributes: The attributes of this Body6.  # noqa: E501
-        :type: dict(str, object)
+        :param name: The name of this Body6.  # noqa: E501
+        :type: str
         """
-        if attributes is None:
-            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
 
-        self._attributes = attributes
+        self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this Body6.  # noqa: E501
+
+        Description of the media type.  # noqa: E501
+
+        :return: The description of this Body6.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body6.
+
+        Description of the media type.  # noqa: E501
+
+        :param description: The description of this Body6.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
+
+    @property
+    def file_format(self):
+        """Gets the file_format of this Body6.  # noqa: E501
+
+        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
+
+        :return: The file_format of this Body6.  # noqa: E501
+        :rtype: str
+        """
+        return self._file_format
+
+    @file_format.setter
+    def file_format(self, file_format):
+        """Sets the file_format of this Body6.
+
+        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
+
+        :param file_format: The file_format of this Body6.  # noqa: E501
+        :type: str
+        """
+
+        self._file_format = file_format
+
+    @property
+    def uploadable(self):
+        """Gets the uploadable of this Body6.  # noqa: E501
+
+        Whether this media can be uploaded.  # noqa: E501
+
+        :return: The uploadable of this Body6.  # noqa: E501
+        :rtype: bool
+        """
+        return self._uploadable
+
+    @uploadable.setter
+    def uploadable(self, uploadable):
+        """Sets the uploadable of this Body6.
+
+        Whether this media can be uploaded.  # noqa: E501
+
+        :param uploadable: The uploadable of this Body6.  # noqa: E501
+        :type: bool
+        """
+
+        self._uploadable = uploadable
+
+    @property
+    def keep_original(self):
+        """Gets the keep_original of this Body6.  # noqa: E501
+
+        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
+
+        :return: The keep_original of this Body6.  # noqa: E501
+        :rtype: bool
+        """
+        return self._keep_original
+
+    @keep_original.setter
+    def keep_original(self, keep_original):
+        """Sets the keep_original of this Body6.
+
+        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
+
+        :param keep_original: The keep_original of this Body6.  # noqa: E501
+        :type: bool
+        """
+
+        self._keep_original = keep_original
 
     def to_dict(self):
         """Returns the model properties as a dict"""

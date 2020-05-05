@@ -29,129 +29,120 @@ class Body23(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'url': 'str',
-        'lookup': 'str',
-        'hours': 'int'
+        'username': 'str',
+        'first_name': 'str',
+        'last_name': 'str',
+        'email': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'url': 'url',
-        'lookup': 'lookup',
-        'hours': 'hours'
+        'username': 'username',
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'email': 'email'
     }
 
-    def __init__(self, name=None, url=None, lookup=None, hours=24):  # noqa: E501
+    def __init__(self, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
         """Body23 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._url = None
-        self._lookup = None
-        self._hours = None
+        self._username = None
+        self._first_name = None
+        self._last_name = None
+        self._email = None
         self.discriminator = None
-        self.name = name
-        self.url = url
-        self.lookup = lookup
-        if hours is not None:
-            self.hours = hours
+        if username is not None:
+            self.username = username
+        if first_name is not None:
+            self.first_name = first_name
+        if last_name is not None:
+            self.last_name = last_name
+        if email is not None:
+            self.email = email
 
     @property
-    def name(self):
-        """Gets the name of this Body23.  # noqa: E501
+    def username(self):
+        """Gets the username of this Body23.  # noqa: E501
 
-        Unique name for the temporary file  # noqa: E501
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
 
-        :return: The name of this Body23.  # noqa: E501
+        :return: The username of this Body23.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._username
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body23.
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Body23.
 
-        Unique name for the temporary file  # noqa: E501
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
 
-        :param name: The name of this Body23.  # noqa: E501
+        :param username: The username of this Body23.  # noqa: E501
         :type: str
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        self._username = username
 
     @property
-    def url(self):
-        """Gets the url of this Body23.  # noqa: E501
+    def first_name(self):
+        """Gets the first_name of this Body23.  # noqa: E501
 
-        URL for the temporary file  # noqa: E501
 
-        :return: The url of this Body23.  # noqa: E501
+        :return: The first_name of this Body23.  # noqa: E501
         :rtype: str
         """
-        return self._url
+        return self._first_name
 
-    @url.setter
-    def url(self, url):
-        """Sets the url of this Body23.
+    @first_name.setter
+    def first_name(self, first_name):
+        """Sets the first_name of this Body23.
 
-        URL for the temporary file  # noqa: E501
 
-        :param url: The url of this Body23.  # noqa: E501
+        :param first_name: The first_name of this Body23.  # noqa: E501
         :type: str
         """
-        if url is None:
-            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
-        self._url = url
+        self._first_name = first_name
 
     @property
-    def lookup(self):
-        """Gets the lookup of this Body23.  # noqa: E501
+    def last_name(self):
+        """Gets the last_name of this Body23.  # noqa: E501
 
-        md5hash of lookup parameters  # noqa: E501
 
-        :return: The lookup of this Body23.  # noqa: E501
+        :return: The last_name of this Body23.  # noqa: E501
         :rtype: str
         """
-        return self._lookup
+        return self._last_name
 
-    @lookup.setter
-    def lookup(self, lookup):
-        """Sets the lookup of this Body23.
+    @last_name.setter
+    def last_name(self, last_name):
+        """Sets the last_name of this Body23.
 
-        md5hash of lookup parameters  # noqa: E501
 
-        :param lookup: The lookup of this Body23.  # noqa: E501
+        :param last_name: The last_name of this Body23.  # noqa: E501
         :type: str
         """
-        if lookup is None:
-            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
 
-        self._lookup = lookup
+        self._last_name = last_name
 
     @property
-    def hours(self):
-        """Gets the hours of this Body23.  # noqa: E501
+    def email(self):
+        """Gets the email of this Body23.  # noqa: E501
 
-        Number of hours file is to be kept alive  # noqa: E501
 
-        :return: The hours of this Body23.  # noqa: E501
-        :rtype: int
+        :return: The email of this Body23.  # noqa: E501
+        :rtype: str
         """
-        return self._hours
+        return self._email
 
-    @hours.setter
-    def hours(self, hours):
-        """Sets the hours of this Body23.
+    @email.setter
+    def email(self, email):
+        """Sets the email of this Body23.
 
-        Number of hours file is to be kept alive  # noqa: E501
 
-        :param hours: The hours of this Body23.  # noqa: E501
-        :type: int
+        :param email: The email of this Body23.  # noqa: E501
+        :type: str
         """
 
-        self._hours = hours
+        self._email = email
 
     def to_dict(self):
         """Returns the model properties as a dict"""

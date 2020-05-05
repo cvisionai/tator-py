@@ -29,24 +29,53 @@ class Body19(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'name': 'str',
         'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
+        'name': 'name',
         'attributes': 'attributes'
     }
 
-    def __init__(self, attributes=None):  # noqa: E501
+    def __init__(self, name=None, attributes=None):  # noqa: E501
         """Body19 - a model defined in Swagger"""  # noqa: E501
+        self._name = None
         self._attributes = None
         self.discriminator = None
-        self.attributes = attributes
+        if name is not None:
+            self.name = name
+        if attributes is not None:
+            self.attributes = attributes
+
+    @property
+    def name(self):
+        """Gets the name of this Body19.  # noqa: E501
+
+        Name of the tree leaf.  # noqa: E501
+
+        :return: The name of this Body19.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body19.
+
+        Name of the tree leaf.  # noqa: E501
+
+        :param name: The name of this Body19.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     @property
     def attributes(self):
         """Gets the attributes of this Body19.  # noqa: E501
 
-        Attribute values to bulk update.  # noqa: E501
+        Attribute values to update.  # noqa: E501
 
         :return: The attributes of this Body19.  # noqa: E501
         :rtype: dict(str, object)
@@ -57,13 +86,11 @@ class Body19(object):
     def attributes(self, attributes):
         """Sets the attributes of this Body19.
 
-        Attribute values to bulk update.  # noqa: E501
+        Attribute values to update.  # noqa: E501
 
         :param attributes: The attributes of this Body19.  # noqa: E501
         :type: dict(str, object)
         """
-        if attributes is None:
-            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
 
         self._attributes = attributes
 

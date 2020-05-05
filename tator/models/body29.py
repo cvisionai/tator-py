@@ -29,120 +29,341 @@ class Body29(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'username': 'str',
-        'first_name': 'str',
-        'last_name': 'str',
-        'email': 'str'
+        'job_type': 'str',
+        'gid': 'str',
+        'uid': 'str',
+        'swid': 'str',
+        'state': 'str',
+        'message': 'str',
+        'progress': 'float',
+        'section': 'str',
+        'sections': 'str',
+        'media_ids': 'str',
+        'name': 'str'
     }
 
     attribute_map = {
-        'username': 'username',
-        'first_name': 'first_name',
-        'last_name': 'last_name',
-        'email': 'email'
+        'job_type': 'job_type',
+        'gid': 'gid',
+        'uid': 'uid',
+        'swid': 'swid',
+        'state': 'state',
+        'message': 'message',
+        'progress': 'progress',
+        'section': 'section',
+        'sections': 'sections',
+        'media_ids': 'media_ids',
+        'name': 'name'
     }
 
-    def __init__(self, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
+    def __init__(self, job_type=None, gid=None, uid=None, swid=None, state=None, message=None, progress=None, section=None, sections=None, media_ids=None, name=None):  # noqa: E501
         """Body29 - a model defined in Swagger"""  # noqa: E501
-        self._username = None
-        self._first_name = None
-        self._last_name = None
-        self._email = None
+        self._job_type = None
+        self._gid = None
+        self._uid = None
+        self._swid = None
+        self._state = None
+        self._message = None
+        self._progress = None
+        self._section = None
+        self._sections = None
+        self._media_ids = None
+        self._name = None
         self.discriminator = None
-        if username is not None:
-            self.username = username
-        if first_name is not None:
-            self.first_name = first_name
-        if last_name is not None:
-            self.last_name = last_name
-        if email is not None:
-            self.email = email
+        self.job_type = job_type
+        self.gid = gid
+        self.uid = uid
+        if swid is not None:
+            self.swid = swid
+        self.state = state
+        self.message = message
+        self.progress = progress
+        if section is not None:
+            self.section = section
+        if sections is not None:
+            self.sections = sections
+        if media_ids is not None:
+            self.media_ids = media_ids
+        self.name = name
 
     @property
-    def username(self):
-        """Gets the username of this Body29.  # noqa: E501
+    def job_type(self):
+        """Gets the job_type of this Body29.  # noqa: E501
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Type of background job.  # noqa: E501
 
-        :return: The username of this Body29.  # noqa: E501
+        :return: The job_type of this Body29.  # noqa: E501
         :rtype: str
         """
-        return self._username
+        return self._job_type
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this Body29.
+    @job_type.setter
+    def job_type(self, job_type):
+        """Sets the job_type of this Body29.
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Type of background job.  # noqa: E501
 
-        :param username: The username of this Body29.  # noqa: E501
+        :param job_type: The job_type of this Body29.  # noqa: E501
+        :type: str
+        """
+        if job_type is None:
+            raise ValueError("Invalid value for `job_type`, must not be `None`")  # noqa: E501
+        allowed_values = ["upload", "download", "algorithm"]  # noqa: E501
+        if job_type not in allowed_values:
+            raise ValueError(
+                "Invalid value for `job_type` ({0}), must be one of {1}"  # noqa: E501
+                .format(job_type, allowed_values)
+            )
+
+        self._job_type = job_type
+
+    @property
+    def gid(self):
+        """Gets the gid of this Body29.  # noqa: E501
+
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The gid of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._gid
+
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this Body29.
+
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param gid: The gid of this Body29.  # noqa: E501
+        :type: str
+        """
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
+
+        self._gid = gid
+
+    @property
+    def uid(self):
+        """Gets the uid of this Body29.  # noqa: E501
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The uid of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this Body29.
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param uid: The uid of this Body29.  # noqa: E501
+        :type: str
+        """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
+
+        self._uid = uid
+
+    @property
+    def swid(self):
+        """Gets the swid of this Body29.  # noqa: E501
+
+        UUID generated for the service worker that is doing an upload. This field is required if the `job_type` is `upload`.  # noqa: E501
+
+        :return: The swid of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._swid
+
+    @swid.setter
+    def swid(self, swid):
+        """Sets the swid of this Body29.
+
+        UUID generated for the service worker that is doing an upload. This field is required if the `job_type` is `upload`.  # noqa: E501
+
+        :param swid: The swid of this Body29.  # noqa: E501
         :type: str
         """
 
-        self._username = username
+        self._swid = swid
 
     @property
-    def first_name(self):
-        """Gets the first_name of this Body29.  # noqa: E501
+    def state(self):
+        """Gets the state of this Body29.  # noqa: E501
 
+        State of the job.  # noqa: E501
 
-        :return: The first_name of this Body29.  # noqa: E501
+        :return: The state of this Body29.  # noqa: E501
         :rtype: str
         """
-        return self._first_name
+        return self._state
 
-    @first_name.setter
-    def first_name(self, first_name):
-        """Sets the first_name of this Body29.
+    @state.setter
+    def state(self, state):
+        """Sets the state of this Body29.
 
+        State of the job.  # noqa: E501
 
-        :param first_name: The first_name of this Body29.  # noqa: E501
+        :param state: The state of this Body29.  # noqa: E501
+        :type: str
+        """
+        if state is None:
+            raise ValueError("Invalid value for `state`, must not be `None`")  # noqa: E501
+        allowed_values = ["queued", "started", "failed", "finished"]  # noqa: E501
+        if state not in allowed_values:
+            raise ValueError(
+                "Invalid value for `state` ({0}), must be one of {1}"  # noqa: E501
+                .format(state, allowed_values)
+            )
+
+        self._state = state
+
+    @property
+    def message(self):
+        """Gets the message of this Body29.  # noqa: E501
+
+        Progress message. This should be short to fit in the UI.  # noqa: E501
+
+        :return: The message of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._message
+
+    @message.setter
+    def message(self, message):
+        """Sets the message of this Body29.
+
+        Progress message. This should be short to fit in the UI.  # noqa: E501
+
+        :param message: The message of this Body29.  # noqa: E501
+        :type: str
+        """
+        if message is None:
+            raise ValueError("Invalid value for `message`, must not be `None`")  # noqa: E501
+
+        self._message = message
+
+    @property
+    def progress(self):
+        """Gets the progress of this Body29.  # noqa: E501
+
+        Progress percent completion. This is used to display the progress bar associated with the job.  # noqa: E501
+
+        :return: The progress of this Body29.  # noqa: E501
+        :rtype: float
+        """
+        return self._progress
+
+    @progress.setter
+    def progress(self, progress):
+        """Sets the progress of this Body29.
+
+        Progress percent completion. This is used to display the progress bar associated with the job.  # noqa: E501
+
+        :param progress: The progress of this Body29.  # noqa: E501
+        :type: float
+        """
+        if progress is None:
+            raise ValueError("Invalid value for `progress`, must not be `None`")  # noqa: E501
+
+        self._progress = progress
+
+    @property
+    def section(self):
+        """Gets the section of this Body29.  # noqa: E501
+
+        Media section name. Required only for `job_type` of `upload`.  # noqa: E501
+
+        :return: The section of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._section
+
+    @section.setter
+    def section(self, section):
+        """Sets the section of this Body29.
+
+        Media section name. Required only for `job_type` of `upload`.  # noqa: E501
+
+        :param section: The section of this Body29.  # noqa: E501
         :type: str
         """
 
-        self._first_name = first_name
+        self._section = section
 
     @property
-    def last_name(self):
-        """Gets the last_name of this Body29.  # noqa: E501
+    def sections(self):
+        """Gets the sections of this Body29.  # noqa: E501
 
+        Comma separated string of media sections, one for each media ID that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
-        :return: The last_name of this Body29.  # noqa: E501
+        :return: The sections of this Body29.  # noqa: E501
         :rtype: str
         """
-        return self._last_name
+        return self._sections
 
-    @last_name.setter
-    def last_name(self, last_name):
-        """Sets the last_name of this Body29.
+    @sections.setter
+    def sections(self, sections):
+        """Sets the sections of this Body29.
 
+        Comma separated string of media sections, one for each media ID that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
-        :param last_name: The last_name of this Body29.  # noqa: E501
+        :param sections: The sections of this Body29.  # noqa: E501
         :type: str
         """
 
-        self._last_name = last_name
+        self._sections = sections
 
     @property
-    def email(self):
-        """Gets the email of this Body29.  # noqa: E501
+    def media_ids(self):
+        """Gets the media_ids of this Body29.  # noqa: E501
 
+        Comma separated string of media ids, one for each media that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
-        :return: The email of this Body29.  # noqa: E501
+        :return: The media_ids of this Body29.  # noqa: E501
         :rtype: str
         """
-        return self._email
+        return self._media_ids
 
-    @email.setter
-    def email(self, email):
-        """Sets the email of this Body29.
+    @media_ids.setter
+    def media_ids(self, media_ids):
+        """Sets the media_ids of this Body29.
 
+        Comma separated string of media ids, one for each media that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
-        :param email: The email of this Body29.  # noqa: E501
+        :param media_ids: The media_ids of this Body29.  # noqa: E501
         :type: str
         """
 
-        self._email = email
+        self._media_ids = media_ids
+
+    @property
+    def name(self):
+        """Gets the name of this Body29.  # noqa: E501
+
+        Name of the job.  # noqa: E501
+
+        :return: The name of this Body29.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body29.
+
+        Name of the job.  # noqa: E501
+
+        :param name: The name of this Body29.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

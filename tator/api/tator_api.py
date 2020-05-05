@@ -43,8 +43,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body35 body:
-        :return: InlineResponse20110
+        :param AlgorithmLaunchSpec body:
+        :return: AlgorithmLaunchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -66,8 +66,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body35 body:
-        :return: InlineResponse20110
+        :param AlgorithmLaunchSpec body:
+        :return: AlgorithmLaunchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -127,7 +127,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20110',  # noqa: E501
+            response_type='AlgorithmLaunchResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -146,8 +146,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body body:
-        :return: InlineResponse201
+        :param AnalysisSpec body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -169,8 +169,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body body:
-        :return: InlineResponse201
+        :param AnalysisSpec body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -230,7 +230,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse201',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -249,8 +249,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body1 body:
-        :return: InlineResponse2011
+        :param AttributeTypeSpec body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -272,8 +272,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body1 body:
-        :return: InlineResponse2011
+        :param AttributeTypeSpec body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -333,7 +333,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2011',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -352,8 +352,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body5 body:
-        :return: InlineResponse2012
+        :param LocalizationSpec body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -375,8 +375,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body5 body:
-        :return: InlineResponse2012
+        :param LocalizationSpec body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -436,7 +436,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2012',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -455,8 +455,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body8 body:
-        :return: InlineResponse2011
+        :param Body1 body:
+        :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -478,8 +478,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body8 body:
-        :return: InlineResponse2011
+        :param Body1 body:
+        :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -539,7 +539,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2011',  # noqa: E501
+            response_type='InlineResponse201',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -558,8 +558,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body12 body:
-        :return: InlineResponse2011
+        :param Body5 body:
+        :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -581,8 +581,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body12 body:
-        :return: InlineResponse2011
+        :param Body5 body:
+        :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -642,7 +642,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2011',  # noqa: E501
+            response_type='InlineResponse201',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -661,8 +661,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body14 body:
-        :return: InlineResponse2013
+        :param Body7 body:
+        :return: InlineResponse2011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -684,8 +684,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body14 body:
-        :return: InlineResponse2013
+        :param Body7 body:
+        :return: InlineResponse2011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -745,7 +745,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2013',  # noqa: E501
+            response_type='InlineResponse2011',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -762,8 +762,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body34 body:
-        :return: InlineResponse20042
+        :param Body27 body:
+        :return: InlineResponse20020
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -783,8 +783,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body34 body:
-        :return: InlineResponse20042
+        :param Body27 body:
+        :return: InlineResponse20020
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -838,7 +838,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20042',  # noqa: E501
+            response_type='InlineResponse20020',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -856,8 +856,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body16 body:
-        :return: InlineResponse2014
+        :param Body9 body:
+        :return: InlineResponse2012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -878,8 +878,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body16 body:
-        :return: InlineResponse2014
+        :param Body9 body:
+        :return: InlineResponse2012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -933,7 +933,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2014',  # noqa: E501
+            response_type='InlineResponse2012',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -953,7 +953,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param dict(str, object) body:
-        :return: InlineResponse2015
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -976,7 +976,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param dict(str, object) body:
-        :return: InlineResponse2015
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1036,7 +1036,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2015',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1055,8 +1055,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body21 body:
-        :return: InlineResponse2016
+        :param Body14 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1078,8 +1078,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body21 body:
-        :return: InlineResponse2016
+        :param Body14 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1139,7 +1139,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2016',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1158,8 +1158,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body23 body:
-        :return: InlineResponse20030
+        :param Body16 body:
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1181,8 +1181,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body23 body:
-        :return: InlineResponse20030
+        :param Body16 body:
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1242,7 +1242,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20030',  # noqa: E501
+            response_type='InlineResponse20012',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1262,7 +1262,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param dict(str, object) body:
-        :return: InlineResponse2017
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1285,7 +1285,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param dict(str, object) body:
-        :return: InlineResponse2017
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1345,7 +1345,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2017',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1364,8 +1364,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body27 body:
-        :return: InlineResponse2018
+        :param Body20 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1387,8 +1387,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body27 body:
-        :return: InlineResponse2018
+        :param Body20 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1448,7 +1448,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2018',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1467,8 +1467,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body32 body:
-        :return: InlineResponse2019
+        :param Body25 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1490,8 +1490,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body32 body:
-        :return: InlineResponse2019
+        :param Body25 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1551,7 +1551,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2019',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1760,7 +1760,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str run_uid: A uuid1 string identifying to single Job. (required)
-        :return: InlineResponse2044
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1782,7 +1782,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str run_uid: A uuid1 string identifying to single Job. (required)
-        :return: InlineResponse2044
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1836,7 +1836,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2044',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1855,7 +1855,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str group_id: A uuid1 string identifying a group of jobs. (required)
-        :return: InlineResponse2045
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1877,7 +1877,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str group_id: A uuid1 string identifying a group of jobs. (required)
-        :return: InlineResponse2045
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1931,7 +1931,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2045',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -2158,7 +2158,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse204
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2198,7 +2198,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse204
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2289,7 +2289,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse204',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -2515,7 +2515,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2041
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2554,7 +2554,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2041
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -2643,7 +2643,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2041',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -3060,7 +3060,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2042
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -3100,7 +3100,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2042
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -3191,7 +3191,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2042',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -3600,7 +3600,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2043
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -3636,7 +3636,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2043
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -3718,7 +3718,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2043',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -3927,7 +3927,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse200]
+        :return: AlgorithmList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -3949,7 +3949,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse200]
+        :return: AlgorithmList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4003,7 +4003,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse200]',  # noqa: E501
+            response_type='AlgorithmList',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4022,7 +4022,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2001]
+        :return: AnalysisList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4044,7 +4044,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2001]
+        :return: AnalysisList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4098,7 +4098,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2001]',  # noqa: E501
+            response_type='AnalysisList',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4117,7 +4117,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an attribute type. (required)
-        :return: Body1
+        :return: AttributeType
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4139,7 +4139,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an attribute type. (required)
-        :return: Body1
+        :return: AttributeType
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4193,7 +4193,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='Body1',  # noqa: E501
+            response_type='AttributeType',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4213,7 +4213,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int applies_to: Unique integer identifying the entity type that this attribute describes.
-        :return: list[Object]
+        :return: AttributeTypeList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4236,7 +4236,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int applies_to: Unique integer identifying the entity type that this attribute describes.
-        :return: list[Object]
+        :return: AttributeTypeList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4292,7 +4292,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[Object]',  # noqa: E501
+            response_type='AttributeTypeList',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4419,7 +4419,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an entity type. (required)
-        :return: InlineResponse2003
+        :return: EntityTypeSchema
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4441,7 +4441,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an entity type. (required)
-        :return: InlineResponse2003
+        :return: EntityTypeSchema
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4495,7 +4495,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2003',  # noqa: E501
+            response_type='EntityTypeSchema',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4725,7 +4725,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization. (required)
-        :return: InlineResponse2007
+        :return: Localization
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4747,7 +4747,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization. (required)
-        :return: InlineResponse2007
+        :return: Localization
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4801,7 +4801,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2007',  # noqa: E501
+            response_type='Localization',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4820,7 +4820,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: dict(str, object)
+        :return: LocalizationAssociation
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4842,7 +4842,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: dict(str, object)
+        :return: LocalizationAssociation
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4896,7 +4896,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, object)',  # noqa: E501
+            response_type='LocalizationAssociation',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -4933,7 +4933,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[Object]
+        :return: LocalizationList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4973,7 +4973,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[Object]
+        :return: LocalizationList
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5064,7 +5064,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[Object]',  # noqa: E501
+            response_type='LocalizationList',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5083,7 +5083,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :return: InlineResponse20010
+        :return: InlineResponse2001
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5105,7 +5105,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :return: InlineResponse20010
+        :return: InlineResponse2001
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5159,7 +5159,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20010',  # noqa: E501
+            response_type='InlineResponse2001',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5180,7 +5180,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse2009]
+        :return: list[InlineResponse200]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5204,7 +5204,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse2009]
+        :return: list[InlineResponse200]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5263,7 +5263,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2009]',  # noqa: E501
+            response_type='list[InlineResponse200]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5282,7 +5282,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :return: InlineResponse20012
+        :return: InlineResponse2002
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5304,7 +5304,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :return: InlineResponse20012
+        :return: InlineResponse2002
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5358,7 +5358,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20012',  # noqa: E501
+            response_type='InlineResponse2002',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5394,7 +5394,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20012]
+        :return: list[InlineResponse2002]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5433,7 +5433,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20012]
+        :return: list[InlineResponse2002]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5522,7 +5522,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20012]',  # noqa: E501
+            response_type='list[InlineResponse2002]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5558,7 +5558,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20015
+        :return: InlineResponse2003
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5597,7 +5597,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20015
+        :return: InlineResponse2003
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5686,7 +5686,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20015',  # noqa: E501
+            response_type='InlineResponse2003',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5722,7 +5722,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20016
+        :return: InlineResponse2004
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5761,7 +5761,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20016
+        :return: InlineResponse2004
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5850,7 +5850,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20016',  # noqa: E501
+            response_type='InlineResponse2004',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6033,7 +6033,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :return: InlineResponse20018
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6055,7 +6055,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :return: InlineResponse20018
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6109,7 +6109,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20018',  # noqa: E501
+            response_type='InlineResponse2006',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6128,7 +6128,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20017]
+        :return: list[InlineResponse2005]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6150,7 +6150,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20017]
+        :return: list[InlineResponse2005]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6204,7 +6204,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20017]',  # noqa: E501
+            response_type='list[InlineResponse2005]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6223,7 +6223,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :return: InlineResponse20020
+        :return: InlineResponse2007
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6245,7 +6245,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :return: InlineResponse20020
+        :return: InlineResponse2007
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6299,7 +6299,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20020',  # noqa: E501
+            response_type='InlineResponse2007',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6318,7 +6318,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20020]
+        :return: list[InlineResponse2007]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6340,7 +6340,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20020]
+        :return: list[InlineResponse2007]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6394,7 +6394,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20020]',  # noqa: E501
+            response_type='list[InlineResponse2007]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6413,7 +6413,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :return: InlineResponse20022
+        :return: InlineResponse2008
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6435,7 +6435,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :return: InlineResponse20022
+        :return: InlineResponse2008
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6489,7 +6489,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20022',  # noqa: E501
+            response_type='InlineResponse2008',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6507,7 +6507,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[InlineResponse20022]
+        :return: list[InlineResponse2008]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6528,7 +6528,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[InlineResponse20022]
+        :return: list[InlineResponse2008]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6576,7 +6576,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20022]',  # noqa: E501
+            response_type='list[InlineResponse2008]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6856,7 +6856,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20024]
+        :return: list[InlineResponse2009]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6896,7 +6896,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20024]
+        :return: list[InlineResponse2009]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6987,7 +6987,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20024]',  # noqa: E501
+            response_type='list[InlineResponse2009]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7006,7 +7006,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :return: InlineResponse20028
+        :return: InlineResponse20011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7028,7 +7028,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :return: InlineResponse20028
+        :return: InlineResponse20011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7082,7 +7082,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20028',  # noqa: E501
+            response_type='InlineResponse20011',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7103,7 +7103,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse20027]
+        :return: list[InlineResponse20010]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7127,7 +7127,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse20027]
+        :return: list[InlineResponse20010]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7186,7 +7186,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20027]',  # noqa: E501
+            response_type='list[InlineResponse20010]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7205,7 +7205,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str id: A unique integer value identifying this temporary file. (required)
-        :return: InlineResponse20030
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7227,7 +7227,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str id: A unique integer value identifying this temporary file. (required)
-        :return: InlineResponse20030
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7281,7 +7281,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20030',  # noqa: E501
+            response_type='InlineResponse20012',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7301,7 +7301,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int expired: If greater than 0 will return only expired files
-        :return: InlineResponse20030
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7324,7 +7324,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int expired: If greater than 0 will return only expired files
-        :return: InlineResponse20030
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7380,7 +7380,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20030',  # noqa: E501
+            response_type='InlineResponse20012',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7399,7 +7399,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :return: InlineResponse20032
+        :return: InlineResponse20014
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7421,7 +7421,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :return: InlineResponse20032
+        :return: InlineResponse20014
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7475,7 +7475,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20032',  # noqa: E501
+            response_type='InlineResponse20014',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7508,7 +7508,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20032]
+        :return: list[InlineResponse20014]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7544,7 +7544,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20032]
+        :return: list[InlineResponse20014]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7626,7 +7626,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20032]',  # noqa: E501
+            response_type='list[InlineResponse20014]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7645,7 +7645,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :return: InlineResponse20036
+        :return: InlineResponse20016
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7667,7 +7667,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :return: InlineResponse20036
+        :return: InlineResponse20016
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7721,7 +7721,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20036',  # noqa: E501
+            response_type='InlineResponse20016',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7740,7 +7740,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20035]
+        :return: list[InlineResponse20015]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7762,7 +7762,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20035]
+        :return: list[InlineResponse20015]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7816,7 +7816,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20035]',  # noqa: E501
+            response_type='list[InlineResponse20015]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7835,7 +7835,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7857,7 +7857,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7911,7 +7911,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20038',  # noqa: E501
+            response_type='InlineResponse20017',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7930,7 +7930,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :return: InlineResponse20040
+        :return: InlineResponse20019
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7952,7 +7952,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :return: InlineResponse20040
+        :return: InlineResponse20019
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8006,7 +8006,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20040',  # noqa: E501
+            response_type='InlineResponse20019',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8024,7 +8024,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body36 body:
+        :param Body28 body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8046,7 +8046,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body36 body:
+        :param Body28 body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8223,8 +8223,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Body37] body:
-        :return: InlineResponse20043
+        :param list[Body29] body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8246,8 +8246,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Body37] body:
-        :return: InlineResponse20043
+        :param list[Body29] body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8307,7 +8307,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20043',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8434,7 +8434,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int media_id: Unique integer identifying a media.
-        :return: list[InlineResponse20040]
+        :return: list[InlineResponse20019]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8457,7 +8457,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int media_id: Unique integer identifying a media.
-        :return: list[InlineResponse20040]
+        :return: list[InlineResponse20019]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8513,7 +8513,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20040]',  # noqa: E501
+            response_type='list[InlineResponse20019]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8532,8 +8532,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body38 body:
-        :return: InlineResponse20111
+        :param Body30 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8555,8 +8555,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body38 body:
-        :return: InlineResponse20111
+        :param Body30 body:
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8616,7 +8616,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20111',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8636,7 +8636,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param VideoSpec body:
-        :return: InlineResponse20112
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8659,7 +8659,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param VideoSpec body:
-        :return: InlineResponse20112
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8719,7 +8719,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20112',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8738,8 +8738,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body39 body:
-        :return: InlineResponse20113
+        :param Body31 body:
+        :return: InlineResponse2013
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8761,8 +8761,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body39 body:
-        :return: InlineResponse20113
+        :param Body31 body:
+        :return: InlineResponse2013
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8822,7 +8822,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20113',  # noqa: E501
+            response_type='InlineResponse2013',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8844,7 +8844,7 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
         :param str query: String to search for matching names. (required)
         :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
-        :return: list[InlineResponse20031]
+        :return: list[InlineResponse20013]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8869,7 +8869,7 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
         :param str query: String to search for matching names. (required)
         :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
-        :return: list[InlineResponse20031]
+        :return: list[InlineResponse20013]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8937,7 +8937,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20031]',  # noqa: E501
+            response_type='list[InlineResponse20013]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8956,8 +8956,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an attribute type. (required)
-        :param Body2 body:
-        :return: InlineResponse2002
+        :param AttributeTypeUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8979,8 +8979,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an attribute type. (required)
-        :param Body2 body:
-        :return: InlineResponse2002
+        :param AttributeTypeUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9040,7 +9040,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2002',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9059,8 +9059,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a frame association. (required)
-        :param Body3 body:
-        :return: InlineResponse2004
+        :param Body body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9082,8 +9082,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a frame association. (required)
-        :param Body3 body:
-        :return: InlineResponse2004
+        :param Body body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9143,7 +9143,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2004',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9162,8 +9162,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization. (required)
-        :param Body7 body:
-        :return: InlineResponse2008
+        :param LocalizationUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9185,8 +9185,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization. (required)
-        :param Body7 body:
-        :return: InlineResponse2008
+        :param LocalizationUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9246,7 +9246,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2008',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9265,8 +9265,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body4 body:
-        :return: InlineResponse2005
+        :param LocalizationAssociationUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9288,8 +9288,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body4 body:
-        :return: InlineResponse2005
+        :param LocalizationAssociationUpdate body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9349,7 +9349,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2005',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9368,7 +9368,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body6 body:
+        :param LocalizationListUpdate body:
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -9387,7 +9387,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2006
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9409,7 +9409,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body6 body:
+        :param LocalizationListUpdate body:
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -9428,7 +9428,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2006
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9525,7 +9525,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2006',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9544,8 +9544,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :param Body9 body:
-        :return: InlineResponse20011
+        :param Body2 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9567,8 +9567,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :param Body9 body:
-        :return: InlineResponse20011
+        :param Body2 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9628,7 +9628,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20011',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9647,8 +9647,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :param Body11 body:
-        :return: InlineResponse20014
+        :param Body4 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9670,8 +9670,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :param Body11 body:
-        :return: InlineResponse20014
+        :param Body4 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9731,7 +9731,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20014',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9750,7 +9750,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body10 body:
+        :param Body3 body:
         :param list[int] media_id: List of integers identifying media.
         :param int type: Unique integer identifying media type.
         :param str name: Name of the media to filter on.
@@ -9768,7 +9768,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20013
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9790,7 +9790,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body10 body:
+        :param Body3 body:
         :param list[int] media_id: List of integers identifying media.
         :param int type: Unique integer identifying media type.
         :param str name: Name of the media to filter on.
@@ -9808,7 +9808,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20013
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9903,7 +9903,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20013',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -9922,8 +9922,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :param Body13 body:
-        :return: InlineResponse20019
+        :param Body6 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9945,8 +9945,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :param Body13 body:
-        :return: InlineResponse20019
+        :param Body6 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10006,7 +10006,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20019',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10025,8 +10025,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :param Body15 body:
-        :return: InlineResponse20021
+        :param Body8 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10048,8 +10048,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :param Body15 body:
-        :return: InlineResponse20021
+        :param Body8 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10109,7 +10109,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20021',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10128,8 +10128,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :param Body17 body:
-        :return: InlineResponse20023
+        :param Body10 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10151,8 +10151,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :param Body17 body:
-        :return: InlineResponse20023
+        :param Body10 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10212,7 +10212,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20023',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10231,8 +10231,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state. (required)
-        :param Body20 body:
-        :return: InlineResponse20026
+        :param Body13 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10254,8 +10254,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state. (required)
-        :param Body20 body:
-        :return: InlineResponse20026
+        :param Body13 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10315,7 +10315,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20026',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10334,7 +10334,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body19 body:
+        :param Body12 body:
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -10353,7 +10353,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20025
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10375,7 +10375,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body19 body:
+        :param Body12 body:
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -10394,7 +10394,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20025
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10491,7 +10491,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20025',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10510,8 +10510,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :param Body22 body:
-        :return: InlineResponse20029
+        :param Body15 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10533,8 +10533,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :param Body22 body:
-        :return: InlineResponse20029
+        :param Body15 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10594,7 +10594,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20029',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10613,8 +10613,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :param Body26 body:
-        :return: InlineResponse20034
+        :param Body19 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10636,8 +10636,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :param Body26 body:
-        :return: InlineResponse20034
+        :param Body19 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10697,7 +10697,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20034',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10716,7 +10716,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body25 body:
+        :param Body18 body:
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
@@ -10731,7 +10731,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20033
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10753,7 +10753,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body25 body:
+        :param Body18 body:
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
@@ -10768,7 +10768,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse20033
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10856,7 +10856,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20033',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10875,8 +10875,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param Body28 body:
-        :return: InlineResponse20037
+        :param Body21 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10898,8 +10898,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param Body28 body:
-        :return: InlineResponse20037
+        :param Body21 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10959,7 +10959,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20037',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -10978,8 +10978,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body29 body:
-        :return: InlineResponse20038
+        :param Body22 body:
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11001,8 +11001,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body29 body:
-        :return: InlineResponse20038
+        :param Body22 body:
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11078,7 +11078,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20038',  # noqa: E501
+            response_type='InlineResponse20017',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -11101,7 +11101,7 @@ class TatorApi(object):
         :param str first_name:
         :param str last_name:
         :param str email:
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11127,7 +11127,7 @@ class TatorApi(object):
         :param str first_name:
         :param str last_name:
         :param str email:
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11203,7 +11203,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20038',  # noqa: E501
+            response_type='InlineResponse20017',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -11226,7 +11226,7 @@ class TatorApi(object):
         :param str first_name:
         :param str last_name:
         :param str email:
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11252,7 +11252,7 @@ class TatorApi(object):
         :param str first_name:
         :param str last_name:
         :param str email:
-        :return: InlineResponse20038
+        :return: InlineResponse20017
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11328,7 +11328,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20038',  # noqa: E501
+            response_type='InlineResponse20017',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -11347,8 +11347,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :param Body33 body:
-        :return: InlineResponse20041
+        :param Body26 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11370,8 +11370,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :param Body33 body:
-        :return: InlineResponse20041
+        :param Body26 body:
+        :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11431,7 +11431,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20041',  # noqa: E501
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -11449,7 +11449,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: InlineResponse20039
+        :return: InlineResponse20018
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11470,7 +11470,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: InlineResponse20039
+        :return: InlineResponse20018
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11518,7 +11518,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20039',  # noqa: E501
+            response_type='InlineResponse20018',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

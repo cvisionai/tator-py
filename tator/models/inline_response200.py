@@ -29,98 +29,68 @@ class InlineResponse200(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'name': 'str',
-        'description': 'str'
+        'type': 'RestLocalizationTypesprojectType',
+        'columns': 'list[OneOfinlineResponse200ColumnsItems]'
     }
 
     attribute_map = {
-        'id': 'id',
-        'name': 'name',
-        'description': 'description'
+        'type': 'type',
+        'columns': 'columns'
     }
 
-    def __init__(self, id=None, name=None, description=None):  # noqa: E501
+    def __init__(self, type=None, columns=None):  # noqa: E501
         """InlineResponse200 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._name = None
-        self._description = None
+        self._type = None
+        self._columns = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
+        if type is not None:
+            self.type = type
+        if columns is not None:
+            self.columns = columns
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse200.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse200.  # noqa: E501
 
-        Unique integer identifying the algorithm.  # noqa: E501
 
-        :return: The id of this InlineResponse200.  # noqa: E501
-        :rtype: int
+        :return: The type of this InlineResponse200.  # noqa: E501
+        :rtype: RestLocalizationTypesprojectType
         """
-        return self._id
+        return self._type
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse200.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse200.
 
-        Unique integer identifying the algorithm.  # noqa: E501
 
-        :param id: The id of this InlineResponse200.  # noqa: E501
-        :type: int
+        :param type: The type of this InlineResponse200.  # noqa: E501
+        :type: RestLocalizationTypesprojectType
         """
 
-        self._id = id
+        self._type = type
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse200.  # noqa: E501
+    def columns(self):
+        """Gets the columns of this InlineResponse200.  # noqa: E501
 
-        Name of the algorithm.  # noqa: E501
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :return: The name of this InlineResponse200.  # noqa: E501
-        :rtype: str
+        :return: The columns of this InlineResponse200.  # noqa: E501
+        :rtype: list[OneOfinlineResponse200ColumnsItems]
         """
-        return self._name
+        return self._columns
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse200.
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse200.
 
-        Name of the algorithm.  # noqa: E501
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :param name: The name of this InlineResponse200.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
-    def description(self):
-        """Gets the description of this InlineResponse200.  # noqa: E501
-
-        Description of the algorithm.  # noqa: E501
-
-        :return: The description of this InlineResponse200.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this InlineResponse200.
-
-        Description of the algorithm.  # noqa: E501
-
-        :param description: The description of this InlineResponse200.  # noqa: E501
-        :type: str
+        :param columns: The columns of this InlineResponse200.  # noqa: E501
+        :type: list[OneOfinlineResponse200ColumnsItems]
         """
 
-        self._description = description
+        self._columns = columns
 
     def to_dict(self):
         """Returns the model properties as a dict"""

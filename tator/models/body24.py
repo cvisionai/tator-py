@@ -29,19 +29,120 @@ class Body24(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'username': 'str',
+        'first_name': 'str',
+        'last_name': 'str',
+        'email': 'str'
     }
-    if hasattr(dict, "swagger_types"):
-        swagger_types.update(dict.swagger_types)
 
     attribute_map = {
+        'username': 'username',
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'email': 'email'
     }
-    if hasattr(dict, "attribute_map"):
-        attribute_map.update(dict.attribute_map)
 
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
         """Body24 - a model defined in Swagger"""  # noqa: E501
+        self._username = None
+        self._first_name = None
+        self._last_name = None
+        self._email = None
         self.discriminator = None
-        dict.__init__(self, *args, **kwargs)
+        if username is not None:
+            self.username = username
+        if first_name is not None:
+            self.first_name = first_name
+        if last_name is not None:
+            self.last_name = last_name
+        if email is not None:
+            self.email = email
+
+    @property
+    def username(self):
+        """Gets the username of this Body24.  # noqa: E501
+
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+
+        :return: The username of this Body24.  # noqa: E501
+        :rtype: str
+        """
+        return self._username
+
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Body24.
+
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+
+        :param username: The username of this Body24.  # noqa: E501
+        :type: str
+        """
+
+        self._username = username
+
+    @property
+    def first_name(self):
+        """Gets the first_name of this Body24.  # noqa: E501
+
+
+        :return: The first_name of this Body24.  # noqa: E501
+        :rtype: str
+        """
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, first_name):
+        """Sets the first_name of this Body24.
+
+
+        :param first_name: The first_name of this Body24.  # noqa: E501
+        :type: str
+        """
+
+        self._first_name = first_name
+
+    @property
+    def last_name(self):
+        """Gets the last_name of this Body24.  # noqa: E501
+
+
+        :return: The last_name of this Body24.  # noqa: E501
+        :rtype: str
+        """
+        return self._last_name
+
+    @last_name.setter
+    def last_name(self, last_name):
+        """Sets the last_name of this Body24.
+
+
+        :param last_name: The last_name of this Body24.  # noqa: E501
+        :type: str
+        """
+
+        self._last_name = last_name
+
+    @property
+    def email(self):
+        """Gets the email of this Body24.  # noqa: E501
+
+
+        :return: The email of this Body24.  # noqa: E501
+        :rtype: str
+        """
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        """Sets the email of this Body24.
+
+
+        :param email: The email of this Body24.  # noqa: E501
+        :type: str
+        """
+
+        self._email = email
 
     def to_dict(self):
         """Returns the model properties as a dict"""

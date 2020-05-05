@@ -30,29 +30,29 @@ class Body26(object):
     """
     swagger_types = {
         'name': 'str',
-        'attributes': 'dict(str, object)'
+        'description': 'str'
     }
 
     attribute_map = {
         'name': 'name',
-        'attributes': 'attributes'
+        'description': 'description'
     }
 
-    def __init__(self, name=None, attributes=None):  # noqa: E501
+    def __init__(self, name=None, description=None):  # noqa: E501
         """Body26 - a model defined in Swagger"""  # noqa: E501
         self._name = None
-        self._attributes = None
+        self._description = None
         self.discriminator = None
         if name is not None:
             self.name = name
-        if attributes is not None:
-            self.attributes = attributes
+        if description is not None:
+            self.description = description
 
     @property
     def name(self):
         """Gets the name of this Body26.  # noqa: E501
 
-        Name of the tree leaf.  # noqa: E501
+        Name of the version.  # noqa: E501
 
         :return: The name of this Body26.  # noqa: E501
         :rtype: str
@@ -63,7 +63,7 @@ class Body26(object):
     def name(self, name):
         """Sets the name of this Body26.
 
-        Name of the tree leaf.  # noqa: E501
+        Name of the version.  # noqa: E501
 
         :param name: The name of this Body26.  # noqa: E501
         :type: str
@@ -72,27 +72,27 @@ class Body26(object):
         self._name = name
 
     @property
-    def attributes(self):
-        """Gets the attributes of this Body26.  # noqa: E501
+    def description(self):
+        """Gets the description of this Body26.  # noqa: E501
 
-        Attribute values to update.  # noqa: E501
+        Description of the version.  # noqa: E501
 
-        :return: The attributes of this Body26.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The description of this Body26.  # noqa: E501
+        :rtype: str
         """
-        return self._attributes
+        return self._description
 
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body26.
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body26.
 
-        Attribute values to update.  # noqa: E501
+        Description of the version.  # noqa: E501
 
-        :param attributes: The attributes of this Body26.  # noqa: E501
-        :type: dict(str, object)
+        :param description: The description of this Body26.  # noqa: E501
+        :type: str
         """
 
-        self._attributes = attributes
+        self._description = description
 
     def to_dict(self):
         """Returns the model properties as a dict"""

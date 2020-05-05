@@ -29,98 +29,40 @@ class InlineResponse2003(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str',
-        'required_fields': 'dict(str, object)'
+        'next': 'int'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description',
-        'required_fields': 'required_fields'
+        'next': 'next'
     }
 
-    def __init__(self, name=None, description=None, required_fields=None):  # noqa: E501
+    def __init__(self, next=None):  # noqa: E501
         """InlineResponse2003 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
-        self._required_fields = None
+        self._next = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
-        if required_fields is not None:
-            self.required_fields = required_fields
+        if next is not None:
+            self.next = next
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse2003.  # noqa: E501
+    def next(self):
+        """Gets the next of this InlineResponse2003.  # noqa: E501
 
-        Name of the entity type.  # noqa: E501
 
-        :return: The name of this InlineResponse2003.  # noqa: E501
-        :rtype: str
+        :return: The next of this InlineResponse2003.  # noqa: E501
+        :rtype: int
         """
-        return self._name
+        return self._next
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse2003.
+    @next.setter
+    def next(self, next):
+        """Sets the next of this InlineResponse2003.
 
-        Name of the entity type.  # noqa: E501
 
-        :param name: The name of this InlineResponse2003.  # noqa: E501
-        :type: str
+        :param next: The next of this InlineResponse2003.  # noqa: E501
+        :type: int
         """
 
-        self._name = name
-
-    @property
-    def description(self):
-        """Gets the description of this InlineResponse2003.  # noqa: E501
-
-        Description of the entity type.  # noqa: E501
-
-        :return: The description of this InlineResponse2003.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this InlineResponse2003.
-
-        Description of the entity type.  # noqa: E501
-
-        :param description: The description of this InlineResponse2003.  # noqa: E501
-        :type: str
-        """
-
-        self._description = description
-
-    @property
-    def required_fields(self):
-        """Gets the required_fields of this InlineResponse2003.  # noqa: E501
-
-        Description of required fields.  # noqa: E501
-
-        :return: The required_fields of this InlineResponse2003.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._required_fields
-
-    @required_fields.setter
-    def required_fields(self, required_fields):
-        """Sets the required_fields of this InlineResponse2003.
-
-        Description of required fields.  # noqa: E501
-
-        :param required_fields: The required_fields of this InlineResponse2003.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._required_fields = required_fields
+        self._next = next
 
     def to_dict(self):
         """Returns the model properties as a dict"""

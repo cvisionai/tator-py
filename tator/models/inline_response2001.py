@@ -29,160 +29,68 @@ class InlineResponse2001(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'data_type': 'int',
-        'data_query': 'str',
-        'project': 'int',
-        'resourcetype': 'str'
+        'type': 'RestLocalizationTypesprojectType',
+        'columns': 'list[OneOfinlineResponse2001ColumnsItems]'
     }
 
     attribute_map = {
-        'name': 'name',
-        'data_type': 'data_type',
-        'data_query': 'data_query',
-        'project': 'project',
-        'resourcetype': 'resourcetype'
+        'type': 'type',
+        'columns': 'columns'
     }
 
-    def __init__(self, name=None, data_type=None, data_query='*', project=None, resourcetype=None):  # noqa: E501
+    def __init__(self, type=None, columns=None):  # noqa: E501
         """InlineResponse2001 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._data_type = None
-        self._data_query = None
-        self._project = None
-        self._resourcetype = None
+        self._type = None
+        self._columns = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if data_type is not None:
-            self.data_type = data_type
-        if data_query is not None:
-            self.data_query = data_query
-        if project is not None:
-            self.project = project
-        if resourcetype is not None:
-            self.resourcetype = resourcetype
+        if type is not None:
+            self.type = type
+        if columns is not None:
+            self.columns = columns
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse2001.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse2001.  # noqa: E501
 
-        Name of analysis.  # noqa: E501
 
-        :return: The name of this InlineResponse2001.  # noqa: E501
-        :rtype: str
+        :return: The type of this InlineResponse2001.  # noqa: E501
+        :rtype: RestLocalizationTypesprojectType
         """
-        return self._name
+        return self._type
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse2001.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse2001.
 
-        Name of analysis.  # noqa: E501
 
-        :param name: The name of this InlineResponse2001.  # noqa: E501
-        :type: str
+        :param type: The type of this InlineResponse2001.  # noqa: E501
+        :type: RestLocalizationTypesprojectType
         """
 
-        self._name = name
+        self._type = type
 
     @property
-    def data_type(self):
-        """Gets the data_type of this InlineResponse2001.  # noqa: E501
+    def columns(self):
+        """Gets the columns of this InlineResponse2001.  # noqa: E501
 
-        A unique integer identifying an entity type to analyze.  # noqa: E501
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :return: The data_type of this InlineResponse2001.  # noqa: E501
-        :rtype: int
+        :return: The columns of this InlineResponse2001.  # noqa: E501
+        :rtype: list[OneOfinlineResponse2001ColumnsItems]
         """
-        return self._data_type
+        return self._columns
 
-    @data_type.setter
-    def data_type(self, data_type):
-        """Sets the data_type of this InlineResponse2001.
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse2001.
 
-        A unique integer identifying an entity type to analyze.  # noqa: E501
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :param data_type: The data_type of this InlineResponse2001.  # noqa: E501
-        :type: int
-        """
-
-        self._data_type = data_type
-
-    @property
-    def data_query(self):
-        """Gets the data_query of this InlineResponse2001.  # noqa: E501
-
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
-
-        :return: The data_query of this InlineResponse2001.  # noqa: E501
-        :rtype: str
-        """
-        return self._data_query
-
-    @data_query.setter
-    def data_query(self, data_query):
-        """Sets the data_query of this InlineResponse2001.
-
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
-
-        :param data_query: The data_query of this InlineResponse2001.  # noqa: E501
-        :type: str
+        :param columns: The columns of this InlineResponse2001.  # noqa: E501
+        :type: list[OneOfinlineResponse2001ColumnsItems]
         """
 
-        self._data_query = data_query
-
-    @property
-    def project(self):
-        """Gets the project of this InlineResponse2001.  # noqa: E501
-
-        Unique integer identifying a project.  # noqa: E501
-
-        :return: The project of this InlineResponse2001.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this InlineResponse2001.
-
-        Unique integer identifying a project.  # noqa: E501
-
-        :param project: The project of this InlineResponse2001.  # noqa: E501
-        :type: int
-        """
-
-        self._project = project
-
-    @property
-    def resourcetype(self):
-        """Gets the resourcetype of this InlineResponse2001.  # noqa: E501
-
-        Analysis type.  # noqa: E501
-
-        :return: The resourcetype of this InlineResponse2001.  # noqa: E501
-        :rtype: str
-        """
-        return self._resourcetype
-
-    @resourcetype.setter
-    def resourcetype(self, resourcetype):
-        """Sets the resourcetype of this InlineResponse2001.
-
-        Analysis type.  # noqa: E501
-
-        :param resourcetype: The resourcetype of this InlineResponse2001.  # noqa: E501
-        :type: str
-        """
-        allowed_values = ["AnalysisCount"]  # noqa: E501
-        if resourcetype not in allowed_values:
-            raise ValueError(
-                "Invalid value for `resourcetype` ({0}), must be one of {1}"  # noqa: E501
-                .format(resourcetype, allowed_values)
-            )
-
-        self._resourcetype = resourcetype
+        self._columns = columns
 
     def to_dict(self):
         """Returns the model properties as a dict"""

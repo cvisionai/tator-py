@@ -75,7 +75,7 @@ class InlineResponse201(object):
     def id(self):
         """Gets the id of this InlineResponse201.  # noqa: E501
 
-        Unique integer identifying the created object.  # noqa: E501
+        Unique integer identifying created object.  # noqa: E501
 
         :return: The id of this InlineResponse201.  # noqa: E501
         :rtype: int
@@ -86,7 +86,7 @@ class InlineResponse201(object):
     def id(self, id):
         """Sets the id of this InlineResponse201.
 
-        Unique integer identifying the created object.  # noqa: E501
+        Unique integer identifying created object.  # noqa: E501
 
         :param id: The id of this InlineResponse201.  # noqa: E501
         :type: int

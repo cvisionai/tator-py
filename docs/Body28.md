@@ -3,8 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Name of the tree leaf type. | [optional] 
-**description** | **str** | Description of the tree leaf type. | [optional] [default to '']
+**message** | **str** | Message to send to administrators. | 
+**send_as_file** | **str** | Whether to send message as a file. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -29,70 +29,43 @@ class Body3(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'frame': 'int',
-        'extracted': 'int'
+        'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
-        'frame': 'frame',
-        'extracted': 'extracted'
+        'attributes': 'attributes'
     }
 
-    def __init__(self, frame=None, extracted=None):  # noqa: E501
+    def __init__(self, attributes=None):  # noqa: E501
         """Body3 - a model defined in Swagger"""  # noqa: E501
-        self._frame = None
-        self._extracted = None
+        self._attributes = None
         self.discriminator = None
-        if frame is not None:
-            self.frame = frame
-        if extracted is not None:
-            self.extracted = extracted
+        self.attributes = attributes
 
     @property
-    def frame(self):
-        """Gets the frame of this Body3.  # noqa: E501
+    def attributes(self):
+        """Gets the attributes of this Body3.  # noqa: E501
 
-        Video frame number for this association.  # noqa: E501
+        Attribute values to bulk update.  # noqa: E501
 
-        :return: The frame of this Body3.  # noqa: E501
-        :rtype: int
+        :return: The attributes of this Body3.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._frame
+        return self._attributes
 
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this Body3.
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this Body3.
 
-        Video frame number for this association.  # noqa: E501
+        Attribute values to bulk update.  # noqa: E501
 
-        :param frame: The frame of this Body3.  # noqa: E501
-        :type: int
+        :param attributes: The attributes of this Body3.  # noqa: E501
+        :type: dict(str, object)
         """
+        if attributes is None:
+            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
 
-        self._frame = frame
-
-    @property
-    def extracted(self):
-        """Gets the extracted of this Body3.  # noqa: E501
-
-        Unique integer identifying an extracted image.  # noqa: E501
-
-        :return: The extracted of this Body3.  # noqa: E501
-        :rtype: int
-        """
-        return self._extracted
-
-    @extracted.setter
-    def extracted(self, extracted):
-        """Sets the extracted of this Body3.
-
-        Unique integer identifying an extracted image.  # noqa: E501
-
-        :param extracted: The extracted of this Body3.  # noqa: E501
-        :type: int
-        """
-
-        self._extracted = extracted
+        self._attributes = attributes
 
     def to_dict(self):
         """Returns the model properties as a dict"""
