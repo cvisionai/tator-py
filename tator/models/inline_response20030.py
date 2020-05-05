@@ -29,98 +29,228 @@ class InlineResponse20030(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'value': 'str',
-        'group': 'str',
-        'data': 'dict(str, object)'
+        'id': 'int',
+        'name': 'str',
+        'project': 'int',
+        'user': 'int',
+        'path': 'str',
+        'lookup': 'str',
+        'created_datetime': 'datetime',
+        'eol_datetime': 'datetime'
     }
 
     attribute_map = {
-        'value': 'value',
-        'group': 'group',
-        'data': 'data'
+        'id': 'id',
+        'name': 'name',
+        'project': 'project',
+        'user': 'user',
+        'path': 'path',
+        'lookup': 'lookup',
+        'created_datetime': 'created_datetime',
+        'eol_datetime': 'eol_datetime'
     }
 
-    def __init__(self, value=None, group=None, data=None):  # noqa: E501
+    def __init__(self, id=None, name=None, project=None, user=None, path=None, lookup=None, created_datetime=None, eol_datetime=None):  # noqa: E501
         """InlineResponse20030 - a model defined in Swagger"""  # noqa: E501
-        self._value = None
-        self._group = None
-        self._data = None
+        self._id = None
+        self._name = None
+        self._project = None
+        self._user = None
+        self._path = None
+        self._lookup = None
+        self._created_datetime = None
+        self._eol_datetime = None
         self.discriminator = None
-        if value is not None:
-            self.value = value
-        if group is not None:
-            self.group = group
-        if data is not None:
-            self.data = data
+        if id is not None:
+            self.id = id
+        self.name = name
+        self.project = project
+        self.user = user
+        if path is not None:
+            self.path = path
+        self.lookup = lookup
+        self.created_datetime = created_datetime
+        self.eol_datetime = eol_datetime
 
     @property
-    def value(self):
-        """Gets the value of this InlineResponse20030.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20030.  # noqa: E501
 
-        Name of the suggestion.  # noqa: E501
 
-        :return: The value of this InlineResponse20030.  # noqa: E501
+        :return: The id of this InlineResponse20030.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20030.
+
+
+        :param id: The id of this InlineResponse20030.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse20030.  # noqa: E501
+
+
+        :return: The name of this InlineResponse20030.  # noqa: E501
         :rtype: str
         """
-        return self._value
+        return self._name
 
-    @value.setter
-    def value(self, value):
-        """Sets the value of this InlineResponse20030.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20030.
 
-        Name of the suggestion.  # noqa: E501
 
-        :param value: The value of this InlineResponse20030.  # noqa: E501
+        :param name: The name of this InlineResponse20030.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse20030.  # noqa: E501
+
+
+        :return: The project of this InlineResponse20030.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse20030.
+
+
+        :param project: The project of this InlineResponse20030.  # noqa: E501
+        :type: int
+        """
+        if project is None:
+            raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501
+
+        self._project = project
+
+    @property
+    def user(self):
+        """Gets the user of this InlineResponse20030.  # noqa: E501
+
+
+        :return: The user of this InlineResponse20030.  # noqa: E501
+        :rtype: int
+        """
+        return self._user
+
+    @user.setter
+    def user(self, user):
+        """Sets the user of this InlineResponse20030.
+
+
+        :param user: The user of this InlineResponse20030.  # noqa: E501
+        :type: int
+        """
+        if user is None:
+            raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
+
+        self._user = user
+
+    @property
+    def path(self):
+        """Gets the path of this InlineResponse20030.  # noqa: E501
+
+
+        :return: The path of this InlineResponse20030.  # noqa: E501
+        :rtype: str
+        """
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        """Sets the path of this InlineResponse20030.
+
+
+        :param path: The path of this InlineResponse20030.  # noqa: E501
         :type: str
         """
 
-        self._value = value
+        self._path = path
 
     @property
-    def group(self):
-        """Gets the group of this InlineResponse20030.  # noqa: E501
+    def lookup(self):
+        """Gets the lookup of this InlineResponse20030.  # noqa: E501
 
-        Group of the suggestion.  # noqa: E501
 
-        :return: The group of this InlineResponse20030.  # noqa: E501
+        :return: The lookup of this InlineResponse20030.  # noqa: E501
         :rtype: str
         """
-        return self._group
+        return self._lookup
 
-    @group.setter
-    def group(self, group):
-        """Sets the group of this InlineResponse20030.
+    @lookup.setter
+    def lookup(self, lookup):
+        """Sets the lookup of this InlineResponse20030.
 
-        Group of the suggestion.  # noqa: E501
 
-        :param group: The group of this InlineResponse20030.  # noqa: E501
+        :param lookup: The lookup of this InlineResponse20030.  # noqa: E501
         :type: str
         """
+        if lookup is None:
+            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
 
-        self._group = group
+        self._lookup = lookup
 
     @property
-    def data(self):
-        """Gets the data of this InlineResponse20030.  # noqa: E501
+    def created_datetime(self):
+        """Gets the created_datetime of this InlineResponse20030.  # noqa: E501
 
-        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :return: The data of this InlineResponse20030.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The created_datetime of this InlineResponse20030.  # noqa: E501
+        :rtype: datetime
         """
-        return self._data
+        return self._created_datetime
 
-    @data.setter
-    def data(self, data):
-        """Sets the data of this InlineResponse20030.
+    @created_datetime.setter
+    def created_datetime(self, created_datetime):
+        """Sets the created_datetime of this InlineResponse20030.
 
-        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :param data: The data of this InlineResponse20030.  # noqa: E501
-        :type: dict(str, object)
+        :param created_datetime: The created_datetime of this InlineResponse20030.  # noqa: E501
+        :type: datetime
         """
+        if created_datetime is None:
+            raise ValueError("Invalid value for `created_datetime`, must not be `None`")  # noqa: E501
 
-        self._data = data
+        self._created_datetime = created_datetime
+
+    @property
+    def eol_datetime(self):
+        """Gets the eol_datetime of this InlineResponse20030.  # noqa: E501
+
+
+        :return: The eol_datetime of this InlineResponse20030.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._eol_datetime
+
+    @eol_datetime.setter
+    def eol_datetime(self, eol_datetime):
+        """Sets the eol_datetime of this InlineResponse20030.
+
+
+        :param eol_datetime: The eol_datetime of this InlineResponse20030.  # noqa: E501
+        :type: datetime
+        """
+        if eol_datetime is None:
+            raise ValueError("Invalid value for `eol_datetime`, must not be `None`")  # noqa: E501
+
+        self._eol_datetime = eol_datetime
 
     def to_dict(self):
         """Returns the model properties as a dict"""

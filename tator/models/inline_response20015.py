@@ -29,40 +29,40 @@ class InlineResponse20015(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'prev': 'int'
+        'next': 'int'
     }
 
     attribute_map = {
-        'prev': 'prev'
+        'next': 'next'
     }
 
-    def __init__(self, prev=None):  # noqa: E501
+    def __init__(self, next=None):  # noqa: E501
         """InlineResponse20015 - a model defined in Swagger"""  # noqa: E501
-        self._prev = None
+        self._next = None
         self.discriminator = None
-        if prev is not None:
-            self.prev = prev
+        if next is not None:
+            self.next = next
 
     @property
-    def prev(self):
-        """Gets the prev of this InlineResponse20015.  # noqa: E501
+    def next(self):
+        """Gets the next of this InlineResponse20015.  # noqa: E501
 
 
-        :return: The prev of this InlineResponse20015.  # noqa: E501
+        :return: The next of this InlineResponse20015.  # noqa: E501
         :rtype: int
         """
-        return self._prev
+        return self._next
 
-    @prev.setter
-    def prev(self, prev):
-        """Sets the prev of this InlineResponse20015.
+    @next.setter
+    def next(self, next):
+        """Sets the next of this InlineResponse20015.
 
 
-        :param prev: The prev of this InlineResponse20015.  # noqa: E501
+        :param next: The next of this InlineResponse20015.  # noqa: E501
         :type: int
         """
 
-        self._prev = prev
+        self._next = next
 
     def to_dict(self):
         """Returns the model properties as a dict"""

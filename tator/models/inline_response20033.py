@@ -47,7 +47,7 @@ class InlineResponse20033(object):
     def message(self):
         """Gets the message of this InlineResponse20033.  # noqa: E501
 
-        Message indicating successful update of tree leaf.  # noqa: E501
+        Message indicating successful update of tree leaf list.  # noqa: E501
 
         :return: The message of this InlineResponse20033.  # noqa: E501
         :rtype: str
@@ -58,7 +58,7 @@ class InlineResponse20033(object):
     def message(self, message):
         """Sets the message of this InlineResponse20033.
 
-        Message indicating successful update of tree leaf.  # noqa: E501
+        Message indicating successful update of tree leaf list.  # noqa: E501
 
         :param message: The message of this InlineResponse20033.  # noqa: E501
         :type: str

@@ -29,42 +29,350 @@ class InlineResponse20040(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'id': 'int',
+        'name': 'str',
+        'description': 'str',
+        'number': 'int',
+        'project': 'int',
+        'show_empty': 'bool',
+        'num_created': 'int',
+        'created_datetime': 'str',
+        'created_by': 'str',
+        'num_modified': 'int',
+        'modified_datetime': 'str',
+        'modified_by': 'str'
     }
 
     attribute_map = {
-        'message': 'message'
+        'id': 'id',
+        'name': 'name',
+        'description': 'description',
+        'number': 'number',
+        'project': 'project',
+        'show_empty': 'show_empty',
+        'num_created': 'num_created',
+        'created_datetime': 'created_datetime',
+        'created_by': 'created_by',
+        'num_modified': 'num_modified',
+        'modified_datetime': 'modified_datetime',
+        'modified_by': 'modified_by'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, id=None, name=None, description=None, number=None, project=None, show_empty=None, num_created=None, created_datetime=None, created_by=None, num_modified=None, modified_datetime=None, modified_by=None):  # noqa: E501
         """InlineResponse20040 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._id = None
+        self._name = None
+        self._description = None
+        self._number = None
+        self._project = None
+        self._show_empty = None
+        self._num_created = None
+        self._created_datetime = None
+        self._created_by = None
+        self._num_modified = None
+        self._modified_datetime = None
+        self._modified_by = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if id is not None:
+            self.id = id
+        if name is not None:
+            self.name = name
+        if description is not None:
+            self.description = description
+        if number is not None:
+            self.number = number
+        if project is not None:
+            self.project = project
+        if show_empty is not None:
+            self.show_empty = show_empty
+        if num_created is not None:
+            self.num_created = num_created
+        if created_datetime is not None:
+            self.created_datetime = created_datetime
+        if created_by is not None:
+            self.created_by = created_by
+        if num_modified is not None:
+            self.num_modified = num_modified
+        if modified_datetime is not None:
+            self.modified_datetime = modified_datetime
+        if modified_by is not None:
+            self.modified_by = modified_by
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20040.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20040.  # noqa: E501
 
-        Message indicating successful update of version.  # noqa: E501
+        Unique integer identifying a membership.  # noqa: E501
 
-        :return: The message of this InlineResponse20040.  # noqa: E501
+        :return: The id of this InlineResponse20040.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20040.
+
+        Unique integer identifying a membership.  # noqa: E501
+
+        :param id: The id of this InlineResponse20040.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse20040.  # noqa: E501
+
+        Name of the version.  # noqa: E501
+
+        :return: The name of this InlineResponse20040.  # noqa: E501
         :rtype: str
         """
-        return self._message
+        return self._name
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20040.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20040.
 
-        Message indicating successful update of version.  # noqa: E501
+        Name of the version.  # noqa: E501
 
-        :param message: The message of this InlineResponse20040.  # noqa: E501
+        :param name: The name of this InlineResponse20040.  # noqa: E501
         :type: str
         """
 
-        self._message = message
+        self._name = name
+
+    @property
+    def description(self):
+        """Gets the description of this InlineResponse20040.  # noqa: E501
+
+        Description of the version.  # noqa: E501
+
+        :return: The description of this InlineResponse20040.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this InlineResponse20040.
+
+        Description of the version.  # noqa: E501
+
+        :param description: The description of this InlineResponse20040.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
+
+    @property
+    def number(self):
+        """Gets the number of this InlineResponse20040.  # noqa: E501
+
+        Version number.  # noqa: E501
+
+        :return: The number of this InlineResponse20040.  # noqa: E501
+        :rtype: int
+        """
+        return self._number
+
+    @number.setter
+    def number(self, number):
+        """Sets the number of this InlineResponse20040.
+
+        Version number.  # noqa: E501
+
+        :param number: The number of this InlineResponse20040.  # noqa: E501
+        :type: int
+        """
+
+        self._number = number
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse20040.  # noqa: E501
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :return: The project of this InlineResponse20040.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse20040.
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :param project: The project of this InlineResponse20040.  # noqa: E501
+        :type: int
+        """
+
+        self._project = project
+
+    @property
+    def show_empty(self):
+        """Gets the show_empty of this InlineResponse20040.  # noqa: E501
+
+        Whether to show this version on media for which no annotations exist.  # noqa: E501
+
+        :return: The show_empty of this InlineResponse20040.  # noqa: E501
+        :rtype: bool
+        """
+        return self._show_empty
+
+    @show_empty.setter
+    def show_empty(self, show_empty):
+        """Sets the show_empty of this InlineResponse20040.
+
+        Whether to show this version on media for which no annotations exist.  # noqa: E501
+
+        :param show_empty: The show_empty of this InlineResponse20040.  # noqa: E501
+        :type: bool
+        """
+
+        self._show_empty = show_empty
+
+    @property
+    def num_created(self):
+        """Gets the num_created of this InlineResponse20040.  # noqa: E501
+
+        Number of created annotations in this version.  # noqa: E501
+
+        :return: The num_created of this InlineResponse20040.  # noqa: E501
+        :rtype: int
+        """
+        return self._num_created
+
+    @num_created.setter
+    def num_created(self, num_created):
+        """Sets the num_created of this InlineResponse20040.
+
+        Number of created annotations in this version.  # noqa: E501
+
+        :param num_created: The num_created of this InlineResponse20040.  # noqa: E501
+        :type: int
+        """
+
+        self._num_created = num_created
+
+    @property
+    def created_datetime(self):
+        """Gets the created_datetime of this InlineResponse20040.  # noqa: E501
+
+        Datetime when the last unmodified annotation was created.  # noqa: E501
+
+        :return: The created_datetime of this InlineResponse20040.  # noqa: E501
+        :rtype: str
+        """
+        return self._created_datetime
+
+    @created_datetime.setter
+    def created_datetime(self, created_datetime):
+        """Sets the created_datetime of this InlineResponse20040.
+
+        Datetime when the last unmodified annotation was created.  # noqa: E501
+
+        :param created_datetime: The created_datetime of this InlineResponse20040.  # noqa: E501
+        :type: str
+        """
+
+        self._created_datetime = created_datetime
+
+    @property
+    def created_by(self):
+        """Gets the created_by of this InlineResponse20040.  # noqa: E501
+
+        Name of user who created the last unmodified annotation in this version.  # noqa: E501
+
+        :return: The created_by of this InlineResponse20040.  # noqa: E501
+        :rtype: str
+        """
+        return self._created_by
+
+    @created_by.setter
+    def created_by(self, created_by):
+        """Sets the created_by of this InlineResponse20040.
+
+        Name of user who created the last unmodified annotation in this version.  # noqa: E501
+
+        :param created_by: The created_by of this InlineResponse20040.  # noqa: E501
+        :type: str
+        """
+
+        self._created_by = created_by
+
+    @property
+    def num_modified(self):
+        """Gets the num_modified of this InlineResponse20040.  # noqa: E501
+
+        Number of modified annotations in this version.  # noqa: E501
+
+        :return: The num_modified of this InlineResponse20040.  # noqa: E501
+        :rtype: int
+        """
+        return self._num_modified
+
+    @num_modified.setter
+    def num_modified(self, num_modified):
+        """Sets the num_modified of this InlineResponse20040.
+
+        Number of modified annotations in this version.  # noqa: E501
+
+        :param num_modified: The num_modified of this InlineResponse20040.  # noqa: E501
+        :type: int
+        """
+
+        self._num_modified = num_modified
+
+    @property
+    def modified_datetime(self):
+        """Gets the modified_datetime of this InlineResponse20040.  # noqa: E501
+
+        Datetime when last annotation was modified in the web interface.  # noqa: E501
+
+        :return: The modified_datetime of this InlineResponse20040.  # noqa: E501
+        :rtype: str
+        """
+        return self._modified_datetime
+
+    @modified_datetime.setter
+    def modified_datetime(self, modified_datetime):
+        """Sets the modified_datetime of this InlineResponse20040.
+
+        Datetime when last annotation was modified in the web interface.  # noqa: E501
+
+        :param modified_datetime: The modified_datetime of this InlineResponse20040.  # noqa: E501
+        :type: str
+        """
+
+        self._modified_datetime = modified_datetime
+
+    @property
+    def modified_by(self):
+        """Gets the modified_by of this InlineResponse20040.  # noqa: E501
+
+        Name of user who modified annotations in this version most recently.  # noqa: E501
+
+        :return: The modified_by of this InlineResponse20040.  # noqa: E501
+        :rtype: str
+        """
+        return self._modified_by
+
+    @modified_by.setter
+    def modified_by(self, modified_by):
+        """Sets the modified_by of this InlineResponse20040.
+
+        Name of user who modified annotations in this version most recently.  # noqa: E501
+
+        :param modified_by: The modified_by of this InlineResponse20040.  # noqa: E501
+        :type: str
+        """
+
+        self._modified_by = modified_by
 
     def to_dict(self):
         """Returns the model properties as a dict"""

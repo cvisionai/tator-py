@@ -54,8 +54,7 @@ class InlineResponse20038(object):
         self.discriminator = None
         if id is not None:
             self.id = id
-        if username is not None:
-            self.username = username
+        self.username = username
         if first_name is not None:
             self.first_name = first_name
         if last_name is not None:
@@ -67,7 +66,6 @@ class InlineResponse20038(object):
     def id(self):
         """Gets the id of this InlineResponse20038.  # noqa: E501
 
-        Unique integer identifying current user.  # noqa: E501
 
         :return: The id of this InlineResponse20038.  # noqa: E501
         :rtype: int
@@ -78,7 +76,6 @@ class InlineResponse20038(object):
     def id(self, id):
         """Sets the id of this InlineResponse20038.
 
-        Unique integer identifying current user.  # noqa: E501
 
         :param id: The id of this InlineResponse20038.  # noqa: E501
         :type: int
@@ -90,7 +87,7 @@ class InlineResponse20038(object):
     def username(self):
         """Gets the username of this InlineResponse20038.  # noqa: E501
 
-        Username of current user.  # noqa: E501
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
 
         :return: The username of this InlineResponse20038.  # noqa: E501
         :rtype: str
@@ -101,11 +98,13 @@ class InlineResponse20038(object):
     def username(self, username):
         """Sets the username of this InlineResponse20038.
 
-        Username of current user.  # noqa: E501
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
 
         :param username: The username of this InlineResponse20038.  # noqa: E501
         :type: str
         """
+        if username is None:
+            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
 
         self._username = username
 
@@ -113,7 +112,6 @@ class InlineResponse20038(object):
     def first_name(self):
         """Gets the first_name of this InlineResponse20038.  # noqa: E501
 
-        First name of current user.  # noqa: E501
 
         :return: The first_name of this InlineResponse20038.  # noqa: E501
         :rtype: str
@@ -124,7 +122,6 @@ class InlineResponse20038(object):
     def first_name(self, first_name):
         """Sets the first_name of this InlineResponse20038.
 
-        First name of current user.  # noqa: E501
 
         :param first_name: The first_name of this InlineResponse20038.  # noqa: E501
         :type: str
@@ -136,7 +133,6 @@ class InlineResponse20038(object):
     def last_name(self):
         """Gets the last_name of this InlineResponse20038.  # noqa: E501
 
-        Last name of current user.  # noqa: E501
 
         :return: The last_name of this InlineResponse20038.  # noqa: E501
         :rtype: str
@@ -147,7 +143,6 @@ class InlineResponse20038(object):
     def last_name(self, last_name):
         """Sets the last_name of this InlineResponse20038.
 
-        Last name of current user.  # noqa: E501
 
         :param last_name: The last_name of this InlineResponse20038.  # noqa: E501
         :type: str
@@ -159,7 +154,6 @@ class InlineResponse20038(object):
     def email(self):
         """Gets the email of this InlineResponse20038.  # noqa: E501
 
-        Email address of current user.  # noqa: E501
 
         :return: The email of this InlineResponse20038.  # noqa: E501
         :rtype: str
@@ -170,7 +164,6 @@ class InlineResponse20038(object):
     def email(self, email):
         """Sets the email of this InlineResponse20038.
 
-        Email address of current user.  # noqa: E501
 
         :param email: The email of this InlineResponse20038.  # noqa: E501
         :type: str

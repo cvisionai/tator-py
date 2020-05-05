@@ -29,42 +29,518 @@ class InlineResponse20012(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'name': 'str',
+        'last_edit_start': 'datetime',
+        'last_edit_end': 'datetime',
+        'media_files': 'list[str]',
+        'attributes': 'dict(str, object)',
+        'id': 'int',
+        'project': 'int',
+        'meta': 'int',
+        'url': 'str',
+        'created_datetime': 'str',
+        'created_by_id': 'int',
+        'modified_datetime': 'str',
+        'modified_by_id': 'int',
+        'md5': 'str',
+        'video_thumbnail': 'str',
+        'image_thumbnail': 'str',
+        'video_thumbnail_gif': 'str',
+        'original_url': 'str'
     }
 
     attribute_map = {
-        'message': 'message'
+        'name': 'name',
+        'last_edit_start': 'last_edit_start',
+        'last_edit_end': 'last_edit_end',
+        'media_files': 'media_files',
+        'attributes': 'attributes',
+        'id': 'id',
+        'project': 'project',
+        'meta': 'meta',
+        'url': 'url',
+        'created_datetime': 'created_datetime',
+        'created_by_id': 'created_by_id',
+        'modified_datetime': 'modified_datetime',
+        'modified_by_id': 'modified_by_id',
+        'md5': 'md5',
+        'video_thumbnail': 'video_thumbnail',
+        'image_thumbnail': 'image_thumbnail',
+        'video_thumbnail_gif': 'video_thumbnail_gif',
+        'original_url': 'original_url'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, name=None, last_edit_start=None, last_edit_end=None, media_files=None, attributes=None, id=None, project=None, meta=None, url=None, created_datetime=None, created_by_id=None, modified_datetime=None, modified_by_id=None, md5=None, video_thumbnail=None, image_thumbnail=None, video_thumbnail_gif=None, original_url=None):  # noqa: E501
         """InlineResponse20012 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._name = None
+        self._last_edit_start = None
+        self._last_edit_end = None
+        self._media_files = None
+        self._attributes = None
+        self._id = None
+        self._project = None
+        self._meta = None
+        self._url = None
+        self._created_datetime = None
+        self._created_by_id = None
+        self._modified_datetime = None
+        self._modified_by_id = None
+        self._md5 = None
+        self._video_thumbnail = None
+        self._image_thumbnail = None
+        self._video_thumbnail_gif = None
+        self._original_url = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if name is not None:
+            self.name = name
+        if last_edit_start is not None:
+            self.last_edit_start = last_edit_start
+        if last_edit_end is not None:
+            self.last_edit_end = last_edit_end
+        if media_files is not None:
+            self.media_files = media_files
+        if attributes is not None:
+            self.attributes = attributes
+        if id is not None:
+            self.id = id
+        if project is not None:
+            self.project = project
+        if meta is not None:
+            self.meta = meta
+        if url is not None:
+            self.url = url
+        if created_datetime is not None:
+            self.created_datetime = created_datetime
+        if created_by_id is not None:
+            self.created_by_id = created_by_id
+        if modified_datetime is not None:
+            self.modified_datetime = modified_datetime
+        if modified_by_id is not None:
+            self.modified_by_id = modified_by_id
+        if md5 is not None:
+            self.md5 = md5
+        if video_thumbnail is not None:
+            self.video_thumbnail = video_thumbnail
+        if image_thumbnail is not None:
+            self.image_thumbnail = image_thumbnail
+        if video_thumbnail_gif is not None:
+            self.video_thumbnail_gif = video_thumbnail_gif
+        if original_url is not None:
+            self.original_url = original_url
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20012.  # noqa: E501
+    def name(self):
+        """Gets the name of this InlineResponse20012.  # noqa: E501
 
-        Message indicating successful update of media list.  # noqa: E501
+        Name of the media.  # noqa: E501
 
-        :return: The message of this InlineResponse20012.  # noqa: E501
+        :return: The name of this InlineResponse20012.  # noqa: E501
         :rtype: str
         """
-        return self._message
+        return self._name
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20012.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20012.
 
-        Message indicating successful update of media list.  # noqa: E501
+        Name of the media.  # noqa: E501
 
-        :param message: The message of this InlineResponse20012.  # noqa: E501
+        :param name: The name of this InlineResponse20012.  # noqa: E501
         :type: str
         """
 
-        self._message = message
+        self._name = name
+
+    @property
+    def last_edit_start(self):
+        """Gets the last_edit_start of this InlineResponse20012.  # noqa: E501
+
+        Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
+
+        :return: The last_edit_start of this InlineResponse20012.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._last_edit_start
+
+    @last_edit_start.setter
+    def last_edit_start(self, last_edit_start):
+        """Sets the last_edit_start of this InlineResponse20012.
+
+        Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
+
+        :param last_edit_start: The last_edit_start of this InlineResponse20012.  # noqa: E501
+        :type: datetime
+        """
+
+        self._last_edit_start = last_edit_start
+
+    @property
+    def last_edit_end(self):
+        """Gets the last_edit_end of this InlineResponse20012.  # noqa: E501
+
+        Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
+
+        :return: The last_edit_end of this InlineResponse20012.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._last_edit_end
+
+    @last_edit_end.setter
+    def last_edit_end(self, last_edit_end):
+        """Sets the last_edit_end of this InlineResponse20012.
+
+        Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
+
+        :param last_edit_end: The last_edit_end of this InlineResponse20012.  # noqa: E501
+        :type: datetime
+        """
+
+        self._last_edit_end = last_edit_end
+
+    @property
+    def media_files(self):
+        """Gets the media_files of this InlineResponse20012.  # noqa: E501
+
+        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
+
+        :return: The media_files of this InlineResponse20012.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._media_files
+
+    @media_files.setter
+    def media_files(self, media_files):
+        """Sets the media_files of this InlineResponse20012.
+
+        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
+
+        :param media_files: The media_files of this InlineResponse20012.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._media_files = media_files
+
+    @property
+    def attributes(self):
+        """Gets the attributes of this InlineResponse20012.  # noqa: E501
+
+        Object containing attribute values.  # noqa: E501
+
+        :return: The attributes of this InlineResponse20012.  # noqa: E501
+        :rtype: dict(str, object)
+        """
+        return self._attributes
+
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this InlineResponse20012.
+
+        Object containing attribute values.  # noqa: E501
+
+        :param attributes: The attributes of this InlineResponse20012.  # noqa: E501
+        :type: dict(str, object)
+        """
+
+        self._attributes = attributes
+
+    @property
+    def id(self):
+        """Gets the id of this InlineResponse20012.  # noqa: E501
+
+        Unique integer identifying this media.  # noqa: E501
+
+        :return: The id of this InlineResponse20012.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20012.
+
+        Unique integer identifying this media.  # noqa: E501
+
+        :param id: The id of this InlineResponse20012.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse20012.  # noqa: E501
+
+        Unique integer identifying project of this media.  # noqa: E501
+
+        :return: The project of this InlineResponse20012.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse20012.
+
+        Unique integer identifying project of this media.  # noqa: E501
+
+        :param project: The project of this InlineResponse20012.  # noqa: E501
+        :type: int
+        """
+
+        self._project = project
+
+    @property
+    def meta(self):
+        """Gets the meta of this InlineResponse20012.  # noqa: E501
+
+        Unique integer identifying entity type of this media.  # noqa: E501
+
+        :return: The meta of this InlineResponse20012.  # noqa: E501
+        :rtype: int
+        """
+        return self._meta
+
+    @meta.setter
+    def meta(self, meta):
+        """Sets the meta of this InlineResponse20012.
+
+        Unique integer identifying entity type of this media.  # noqa: E501
+
+        :param meta: The meta of this InlineResponse20012.  # noqa: E501
+        :type: int
+        """
+
+        self._meta = meta
+
+    @property
+    def url(self):
+        """Gets the url of this InlineResponse20012.  # noqa: E501
+
+        URL of the media file.  # noqa: E501
+
+        :return: The url of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """Sets the url of this InlineResponse20012.
+
+        URL of the media file.  # noqa: E501
+
+        :param url: The url of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._url = url
+
+    @property
+    def created_datetime(self):
+        """Gets the created_datetime of this InlineResponse20012.  # noqa: E501
+
+        Datetime when this media was created.  # noqa: E501
+
+        :return: The created_datetime of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._created_datetime
+
+    @created_datetime.setter
+    def created_datetime(self, created_datetime):
+        """Sets the created_datetime of this InlineResponse20012.
+
+        Datetime when this media was created.  # noqa: E501
+
+        :param created_datetime: The created_datetime of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._created_datetime = created_datetime
+
+    @property
+    def created_by_id(self):
+        """Gets the created_by_id of this InlineResponse20012.  # noqa: E501
+
+        Unique integer identifying user who created this media.  # noqa: E501
+
+        :return: The created_by_id of this InlineResponse20012.  # noqa: E501
+        :rtype: int
+        """
+        return self._created_by_id
+
+    @created_by_id.setter
+    def created_by_id(self, created_by_id):
+        """Sets the created_by_id of this InlineResponse20012.
+
+        Unique integer identifying user who created this media.  # noqa: E501
+
+        :param created_by_id: The created_by_id of this InlineResponse20012.  # noqa: E501
+        :type: int
+        """
+
+        self._created_by_id = created_by_id
+
+    @property
+    def modified_datetime(self):
+        """Gets the modified_datetime of this InlineResponse20012.  # noqa: E501
+
+        Datetime when this media was last modified.  # noqa: E501
+
+        :return: The modified_datetime of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._modified_datetime
+
+    @modified_datetime.setter
+    def modified_datetime(self, modified_datetime):
+        """Sets the modified_datetime of this InlineResponse20012.
+
+        Datetime when this media was last modified.  # noqa: E501
+
+        :param modified_datetime: The modified_datetime of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._modified_datetime = modified_datetime
+
+    @property
+    def modified_by_id(self):
+        """Gets the modified_by_id of this InlineResponse20012.  # noqa: E501
+
+        Unique integer identifying user who last modified this media.  # noqa: E501
+
+        :return: The modified_by_id of this InlineResponse20012.  # noqa: E501
+        :rtype: int
+        """
+        return self._modified_by_id
+
+    @modified_by_id.setter
+    def modified_by_id(self, modified_by_id):
+        """Sets the modified_by_id of this InlineResponse20012.
+
+        Unique integer identifying user who last modified this media.  # noqa: E501
+
+        :param modified_by_id: The modified_by_id of this InlineResponse20012.  # noqa: E501
+        :type: int
+        """
+
+        self._modified_by_id = modified_by_id
+
+    @property
+    def md5(self):
+        """Gets the md5 of this InlineResponse20012.  # noqa: E501
+
+        MD5 checksum of the media file.  # noqa: E501
+
+        :return: The md5 of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._md5
+
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this InlineResponse20012.
+
+        MD5 checksum of the media file.  # noqa: E501
+
+        :param md5: The md5 of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._md5 = md5
+
+    @property
+    def video_thumbnail(self):
+        """Gets the video_thumbnail of this InlineResponse20012.  # noqa: E501
+
+        URL of video thumbnail.  # noqa: E501
+
+        :return: The video_thumbnail of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._video_thumbnail
+
+    @video_thumbnail.setter
+    def video_thumbnail(self, video_thumbnail):
+        """Sets the video_thumbnail of this InlineResponse20012.
+
+        URL of video thumbnail.  # noqa: E501
+
+        :param video_thumbnail: The video_thumbnail of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._video_thumbnail = video_thumbnail
+
+    @property
+    def image_thumbnail(self):
+        """Gets the image_thumbnail of this InlineResponse20012.  # noqa: E501
+
+        URL of image thumbnail.  # noqa: E501
+
+        :return: The image_thumbnail of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_thumbnail
+
+    @image_thumbnail.setter
+    def image_thumbnail(self, image_thumbnail):
+        """Sets the image_thumbnail of this InlineResponse20012.
+
+        URL of image thumbnail.  # noqa: E501
+
+        :param image_thumbnail: The image_thumbnail of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._image_thumbnail = image_thumbnail
+
+    @property
+    def video_thumbnail_gif(self):
+        """Gets the video_thumbnail_gif of this InlineResponse20012.  # noqa: E501
+
+        URL of video thumbnail gif.  # noqa: E501
+
+        :return: The video_thumbnail_gif of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._video_thumbnail_gif
+
+    @video_thumbnail_gif.setter
+    def video_thumbnail_gif(self, video_thumbnail_gif):
+        """Sets the video_thumbnail_gif of this InlineResponse20012.
+
+        URL of video thumbnail gif.  # noqa: E501
+
+        :param video_thumbnail_gif: The video_thumbnail_gif of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._video_thumbnail_gif = video_thumbnail_gif
+
+    @property
+    def original_url(self):
+        """Gets the original_url of this InlineResponse20012.  # noqa: E501
+
+        URL of original video, if it exists.  # noqa: E501
+
+        :return: The original_url of this InlineResponse20012.  # noqa: E501
+        :rtype: str
+        """
+        return self._original_url
+
+    @original_url.setter
+    def original_url(self, original_url):
+        """Sets the original_url of this InlineResponse20012.
+
+        URL of original video, if it exists.  # noqa: E501
+
+        :param original_url: The original_url of this InlineResponse20012.  # noqa: E501
+        :type: str
+        """
+
+        self._original_url = original_url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

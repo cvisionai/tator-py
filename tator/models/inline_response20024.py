@@ -29,42 +29,266 @@ class InlineResponse20024(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'id': 'int',
+        'meta': 'int',
+        'association': 'int',
+        'version': 'int',
+        'modified': 'bool',
+        'media_ids': 'list[int]',
+        'localization_ids': 'list[int]',
+        'frame': 'int',
+        'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
-        'message': 'message'
+        'id': 'id',
+        'meta': 'meta',
+        'association': 'association',
+        'version': 'version',
+        'modified': 'modified',
+        'media_ids': 'media_ids',
+        'localization_ids': 'localization_ids',
+        'frame': 'frame',
+        'attributes': 'attributes'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, id=None, meta=None, association=None, version=None, modified=False, media_ids=None, localization_ids=None, frame=None, attributes=None):  # noqa: E501
         """InlineResponse20024 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._id = None
+        self._meta = None
+        self._association = None
+        self._version = None
+        self._modified = None
+        self._media_ids = None
+        self._localization_ids = None
+        self._frame = None
+        self._attributes = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if id is not None:
+            self.id = id
+        if meta is not None:
+            self.meta = meta
+        if association is not None:
+            self.association = association
+        if version is not None:
+            self.version = version
+        if modified is not None:
+            self.modified = modified
+        if media_ids is not None:
+            self.media_ids = media_ids
+        if localization_ids is not None:
+            self.localization_ids = localization_ids
+        if frame is not None:
+            self.frame = frame
+        if attributes is not None:
+            self.attributes = attributes
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20024.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20024.  # noqa: E501
 
-        Message indicating successful update of state list.  # noqa: E501
+        Unique integer identifying the state.  # noqa: E501
 
-        :return: The message of this InlineResponse20024.  # noqa: E501
-        :rtype: str
+        :return: The id of this InlineResponse20024.  # noqa: E501
+        :rtype: int
         """
-        return self._message
+        return self._id
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20024.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20024.
 
-        Message indicating successful update of state list.  # noqa: E501
+        Unique integer identifying the state.  # noqa: E501
 
-        :param message: The message of this InlineResponse20024.  # noqa: E501
-        :type: str
+        :param id: The id of this InlineResponse20024.  # noqa: E501
+        :type: int
         """
 
-        self._message = message
+        self._id = id
+
+    @property
+    def meta(self):
+        """Gets the meta of this InlineResponse20024.  # noqa: E501
+
+        Unique integer identifying the entity type.  # noqa: E501
+
+        :return: The meta of this InlineResponse20024.  # noqa: E501
+        :rtype: int
+        """
+        return self._meta
+
+    @meta.setter
+    def meta(self, meta):
+        """Sets the meta of this InlineResponse20024.
+
+        Unique integer identifying the entity type.  # noqa: E501
+
+        :param meta: The meta of this InlineResponse20024.  # noqa: E501
+        :type: int
+        """
+
+        self._meta = meta
+
+    @property
+    def association(self):
+        """Gets the association of this InlineResponse20024.  # noqa: E501
+
+        Unique integer identifying the state association.  # noqa: E501
+
+        :return: The association of this InlineResponse20024.  # noqa: E501
+        :rtype: int
+        """
+        return self._association
+
+    @association.setter
+    def association(self, association):
+        """Sets the association of this InlineResponse20024.
+
+        Unique integer identifying the state association.  # noqa: E501
+
+        :param association: The association of this InlineResponse20024.  # noqa: E501
+        :type: int
+        """
+
+        self._association = association
+
+    @property
+    def version(self):
+        """Gets the version of this InlineResponse20024.  # noqa: E501
+
+        Unique integer identifying the version.  # noqa: E501
+
+        :return: The version of this InlineResponse20024.  # noqa: E501
+        :rtype: int
+        """
+        return self._version
+
+    @version.setter
+    def version(self, version):
+        """Sets the version of this InlineResponse20024.
+
+        Unique integer identifying the version.  # noqa: E501
+
+        :param version: The version of this InlineResponse20024.  # noqa: E501
+        :type: int
+        """
+
+        self._version = version
+
+    @property
+    def modified(self):
+        """Gets the modified of this InlineResponse20024.  # noqa: E501
+
+        Whether this localization was created in the web UI.  # noqa: E501
+
+        :return: The modified of this InlineResponse20024.  # noqa: E501
+        :rtype: bool
+        """
+        return self._modified
+
+    @modified.setter
+    def modified(self, modified):
+        """Sets the modified of this InlineResponse20024.
+
+        Whether this localization was created in the web UI.  # noqa: E501
+
+        :param modified: The modified of this InlineResponse20024.  # noqa: E501
+        :type: bool
+        """
+
+        self._modified = modified
+
+    @property
+    def media_ids(self):
+        """Gets the media_ids of this InlineResponse20024.  # noqa: E501
+
+        List of media IDs that this state applies to.  # noqa: E501
+
+        :return: The media_ids of this InlineResponse20024.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._media_ids
+
+    @media_ids.setter
+    def media_ids(self, media_ids):
+        """Sets the media_ids of this InlineResponse20024.
+
+        List of media IDs that this state applies to.  # noqa: E501
+
+        :param media_ids: The media_ids of this InlineResponse20024.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._media_ids = media_ids
+
+    @property
+    def localization_ids(self):
+        """Gets the localization_ids of this InlineResponse20024.  # noqa: E501
+
+        List of localization IDs that this state applies to.  # noqa: E501
+
+        :return: The localization_ids of this InlineResponse20024.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._localization_ids
+
+    @localization_ids.setter
+    def localization_ids(self, localization_ids):
+        """Sets the localization_ids of this InlineResponse20024.
+
+        List of localization IDs that this state applies to.  # noqa: E501
+
+        :param localization_ids: The localization_ids of this InlineResponse20024.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._localization_ids = localization_ids
+
+    @property
+    def frame(self):
+        """Gets the frame of this InlineResponse20024.  # noqa: E501
+
+        Frame number this state applies to.  # noqa: E501
+
+        :return: The frame of this InlineResponse20024.  # noqa: E501
+        :rtype: int
+        """
+        return self._frame
+
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this InlineResponse20024.
+
+        Frame number this state applies to.  # noqa: E501
+
+        :param frame: The frame of this InlineResponse20024.  # noqa: E501
+        :type: int
+        """
+
+        self._frame = frame
+
+    @property
+    def attributes(self):
+        """Gets the attributes of this InlineResponse20024.  # noqa: E501
+
+        Object containing attribute values.  # noqa: E501
+
+        :return: The attributes of this InlineResponse20024.  # noqa: E501
+        :rtype: dict(str, object)
+        """
+        return self._attributes
+
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this InlineResponse20024.
+
+        Object containing attribute values.  # noqa: E501
+
+        :param attributes: The attributes of this InlineResponse20024.  # noqa: E501
+        :type: dict(str, object)
+        """
+
+        self._attributes = attributes
 
     def to_dict(self):
         """Returns the model properties as a dict"""

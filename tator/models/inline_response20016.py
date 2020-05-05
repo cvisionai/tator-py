@@ -29,68 +29,40 @@ class InlineResponse20016(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestMediaTypesprojectType',
-        'columns': 'list[OneOfinlineResponse20016ColumnsItems]'
+        'prev': 'int'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'prev': 'prev'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, prev=None):  # noqa: E501
         """InlineResponse20016 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._prev = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if prev is not None:
+            self.prev = prev
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse20016.  # noqa: E501
+    def prev(self):
+        """Gets the prev of this InlineResponse20016.  # noqa: E501
 
 
-        :return: The type of this InlineResponse20016.  # noqa: E501
-        :rtype: RestMediaTypesprojectType
+        :return: The prev of this InlineResponse20016.  # noqa: E501
+        :rtype: int
         """
-        return self._type
+        return self._prev
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse20016.
+    @prev.setter
+    def prev(self, prev):
+        """Sets the prev of this InlineResponse20016.
 
 
-        :param type: The type of this InlineResponse20016.  # noqa: E501
-        :type: RestMediaTypesprojectType
-        """
-
-        self._type = type
-
-    @property
-    def columns(self):
-        """Gets the columns of this InlineResponse20016.  # noqa: E501
-
-        Attribute types associated with this localization type.  # noqa: E501
-
-        :return: The columns of this InlineResponse20016.  # noqa: E501
-        :rtype: list[OneOfinlineResponse20016ColumnsItems]
-        """
-        return self._columns
-
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse20016.
-
-        Attribute types associated with this localization type.  # noqa: E501
-
-        :param columns: The columns of this InlineResponse20016.  # noqa: E501
-        :type: list[OneOfinlineResponse20016ColumnsItems]
+        :param prev: The prev of this InlineResponse20016.  # noqa: E501
+        :type: int
         """
 
-        self._columns = columns
+        self._prev = prev
 
     def to_dict(self):
         """Returns the model properties as a dict"""

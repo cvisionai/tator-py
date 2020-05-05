@@ -29,40 +29,42 @@ class InlineResponse20014(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'next': 'int'
+        'message': 'str'
     }
 
     attribute_map = {
-        'next': 'next'
+        'message': 'message'
     }
 
-    def __init__(self, next=None):  # noqa: E501
+    def __init__(self, message=None):  # noqa: E501
         """InlineResponse20014 - a model defined in Swagger"""  # noqa: E501
-        self._next = None
+        self._message = None
         self.discriminator = None
-        if next is not None:
-            self.next = next
+        if message is not None:
+            self.message = message
 
     @property
-    def next(self):
-        """Gets the next of this InlineResponse20014.  # noqa: E501
+    def message(self):
+        """Gets the message of this InlineResponse20014.  # noqa: E501
 
+        Message indicating successful update of media.  # noqa: E501
 
-        :return: The next of this InlineResponse20014.  # noqa: E501
-        :rtype: int
+        :return: The message of this InlineResponse20014.  # noqa: E501
+        :rtype: str
         """
-        return self._next
+        return self._message
 
-    @next.setter
-    def next(self, next):
-        """Sets the next of this InlineResponse20014.
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse20014.
 
+        Message indicating successful update of media.  # noqa: E501
 
-        :param next: The next of this InlineResponse20014.  # noqa: E501
-        :type: int
+        :param message: The message of this InlineResponse20014.  # noqa: E501
+        :type: str
         """
 
-        self._next = next
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

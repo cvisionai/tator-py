@@ -29,104 +29,42 @@ class InlineResponse20019(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'username': 'str',
-        'permission': 'str'
+        'message': 'str'
     }
 
     attribute_map = {
-        'id': 'id',
-        'username': 'username',
-        'permission': 'permission'
+        'message': 'message'
     }
 
-    def __init__(self, id=None, username=None, permission=None):  # noqa: E501
+    def __init__(self, message=None):  # noqa: E501
         """InlineResponse20019 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._username = None
-        self._permission = None
+        self._message = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if username is not None:
-            self.username = username
-        if permission is not None:
-            self.permission = permission
+        if message is not None:
+            self.message = message
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse20019.  # noqa: E501
+    def message(self):
+        """Gets the message of this InlineResponse20019.  # noqa: E501
 
-        Unique integer identifying a membership.  # noqa: E501
+        Message indicating successful update of media type.  # noqa: E501
 
-        :return: The id of this InlineResponse20019.  # noqa: E501
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse20019.
-
-        Unique integer identifying a membership.  # noqa: E501
-
-        :param id: The id of this InlineResponse20019.  # noqa: E501
-        :type: int
-        """
-
-        self._id = id
-
-    @property
-    def username(self):
-        """Gets the username of this InlineResponse20019.  # noqa: E501
-
-        Username for the membership.  # noqa: E501
-
-        :return: The username of this InlineResponse20019.  # noqa: E501
+        :return: The message of this InlineResponse20019.  # noqa: E501
         :rtype: str
         """
-        return self._username
+        return self._message
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this InlineResponse20019.
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse20019.
 
-        Username for the membership.  # noqa: E501
+        Message indicating successful update of media type.  # noqa: E501
 
-        :param username: The username of this InlineResponse20019.  # noqa: E501
+        :param message: The message of this InlineResponse20019.  # noqa: E501
         :type: str
         """
 
-        self._username = username
-
-    @property
-    def permission(self):
-        """Gets the permission of this InlineResponse20019.  # noqa: E501
-
-        User permission level for the project.  # noqa: E501
-
-        :return: The permission of this InlineResponse20019.  # noqa: E501
-        :rtype: str
-        """
-        return self._permission
-
-    @permission.setter
-    def permission(self, permission):
-        """Sets the permission of this InlineResponse20019.
-
-        User permission level for the project.  # noqa: E501
-
-        :param permission: The permission of this InlineResponse20019.  # noqa: E501
-        :type: str
-        """
-        allowed_values = ["view_only", "can_edit", "can_transfer", "can_execute", "full_control"]  # noqa: E501
-        if permission not in allowed_values:
-            raise ValueError(
-                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
-                .format(permission, allowed_values)
-            )
-
-        self._permission = permission
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,42 +29,238 @@ class InlineResponse20022(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'id': 'int',
+        'name': 'str',
+        'summary': 'str',
+        'thumb': 'str',
+        'num_files': 'int',
+        'size': 'int',
+        'usernames': 'list[str]',
+        'permission': 'str'
     }
 
     attribute_map = {
-        'message': 'message'
+        'id': 'id',
+        'name': 'name',
+        'summary': 'summary',
+        'thumb': 'thumb',
+        'num_files': 'num_files',
+        'size': 'size',
+        'usernames': 'usernames',
+        'permission': 'permission'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, id=None, name=None, summary='', thumb=None, num_files=None, size=None, usernames=None, permission=None):  # noqa: E501
         """InlineResponse20022 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._id = None
+        self._name = None
+        self._summary = None
+        self._thumb = None
+        self._num_files = None
+        self._size = None
+        self._usernames = None
+        self._permission = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if id is not None:
+            self.id = id
+        if name is not None:
+            self.name = name
+        if summary is not None:
+            self.summary = summary
+        if thumb is not None:
+            self.thumb = thumb
+        if num_files is not None:
+            self.num_files = num_files
+        if size is not None:
+            self.size = size
+        if usernames is not None:
+            self.usernames = usernames
+        if permission is not None:
+            self.permission = permission
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20022.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20022.  # noqa: E501
 
-        Message indicating successful update of project.  # noqa: E501
+        Unique integer identifying the project.  # noqa: E501
 
-        :return: The message of this InlineResponse20022.  # noqa: E501
+        :return: The id of this InlineResponse20022.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20022.
+
+        Unique integer identifying the project.  # noqa: E501
+
+        :param id: The id of this InlineResponse20022.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse20022.  # noqa: E501
+
+        Name of the project.  # noqa: E501
+
+        :return: The name of this InlineResponse20022.  # noqa: E501
         :rtype: str
         """
-        return self._message
+        return self._name
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20022.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20022.
 
-        Message indicating successful update of project.  # noqa: E501
+        Name of the project.  # noqa: E501
 
-        :param message: The message of this InlineResponse20022.  # noqa: E501
+        :param name: The name of this InlineResponse20022.  # noqa: E501
         :type: str
         """
 
-        self._message = message
+        self._name = name
+
+    @property
+    def summary(self):
+        """Gets the summary of this InlineResponse20022.  # noqa: E501
+
+        Summary of the project.  # noqa: E501
+
+        :return: The summary of this InlineResponse20022.  # noqa: E501
+        :rtype: str
+        """
+        return self._summary
+
+    @summary.setter
+    def summary(self, summary):
+        """Sets the summary of this InlineResponse20022.
+
+        Summary of the project.  # noqa: E501
+
+        :param summary: The summary of this InlineResponse20022.  # noqa: E501
+        :type: str
+        """
+
+        self._summary = summary
+
+    @property
+    def thumb(self):
+        """Gets the thumb of this InlineResponse20022.  # noqa: E501
+
+        URL of thumbnail used to represent the project.  # noqa: E501
+
+        :return: The thumb of this InlineResponse20022.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumb
+
+    @thumb.setter
+    def thumb(self, thumb):
+        """Sets the thumb of this InlineResponse20022.
+
+        URL of thumbnail used to represent the project.  # noqa: E501
+
+        :param thumb: The thumb of this InlineResponse20022.  # noqa: E501
+        :type: str
+        """
+
+        self._thumb = thumb
+
+    @property
+    def num_files(self):
+        """Gets the num_files of this InlineResponse20022.  # noqa: E501
+
+        Number of files in the project.  # noqa: E501
+
+        :return: The num_files of this InlineResponse20022.  # noqa: E501
+        :rtype: int
+        """
+        return self._num_files
+
+    @num_files.setter
+    def num_files(self, num_files):
+        """Sets the num_files of this InlineResponse20022.
+
+        Number of files in the project.  # noqa: E501
+
+        :param num_files: The num_files of this InlineResponse20022.  # noqa: E501
+        :type: int
+        """
+
+        self._num_files = num_files
+
+    @property
+    def size(self):
+        """Gets the size of this InlineResponse20022.  # noqa: E501
+
+        Size of the project in bytes.  # noqa: E501
+
+        :return: The size of this InlineResponse20022.  # noqa: E501
+        :rtype: int
+        """
+        return self._size
+
+    @size.setter
+    def size(self, size):
+        """Sets the size of this InlineResponse20022.
+
+        Size of the project in bytes.  # noqa: E501
+
+        :param size: The size of this InlineResponse20022.  # noqa: E501
+        :type: int
+        """
+
+        self._size = size
+
+    @property
+    def usernames(self):
+        """Gets the usernames of this InlineResponse20022.  # noqa: E501
+
+        List of usernames of project members.  # noqa: E501
+
+        :return: The usernames of this InlineResponse20022.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._usernames
+
+    @usernames.setter
+    def usernames(self, usernames):
+        """Sets the usernames of this InlineResponse20022.
+
+        List of usernames of project members.  # noqa: E501
+
+        :param usernames: The usernames of this InlineResponse20022.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._usernames = usernames
+
+    @property
+    def permission(self):
+        """Gets the permission of this InlineResponse20022.  # noqa: E501
+
+        Permission level of user making request.  # noqa: E501
+
+        :return: The permission of this InlineResponse20022.  # noqa: E501
+        :rtype: str
+        """
+        return self._permission
+
+    @permission.setter
+    def permission(self, permission):
+        """Sets the permission of this InlineResponse20022.
+
+        Permission level of user making request.  # noqa: E501
+
+        :param permission: The permission of this InlineResponse20022.  # noqa: E501
+        :type: str
+        """
+
+        self._permission = permission
 
     def to_dict(self):
         """Returns the model properties as a dict"""

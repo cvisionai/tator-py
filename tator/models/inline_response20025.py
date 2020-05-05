@@ -47,7 +47,7 @@ class InlineResponse20025(object):
     def message(self):
         """Gets the message of this InlineResponse20025.  # noqa: E501
 
-        Message indicating successful update of state.  # noqa: E501
+        Message indicating successful update of state list.  # noqa: E501
 
         :return: The message of this InlineResponse20025.  # noqa: E501
         :rtype: str
@@ -58,7 +58,7 @@ class InlineResponse20025(object):
     def message(self, message):
         """Sets the message of this InlineResponse20025.
 
-        Message indicating successful update of state.  # noqa: E501
+        Message indicating successful update of state list.  # noqa: E501
 
         :param message: The message of this InlineResponse20025.  # noqa: E501
         :type: str

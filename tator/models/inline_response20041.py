@@ -29,42 +29,42 @@ class InlineResponse20041(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'token': 'str'
+        'message': 'str'
     }
 
     attribute_map = {
-        'token': 'token'
+        'message': 'message'
     }
 
-    def __init__(self, token=None):  # noqa: E501
+    def __init__(self, message=None):  # noqa: E501
         """InlineResponse20041 - a model defined in Swagger"""  # noqa: E501
-        self._token = None
+        self._message = None
         self.discriminator = None
-        if token is not None:
-            self.token = token
+        if message is not None:
+            self.message = message
 
     @property
-    def token(self):
-        """Gets the token of this InlineResponse20041.  # noqa: E501
+    def message(self):
+        """Gets the message of this InlineResponse20041.  # noqa: E501
 
-        API token.  # noqa: E501
+        Message indicating successful update of version.  # noqa: E501
 
-        :return: The token of this InlineResponse20041.  # noqa: E501
+        :return: The message of this InlineResponse20041.  # noqa: E501
         :rtype: str
         """
-        return self._token
+        return self._message
 
-    @token.setter
-    def token(self, token):
-        """Sets the token of this InlineResponse20041.
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse20041.
 
-        API token.  # noqa: E501
+        Message indicating successful update of version.  # noqa: E501
 
-        :param token: The token of this InlineResponse20041.  # noqa: E501
+        :param message: The message of this InlineResponse20041.  # noqa: E501
         :type: str
         """
 
-        self._token = token
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

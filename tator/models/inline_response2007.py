@@ -29,42 +29,14 @@ class InlineResponse2007(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
     }
 
     attribute_map = {
-        'message': 'message'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self):  # noqa: E501
         """InlineResponse2007 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
-
-    @property
-    def message(self):
-        """Gets the message of this InlineResponse2007.  # noqa: E501
-
-        Message indicating successful update of localization.  # noqa: E501
-
-        :return: The message of this InlineResponse2007.  # noqa: E501
-        :rtype: str
-        """
-        return self._message
-
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse2007.
-
-        Message indicating successful update of localization.  # noqa: E501
-
-        :param message: The message of this InlineResponse2007.  # noqa: E501
-        :type: str
-        """
-
-        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

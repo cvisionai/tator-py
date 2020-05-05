@@ -29,182 +29,98 @@ class InlineResponse20031(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'project': 'int',
-        'path': 'str',
-        'name': 'str',
-        'parent': 'int',
-        'attributes': 'dict(str, object)'
+        'value': 'str',
+        'group': 'str',
+        'data': 'dict(str, object)'
     }
 
     attribute_map = {
-        'id': 'id',
-        'project': 'project',
-        'path': 'path',
-        'name': 'name',
-        'parent': 'parent',
-        'attributes': 'attributes'
+        'value': 'value',
+        'group': 'group',
+        'data': 'data'
     }
 
-    def __init__(self, id=None, project=None, path=None, name=None, parent=None, attributes=None):  # noqa: E501
+    def __init__(self, value=None, group=None, data=None):  # noqa: E501
         """InlineResponse20031 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._project = None
-        self._path = None
-        self._name = None
-        self._parent = None
-        self._attributes = None
+        self._value = None
+        self._group = None
+        self._data = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if project is not None:
-            self.project = project
-        if path is not None:
-            self.path = path
-        if name is not None:
-            self.name = name
-        if parent is not None:
-            self.parent = parent
-        if attributes is not None:
-            self.attributes = attributes
+        if value is not None:
+            self.value = value
+        if group is not None:
+            self.group = group
+        if data is not None:
+            self.data = data
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse20031.  # noqa: E501
+    def value(self):
+        """Gets the value of this InlineResponse20031.  # noqa: E501
 
-        Unique integer identifying the tree leaf.  # noqa: E501
+        Name of the suggestion.  # noqa: E501
 
-        :return: The id of this InlineResponse20031.  # noqa: E501
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse20031.
-
-        Unique integer identifying the tree leaf.  # noqa: E501
-
-        :param id: The id of this InlineResponse20031.  # noqa: E501
-        :type: int
-        """
-
-        self._id = id
-
-    @property
-    def project(self):
-        """Gets the project of this InlineResponse20031.  # noqa: E501
-
-        Unique integer identifying a project.  # noqa: E501
-
-        :return: The project of this InlineResponse20031.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this InlineResponse20031.
-
-        Unique integer identifying a project.  # noqa: E501
-
-        :param project: The project of this InlineResponse20031.  # noqa: E501
-        :type: int
-        """
-
-        self._project = project
-
-    @property
-    def path(self):
-        """Gets the path of this InlineResponse20031.  # noqa: E501
-
-        Full path to leaf in hierarchy.  # noqa: E501
-
-        :return: The path of this InlineResponse20031.  # noqa: E501
+        :return: The value of this InlineResponse20031.  # noqa: E501
         :rtype: str
         """
-        return self._path
+        return self._value
 
-    @path.setter
-    def path(self, path):
-        """Sets the path of this InlineResponse20031.
+    @value.setter
+    def value(self, value):
+        """Sets the value of this InlineResponse20031.
 
-        Full path to leaf in hierarchy.  # noqa: E501
+        Name of the suggestion.  # noqa: E501
 
-        :param path: The path of this InlineResponse20031.  # noqa: E501
+        :param value: The value of this InlineResponse20031.  # noqa: E501
         :type: str
         """
 
-        self._path = path
+        self._value = value
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse20031.  # noqa: E501
+    def group(self):
+        """Gets the group of this InlineResponse20031.  # noqa: E501
 
-        Name of the tree leaf.  # noqa: E501
+        Group of the suggestion.  # noqa: E501
 
-        :return: The name of this InlineResponse20031.  # noqa: E501
+        :return: The group of this InlineResponse20031.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._group
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse20031.
+    @group.setter
+    def group(self, group):
+        """Sets the group of this InlineResponse20031.
 
-        Name of the tree leaf.  # noqa: E501
+        Group of the suggestion.  # noqa: E501
 
-        :param name: The name of this InlineResponse20031.  # noqa: E501
+        :param group: The group of this InlineResponse20031.  # noqa: E501
         :type: str
         """
 
-        self._name = name
+        self._group = group
 
     @property
-    def parent(self):
-        """Gets the parent of this InlineResponse20031.  # noqa: E501
+    def data(self):
+        """Gets the data of this InlineResponse20031.  # noqa: E501
 
-        ID to use as parent if there is one.  # noqa: E501
+        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :return: The parent of this InlineResponse20031.  # noqa: E501
-        :rtype: int
-        """
-        return self._parent
-
-    @parent.setter
-    def parent(self, parent):
-        """Sets the parent of this InlineResponse20031.
-
-        ID to use as parent if there is one.  # noqa: E501
-
-        :param parent: The parent of this InlineResponse20031.  # noqa: E501
-        :type: int
-        """
-
-        self._parent = parent
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this InlineResponse20031.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this InlineResponse20031.  # noqa: E501
+        :return: The data of this InlineResponse20031.  # noqa: E501
         :rtype: dict(str, object)
         """
-        return self._attributes
+        return self._data
 
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this InlineResponse20031.
+    @data.setter
+    def data(self, data):
+        """Sets the data of this InlineResponse20031.
 
-        Object containing attribute values.  # noqa: E501
+        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :param attributes: The attributes of this InlineResponse20031.  # noqa: E501
+        :param data: The data of this InlineResponse20031.  # noqa: E501
         :type: dict(str, object)
         """
 
-        self._attributes = attributes
+        self._data = data
 
     def to_dict(self):
         """Returns the model properties as a dict"""

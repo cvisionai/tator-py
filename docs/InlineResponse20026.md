@@ -3,8 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**RestStateTypesprojectType**](RestStateTypesprojectType.md) |  | [optional] 
-**columns** | [**list[OneOfinlineResponse20026ColumnsItems]**](Object.md) | Attribute types associated with this state type. | [optional] 
+**message** | **str** | Message indicating successful update of state. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

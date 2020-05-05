@@ -58,7 +58,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = tator.AlgorithmApi(tator.ApiClient(configuration))
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
 body = tator.Body35() # Body35 |  (optional)
 
@@ -66,7 +66,7 @@ try:
     api_response = api_instance.algorithm_launch(project, body=body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AlgorithmApi->algorithm_launch: %s\n" % e)
+    print("Exception when calling TatorApi->algorithm_launch: %s\n" % e)
 
 # Configure API key authorization: TokenAuth
 configuration = tator.Configuration()
@@ -75,14 +75,1940 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = tator.AlgorithmApi(tator.ApiClient(configuration))
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body() # Body |  (optional)
+
+try:
+    api_response = api_instance.create_analysis(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_analysis: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body1() # Body1 |  (optional)
+
+try:
+    api_response = api_instance.create_attribute_type(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_attribute_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body5() # Body5 |  (optional)
+
+try:
+    api_response = api_instance.create_localization(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_localization: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body8() # Body8 |  (optional)
+
+try:
+    api_response = api_instance.create_localization_type(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_localization_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body12() # Body12 |  (optional)
+
+try:
+    api_response = api_instance.create_media_type(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_media_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body14() # Body14 |  (optional)
+
+try:
+    api_response = api_instance.create_membership(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_membership: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+body = tator.Body34() # Body34 |  (optional)
+
+try:
+    api_response = api_instance.create_obtain_auth_token(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_obtain_auth_token: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+body = tator.Body16() # Body16 |  (optional)
+
+try:
+    api_response = api_instance.create_project(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_project: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = {
+  "summary" : "Frame associated state",
+  "value" : {
+    "type" : 1,
+    "media_ids" : [ 1 ],
+    "frame" : 1000,
+    "My First Attribute" : "value1",
+    "My Second Attribute" : "value2"
+  }
+} # dict(str, object) |  (optional)
+
+try:
+    api_response = api_instance.create_state(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_state: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body21() # Body21 |  (optional)
+
+try:
+    api_response = api_instance.create_state_type(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_state_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body23() # Body23 |  (optional)
+
+try:
+    api_response = api_instance.create_temporary_file(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_temporary_file: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = NULL # dict(str, object) |  (optional)
+
+try:
+    api_response = api_instance.create_tree_leaf(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_tree_leaf: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body27() # Body27 |  (optional)
+
+try:
+    api_response = api_instance.create_tree_leaf_type(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_tree_leaf_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body32() # Body32 |  (optional)
+
+try:
+    api_response = api_instance.create_version(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->create_version: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an attribute type.
+
+try:
+    api_instance.delete_attribute_type(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_attribute_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a frame association.
+
+try:
+    api_instance.delete_frame_association(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_frame_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+run_uid = 'run_uid_example' # str | A uuid1 string identifying to single Job.
+
+try:
+    api_response = api_instance.delete_job(run_uid)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_job: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+group_id = 'group_id_example' # str | A uuid1 string identifying a group of jobs.
+
+try:
+    api_response = api_instance.delete_job_group(group_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_job_group: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization.
+
+try:
+    api_instance.delete_localization(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_localization: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization association.
+
+try:
+    api_instance.delete_localization_association(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_localization_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_localization_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an localization type.
+
+try:
+    api_instance.delete_localization_type(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_localization_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media.
+
+try:
+    api_instance.delete_media(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_media: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.delete_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_media_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an media type.
+
+try:
+    api_instance.delete_media_type(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_media_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a membership.
+
+try:
+    api_instance.delete_membership(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_membership: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a project.
+
+try:
+    api_instance.delete_project(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_project: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state.
+
+try:
+    api_instance.delete_state(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_state: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.delete_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_state_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state type.
+
+try:
+    api_instance.delete_state_type(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_state_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 'id_example' # str | A unique integer value identifying this temporary file.
+
+try:
+    api_instance.delete_temporary_file(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_temporary_file: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+expired = 0 # int | If greater than 0 will return only expired files (optional) (default to 0)
+
+try:
+    api_instance.delete_temporary_file_list(project, expired=expired)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_temporary_file_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a tree leaf.
+
+try:
+    api_instance.delete_tree_leaf(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_tree_leaf: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a tree leaf type. (optional)
+name = 'name_example' # str | Name of the tree leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_tree_leaf_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an tree_leaf type.
+
+try:
+    api_instance.delete_tree_leaf_type(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_tree_leaf_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a version.
+
+try:
+    api_instance.delete_version(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->delete_version: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
 
 try:
     api_response = api_instance.get_algorithm_list(project)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AlgorithmApi->get_algorithm_list: %s\n" % e)
+    print("Exception when calling TatorApi->get_algorithm_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+
+try:
+    api_response = api_instance.get_analysis_list(project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_analysis_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an attribute type.
+
+try:
+    api_response = api_instance.get_attribute_type(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_attribute_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+applies_to = 56 # int | Unique integer identifying the entity type that this attribute describes. (optional)
+
+try:
+    api_response = api_instance.get_attribute_type_list(project, applies_to=applies_to)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_attribute_type_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media object.
+frame_ranges = ['frame_ranges_example'] # list[str] | Comma-seperated list of frame ranges to capture.
+quality = 56 # int | Source resolution to use (default to highest quality) (optional)
+
+try:
+    api_response = api_instance.get_clip(id, frame_ranges, quality=quality)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_clip: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an entity type.
+
+try:
+    api_response = api_instance.get_entity_type_schema(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_entity_type_schema: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media object.
+frames = [[0]] # list[int] | Comma-seperated list of frames to capture. (optional) (default to [0])
+tile = 'tile_example' # str | wxh, if not supplied is made as squarish as possible. (optional)
+roi = 'roi_example' # str | w:h:x:y, optionally crop each frame to a given roi in relative coordinates. (optional)
+animate = 56 # int | If not tiling, animate each frame at a given fps in a gif. (optional)
+quality = 56 # int | Source resolution to use (default to highest quality) (optional)
+
+try:
+    api_response = api_instance.get_frame(id, frames=frames, tile=tile, roi=roi, animate=animate, quality=quality)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_frame: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a frame association.
+
+try:
+    api_response = api_instance.get_frame_association(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_frame_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization.
+
+try:
+    api_response = api_instance.get_localization(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_localization: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization association.
+
+try:
+    api_response = api_instance.get_localization_association(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_localization_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_localization_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an localization type.
+
+try:
+    api_response = api_instance.get_localization_type(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_localization_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | List of unique integers identifying a media. (optional)
+type = 56 # int | Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID. (optional)
+
+try:
+    api_response = api_instance.get_localization_type_list(project, media_id=media_id, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_localization_type_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media.
+
+try:
+    api_response = api_instance.get_media(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media object.
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_next: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media object.
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_prev: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_media_sections(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_sections: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an media type.
+
+try:
+    api_response = api_instance.get_media_type(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+
+try:
+    api_response = api_instance.get_media_type_list(project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_media_type_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a membership.
+
+try:
+    api_response = api_instance.get_membership(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_membership: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+
+try:
+    api_response = api_instance.get_membership_list(project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_membership_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a project.
+
+try:
+    api_response = api_instance.get_project(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_project: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+
+try:
+    api_response = api_instance.get_project_list()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_project_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | Unique integer identifying a media. Use this to do analyis on a single file instead of sections. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_section_analysis(project, media_id=media_id, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_section_analysis: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state.
+
+try:
+    api_instance.get_state(id)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_state: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_state_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state type.
+
+try:
+    api_response = api_instance.get_state_type(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_state_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = [56] # list[int] | List of unique integers identifying a media. (optional)
+type = 56 # int | Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID. (optional)
+
+try:
+    api_response = api_instance.get_state_type_list(project, media_id=media_id, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_state_type_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 'id_example' # str | A unique integer value identifying this temporary file.
+
+try:
+    api_response = api_instance.get_temporary_file(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_temporary_file: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+expired = 0 # int | If greater than 0 will return only expired files (optional) (default to 0)
+
+try:
+    api_response = api_instance.get_temporary_file_list(project, expired=expired)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_temporary_file_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a tree leaf.
+
+try:
+    api_response = api_instance.get_tree_leaf(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_tree_leaf: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a tree leaf type. (optional)
+name = 'name_example' # str | Name of the tree leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_tree_leaf_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an tree_leaf type.
+
+try:
+    api_response = api_instance.get_tree_leaf_type(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_tree_leaf_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+
+try:
+    api_response = api_instance.get_tree_leaf_type_list(project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_tree_leaf_type_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization association.
+
+try:
+    api_response = api_instance.get_user(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_user: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a version.
+
+try:
+    api_response = api_instance.get_version(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->get_version: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+body = tator.Body36() # Body36 |  (optional)
+
+try:
+    api_instance.notify(body=body)
+except ApiException as e:
+    print("Exception when calling TatorApi->notify: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body40() # Body40 |  (optional)
+
+try:
+    api_instance.partial_update_save_video_api(project, body=body)
+except ApiException as e:
+    print("Exception when calling TatorApi->partial_update_save_video_api: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = [tator.Body37()] # list[Body37] |  (optional)
+
+try:
+    api_response = api_instance.progress(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->progress: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state.
+mode = 'animate' # str | Whether to animate or tile. (optional) (default to animate)
+fps = 2 # float | Frame rate if `mode` is `animate`. (optional) (default to 2)
+force_scale = 'force_scale_example' # str | wxh to force each tile prior to stich (optional)
+
+try:
+    api_response = api_instance.retrieve_state_graphic_api(id, mode=mode, fps=fps, force_scale=force_scale)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->retrieve_state_graphic_api: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+media_id = 56 # int | Unique integer identifying a media. (optional)
+
+try:
+    api_response = api_instance.retrieve_version_list(project, media_id=media_id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->retrieve_version_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body38() # Body38 |  (optional)
+
+try:
+    api_response = api_instance.save_image(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->save_image: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body39() # Body39 |  (optional)
+
+try:
+    api_response = api_instance.save_video(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->save_video: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body41() # Body41 |  (optional)
+
+try:
+    api_response = api_instance.transcode(project, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->transcode: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
+query = 'query_example' # str | String to search for matching names.
+min_level = 56 # int | Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter. (optional)
+
+try:
+    api_response = api_instance.tree_leaf_suggestion(project, ancestor, query, min_level=min_level)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->tree_leaf_suggestion: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an attribute type.
+body = tator.Body2() # Body2 |  (optional)
+
+try:
+    api_response = api_instance.update_attribute_type(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_attribute_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a frame association.
+body = tator.Body3() # Body3 |  (optional)
+
+try:
+    api_response = api_instance.update_frame_association(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_frame_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization.
+body = tator.Body7() # Body7 |  (optional)
+
+try:
+    api_response = api_instance.update_localization(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_localization: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization association.
+body = tator.Body4() # Body4 |  (optional)
+
+try:
+    api_response = api_instance.update_localization_association(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_localization_association: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body6() # Body6 |  (optional)
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.update_localization_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_localization_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an localization type.
+body = tator.Body9() # Body9 |  (optional)
+
+try:
+    api_response = api_instance.update_localization_type(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_localization_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a media.
+body = tator.Body11() # Body11 |  (optional)
+
+try:
+    api_response = api_instance.update_media(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_media: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body10() # Body10 |  (optional)
+media_id = [56] # list[int] | List of integers identifying media. (optional)
+type = 56 # int | Unique integer identifying media type. (optional)
+name = 'name_example' # str | Name of the media to filter on. (optional)
+md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
+after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.update_media_list(project, body=body, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_media_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an media type.
+body = tator.Body13() # Body13 |  (optional)
+
+try:
+    api_response = api_instance.update_media_type(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_media_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a membership.
+body = tator.Body15() # Body15 |  (optional)
+
+try:
+    api_response = api_instance.update_membership(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_membership: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a project.
+body = tator.Body17() # Body17 |  (optional)
+
+try:
+    api_response = api_instance.update_project(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_project: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state.
+body = tator.Body20() # Body20 |  (optional)
+
+try:
+    api_response = api_instance.update_state(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_state: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body19() # Body19 |  (optional)
+media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
+media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
+type = 56 # int | Unique integer identifying a annotation type. (optional)
+version = 56 # int | Unique integer identifying a version. (optional)
+modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
+search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.update_state_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_state_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a state type.
+body = tator.Body22() # Body22 |  (optional)
+
+try:
+    api_response = api_instance.update_state_type(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_state_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a tree leaf.
+body = tator.Body26() # Body26 |  (optional)
+
+try:
+    api_response = api_instance.update_tree_leaf(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_tree_leaf: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+project = 56 # int | A unique integer identifying a project.
+body = tator.Body25() # Body25 |  (optional)
+ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a tree leaf type. (optional)
+name = 'name_example' # str | Name of the tree leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+try:
+    api_response = api_instance.update_tree_leaf_list(project, body=body, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_tree_leaf_list: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying an tree_leaf type.
+body = tator.Body28() # Body28 |  (optional)
+
+try:
+    api_response = api_instance.update_tree_leaf_type(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_tree_leaf_type: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a localization association.
+body = tator.Body29() # Body29 |  (optional)
+
+try:
+    api_response = api_instance.update_user(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_user: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+id = 56 # int | A unique integer identifying a version.
+body = tator.Body33() # Body33 |  (optional)
+
+try:
+    api_response = api_instance.update_version(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->update_version: %s\n" % e)
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = tator.TatorApi(tator.ApiClient(configuration))
+
+try:
+    api_response = api_instance.who_am_i()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TatorApi->who_am_i: %s\n" % e)
 ```
 
 ## Documentation for API Endpoints
@@ -91,109 +2017,109 @@ All URIs are relative to */*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AlgorithmApi* | [**algorithm_launch**](docs/AlgorithmApi.md#algorithm_launch) | **POST** /rest/AlgorithmLaunch/{project} | 
-*AlgorithmApi* | [**get_algorithm_list**](docs/AlgorithmApi.md#get_algorithm_list) | **GET** /rest/Algorithms/{project} | 
-*AnalysisApi* | [**create_analysis**](docs/AnalysisApi.md#create_analysis) | **POST** /rest/Analyses/{project} | 
-*AnalysisApi* | [**get_analysis_list**](docs/AnalysisApi.md#get_analysis_list) | **GET** /rest/Analyses/{project} | 
-*AttributeTypeApi* | [**create_attribute_type**](docs/AttributeTypeApi.md#create_attribute_type) | **POST** /rest/AttributeTypes/{project} | 
-*AttributeTypeApi* | [**delete_attribute_type**](docs/AttributeTypeApi.md#delete_attribute_type) | **DELETE** /rest/AttributeType/{id} | 
-*AttributeTypeApi* | [**get_attribute_type**](docs/AttributeTypeApi.md#get_attribute_type) | **GET** /rest/AttributeType/{id} | 
-*AttributeTypeApi* | [**get_attribute_type_list**](docs/AttributeTypeApi.md#get_attribute_type_list) | **GET** /rest/AttributeTypes/{project} | 
-*AttributeTypeApi* | [**update_attribute_type**](docs/AttributeTypeApi.md#update_attribute_type) | **PATCH** /rest/AttributeType/{id} | 
-*EntityTypeSchemaApi* | [**get_entity_type_schema**](docs/EntityTypeSchemaApi.md#get_entity_type_schema) | **GET** /rest/EntityTypeSchema/{id} | 
-*FrameAssociationApi* | [**delete_frame_association**](docs/FrameAssociationApi.md#delete_frame_association) | **DELETE** /rest/FrameAssociation/{id} | 
-*FrameAssociationApi* | [**get_frame_association**](docs/FrameAssociationApi.md#get_frame_association) | **GET** /rest/FrameAssociation/{id} | 
-*FrameAssociationApi* | [**update_frame_association**](docs/FrameAssociationApi.md#update_frame_association) | **PATCH** /rest/FrameAssociation/{id} | 
-*GetClipApi* | [**retrieve_get_clip_api**](docs/GetClipApi.md#retrieve_get_clip_api) | **GET** /rest/GetClip/{id} | 
-*GetFrameApi* | [**retrieve_get_frame_api**](docs/GetFrameApi.md#retrieve_get_frame_api) | **GET** /rest/GetFrame/{id} | 
-*JobApi* | [**delete_job**](docs/JobApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
-*JobApi* | [**delete_job_group**](docs/JobApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
-*LocalizationApi* | [**create_localization**](docs/LocalizationApi.md#create_localization) | **POST** /rest/Localizations/{project} | 
-*LocalizationApi* | [**delete_localization**](docs/LocalizationApi.md#delete_localization) | **DELETE** /rest/Localization/{id} | 
-*LocalizationApi* | [**delete_localization_list**](docs/LocalizationApi.md#delete_localization_list) | **DELETE** /rest/Localizations/{project} | 
-*LocalizationApi* | [**get_localization**](docs/LocalizationApi.md#get_localization) | **GET** /rest/Localization/{id} | 
-*LocalizationApi* | [**get_localization_list**](docs/LocalizationApi.md#get_localization_list) | **GET** /rest/Localizations/{project} | 
-*LocalizationApi* | [**update_localization**](docs/LocalizationApi.md#update_localization) | **PATCH** /rest/Localization/{id} | 
-*LocalizationApi* | [**update_localization_list**](docs/LocalizationApi.md#update_localization_list) | **PATCH** /rest/Localizations/{project} | 
-*LocalizationAssociationApi* | [**delete_localization_association**](docs/LocalizationAssociationApi.md#delete_localization_association) | **DELETE** /rest/LocalizationAssociation/{id} | 
-*LocalizationAssociationApi* | [**get_localization_association**](docs/LocalizationAssociationApi.md#get_localization_association) | **GET** /rest/LocalizationAssociation/{id} | 
-*LocalizationAssociationApi* | [**update_localization_association**](docs/LocalizationAssociationApi.md#update_localization_association) | **PATCH** /rest/LocalizationAssociation/{id} | 
-*LocalizationTypeApi* | [**create_localization_type**](docs/LocalizationTypeApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
-*LocalizationTypeApi* | [**delete_localization_type**](docs/LocalizationTypeApi.md#delete_localization_type) | **DELETE** /rest/LocalizationType/{id} | 
-*LocalizationTypeApi* | [**get_localization_type**](docs/LocalizationTypeApi.md#get_localization_type) | **GET** /rest/LocalizationType/{id} | 
-*LocalizationTypeApi* | [**get_localization_type_list**](docs/LocalizationTypeApi.md#get_localization_type_list) | **GET** /rest/LocalizationTypes/{project} | 
-*LocalizationTypeApi* | [**update_localization_type**](docs/LocalizationTypeApi.md#update_localization_type) | **PATCH** /rest/LocalizationType/{id} | 
-*MediaApi* | [**delete_media**](docs/MediaApi.md#delete_media) | **DELETE** /rest/Media/{id} | 
-*MediaApi* | [**delete_media_list**](docs/MediaApi.md#delete_media_list) | **DELETE** /rest/Medias/{project} | 
-*MediaApi* | [**get_media**](docs/MediaApi.md#get_media) | **GET** /rest/Media/{id} | 
-*MediaApi* | [**get_media_list**](docs/MediaApi.md#get_media_list) | **GET** /rest/Medias/{project} | 
-*MediaApi* | [**get_media_next**](docs/MediaApi.md#get_media_next) | **GET** /rest/MediaNext/{id} | 
-*MediaApi* | [**get_media_prev**](docs/MediaApi.md#get_media_prev) | **GET** /rest/MediaPrev/{id} | 
-*MediaApi* | [**get_media_sections**](docs/MediaApi.md#get_media_sections) | **GET** /rest/MediaSections/{project} | 
-*MediaApi* | [**update_media**](docs/MediaApi.md#update_media) | **PATCH** /rest/Media/{id} | 
-*MediaApi* | [**update_media_list**](docs/MediaApi.md#update_media_list) | **PATCH** /rest/Medias/{project} | 
-*MediaTypeApi* | [**create_media_type**](docs/MediaTypeApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
-*MediaTypeApi* | [**delete_media_type**](docs/MediaTypeApi.md#delete_media_type) | **DELETE** /rest/MediaType/{id} | 
-*MediaTypeApi* | [**get_media_type**](docs/MediaTypeApi.md#get_media_type) | **GET** /rest/MediaType/{id} | 
-*MediaTypeApi* | [**get_media_type_list**](docs/MediaTypeApi.md#get_media_type_list) | **GET** /rest/MediaTypes/{project} | 
-*MediaTypeApi* | [**update_media_type**](docs/MediaTypeApi.md#update_media_type) | **PATCH** /rest/MediaType/{id} | 
-*MembershipApi* | [**create_membership**](docs/MembershipApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
-*MembershipApi* | [**delete_membership**](docs/MembershipApi.md#delete_membership) | **DELETE** /rest/Membership/{id} | 
-*MembershipApi* | [**get_membership**](docs/MembershipApi.md#get_membership) | **GET** /rest/Membership/{id} | 
-*MembershipApi* | [**get_membership_list**](docs/MembershipApi.md#get_membership_list) | **GET** /rest/Memberships/{project} | 
-*MembershipApi* | [**update_membership**](docs/MembershipApi.md#update_membership) | **PATCH** /rest/Membership/{id} | 
-*NotifyApi* | [**notify**](docs/NotifyApi.md#notify) | **POST** /rest/Notify | 
-*ProgressApi* | [**progress**](docs/ProgressApi.md#progress) | **POST** /rest/Progress/{project} | 
-*ProjectApi* | [**create_project**](docs/ProjectApi.md#create_project) | **POST** /rest/Projects | 
-*ProjectApi* | [**delete_project**](docs/ProjectApi.md#delete_project) | **DELETE** /rest/Project/{id} | 
-*ProjectApi* | [**get_project**](docs/ProjectApi.md#get_project) | **GET** /rest/Project/{id} | 
-*ProjectApi* | [**get_project_list**](docs/ProjectApi.md#get_project_list) | **GET** /rest/Projects | 
-*ProjectApi* | [**update_project**](docs/ProjectApi.md#update_project) | **PATCH** /rest/Project/{id} | 
-*SaveImageApi* | [**save_image**](docs/SaveImageApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
-*SaveVideoApi* | [**partial_update_save_video_api**](docs/SaveVideoApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
-*SaveVideoApi* | [**save_video**](docs/SaveVideoApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
-*SectionAnalysisApi* | [**get_section_analysis**](docs/SectionAnalysisApi.md#get_section_analysis) | **GET** /rest/SectionAnalysis/{project} | 
-*StateApi* | [**create_state**](docs/StateApi.md#create_state) | **POST** /rest/States/{project} | 
-*StateApi* | [**delete_state**](docs/StateApi.md#delete_state) | **DELETE** /rest/State/{id} | 
-*StateApi* | [**delete_state_list**](docs/StateApi.md#delete_state_list) | **DELETE** /rest/States/{project} | 
-*StateApi* | [**get_state**](docs/StateApi.md#get_state) | **GET** /rest/State/{id} | 
-*StateApi* | [**get_state_list**](docs/StateApi.md#get_state_list) | **GET** /rest/States/{project} | 
-*StateApi* | [**update_state**](docs/StateApi.md#update_state) | **PATCH** /rest/State/{id} | 
-*StateApi* | [**update_state_list**](docs/StateApi.md#update_state_list) | **PATCH** /rest/States/{project} | 
-*StateGraphicApi* | [**retrieve_state_graphic_api**](docs/StateGraphicApi.md#retrieve_state_graphic_api) | **GET** /rest/StateGraphic/{id} | 
-*StateTypeApi* | [**create_state_type**](docs/StateTypeApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
-*StateTypeApi* | [**delete_state_type**](docs/StateTypeApi.md#delete_state_type) | **DELETE** /rest/StateType/{id} | 
-*StateTypeApi* | [**get_state_type**](docs/StateTypeApi.md#get_state_type) | **GET** /rest/StateType/{id} | 
-*StateTypeApi* | [**get_state_type_list**](docs/StateTypeApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
-*StateTypeApi* | [**update_state_type**](docs/StateTypeApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
-*TemporaryFileApi* | [**create_temporary_file**](docs/TemporaryFileApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
-*TemporaryFileApi* | [**delete_temporary_file**](docs/TemporaryFileApi.md#delete_temporary_file) | **DELETE** /rest/TemporaryFile/{id} | 
-*TemporaryFileApi* | [**delete_temporary_file_list**](docs/TemporaryFileApi.md#delete_temporary_file_list) | **DELETE** /rest/TemporaryFiles/{project} | 
-*TemporaryFileApi* | [**get_temporary_file**](docs/TemporaryFileApi.md#get_temporary_file) | **GET** /rest/TemporaryFile/{id} | 
-*TemporaryFileApi* | [**get_temporary_file_list**](docs/TemporaryFileApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
-*TokenApi* | [**create_obtain_auth_token**](docs/TokenApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
-*TranscodeApi* | [**transcode**](docs/TranscodeApi.md#transcode) | **POST** /rest/Transcode/{project} | 
-*TreeLeafApi* | [**create_tree_leaf**](docs/TreeLeafApi.md#create_tree_leaf) | **POST** /rest/TreeLeaves/{project} | 
-*TreeLeafApi* | [**delete_tree_leaf**](docs/TreeLeafApi.md#delete_tree_leaf) | **DELETE** /rest/TreeLeaf/{id} | 
-*TreeLeafApi* | [**delete_tree_leaf_list**](docs/TreeLeafApi.md#delete_tree_leaf_list) | **DELETE** /rest/TreeLeaves/{project} | 
-*TreeLeafApi* | [**get_tree_leaf**](docs/TreeLeafApi.md#get_tree_leaf) | **GET** /rest/TreeLeaf/{id} | 
-*TreeLeafApi* | [**get_tree_leaf_list**](docs/TreeLeafApi.md#get_tree_leaf_list) | **GET** /rest/TreeLeaves/{project} | 
-*TreeLeafApi* | [**tree_leaf_suggestion**](docs/TreeLeafApi.md#tree_leaf_suggestion) | **GET** /rest/TreeLeaves/Suggestion/{ancestor}/{project} | 
-*TreeLeafApi* | [**update_tree_leaf**](docs/TreeLeafApi.md#update_tree_leaf) | **PATCH** /rest/TreeLeaf/{id} | 
-*TreeLeafApi* | [**update_tree_leaf_list**](docs/TreeLeafApi.md#update_tree_leaf_list) | **PATCH** /rest/TreeLeaves/{project} | 
-*TreeLeafTypeApi* | [**create_tree_leaf_type**](docs/TreeLeafTypeApi.md#create_tree_leaf_type) | **POST** /rest/TreeLeafTypes/{project} | 
-*TreeLeafTypeApi* | [**delete_tree_leaf_type**](docs/TreeLeafTypeApi.md#delete_tree_leaf_type) | **DELETE** /rest/TreeLeafType/{id} | 
-*TreeLeafTypeApi* | [**get_tree_leaf_type**](docs/TreeLeafTypeApi.md#get_tree_leaf_type) | **GET** /rest/TreeLeafType/{id} | 
-*TreeLeafTypeApi* | [**get_tree_leaf_type_list**](docs/TreeLeafTypeApi.md#get_tree_leaf_type_list) | **GET** /rest/TreeLeafTypes/{project} | 
-*TreeLeafTypeApi* | [**update_tree_leaf_type**](docs/TreeLeafTypeApi.md#update_tree_leaf_type) | **PATCH** /rest/TreeLeafType/{id} | 
-*UserApi* | [**get_user**](docs/UserApi.md#get_user) | **GET** /rest/User/{id} | 
-*UserApi* | [**update_user**](docs/UserApi.md#update_user) | **PATCH** /rest/User/{id} | 
-*UserApi* | [**who_am_i**](docs/UserApi.md#who_am_i) | **GET** /rest/User/GetCurrent | 
-*VersionApi* | [**create_version**](docs/VersionApi.md#create_version) | **POST** /rest/Versions/{project} | 
-*VersionApi* | [**delete_version**](docs/VersionApi.md#delete_version) | **DELETE** /rest/Version/{id} | 
-*VersionApi* | [**get_version**](docs/VersionApi.md#get_version) | **GET** /rest/Version/{id} | 
-*VersionApi* | [**retrieve_version_list**](docs/VersionApi.md#retrieve_version_list) | **GET** /rest/Versions/{project} | 
-*VersionApi* | [**update_version**](docs/VersionApi.md#update_version) | **PATCH** /rest/Version/{id} | 
+*TatorApi* | [**algorithm_launch**](docs/TatorApi.md#algorithm_launch) | **POST** /rest/AlgorithmLaunch/{project} | 
+*TatorApi* | [**create_analysis**](docs/TatorApi.md#create_analysis) | **POST** /rest/Analyses/{project} | 
+*TatorApi* | [**create_attribute_type**](docs/TatorApi.md#create_attribute_type) | **POST** /rest/AttributeTypes/{project} | 
+*TatorApi* | [**create_localization**](docs/TatorApi.md#create_localization) | **POST** /rest/Localizations/{project} | 
+*TatorApi* | [**create_localization_type**](docs/TatorApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
+*TatorApi* | [**create_media_type**](docs/TatorApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
+*TatorApi* | [**create_membership**](docs/TatorApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
+*TatorApi* | [**create_obtain_auth_token**](docs/TatorApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
+*TatorApi* | [**create_project**](docs/TatorApi.md#create_project) | **POST** /rest/Projects | 
+*TatorApi* | [**create_state**](docs/TatorApi.md#create_state) | **POST** /rest/States/{project} | 
+*TatorApi* | [**create_state_type**](docs/TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
+*TatorApi* | [**create_temporary_file**](docs/TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
+*TatorApi* | [**create_tree_leaf**](docs/TatorApi.md#create_tree_leaf) | **POST** /rest/TreeLeaves/{project} | 
+*TatorApi* | [**create_tree_leaf_type**](docs/TatorApi.md#create_tree_leaf_type) | **POST** /rest/TreeLeafTypes/{project} | 
+*TatorApi* | [**create_version**](docs/TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
+*TatorApi* | [**delete_attribute_type**](docs/TatorApi.md#delete_attribute_type) | **DELETE** /rest/AttributeType/{id} | 
+*TatorApi* | [**delete_frame_association**](docs/TatorApi.md#delete_frame_association) | **DELETE** /rest/FrameAssociation/{id} | 
+*TatorApi* | [**delete_job**](docs/TatorApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
+*TatorApi* | [**delete_job_group**](docs/TatorApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
+*TatorApi* | [**delete_localization**](docs/TatorApi.md#delete_localization) | **DELETE** /rest/Localization/{id} | 
+*TatorApi* | [**delete_localization_association**](docs/TatorApi.md#delete_localization_association) | **DELETE** /rest/LocalizationAssociation/{id} | 
+*TatorApi* | [**delete_localization_list**](docs/TatorApi.md#delete_localization_list) | **DELETE** /rest/Localizations/{project} | 
+*TatorApi* | [**delete_localization_type**](docs/TatorApi.md#delete_localization_type) | **DELETE** /rest/LocalizationType/{id} | 
+*TatorApi* | [**delete_media**](docs/TatorApi.md#delete_media) | **DELETE** /rest/Media/{id} | 
+*TatorApi* | [**delete_media_list**](docs/TatorApi.md#delete_media_list) | **DELETE** /rest/Medias/{project} | 
+*TatorApi* | [**delete_media_type**](docs/TatorApi.md#delete_media_type) | **DELETE** /rest/MediaType/{id} | 
+*TatorApi* | [**delete_membership**](docs/TatorApi.md#delete_membership) | **DELETE** /rest/Membership/{id} | 
+*TatorApi* | [**delete_project**](docs/TatorApi.md#delete_project) | **DELETE** /rest/Project/{id} | 
+*TatorApi* | [**delete_state**](docs/TatorApi.md#delete_state) | **DELETE** /rest/State/{id} | 
+*TatorApi* | [**delete_state_list**](docs/TatorApi.md#delete_state_list) | **DELETE** /rest/States/{project} | 
+*TatorApi* | [**delete_state_type**](docs/TatorApi.md#delete_state_type) | **DELETE** /rest/StateType/{id} | 
+*TatorApi* | [**delete_temporary_file**](docs/TatorApi.md#delete_temporary_file) | **DELETE** /rest/TemporaryFile/{id} | 
+*TatorApi* | [**delete_temporary_file_list**](docs/TatorApi.md#delete_temporary_file_list) | **DELETE** /rest/TemporaryFiles/{project} | 
+*TatorApi* | [**delete_tree_leaf**](docs/TatorApi.md#delete_tree_leaf) | **DELETE** /rest/TreeLeaf/{id} | 
+*TatorApi* | [**delete_tree_leaf_list**](docs/TatorApi.md#delete_tree_leaf_list) | **DELETE** /rest/TreeLeaves/{project} | 
+*TatorApi* | [**delete_tree_leaf_type**](docs/TatorApi.md#delete_tree_leaf_type) | **DELETE** /rest/TreeLeafType/{id} | 
+*TatorApi* | [**delete_version**](docs/TatorApi.md#delete_version) | **DELETE** /rest/Version/{id} | 
+*TatorApi* | [**get_algorithm_list**](docs/TatorApi.md#get_algorithm_list) | **GET** /rest/Algorithms/{project} | 
+*TatorApi* | [**get_analysis_list**](docs/TatorApi.md#get_analysis_list) | **GET** /rest/Analyses/{project} | 
+*TatorApi* | [**get_attribute_type**](docs/TatorApi.md#get_attribute_type) | **GET** /rest/AttributeType/{id} | 
+*TatorApi* | [**get_attribute_type_list**](docs/TatorApi.md#get_attribute_type_list) | **GET** /rest/AttributeTypes/{project} | 
+*TatorApi* | [**get_clip**](docs/TatorApi.md#get_clip) | **GET** /rest/GetClip/{id} | 
+*TatorApi* | [**get_entity_type_schema**](docs/TatorApi.md#get_entity_type_schema) | **GET** /rest/EntityTypeSchema/{id} | 
+*TatorApi* | [**get_frame**](docs/TatorApi.md#get_frame) | **GET** /rest/GetFrame/{id} | 
+*TatorApi* | [**get_frame_association**](docs/TatorApi.md#get_frame_association) | **GET** /rest/FrameAssociation/{id} | 
+*TatorApi* | [**get_localization**](docs/TatorApi.md#get_localization) | **GET** /rest/Localization/{id} | 
+*TatorApi* | [**get_localization_association**](docs/TatorApi.md#get_localization_association) | **GET** /rest/LocalizationAssociation/{id} | 
+*TatorApi* | [**get_localization_list**](docs/TatorApi.md#get_localization_list) | **GET** /rest/Localizations/{project} | 
+*TatorApi* | [**get_localization_type**](docs/TatorApi.md#get_localization_type) | **GET** /rest/LocalizationType/{id} | 
+*TatorApi* | [**get_localization_type_list**](docs/TatorApi.md#get_localization_type_list) | **GET** /rest/LocalizationTypes/{project} | 
+*TatorApi* | [**get_media**](docs/TatorApi.md#get_media) | **GET** /rest/Media/{id} | 
+*TatorApi* | [**get_media_list**](docs/TatorApi.md#get_media_list) | **GET** /rest/Medias/{project} | 
+*TatorApi* | [**get_media_next**](docs/TatorApi.md#get_media_next) | **GET** /rest/MediaNext/{id} | 
+*TatorApi* | [**get_media_prev**](docs/TatorApi.md#get_media_prev) | **GET** /rest/MediaPrev/{id} | 
+*TatorApi* | [**get_media_sections**](docs/TatorApi.md#get_media_sections) | **GET** /rest/MediaSections/{project} | 
+*TatorApi* | [**get_media_type**](docs/TatorApi.md#get_media_type) | **GET** /rest/MediaType/{id} | 
+*TatorApi* | [**get_media_type_list**](docs/TatorApi.md#get_media_type_list) | **GET** /rest/MediaTypes/{project} | 
+*TatorApi* | [**get_membership**](docs/TatorApi.md#get_membership) | **GET** /rest/Membership/{id} | 
+*TatorApi* | [**get_membership_list**](docs/TatorApi.md#get_membership_list) | **GET** /rest/Memberships/{project} | 
+*TatorApi* | [**get_project**](docs/TatorApi.md#get_project) | **GET** /rest/Project/{id} | 
+*TatorApi* | [**get_project_list**](docs/TatorApi.md#get_project_list) | **GET** /rest/Projects | 
+*TatorApi* | [**get_section_analysis**](docs/TatorApi.md#get_section_analysis) | **GET** /rest/SectionAnalysis/{project} | 
+*TatorApi* | [**get_state**](docs/TatorApi.md#get_state) | **GET** /rest/State/{id} | 
+*TatorApi* | [**get_state_list**](docs/TatorApi.md#get_state_list) | **GET** /rest/States/{project} | 
+*TatorApi* | [**get_state_type**](docs/TatorApi.md#get_state_type) | **GET** /rest/StateType/{id} | 
+*TatorApi* | [**get_state_type_list**](docs/TatorApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
+*TatorApi* | [**get_temporary_file**](docs/TatorApi.md#get_temporary_file) | **GET** /rest/TemporaryFile/{id} | 
+*TatorApi* | [**get_temporary_file_list**](docs/TatorApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
+*TatorApi* | [**get_tree_leaf**](docs/TatorApi.md#get_tree_leaf) | **GET** /rest/TreeLeaf/{id} | 
+*TatorApi* | [**get_tree_leaf_list**](docs/TatorApi.md#get_tree_leaf_list) | **GET** /rest/TreeLeaves/{project} | 
+*TatorApi* | [**get_tree_leaf_type**](docs/TatorApi.md#get_tree_leaf_type) | **GET** /rest/TreeLeafType/{id} | 
+*TatorApi* | [**get_tree_leaf_type_list**](docs/TatorApi.md#get_tree_leaf_type_list) | **GET** /rest/TreeLeafTypes/{project} | 
+*TatorApi* | [**get_user**](docs/TatorApi.md#get_user) | **GET** /rest/User/{id} | 
+*TatorApi* | [**get_version**](docs/TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
+*TatorApi* | [**notify**](docs/TatorApi.md#notify) | **POST** /rest/Notify | 
+*TatorApi* | [**partial_update_save_video_api**](docs/TatorApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
+*TatorApi* | [**progress**](docs/TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
+*TatorApi* | [**retrieve_state_graphic_api**](docs/TatorApi.md#retrieve_state_graphic_api) | **GET** /rest/StateGraphic/{id} | 
+*TatorApi* | [**retrieve_version_list**](docs/TatorApi.md#retrieve_version_list) | **GET** /rest/Versions/{project} | 
+*TatorApi* | [**save_image**](docs/TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
+*TatorApi* | [**save_video**](docs/TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
+*TatorApi* | [**transcode**](docs/TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
+*TatorApi* | [**tree_leaf_suggestion**](docs/TatorApi.md#tree_leaf_suggestion) | **GET** /rest/TreeLeaves/Suggestion/{ancestor}/{project} | 
+*TatorApi* | [**update_attribute_type**](docs/TatorApi.md#update_attribute_type) | **PATCH** /rest/AttributeType/{id} | 
+*TatorApi* | [**update_frame_association**](docs/TatorApi.md#update_frame_association) | **PATCH** /rest/FrameAssociation/{id} | 
+*TatorApi* | [**update_localization**](docs/TatorApi.md#update_localization) | **PATCH** /rest/Localization/{id} | 
+*TatorApi* | [**update_localization_association**](docs/TatorApi.md#update_localization_association) | **PATCH** /rest/LocalizationAssociation/{id} | 
+*TatorApi* | [**update_localization_list**](docs/TatorApi.md#update_localization_list) | **PATCH** /rest/Localizations/{project} | 
+*TatorApi* | [**update_localization_type**](docs/TatorApi.md#update_localization_type) | **PATCH** /rest/LocalizationType/{id} | 
+*TatorApi* | [**update_media**](docs/TatorApi.md#update_media) | **PATCH** /rest/Media/{id} | 
+*TatorApi* | [**update_media_list**](docs/TatorApi.md#update_media_list) | **PATCH** /rest/Medias/{project} | 
+*TatorApi* | [**update_media_type**](docs/TatorApi.md#update_media_type) | **PATCH** /rest/MediaType/{id} | 
+*TatorApi* | [**update_membership**](docs/TatorApi.md#update_membership) | **PATCH** /rest/Membership/{id} | 
+*TatorApi* | [**update_project**](docs/TatorApi.md#update_project) | **PATCH** /rest/Project/{id} | 
+*TatorApi* | [**update_state**](docs/TatorApi.md#update_state) | **PATCH** /rest/State/{id} | 
+*TatorApi* | [**update_state_list**](docs/TatorApi.md#update_state_list) | **PATCH** /rest/States/{project} | 
+*TatorApi* | [**update_state_type**](docs/TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
+*TatorApi* | [**update_tree_leaf**](docs/TatorApi.md#update_tree_leaf) | **PATCH** /rest/TreeLeaf/{id} | 
+*TatorApi* | [**update_tree_leaf_list**](docs/TatorApi.md#update_tree_leaf_list) | **PATCH** /rest/TreeLeaves/{project} | 
+*TatorApi* | [**update_tree_leaf_type**](docs/TatorApi.md#update_tree_leaf_type) | **PATCH** /rest/TreeLeafType/{id} | 
+*TatorApi* | [**update_user**](docs/TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
+*TatorApi* | [**update_version**](docs/TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
+*TatorApi* | [**who_am_i**](docs/TatorApi.md#who_am_i) | **GET** /rest/User/GetCurrent | 
 
 ## Documentation For Models
 
@@ -277,6 +2203,7 @@ Class | Method | HTTP request | Description
  - [InlineResponse20040](docs/InlineResponse20040.md)
  - [InlineResponse20041](docs/InlineResponse20041.md)
  - [InlineResponse20042](docs/InlineResponse20042.md)
+ - [InlineResponse20043](docs/InlineResponse20043.md)
  - [InlineResponse2005](docs/InlineResponse2005.md)
  - [InlineResponse2006](docs/InlineResponse2006.md)
  - [InlineResponse2007](docs/InlineResponse2007.md)
@@ -307,13 +2234,14 @@ Class | Method | HTTP request | Description
  - [OneOfbody1](docs/OneOfbody1.md)
  - [OneOfbody5](docs/OneOfbody5.md)
  - [OneOfbody7](docs/OneOfbody7.md)
- - [OneOfinlineResponse20016ColumnsItems](docs/OneOfinlineResponse20016ColumnsItems.md)
+ - [OneOfinlineResponse20010ColumnsItems](docs/OneOfinlineResponse20010ColumnsItems.md)
  - [OneOfinlineResponse20017ColumnsItems](docs/OneOfinlineResponse20017ColumnsItems.md)
- - [OneOfinlineResponse20026ColumnsItems](docs/OneOfinlineResponse20026ColumnsItems.md)
+ - [OneOfinlineResponse20018ColumnsItems](docs/OneOfinlineResponse20018ColumnsItems.md)
  - [OneOfinlineResponse20027ColumnsItems](docs/OneOfinlineResponse20027ColumnsItems.md)
- - [OneOfinlineResponse20034ColumnsItems](docs/OneOfinlineResponse20034ColumnsItems.md)
+ - [OneOfinlineResponse20028ColumnsItems](docs/OneOfinlineResponse20028ColumnsItems.md)
  - [OneOfinlineResponse20035ColumnsItems](docs/OneOfinlineResponse20035ColumnsItems.md)
- - [OneOfinlineResponse2008ColumnsItems](docs/OneOfinlineResponse2008ColumnsItems.md)
+ - [OneOfinlineResponse20036ColumnsItems](docs/OneOfinlineResponse20036ColumnsItems.md)
+ - [OneOfinlineResponse2007](docs/OneOfinlineResponse2007.md)
  - [OneOfinlineResponse2009ColumnsItems](docs/OneOfinlineResponse2009ColumnsItems.md)
  - [RestLocalizationTypesprojectType](docs/RestLocalizationTypesprojectType.md)
  - [RestMediaTypesprojectType](docs/RestMediaTypesprojectType.md)

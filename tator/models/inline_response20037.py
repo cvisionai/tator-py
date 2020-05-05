@@ -29,147 +29,42 @@ class InlineResponse20037(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'username': 'str',
-        'first_name': 'str',
-        'last_name': 'str',
-        'email': 'str'
+        'message': 'str'
     }
 
     attribute_map = {
-        'id': 'id',
-        'username': 'username',
-        'first_name': 'first_name',
-        'last_name': 'last_name',
-        'email': 'email'
+        'message': 'message'
     }
 
-    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None):  # noqa: E501
+    def __init__(self, message=None):  # noqa: E501
         """InlineResponse20037 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._username = None
-        self._first_name = None
-        self._last_name = None
-        self._email = None
+        self._message = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        self.username = username
-        if first_name is not None:
-            self.first_name = first_name
-        if last_name is not None:
-            self.last_name = last_name
-        if email is not None:
-            self.email = email
+        if message is not None:
+            self.message = message
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse20037.  # noqa: E501
+    def message(self):
+        """Gets the message of this InlineResponse20037.  # noqa: E501
 
+        Message indicating successful update of tree leaf type.  # noqa: E501
 
-        :return: The id of this InlineResponse20037.  # noqa: E501
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse20037.
-
-
-        :param id: The id of this InlineResponse20037.  # noqa: E501
-        :type: int
-        """
-
-        self._id = id
-
-    @property
-    def username(self):
-        """Gets the username of this InlineResponse20037.  # noqa: E501
-
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
-
-        :return: The username of this InlineResponse20037.  # noqa: E501
+        :return: The message of this InlineResponse20037.  # noqa: E501
         :rtype: str
         """
-        return self._username
+        return self._message
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this InlineResponse20037.
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse20037.
 
-        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+        Message indicating successful update of tree leaf type.  # noqa: E501
 
-        :param username: The username of this InlineResponse20037.  # noqa: E501
-        :type: str
-        """
-        if username is None:
-            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
-
-        self._username = username
-
-    @property
-    def first_name(self):
-        """Gets the first_name of this InlineResponse20037.  # noqa: E501
-
-
-        :return: The first_name of this InlineResponse20037.  # noqa: E501
-        :rtype: str
-        """
-        return self._first_name
-
-    @first_name.setter
-    def first_name(self, first_name):
-        """Sets the first_name of this InlineResponse20037.
-
-
-        :param first_name: The first_name of this InlineResponse20037.  # noqa: E501
+        :param message: The message of this InlineResponse20037.  # noqa: E501
         :type: str
         """
 
-        self._first_name = first_name
-
-    @property
-    def last_name(self):
-        """Gets the last_name of this InlineResponse20037.  # noqa: E501
-
-
-        :return: The last_name of this InlineResponse20037.  # noqa: E501
-        :rtype: str
-        """
-        return self._last_name
-
-    @last_name.setter
-    def last_name(self, last_name):
-        """Sets the last_name of this InlineResponse20037.
-
-
-        :param last_name: The last_name of this InlineResponse20037.  # noqa: E501
-        :type: str
-        """
-
-        self._last_name = last_name
-
-    @property
-    def email(self):
-        """Gets the email of this InlineResponse20037.  # noqa: E501
-
-
-        :return: The email of this InlineResponse20037.  # noqa: E501
-        :rtype: str
-        """
-        return self._email
-
-    @email.setter
-    def email(self, email):
-        """Sets the email of this InlineResponse20037.
-
-
-        :param email: The email of this InlineResponse20037.  # noqa: E501
-        :type: str
-        """
-
-        self._email = email
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

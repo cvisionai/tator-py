@@ -3,9 +3,14 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **str** | Name of the suggestion. | [optional] 
-**group** | **str** | Group of the suggestion. | [optional] 
-**data** | **dict(str, object)** | Auxiliary data associated with the tree leaf. | [optional] 
+**id** | **int** |  | [optional] 
+**name** | **str** |  | 
+**project** | **int** |  | 
+**user** | **int** |  | 
+**path** | **str** |  | [optional] 
+**lookup** | **str** |  | 
+**created_datetime** | **datetime** |  | 
+**eol_datetime** | **datetime** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

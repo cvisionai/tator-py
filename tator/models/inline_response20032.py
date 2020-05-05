@@ -29,42 +29,182 @@ class InlineResponse20032(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'id': 'int',
+        'project': 'int',
+        'path': 'str',
+        'name': 'str',
+        'parent': 'int',
+        'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
-        'message': 'message'
+        'id': 'id',
+        'project': 'project',
+        'path': 'path',
+        'name': 'name',
+        'parent': 'parent',
+        'attributes': 'attributes'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, id=None, project=None, path=None, name=None, parent=None, attributes=None):  # noqa: E501
         """InlineResponse20032 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._id = None
+        self._project = None
+        self._path = None
+        self._name = None
+        self._parent = None
+        self._attributes = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if id is not None:
+            self.id = id
+        if project is not None:
+            self.project = project
+        if path is not None:
+            self.path = path
+        if name is not None:
+            self.name = name
+        if parent is not None:
+            self.parent = parent
+        if attributes is not None:
+            self.attributes = attributes
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20032.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20032.  # noqa: E501
 
-        Message indicating successful update of tree leaf list.  # noqa: E501
+        Unique integer identifying the tree leaf.  # noqa: E501
 
-        :return: The message of this InlineResponse20032.  # noqa: E501
+        :return: The id of this InlineResponse20032.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20032.
+
+        Unique integer identifying the tree leaf.  # noqa: E501
+
+        :param id: The id of this InlineResponse20032.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse20032.  # noqa: E501
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :return: The project of this InlineResponse20032.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse20032.
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :param project: The project of this InlineResponse20032.  # noqa: E501
+        :type: int
+        """
+
+        self._project = project
+
+    @property
+    def path(self):
+        """Gets the path of this InlineResponse20032.  # noqa: E501
+
+        Full path to leaf in hierarchy.  # noqa: E501
+
+        :return: The path of this InlineResponse20032.  # noqa: E501
         :rtype: str
         """
-        return self._message
+        return self._path
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20032.
+    @path.setter
+    def path(self, path):
+        """Sets the path of this InlineResponse20032.
 
-        Message indicating successful update of tree leaf list.  # noqa: E501
+        Full path to leaf in hierarchy.  # noqa: E501
 
-        :param message: The message of this InlineResponse20032.  # noqa: E501
+        :param path: The path of this InlineResponse20032.  # noqa: E501
         :type: str
         """
 
-        self._message = message
+        self._path = path
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse20032.  # noqa: E501
+
+        Name of the tree leaf.  # noqa: E501
+
+        :return: The name of this InlineResponse20032.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20032.
+
+        Name of the tree leaf.  # noqa: E501
+
+        :param name: The name of this InlineResponse20032.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
+
+    @property
+    def parent(self):
+        """Gets the parent of this InlineResponse20032.  # noqa: E501
+
+        ID to use as parent if there is one.  # noqa: E501
+
+        :return: The parent of this InlineResponse20032.  # noqa: E501
+        :rtype: int
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        """Sets the parent of this InlineResponse20032.
+
+        ID to use as parent if there is one.  # noqa: E501
+
+        :param parent: The parent of this InlineResponse20032.  # noqa: E501
+        :type: int
+        """
+
+        self._parent = parent
+
+    @property
+    def attributes(self):
+        """Gets the attributes of this InlineResponse20032.  # noqa: E501
+
+        Object containing attribute values.  # noqa: E501
+
+        :return: The attributes of this InlineResponse20032.  # noqa: E501
+        :rtype: dict(str, object)
+        """
+        return self._attributes
+
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this InlineResponse20032.
+
+        Object containing attribute values.  # noqa: E501
+
+        :param attributes: The attributes of this InlineResponse20032.  # noqa: E501
+        :type: dict(str, object)
+        """
+
+        self._attributes = attributes
 
     def to_dict(self):
         """Returns the model properties as a dict"""

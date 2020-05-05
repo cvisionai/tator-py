@@ -29,42 +29,68 @@ class InlineResponse20036(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str'
+        'type': 'RestTreeLeafTypesprojectType',
+        'columns': 'list[OneOfinlineResponse20036ColumnsItems]'
     }
 
     attribute_map = {
-        'message': 'message'
+        'type': 'type',
+        'columns': 'columns'
     }
 
-    def __init__(self, message=None):  # noqa: E501
+    def __init__(self, type=None, columns=None):  # noqa: E501
         """InlineResponse20036 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
+        self._type = None
+        self._columns = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
+        if type is not None:
+            self.type = type
+        if columns is not None:
+            self.columns = columns
 
     @property
-    def message(self):
-        """Gets the message of this InlineResponse20036.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse20036.  # noqa: E501
 
-        Message indicating successful update of tree leaf type.  # noqa: E501
 
-        :return: The message of this InlineResponse20036.  # noqa: E501
-        :rtype: str
+        :return: The type of this InlineResponse20036.  # noqa: E501
+        :rtype: RestTreeLeafTypesprojectType
         """
-        return self._message
+        return self._type
 
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse20036.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse20036.
 
-        Message indicating successful update of tree leaf type.  # noqa: E501
 
-        :param message: The message of this InlineResponse20036.  # noqa: E501
-        :type: str
+        :param type: The type of this InlineResponse20036.  # noqa: E501
+        :type: RestTreeLeafTypesprojectType
         """
 
-        self._message = message
+        self._type = type
+
+    @property
+    def columns(self):
+        """Gets the columns of this InlineResponse20036.  # noqa: E501
+
+        Attribute types associated with this tree leaf type.  # noqa: E501
+
+        :return: The columns of this InlineResponse20036.  # noqa: E501
+        :rtype: list[OneOfinlineResponse20036ColumnsItems]
+        """
+        return self._columns
+
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse20036.
+
+        Attribute types associated with this tree leaf type.  # noqa: E501
+
+        :param columns: The columns of this InlineResponse20036.  # noqa: E501
+        :type: list[OneOfinlineResponse20036ColumnsItems]
+        """
+
+        self._columns = columns
 
     def to_dict(self):
         """Returns the model properties as a dict"""
