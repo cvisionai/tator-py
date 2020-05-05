@@ -1475,7 +1475,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body40() # Body40 |  (optional)
+body = tator.VideoUpdate() # VideoUpdate |  (optional)
 
 try:
     api_instance.partial_update_save_video_api(project, body=body)
@@ -1561,7 +1561,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body39() # Body39 |  (optional)
+body = tator.VideoSpec() # VideoSpec |  (optional)
 
 try:
     api_response = api_instance.save_video(project, body=body)
@@ -1578,7 +1578,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body41() # Body41 |  (optional)
+body = tator.Body39() # Body39 |  (optional)
 
 try:
     api_response = api_instance.transcode(project, body=body)
@@ -2158,8 +2158,6 @@ Class | Method | HTTP request | Description
  - [Body38](docs/Body38.md)
  - [Body39](docs/Body39.md)
  - [Body4](docs/Body4.md)
- - [Body40](docs/Body40.md)
- - [Body41](docs/Body41.md)
  - [Body5](docs/Body5.md)
  - [Body6](docs/Body6.md)
  - [Body7](docs/Body7.md)
@@ -2247,6 +2245,8 @@ Class | Method | HTTP request | Description
  - [RestMediaTypesprojectType](docs/RestMediaTypesprojectType.md)
  - [RestStateTypesprojectType](docs/RestStateTypesprojectType.md)
  - [RestTreeLeafTypesprojectType](docs/RestTreeLeafTypesprojectType.md)
+ - [VideoSpec](docs/VideoSpec.md)
+ - [VideoUpdate](docs/VideoUpdate.md)
 
 ## Documentation For Authorization
 

@@ -32,78 +32,45 @@ class Body39(object):
         'type': 'int',
         'gid': 'str',
         'uid': 'str',
-        'media_files': 'list[str]',
-        'thumbnail_url': 'str',
-        'thumbnail_gif_url': 'str',
+        'url': 'str',
         'section': 'str',
         'name': 'str',
-        'md5': 'str',
-        'num_frames': 'int',
-        'fps': 'float',
-        'codec': 'str',
-        'width': 'int',
-        'height': 'int',
-        'progress_name': 'str'
+        'md5': 'str'
     }
 
     attribute_map = {
         'type': 'type',
         'gid': 'gid',
         'uid': 'uid',
-        'media_files': 'media_files',
-        'thumbnail_url': 'thumbnail_url',
-        'thumbnail_gif_url': 'thumbnail_gif_url',
+        'url': 'url',
         'section': 'section',
         'name': 'name',
-        'md5': 'md5',
-        'num_frames': 'num_frames',
-        'fps': 'fps',
-        'codec': 'codec',
-        'width': 'width',
-        'height': 'height',
-        'progress_name': 'progressName'
+        'md5': 'md5'
     }
 
-    def __init__(self, type=None, gid=None, uid=None, media_files=None, thumbnail_url=None, thumbnail_gif_url=None, section=None, name=None, md5=None, num_frames=None, fps=None, codec=None, width=None, height=None, progress_name=None):  # noqa: E501
+    def __init__(self, type=None, gid=None, uid=None, url=None, section=None, name=None, md5=None):  # noqa: E501
         """Body39 - a model defined in Swagger"""  # noqa: E501
         self._type = None
         self._gid = None
         self._uid = None
-        self._media_files = None
-        self._thumbnail_url = None
-        self._thumbnail_gif_url = None
+        self._url = None
         self._section = None
         self._name = None
         self._md5 = None
-        self._num_frames = None
-        self._fps = None
-        self._codec = None
-        self._width = None
-        self._height = None
-        self._progress_name = None
         self.discriminator = None
         self.type = type
         self.gid = gid
         self.uid = uid
-        self.media_files = media_files
-        self.thumbnail_url = thumbnail_url
-        self.thumbnail_gif_url = thumbnail_gif_url
+        self.url = url
         self.section = section
         self.name = name
         self.md5 = md5
-        self.num_frames = num_frames
-        self.fps = fps
-        self.codec = codec
-        self.width = width
-        self.height = height
-        if progress_name is not None:
-            self.progress_name = progress_name
 
     @property
     def type(self):
         """Gets the type of this Body39.  # noqa: E501
 
-        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
+        Unique integer identifying a video type.  # noqa: E501
 
         :return: The type of this Body39.  # noqa: E501
         :rtype: int
@@ -114,7 +81,7 @@ class Body39(object):
     def type(self, type):
         """Sets the type of this Body39.
 
-        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
+        Unique integer identifying a video type.  # noqa: E501
 
         :param type: The type of this Body39.  # noqa: E501
         :type: int
@@ -128,7 +95,7 @@ class Body39(object):
     def gid(self):
         """Gets the gid of this Body39.  # noqa: E501
 
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :return: The gid of this Body39.  # noqa: E501
         :rtype: str
@@ -139,7 +106,7 @@ class Body39(object):
     def gid(self, gid):
         """Sets the gid of this Body39.
 
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :param gid: The gid of this Body39.  # noqa: E501
         :type: str
@@ -153,7 +120,7 @@ class Body39(object):
     def uid(self):
         """Gets the uid of this Body39.  # noqa: E501
 
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :return: The uid of this Body39.  # noqa: E501
         :rtype: str
@@ -164,7 +131,7 @@ class Body39(object):
     def uid(self, uid):
         """Sets the uid of this Body39.
 
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :param uid: The uid of this Body39.  # noqa: E501
         :type: str
@@ -175,85 +142,35 @@ class Body39(object):
         self._uid = uid
 
     @property
-    def media_files(self):
-        """Gets the media_files of this Body39.  # noqa: E501
+    def url(self):
+        """Gets the url of this Body39.  # noqa: E501
 
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
+        Upload URL for the raw video.  # noqa: E501
 
-        :return: The media_files of this Body39.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._media_files
-
-    @media_files.setter
-    def media_files(self, media_files):
-        """Sets the media_files of this Body39.
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :param media_files: The media_files of this Body39.  # noqa: E501
-        :type: list[str]
-        """
-        if media_files is None:
-            raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
-
-        self._media_files = media_files
-
-    @property
-    def thumbnail_url(self):
-        """Gets the thumbnail_url of this Body39.  # noqa: E501
-
-        Upload URL for the thumbnail.  # noqa: E501
-
-        :return: The thumbnail_url of this Body39.  # noqa: E501
+        :return: The url of this Body39.  # noqa: E501
         :rtype: str
         """
-        return self._thumbnail_url
+        return self._url
 
-    @thumbnail_url.setter
-    def thumbnail_url(self, thumbnail_url):
-        """Sets the thumbnail_url of this Body39.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body39.
 
-        Upload URL for the thumbnail.  # noqa: E501
+        Upload URL for the raw video.  # noqa: E501
 
-        :param thumbnail_url: The thumbnail_url of this Body39.  # noqa: E501
+        :param url: The url of this Body39.  # noqa: E501
         :type: str
         """
-        if thumbnail_url is None:
-            raise ValueError("Invalid value for `thumbnail_url`, must not be `None`")  # noqa: E501
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
-        self._thumbnail_url = thumbnail_url
-
-    @property
-    def thumbnail_gif_url(self):
-        """Gets the thumbnail_gif_url of this Body39.  # noqa: E501
-
-        Upload URL for the thumbnail gif.  # noqa: E501
-
-        :return: The thumbnail_gif_url of this Body39.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumbnail_gif_url
-
-    @thumbnail_gif_url.setter
-    def thumbnail_gif_url(self, thumbnail_gif_url):
-        """Sets the thumbnail_gif_url of this Body39.
-
-        Upload URL for the thumbnail gif.  # noqa: E501
-
-        :param thumbnail_gif_url: The thumbnail_gif_url of this Body39.  # noqa: E501
-        :type: str
-        """
-        if thumbnail_gif_url is None:
-            raise ValueError("Invalid value for `thumbnail_gif_url`, must not be `None`")  # noqa: E501
-
-        self._thumbnail_gif_url = thumbnail_gif_url
+        self._url = url
 
     @property
     def section(self):
         """Gets the section of this Body39.  # noqa: E501
 
-        Media section name.  # noqa: E501
+        Media section name to upload to.  # noqa: E501
 
         :return: The section of this Body39.  # noqa: E501
         :rtype: str
@@ -264,7 +181,7 @@ class Body39(object):
     def section(self, section):
         """Sets the section of this Body39.
 
-        Media section name.  # noqa: E501
+        Media section name to upload to.  # noqa: E501
 
         :param section: The section of this Body39.  # noqa: E501
         :type: str
@@ -323,154 +240,6 @@ class Body39(object):
             raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
 
         self._md5 = md5
-
-    @property
-    def num_frames(self):
-        """Gets the num_frames of this Body39.  # noqa: E501
-
-        Number of frames in the video.  # noqa: E501
-
-        :return: The num_frames of this Body39.  # noqa: E501
-        :rtype: int
-        """
-        return self._num_frames
-
-    @num_frames.setter
-    def num_frames(self, num_frames):
-        """Sets the num_frames of this Body39.
-
-        Number of frames in the video.  # noqa: E501
-
-        :param num_frames: The num_frames of this Body39.  # noqa: E501
-        :type: int
-        """
-        if num_frames is None:
-            raise ValueError("Invalid value for `num_frames`, must not be `None`")  # noqa: E501
-
-        self._num_frames = num_frames
-
-    @property
-    def fps(self):
-        """Gets the fps of this Body39.  # noqa: E501
-
-        Frame rate of the video.  # noqa: E501
-
-        :return: The fps of this Body39.  # noqa: E501
-        :rtype: float
-        """
-        return self._fps
-
-    @fps.setter
-    def fps(self, fps):
-        """Sets the fps of this Body39.
-
-        Frame rate of the video.  # noqa: E501
-
-        :param fps: The fps of this Body39.  # noqa: E501
-        :type: float
-        """
-        if fps is None:
-            raise ValueError("Invalid value for `fps`, must not be `None`")  # noqa: E501
-
-        self._fps = fps
-
-    @property
-    def codec(self):
-        """Gets the codec of this Body39.  # noqa: E501
-
-        Codec of the original video.  # noqa: E501
-
-        :return: The codec of this Body39.  # noqa: E501
-        :rtype: str
-        """
-        return self._codec
-
-    @codec.setter
-    def codec(self, codec):
-        """Sets the codec of this Body39.
-
-        Codec of the original video.  # noqa: E501
-
-        :param codec: The codec of this Body39.  # noqa: E501
-        :type: str
-        """
-        if codec is None:
-            raise ValueError("Invalid value for `codec`, must not be `None`")  # noqa: E501
-
-        self._codec = codec
-
-    @property
-    def width(self):
-        """Gets the width of this Body39.  # noqa: E501
-
-        Pixel width of the video.  # noqa: E501
-
-        :return: The width of this Body39.  # noqa: E501
-        :rtype: int
-        """
-        return self._width
-
-    @width.setter
-    def width(self, width):
-        """Sets the width of this Body39.
-
-        Pixel width of the video.  # noqa: E501
-
-        :param width: The width of this Body39.  # noqa: E501
-        :type: int
-        """
-        if width is None:
-            raise ValueError("Invalid value for `width`, must not be `None`")  # noqa: E501
-
-        self._width = width
-
-    @property
-    def height(self):
-        """Gets the height of this Body39.  # noqa: E501
-
-        Pixel height of the video.  # noqa: E501
-
-        :return: The height of this Body39.  # noqa: E501
-        :rtype: int
-        """
-        return self._height
-
-    @height.setter
-    def height(self, height):
-        """Sets the height of this Body39.
-
-        Pixel height of the video.  # noqa: E501
-
-        :param height: The height of this Body39.  # noqa: E501
-        :type: int
-        """
-        if height is None:
-            raise ValueError("Invalid value for `height`, must not be `None`")  # noqa: E501
-
-        self._height = height
-
-    @property
-    def progress_name(self):
-        """Gets the progress_name of this Body39.  # noqa: E501
-
-        Name to use for progress update.  # noqa: E501
-
-        :return: The progress_name of this Body39.  # noqa: E501
-        :rtype: str
-        """
-        return self._progress_name
-
-    @progress_name.setter
-    def progress_name(self, progress_name):
-        """Sets the progress_name of this Body39.
-
-        Name to use for progress update.  # noqa: E501
-
-        :param progress_name: The progress_name of this Body39.  # noqa: E501
-        :type: str
-        """
-
-        self._progress_name = progress_name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

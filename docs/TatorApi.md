@@ -4542,7 +4542,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body40() # Body40 |  (optional)
+body = tator.VideoUpdate() # VideoUpdate |  (optional)
 
 try:
     api_instance.partial_update_save_video_api(project, body=body)
@@ -4555,7 +4555,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body40**](Body40.md)|  | [optional] 
+ **body** | [**VideoUpdate**](VideoUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -4820,7 +4820,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body39() # Body39 |  (optional)
+body = tator.VideoSpec() # VideoSpec |  (optional)
 
 try:
     api_response = api_instance.save_video(project, body=body)
@@ -4834,7 +4834,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body39**](Body39.md)|  | [optional] 
+ **body** | [**VideoSpec**](VideoSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -4875,7 +4875,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body41() # Body41 |  (optional)
+body = tator.Body39() # Body39 |  (optional)
 
 try:
     api_response = api_instance.transcode(project, body=body)
@@ -4889,7 +4889,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **body** | [**Body41**](Body41.md)|  | [optional] 
+ **body** | [**Body39**](Body39.md)|  | [optional] 
 
 ### Return type
 

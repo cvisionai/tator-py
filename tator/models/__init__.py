@@ -49,8 +49,6 @@ from tator.models.body37 import Body37
 from tator.models.body38 import Body38
 from tator.models.body39 import Body39
 from tator.models.body4 import Body4
-from tator.models.body40 import Body40
-from tator.models.body41 import Body41
 from tator.models.body5 import Body5
 from tator.models.body6 import Body6
 from tator.models.body7 import Body7
@@ -138,3 +136,5 @@ from tator.models.rest_localization_typesproject_type import RestLocalizationTyp
 from tator.models.rest_media_typesproject_type import RestMediaTypesprojectType
 from tator.models.rest_state_typesproject_type import RestStateTypesprojectType
 from tator.models.rest_tree_leaf_typesproject_type import RestTreeLeafTypesprojectType
+from tator.models.video_spec import VideoSpec
+from tator.models.video_update import VideoUpdate

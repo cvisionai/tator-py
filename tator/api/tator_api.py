@@ -8120,7 +8120,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body40 body:
+        :param VideoUpdate body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8143,7 +8143,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body40 body:
+        :param VideoUpdate body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8635,7 +8635,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body39 body:
+        :param VideoSpec body:
         :return: InlineResponse20112
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8658,7 +8658,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body39 body:
+        :param VideoSpec body:
         :return: InlineResponse20112
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8738,7 +8738,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body41 body:
+        :param Body39 body:
         :return: InlineResponse20113
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8761,7 +8761,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body41 body:
+        :param Body39 body:
         :return: InlineResponse20113
                  If the method is called asynchronously,
                  returns the request thread.
