@@ -29,56 +29,24 @@ class Body1(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
         'description': 'str',
-        'dtype': 'str',
-        'media_types': 'list[int]'
+        'name': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
         'description': 'description',
-        'dtype': 'dtype',
-        'media_types': 'media_types'
+        'name': 'name'
     }
 
-    def __init__(self, name=None, description='', dtype=None, media_types=None):  # noqa: E501
+    def __init__(self, description=None, name=None):  # noqa: E501
         """Body1 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
         self._description = None
-        self._dtype = None
-        self._media_types = None
+        self._name = None
         self.discriminator = None
-        self.name = name
         if description is not None:
             self.description = description
-        self.dtype = dtype
-        self.media_types = media_types
-
-    @property
-    def name(self):
-        """Gets the name of this Body1.  # noqa: E501
-
-        Name of the localization type.  # noqa: E501
-
-        :return: The name of this Body1.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body1.
-
-        Name of the localization type.  # noqa: E501
-
-        :param name: The name of this Body1.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
+        if name is not None:
+            self.name = name
 
     @property
     def description(self):
@@ -104,60 +72,27 @@ class Body1(object):
         self._description = description
 
     @property
-    def dtype(self):
-        """Gets the dtype of this Body1.  # noqa: E501
+    def name(self):
+        """Gets the name of this Body1.  # noqa: E501
 
-        Shape of the localization.  # noqa: E501
+        Name of the localization type.  # noqa: E501
 
-        :return: The dtype of this Body1.  # noqa: E501
+        :return: The name of this Body1.  # noqa: E501
         :rtype: str
         """
-        return self._dtype
+        return self._name
 
-    @dtype.setter
-    def dtype(self, dtype):
-        """Sets the dtype of this Body1.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body1.
 
-        Shape of the localization.  # noqa: E501
+        Name of the localization type.  # noqa: E501
 
-        :param dtype: The dtype of this Body1.  # noqa: E501
+        :param name: The name of this Body1.  # noqa: E501
         :type: str
         """
-        if dtype is None:
-            raise ValueError("Invalid value for `dtype`, must not be `None`")  # noqa: E501
-        allowed_values = ["box", "line", "dot"]  # noqa: E501
-        if dtype not in allowed_values:
-            raise ValueError(
-                "Invalid value for `dtype` ({0}), must be one of {1}"  # noqa: E501
-                .format(dtype, allowed_values)
-            )
 
-        self._dtype = dtype
-
-    @property
-    def media_types(self):
-        """Gets the media_types of this Body1.  # noqa: E501
-
-        List of integers identifying media types that this localization type may apply to.  # noqa: E501
-
-        :return: The media_types of this Body1.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_types
-
-    @media_types.setter
-    def media_types(self, media_types):
-        """Sets the media_types of this Body1.
-
-        List of integers identifying media types that this localization type may apply to.  # noqa: E501
-
-        :param media_types: The media_types of this Body1.  # noqa: E501
-        :type: list[int]
-        """
-        if media_types is None:
-            raise ValueError("Invalid value for `media_types`, must not be `None`")  # noqa: E501
-
-        self._media_types = media_types
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

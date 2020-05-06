@@ -249,7 +249,6 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param AttributeTypeSpec body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -272,13 +271,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param AttributeTypeSpec body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'body']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -312,8 +310,6 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -455,7 +451,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body1 body:
+        :param Body2 body:
         :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
@@ -478,7 +474,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body1 body:
+        :param Body2 body:
         :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
@@ -558,7 +554,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body5 body:
+        :param object body:
         :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
@@ -581,7 +577,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body5 body:
+        :param object body:
         :return: InlineResponse201
                  If the method is called asynchronously,
                  returns the request thread.
@@ -661,7 +657,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body7 body:
+        :param Body5 body:
         :return: InlineResponse2011
                  If the method is called asynchronously,
                  returns the request thread.
@@ -684,7 +680,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body7 body:
+        :param Body5 body:
         :return: InlineResponse2011
                  If the method is called asynchronously,
                  returns the request thread.
@@ -762,8 +758,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body27 body:
-        :return: InlineResponse20020
+        :param Body15 body:
+        :return: InlineResponse20010
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -783,8 +779,8 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body27 body:
-        :return: InlineResponse20020
+        :param Body15 body:
+        :return: InlineResponse20010
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -838,7 +834,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20020',  # noqa: E501
+            response_type='InlineResponse20010',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -856,7 +852,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body9 body:
+        :param object body:
         :return: InlineResponse2012
                  If the method is called asynchronously,
                  returns the request thread.
@@ -878,7 +874,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body9 body:
+        :param object body:
         :return: InlineResponse2012
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1055,7 +1051,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body14 body:
+        :param Body11 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1078,7 +1074,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body14 body:
+        :param Body11 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1158,8 +1154,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body16 body:
-        :return: InlineResponse20012
+        :param Body14 body:
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1181,8 +1177,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body16 body:
-        :return: InlineResponse20012
+        :param Body14 body:
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1242,7 +1238,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20012',  # noqa: E501
+            response_type='InlineResponse2009',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1364,7 +1360,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body20 body:
+        :param object body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1387,7 +1383,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body20 body:
+        :param object body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1467,7 +1463,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body25 body:
+        :param Body22 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1490,7 +1486,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body25 body:
+        :param Body22 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2498,23 +2494,6 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2537,29 +2516,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -2586,41 +2548,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
-        if 'md5' in params:
-            query_params.append(('md5', params['md5']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -3042,24 +2969,6 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -3082,30 +2991,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_query', 'media_id', 'type', 'version', 'modified', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -3132,43 +3023,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_query' in params:
-            query_params.append(('media_query', params['media_query']))  # noqa: E501
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'version' in params:
-            query_params.append(('version', params['version']))  # noqa: E501
-        if 'modified' in params:
-            query_params.append(('modified', params['modified']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -3589,17 +3443,6 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -3625,23 +3468,12 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'ancestor', 'type', 'name', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'ancestor', 'type', 'name']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -3674,28 +3506,6 @@ class TatorApi(object):
             query_params.append(('type', params['type']))  # noqa: E501
         if 'name' in params:
             query_params.append(('name', params['name']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -4387,7 +4197,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'video/*'])  # noqa: E501
+            ['video/*', 'application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -4915,24 +4725,6 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: LocalizationList
                  If the method is called asynchronously,
                  returns the request thread.
@@ -4955,30 +4747,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: LocalizationList
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_query', 'media_id', 'type', 'version', 'modified', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -5005,43 +4779,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_query' in params:
-            query_params.append(('media_query', params['media_query']))  # noqa: E501
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'version' in params:
-            query_params.append(('version', params['version']))  # noqa: E501
-        if 'modified' in params:
-            query_params.append(('modified', params['modified']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -5083,7 +4820,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :return: InlineResponse2001
+        :return: InlineResponse200
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5105,7 +4842,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :return: InlineResponse2001
+        :return: InlineResponse200
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5159,7 +4896,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2001',  # noqa: E501
+            response_type='InlineResponse200',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5180,7 +4917,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse200]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5204,7 +4941,7 @@ class TatorApi(object):
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: List of unique integers identifying a media.
         :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse200]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5263,7 +5000,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse200]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5282,7 +5019,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :return: InlineResponse2002
+        :return: InlineResponse2001
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5304,7 +5041,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :return: InlineResponse2002
+        :return: InlineResponse2001
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5358,7 +5095,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2002',  # noqa: E501
+            response_type='InlineResponse2001',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5377,24 +5114,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse2002]
+        :return: list[object]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5416,29 +5136,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse2002]
+        :return: list[object]
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -5465,41 +5168,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
-        if 'md5' in params:
-            query_params.append(('md5', params['md5']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -5522,7 +5190,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2002]',  # noqa: E501
+            response_type='list[object]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5546,19 +5214,7 @@ class TatorApi(object):
         :param str name: Name of the media to filter on.
         :param str md5: MD5 sum of the media file.
         :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2003
+        :return: InlineResponse2002
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5585,24 +5241,12 @@ class TatorApi(object):
         :param str name: Name of the media to filter on.
         :param str md5: MD5 sum of the media file.
         :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2003
+        :return: InlineResponse2002
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['id', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['id', 'media_id', 'type', 'name', 'md5', 'after']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -5640,30 +5284,6 @@ class TatorApi(object):
             query_params.append(('md5', params['md5']))  # noqa: E501
         if 'after' in params:
             query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -5686,7 +5306,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2003',  # noqa: E501
+            response_type='InlineResponse2002',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5705,24 +5325,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media object. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2004
+        :return: InlineResponse2003
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5744,29 +5347,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media object. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: InlineResponse2004
+        :return: InlineResponse2003
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['id', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -5793,41 +5379,6 @@ class TatorApi(object):
             path_params['id'] = params['id']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
-        if 'md5' in params:
-            query_params.append(('md5', params['md5']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -5850,7 +5401,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2004',  # noqa: E501
+            response_type='InlineResponse2003',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -5869,23 +5420,6 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: dict(str, object)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -5908,29 +5442,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: dict(str, object)
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -5957,41 +5474,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
-        if 'md5' in params:
-            query_params.append(('md5', params['md5']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -6033,7 +5515,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :return: InlineResponse2006
+        :return: InlineResponse2004
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6055,7 +5537,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :return: InlineResponse2006
+        :return: InlineResponse2004
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6109,7 +5591,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2006',  # noqa: E501
+            response_type='InlineResponse2004',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6128,7 +5610,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2005]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6150,7 +5632,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2005]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6204,7 +5686,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2005]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6223,7 +5705,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :return: InlineResponse2007
+        :return: InlineResponse2005
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6245,7 +5727,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :return: InlineResponse2007
+        :return: InlineResponse2005
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6299,7 +5781,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2007',  # noqa: E501
+            response_type='InlineResponse2005',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6318,7 +5800,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2007]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6340,7 +5822,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse2007]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6394,7 +5876,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2007]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6413,7 +5895,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :return: InlineResponse2008
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6435,7 +5917,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :return: InlineResponse2008
+        :return: InlineResponse2006
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6489,7 +5971,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2008',  # noqa: E501
+            response_type='InlineResponse2006',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6507,7 +5989,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[InlineResponse2008]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6528,7 +6010,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: list[InlineResponse2008]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6576,7 +6058,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2008]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -6596,18 +6078,6 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: Unique integer identifying a media. Use this to do analyis on a single file instead of sections.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: dict(str, object)
                  If the method is called asynchronously,
                  returns the request thread.
@@ -6631,24 +6101,12 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param list[int] media_id: Unique integer identifying a media. Use this to do analyis on a single file instead of sections.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: dict(str, object)
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_id', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'media_id']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -6678,30 +6136,6 @@ class TatorApi(object):
         if 'media_id' in params:
             query_params.append(('media_id', params['media_id']))  # noqa: E501
             collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -6838,25 +6272,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse2009]
+        :return: list[InlineResponse2008]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6878,30 +6294,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse2009]
+        :return: list[InlineResponse2008]
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_query', 'media_id', 'type', 'version', 'modified', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -6928,43 +6326,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_query' in params:
-            query_params.append(('media_query', params['media_query']))  # noqa: E501
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'version' in params:
-            query_params.append(('version', params['version']))  # noqa: E501
-        if 'modified' in params:
-            query_params.append(('modified', params['modified']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -6987,7 +6348,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2009]',  # noqa: E501
+            response_type='list[InlineResponse2008]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7006,7 +6367,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :return: InlineResponse20011
+        :return: InlineResponse2007
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7028,7 +6389,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :return: InlineResponse20011
+        :return: InlineResponse2007
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7082,7 +6443,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20011',  # noqa: E501
+            response_type='InlineResponse2007',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7101,9 +6462,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of unique integers identifying a media.
-        :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse20010]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7125,14 +6484,12 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[int] media_id: List of unique integers identifying a media.
-        :param int type: Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID.
-        :return: list[InlineResponse20010]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'media_id', 'type']  # noqa: E501
+        all_params = ['project']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -7159,11 +6516,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
 
         header_params = {}
 
@@ -7186,7 +6538,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20010]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7205,7 +6557,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str id: A unique integer value identifying this temporary file. (required)
-        :return: InlineResponse20012
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7227,7 +6579,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param str id: A unique integer value identifying this temporary file. (required)
-        :return: InlineResponse20012
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7281,7 +6633,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20012',  # noqa: E501
+            response_type='InlineResponse2009',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7301,7 +6653,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int expired: If greater than 0 will return only expired files
-        :return: InlineResponse20012
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7324,7 +6676,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int expired: If greater than 0 will return only expired files
-        :return: InlineResponse20012
+        :return: InlineResponse2009
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7380,7 +6732,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20012',  # noqa: E501
+            response_type='InlineResponse2009',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7399,7 +6751,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :return: InlineResponse20014
+        :return: InlineResponse20011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7421,7 +6773,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :return: InlineResponse20014
+        :return: InlineResponse20011
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7475,7 +6827,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20014',  # noqa: E501
+            response_type='InlineResponse20011',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7497,18 +6849,7 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20014]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7533,23 +6874,12 @@ class TatorApi(object):
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :return: list[InlineResponse20014]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'ancestor', 'type', 'name', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'ancestor', 'type', 'name']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -7582,28 +6912,6 @@ class TatorApi(object):
             query_params.append(('type', params['type']))  # noqa: E501
         if 'name' in params:
             query_params.append(('name', params['name']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -7626,7 +6934,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20014]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7645,7 +6953,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :return: InlineResponse20016
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7667,7 +6975,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :return: InlineResponse20016
+        :return: InlineResponse20012
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7721,7 +7029,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20016',  # noqa: E501
+            response_type='InlineResponse20012',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7740,7 +7048,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20015]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7762,7 +7070,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :return: list[InlineResponse20015]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7816,7 +7124,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20015]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7835,7 +7143,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: InlineResponse20017
+        :return: InlineResponse20015
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7857,7 +7165,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :return: InlineResponse20017
+        :return: InlineResponse20015
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7911,7 +7219,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20017',  # noqa: E501
+            response_type='InlineResponse20015',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -7930,7 +7238,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :return: InlineResponse20019
+        :return: InlineResponse20016
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7952,7 +7260,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :return: InlineResponse20019
+        :return: InlineResponse20016
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8006,7 +7314,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20019',  # noqa: E501
+            response_type='InlineResponse20016',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8024,7 +7332,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body28 body:
+        :param Body6 body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8046,7 +7354,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param Body28 body:
+        :param Body6 body:
         :return: None
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8223,7 +7531,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Body29] body:
+        :param list[Body7] body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8246,7 +7554,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Body29] body:
+        :param list[Body7] body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8401,7 +7709,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'image/*'])  # noqa: E501
+            ['image/*', 'application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -8434,7 +7742,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int media_id: Unique integer identifying a media.
-        :return: list[InlineResponse20019]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8457,7 +7765,7 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param int media_id: Unique integer identifying a media.
-        :return: list[InlineResponse20019]
+        :return: list
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8513,7 +7821,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20019]',  # noqa: E501
+            response_type='list',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -8532,7 +7840,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body30 body:
+        :param Body8 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8555,7 +7863,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body30 body:
+        :param Body8 body:
         :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8738,7 +8046,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body31 body:
+        :param Body16 body:
         :return: InlineResponse2013
                  If the method is called asynchronously,
                  returns the request thread.
@@ -8761,7 +8069,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body31 body:
+        :param Body16 body:
         :return: InlineResponse2013
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9369,24 +8677,6 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param LocalizationListUpdate body:
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9410,30 +8700,12 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param LocalizationListUpdate body:
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'body', 'media_query', 'media_id', 'type', 'version', 'modified', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -9460,43 +8732,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_query' in params:
-            query_params.append(('media_query', params['media_query']))  # noqa: E501
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'version' in params:
-            query_params.append(('version', params['version']))  # noqa: E501
-        if 'modified' in params:
-            query_params.append(('modified', params['modified']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -9544,7 +8779,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :param Body2 body:
+        :param Body1 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9567,7 +8802,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an localization type. (required)
-        :param Body2 body:
+        :param Body1 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9647,7 +8882,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :param Body4 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9670,7 +8905,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a media. (required)
-        :param Body4 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9751,23 +8986,6 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param Body3 body:
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9791,29 +9009,12 @@ class TatorApi(object):
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
         :param Body3 body:
-        :param list[int] media_id: List of integers identifying media.
-        :param int type: Unique integer identifying media type.
-        :param str name: Name of the media to filter on.
-        :param str md5: MD5 sum of the media file.
-        :param str after: If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'body', 'media_id', 'type', 'name', 'md5', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -9840,41 +9041,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'name' in params:
-            query_params.append(('name', params['name']))  # noqa: E501
-        if 'md5' in params:
-            query_params.append(('md5', params['md5']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -9922,7 +9088,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :param Body6 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -9945,7 +9111,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an media type. (required)
-        :param Body6 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10025,7 +9191,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :param Body8 body:
+        :param Body4 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10048,7 +9214,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a membership. (required)
-        :param Body8 body:
+        :param Body4 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10128,7 +9294,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :param Body10 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10151,7 +9317,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a project. (required)
-        :param Body10 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10231,7 +9397,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state. (required)
-        :param Body13 body:
+        :param Body9 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10254,7 +9420,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state. (required)
-        :param Body13 body:
+        :param Body9 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10334,25 +9500,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body12 body:
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param Body13 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10375,31 +9523,13 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body12 body:
-        :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
-        :param list[int] media_id: Comma-separated list of media IDs.
-        :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
-        :param int modified: Whether to return original or modified annotations, 0 or 1.
-        :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
-        :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param Body13 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'body', 'media_query', 'media_id', 'type', 'version', 'modified', 'after', 'search', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -10426,43 +9556,6 @@ class TatorApi(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
-        if 'media_query' in params:
-            query_params.append(('media_query', params['media_query']))  # noqa: E501
-        if 'media_id' in params:
-            query_params.append(('media_id', params['media_id']))  # noqa: E501
-            collection_formats['media_id'] = 'csv'  # noqa: E501
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
-        if 'version' in params:
-            query_params.append(('version', params['version']))  # noqa: E501
-        if 'modified' in params:
-            query_params.append(('modified', params['modified']))  # noqa: E501
-        if 'after' in params:
-            query_params.append(('after', params['after']))  # noqa: E501
-        if 'search' in params:
-            query_params.append(('search', params['search']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -10510,7 +9603,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :param Body15 body:
+        :param Body10 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10533,7 +9626,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a state type. (required)
-        :param Body15 body:
+        :param Body10 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10613,7 +9706,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :param Body19 body:
+        :param Body17 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10636,7 +9729,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a tree leaf. (required)
-        :param Body19 body:
+        :param Body17 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10716,21 +9809,10 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body18 body:
+        :param Body19 body:
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10753,27 +9835,16 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param Body18 body:
+        :param Body19 body:
         :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a tree leaf type.
         :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project', 'body', 'ancestor', 'type', 'name', 'attribute', 'attribute_lt', 'attribute_lte', 'attribute_gt', 'attribute_gte', 'attribute_contains', 'attribute_distance', 'attribute_null', 'operation', 'start', 'stop']  # noqa: E501
+        all_params = ['project', 'body', 'ancestor', 'type', 'name']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -10806,28 +9877,6 @@ class TatorApi(object):
             query_params.append(('type', params['type']))  # noqa: E501
         if 'name' in params:
             query_params.append(('name', params['name']))  # noqa: E501
-        if 'attribute' in params:
-            query_params.append(('attribute', params['attribute']))  # noqa: E501
-        if 'attribute_lt' in params:
-            query_params.append(('attribute_lt', params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in params:
-            query_params.append(('attribute_lte', params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in params:
-            query_params.append(('attribute_gt', params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in params:
-            query_params.append(('attribute_gte', params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in params:
-            query_params.append(('attribute_contains', params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in params:
-            query_params.append(('attribute_distance', params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in params:
-            query_params.append(('attribute_null', params['attribute_null']))  # noqa: E501
-        if 'operation' in params:
-            query_params.append(('operation', params['operation']))  # noqa: E501
-        if 'start' in params:
-            query_params.append(('start', params['start']))  # noqa: E501
-        if 'stop' in params:
-            query_params.append(('stop', params['stop']))  # noqa: E501
 
         header_params = {}
 
@@ -10875,7 +9924,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param Body21 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10898,7 +9947,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param Body21 body:
+        :param object body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -10978,8 +10027,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body22 body:
-        :return: InlineResponse20017
+        :param Body20 body:
+        :return: InlineResponse20015
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11001,8 +10050,8 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a localization association. (required)
-        :param Body22 body:
-        :return: InlineResponse20017
+        :param Body20 body:
+        :return: InlineResponse20015
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11039,22 +10088,6 @@ class TatorApi(object):
 
         form_params = []
         local_var_files = {}
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
 
         body_params = None
         if 'body' in params:
@@ -11078,257 +10111,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20017',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_user(self, id, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
-
-        Interact with an individual user.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_user(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param int id: A unique integer identifying a localization association. (required)
-        :param str username:
-        :param str first_name:
-        :param str last_name:
-        :param str email:
-        :return: InlineResponse20017
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.update_user_with_http_info(id, **kwargs)  # noqa: E501
-        else:
-            (data) = self.update_user_with_http_info(id, **kwargs)  # noqa: E501
-            return data
-
-    def update_user_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
-
-        Interact with an individual user.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_user_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param int id: A unique integer identifying a localization association. (required)
-        :param str username:
-        :param str first_name:
-        :param str last_name:
-        :param str email:
-        :return: InlineResponse20017
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['id', 'username', 'first_name', 'last_name', 'email']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
-
-        params = locals()
-        for key, val in six.iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-        # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `update_user`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
-
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/User/{id}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='InlineResponse20017',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_user(self, id, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
-
-        Interact with an individual user.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_user(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param int id: A unique integer identifying a localization association. (required)
-        :param str username:
-        :param str first_name:
-        :param str last_name:
-        :param str email:
-        :return: InlineResponse20017
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.update_user_with_http_info(id, **kwargs)  # noqa: E501
-        else:
-            (data) = self.update_user_with_http_info(id, **kwargs)  # noqa: E501
-            return data
-
-    def update_user_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_user  # noqa: E501
-
-        Interact with an individual user.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_user_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param int id: A unique integer identifying a localization association. (required)
-        :param str username:
-        :param str first_name:
-        :param str last_name:
-        :param str email:
-        :return: InlineResponse20017
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['id', 'username', 'first_name', 'last_name', 'email']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
-
-        params = locals()
-        for key, val in six.iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_user" % key
-                )
-            params[key] = val
-        del params['kwargs']
-        # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `update_user`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
-        if 'username' in params:
-            form_params.append(('username', params['username']))  # noqa: E501
-        if 'first_name' in params:
-            form_params.append(('first_name', params['first_name']))  # noqa: E501
-        if 'last_name' in params:
-            form_params.append(('last_name', params['last_name']))  # noqa: E501
-        if 'email' in params:
-            form_params.append(('email', params['email']))  # noqa: E501
-
-        body_params = None
-        if 'body' in params:
-            body_params = params['body']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/User/{id}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='InlineResponse20017',  # noqa: E501
+            response_type='InlineResponse20015',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -11347,7 +10130,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :param Body26 body:
+        :param Body21 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -11370,7 +10153,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int id: A unique integer identifying a version. (required)
-        :param Body26 body:
+        :param Body21 body:
         :return: MessageResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -11449,7 +10232,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: InlineResponse20018
+        :return: InlineResponse20014
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11470,7 +10253,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :return: InlineResponse20018
+        :return: InlineResponse20014
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -11518,7 +10301,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20018',  # noqa: E501
+            response_type='InlineResponse20014',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

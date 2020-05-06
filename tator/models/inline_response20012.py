@@ -29,228 +29,68 @@ class InlineResponse20012(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'name': 'str',
-        'project': 'int',
-        'user': 'int',
-        'path': 'str',
-        'lookup': 'str',
-        'created_datetime': 'datetime',
-        'eol_datetime': 'datetime'
+        'columns': 'list',
+        'type': 'InlineResponse20012Type'
     }
 
     attribute_map = {
-        'id': 'id',
-        'name': 'name',
-        'project': 'project',
-        'user': 'user',
-        'path': 'path',
-        'lookup': 'lookup',
-        'created_datetime': 'created_datetime',
-        'eol_datetime': 'eol_datetime'
+        'columns': 'columns',
+        'type': 'type'
     }
 
-    def __init__(self, id=None, name=None, project=None, user=None, path=None, lookup=None, created_datetime=None, eol_datetime=None):  # noqa: E501
+    def __init__(self, columns=None, type=None):  # noqa: E501
         """InlineResponse20012 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._name = None
-        self._project = None
-        self._user = None
-        self._path = None
-        self._lookup = None
-        self._created_datetime = None
-        self._eol_datetime = None
+        self._columns = None
+        self._type = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        self.name = name
-        self.project = project
-        self.user = user
-        if path is not None:
-            self.path = path
-        self.lookup = lookup
-        self.created_datetime = created_datetime
-        self.eol_datetime = eol_datetime
+        if columns is not None:
+            self.columns = columns
+        if type is not None:
+            self.type = type
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse20012.  # noqa: E501
+    def columns(self):
+        """Gets the columns of this InlineResponse20012.  # noqa: E501
 
+        Attribute types associated with this tree leaf type.  # noqa: E501
 
-        :return: The id of this InlineResponse20012.  # noqa: E501
-        :rtype: int
+        :return: The columns of this InlineResponse20012.  # noqa: E501
+        :rtype: list
         """
-        return self._id
+        return self._columns
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse20012.
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse20012.
 
+        Attribute types associated with this tree leaf type.  # noqa: E501
 
-        :param id: The id of this InlineResponse20012.  # noqa: E501
-        :type: int
+        :param columns: The columns of this InlineResponse20012.  # noqa: E501
+        :type: list
         """
 
-        self._id = id
+        self._columns = columns
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse20012.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse20012.  # noqa: E501
 
 
-        :return: The name of this InlineResponse20012.  # noqa: E501
-        :rtype: str
+        :return: The type of this InlineResponse20012.  # noqa: E501
+        :rtype: InlineResponse20012Type
         """
-        return self._name
+        return self._type
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse20012.
-
-
-        :param name: The name of this InlineResponse20012.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def project(self):
-        """Gets the project of this InlineResponse20012.  # noqa: E501
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse20012.
 
 
-        :return: The project of this InlineResponse20012.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this InlineResponse20012.
-
-
-        :param project: The project of this InlineResponse20012.  # noqa: E501
-        :type: int
-        """
-        if project is None:
-            raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501
-
-        self._project = project
-
-    @property
-    def user(self):
-        """Gets the user of this InlineResponse20012.  # noqa: E501
-
-
-        :return: The user of this InlineResponse20012.  # noqa: E501
-        :rtype: int
-        """
-        return self._user
-
-    @user.setter
-    def user(self, user):
-        """Sets the user of this InlineResponse20012.
-
-
-        :param user: The user of this InlineResponse20012.  # noqa: E501
-        :type: int
-        """
-        if user is None:
-            raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
-
-        self._user = user
-
-    @property
-    def path(self):
-        """Gets the path of this InlineResponse20012.  # noqa: E501
-
-
-        :return: The path of this InlineResponse20012.  # noqa: E501
-        :rtype: str
-        """
-        return self._path
-
-    @path.setter
-    def path(self, path):
-        """Sets the path of this InlineResponse20012.
-
-
-        :param path: The path of this InlineResponse20012.  # noqa: E501
-        :type: str
+        :param type: The type of this InlineResponse20012.  # noqa: E501
+        :type: InlineResponse20012Type
         """
 
-        self._path = path
-
-    @property
-    def lookup(self):
-        """Gets the lookup of this InlineResponse20012.  # noqa: E501
-
-
-        :return: The lookup of this InlineResponse20012.  # noqa: E501
-        :rtype: str
-        """
-        return self._lookup
-
-    @lookup.setter
-    def lookup(self, lookup):
-        """Sets the lookup of this InlineResponse20012.
-
-
-        :param lookup: The lookup of this InlineResponse20012.  # noqa: E501
-        :type: str
-        """
-        if lookup is None:
-            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
-
-        self._lookup = lookup
-
-    @property
-    def created_datetime(self):
-        """Gets the created_datetime of this InlineResponse20012.  # noqa: E501
-
-
-        :return: The created_datetime of this InlineResponse20012.  # noqa: E501
-        :rtype: datetime
-        """
-        return self._created_datetime
-
-    @created_datetime.setter
-    def created_datetime(self, created_datetime):
-        """Sets the created_datetime of this InlineResponse20012.
-
-
-        :param created_datetime: The created_datetime of this InlineResponse20012.  # noqa: E501
-        :type: datetime
-        """
-        if created_datetime is None:
-            raise ValueError("Invalid value for `created_datetime`, must not be `None`")  # noqa: E501
-
-        self._created_datetime = created_datetime
-
-    @property
-    def eol_datetime(self):
-        """Gets the eol_datetime of this InlineResponse20012.  # noqa: E501
-
-
-        :return: The eol_datetime of this InlineResponse20012.  # noqa: E501
-        :rtype: datetime
-        """
-        return self._eol_datetime
-
-    @eol_datetime.setter
-    def eol_datetime(self, eol_datetime):
-        """Sets the eol_datetime of this InlineResponse20012.
-
-
-        :param eol_datetime: The eol_datetime of this InlineResponse20012.  # noqa: E501
-        :type: datetime
-        """
-        if eol_datetime is None:
-            raise ValueError("Invalid value for `eol_datetime`, must not be `None`")  # noqa: E501
-
-        self._eol_datetime = eol_datetime
+        self._type = type
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,65 +29,99 @@ class InlineResponse2009(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'created_datetime': 'datetime',
+        'eol_datetime': 'datetime',
         'id': 'int',
-        'meta': 'int',
-        'association': 'int',
-        'version': 'int',
-        'modified': 'bool',
-        'media_ids': 'list[int]',
-        'localization_ids': 'list[int]',
-        'frame': 'int',
-        'attributes': 'dict(str, object)'
+        'lookup': 'str',
+        'name': 'str',
+        'path': 'str',
+        'project': 'int',
+        'user': 'int'
     }
 
     attribute_map = {
+        'created_datetime': 'created_datetime',
+        'eol_datetime': 'eol_datetime',
         'id': 'id',
-        'meta': 'meta',
-        'association': 'association',
-        'version': 'version',
-        'modified': 'modified',
-        'media_ids': 'media_ids',
-        'localization_ids': 'localization_ids',
-        'frame': 'frame',
-        'attributes': 'attributes'
+        'lookup': 'lookup',
+        'name': 'name',
+        'path': 'path',
+        'project': 'project',
+        'user': 'user'
     }
 
-    def __init__(self, id=None, meta=None, association=None, version=None, modified=False, media_ids=None, localization_ids=None, frame=None, attributes=None):  # noqa: E501
+    def __init__(self, created_datetime=None, eol_datetime=None, id=None, lookup=None, name=None, path=None, project=None, user=None):  # noqa: E501
         """InlineResponse2009 - a model defined in Swagger"""  # noqa: E501
+        self._created_datetime = None
+        self._eol_datetime = None
         self._id = None
-        self._meta = None
-        self._association = None
-        self._version = None
-        self._modified = None
-        self._media_ids = None
-        self._localization_ids = None
-        self._frame = None
-        self._attributes = None
+        self._lookup = None
+        self._name = None
+        self._path = None
+        self._project = None
+        self._user = None
         self.discriminator = None
+        self.created_datetime = created_datetime
+        self.eol_datetime = eol_datetime
         if id is not None:
             self.id = id
-        if meta is not None:
-            self.meta = meta
-        if association is not None:
-            self.association = association
-        if version is not None:
-            self.version = version
-        if modified is not None:
-            self.modified = modified
-        if media_ids is not None:
-            self.media_ids = media_ids
-        if localization_ids is not None:
-            self.localization_ids = localization_ids
-        if frame is not None:
-            self.frame = frame
-        if attributes is not None:
-            self.attributes = attributes
+        self.lookup = lookup
+        self.name = name
+        if path is not None:
+            self.path = path
+        self.project = project
+        self.user = user
+
+    @property
+    def created_datetime(self):
+        """Gets the created_datetime of this InlineResponse2009.  # noqa: E501
+
+
+        :return: The created_datetime of this InlineResponse2009.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._created_datetime
+
+    @created_datetime.setter
+    def created_datetime(self, created_datetime):
+        """Sets the created_datetime of this InlineResponse2009.
+
+
+        :param created_datetime: The created_datetime of this InlineResponse2009.  # noqa: E501
+        :type: datetime
+        """
+        if created_datetime is None:
+            raise ValueError("Invalid value for `created_datetime`, must not be `None`")  # noqa: E501
+
+        self._created_datetime = created_datetime
+
+    @property
+    def eol_datetime(self):
+        """Gets the eol_datetime of this InlineResponse2009.  # noqa: E501
+
+
+        :return: The eol_datetime of this InlineResponse2009.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._eol_datetime
+
+    @eol_datetime.setter
+    def eol_datetime(self, eol_datetime):
+        """Sets the eol_datetime of this InlineResponse2009.
+
+
+        :param eol_datetime: The eol_datetime of this InlineResponse2009.  # noqa: E501
+        :type: datetime
+        """
+        if eol_datetime is None:
+            raise ValueError("Invalid value for `eol_datetime`, must not be `None`")  # noqa: E501
+
+        self._eol_datetime = eol_datetime
 
     @property
     def id(self):
         """Gets the id of this InlineResponse2009.  # noqa: E501
 
-        Unique integer identifying the state.  # noqa: E501
 
         :return: The id of this InlineResponse2009.  # noqa: E501
         :rtype: int
@@ -98,7 +132,6 @@ class InlineResponse2009(object):
     def id(self, id):
         """Sets the id of this InlineResponse2009.
 
-        Unique integer identifying the state.  # noqa: E501
 
         :param id: The id of this InlineResponse2009.  # noqa: E501
         :type: int
@@ -107,188 +140,117 @@ class InlineResponse2009(object):
         self._id = id
 
     @property
-    def meta(self):
-        """Gets the meta of this InlineResponse2009.  # noqa: E501
+    def lookup(self):
+        """Gets the lookup of this InlineResponse2009.  # noqa: E501
 
-        Unique integer identifying the entity type.  # noqa: E501
 
-        :return: The meta of this InlineResponse2009.  # noqa: E501
+        :return: The lookup of this InlineResponse2009.  # noqa: E501
+        :rtype: str
+        """
+        return self._lookup
+
+    @lookup.setter
+    def lookup(self, lookup):
+        """Sets the lookup of this InlineResponse2009.
+
+
+        :param lookup: The lookup of this InlineResponse2009.  # noqa: E501
+        :type: str
+        """
+        if lookup is None:
+            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
+
+        self._lookup = lookup
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse2009.  # noqa: E501
+
+
+        :return: The name of this InlineResponse2009.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse2009.
+
+
+        :param name: The name of this InlineResponse2009.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
+
+    @property
+    def path(self):
+        """Gets the path of this InlineResponse2009.  # noqa: E501
+
+
+        :return: The path of this InlineResponse2009.  # noqa: E501
+        :rtype: str
+        """
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        """Sets the path of this InlineResponse2009.
+
+
+        :param path: The path of this InlineResponse2009.  # noqa: E501
+        :type: str
+        """
+
+        self._path = path
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse2009.  # noqa: E501
+
+
+        :return: The project of this InlineResponse2009.  # noqa: E501
         :rtype: int
         """
-        return self._meta
+        return self._project
 
-    @meta.setter
-    def meta(self, meta):
-        """Sets the meta of this InlineResponse2009.
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse2009.
 
-        Unique integer identifying the entity type.  # noqa: E501
 
-        :param meta: The meta of this InlineResponse2009.  # noqa: E501
+        :param project: The project of this InlineResponse2009.  # noqa: E501
         :type: int
         """
+        if project is None:
+            raise ValueError("Invalid value for `project`, must not be `None`")  # noqa: E501
 
-        self._meta = meta
+        self._project = project
 
     @property
-    def association(self):
-        """Gets the association of this InlineResponse2009.  # noqa: E501
+    def user(self):
+        """Gets the user of this InlineResponse2009.  # noqa: E501
 
-        Unique integer identifying the state association.  # noqa: E501
 
-        :return: The association of this InlineResponse2009.  # noqa: E501
+        :return: The user of this InlineResponse2009.  # noqa: E501
         :rtype: int
         """
-        return self._association
+        return self._user
 
-    @association.setter
-    def association(self, association):
-        """Sets the association of this InlineResponse2009.
+    @user.setter
+    def user(self, user):
+        """Sets the user of this InlineResponse2009.
 
-        Unique integer identifying the state association.  # noqa: E501
 
-        :param association: The association of this InlineResponse2009.  # noqa: E501
+        :param user: The user of this InlineResponse2009.  # noqa: E501
         :type: int
         """
+        if user is None:
+            raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
 
-        self._association = association
-
-    @property
-    def version(self):
-        """Gets the version of this InlineResponse2009.  # noqa: E501
-
-        Unique integer identifying the version.  # noqa: E501
-
-        :return: The version of this InlineResponse2009.  # noqa: E501
-        :rtype: int
-        """
-        return self._version
-
-    @version.setter
-    def version(self, version):
-        """Sets the version of this InlineResponse2009.
-
-        Unique integer identifying the version.  # noqa: E501
-
-        :param version: The version of this InlineResponse2009.  # noqa: E501
-        :type: int
-        """
-
-        self._version = version
-
-    @property
-    def modified(self):
-        """Gets the modified of this InlineResponse2009.  # noqa: E501
-
-        Whether this localization was created in the web UI.  # noqa: E501
-
-        :return: The modified of this InlineResponse2009.  # noqa: E501
-        :rtype: bool
-        """
-        return self._modified
-
-    @modified.setter
-    def modified(self, modified):
-        """Sets the modified of this InlineResponse2009.
-
-        Whether this localization was created in the web UI.  # noqa: E501
-
-        :param modified: The modified of this InlineResponse2009.  # noqa: E501
-        :type: bool
-        """
-
-        self._modified = modified
-
-    @property
-    def media_ids(self):
-        """Gets the media_ids of this InlineResponse2009.  # noqa: E501
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :return: The media_ids of this InlineResponse2009.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_ids
-
-    @media_ids.setter
-    def media_ids(self, media_ids):
-        """Sets the media_ids of this InlineResponse2009.
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :param media_ids: The media_ids of this InlineResponse2009.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._media_ids = media_ids
-
-    @property
-    def localization_ids(self):
-        """Gets the localization_ids of this InlineResponse2009.  # noqa: E501
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :return: The localization_ids of this InlineResponse2009.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._localization_ids
-
-    @localization_ids.setter
-    def localization_ids(self, localization_ids):
-        """Sets the localization_ids of this InlineResponse2009.
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :param localization_ids: The localization_ids of this InlineResponse2009.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._localization_ids = localization_ids
-
-    @property
-    def frame(self):
-        """Gets the frame of this InlineResponse2009.  # noqa: E501
-
-        Frame number this state applies to.  # noqa: E501
-
-        :return: The frame of this InlineResponse2009.  # noqa: E501
-        :rtype: int
-        """
-        return self._frame
-
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this InlineResponse2009.
-
-        Frame number this state applies to.  # noqa: E501
-
-        :param frame: The frame of this InlineResponse2009.  # noqa: E501
-        :type: int
-        """
-
-        self._frame = frame
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this InlineResponse2009.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this InlineResponse2009.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this InlineResponse2009.
-
-        Object containing attribute values.  # noqa: E501
-
-        :param attributes: The attributes of this InlineResponse2009.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._attributes = attributes
+        self._user = user
 
     def to_dict(self):
         """Returns the model properties as a dict"""

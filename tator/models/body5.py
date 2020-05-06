@@ -29,190 +29,42 @@ class Body5(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str',
-        'dtype': 'str',
-        'file_format': 'str',
-        'uploadable': 'bool',
-        'keep_original': 'bool'
+        'user': 'int'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description',
-        'dtype': 'dtype',
-        'file_format': 'file_format',
-        'uploadable': 'uploadable',
-        'keep_original': 'keep_original'
+        'user': 'user'
     }
 
-    def __init__(self, name=None, description='', dtype=None, file_format=None, uploadable=True, keep_original=True):  # noqa: E501
+    def __init__(self, user=None):  # noqa: E501
         """Body5 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
-        self._dtype = None
-        self._file_format = None
-        self._uploadable = None
-        self._keep_original = None
+        self._user = None
         self.discriminator = None
-        self.name = name
-        if description is not None:
-            self.description = description
-        self.dtype = dtype
-        if file_format is not None:
-            self.file_format = file_format
-        if uploadable is not None:
-            self.uploadable = uploadable
-        if keep_original is not None:
-            self.keep_original = keep_original
+        if user is not None:
+            self.user = user
 
     @property
-    def name(self):
-        """Gets the name of this Body5.  # noqa: E501
+    def user(self):
+        """Gets the user of this Body5.  # noqa: E501
 
-        Name of the media type.  # noqa: E501
+        Unique integer identifying a user.  # noqa: E501
 
-        :return: The name of this Body5.  # noqa: E501
-        :rtype: str
+        :return: The user of this Body5.  # noqa: E501
+        :rtype: int
         """
-        return self._name
+        return self._user
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body5.
+    @user.setter
+    def user(self, user):
+        """Sets the user of this Body5.
 
-        Name of the media type.  # noqa: E501
+        Unique integer identifying a user.  # noqa: E501
 
-        :param name: The name of this Body5.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def description(self):
-        """Gets the description of this Body5.  # noqa: E501
-
-        Description of the media type.  # noqa: E501
-
-        :return: The description of this Body5.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body5.
-
-        Description of the media type.  # noqa: E501
-
-        :param description: The description of this Body5.  # noqa: E501
-        :type: str
+        :param user: The user of this Body5.  # noqa: E501
+        :type: int
         """
 
-        self._description = description
-
-    @property
-    def dtype(self):
-        """Gets the dtype of this Body5.  # noqa: E501
-
-        Type of the media, image or video.  # noqa: E501
-
-        :return: The dtype of this Body5.  # noqa: E501
-        :rtype: str
-        """
-        return self._dtype
-
-    @dtype.setter
-    def dtype(self, dtype):
-        """Sets the dtype of this Body5.
-
-        Type of the media, image or video.  # noqa: E501
-
-        :param dtype: The dtype of this Body5.  # noqa: E501
-        :type: str
-        """
-        if dtype is None:
-            raise ValueError("Invalid value for `dtype`, must not be `None`")  # noqa: E501
-        allowed_values = ["image", "video"]  # noqa: E501
-        if dtype not in allowed_values:
-            raise ValueError(
-                "Invalid value for `dtype` ({0}), must be one of {1}"  # noqa: E501
-                .format(dtype, allowed_values)
-            )
-
-        self._dtype = dtype
-
-    @property
-    def file_format(self):
-        """Gets the file_format of this Body5.  # noqa: E501
-
-        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
-
-        :return: The file_format of this Body5.  # noqa: E501
-        :rtype: str
-        """
-        return self._file_format
-
-    @file_format.setter
-    def file_format(self, file_format):
-        """Sets the file_format of this Body5.
-
-        File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
-
-        :param file_format: The file_format of this Body5.  # noqa: E501
-        :type: str
-        """
-
-        self._file_format = file_format
-
-    @property
-    def uploadable(self):
-        """Gets the uploadable of this Body5.  # noqa: E501
-
-        Whether this media can be uploaded.  # noqa: E501
-
-        :return: The uploadable of this Body5.  # noqa: E501
-        :rtype: bool
-        """
-        return self._uploadable
-
-    @uploadable.setter
-    def uploadable(self, uploadable):
-        """Sets the uploadable of this Body5.
-
-        Whether this media can be uploaded.  # noqa: E501
-
-        :param uploadable: The uploadable of this Body5.  # noqa: E501
-        :type: bool
-        """
-
-        self._uploadable = uploadable
-
-    @property
-    def keep_original(self):
-        """Gets the keep_original of this Body5.  # noqa: E501
-
-        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
-
-        :return: The keep_original of this Body5.  # noqa: E501
-        :rtype: bool
-        """
-        return self._keep_original
-
-    @keep_original.setter
-    def keep_original(self, keep_original):
-        """Sets the keep_original of this Body5.
-
-        For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
-
-        :param keep_original: The keep_original of this Body5.  # noqa: E501
-        :type: bool
-        """
-
-        self._keep_original = keep_original
+        self._user = user
 
     def to_dict(self):
         """Returns the model properties as a dict"""

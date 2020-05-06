@@ -29,52 +29,29 @@ class EntityTypeSchema(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
         'description': 'str',
+        'name': 'str',
         'required_fields': 'dict(str, object)'
     }
 
     attribute_map = {
-        'name': 'name',
         'description': 'description',
+        'name': 'name',
         'required_fields': 'required_fields'
     }
 
-    def __init__(self, name=None, description=None, required_fields=None):  # noqa: E501
+    def __init__(self, description=None, name=None, required_fields=None):  # noqa: E501
         """EntityTypeSchema - a model defined in Swagger"""  # noqa: E501
-        self._name = None
         self._description = None
+        self._name = None
         self._required_fields = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
         if description is not None:
             self.description = description
+        if name is not None:
+            self.name = name
         if required_fields is not None:
             self.required_fields = required_fields
-
-    @property
-    def name(self):
-        """Gets the name of this EntityTypeSchema.  # noqa: E501
-
-        Name of the entity type.  # noqa: E501
-
-        :return: The name of this EntityTypeSchema.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this EntityTypeSchema.
-
-        Name of the entity type.  # noqa: E501
-
-        :param name: The name of this EntityTypeSchema.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
 
     @property
     def description(self):
@@ -98,6 +75,29 @@ class EntityTypeSchema(object):
         """
 
         self._description = description
+
+    @property
+    def name(self):
+        """Gets the name of this EntityTypeSchema.  # noqa: E501
+
+        Name of the entity type.  # noqa: E501
+
+        :return: The name of this EntityTypeSchema.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this EntityTypeSchema.
+
+        Name of the entity type.  # noqa: E501
+
+        :param name: The name of this EntityTypeSchema.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     @property
     def required_fields(self):

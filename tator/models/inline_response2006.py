@@ -29,68 +29,238 @@ class InlineResponse2006(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestMediaTypesprojectType',
-        'columns': 'list[OneOfinlineResponse2006ColumnsItems]'
+        'id': 'int',
+        'name': 'str',
+        'num_files': 'int',
+        'permission': 'str',
+        'size': 'int',
+        'summary': 'str',
+        'thumb': 'str',
+        'usernames': 'list[str]'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'id': 'id',
+        'name': 'name',
+        'num_files': 'num_files',
+        'permission': 'permission',
+        'size': 'size',
+        'summary': 'summary',
+        'thumb': 'thumb',
+        'usernames': 'usernames'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, id=None, name=None, num_files=None, permission=None, size=None, summary='', thumb=None, usernames=None):  # noqa: E501
         """InlineResponse2006 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._id = None
+        self._name = None
+        self._num_files = None
+        self._permission = None
+        self._size = None
+        self._summary = None
+        self._thumb = None
+        self._usernames = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if id is not None:
+            self.id = id
+        if name is not None:
+            self.name = name
+        if num_files is not None:
+            self.num_files = num_files
+        if permission is not None:
+            self.permission = permission
+        if size is not None:
+            self.size = size
+        if summary is not None:
+            self.summary = summary
+        if thumb is not None:
+            self.thumb = thumb
+        if usernames is not None:
+            self.usernames = usernames
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse2006.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse2006.  # noqa: E501
 
+        Unique integer identifying the project.  # noqa: E501
 
-        :return: The type of this InlineResponse2006.  # noqa: E501
-        :rtype: RestMediaTypesprojectType
+        :return: The id of this InlineResponse2006.  # noqa: E501
+        :rtype: int
         """
-        return self._type
+        return self._id
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse2006.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse2006.
 
+        Unique integer identifying the project.  # noqa: E501
 
-        :param type: The type of this InlineResponse2006.  # noqa: E501
-        :type: RestMediaTypesprojectType
+        :param id: The id of this InlineResponse2006.  # noqa: E501
+        :type: int
         """
 
-        self._type = type
+        self._id = id
 
     @property
-    def columns(self):
-        """Gets the columns of this InlineResponse2006.  # noqa: E501
+    def name(self):
+        """Gets the name of this InlineResponse2006.  # noqa: E501
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Name of the project.  # noqa: E501
 
-        :return: The columns of this InlineResponse2006.  # noqa: E501
-        :rtype: list[OneOfinlineResponse2006ColumnsItems]
+        :return: The name of this InlineResponse2006.  # noqa: E501
+        :rtype: str
         """
-        return self._columns
+        return self._name
 
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse2006.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse2006.
 
-        Attribute types associated with this localization type.  # noqa: E501
+        Name of the project.  # noqa: E501
 
-        :param columns: The columns of this InlineResponse2006.  # noqa: E501
-        :type: list[OneOfinlineResponse2006ColumnsItems]
+        :param name: The name of this InlineResponse2006.  # noqa: E501
+        :type: str
         """
 
-        self._columns = columns
+        self._name = name
+
+    @property
+    def num_files(self):
+        """Gets the num_files of this InlineResponse2006.  # noqa: E501
+
+        Number of files in the project.  # noqa: E501
+
+        :return: The num_files of this InlineResponse2006.  # noqa: E501
+        :rtype: int
+        """
+        return self._num_files
+
+    @num_files.setter
+    def num_files(self, num_files):
+        """Sets the num_files of this InlineResponse2006.
+
+        Number of files in the project.  # noqa: E501
+
+        :param num_files: The num_files of this InlineResponse2006.  # noqa: E501
+        :type: int
+        """
+
+        self._num_files = num_files
+
+    @property
+    def permission(self):
+        """Gets the permission of this InlineResponse2006.  # noqa: E501
+
+        Permission level of user making request.  # noqa: E501
+
+        :return: The permission of this InlineResponse2006.  # noqa: E501
+        :rtype: str
+        """
+        return self._permission
+
+    @permission.setter
+    def permission(self, permission):
+        """Sets the permission of this InlineResponse2006.
+
+        Permission level of user making request.  # noqa: E501
+
+        :param permission: The permission of this InlineResponse2006.  # noqa: E501
+        :type: str
+        """
+
+        self._permission = permission
+
+    @property
+    def size(self):
+        """Gets the size of this InlineResponse2006.  # noqa: E501
+
+        Size of the project in bytes.  # noqa: E501
+
+        :return: The size of this InlineResponse2006.  # noqa: E501
+        :rtype: int
+        """
+        return self._size
+
+    @size.setter
+    def size(self, size):
+        """Sets the size of this InlineResponse2006.
+
+        Size of the project in bytes.  # noqa: E501
+
+        :param size: The size of this InlineResponse2006.  # noqa: E501
+        :type: int
+        """
+
+        self._size = size
+
+    @property
+    def summary(self):
+        """Gets the summary of this InlineResponse2006.  # noqa: E501
+
+        Summary of the project.  # noqa: E501
+
+        :return: The summary of this InlineResponse2006.  # noqa: E501
+        :rtype: str
+        """
+        return self._summary
+
+    @summary.setter
+    def summary(self, summary):
+        """Sets the summary of this InlineResponse2006.
+
+        Summary of the project.  # noqa: E501
+
+        :param summary: The summary of this InlineResponse2006.  # noqa: E501
+        :type: str
+        """
+
+        self._summary = summary
+
+    @property
+    def thumb(self):
+        """Gets the thumb of this InlineResponse2006.  # noqa: E501
+
+        URL of thumbnail used to represent the project.  # noqa: E501
+
+        :return: The thumb of this InlineResponse2006.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumb
+
+    @thumb.setter
+    def thumb(self, thumb):
+        """Sets the thumb of this InlineResponse2006.
+
+        URL of thumbnail used to represent the project.  # noqa: E501
+
+        :param thumb: The thumb of this InlineResponse2006.  # noqa: E501
+        :type: str
+        """
+
+        self._thumb = thumb
+
+    @property
+    def usernames(self):
+        """Gets the usernames of this InlineResponse2006.  # noqa: E501
+
+        List of usernames of project members.  # noqa: E501
+
+        :return: The usernames of this InlineResponse2006.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._usernames
+
+    @usernames.setter
+    def usernames(self, usernames):
+        """Sets the usernames of this InlineResponse2006.
+
+        List of usernames of project members.  # noqa: E501
+
+        :param usernames: The usernames of this InlineResponse2006.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._usernames = usernames
 
     def to_dict(self):
         """Returns the model properties as a dict"""

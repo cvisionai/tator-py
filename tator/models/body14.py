@@ -29,37 +29,85 @@ class Body14(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'hours': 'int',
+        'lookup': 'str',
         'name': 'str',
-        'description': 'str',
-        'association': 'str',
-        'media_types': 'list[int]'
+        'url': 'str'
     }
 
     attribute_map = {
+        'hours': 'hours',
+        'lookup': 'lookup',
         'name': 'name',
-        'description': 'description',
-        'association': 'association',
-        'media_types': 'media_types'
+        'url': 'url'
     }
 
-    def __init__(self, name=None, description='', association=None, media_types=None):  # noqa: E501
+    def __init__(self, hours=24, lookup=None, name=None, url=None):  # noqa: E501
         """Body14 - a model defined in Swagger"""  # noqa: E501
+        self._hours = None
+        self._lookup = None
         self._name = None
-        self._description = None
-        self._association = None
-        self._media_types = None
+        self._url = None
         self.discriminator = None
+        if hours is not None:
+            self.hours = hours
+        self.lookup = lookup
         self.name = name
-        if description is not None:
-            self.description = description
-        self.association = association
-        self.media_types = media_types
+        self.url = url
+
+    @property
+    def hours(self):
+        """Gets the hours of this Body14.  # noqa: E501
+
+        Number of hours file is to be kept alive  # noqa: E501
+
+        :return: The hours of this Body14.  # noqa: E501
+        :rtype: int
+        """
+        return self._hours
+
+    @hours.setter
+    def hours(self, hours):
+        """Sets the hours of this Body14.
+
+        Number of hours file is to be kept alive  # noqa: E501
+
+        :param hours: The hours of this Body14.  # noqa: E501
+        :type: int
+        """
+
+        self._hours = hours
+
+    @property
+    def lookup(self):
+        """Gets the lookup of this Body14.  # noqa: E501
+
+        md5hash of lookup parameters  # noqa: E501
+
+        :return: The lookup of this Body14.  # noqa: E501
+        :rtype: str
+        """
+        return self._lookup
+
+    @lookup.setter
+    def lookup(self, lookup):
+        """Sets the lookup of this Body14.
+
+        md5hash of lookup parameters  # noqa: E501
+
+        :param lookup: The lookup of this Body14.  # noqa: E501
+        :type: str
+        """
+        if lookup is None:
+            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
+
+        self._lookup = lookup
 
     @property
     def name(self):
         """Gets the name of this Body14.  # noqa: E501
 
-        Name of the state type.  # noqa: E501
+        Unique name for the temporary file  # noqa: E501
 
         :return: The name of this Body14.  # noqa: E501
         :rtype: str
@@ -70,7 +118,7 @@ class Body14(object):
     def name(self, name):
         """Sets the name of this Body14.
 
-        Name of the state type.  # noqa: E501
+        Unique name for the temporary file  # noqa: E501
 
         :param name: The name of this Body14.  # noqa: E501
         :type: str
@@ -81,83 +129,29 @@ class Body14(object):
         self._name = name
 
     @property
-    def description(self):
-        """Gets the description of this Body14.  # noqa: E501
+    def url(self):
+        """Gets the url of this Body14.  # noqa: E501
 
-        Description of the state type.  # noqa: E501
+        URL for the temporary file  # noqa: E501
 
-        :return: The description of this Body14.  # noqa: E501
+        :return: The url of this Body14.  # noqa: E501
         :rtype: str
         """
-        return self._description
+        return self._url
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body14.
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body14.
 
-        Description of the state type.  # noqa: E501
+        URL for the temporary file  # noqa: E501
 
-        :param description: The description of this Body14.  # noqa: E501
+        :param url: The url of this Body14.  # noqa: E501
         :type: str
         """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
-        self._description = description
-
-    @property
-    def association(self):
-        """Gets the association of this Body14.  # noqa: E501
-
-        Type of object this state type is associated with.  # noqa: E501
-
-        :return: The association of this Body14.  # noqa: E501
-        :rtype: str
-        """
-        return self._association
-
-    @association.setter
-    def association(self, association):
-        """Sets the association of this Body14.
-
-        Type of object this state type is associated with.  # noqa: E501
-
-        :param association: The association of this Body14.  # noqa: E501
-        :type: str
-        """
-        if association is None:
-            raise ValueError("Invalid value for `association`, must not be `None`")  # noqa: E501
-        allowed_values = ["Media", "Frame", "Localization"]  # noqa: E501
-        if association not in allowed_values:
-            raise ValueError(
-                "Invalid value for `association` ({0}), must be one of {1}"  # noqa: E501
-                .format(association, allowed_values)
-            )
-
-        self._association = association
-
-    @property
-    def media_types(self):
-        """Gets the media_types of this Body14.  # noqa: E501
-
-        List of integers identifying media types that this state type may apply to.  # noqa: E501
-
-        :return: The media_types of this Body14.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_types
-
-    @media_types.setter
-    def media_types(self, media_types):
-        """Sets the media_types of this Body14.
-
-        List of integers identifying media types that this state type may apply to.  # noqa: E501
-
-        :param media_types: The media_types of this Body14.  # noqa: E501
-        :type: list[int]
-        """
-        if media_types is None:
-            raise ValueError("Invalid value for `media_types`, must not be `None`")  # noqa: E501
-
-        self._media_types = media_types
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

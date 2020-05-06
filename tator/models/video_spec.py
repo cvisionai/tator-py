@@ -29,350 +29,75 @@ class VideoSpec(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'int',
-        'gid': 'str',
-        'uid': 'str',
-        'media_files': 'list[str]',
-        'thumbnail_url': 'str',
-        'thumbnail_gif_url': 'str',
-        'section': 'str',
-        'name': 'str',
-        'md5': 'str',
-        'num_frames': 'int',
-        'fps': 'float',
         'codec': 'str',
-        'width': 'int',
+        'fps': 'float',
+        'gid': 'str',
         'height': 'int',
-        'progress_name': 'str'
+        'md5': 'str',
+        'media_files': 'list[str]',
+        'name': 'str',
+        'num_frames': 'int',
+        'progress_name': 'str',
+        'section': 'str',
+        'thumbnail_gif_url': 'str',
+        'thumbnail_url': 'str',
+        'type': 'int',
+        'uid': 'str',
+        'width': 'int'
     }
 
     attribute_map = {
-        'type': 'type',
-        'gid': 'gid',
-        'uid': 'uid',
-        'media_files': 'media_files',
-        'thumbnail_url': 'thumbnail_url',
-        'thumbnail_gif_url': 'thumbnail_gif_url',
-        'section': 'section',
-        'name': 'name',
-        'md5': 'md5',
-        'num_frames': 'num_frames',
-        'fps': 'fps',
         'codec': 'codec',
-        'width': 'width',
+        'fps': 'fps',
+        'gid': 'gid',
         'height': 'height',
-        'progress_name': 'progressName'
+        'md5': 'md5',
+        'media_files': 'media_files',
+        'name': 'name',
+        'num_frames': 'num_frames',
+        'progress_name': 'progressName',
+        'section': 'section',
+        'thumbnail_gif_url': 'thumbnail_gif_url',
+        'thumbnail_url': 'thumbnail_url',
+        'type': 'type',
+        'uid': 'uid',
+        'width': 'width'
     }
 
-    def __init__(self, type=None, gid=None, uid=None, media_files=None, thumbnail_url=None, thumbnail_gif_url=None, section=None, name=None, md5=None, num_frames=None, fps=None, codec=None, width=None, height=None, progress_name=None):  # noqa: E501
+    def __init__(self, codec=None, fps=None, gid=None, height=None, md5=None, media_files=None, name=None, num_frames=None, progress_name=None, section=None, thumbnail_gif_url=None, thumbnail_url=None, type=None, uid=None, width=None):  # noqa: E501
         """VideoSpec - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._gid = None
-        self._uid = None
-        self._media_files = None
-        self._thumbnail_url = None
-        self._thumbnail_gif_url = None
-        self._section = None
-        self._name = None
-        self._md5 = None
-        self._num_frames = None
-        self._fps = None
         self._codec = None
-        self._width = None
+        self._fps = None
+        self._gid = None
         self._height = None
+        self._md5 = None
+        self._media_files = None
+        self._name = None
+        self._num_frames = None
         self._progress_name = None
+        self._section = None
+        self._thumbnail_gif_url = None
+        self._thumbnail_url = None
+        self._type = None
+        self._uid = None
+        self._width = None
         self.discriminator = None
-        self.type = type
-        self.gid = gid
-        self.uid = uid
-        self.media_files = media_files
-        self.thumbnail_url = thumbnail_url
-        self.thumbnail_gif_url = thumbnail_gif_url
-        self.section = section
-        self.name = name
-        self.md5 = md5
-        self.num_frames = num_frames
-        self.fps = fps
         self.codec = codec
-        self.width = width
+        self.fps = fps
+        self.gid = gid
         self.height = height
+        self.md5 = md5
+        self.media_files = media_files
+        self.name = name
+        self.num_frames = num_frames
         if progress_name is not None:
             self.progress_name = progress_name
-
-    @property
-    def type(self):
-        """Gets the type of this VideoSpec.  # noqa: E501
-
-        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
-
-        :return: The type of this VideoSpec.  # noqa: E501
-        :rtype: int
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """Sets the type of this VideoSpec.
-
-        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
-
-        :param type: The type of this VideoSpec.  # noqa: E501
-        :type: int
-        """
-        if type is None:
-            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
-
-        self._type = type
-
-    @property
-    def gid(self):
-        """Gets the gid of this VideoSpec.  # noqa: E501
-
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :return: The gid of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._gid
-
-    @gid.setter
-    def gid(self, gid):
-        """Sets the gid of this VideoSpec.
-
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :param gid: The gid of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if gid is None:
-            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
-
-        self._gid = gid
-
-    @property
-    def uid(self):
-        """Gets the uid of this VideoSpec.  # noqa: E501
-
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :return: The uid of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._uid
-
-    @uid.setter
-    def uid(self, uid):
-        """Sets the uid of this VideoSpec.
-
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :param uid: The uid of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if uid is None:
-            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
-
-        self._uid = uid
-
-    @property
-    def media_files(self):
-        """Gets the media_files of this VideoSpec.  # noqa: E501
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :return: The media_files of this VideoSpec.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._media_files
-
-    @media_files.setter
-    def media_files(self, media_files):
-        """Sets the media_files of this VideoSpec.
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :param media_files: The media_files of this VideoSpec.  # noqa: E501
-        :type: list[str]
-        """
-        if media_files is None:
-            raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
-
-        self._media_files = media_files
-
-    @property
-    def thumbnail_url(self):
-        """Gets the thumbnail_url of this VideoSpec.  # noqa: E501
-
-        Upload URL for the thumbnail.  # noqa: E501
-
-        :return: The thumbnail_url of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumbnail_url
-
-    @thumbnail_url.setter
-    def thumbnail_url(self, thumbnail_url):
-        """Sets the thumbnail_url of this VideoSpec.
-
-        Upload URL for the thumbnail.  # noqa: E501
-
-        :param thumbnail_url: The thumbnail_url of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if thumbnail_url is None:
-            raise ValueError("Invalid value for `thumbnail_url`, must not be `None`")  # noqa: E501
-
-        self._thumbnail_url = thumbnail_url
-
-    @property
-    def thumbnail_gif_url(self):
-        """Gets the thumbnail_gif_url of this VideoSpec.  # noqa: E501
-
-        Upload URL for the thumbnail gif.  # noqa: E501
-
-        :return: The thumbnail_gif_url of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumbnail_gif_url
-
-    @thumbnail_gif_url.setter
-    def thumbnail_gif_url(self, thumbnail_gif_url):
-        """Sets the thumbnail_gif_url of this VideoSpec.
-
-        Upload URL for the thumbnail gif.  # noqa: E501
-
-        :param thumbnail_gif_url: The thumbnail_gif_url of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if thumbnail_gif_url is None:
-            raise ValueError("Invalid value for `thumbnail_gif_url`, must not be `None`")  # noqa: E501
-
-        self._thumbnail_gif_url = thumbnail_gif_url
-
-    @property
-    def section(self):
-        """Gets the section of this VideoSpec.  # noqa: E501
-
-        Media section name.  # noqa: E501
-
-        :return: The section of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._section
-
-    @section.setter
-    def section(self, section):
-        """Sets the section of this VideoSpec.
-
-        Media section name.  # noqa: E501
-
-        :param section: The section of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if section is None:
-            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
-
-        self._section = section
-
-    @property
-    def name(self):
-        """Gets the name of this VideoSpec.  # noqa: E501
-
-        Name of the file.  # noqa: E501
-
-        :return: The name of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this VideoSpec.
-
-        Name of the file.  # noqa: E501
-
-        :param name: The name of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def md5(self):
-        """Gets the md5 of this VideoSpec.  # noqa: E501
-
-        MD5 sum of the media file.  # noqa: E501
-
-        :return: The md5 of this VideoSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._md5
-
-    @md5.setter
-    def md5(self, md5):
-        """Sets the md5 of this VideoSpec.
-
-        MD5 sum of the media file.  # noqa: E501
-
-        :param md5: The md5 of this VideoSpec.  # noqa: E501
-        :type: str
-        """
-        if md5 is None:
-            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
-
-        self._md5 = md5
-
-    @property
-    def num_frames(self):
-        """Gets the num_frames of this VideoSpec.  # noqa: E501
-
-        Number of frames in the video.  # noqa: E501
-
-        :return: The num_frames of this VideoSpec.  # noqa: E501
-        :rtype: int
-        """
-        return self._num_frames
-
-    @num_frames.setter
-    def num_frames(self, num_frames):
-        """Sets the num_frames of this VideoSpec.
-
-        Number of frames in the video.  # noqa: E501
-
-        :param num_frames: The num_frames of this VideoSpec.  # noqa: E501
-        :type: int
-        """
-        if num_frames is None:
-            raise ValueError("Invalid value for `num_frames`, must not be `None`")  # noqa: E501
-
-        self._num_frames = num_frames
-
-    @property
-    def fps(self):
-        """Gets the fps of this VideoSpec.  # noqa: E501
-
-        Frame rate of the video.  # noqa: E501
-
-        :return: The fps of this VideoSpec.  # noqa: E501
-        :rtype: float
-        """
-        return self._fps
-
-    @fps.setter
-    def fps(self, fps):
-        """Sets the fps of this VideoSpec.
-
-        Frame rate of the video.  # noqa: E501
-
-        :param fps: The fps of this VideoSpec.  # noqa: E501
-        :type: float
-        """
-        if fps is None:
-            raise ValueError("Invalid value for `fps`, must not be `None`")  # noqa: E501
-
-        self._fps = fps
+        self.section = section
+        self.thumbnail_gif_url = thumbnail_gif_url
+        self.thumbnail_url = thumbnail_url
+        self.type = type
+        self.uid = uid
+        self.width = width
 
     @property
     def codec(self):
@@ -400,29 +125,54 @@ class VideoSpec(object):
         self._codec = codec
 
     @property
-    def width(self):
-        """Gets the width of this VideoSpec.  # noqa: E501
+    def fps(self):
+        """Gets the fps of this VideoSpec.  # noqa: E501
 
-        Pixel width of the video.  # noqa: E501
+        Frame rate of the video.  # noqa: E501
 
-        :return: The width of this VideoSpec.  # noqa: E501
-        :rtype: int
+        :return: The fps of this VideoSpec.  # noqa: E501
+        :rtype: float
         """
-        return self._width
+        return self._fps
 
-    @width.setter
-    def width(self, width):
-        """Sets the width of this VideoSpec.
+    @fps.setter
+    def fps(self, fps):
+        """Sets the fps of this VideoSpec.
 
-        Pixel width of the video.  # noqa: E501
+        Frame rate of the video.  # noqa: E501
 
-        :param width: The width of this VideoSpec.  # noqa: E501
-        :type: int
+        :param fps: The fps of this VideoSpec.  # noqa: E501
+        :type: float
         """
-        if width is None:
-            raise ValueError("Invalid value for `width`, must not be `None`")  # noqa: E501
+        if fps is None:
+            raise ValueError("Invalid value for `fps`, must not be `None`")  # noqa: E501
 
-        self._width = width
+        self._fps = fps
+
+    @property
+    def gid(self):
+        """Gets the gid of this VideoSpec.  # noqa: E501
+
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The gid of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._gid
+
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this VideoSpec.
+
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param gid: The gid of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
+
+        self._gid = gid
 
     @property
     def height(self):
@@ -450,6 +200,106 @@ class VideoSpec(object):
         self._height = height
 
     @property
+    def md5(self):
+        """Gets the md5 of this VideoSpec.  # noqa: E501
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :return: The md5 of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._md5
+
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this VideoSpec.
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :param md5: The md5 of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if md5 is None:
+            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
+
+        self._md5 = md5
+
+    @property
+    def media_files(self):
+        """Gets the media_files of this VideoSpec.  # noqa: E501
+
+        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
+
+        :return: The media_files of this VideoSpec.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._media_files
+
+    @media_files.setter
+    def media_files(self, media_files):
+        """Sets the media_files of this VideoSpec.
+
+        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
+
+        :param media_files: The media_files of this VideoSpec.  # noqa: E501
+        :type: list[str]
+        """
+        if media_files is None:
+            raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
+
+        self._media_files = media_files
+
+    @property
+    def name(self):
+        """Gets the name of this VideoSpec.  # noqa: E501
+
+        Name of the file.  # noqa: E501
+
+        :return: The name of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this VideoSpec.
+
+        Name of the file.  # noqa: E501
+
+        :param name: The name of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
+
+    @property
+    def num_frames(self):
+        """Gets the num_frames of this VideoSpec.  # noqa: E501
+
+        Number of frames in the video.  # noqa: E501
+
+        :return: The num_frames of this VideoSpec.  # noqa: E501
+        :rtype: int
+        """
+        return self._num_frames
+
+    @num_frames.setter
+    def num_frames(self, num_frames):
+        """Sets the num_frames of this VideoSpec.
+
+        Number of frames in the video.  # noqa: E501
+
+        :param num_frames: The num_frames of this VideoSpec.  # noqa: E501
+        :type: int
+        """
+        if num_frames is None:
+            raise ValueError("Invalid value for `num_frames`, must not be `None`")  # noqa: E501
+
+        self._num_frames = num_frames
+
+    @property
     def progress_name(self):
         """Gets the progress_name of this VideoSpec.  # noqa: E501
 
@@ -471,6 +321,156 @@ class VideoSpec(object):
         """
 
         self._progress_name = progress_name
+
+    @property
+    def section(self):
+        """Gets the section of this VideoSpec.  # noqa: E501
+
+        Media section name.  # noqa: E501
+
+        :return: The section of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._section
+
+    @section.setter
+    def section(self, section):
+        """Sets the section of this VideoSpec.
+
+        Media section name.  # noqa: E501
+
+        :param section: The section of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if section is None:
+            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
+
+        self._section = section
+
+    @property
+    def thumbnail_gif_url(self):
+        """Gets the thumbnail_gif_url of this VideoSpec.  # noqa: E501
+
+        Upload URL for the thumbnail gif.  # noqa: E501
+
+        :return: The thumbnail_gif_url of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumbnail_gif_url
+
+    @thumbnail_gif_url.setter
+    def thumbnail_gif_url(self, thumbnail_gif_url):
+        """Sets the thumbnail_gif_url of this VideoSpec.
+
+        Upload URL for the thumbnail gif.  # noqa: E501
+
+        :param thumbnail_gif_url: The thumbnail_gif_url of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if thumbnail_gif_url is None:
+            raise ValueError("Invalid value for `thumbnail_gif_url`, must not be `None`")  # noqa: E501
+
+        self._thumbnail_gif_url = thumbnail_gif_url
+
+    @property
+    def thumbnail_url(self):
+        """Gets the thumbnail_url of this VideoSpec.  # noqa: E501
+
+        Upload URL for the thumbnail.  # noqa: E501
+
+        :return: The thumbnail_url of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumbnail_url
+
+    @thumbnail_url.setter
+    def thumbnail_url(self, thumbnail_url):
+        """Sets the thumbnail_url of this VideoSpec.
+
+        Upload URL for the thumbnail.  # noqa: E501
+
+        :param thumbnail_url: The thumbnail_url of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if thumbnail_url is None:
+            raise ValueError("Invalid value for `thumbnail_url`, must not be `None`")  # noqa: E501
+
+        self._thumbnail_url = thumbnail_url
+
+    @property
+    def type(self):
+        """Gets the type of this VideoSpec.  # noqa: E501
+
+        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
+
+        :return: The type of this VideoSpec.  # noqa: E501
+        :rtype: int
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this VideoSpec.
+
+        Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
+
+        :param type: The type of this VideoSpec.  # noqa: E501
+        :type: int
+        """
+        if type is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
+
+        self._type = type
+
+    @property
+    def uid(self):
+        """Gets the uid of this VideoSpec.  # noqa: E501
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The uid of this VideoSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this VideoSpec.
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param uid: The uid of this VideoSpec.  # noqa: E501
+        :type: str
+        """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
+
+        self._uid = uid
+
+    @property
+    def width(self):
+        """Gets the width of this VideoSpec.  # noqa: E501
+
+        Pixel width of the video.  # noqa: E501
+
+        :return: The width of this VideoSpec.  # noqa: E501
+        :rtype: int
+        """
+        return self._width
+
+    @width.setter
+    def width(self, width):
+        """Sets the width of this VideoSpec.
+
+        Pixel width of the video.  # noqa: E501
+
+        :param width: The width of this VideoSpec.  # noqa: E501
+        :type: int
+        """
+        if width is None:
+            raise ValueError("Invalid value for `width`, must not be `None`")  # noqa: E501
+
+        self._width = width
 
     def to_dict(self):
         """Returns the model properties as a dict"""

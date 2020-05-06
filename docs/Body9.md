@@ -3,8 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Name of the project. | 
-**summary** | **str** | Summary of the project. | [optional] [default to '']
+**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
+**frame** | **int** | Frame number this state applies to. | [optional] 
+**localization_ids** | **list[int]** | List of localization IDs that this state applies to. | [optional] 
+**media_ids** | **list[int]** | List of media IDs that this state applies to. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

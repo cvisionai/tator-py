@@ -29,43 +29,19 @@ class Body12(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)'
     }
+    if hasattr(dict, "swagger_types"):
+        swagger_types.update(dict.swagger_types)
 
     attribute_map = {
-        'attributes': 'attributes'
     }
+    if hasattr(dict, "attribute_map"):
+        attribute_map.update(dict.attribute_map)
 
-    def __init__(self, attributes=None):  # noqa: E501
+    def __init__(self, *args, **kwargs):  # noqa: E501
         """Body12 - a model defined in Swagger"""  # noqa: E501
-        self._attributes = None
         self.discriminator = None
-        self.attributes = attributes
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this Body12.  # noqa: E501
-
-        Attribute values to bulk update.  # noqa: E501
-
-        :return: The attributes of this Body12.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Body12.
-
-        Attribute values to bulk update.  # noqa: E501
-
-        :param attributes: The attributes of this Body12.  # noqa: E501
-        :type: dict(str, object)
-        """
-        if attributes is None:
-            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
-
-        self._attributes = attributes
+        dict.__init__(self, *args, **kwargs)
 
     def to_dict(self):
         """Returns the model properties as a dict"""

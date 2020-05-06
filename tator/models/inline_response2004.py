@@ -29,40 +29,68 @@ class InlineResponse2004(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'prev': 'int'
+        'columns': 'list',
+        'type': 'InlineResponse2004Type'
     }
 
     attribute_map = {
-        'prev': 'prev'
+        'columns': 'columns',
+        'type': 'type'
     }
 
-    def __init__(self, prev=None):  # noqa: E501
+    def __init__(self, columns=None, type=None):  # noqa: E501
         """InlineResponse2004 - a model defined in Swagger"""  # noqa: E501
-        self._prev = None
+        self._columns = None
+        self._type = None
         self.discriminator = None
-        if prev is not None:
-            self.prev = prev
+        if columns is not None:
+            self.columns = columns
+        if type is not None:
+            self.type = type
 
     @property
-    def prev(self):
-        """Gets the prev of this InlineResponse2004.  # noqa: E501
+    def columns(self):
+        """Gets the columns of this InlineResponse2004.  # noqa: E501
 
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :return: The prev of this InlineResponse2004.  # noqa: E501
-        :rtype: int
+        :return: The columns of this InlineResponse2004.  # noqa: E501
+        :rtype: list
         """
-        return self._prev
+        return self._columns
 
-    @prev.setter
-    def prev(self, prev):
-        """Sets the prev of this InlineResponse2004.
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse2004.
 
+        Attribute types associated with this localization type.  # noqa: E501
 
-        :param prev: The prev of this InlineResponse2004.  # noqa: E501
-        :type: int
+        :param columns: The columns of this InlineResponse2004.  # noqa: E501
+        :type: list
         """
 
-        self._prev = prev
+        self._columns = columns
+
+    @property
+    def type(self):
+        """Gets the type of this InlineResponse2004.  # noqa: E501
+
+
+        :return: The type of this InlineResponse2004.  # noqa: E501
+        :rtype: InlineResponse2004Type
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse2004.
+
+
+        :param type: The type of this InlineResponse2004.  # noqa: E501
+        :type: InlineResponse2004Type
+        """
+
+        self._type = type
 
     def to_dict(self):
         """Returns the model properties as a dict"""

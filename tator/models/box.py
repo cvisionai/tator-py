@@ -29,245 +29,107 @@ class Box(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'project': 'int',
-        'meta': 'int',
-        'media': 'int',
-        'thumbnail_image': 'str',
-        'modified': 'bool',
-        'version': 'int',
+        'attributes': 'dict(str, object)',
         'email': 'str',
         'frame': 'int',
-        'attributes': 'dict(str, object)',
-        'x': 'float',
-        'y': 'float',
+        'height': 'float',
+        'id': 'int',
+        'media': 'int',
+        'meta': 'int',
+        'modified': 'bool',
+        'project': 'int',
+        'thumbnail_image': 'str',
+        'version': 'int',
         'width': 'float',
-        'height': 'float'
+        'x': 'float',
+        'y': 'float'
     }
 
     attribute_map = {
-        'id': 'id',
-        'project': 'project',
-        'meta': 'meta',
-        'media': 'media',
-        'thumbnail_image': 'thumbnail_image',
-        'modified': 'modified',
-        'version': 'version',
+        'attributes': 'attributes',
         'email': 'email',
         'frame': 'frame',
-        'attributes': 'attributes',
-        'x': 'x',
-        'y': 'y',
+        'height': 'height',
+        'id': 'id',
+        'media': 'media',
+        'meta': 'meta',
+        'modified': 'modified',
+        'project': 'project',
+        'thumbnail_image': 'thumbnail_image',
+        'version': 'version',
         'width': 'width',
-        'height': 'height'
+        'x': 'x',
+        'y': 'y'
     }
 
-    def __init__(self, id=None, project=None, meta=None, media=None, thumbnail_image=None, modified=None, version=None, email=None, frame=None, attributes=None, x=None, y=None, width=None, height=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, version=None, width=None, x=None, y=None):  # noqa: E501
         """Box - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._project = None
-        self._meta = None
-        self._media = None
-        self._thumbnail_image = None
-        self._modified = None
-        self._version = None
+        self._attributes = None
         self._email = None
         self._frame = None
-        self._attributes = None
+        self._height = None
+        self._id = None
+        self._media = None
+        self._meta = None
+        self._modified = None
+        self._project = None
+        self._thumbnail_image = None
+        self._version = None
+        self._width = None
         self._x = None
         self._y = None
-        self._width = None
-        self._height = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if project is not None:
-            self.project = project
-        if meta is not None:
-            self.meta = meta
-        if media is not None:
-            self.media = media
-        if thumbnail_image is not None:
-            self.thumbnail_image = thumbnail_image
-        if modified is not None:
-            self.modified = modified
-        if version is not None:
-            self.version = version
+        if attributes is not None:
+            self.attributes = attributes
         if email is not None:
             self.email = email
         if frame is not None:
             self.frame = frame
-        if attributes is not None:
-            self.attributes = attributes
+        if height is not None:
+            self.height = height
+        if id is not None:
+            self.id = id
+        if media is not None:
+            self.media = media
+        if meta is not None:
+            self.meta = meta
+        if modified is not None:
+            self.modified = modified
+        if project is not None:
+            self.project = project
+        if thumbnail_image is not None:
+            self.thumbnail_image = thumbnail_image
+        if version is not None:
+            self.version = version
+        if width is not None:
+            self.width = width
         if x is not None:
             self.x = x
         if y is not None:
             self.y = y
-        if width is not None:
-            self.width = width
-        if height is not None:
-            self.height = height
 
     @property
-    def id(self):
-        """Gets the id of this Box.  # noqa: E501
+    def attributes(self):
+        """Gets the attributes of this Box.  # noqa: E501
 
-        Unique integer identifying this localization.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :return: The id of this Box.  # noqa: E501
-        :rtype: int
+        :return: The attributes of this Box.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._id
+        return self._attributes
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this Box.
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this Box.
 
-        Unique integer identifying this localization.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :param id: The id of this Box.  # noqa: E501
-        :type: int
-        """
-
-        self._id = id
-
-    @property
-    def project(self):
-        """Gets the project of this Box.  # noqa: E501
-
-        Unique integer identifying project of this localization.  # noqa: E501
-
-        :return: The project of this Box.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this Box.
-
-        Unique integer identifying project of this localization.  # noqa: E501
-
-        :param project: The project of this Box.  # noqa: E501
-        :type: int
+        :param attributes: The attributes of this Box.  # noqa: E501
+        :type: dict(str, object)
         """
 
-        self._project = project
-
-    @property
-    def meta(self):
-        """Gets the meta of this Box.  # noqa: E501
-
-        Unique integer identifying entity type of this localization.  # noqa: E501
-
-        :return: The meta of this Box.  # noqa: E501
-        :rtype: int
-        """
-        return self._meta
-
-    @meta.setter
-    def meta(self, meta):
-        """Sets the meta of this Box.
-
-        Unique integer identifying entity type of this localization.  # noqa: E501
-
-        :param meta: The meta of this Box.  # noqa: E501
-        :type: int
-        """
-
-        self._meta = meta
-
-    @property
-    def media(self):
-        """Gets the media of this Box.  # noqa: E501
-
-        Unique integer identifying media of this localization.  # noqa: E501
-
-        :return: The media of this Box.  # noqa: E501
-        :rtype: int
-        """
-        return self._media
-
-    @media.setter
-    def media(self, media):
-        """Sets the media of this Box.
-
-        Unique integer identifying media of this localization.  # noqa: E501
-
-        :param media: The media of this Box.  # noqa: E501
-        :type: int
-        """
-
-        self._media = media
-
-    @property
-    def thumbnail_image(self):
-        """Gets the thumbnail_image of this Box.  # noqa: E501
-
-        URL of thumbnail corresponding to this localization.  # noqa: E501
-
-        :return: The thumbnail_image of this Box.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumbnail_image
-
-    @thumbnail_image.setter
-    def thumbnail_image(self, thumbnail_image):
-        """Sets the thumbnail_image of this Box.
-
-        URL of thumbnail corresponding to this localization.  # noqa: E501
-
-        :param thumbnail_image: The thumbnail_image of this Box.  # noqa: E501
-        :type: str
-        """
-
-        self._thumbnail_image = thumbnail_image
-
-    @property
-    def modified(self):
-        """Gets the modified of this Box.  # noqa: E501
-
-        Indicates whether this localization has been modified in the web UI.  # noqa: E501
-
-        :return: The modified of this Box.  # noqa: E501
-        :rtype: bool
-        """
-        return self._modified
-
-    @modified.setter
-    def modified(self, modified):
-        """Sets the modified of this Box.
-
-        Indicates whether this localization has been modified in the web UI.  # noqa: E501
-
-        :param modified: The modified of this Box.  # noqa: E501
-        :type: bool
-        """
-
-        self._modified = modified
-
-    @property
-    def version(self):
-        """Gets the version of this Box.  # noqa: E501
-
-        Unique integer identifying a version.  # noqa: E501
-
-        :return: The version of this Box.  # noqa: E501
-        :rtype: int
-        """
-        return self._version
-
-    @version.setter
-    def version(self, version):
-        """Sets the version of this Box.
-
-        Unique integer identifying a version.  # noqa: E501
-
-        :param version: The version of this Box.  # noqa: E501
-        :type: int
-        """
-
-        self._version = version
+        self._attributes = attributes
 
     @property
     def email(self):
@@ -316,27 +178,211 @@ class Box(object):
         self._frame = frame
 
     @property
-    def attributes(self):
-        """Gets the attributes of this Box.  # noqa: E501
+    def height(self):
+        """Gets the height of this Box.  # noqa: E501
 
-        Object containing attribute values.  # noqa: E501
+        Normalized height of bounding box for `box` localization types.  # noqa: E501
 
-        :return: The attributes of this Box.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The height of this Box.  # noqa: E501
+        :rtype: float
         """
-        return self._attributes
+        return self._height
 
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Box.
+    @height.setter
+    def height(self, height):
+        """Sets the height of this Box.
 
-        Object containing attribute values.  # noqa: E501
+        Normalized height of bounding box for `box` localization types.  # noqa: E501
 
-        :param attributes: The attributes of this Box.  # noqa: E501
-        :type: dict(str, object)
+        :param height: The height of this Box.  # noqa: E501
+        :type: float
         """
 
-        self._attributes = attributes
+        self._height = height
+
+    @property
+    def id(self):
+        """Gets the id of this Box.  # noqa: E501
+
+        Unique integer identifying this localization.  # noqa: E501
+
+        :return: The id of this Box.  # noqa: E501
+        :rtype: int
+        """
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        """Sets the id of this Box.
+
+        Unique integer identifying this localization.  # noqa: E501
+
+        :param id: The id of this Box.  # noqa: E501
+        :type: int
+        """
+
+        self._id = id
+
+    @property
+    def media(self):
+        """Gets the media of this Box.  # noqa: E501
+
+        Unique integer identifying media of this localization.  # noqa: E501
+
+        :return: The media of this Box.  # noqa: E501
+        :rtype: int
+        """
+        return self._media
+
+    @media.setter
+    def media(self, media):
+        """Sets the media of this Box.
+
+        Unique integer identifying media of this localization.  # noqa: E501
+
+        :param media: The media of this Box.  # noqa: E501
+        :type: int
+        """
+
+        self._media = media
+
+    @property
+    def meta(self):
+        """Gets the meta of this Box.  # noqa: E501
+
+        Unique integer identifying entity type of this localization.  # noqa: E501
+
+        :return: The meta of this Box.  # noqa: E501
+        :rtype: int
+        """
+        return self._meta
+
+    @meta.setter
+    def meta(self, meta):
+        """Sets the meta of this Box.
+
+        Unique integer identifying entity type of this localization.  # noqa: E501
+
+        :param meta: The meta of this Box.  # noqa: E501
+        :type: int
+        """
+
+        self._meta = meta
+
+    @property
+    def modified(self):
+        """Gets the modified of this Box.  # noqa: E501
+
+        Indicates whether this localization has been modified in the web UI.  # noqa: E501
+
+        :return: The modified of this Box.  # noqa: E501
+        :rtype: bool
+        """
+        return self._modified
+
+    @modified.setter
+    def modified(self, modified):
+        """Sets the modified of this Box.
+
+        Indicates whether this localization has been modified in the web UI.  # noqa: E501
+
+        :param modified: The modified of this Box.  # noqa: E501
+        :type: bool
+        """
+
+        self._modified = modified
+
+    @property
+    def project(self):
+        """Gets the project of this Box.  # noqa: E501
+
+        Unique integer identifying project of this localization.  # noqa: E501
+
+        :return: The project of this Box.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this Box.
+
+        Unique integer identifying project of this localization.  # noqa: E501
+
+        :param project: The project of this Box.  # noqa: E501
+        :type: int
+        """
+
+        self._project = project
+
+    @property
+    def thumbnail_image(self):
+        """Gets the thumbnail_image of this Box.  # noqa: E501
+
+        URL of thumbnail corresponding to this localization.  # noqa: E501
+
+        :return: The thumbnail_image of this Box.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumbnail_image
+
+    @thumbnail_image.setter
+    def thumbnail_image(self, thumbnail_image):
+        """Sets the thumbnail_image of this Box.
+
+        URL of thumbnail corresponding to this localization.  # noqa: E501
+
+        :param thumbnail_image: The thumbnail_image of this Box.  # noqa: E501
+        :type: str
+        """
+
+        self._thumbnail_image = thumbnail_image
+
+    @property
+    def version(self):
+        """Gets the version of this Box.  # noqa: E501
+
+        Unique integer identifying a version.  # noqa: E501
+
+        :return: The version of this Box.  # noqa: E501
+        :rtype: int
+        """
+        return self._version
+
+    @version.setter
+    def version(self, version):
+        """Sets the version of this Box.
+
+        Unique integer identifying a version.  # noqa: E501
+
+        :param version: The version of this Box.  # noqa: E501
+        :type: int
+        """
+
+        self._version = version
+
+    @property
+    def width(self):
+        """Gets the width of this Box.  # noqa: E501
+
+        Normalized width of bounding box for `box` localization types.  # noqa: E501
+
+        :return: The width of this Box.  # noqa: E501
+        :rtype: float
+        """
+        return self._width
+
+    @width.setter
+    def width(self, width):
+        """Sets the width of this Box.
+
+        Normalized width of bounding box for `box` localization types.  # noqa: E501
+
+        :param width: The width of this Box.  # noqa: E501
+        :type: float
+        """
+
+        self._width = width
 
     @property
     def x(self):
@@ -383,52 +429,6 @@ class Box(object):
         """
 
         self._y = y
-
-    @property
-    def width(self):
-        """Gets the width of this Box.  # noqa: E501
-
-        Normalized width of bounding box for `box` localization types.  # noqa: E501
-
-        :return: The width of this Box.  # noqa: E501
-        :rtype: float
-        """
-        return self._width
-
-    @width.setter
-    def width(self, width):
-        """Sets the width of this Box.
-
-        Normalized width of bounding box for `box` localization types.  # noqa: E501
-
-        :param width: The width of this Box.  # noqa: E501
-        :type: float
-        """
-
-        self._width = width
-
-    @property
-    def height(self):
-        """Gets the height of this Box.  # noqa: E501
-
-        Normalized height of bounding box for `box` localization types.  # noqa: E501
-
-        :return: The height of this Box.  # noqa: E501
-        :rtype: float
-        """
-        return self._height
-
-    @height.setter
-    def height(self, height):
-        """Sets the height of this Box.
-
-        Normalized height of bounding box for `box` localization types.  # noqa: E501
-
-        :param height: The height of this Box.  # noqa: E501
-        :type: float
-        """
-
-        self._height = height
 
     def to_dict(self):
         """Returns the model properties as a dict"""

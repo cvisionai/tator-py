@@ -29,50 +29,91 @@ class InlineResponse20014(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'email': 'str',
+        'first_name': 'str',
         'id': 'int',
-        'project': 'int',
-        'path': 'str',
-        'name': 'str',
-        'parent': 'int',
-        'attributes': 'dict(str, object)'
+        'last_name': 'str',
+        'username': 'str'
     }
 
     attribute_map = {
+        'email': 'email',
+        'first_name': 'first_name',
         'id': 'id',
-        'project': 'project',
-        'path': 'path',
-        'name': 'name',
-        'parent': 'parent',
-        'attributes': 'attributes'
+        'last_name': 'last_name',
+        'username': 'username'
     }
 
-    def __init__(self, id=None, project=None, path=None, name=None, parent=None, attributes=None):  # noqa: E501
+    def __init__(self, email=None, first_name=None, id=None, last_name=None, username=None):  # noqa: E501
         """InlineResponse20014 - a model defined in Swagger"""  # noqa: E501
+        self._email = None
+        self._first_name = None
         self._id = None
-        self._project = None
-        self._path = None
-        self._name = None
-        self._parent = None
-        self._attributes = None
+        self._last_name = None
+        self._username = None
         self.discriminator = None
+        if email is not None:
+            self.email = email
+        if first_name is not None:
+            self.first_name = first_name
         if id is not None:
             self.id = id
-        if project is not None:
-            self.project = project
-        if path is not None:
-            self.path = path
-        if name is not None:
-            self.name = name
-        if parent is not None:
-            self.parent = parent
-        if attributes is not None:
-            self.attributes = attributes
+        if last_name is not None:
+            self.last_name = last_name
+        if username is not None:
+            self.username = username
+
+    @property
+    def email(self):
+        """Gets the email of this InlineResponse20014.  # noqa: E501
+
+        Email address of current user.  # noqa: E501
+
+        :return: The email of this InlineResponse20014.  # noqa: E501
+        :rtype: str
+        """
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        """Sets the email of this InlineResponse20014.
+
+        Email address of current user.  # noqa: E501
+
+        :param email: The email of this InlineResponse20014.  # noqa: E501
+        :type: str
+        """
+
+        self._email = email
+
+    @property
+    def first_name(self):
+        """Gets the first_name of this InlineResponse20014.  # noqa: E501
+
+        First name of current user.  # noqa: E501
+
+        :return: The first_name of this InlineResponse20014.  # noqa: E501
+        :rtype: str
+        """
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, first_name):
+        """Sets the first_name of this InlineResponse20014.
+
+        First name of current user.  # noqa: E501
+
+        :param first_name: The first_name of this InlineResponse20014.  # noqa: E501
+        :type: str
+        """
+
+        self._first_name = first_name
 
     @property
     def id(self):
         """Gets the id of this InlineResponse20014.  # noqa: E501
 
-        Unique integer identifying the tree leaf.  # noqa: E501
+        Unique integer identifying current user.  # noqa: E501
 
         :return: The id of this InlineResponse20014.  # noqa: E501
         :rtype: int
@@ -83,7 +124,7 @@ class InlineResponse20014(object):
     def id(self, id):
         """Sets the id of this InlineResponse20014.
 
-        Unique integer identifying the tree leaf.  # noqa: E501
+        Unique integer identifying current user.  # noqa: E501
 
         :param id: The id of this InlineResponse20014.  # noqa: E501
         :type: int
@@ -92,119 +133,50 @@ class InlineResponse20014(object):
         self._id = id
 
     @property
-    def project(self):
-        """Gets the project of this InlineResponse20014.  # noqa: E501
+    def last_name(self):
+        """Gets the last_name of this InlineResponse20014.  # noqa: E501
 
-        Unique integer identifying a project.  # noqa: E501
+        Last name of current user.  # noqa: E501
 
-        :return: The project of this InlineResponse20014.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this InlineResponse20014.
-
-        Unique integer identifying a project.  # noqa: E501
-
-        :param project: The project of this InlineResponse20014.  # noqa: E501
-        :type: int
-        """
-
-        self._project = project
-
-    @property
-    def path(self):
-        """Gets the path of this InlineResponse20014.  # noqa: E501
-
-        Full path to leaf in hierarchy.  # noqa: E501
-
-        :return: The path of this InlineResponse20014.  # noqa: E501
+        :return: The last_name of this InlineResponse20014.  # noqa: E501
         :rtype: str
         """
-        return self._path
+        return self._last_name
 
-    @path.setter
-    def path(self, path):
-        """Sets the path of this InlineResponse20014.
+    @last_name.setter
+    def last_name(self, last_name):
+        """Sets the last_name of this InlineResponse20014.
 
-        Full path to leaf in hierarchy.  # noqa: E501
+        Last name of current user.  # noqa: E501
 
-        :param path: The path of this InlineResponse20014.  # noqa: E501
+        :param last_name: The last_name of this InlineResponse20014.  # noqa: E501
         :type: str
         """
 
-        self._path = path
+        self._last_name = last_name
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse20014.  # noqa: E501
+    def username(self):
+        """Gets the username of this InlineResponse20014.  # noqa: E501
 
-        Name of the tree leaf.  # noqa: E501
+        Username of current user.  # noqa: E501
 
-        :return: The name of this InlineResponse20014.  # noqa: E501
+        :return: The username of this InlineResponse20014.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._username
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse20014.
+    @username.setter
+    def username(self, username):
+        """Sets the username of this InlineResponse20014.
 
-        Name of the tree leaf.  # noqa: E501
+        Username of current user.  # noqa: E501
 
-        :param name: The name of this InlineResponse20014.  # noqa: E501
+        :param username: The username of this InlineResponse20014.  # noqa: E501
         :type: str
         """
 
-        self._name = name
-
-    @property
-    def parent(self):
-        """Gets the parent of this InlineResponse20014.  # noqa: E501
-
-        ID to use as parent if there is one.  # noqa: E501
-
-        :return: The parent of this InlineResponse20014.  # noqa: E501
-        :rtype: int
-        """
-        return self._parent
-
-    @parent.setter
-    def parent(self, parent):
-        """Sets the parent of this InlineResponse20014.
-
-        ID to use as parent if there is one.  # noqa: E501
-
-        :param parent: The parent of this InlineResponse20014.  # noqa: E501
-        :type: int
-        """
-
-        self._parent = parent
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this InlineResponse20014.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this InlineResponse20014.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this InlineResponse20014.
-
-        Object containing attribute values.  # noqa: E501
-
-        :param attributes: The attributes of this InlineResponse20014.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._attributes = attributes
+        self._username = username
 
     def to_dict(self):
         """Returns the model properties as a dict"""

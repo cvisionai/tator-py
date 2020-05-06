@@ -29,70 +29,72 @@ class Body15(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str'
+        'password': 'str',
+        'username': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description'
+        'password': 'password',
+        'username': 'username'
     }
 
-    def __init__(self, name=None, description=None):  # noqa: E501
+    def __init__(self, password=None, username=None):  # noqa: E501
         """Body15 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
+        self._password = None
+        self._username = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if description is not None:
-            self.description = description
+        self.password = password
+        self.username = username
 
     @property
-    def name(self):
-        """Gets the name of this Body15.  # noqa: E501
+    def password(self):
+        """Gets the password of this Body15.  # noqa: E501
 
-        Name of the state type.  # noqa: E501
+        Account password.  # noqa: E501
 
-        :return: The name of this Body15.  # noqa: E501
+        :return: The password of this Body15.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._password
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body15.
+    @password.setter
+    def password(self, password):
+        """Sets the password of this Body15.
 
-        Name of the state type.  # noqa: E501
+        Account password.  # noqa: E501
 
-        :param name: The name of this Body15.  # noqa: E501
+        :param password: The password of this Body15.  # noqa: E501
         :type: str
         """
+        if password is None:
+            raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        self._password = password
 
     @property
-    def description(self):
-        """Gets the description of this Body15.  # noqa: E501
+    def username(self):
+        """Gets the username of this Body15.  # noqa: E501
 
-        Description of the state type.  # noqa: E501
+        Account username.  # noqa: E501
 
-        :return: The description of this Body15.  # noqa: E501
+        :return: The username of this Body15.  # noqa: E501
         :rtype: str
         """
-        return self._description
+        return self._username
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body15.
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Body15.
 
-        Description of the state type.  # noqa: E501
+        Account username.  # noqa: E501
 
-        :param description: The description of this Body15.  # noqa: E501
+        :param username: The username of this Body15.  # noqa: E501
         :type: str
         """
+        if username is None:
+            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
 
-        self._description = description
+        self._username = username
 
     def to_dict(self):
         """Returns the model properties as a dict"""

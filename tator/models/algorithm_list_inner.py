@@ -29,29 +29,52 @@ class AlgorithmListInner(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'description': 'str',
         'id': 'int',
-        'name': 'str',
-        'description': 'str'
+        'name': 'str'
     }
 
     attribute_map = {
+        'description': 'description',
         'id': 'id',
-        'name': 'name',
-        'description': 'description'
+        'name': 'name'
     }
 
-    def __init__(self, id=None, name=None, description=None):  # noqa: E501
+    def __init__(self, description=None, id=None, name=None):  # noqa: E501
         """AlgorithmListInner - a model defined in Swagger"""  # noqa: E501
+        self._description = None
         self._id = None
         self._name = None
-        self._description = None
         self.discriminator = None
+        if description is not None:
+            self.description = description
         if id is not None:
             self.id = id
         if name is not None:
             self.name = name
-        if description is not None:
-            self.description = description
+
+    @property
+    def description(self):
+        """Gets the description of this AlgorithmListInner.  # noqa: E501
+
+        Description of the algorithm.  # noqa: E501
+
+        :return: The description of this AlgorithmListInner.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this AlgorithmListInner.
+
+        Description of the algorithm.  # noqa: E501
+
+        :param description: The description of this AlgorithmListInner.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
 
     @property
     def id(self):
@@ -98,29 +121,6 @@ class AlgorithmListInner(object):
         """
 
         self._name = name
-
-    @property
-    def description(self):
-        """Gets the description of this AlgorithmListInner.  # noqa: E501
-
-        Description of the algorithm.  # noqa: E501
-
-        :return: The description of this AlgorithmListInner.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this AlgorithmListInner.
-
-        Description of the algorithm.  # noqa: E501
-
-        :param description: The description of this AlgorithmListInner.  # noqa: E501
-        :type: str
-        """
-
-        self._description = description
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,68 +29,182 @@ class InlineResponse20011(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestStateTypesprojectType',
-        'columns': 'list[OneOfinlineResponse20011ColumnsItems]'
+        'attributes': 'dict(str, object)',
+        'id': 'int',
+        'name': 'str',
+        'parent': 'int',
+        'path': 'str',
+        'project': 'int'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'attributes': 'attributes',
+        'id': 'id',
+        'name': 'name',
+        'parent': 'parent',
+        'path': 'path',
+        'project': 'project'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, attributes=None, id=None, name=None, parent=None, path=None, project=None):  # noqa: E501
         """InlineResponse20011 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._attributes = None
+        self._id = None
+        self._name = None
+        self._parent = None
+        self._path = None
+        self._project = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if attributes is not None:
+            self.attributes = attributes
+        if id is not None:
+            self.id = id
+        if name is not None:
+            self.name = name
+        if parent is not None:
+            self.parent = parent
+        if path is not None:
+            self.path = path
+        if project is not None:
+            self.project = project
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse20011.  # noqa: E501
+    def attributes(self):
+        """Gets the attributes of this InlineResponse20011.  # noqa: E501
 
+        Object containing attribute values.  # noqa: E501
 
-        :return: The type of this InlineResponse20011.  # noqa: E501
-        :rtype: RestStateTypesprojectType
+        :return: The attributes of this InlineResponse20011.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._type
+        return self._attributes
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse20011.
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this InlineResponse20011.
 
+        Object containing attribute values.  # noqa: E501
 
-        :param type: The type of this InlineResponse20011.  # noqa: E501
-        :type: RestStateTypesprojectType
+        :param attributes: The attributes of this InlineResponse20011.  # noqa: E501
+        :type: dict(str, object)
         """
 
-        self._type = type
+        self._attributes = attributes
 
     @property
-    def columns(self):
-        """Gets the columns of this InlineResponse20011.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse20011.  # noqa: E501
 
-        Attribute types associated with this state type.  # noqa: E501
+        Unique integer identifying the tree leaf.  # noqa: E501
 
-        :return: The columns of this InlineResponse20011.  # noqa: E501
-        :rtype: list[OneOfinlineResponse20011ColumnsItems]
+        :return: The id of this InlineResponse20011.  # noqa: E501
+        :rtype: int
         """
-        return self._columns
+        return self._id
 
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse20011.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse20011.
 
-        Attribute types associated with this state type.  # noqa: E501
+        Unique integer identifying the tree leaf.  # noqa: E501
 
-        :param columns: The columns of this InlineResponse20011.  # noqa: E501
-        :type: list[OneOfinlineResponse20011ColumnsItems]
+        :param id: The id of this InlineResponse20011.  # noqa: E501
+        :type: int
         """
 
-        self._columns = columns
+        self._id = id
+
+    @property
+    def name(self):
+        """Gets the name of this InlineResponse20011.  # noqa: E501
+
+        Name of the tree leaf.  # noqa: E501
+
+        :return: The name of this InlineResponse20011.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this InlineResponse20011.
+
+        Name of the tree leaf.  # noqa: E501
+
+        :param name: The name of this InlineResponse20011.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
+
+    @property
+    def parent(self):
+        """Gets the parent of this InlineResponse20011.  # noqa: E501
+
+        ID to use as parent if there is one.  # noqa: E501
+
+        :return: The parent of this InlineResponse20011.  # noqa: E501
+        :rtype: int
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        """Sets the parent of this InlineResponse20011.
+
+        ID to use as parent if there is one.  # noqa: E501
+
+        :param parent: The parent of this InlineResponse20011.  # noqa: E501
+        :type: int
+        """
+
+        self._parent = parent
+
+    @property
+    def path(self):
+        """Gets the path of this InlineResponse20011.  # noqa: E501
+
+        Full path to leaf in hierarchy.  # noqa: E501
+
+        :return: The path of this InlineResponse20011.  # noqa: E501
+        :rtype: str
+        """
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        """Sets the path of this InlineResponse20011.
+
+        Full path to leaf in hierarchy.  # noqa: E501
+
+        :param path: The path of this InlineResponse20011.  # noqa: E501
+        :type: str
+        """
+
+        self._path = path
+
+    @property
+    def project(self):
+        """Gets the project of this InlineResponse20011.  # noqa: E501
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :return: The project of this InlineResponse20011.  # noqa: E501
+        :rtype: int
+        """
+        return self._project
+
+    @project.setter
+    def project(self, project):
+        """Sets the project of this InlineResponse20011.
+
+        Unique integer identifying a project.  # noqa: E501
+
+        :param project: The project of this InlineResponse20011.  # noqa: E501
+        :type: int
+        """
+
+        self._project = project
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,37 +29,98 @@ class Body16(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'gid': 'str',
+        'md5': 'str',
         'name': 'str',
-        'url': 'str',
-        'lookup': 'str',
-        'hours': 'int'
+        'section': 'str',
+        'type': 'int',
+        'uid': 'str',
+        'url': 'str'
     }
 
     attribute_map = {
+        'gid': 'gid',
+        'md5': 'md5',
         'name': 'name',
-        'url': 'url',
-        'lookup': 'lookup',
-        'hours': 'hours'
+        'section': 'section',
+        'type': 'type',
+        'uid': 'uid',
+        'url': 'url'
     }
 
-    def __init__(self, name=None, url=None, lookup=None, hours=24):  # noqa: E501
+    def __init__(self, gid=None, md5=None, name=None, section=None, type=None, uid=None, url=None):  # noqa: E501
         """Body16 - a model defined in Swagger"""  # noqa: E501
+        self._gid = None
+        self._md5 = None
         self._name = None
+        self._section = None
+        self._type = None
+        self._uid = None
         self._url = None
-        self._lookup = None
-        self._hours = None
         self.discriminator = None
+        self.gid = gid
+        self.md5 = md5
         self.name = name
+        self.section = section
+        self.type = type
+        self.uid = uid
         self.url = url
-        self.lookup = lookup
-        if hours is not None:
-            self.hours = hours
+
+    @property
+    def gid(self):
+        """Gets the gid of this Body16.  # noqa: E501
+
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
+
+        :return: The gid of this Body16.  # noqa: E501
+        :rtype: str
+        """
+        return self._gid
+
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this Body16.
+
+        UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
+
+        :param gid: The gid of this Body16.  # noqa: E501
+        :type: str
+        """
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
+
+        self._gid = gid
+
+    @property
+    def md5(self):
+        """Gets the md5 of this Body16.  # noqa: E501
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :return: The md5 of this Body16.  # noqa: E501
+        :rtype: str
+        """
+        return self._md5
+
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this Body16.
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :param md5: The md5 of this Body16.  # noqa: E501
+        :type: str
+        """
+        if md5 is None:
+            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
+
+        self._md5 = md5
 
     @property
     def name(self):
         """Gets the name of this Body16.  # noqa: E501
 
-        Unique name for the temporary file  # noqa: E501
+        Name of the file.  # noqa: E501
 
         :return: The name of this Body16.  # noqa: E501
         :rtype: str
@@ -70,7 +131,7 @@ class Body16(object):
     def name(self, name):
         """Sets the name of this Body16.
 
-        Unique name for the temporary file  # noqa: E501
+        Name of the file.  # noqa: E501
 
         :param name: The name of this Body16.  # noqa: E501
         :type: str
@@ -81,10 +142,85 @@ class Body16(object):
         self._name = name
 
     @property
+    def section(self):
+        """Gets the section of this Body16.  # noqa: E501
+
+        Media section name to upload to.  # noqa: E501
+
+        :return: The section of this Body16.  # noqa: E501
+        :rtype: str
+        """
+        return self._section
+
+    @section.setter
+    def section(self, section):
+        """Sets the section of this Body16.
+
+        Media section name to upload to.  # noqa: E501
+
+        :param section: The section of this Body16.  # noqa: E501
+        :type: str
+        """
+        if section is None:
+            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
+
+        self._section = section
+
+    @property
+    def type(self):
+        """Gets the type of this Body16.  # noqa: E501
+
+        Unique integer identifying a video type.  # noqa: E501
+
+        :return: The type of this Body16.  # noqa: E501
+        :rtype: int
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this Body16.
+
+        Unique integer identifying a video type.  # noqa: E501
+
+        :param type: The type of this Body16.  # noqa: E501
+        :type: int
+        """
+        if type is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
+
+        self._type = type
+
+    @property
+    def uid(self):
+        """Gets the uid of this Body16.  # noqa: E501
+
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
+
+        :return: The uid of this Body16.  # noqa: E501
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this Body16.
+
+        UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
+
+        :param uid: The uid of this Body16.  # noqa: E501
+        :type: str
+        """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
+
+        self._uid = uid
+
+    @property
     def url(self):
         """Gets the url of this Body16.  # noqa: E501
 
-        URL for the temporary file  # noqa: E501
+        Upload URL for the raw video.  # noqa: E501
 
         :return: The url of this Body16.  # noqa: E501
         :rtype: str
@@ -95,7 +231,7 @@ class Body16(object):
     def url(self, url):
         """Sets the url of this Body16.
 
-        URL for the temporary file  # noqa: E501
+        Upload URL for the raw video.  # noqa: E501
 
         :param url: The url of this Body16.  # noqa: E501
         :type: str
@@ -104,54 +240,6 @@ class Body16(object):
             raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
 
         self._url = url
-
-    @property
-    def lookup(self):
-        """Gets the lookup of this Body16.  # noqa: E501
-
-        md5hash of lookup parameters  # noqa: E501
-
-        :return: The lookup of this Body16.  # noqa: E501
-        :rtype: str
-        """
-        return self._lookup
-
-    @lookup.setter
-    def lookup(self, lookup):
-        """Sets the lookup of this Body16.
-
-        md5hash of lookup parameters  # noqa: E501
-
-        :param lookup: The lookup of this Body16.  # noqa: E501
-        :type: str
-        """
-        if lookup is None:
-            raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
-
-        self._lookup = lookup
-
-    @property
-    def hours(self):
-        """Gets the hours of this Body16.  # noqa: E501
-
-        Number of hours file is to be kept alive  # noqa: E501
-
-        :return: The hours of this Body16.  # noqa: E501
-        :rtype: int
-        """
-        return self._hours
-
-    @hours.setter
-    def hours(self, hours):
-        """Sets the hours of this Body16.
-
-        Number of hours file is to be kept alive  # noqa: E501
-
-        :param hours: The hours of this Body16.  # noqa: E501
-        :type: int
-        """
-
-        self._hours = hours
 
     def to_dict(self):
         """Returns the model properties as a dict"""

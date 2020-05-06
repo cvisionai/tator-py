@@ -29,104 +29,68 @@ class InlineResponse2007(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'username': 'str',
-        'permission': 'str'
+        'columns': 'list',
+        'type': 'InlineResponse2007Type'
     }
 
     attribute_map = {
-        'id': 'id',
-        'username': 'username',
-        'permission': 'permission'
+        'columns': 'columns',
+        'type': 'type'
     }
 
-    def __init__(self, id=None, username=None, permission=None):  # noqa: E501
+    def __init__(self, columns=None, type=None):  # noqa: E501
         """InlineResponse2007 - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._username = None
-        self._permission = None
+        self._columns = None
+        self._type = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if username is not None:
-            self.username = username
-        if permission is not None:
-            self.permission = permission
+        if columns is not None:
+            self.columns = columns
+        if type is not None:
+            self.type = type
 
     @property
-    def id(self):
-        """Gets the id of this InlineResponse2007.  # noqa: E501
+    def columns(self):
+        """Gets the columns of this InlineResponse2007.  # noqa: E501
 
-        Unique integer identifying a membership.  # noqa: E501
+        Attribute types associated with this state type.  # noqa: E501
 
-        :return: The id of this InlineResponse2007.  # noqa: E501
-        :rtype: int
+        :return: The columns of this InlineResponse2007.  # noqa: E501
+        :rtype: list
         """
-        return self._id
+        return self._columns
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this InlineResponse2007.
+    @columns.setter
+    def columns(self, columns):
+        """Sets the columns of this InlineResponse2007.
 
-        Unique integer identifying a membership.  # noqa: E501
+        Attribute types associated with this state type.  # noqa: E501
 
-        :param id: The id of this InlineResponse2007.  # noqa: E501
-        :type: int
+        :param columns: The columns of this InlineResponse2007.  # noqa: E501
+        :type: list
         """
 
-        self._id = id
+        self._columns = columns
 
     @property
-    def username(self):
-        """Gets the username of this InlineResponse2007.  # noqa: E501
+    def type(self):
+        """Gets the type of this InlineResponse2007.  # noqa: E501
 
-        Username for the membership.  # noqa: E501
 
-        :return: The username of this InlineResponse2007.  # noqa: E501
-        :rtype: str
+        :return: The type of this InlineResponse2007.  # noqa: E501
+        :rtype: InlineResponse2007Type
         """
-        return self._username
+        return self._type
 
-    @username.setter
-    def username(self, username):
-        """Sets the username of this InlineResponse2007.
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse2007.
 
-        Username for the membership.  # noqa: E501
 
-        :param username: The username of this InlineResponse2007.  # noqa: E501
-        :type: str
+        :param type: The type of this InlineResponse2007.  # noqa: E501
+        :type: InlineResponse2007Type
         """
 
-        self._username = username
-
-    @property
-    def permission(self):
-        """Gets the permission of this InlineResponse2007.  # noqa: E501
-
-        User permission level for the project.  # noqa: E501
-
-        :return: The permission of this InlineResponse2007.  # noqa: E501
-        :rtype: str
-        """
-        return self._permission
-
-    @permission.setter
-    def permission(self, permission):
-        """Sets the permission of this InlineResponse2007.
-
-        User permission level for the project.  # noqa: E501
-
-        :param permission: The permission of this InlineResponse2007.  # noqa: E501
-        :type: str
-        """
-        allowed_values = ["view_only", "can_edit", "can_transfer", "can_execute", "full_control"]  # noqa: E501
-        if permission not in allowed_values:
-            raise ValueError(
-                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
-                .format(permission, allowed_values)
-            )
-
-        self._permission = permission
+        self._type = type
 
     def to_dict(self):
         """Returns the model properties as a dict"""

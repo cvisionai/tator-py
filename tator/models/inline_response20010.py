@@ -29,68 +29,42 @@ class InlineResponse20010(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestStateTypesprojectType',
-        'columns': 'list[OneOfinlineResponse20010ColumnsItems]'
+        'token': 'str'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'token': 'token'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, token=None):  # noqa: E501
         """InlineResponse20010 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._token = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if token is not None:
+            self.token = token
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse20010.  # noqa: E501
+    def token(self):
+        """Gets the token of this InlineResponse20010.  # noqa: E501
 
+        API token.  # noqa: E501
 
-        :return: The type of this InlineResponse20010.  # noqa: E501
-        :rtype: RestStateTypesprojectType
+        :return: The token of this InlineResponse20010.  # noqa: E501
+        :rtype: str
         """
-        return self._type
+        return self._token
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse20010.
+    @token.setter
+    def token(self, token):
+        """Sets the token of this InlineResponse20010.
 
+        API token.  # noqa: E501
 
-        :param type: The type of this InlineResponse20010.  # noqa: E501
-        :type: RestStateTypesprojectType
-        """
-
-        self._type = type
-
-    @property
-    def columns(self):
-        """Gets the columns of this InlineResponse20010.  # noqa: E501
-
-        Attribute types associated with this state type.  # noqa: E501
-
-        :return: The columns of this InlineResponse20010.  # noqa: E501
-        :rtype: list[OneOfinlineResponse20010ColumnsItems]
-        """
-        return self._columns
-
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse20010.
-
-        Attribute types associated with this state type.  # noqa: E501
-
-        :param columns: The columns of this InlineResponse20010.  # noqa: E501
-        :type: list[OneOfinlineResponse20010ColumnsItems]
+        :param token: The token of this InlineResponse20010.  # noqa: E501
+        :type: str
         """
 
-        self._columns = columns
+        self._token = token
 
     def to_dict(self):
         """Returns the model properties as a dict"""

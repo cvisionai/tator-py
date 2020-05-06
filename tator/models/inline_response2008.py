@@ -29,60 +29,68 @@ class InlineResponse2008(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'association': 'int',
         'id': 'int',
-        'name': 'str',
-        'summary': 'str',
-        'thumb': 'str',
-        'num_files': 'int',
-        'size': 'int',
-        'usernames': 'list[str]',
-        'permission': 'str'
+        'meta': 'int',
+        'modified': 'bool',
+        'version': 'int'
     }
 
     attribute_map = {
+        'association': 'association',
         'id': 'id',
-        'name': 'name',
-        'summary': 'summary',
-        'thumb': 'thumb',
-        'num_files': 'num_files',
-        'size': 'size',
-        'usernames': 'usernames',
-        'permission': 'permission'
+        'meta': 'meta',
+        'modified': 'modified',
+        'version': 'version'
     }
 
-    def __init__(self, id=None, name=None, summary='', thumb=None, num_files=None, size=None, usernames=None, permission=None):  # noqa: E501
+    def __init__(self, association=None, id=None, meta=None, modified=False, version=None):  # noqa: E501
         """InlineResponse2008 - a model defined in Swagger"""  # noqa: E501
+        self._association = None
         self._id = None
-        self._name = None
-        self._summary = None
-        self._thumb = None
-        self._num_files = None
-        self._size = None
-        self._usernames = None
-        self._permission = None
+        self._meta = None
+        self._modified = None
+        self._version = None
         self.discriminator = None
+        if association is not None:
+            self.association = association
         if id is not None:
             self.id = id
-        if name is not None:
-            self.name = name
-        if summary is not None:
-            self.summary = summary
-        if thumb is not None:
-            self.thumb = thumb
-        if num_files is not None:
-            self.num_files = num_files
-        if size is not None:
-            self.size = size
-        if usernames is not None:
-            self.usernames = usernames
-        if permission is not None:
-            self.permission = permission
+        if meta is not None:
+            self.meta = meta
+        if modified is not None:
+            self.modified = modified
+        if version is not None:
+            self.version = version
+
+    @property
+    def association(self):
+        """Gets the association of this InlineResponse2008.  # noqa: E501
+
+        Unique integer identifying the state association.  # noqa: E501
+
+        :return: The association of this InlineResponse2008.  # noqa: E501
+        :rtype: int
+        """
+        return self._association
+
+    @association.setter
+    def association(self, association):
+        """Sets the association of this InlineResponse2008.
+
+        Unique integer identifying the state association.  # noqa: E501
+
+        :param association: The association of this InlineResponse2008.  # noqa: E501
+        :type: int
+        """
+
+        self._association = association
 
     @property
     def id(self):
         """Gets the id of this InlineResponse2008.  # noqa: E501
 
-        Unique integer identifying the project.  # noqa: E501
+        Unique integer identifying the state.  # noqa: E501
 
         :return: The id of this InlineResponse2008.  # noqa: E501
         :rtype: int
@@ -93,7 +101,7 @@ class InlineResponse2008(object):
     def id(self, id):
         """Sets the id of this InlineResponse2008.
 
-        Unique integer identifying the project.  # noqa: E501
+        Unique integer identifying the state.  # noqa: E501
 
         :param id: The id of this InlineResponse2008.  # noqa: E501
         :type: int
@@ -102,165 +110,73 @@ class InlineResponse2008(object):
         self._id = id
 
     @property
-    def name(self):
-        """Gets the name of this InlineResponse2008.  # noqa: E501
+    def meta(self):
+        """Gets the meta of this InlineResponse2008.  # noqa: E501
 
-        Name of the project.  # noqa: E501
+        Unique integer identifying the entity type.  # noqa: E501
 
-        :return: The name of this InlineResponse2008.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this InlineResponse2008.
-
-        Name of the project.  # noqa: E501
-
-        :param name: The name of this InlineResponse2008.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
-
-    @property
-    def summary(self):
-        """Gets the summary of this InlineResponse2008.  # noqa: E501
-
-        Summary of the project.  # noqa: E501
-
-        :return: The summary of this InlineResponse2008.  # noqa: E501
-        :rtype: str
-        """
-        return self._summary
-
-    @summary.setter
-    def summary(self, summary):
-        """Sets the summary of this InlineResponse2008.
-
-        Summary of the project.  # noqa: E501
-
-        :param summary: The summary of this InlineResponse2008.  # noqa: E501
-        :type: str
-        """
-
-        self._summary = summary
-
-    @property
-    def thumb(self):
-        """Gets the thumb of this InlineResponse2008.  # noqa: E501
-
-        URL of thumbnail used to represent the project.  # noqa: E501
-
-        :return: The thumb of this InlineResponse2008.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumb
-
-    @thumb.setter
-    def thumb(self, thumb):
-        """Sets the thumb of this InlineResponse2008.
-
-        URL of thumbnail used to represent the project.  # noqa: E501
-
-        :param thumb: The thumb of this InlineResponse2008.  # noqa: E501
-        :type: str
-        """
-
-        self._thumb = thumb
-
-    @property
-    def num_files(self):
-        """Gets the num_files of this InlineResponse2008.  # noqa: E501
-
-        Number of files in the project.  # noqa: E501
-
-        :return: The num_files of this InlineResponse2008.  # noqa: E501
+        :return: The meta of this InlineResponse2008.  # noqa: E501
         :rtype: int
         """
-        return self._num_files
+        return self._meta
 
-    @num_files.setter
-    def num_files(self, num_files):
-        """Sets the num_files of this InlineResponse2008.
+    @meta.setter
+    def meta(self, meta):
+        """Sets the meta of this InlineResponse2008.
 
-        Number of files in the project.  # noqa: E501
+        Unique integer identifying the entity type.  # noqa: E501
 
-        :param num_files: The num_files of this InlineResponse2008.  # noqa: E501
+        :param meta: The meta of this InlineResponse2008.  # noqa: E501
         :type: int
         """
 
-        self._num_files = num_files
+        self._meta = meta
 
     @property
-    def size(self):
-        """Gets the size of this InlineResponse2008.  # noqa: E501
+    def modified(self):
+        """Gets the modified of this InlineResponse2008.  # noqa: E501
 
-        Size of the project in bytes.  # noqa: E501
+        Whether this localization was created in the web UI.  # noqa: E501
 
-        :return: The size of this InlineResponse2008.  # noqa: E501
+        :return: The modified of this InlineResponse2008.  # noqa: E501
+        :rtype: bool
+        """
+        return self._modified
+
+    @modified.setter
+    def modified(self, modified):
+        """Sets the modified of this InlineResponse2008.
+
+        Whether this localization was created in the web UI.  # noqa: E501
+
+        :param modified: The modified of this InlineResponse2008.  # noqa: E501
+        :type: bool
+        """
+
+        self._modified = modified
+
+    @property
+    def version(self):
+        """Gets the version of this InlineResponse2008.  # noqa: E501
+
+        Unique integer identifying the version.  # noqa: E501
+
+        :return: The version of this InlineResponse2008.  # noqa: E501
         :rtype: int
         """
-        return self._size
+        return self._version
 
-    @size.setter
-    def size(self, size):
-        """Sets the size of this InlineResponse2008.
+    @version.setter
+    def version(self, version):
+        """Sets the version of this InlineResponse2008.
 
-        Size of the project in bytes.  # noqa: E501
+        Unique integer identifying the version.  # noqa: E501
 
-        :param size: The size of this InlineResponse2008.  # noqa: E501
+        :param version: The version of this InlineResponse2008.  # noqa: E501
         :type: int
         """
 
-        self._size = size
-
-    @property
-    def usernames(self):
-        """Gets the usernames of this InlineResponse2008.  # noqa: E501
-
-        List of usernames of project members.  # noqa: E501
-
-        :return: The usernames of this InlineResponse2008.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._usernames
-
-    @usernames.setter
-    def usernames(self, usernames):
-        """Sets the usernames of this InlineResponse2008.
-
-        List of usernames of project members.  # noqa: E501
-
-        :param usernames: The usernames of this InlineResponse2008.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._usernames = usernames
-
-    @property
-    def permission(self):
-        """Gets the permission of this InlineResponse2008.  # noqa: E501
-
-        Permission level of user making request.  # noqa: E501
-
-        :return: The permission of this InlineResponse2008.  # noqa: E501
-        :rtype: str
-        """
-        return self._permission
-
-    @permission.setter
-    def permission(self, permission):
-        """Sets the permission of this InlineResponse2008.
-
-        Permission level of user making request.  # noqa: E501
-
-        :param permission: The permission of this InlineResponse2008.  # noqa: E501
-        :type: str
-        """
-
-        self._permission = permission
+        self._version = version
 
     def to_dict(self):
         """Returns the model properties as a dict"""

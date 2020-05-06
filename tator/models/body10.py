@@ -29,30 +29,53 @@ class Body10(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'summary': 'str'
+        'description': 'str',
+        'name': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'summary': 'summary'
+        'description': 'description',
+        'name': 'name'
     }
 
-    def __init__(self, name=None, summary=''):  # noqa: E501
+    def __init__(self, description=None, name=None):  # noqa: E501
         """Body10 - a model defined in Swagger"""  # noqa: E501
+        self._description = None
         self._name = None
-        self._summary = None
         self.discriminator = None
+        if description is not None:
+            self.description = description
         if name is not None:
             self.name = name
-        if summary is not None:
-            self.summary = summary
+
+    @property
+    def description(self):
+        """Gets the description of this Body10.  # noqa: E501
+
+        Description of the state type.  # noqa: E501
+
+        :return: The description of this Body10.  # noqa: E501
+        :rtype: str
+        """
+        return self._description
+
+    @description.setter
+    def description(self, description):
+        """Sets the description of this Body10.
+
+        Description of the state type.  # noqa: E501
+
+        :param description: The description of this Body10.  # noqa: E501
+        :type: str
+        """
+
+        self._description = description
 
     @property
     def name(self):
         """Gets the name of this Body10.  # noqa: E501
 
-        Name of the project.  # noqa: E501
+        Name of the state type.  # noqa: E501
 
         :return: The name of this Body10.  # noqa: E501
         :rtype: str
@@ -63,36 +86,13 @@ class Body10(object):
     def name(self, name):
         """Sets the name of this Body10.
 
-        Name of the project.  # noqa: E501
+        Name of the state type.  # noqa: E501
 
         :param name: The name of this Body10.  # noqa: E501
         :type: str
         """
 
         self._name = name
-
-    @property
-    def summary(self):
-        """Gets the summary of this Body10.  # noqa: E501
-
-        Summary of the project.  # noqa: E501
-
-        :return: The summary of this Body10.  # noqa: E501
-        :rtype: str
-        """
-        return self._summary
-
-    @summary.setter
-    def summary(self, summary):
-        """Sets the summary of this Body10.
-
-        Summary of the project.  # noqa: E501
-
-        :param summary: The summary of this Body10.  # noqa: E501
-        :type: str
-        """
-
-        self._summary = summary
 
     def to_dict(self):
         """Returns the model properties as a dict"""

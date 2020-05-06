@@ -3,10 +3,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Name of the state type. | 
-**description** | **str** | Description of the state type. | [optional] [default to '']
-**association** | **str** | Type of object this state type is associated with. | 
-**media_types** | **list[int]** | List of integers identifying media types that this state type may apply to. | 
+**hours** | **int** | Number of hours file is to be kept alive | [optional] [default to 24]
+**lookup** | **str** | md5hash of lookup parameters | 
+**name** | **str** | Unique name for the temporary file | 
+**url** | **str** | URL for the temporary file | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

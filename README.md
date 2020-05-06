@@ -94,10 +94,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.AttributeTypeSpec() # AttributeTypeSpec |  (optional)
 
 try:
-    api_response = api_instance.create_attribute_type(project, body=body)
+    api_response = api_instance.create_attribute_type(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->create_attribute_type: %s\n" % e)
@@ -128,7 +127,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body1() # Body1 |  (optional)
+body = tator.Body2() # Body2 |  (optional)
 
 try:
     api_response = api_instance.create_localization_type(project, body=body)
@@ -145,7 +144,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body5() # Body5 |  (optional)
+body = {
+  "dtype" : "video",
+  "name" : "My media type"
+} # object |  (optional)
 
 try:
     api_response = api_instance.create_media_type(project, body=body)
@@ -162,7 +164,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body7() # Body7 |  (optional)
+body = tator.Body5() # Body5 |  (optional)
 
 try:
     api_response = api_instance.create_membership(project, body=body)
@@ -178,7 +180,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body27() # Body27 |  (optional)
+body = tator.Body15() # Body15 |  (optional)
 
 try:
     api_response = api_instance.create_obtain_auth_token(body=body)
@@ -194,7 +196,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body9() # Body9 |  (optional)
+body = {
+  "name" : "My Project",
+  "summary" : "First project"
+} # object |  (optional)
 
 try:
     api_response = api_instance.create_project(body=body)
@@ -214,11 +219,11 @@ project = 56 # int | A unique integer identifying a project.
 body = {
   "summary" : "Frame associated state",
   "value" : {
-    "type" : 1,
-    "media_ids" : [ 1 ],
-    "frame" : 1000,
     "My First Attribute" : "value1",
-    "My Second Attribute" : "value2"
+    "My Second Attribute" : "value2",
+    "frame" : 1000,
+    "media_ids" : [ 1 ],
+    "type" : 1
   }
 } # dict(str, object) |  (optional)
 
@@ -237,7 +242,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body14() # Body14 |  (optional)
+body = tator.Body11() # Body11 |  (optional)
 
 try:
     api_response = api_instance.create_state_type(project, body=body)
@@ -254,7 +259,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body16() # Body16 |  (optional)
+body = tator.Body14() # Body14 |  (optional)
 
 try:
     api_response = api_instance.create_temporary_file(project, body=body)
@@ -288,7 +293,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body20() # Body20 |  (optional)
+body = {
+  "name" : "My tree leaf type"
+} # object |  (optional)
 
 try:
     api_response = api_instance.create_tree_leaf_type(project, body=body)
@@ -305,7 +312,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body25() # Body25 |  (optional)
+body = tator.Body22() # Body22 |  (optional)
 
 try:
     api_response = api_instance.create_version(project, body=body)
@@ -478,26 +485,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_id = [56] # list[int] | List of integers identifying media. (optional)
-type = 56 # int | Unique integer identifying media type. (optional)
-name = 'name_example' # str | Name of the media to filter on. (optional)
-md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
-after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.delete_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.delete_media_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->delete_media_list: %s\n" % e)
@@ -571,27 +561,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
-media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
-type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
-after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.delete_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.delete_state_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->delete_state_list: %s\n" % e)
@@ -669,20 +641,9 @@ project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a tree leaf type. (optional)
 name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->delete_tree_leaf_list: %s\n" % e)
@@ -894,27 +855,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
-media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
-type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
-after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_localization_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_localization_list: %s\n" % e)
@@ -978,26 +921,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_id = [56] # list[int] | List of integers identifying media. (optional)
-type = 56 # int | Unique integer identifying media type. (optional)
-name = 'name_example' # str | Name of the media to filter on. (optional)
-md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
-after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_media_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_media_list: %s\n" % e)
@@ -1016,21 +942,9 @@ type = 56 # int | Unique integer identifying media type. (optional)
 name = 'name_example' # str | Name of the media to filter on. (optional)
 md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
 after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_media_next: %s\n" % e)
@@ -1044,26 +958,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a media object.
-media_id = [56] # list[int] | List of integers identifying media. (optional)
-type = 56 # int | Unique integer identifying media type. (optional)
-name = 'name_example' # str | Name of the media to filter on. (optional)
-md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
-after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_media_prev(id)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_media_prev: %s\n" % e)
@@ -1077,26 +974,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_id = [56] # list[int] | List of integers identifying media. (optional)
-type = 56 # int | Unique integer identifying media type. (optional)
-name = 'name_example' # str | Name of the media to filter on. (optional)
-md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
-after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_media_sections(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_media_sections(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_media_sections: %s\n" % e)
@@ -1206,21 +1086,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | Unique integer identifying a media. Use this to do analyis on a single file instead of sections. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_section_analysis(project, media_id=media_id, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_section_analysis(project, media_id=media_id)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_section_analysis: %s\n" % e)
@@ -1249,27 +1117,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
-media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
-type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
-after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_state_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_state_list: %s\n" % e)
@@ -1299,11 +1149,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-media_id = [56] # list[int] | List of unique integers identifying a media. (optional)
-type = 56 # int | Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID. (optional)
 
 try:
-    api_response = api_instance.get_state_type_list(project, media_id=media_id, type=type)
+    api_response = api_instance.get_state_type_list(project)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_state_type_list: %s\n" % e)
@@ -1369,20 +1217,9 @@ project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a tree leaf type. (optional)
 name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->get_tree_leaf_list: %s\n" % e)
@@ -1459,7 +1296,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
-body = tator.Body28() # Body28 |  (optional)
+body = tator.Body6() # Body6 |  (optional)
 
 try:
     api_instance.notify(body=body)
@@ -1491,7 +1328,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = [tator.Body29()] # list[Body29] |  (optional)
+body = [tator.Body7()] # list[Body7] |  (optional)
 
 try:
     api_response = api_instance.progress(project, body=body)
@@ -1544,7 +1381,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body30() # Body30 |  (optional)
+body = tator.Body8() # Body8 |  (optional)
 
 try:
     api_response = api_instance.save_image(project, body=body)
@@ -1578,7 +1415,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body31() # Body31 |  (optional)
+body = tator.Body16() # Body16 |  (optional)
 
 try:
     api_response = api_instance.transcode(project, body=body)
@@ -1683,27 +1520,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
 body = tator.LocalizationListUpdate() # LocalizationListUpdate |  (optional)
-media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
-media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
-type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
-after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.update_localization_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.update_localization_list(project, body=body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->update_localization_list: %s\n" % e)
@@ -1717,7 +1536,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an localization type.
-body = tator.Body2() # Body2 |  (optional)
+body = tator.Body1() # Body1 |  (optional)
 
 try:
     api_response = api_instance.update_localization_type(id, body=body)
@@ -1734,7 +1553,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a media.
-body = tator.Body4() # Body4 |  (optional)
+body = NULL # object |  (optional)
 
 try:
     api_response = api_instance.update_media(id, body=body)
@@ -1752,26 +1571,9 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
 body = tator.Body3() # Body3 |  (optional)
-media_id = [56] # list[int] | List of integers identifying media. (optional)
-type = 56 # int | Unique integer identifying media type. (optional)
-name = 'name_example' # str | Name of the media to filter on. (optional)
-md5 = 'md5_example' # str | MD5 sum of the media file. (optional)
-after = 'after_example' # str | If given, all results returned will be after the file with this filename. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.update_media_list(project, body=body, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.update_media_list(project, body=body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->update_media_list: %s\n" % e)
@@ -1785,7 +1587,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an media type.
-body = tator.Body6() # Body6 |  (optional)
+body = {
+  "description" : "New description",
+  "name" : "New name"
+} # object |  (optional)
 
 try:
     api_response = api_instance.update_media_type(id, body=body)
@@ -1802,7 +1607,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a membership.
-body = tator.Body8() # Body8 |  (optional)
+body = tator.Body4() # Body4 |  (optional)
 
 try:
     api_response = api_instance.update_membership(id, body=body)
@@ -1819,7 +1624,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a project.
-body = tator.Body10() # Body10 |  (optional)
+body = {
+  "name" : "New name",
+  "summary" : "New summary"
+} # object |  (optional)
 
 try:
     api_response = api_instance.update_project(id, body=body)
@@ -1836,7 +1644,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a state.
-body = tator.Body13() # Body13 |  (optional)
+body = tator.Body9() # Body9 |  (optional)
 
 try:
     api_response = api_instance.update_state(id, body=body)
@@ -1853,28 +1661,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body12() # Body12 |  (optional)
-media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
-media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
-type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
-after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
-search = 'search_example' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+body = tator.Body13() # Body13 |  (optional)
 
 try:
-    api_response = api_instance.update_state_list(project, body=body, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.update_state_list(project, body=body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->update_state_list: %s\n" % e)
@@ -1888,7 +1678,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a state type.
-body = tator.Body15() # Body15 |  (optional)
+body = tator.Body10() # Body10 |  (optional)
 
 try:
     api_response = api_instance.update_state_type(id, body=body)
@@ -1905,7 +1695,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a tree leaf.
-body = tator.Body19() # Body19 |  (optional)
+body = tator.Body17() # Body17 |  (optional)
 
 try:
     api_response = api_instance.update_tree_leaf(id, body=body)
@@ -1922,24 +1712,13 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 project = 56 # int | A unique integer identifying a project.
-body = tator.Body18() # Body18 |  (optional)
+body = tator.Body19() # Body19 |  (optional)
 ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a tree leaf type. (optional)
 name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 
 try:
-    api_response = api_instance.update_tree_leaf_list(project, body=body, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+    api_response = api_instance.update_tree_leaf_list(project, body=body, ancestor=ancestor, type=type, name=name)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling TatorApi->update_tree_leaf_list: %s\n" % e)
@@ -1953,7 +1732,10 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying an tree_leaf type.
-body = tator.Body21() # Body21 |  (optional)
+body = {
+  "description" : "New description",
+  "name" : "New name"
+} # object |  (optional)
 
 try:
     api_response = api_instance.update_tree_leaf_type(id, body=body)
@@ -1970,7 +1752,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a localization association.
-body = tator.Body22() # Body22 |  (optional)
+body = tator.Body20() # Body20 |  (optional)
 
 try:
     api_response = api_instance.update_user(id, body=body)
@@ -1987,7 +1769,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = tator.TatorApi(tator.ApiClient(configuration))
 id = 56 # int | A unique integer identifying a version.
-body = tator.Body26() # Body26 |  (optional)
+body = tator.Body21() # Body21 |  (optional)
 
 try:
     api_response = api_instance.update_version(id, body=body)
@@ -2132,7 +1914,6 @@ Class | Method | HTTP request | Description
  - [AnalysisSpec](docs/AnalysisSpec.md)
  - [AttributeType](docs/AttributeType.md)
  - [AttributeTypeList](docs/AttributeTypeList.md)
- - [AttributeTypeSpec](docs/AttributeTypeSpec.md)
  - [AttributeTypeUpdate](docs/AttributeTypeUpdate.md)
  - [Body](docs/Body.md)
  - [Body1](docs/Body1.md)
@@ -2150,16 +1931,7 @@ Class | Method | HTTP request | Description
  - [Body20](docs/Body20.md)
  - [Body21](docs/Body21.md)
  - [Body22](docs/Body22.md)
- - [Body23](docs/Body23.md)
- - [Body24](docs/Body24.md)
- - [Body25](docs/Body25.md)
- - [Body26](docs/Body26.md)
- - [Body27](docs/Body27.md)
- - [Body28](docs/Body28.md)
- - [Body29](docs/Body29.md)
  - [Body3](docs/Body3.md)
- - [Body30](docs/Body30.md)
- - [Body31](docs/Body31.md)
  - [Body4](docs/Body4.md)
  - [Body5](docs/Body5.md)
  - [Body6](docs/Body6.md)
@@ -2175,22 +1947,22 @@ Class | Method | HTTP request | Description
  - [InlineResponse20010](docs/InlineResponse20010.md)
  - [InlineResponse20011](docs/InlineResponse20011.md)
  - [InlineResponse20012](docs/InlineResponse20012.md)
+ - [InlineResponse20012Type](docs/InlineResponse20012Type.md)
  - [InlineResponse20013](docs/InlineResponse20013.md)
  - [InlineResponse20014](docs/InlineResponse20014.md)
  - [InlineResponse20015](docs/InlineResponse20015.md)
  - [InlineResponse20016](docs/InlineResponse20016.md)
- - [InlineResponse20017](docs/InlineResponse20017.md)
- - [InlineResponse20018](docs/InlineResponse20018.md)
- - [InlineResponse20019](docs/InlineResponse20019.md)
  - [InlineResponse2002](docs/InlineResponse2002.md)
- - [InlineResponse20020](docs/InlineResponse20020.md)
  - [InlineResponse2003](docs/InlineResponse2003.md)
  - [InlineResponse2004](docs/InlineResponse2004.md)
+ - [InlineResponse2004Type](docs/InlineResponse2004Type.md)
  - [InlineResponse2005](docs/InlineResponse2005.md)
  - [InlineResponse2006](docs/InlineResponse2006.md)
  - [InlineResponse2007](docs/InlineResponse2007.md)
+ - [InlineResponse2007Type](docs/InlineResponse2007Type.md)
  - [InlineResponse2008](docs/InlineResponse2008.md)
  - [InlineResponse2009](docs/InlineResponse2009.md)
+ - [InlineResponse200Type](docs/InlineResponse200Type.md)
  - [InlineResponse201](docs/InlineResponse201.md)
  - [InlineResponse2011](docs/InlineResponse2011.md)
  - [InlineResponse2012](docs/InlineResponse2012.md)
@@ -2207,24 +1979,10 @@ Class | Method | HTTP request | Description
  - [LocalizationUpdate](docs/LocalizationUpdate.md)
  - [MessageResponse](docs/MessageResponse.md)
  - [OneOfAttributeType](docs/OneOfAttributeType.md)
- - [OneOfAttributeTypeListItems](docs/OneOfAttributeTypeListItems.md)
- - [OneOfAttributeTypeSpec](docs/OneOfAttributeTypeSpec.md)
  - [OneOfLocalization](docs/OneOfLocalization.md)
  - [OneOfLocalizationListItems](docs/OneOfLocalizationListItems.md)
  - [OneOfLocalizationSpec](docs/OneOfLocalizationSpec.md)
  - [OneOfLocalizationUpdate](docs/OneOfLocalizationUpdate.md)
- - [OneOfinlineResponse20010ColumnsItems](docs/OneOfinlineResponse20010ColumnsItems.md)
- - [OneOfinlineResponse20011ColumnsItems](docs/OneOfinlineResponse20011ColumnsItems.md)
- - [OneOfinlineResponse20015ColumnsItems](docs/OneOfinlineResponse20015ColumnsItems.md)
- - [OneOfinlineResponse20016ColumnsItems](docs/OneOfinlineResponse20016ColumnsItems.md)
- - [OneOfinlineResponse2001ColumnsItems](docs/OneOfinlineResponse2001ColumnsItems.md)
- - [OneOfinlineResponse2005ColumnsItems](docs/OneOfinlineResponse2005ColumnsItems.md)
- - [OneOfinlineResponse2006ColumnsItems](docs/OneOfinlineResponse2006ColumnsItems.md)
- - [OneOfinlineResponse200ColumnsItems](docs/OneOfinlineResponse200ColumnsItems.md)
- - [RestLocalizationTypesprojectType](docs/RestLocalizationTypesprojectType.md)
- - [RestMediaTypesprojectType](docs/RestMediaTypesprojectType.md)
- - [RestStateTypesprojectType](docs/RestStateTypesprojectType.md)
- - [RestTreeLeafTypesprojectType](docs/RestTreeLeafTypesprojectType.md)
  - [VideoSpec](docs/VideoSpec.md)
  - [VideoUpdate](docs/VideoUpdate.md)
 

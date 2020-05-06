@@ -29,48 +29,245 @@ class Body8(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'permission': 'str'
+        'gid': 'str',
+        'md5': 'str',
+        'name': 'str',
+        'section': 'str',
+        'thumbnail_url': 'str',
+        'type': 'int',
+        'uid': 'str',
+        'url': 'str'
     }
 
     attribute_map = {
-        'permission': 'permission'
+        'gid': 'gid',
+        'md5': 'md5',
+        'name': 'name',
+        'section': 'section',
+        'thumbnail_url': 'thumbnail_url',
+        'type': 'type',
+        'uid': 'uid',
+        'url': 'url'
     }
 
-    def __init__(self, permission=None):  # noqa: E501
+    def __init__(self, gid=None, md5=None, name=None, section=None, thumbnail_url=None, type=None, uid=None, url=None):  # noqa: E501
         """Body8 - a model defined in Swagger"""  # noqa: E501
-        self._permission = None
+        self._gid = None
+        self._md5 = None
+        self._name = None
+        self._section = None
+        self._thumbnail_url = None
+        self._type = None
+        self._uid = None
+        self._url = None
         self.discriminator = None
-        if permission is not None:
-            self.permission = permission
+        self.gid = gid
+        self.md5 = md5
+        self.name = name
+        self.section = section
+        if thumbnail_url is not None:
+            self.thumbnail_url = thumbnail_url
+        self.type = type
+        self.uid = uid
+        self.url = url
 
     @property
-    def permission(self):
-        """Gets the permission of this Body8.  # noqa: E501
+    def gid(self):
+        """Gets the gid of this Body8.  # noqa: E501
 
-        User permission level for the project.  # noqa: E501
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
-        :return: The permission of this Body8.  # noqa: E501
+        :return: The gid of this Body8.  # noqa: E501
         :rtype: str
         """
-        return self._permission
+        return self._gid
 
-    @permission.setter
-    def permission(self, permission):
-        """Sets the permission of this Body8.
+    @gid.setter
+    def gid(self, gid):
+        """Sets the gid of this Body8.
 
-        User permission level for the project.  # noqa: E501
+        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
-        :param permission: The permission of this Body8.  # noqa: E501
+        :param gid: The gid of this Body8.  # noqa: E501
         :type: str
         """
-        allowed_values = ["View Only", "Can Edit", "Can Transfer", "Can Execute", "Full Control"]  # noqa: E501
-        if permission not in allowed_values:
-            raise ValueError(
-                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
-                .format(permission, allowed_values)
-            )
+        if gid is None:
+            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
 
-        self._permission = permission
+        self._gid = gid
+
+    @property
+    def md5(self):
+        """Gets the md5 of this Body8.  # noqa: E501
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :return: The md5 of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._md5
+
+    @md5.setter
+    def md5(self, md5):
+        """Sets the md5 of this Body8.
+
+        MD5 sum of the media file.  # noqa: E501
+
+        :param md5: The md5 of this Body8.  # noqa: E501
+        :type: str
+        """
+        if md5 is None:
+            raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
+
+        self._md5 = md5
+
+    @property
+    def name(self):
+        """Gets the name of this Body8.  # noqa: E501
+
+        Name of the file.  # noqa: E501
+
+        :return: The name of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body8.
+
+        Name of the file.  # noqa: E501
+
+        :param name: The name of this Body8.  # noqa: E501
+        :type: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        self._name = name
+
+    @property
+    def section(self):
+        """Gets the section of this Body8.  # noqa: E501
+
+        Media section name.  # noqa: E501
+
+        :return: The section of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._section
+
+    @section.setter
+    def section(self, section):
+        """Sets the section of this Body8.
+
+        Media section name.  # noqa: E501
+
+        :param section: The section of this Body8.  # noqa: E501
+        :type: str
+        """
+        if section is None:
+            raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
+
+        self._section = section
+
+    @property
+    def thumbnail_url(self):
+        """Gets the thumbnail_url of this Body8.  # noqa: E501
+
+        Upload URL for the thumbnail if already generated.  # noqa: E501
+
+        :return: The thumbnail_url of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._thumbnail_url
+
+    @thumbnail_url.setter
+    def thumbnail_url(self, thumbnail_url):
+        """Sets the thumbnail_url of this Body8.
+
+        Upload URL for the thumbnail if already generated.  # noqa: E501
+
+        :param thumbnail_url: The thumbnail_url of this Body8.  # noqa: E501
+        :type: str
+        """
+
+        self._thumbnail_url = thumbnail_url
+
+    @property
+    def type(self):
+        """Gets the type of this Body8.  # noqa: E501
+
+        Unique integer identifying an image type. Use -1 to automatically select the image type if only one image type exists in a project.  # noqa: E501
+
+        :return: The type of this Body8.  # noqa: E501
+        :rtype: int
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this Body8.
+
+        Unique integer identifying an image type. Use -1 to automatically select the image type if only one image type exists in a project.  # noqa: E501
+
+        :param type: The type of this Body8.  # noqa: E501
+        :type: int
+        """
+        if type is None:
+            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
+
+        self._type = type
+
+    @property
+    def uid(self):
+        """Gets the uid of this Body8.  # noqa: E501
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :return: The uid of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """Sets the uid of this Body8.
+
+        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
+
+        :param uid: The uid of this Body8.  # noqa: E501
+        :type: str
+        """
+        if uid is None:
+            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
+
+        self._uid = uid
+
+    @property
+    def url(self):
+        """Gets the url of this Body8.  # noqa: E501
+
+        Upload URL for the image.  # noqa: E501
+
+        :return: The url of this Body8.  # noqa: E501
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """Sets the url of this Body8.
+
+        Upload URL for the image.  # noqa: E501
+
+        :param url: The url of this Body8.  # noqa: E501
+        :type: str
+        """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
+
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

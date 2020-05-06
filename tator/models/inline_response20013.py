@@ -29,52 +29,52 @@ class InlineResponse20013(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'value': 'str',
+        'data': 'dict(str, object)',
         'group': 'str',
-        'data': 'dict(str, object)'
+        'value': 'str'
     }
 
     attribute_map = {
-        'value': 'value',
+        'data': 'data',
         'group': 'group',
-        'data': 'data'
+        'value': 'value'
     }
 
-    def __init__(self, value=None, group=None, data=None):  # noqa: E501
+    def __init__(self, data=None, group=None, value=None):  # noqa: E501
         """InlineResponse20013 - a model defined in Swagger"""  # noqa: E501
-        self._value = None
-        self._group = None
         self._data = None
+        self._group = None
+        self._value = None
         self.discriminator = None
-        if value is not None:
-            self.value = value
-        if group is not None:
-            self.group = group
         if data is not None:
             self.data = data
+        if group is not None:
+            self.group = group
+        if value is not None:
+            self.value = value
 
     @property
-    def value(self):
-        """Gets the value of this InlineResponse20013.  # noqa: E501
+    def data(self):
+        """Gets the data of this InlineResponse20013.  # noqa: E501
 
-        Name of the suggestion.  # noqa: E501
+        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :return: The value of this InlineResponse20013.  # noqa: E501
-        :rtype: str
+        :return: The data of this InlineResponse20013.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._value
+        return self._data
 
-    @value.setter
-    def value(self, value):
-        """Sets the value of this InlineResponse20013.
+    @data.setter
+    def data(self, data):
+        """Sets the data of this InlineResponse20013.
 
-        Name of the suggestion.  # noqa: E501
+        Auxiliary data associated with the tree leaf.  # noqa: E501
 
-        :param value: The value of this InlineResponse20013.  # noqa: E501
-        :type: str
+        :param data: The data of this InlineResponse20013.  # noqa: E501
+        :type: dict(str, object)
         """
 
-        self._value = value
+        self._data = data
 
     @property
     def group(self):
@@ -100,27 +100,27 @@ class InlineResponse20013(object):
         self._group = group
 
     @property
-    def data(self):
-        """Gets the data of this InlineResponse20013.  # noqa: E501
+    def value(self):
+        """Gets the value of this InlineResponse20013.  # noqa: E501
 
-        Auxiliary data associated with the tree leaf.  # noqa: E501
+        Name of the suggestion.  # noqa: E501
 
-        :return: The data of this InlineResponse20013.  # noqa: E501
-        :rtype: dict(str, object)
+        :return: The value of this InlineResponse20013.  # noqa: E501
+        :rtype: str
         """
-        return self._data
+        return self._value
 
-    @data.setter
-    def data(self, data):
-        """Sets the data of this InlineResponse20013.
+    @value.setter
+    def value(self, value):
+        """Sets the value of this InlineResponse20013.
 
-        Auxiliary data associated with the tree leaf.  # noqa: E501
+        Name of the suggestion.  # noqa: E501
 
-        :param data: The data of this InlineResponse20013.  # noqa: E501
-        :type: dict(str, object)
+        :param value: The value of this InlineResponse20013.  # noqa: E501
+        :type: str
         """
 
-        self._data = data
+        self._value = value
 
     def to_dict(self):
         """Returns the model properties as a dict"""

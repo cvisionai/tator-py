@@ -29,109 +29,24 @@ class Body13(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'media_ids': 'list[int]',
-        'localization_ids': 'list[int]',
-        'frame': 'int',
         'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
-        'media_ids': 'media_ids',
-        'localization_ids': 'localization_ids',
-        'frame': 'frame',
         'attributes': 'attributes'
     }
 
-    def __init__(self, media_ids=None, localization_ids=None, frame=None, attributes=None):  # noqa: E501
+    def __init__(self, attributes=None):  # noqa: E501
         """Body13 - a model defined in Swagger"""  # noqa: E501
-        self._media_ids = None
-        self._localization_ids = None
-        self._frame = None
         self._attributes = None
         self.discriminator = None
-        if media_ids is not None:
-            self.media_ids = media_ids
-        if localization_ids is not None:
-            self.localization_ids = localization_ids
-        if frame is not None:
-            self.frame = frame
-        if attributes is not None:
-            self.attributes = attributes
-
-    @property
-    def media_ids(self):
-        """Gets the media_ids of this Body13.  # noqa: E501
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :return: The media_ids of this Body13.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_ids
-
-    @media_ids.setter
-    def media_ids(self, media_ids):
-        """Sets the media_ids of this Body13.
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :param media_ids: The media_ids of this Body13.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._media_ids = media_ids
-
-    @property
-    def localization_ids(self):
-        """Gets the localization_ids of this Body13.  # noqa: E501
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :return: The localization_ids of this Body13.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._localization_ids
-
-    @localization_ids.setter
-    def localization_ids(self, localization_ids):
-        """Sets the localization_ids of this Body13.
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :param localization_ids: The localization_ids of this Body13.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._localization_ids = localization_ids
-
-    @property
-    def frame(self):
-        """Gets the frame of this Body13.  # noqa: E501
-
-        Frame number this state applies to.  # noqa: E501
-
-        :return: The frame of this Body13.  # noqa: E501
-        :rtype: int
-        """
-        return self._frame
-
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this Body13.
-
-        Frame number this state applies to.  # noqa: E501
-
-        :param frame: The frame of this Body13.  # noqa: E501
-        :type: int
-        """
-
-        self._frame = frame
+        self.attributes = attributes
 
     @property
     def attributes(self):
         """Gets the attributes of this Body13.  # noqa: E501
 
-        Object containing attribute values.  # noqa: E501
+        Attribute values to bulk update.  # noqa: E501
 
         :return: The attributes of this Body13.  # noqa: E501
         :rtype: dict(str, object)
@@ -142,11 +57,13 @@ class Body13(object):
     def attributes(self, attributes):
         """Sets the attributes of this Body13.
 
-        Object containing attribute values.  # noqa: E501
+        Attribute values to bulk update.  # noqa: E501
 
         :param attributes: The attributes of this Body13.  # noqa: E501
         :type: dict(str, object)
         """
+        if attributes is None:
+            raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501
 
         self._attributes = attributes
 

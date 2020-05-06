@@ -29,47 +29,24 @@ class InlineResponse2012(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str',
-        'id': 'int'
+        'id': 'int',
+        'message': 'str'
     }
 
     attribute_map = {
-        'message': 'message',
-        'id': 'id'
+        'id': 'id',
+        'message': 'message'
     }
 
-    def __init__(self, message=None, id=None):  # noqa: E501
+    def __init__(self, id=None, message=None):  # noqa: E501
         """InlineResponse2012 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
         self._id = None
+        self._message = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
         if id is not None:
             self.id = id
-
-    @property
-    def message(self):
-        """Gets the message of this InlineResponse2012.  # noqa: E501
-
-        Message indicating successful creation of project.  # noqa: E501
-
-        :return: The message of this InlineResponse2012.  # noqa: E501
-        :rtype: str
-        """
-        return self._message
-
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse2012.
-
-        Message indicating successful creation of project.  # noqa: E501
-
-        :param message: The message of this InlineResponse2012.  # noqa: E501
-        :type: str
-        """
-
-        self._message = message
+        if message is not None:
+            self.message = message
 
     @property
     def id(self):
@@ -93,6 +70,29 @@ class InlineResponse2012(object):
         """
 
         self._id = id
+
+    @property
+    def message(self):
+        """Gets the message of this InlineResponse2012.  # noqa: E501
+
+        Message indicating successful creation of project.  # noqa: E501
+
+        :return: The message of this InlineResponse2012.  # noqa: E501
+        :rtype: str
+        """
+        return self._message
+
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse2012.
+
+        Message indicating successful creation of project.  # noqa: E501
+
+        :param message: The message of this InlineResponse2012.  # noqa: E501
+        :type: str
+        """
+
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

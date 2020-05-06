@@ -30,27 +30,27 @@ class AlgorithmLaunchSpec(object):
     """
     swagger_types = {
         'algorithm_name': 'str',
-        'media_query': 'str',
-        'media_ids': 'list[int]'
+        'media_ids': 'list[int]',
+        'media_query': 'str'
     }
 
     attribute_map = {
         'algorithm_name': 'algorithm_name',
-        'media_query': 'media_query',
-        'media_ids': 'media_ids'
+        'media_ids': 'media_ids',
+        'media_query': 'media_query'
     }
 
-    def __init__(self, algorithm_name=None, media_query=None, media_ids=None):  # noqa: E501
+    def __init__(self, algorithm_name=None, media_ids=None, media_query=None):  # noqa: E501
         """AlgorithmLaunchSpec - a model defined in Swagger"""  # noqa: E501
         self._algorithm_name = None
-        self._media_query = None
         self._media_ids = None
+        self._media_query = None
         self.discriminator = None
         self.algorithm_name = algorithm_name
-        if media_query is not None:
-            self.media_query = media_query
         if media_ids is not None:
             self.media_ids = media_ids
+        if media_query is not None:
+            self.media_query = media_query
 
     @property
     def algorithm_name(self):
@@ -78,29 +78,6 @@ class AlgorithmLaunchSpec(object):
         self._algorithm_name = algorithm_name
 
     @property
-    def media_query(self):
-        """Gets the media_query of this AlgorithmLaunchSpec.  # noqa: E501
-
-        Query string used to filter media IDs. If supplied, media_ids will be ignored.  # noqa: E501
-
-        :return: The media_query of this AlgorithmLaunchSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._media_query
-
-    @media_query.setter
-    def media_query(self, media_query):
-        """Sets the media_query of this AlgorithmLaunchSpec.
-
-        Query string used to filter media IDs. If supplied, media_ids will be ignored.  # noqa: E501
-
-        :param media_query: The media_query of this AlgorithmLaunchSpec.  # noqa: E501
-        :type: str
-        """
-
-        self._media_query = media_query
-
-    @property
     def media_ids(self):
         """Gets the media_ids of this AlgorithmLaunchSpec.  # noqa: E501
 
@@ -122,6 +99,29 @@ class AlgorithmLaunchSpec(object):
         """
 
         self._media_ids = media_ids
+
+    @property
+    def media_query(self):
+        """Gets the media_query of this AlgorithmLaunchSpec.  # noqa: E501
+
+        Query string used to filter media IDs. If supplied, media_ids will be ignored.  # noqa: E501
+
+        :return: The media_query of this AlgorithmLaunchSpec.  # noqa: E501
+        :rtype: str
+        """
+        return self._media_query
+
+    @media_query.setter
+    def media_query(self, media_query):
+        """Sets the media_query of this AlgorithmLaunchSpec.
+
+        Query string used to filter media IDs. If supplied, media_ids will be ignored.  # noqa: E501
+
+        :param media_query: The media_query of this AlgorithmLaunchSpec.  # noqa: E501
+        :type: str
+        """
+
+        self._media_query = media_query
 
     def to_dict(self):
         """Returns the model properties as a dict"""

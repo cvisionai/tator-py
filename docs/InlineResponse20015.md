@@ -3,8 +3,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**RestTreeLeafTypesprojectType**](RestTreeLeafTypesprojectType.md) |  | [optional] 
-**columns** | [**list[OneOfinlineResponse20015ColumnsItems]**](Object.md) | Attribute types associated with this tree leaf type. | [optional] 
+**email** | **str** |  | [optional] 
+**first_name** | **str** |  | [optional] 
+**id** | **int** |  | [optional] 
+**last_name** | **str** |  | [optional] 
+**username** | **str** | Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

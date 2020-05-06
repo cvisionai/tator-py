@@ -29,45 +29,24 @@ class InlineResponse200(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestLocalizationTypesprojectType',
-        'columns': 'list[OneOfinlineResponse200ColumnsItems]'
+        'columns': 'list',
+        'type': 'InlineResponse200Type'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'columns': 'columns',
+        'type': 'type'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, columns=None, type=None):  # noqa: E501
         """InlineResponse200 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
         self._columns = None
+        self._type = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
         if columns is not None:
             self.columns = columns
-
-    @property
-    def type(self):
-        """Gets the type of this InlineResponse200.  # noqa: E501
-
-
-        :return: The type of this InlineResponse200.  # noqa: E501
-        :rtype: RestLocalizationTypesprojectType
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse200.
-
-
-        :param type: The type of this InlineResponse200.  # noqa: E501
-        :type: RestLocalizationTypesprojectType
-        """
-
-        self._type = type
+        if type is not None:
+            self.type = type
 
     @property
     def columns(self):
@@ -76,7 +55,7 @@ class InlineResponse200(object):
         Attribute types associated with this localization type.  # noqa: E501
 
         :return: The columns of this InlineResponse200.  # noqa: E501
-        :rtype: list[OneOfinlineResponse200ColumnsItems]
+        :rtype: list
         """
         return self._columns
 
@@ -87,10 +66,31 @@ class InlineResponse200(object):
         Attribute types associated with this localization type.  # noqa: E501
 
         :param columns: The columns of this InlineResponse200.  # noqa: E501
-        :type: list[OneOfinlineResponse200ColumnsItems]
+        :type: list
         """
 
         self._columns = columns
+
+    @property
+    def type(self):
+        """Gets the type of this InlineResponse200.  # noqa: E501
+
+
+        :return: The type of this InlineResponse200.  # noqa: E501
+        :rtype: InlineResponse200Type
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this InlineResponse200.
+
+
+        :param type: The type of this InlineResponse200.  # noqa: E501
+        :type: InlineResponse200Type
+        """
+
+        self._type = type
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,71 +29,126 @@ class Body9(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'summary': 'str'
+        'attributes': 'dict(str, object)',
+        'frame': 'int',
+        'localization_ids': 'list[int]',
+        'media_ids': 'list[int]'
     }
 
     attribute_map = {
-        'name': 'name',
-        'summary': 'summary'
+        'attributes': 'attributes',
+        'frame': 'frame',
+        'localization_ids': 'localization_ids',
+        'media_ids': 'media_ids'
     }
 
-    def __init__(self, name=None, summary=''):  # noqa: E501
+    def __init__(self, attributes=None, frame=None, localization_ids=None, media_ids=None):  # noqa: E501
         """Body9 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._summary = None
+        self._attributes = None
+        self._frame = None
+        self._localization_ids = None
+        self._media_ids = None
         self.discriminator = None
-        self.name = name
-        if summary is not None:
-            self.summary = summary
+        if attributes is not None:
+            self.attributes = attributes
+        if frame is not None:
+            self.frame = frame
+        if localization_ids is not None:
+            self.localization_ids = localization_ids
+        if media_ids is not None:
+            self.media_ids = media_ids
 
     @property
-    def name(self):
-        """Gets the name of this Body9.  # noqa: E501
+    def attributes(self):
+        """Gets the attributes of this Body9.  # noqa: E501
 
-        Name of the project.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :return: The name of this Body9.  # noqa: E501
-        :rtype: str
+        :return: The attributes of this Body9.  # noqa: E501
+        :rtype: dict(str, object)
         """
-        return self._name
+        return self._attributes
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body9.
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this Body9.
 
-        Name of the project.  # noqa: E501
+        Object containing attribute values.  # noqa: E501
 
-        :param name: The name of this Body9.  # noqa: E501
-        :type: str
+        :param attributes: The attributes of this Body9.  # noqa: E501
+        :type: dict(str, object)
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        self._attributes = attributes
 
     @property
-    def summary(self):
-        """Gets the summary of this Body9.  # noqa: E501
+    def frame(self):
+        """Gets the frame of this Body9.  # noqa: E501
 
-        Summary of the project.  # noqa: E501
+        Frame number this state applies to.  # noqa: E501
 
-        :return: The summary of this Body9.  # noqa: E501
-        :rtype: str
+        :return: The frame of this Body9.  # noqa: E501
+        :rtype: int
         """
-        return self._summary
+        return self._frame
 
-    @summary.setter
-    def summary(self, summary):
-        """Sets the summary of this Body9.
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this Body9.
 
-        Summary of the project.  # noqa: E501
+        Frame number this state applies to.  # noqa: E501
 
-        :param summary: The summary of this Body9.  # noqa: E501
-        :type: str
+        :param frame: The frame of this Body9.  # noqa: E501
+        :type: int
         """
 
-        self._summary = summary
+        self._frame = frame
+
+    @property
+    def localization_ids(self):
+        """Gets the localization_ids of this Body9.  # noqa: E501
+
+        List of localization IDs that this state applies to.  # noqa: E501
+
+        :return: The localization_ids of this Body9.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._localization_ids
+
+    @localization_ids.setter
+    def localization_ids(self, localization_ids):
+        """Sets the localization_ids of this Body9.
+
+        List of localization IDs that this state applies to.  # noqa: E501
+
+        :param localization_ids: The localization_ids of this Body9.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._localization_ids = localization_ids
+
+    @property
+    def media_ids(self):
+        """Gets the media_ids of this Body9.  # noqa: E501
+
+        List of media IDs that this state applies to.  # noqa: E501
+
+        :return: The media_ids of this Body9.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._media_ids
+
+    @media_ids.setter
+    def media_ids(self, media_ids):
+        """Sets the media_ids of this Body9.
+
+        List of media IDs that this state applies to.  # noqa: E501
+
+        :param media_ids: The media_ids of this Body9.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._media_ids = media_ids
 
     def to_dict(self):
         """Returns the model properties as a dict"""

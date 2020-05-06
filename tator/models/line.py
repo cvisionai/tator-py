@@ -29,314 +29,34 @@ class Line(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'int',
-        'project': 'int',
-        'meta': 'int',
-        'media': 'int',
-        'thumbnail_image': 'str',
-        'modified': 'bool',
-        'version': 'int',
-        'email': 'str',
-        'frame': 'int',
-        'attributes': 'dict(str, object)',
         'x0': 'float',
-        'y0': 'float',
         'x1': 'float',
+        'y0': 'float',
         'y1': 'float'
     }
 
     attribute_map = {
-        'id': 'id',
-        'project': 'project',
-        'meta': 'meta',
-        'media': 'media',
-        'thumbnail_image': 'thumbnail_image',
-        'modified': 'modified',
-        'version': 'version',
-        'email': 'email',
-        'frame': 'frame',
-        'attributes': 'attributes',
         'x0': 'x0',
-        'y0': 'y0',
         'x1': 'x1',
+        'y0': 'y0',
         'y1': 'y1'
     }
 
-    def __init__(self, id=None, project=None, meta=None, media=None, thumbnail_image=None, modified=None, version=None, email=None, frame=None, attributes=None, x0=None, y0=None, x1=None, y1=None):  # noqa: E501
+    def __init__(self, x0=None, x1=None, y0=None, y1=None):  # noqa: E501
         """Line - a model defined in Swagger"""  # noqa: E501
-        self._id = None
-        self._project = None
-        self._meta = None
-        self._media = None
-        self._thumbnail_image = None
-        self._modified = None
-        self._version = None
-        self._email = None
-        self._frame = None
-        self._attributes = None
         self._x0 = None
-        self._y0 = None
         self._x1 = None
+        self._y0 = None
         self._y1 = None
         self.discriminator = None
-        if id is not None:
-            self.id = id
-        if project is not None:
-            self.project = project
-        if meta is not None:
-            self.meta = meta
-        if media is not None:
-            self.media = media
-        if thumbnail_image is not None:
-            self.thumbnail_image = thumbnail_image
-        if modified is not None:
-            self.modified = modified
-        if version is not None:
-            self.version = version
-        if email is not None:
-            self.email = email
-        if frame is not None:
-            self.frame = frame
-        if attributes is not None:
-            self.attributes = attributes
         if x0 is not None:
             self.x0 = x0
-        if y0 is not None:
-            self.y0 = y0
         if x1 is not None:
             self.x1 = x1
+        if y0 is not None:
+            self.y0 = y0
         if y1 is not None:
             self.y1 = y1
-
-    @property
-    def id(self):
-        """Gets the id of this Line.  # noqa: E501
-
-        Unique integer identifying this localization.  # noqa: E501
-
-        :return: The id of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """Sets the id of this Line.
-
-        Unique integer identifying this localization.  # noqa: E501
-
-        :param id: The id of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._id = id
-
-    @property
-    def project(self):
-        """Gets the project of this Line.  # noqa: E501
-
-        Unique integer identifying project of this localization.  # noqa: E501
-
-        :return: The project of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """Sets the project of this Line.
-
-        Unique integer identifying project of this localization.  # noqa: E501
-
-        :param project: The project of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._project = project
-
-    @property
-    def meta(self):
-        """Gets the meta of this Line.  # noqa: E501
-
-        Unique integer identifying entity type of this localization.  # noqa: E501
-
-        :return: The meta of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._meta
-
-    @meta.setter
-    def meta(self, meta):
-        """Sets the meta of this Line.
-
-        Unique integer identifying entity type of this localization.  # noqa: E501
-
-        :param meta: The meta of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._meta = meta
-
-    @property
-    def media(self):
-        """Gets the media of this Line.  # noqa: E501
-
-        Unique integer identifying media of this localization.  # noqa: E501
-
-        :return: The media of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._media
-
-    @media.setter
-    def media(self, media):
-        """Sets the media of this Line.
-
-        Unique integer identifying media of this localization.  # noqa: E501
-
-        :param media: The media of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._media = media
-
-    @property
-    def thumbnail_image(self):
-        """Gets the thumbnail_image of this Line.  # noqa: E501
-
-        URL of thumbnail corresponding to this localization.  # noqa: E501
-
-        :return: The thumbnail_image of this Line.  # noqa: E501
-        :rtype: str
-        """
-        return self._thumbnail_image
-
-    @thumbnail_image.setter
-    def thumbnail_image(self, thumbnail_image):
-        """Sets the thumbnail_image of this Line.
-
-        URL of thumbnail corresponding to this localization.  # noqa: E501
-
-        :param thumbnail_image: The thumbnail_image of this Line.  # noqa: E501
-        :type: str
-        """
-
-        self._thumbnail_image = thumbnail_image
-
-    @property
-    def modified(self):
-        """Gets the modified of this Line.  # noqa: E501
-
-        Indicates whether this localization has been modified in the web UI.  # noqa: E501
-
-        :return: The modified of this Line.  # noqa: E501
-        :rtype: bool
-        """
-        return self._modified
-
-    @modified.setter
-    def modified(self, modified):
-        """Sets the modified of this Line.
-
-        Indicates whether this localization has been modified in the web UI.  # noqa: E501
-
-        :param modified: The modified of this Line.  # noqa: E501
-        :type: bool
-        """
-
-        self._modified = modified
-
-    @property
-    def version(self):
-        """Gets the version of this Line.  # noqa: E501
-
-        Unique integer identifying a version.  # noqa: E501
-
-        :return: The version of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._version
-
-    @version.setter
-    def version(self, version):
-        """Sets the version of this Line.
-
-        Unique integer identifying a version.  # noqa: E501
-
-        :param version: The version of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._version = version
-
-    @property
-    def email(self):
-        """Gets the email of this Line.  # noqa: E501
-
-        Email of last user who modified/created this localization.  # noqa: E501
-
-        :return: The email of this Line.  # noqa: E501
-        :rtype: str
-        """
-        return self._email
-
-    @email.setter
-    def email(self, email):
-        """Sets the email of this Line.
-
-        Email of last user who modified/created this localization.  # noqa: E501
-
-        :param email: The email of this Line.  # noqa: E501
-        :type: str
-        """
-
-        self._email = email
-
-    @property
-    def frame(self):
-        """Gets the frame of this Line.  # noqa: E501
-
-        Frame number of this localization if it is in a video.  # noqa: E501
-
-        :return: The frame of this Line.  # noqa: E501
-        :rtype: int
-        """
-        return self._frame
-
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this Line.
-
-        Frame number of this localization if it is in a video.  # noqa: E501
-
-        :param frame: The frame of this Line.  # noqa: E501
-        :type: int
-        """
-
-        self._frame = frame
-
-    @property
-    def attributes(self):
-        """Gets the attributes of this Line.  # noqa: E501
-
-        Object containing attribute values.  # noqa: E501
-
-        :return: The attributes of this Line.  # noqa: E501
-        :rtype: dict(str, object)
-        """
-        return self._attributes
-
-    @attributes.setter
-    def attributes(self, attributes):
-        """Sets the attributes of this Line.
-
-        Object containing attribute values.  # noqa: E501
-
-        :param attributes: The attributes of this Line.  # noqa: E501
-        :type: dict(str, object)
-        """
-
-        self._attributes = attributes
 
     @property
     def x0(self):
@@ -362,29 +82,6 @@ class Line(object):
         self._x0 = x0
 
     @property
-    def y0(self):
-        """Gets the y0 of this Line.  # noqa: E501
-
-        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
-
-        :return: The y0 of this Line.  # noqa: E501
-        :rtype: float
-        """
-        return self._y0
-
-    @y0.setter
-    def y0(self, y0):
-        """Sets the y0 of this Line.
-
-        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
-
-        :param y0: The y0 of this Line.  # noqa: E501
-        :type: float
-        """
-
-        self._y0 = y0
-
-    @property
     def x1(self):
         """Gets the x1 of this Line.  # noqa: E501
 
@@ -406,6 +103,29 @@ class Line(object):
         """
 
         self._x1 = x1
+
+    @property
+    def y0(self):
+        """Gets the y0 of this Line.  # noqa: E501
+
+        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
+
+        :return: The y0 of this Line.  # noqa: E501
+        :rtype: float
+        """
+        return self._y0
+
+    @y0.setter
+    def y0(self, y0):
+        """Sets the y0 of this Line.
+
+        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
+
+        :param y0: The y0 of this Line.  # noqa: E501
+        :type: float
+        """
+
+        self._y0 = y0
 
     @property
     def y1(self):

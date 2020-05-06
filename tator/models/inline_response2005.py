@@ -29,68 +29,104 @@ class InlineResponse2005(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'type': 'RestMediaTypesprojectType',
-        'columns': 'list[OneOfinlineResponse2005ColumnsItems]'
+        'id': 'int',
+        'permission': 'str',
+        'username': 'str'
     }
 
     attribute_map = {
-        'type': 'type',
-        'columns': 'columns'
+        'id': 'id',
+        'permission': 'permission',
+        'username': 'username'
     }
 
-    def __init__(self, type=None, columns=None):  # noqa: E501
+    def __init__(self, id=None, permission=None, username=None):  # noqa: E501
         """InlineResponse2005 - a model defined in Swagger"""  # noqa: E501
-        self._type = None
-        self._columns = None
+        self._id = None
+        self._permission = None
+        self._username = None
         self.discriminator = None
-        if type is not None:
-            self.type = type
-        if columns is not None:
-            self.columns = columns
+        if id is not None:
+            self.id = id
+        if permission is not None:
+            self.permission = permission
+        if username is not None:
+            self.username = username
 
     @property
-    def type(self):
-        """Gets the type of this InlineResponse2005.  # noqa: E501
+    def id(self):
+        """Gets the id of this InlineResponse2005.  # noqa: E501
 
+        Unique integer identifying a membership.  # noqa: E501
 
-        :return: The type of this InlineResponse2005.  # noqa: E501
-        :rtype: RestMediaTypesprojectType
+        :return: The id of this InlineResponse2005.  # noqa: E501
+        :rtype: int
         """
-        return self._type
+        return self._id
 
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse2005.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this InlineResponse2005.
 
+        Unique integer identifying a membership.  # noqa: E501
 
-        :param type: The type of this InlineResponse2005.  # noqa: E501
-        :type: RestMediaTypesprojectType
+        :param id: The id of this InlineResponse2005.  # noqa: E501
+        :type: int
         """
 
-        self._type = type
+        self._id = id
 
     @property
-    def columns(self):
-        """Gets the columns of this InlineResponse2005.  # noqa: E501
+    def permission(self):
+        """Gets the permission of this InlineResponse2005.  # noqa: E501
 
-        Attribute types associated with this localization type.  # noqa: E501
+        User permission level for the project.  # noqa: E501
 
-        :return: The columns of this InlineResponse2005.  # noqa: E501
-        :rtype: list[OneOfinlineResponse2005ColumnsItems]
+        :return: The permission of this InlineResponse2005.  # noqa: E501
+        :rtype: str
         """
-        return self._columns
+        return self._permission
 
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse2005.
+    @permission.setter
+    def permission(self, permission):
+        """Sets the permission of this InlineResponse2005.
 
-        Attribute types associated with this localization type.  # noqa: E501
+        User permission level for the project.  # noqa: E501
 
-        :param columns: The columns of this InlineResponse2005.  # noqa: E501
-        :type: list[OneOfinlineResponse2005ColumnsItems]
+        :param permission: The permission of this InlineResponse2005.  # noqa: E501
+        :type: str
+        """
+        allowed_values = ["view_only", "can_edit", "can_transfer", "can_execute", "full_control"]  # noqa: E501
+        if permission not in allowed_values:
+            raise ValueError(
+                "Invalid value for `permission` ({0}), must be one of {1}"  # noqa: E501
+                .format(permission, allowed_values)
+            )
+
+        self._permission = permission
+
+    @property
+    def username(self):
+        """Gets the username of this InlineResponse2005.  # noqa: E501
+
+        Username for the membership.  # noqa: E501
+
+        :return: The username of this InlineResponse2005.  # noqa: E501
+        :rtype: str
+        """
+        return self._username
+
+    @username.setter
+    def username(self, username):
+        """Sets the username of this InlineResponse2005.
+
+        Username for the membership.  # noqa: E501
+
+        :param username: The username of this InlineResponse2005.  # noqa: E501
+        :type: str
         """
 
-        self._columns = columns
+        self._username = username
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -29,47 +29,24 @@ class InlineResponse400(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'message': 'str',
-        'details': 'str'
+        'details': 'str',
+        'message': 'str'
     }
 
     attribute_map = {
-        'message': 'message',
-        'details': 'details'
+        'details': 'details',
+        'message': 'message'
     }
 
-    def __init__(self, message=None, details=None):  # noqa: E501
+    def __init__(self, details=None, message=None):  # noqa: E501
         """InlineResponse400 - a model defined in Swagger"""  # noqa: E501
-        self._message = None
         self._details = None
+        self._message = None
         self.discriminator = None
-        if message is not None:
-            self.message = message
         if details is not None:
             self.details = details
-
-    @property
-    def message(self):
-        """Gets the message of this InlineResponse400.  # noqa: E501
-
-        Error message for bad request.  # noqa: E501
-
-        :return: The message of this InlineResponse400.  # noqa: E501
-        :rtype: str
-        """
-        return self._message
-
-    @message.setter
-    def message(self, message):
-        """Sets the message of this InlineResponse400.
-
-        Error message for bad request.  # noqa: E501
-
-        :param message: The message of this InlineResponse400.  # noqa: E501
-        :type: str
-        """
-
-        self._message = message
+        if message is not None:
+            self.message = message
 
     @property
     def details(self):
@@ -93,6 +70,29 @@ class InlineResponse400(object):
         """
 
         self._details = details
+
+    @property
+    def message(self):
+        """Gets the message of this InlineResponse400.  # noqa: E501
+
+        Error message for bad request.  # noqa: E501
+
+        :return: The message of this InlineResponse400.  # noqa: E501
+        :rtype: str
+        """
+        return self._message
+
+    @message.setter
+    def message(self, message):
+        """Sets the message of this InlineResponse400.
+
+        Error message for bad request.  # noqa: E501
+
+        :param message: The message of this InlineResponse400.  # noqa: E501
+        :type: str
+        """
+
+        self._message = message
 
     def to_dict(self):
         """Returns the model properties as a dict"""

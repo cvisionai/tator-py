@@ -29,19 +29,70 @@ class Body17(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'attributes': 'dict(str, object)',
+        'name': 'str'
     }
-    if hasattr(dict, "swagger_types"):
-        swagger_types.update(dict.swagger_types)
 
     attribute_map = {
+        'attributes': 'attributes',
+        'name': 'name'
     }
-    if hasattr(dict, "attribute_map"):
-        attribute_map.update(dict.attribute_map)
 
-    def __init__(self, *args, **kwargs):  # noqa: E501
+    def __init__(self, attributes=None, name=None):  # noqa: E501
         """Body17 - a model defined in Swagger"""  # noqa: E501
+        self._attributes = None
+        self._name = None
         self.discriminator = None
-        dict.__init__(self, *args, **kwargs)
+        if attributes is not None:
+            self.attributes = attributes
+        if name is not None:
+            self.name = name
+
+    @property
+    def attributes(self):
+        """Gets the attributes of this Body17.  # noqa: E501
+
+        Attribute values to update.  # noqa: E501
+
+        :return: The attributes of this Body17.  # noqa: E501
+        :rtype: dict(str, object)
+        """
+        return self._attributes
+
+    @attributes.setter
+    def attributes(self, attributes):
+        """Sets the attributes of this Body17.
+
+        Attribute values to update.  # noqa: E501
+
+        :param attributes: The attributes of this Body17.  # noqa: E501
+        :type: dict(str, object)
+        """
+
+        self._attributes = attributes
+
+    @property
+    def name(self):
+        """Gets the name of this Body17.  # noqa: E501
+
+        Name of the tree leaf.  # noqa: E501
+
+        :return: The name of this Body17.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this Body17.
+
+        Name of the tree leaf.  # noqa: E501
+
+        :param name: The name of this Body17.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

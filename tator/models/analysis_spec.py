@@ -29,100 +29,14 @@ class AnalysisSpec(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'data_type': 'int',
-        'data_query': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'data_type': 'data_type',
-        'data_query': 'data_query'
     }
 
-    def __init__(self, name=None, data_type=None, data_query='*'):  # noqa: E501
+    def __init__(self):  # noqa: E501
         """AnalysisSpec - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._data_type = None
-        self._data_query = None
         self.discriminator = None
-        self.name = name
-        self.data_type = data_type
-        if data_query is not None:
-            self.data_query = data_query
-
-    @property
-    def name(self):
-        """Gets the name of this AnalysisSpec.  # noqa: E501
-
-        Name of analysis.  # noqa: E501
-
-        :return: The name of this AnalysisSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this AnalysisSpec.
-
-        Name of analysis.  # noqa: E501
-
-        :param name: The name of this AnalysisSpec.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def data_type(self):
-        """Gets the data_type of this AnalysisSpec.  # noqa: E501
-
-        A unique integer identifying an entity type to analyze.  # noqa: E501
-
-        :return: The data_type of this AnalysisSpec.  # noqa: E501
-        :rtype: int
-        """
-        return self._data_type
-
-    @data_type.setter
-    def data_type(self, data_type):
-        """Sets the data_type of this AnalysisSpec.
-
-        A unique integer identifying an entity type to analyze.  # noqa: E501
-
-        :param data_type: The data_type of this AnalysisSpec.  # noqa: E501
-        :type: int
-        """
-        if data_type is None:
-            raise ValueError("Invalid value for `data_type`, must not be `None`")  # noqa: E501
-
-        self._data_type = data_type
-
-    @property
-    def data_query(self):
-        """Gets the data_query of this AnalysisSpec.  # noqa: E501
-
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
-
-        :return: The data_query of this AnalysisSpec.  # noqa: E501
-        :rtype: str
-        """
-        return self._data_query
-
-    @data_query.setter
-    def data_query(self, data_query):
-        """Sets the data_query of this AnalysisSpec.
-
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
-
-        :param data_query: The data_query of this AnalysisSpec.  # noqa: E501
-        :type: str
-        """
-
-        self._data_query = data_query
 
     def to_dict(self):
         """Returns the model properties as a dict"""

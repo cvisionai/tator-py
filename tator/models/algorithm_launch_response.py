@@ -29,29 +29,52 @@ class AlgorithmLaunchResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
+        'group_id': 'str',
         'message': 'str',
-        'run_uids': 'list[str]',
-        'group_id': 'str'
+        'run_uids': 'list[str]'
     }
 
     attribute_map = {
+        'group_id': 'group_id',
         'message': 'message',
-        'run_uids': 'run_uids',
-        'group_id': 'group_id'
+        'run_uids': 'run_uids'
     }
 
-    def __init__(self, message=None, run_uids=None, group_id=None):  # noqa: E501
+    def __init__(self, group_id=None, message=None, run_uids=None):  # noqa: E501
         """AlgorithmLaunchResponse - a model defined in Swagger"""  # noqa: E501
+        self._group_id = None
         self._message = None
         self._run_uids = None
-        self._group_id = None
         self.discriminator = None
+        if group_id is not None:
+            self.group_id = group_id
         if message is not None:
             self.message = message
         if run_uids is not None:
             self.run_uids = run_uids
-        if group_id is not None:
-            self.group_id = group_id
+
+    @property
+    def group_id(self):
+        """Gets the group_id of this AlgorithmLaunchResponse.  # noqa: E501
+
+        A uuid1 string identifying the group of jobs started.  # noqa: E501
+
+        :return: The group_id of this AlgorithmLaunchResponse.  # noqa: E501
+        :rtype: str
+        """
+        return self._group_id
+
+    @group_id.setter
+    def group_id(self, group_id):
+        """Sets the group_id of this AlgorithmLaunchResponse.
+
+        A uuid1 string identifying the group of jobs started.  # noqa: E501
+
+        :param group_id: The group_id of this AlgorithmLaunchResponse.  # noqa: E501
+        :type: str
+        """
+
+        self._group_id = group_id
 
     @property
     def message(self):
@@ -98,29 +121,6 @@ class AlgorithmLaunchResponse(object):
         """
 
         self._run_uids = run_uids
-
-    @property
-    def group_id(self):
-        """Gets the group_id of this AlgorithmLaunchResponse.  # noqa: E501
-
-        A uuid1 string identifying the group of jobs started.  # noqa: E501
-
-        :return: The group_id of this AlgorithmLaunchResponse.  # noqa: E501
-        :rtype: str
-        """
-        return self._group_id
-
-    @group_id.setter
-    def group_id(self, group_id):
-        """Sets the group_id of this AlgorithmLaunchResponse.
-
-        A uuid1 string identifying the group of jobs started.  # noqa: E501
-
-        :param group_id: The group_id of this AlgorithmLaunchResponse.  # noqa: E501
-        :type: str
-        """
-
-        self._group_id = group_id
 
     def to_dict(self):
         """Returns the model properties as a dict"""

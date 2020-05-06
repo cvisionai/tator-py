@@ -29,47 +29,24 @@ class LocalizationAssociationUpdate(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'localizations': 'list[int]',
-        'color': 'str'
+        'color': 'str',
+        'localizations': 'list[int]'
     }
 
     attribute_map = {
-        'localizations': 'localizations',
-        'color': 'color'
+        'color': 'color',
+        'localizations': 'localizations'
     }
 
-    def __init__(self, localizations=None, color=None):  # noqa: E501
+    def __init__(self, color=None, localizations=None):  # noqa: E501
         """LocalizationAssociationUpdate - a model defined in Swagger"""  # noqa: E501
-        self._localizations = None
         self._color = None
+        self._localizations = None
         self.discriminator = None
-        if localizations is not None:
-            self.localizations = localizations
         if color is not None:
             self.color = color
-
-    @property
-    def localizations(self):
-        """Gets the localizations of this LocalizationAssociationUpdate.  # noqa: E501
-
-        List of localization IDs.  # noqa: E501
-
-        :return: The localizations of this LocalizationAssociationUpdate.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._localizations
-
-    @localizations.setter
-    def localizations(self, localizations):
-        """Sets the localizations of this LocalizationAssociationUpdate.
-
-        List of localization IDs.  # noqa: E501
-
-        :param localizations: The localizations of this LocalizationAssociationUpdate.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._localizations = localizations
+        if localizations is not None:
+            self.localizations = localizations
 
     @property
     def color(self):
@@ -93,6 +70,29 @@ class LocalizationAssociationUpdate(object):
         """
 
         self._color = color
+
+    @property
+    def localizations(self):
+        """Gets the localizations of this LocalizationAssociationUpdate.  # noqa: E501
+
+        List of localization IDs.  # noqa: E501
+
+        :return: The localizations of this LocalizationAssociationUpdate.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._localizations
+
+    @localizations.setter
+    def localizations(self, localizations):
+        """Sets the localizations of this LocalizationAssociationUpdate.
+
+        List of localization IDs.  # noqa: E501
+
+        :param localizations: The localizations of this LocalizationAssociationUpdate.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._localizations = localizations
 
     def to_dict(self):
         """Returns the model properties as a dict"""

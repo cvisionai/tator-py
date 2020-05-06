@@ -29,80 +29,18 @@ class VideoUpdate(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'gid': 'str',
-        'uid': 'str',
-        'id': 'int',
-        'media_files': 'list[str]'
+        'id': 'int'
     }
 
     attribute_map = {
-        'gid': 'gid',
-        'uid': 'uid',
-        'id': 'id',
-        'media_files': 'media_files'
+        'id': 'id'
     }
 
-    def __init__(self, gid=None, uid=None, id=None, media_files=None):  # noqa: E501
+    def __init__(self, id=None):  # noqa: E501
         """VideoUpdate - a model defined in Swagger"""  # noqa: E501
-        self._gid = None
-        self._uid = None
         self._id = None
-        self._media_files = None
         self.discriminator = None
-        self.gid = gid
-        self.uid = uid
         self.id = id
-        self.media_files = media_files
-
-    @property
-    def gid(self):
-        """Gets the gid of this VideoUpdate.  # noqa: E501
-
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :return: The gid of this VideoUpdate.  # noqa: E501
-        :rtype: str
-        """
-        return self._gid
-
-    @gid.setter
-    def gid(self, gid):
-        """Sets the gid of this VideoUpdate.
-
-        UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :param gid: The gid of this VideoUpdate.  # noqa: E501
-        :type: str
-        """
-        if gid is None:
-            raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
-
-        self._gid = gid
-
-    @property
-    def uid(self):
-        """Gets the uid of this VideoUpdate.  # noqa: E501
-
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :return: The uid of this VideoUpdate.  # noqa: E501
-        :rtype: str
-        """
-        return self._uid
-
-    @uid.setter
-    def uid(self, uid):
-        """Sets the uid of this VideoUpdate.
-
-        UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
-
-        :param uid: The uid of this VideoUpdate.  # noqa: E501
-        :type: str
-        """
-        if uid is None:
-            raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
-
-        self._uid = uid
 
     @property
     def id(self):
@@ -128,31 +66,6 @@ class VideoUpdate(object):
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
-
-    @property
-    def media_files(self):
-        """Gets the media_files of this VideoUpdate.  # noqa: E501
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :return: The media_files of this VideoUpdate.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._media_files
-
-    @media_files.setter
-    def media_files(self, media_files):
-        """Sets the media_files of this VideoUpdate.
-
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
-
-        :param media_files: The media_files of this VideoUpdate.  # noqa: E501
-        :type: list[str]
-        """
-        if media_files is None:
-            raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
-
-        self._media_files = media_files
 
     def to_dict(self):
         """Returns the model properties as a dict"""

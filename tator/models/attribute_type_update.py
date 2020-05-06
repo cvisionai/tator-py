@@ -29,47 +29,24 @@ class AttributeTypeUpdate(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str'
+        'description': 'str',
+        'name': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description'
+        'description': 'description',
+        'name': 'name'
     }
 
-    def __init__(self, name=None, description=None):  # noqa: E501
+    def __init__(self, description=None, name=None):  # noqa: E501
         """AttributeTypeUpdate - a model defined in Swagger"""  # noqa: E501
-        self._name = None
         self._description = None
+        self._name = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
         if description is not None:
             self.description = description
-
-    @property
-    def name(self):
-        """Gets the name of this AttributeTypeUpdate.  # noqa: E501
-
-        Name of the attribute.  # noqa: E501
-
-        :return: The name of this AttributeTypeUpdate.  # noqa: E501
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        """Sets the name of this AttributeTypeUpdate.
-
-        Name of the attribute.  # noqa: E501
-
-        :param name: The name of this AttributeTypeUpdate.  # noqa: E501
-        :type: str
-        """
-
-        self._name = name
+        if name is not None:
+            self.name = name
 
     @property
     def description(self):
@@ -93,6 +70,29 @@ class AttributeTypeUpdate(object):
         """
 
         self._description = description
+
+    @property
+    def name(self):
+        """Gets the name of this AttributeTypeUpdate.  # noqa: E501
+
+        Name of the attribute.  # noqa: E501
+
+        :return: The name of this AttributeTypeUpdate.  # noqa: E501
+        :rtype: str
+        """
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        """Sets the name of this AttributeTypeUpdate.
+
+        Name of the attribute.  # noqa: E501
+
+        :param name: The name of this AttributeTypeUpdate.  # noqa: E501
+        :type: str
+        """
+
+        self._name = name
 
     def to_dict(self):
         """Returns the model properties as a dict"""

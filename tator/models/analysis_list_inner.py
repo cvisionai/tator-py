@@ -29,62 +29,62 @@ class AnalysisListInner(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'data_type': 'int',
         'data_query': 'str',
+        'data_type': 'int',
+        'name': 'str',
         'project': 'int',
         'resourcetype': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'data_type': 'data_type',
         'data_query': 'data_query',
+        'data_type': 'data_type',
+        'name': 'name',
         'project': 'project',
         'resourcetype': 'resourcetype'
     }
 
-    def __init__(self, name=None, data_type=None, data_query='*', project=None, resourcetype=None):  # noqa: E501
+    def __init__(self, data_query='*', data_type=None, name=None, project=None, resourcetype=None):  # noqa: E501
         """AnalysisListInner - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._data_type = None
         self._data_query = None
+        self._data_type = None
+        self._name = None
         self._project = None
         self._resourcetype = None
         self.discriminator = None
-        if name is not None:
-            self.name = name
-        if data_type is not None:
-            self.data_type = data_type
         if data_query is not None:
             self.data_query = data_query
+        if data_type is not None:
+            self.data_type = data_type
+        if name is not None:
+            self.name = name
         if project is not None:
             self.project = project
         if resourcetype is not None:
             self.resourcetype = resourcetype
 
     @property
-    def name(self):
-        """Gets the name of this AnalysisListInner.  # noqa: E501
+    def data_query(self):
+        """Gets the data_query of this AnalysisListInner.  # noqa: E501
 
-        Name of analysis.  # noqa: E501
+        Lucene query string used to retrieve entities to analyze.  # noqa: E501
 
-        :return: The name of this AnalysisListInner.  # noqa: E501
+        :return: The data_query of this AnalysisListInner.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._data_query
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this AnalysisListInner.
+    @data_query.setter
+    def data_query(self, data_query):
+        """Sets the data_query of this AnalysisListInner.
 
-        Name of analysis.  # noqa: E501
+        Lucene query string used to retrieve entities to analyze.  # noqa: E501
 
-        :param name: The name of this AnalysisListInner.  # noqa: E501
+        :param data_query: The data_query of this AnalysisListInner.  # noqa: E501
         :type: str
         """
 
-        self._name = name
+        self._data_query = data_query
 
     @property
     def data_type(self):
@@ -110,27 +110,27 @@ class AnalysisListInner(object):
         self._data_type = data_type
 
     @property
-    def data_query(self):
-        """Gets the data_query of this AnalysisListInner.  # noqa: E501
+    def name(self):
+        """Gets the name of this AnalysisListInner.  # noqa: E501
 
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
+        Name of analysis.  # noqa: E501
 
-        :return: The data_query of this AnalysisListInner.  # noqa: E501
+        :return: The name of this AnalysisListInner.  # noqa: E501
         :rtype: str
         """
-        return self._data_query
+        return self._name
 
-    @data_query.setter
-    def data_query(self, data_query):
-        """Sets the data_query of this AnalysisListInner.
+    @name.setter
+    def name(self, name):
+        """Sets the name of this AnalysisListInner.
 
-        Lucene query string used to retrieve entities to analyze.  # noqa: E501
+        Name of analysis.  # noqa: E501
 
-        :param data_query: The data_query of this AnalysisListInner.  # noqa: E501
+        :param name: The name of this AnalysisListInner.  # noqa: E501
         :type: str
         """
 
-        self._data_query = data_query
+        self._name = name
 
     @property
     def project(self):

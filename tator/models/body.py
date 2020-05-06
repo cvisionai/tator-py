@@ -29,47 +29,24 @@ class Body(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'frame': 'int',
-        'extracted': 'int'
+        'extracted': 'int',
+        'frame': 'int'
     }
 
     attribute_map = {
-        'frame': 'frame',
-        'extracted': 'extracted'
+        'extracted': 'extracted',
+        'frame': 'frame'
     }
 
-    def __init__(self, frame=None, extracted=None):  # noqa: E501
+    def __init__(self, extracted=None, frame=None):  # noqa: E501
         """Body - a model defined in Swagger"""  # noqa: E501
-        self._frame = None
         self._extracted = None
+        self._frame = None
         self.discriminator = None
-        if frame is not None:
-            self.frame = frame
         if extracted is not None:
             self.extracted = extracted
-
-    @property
-    def frame(self):
-        """Gets the frame of this Body.  # noqa: E501
-
-        Video frame number for this association.  # noqa: E501
-
-        :return: The frame of this Body.  # noqa: E501
-        :rtype: int
-        """
-        return self._frame
-
-    @frame.setter
-    def frame(self, frame):
-        """Sets the frame of this Body.
-
-        Video frame number for this association.  # noqa: E501
-
-        :param frame: The frame of this Body.  # noqa: E501
-        :type: int
-        """
-
-        self._frame = frame
+        if frame is not None:
+            self.frame = frame
 
     @property
     def extracted(self):
@@ -93,6 +70,29 @@ class Body(object):
         """
 
         self._extracted = extracted
+
+    @property
+    def frame(self):
+        """Gets the frame of this Body.  # noqa: E501
+
+        Video frame number for this association.  # noqa: E501
+
+        :return: The frame of this Body.  # noqa: E501
+        :rtype: int
+        """
+        return self._frame
+
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this Body.
+
+        Video frame number for this association.  # noqa: E501
+
+        :param frame: The frame of this Body.  # noqa: E501
+        :type: int
+        """
+
+        self._frame = frame
 
     def to_dict(self):
         """Returns the model properties as a dict"""

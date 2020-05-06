@@ -29,71 +29,120 @@ class Body20(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'description': 'str'
+        'email': 'str',
+        'first_name': 'str',
+        'last_name': 'str',
+        'username': 'str'
     }
 
     attribute_map = {
-        'name': 'name',
-        'description': 'description'
+        'email': 'email',
+        'first_name': 'first_name',
+        'last_name': 'last_name',
+        'username': 'username'
     }
 
-    def __init__(self, name=None, description=''):  # noqa: E501
+    def __init__(self, email=None, first_name=None, last_name=None, username=None):  # noqa: E501
         """Body20 - a model defined in Swagger"""  # noqa: E501
-        self._name = None
-        self._description = None
+        self._email = None
+        self._first_name = None
+        self._last_name = None
+        self._username = None
         self.discriminator = None
-        self.name = name
-        if description is not None:
-            self.description = description
+        if email is not None:
+            self.email = email
+        if first_name is not None:
+            self.first_name = first_name
+        if last_name is not None:
+            self.last_name = last_name
+        if username is not None:
+            self.username = username
 
     @property
-    def name(self):
-        """Gets the name of this Body20.  # noqa: E501
+    def email(self):
+        """Gets the email of this Body20.  # noqa: E501
 
-        Name of the tree leaf type.  # noqa: E501
 
-        :return: The name of this Body20.  # noqa: E501
+        :return: The email of this Body20.  # noqa: E501
         :rtype: str
         """
-        return self._name
+        return self._email
 
-    @name.setter
-    def name(self, name):
-        """Sets the name of this Body20.
+    @email.setter
+    def email(self, email):
+        """Sets the email of this Body20.
 
-        Name of the tree leaf type.  # noqa: E501
 
-        :param name: The name of this Body20.  # noqa: E501
-        :type: str
-        """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
-
-        self._name = name
-
-    @property
-    def description(self):
-        """Gets the description of this Body20.  # noqa: E501
-
-        Description of the tree leaf type.  # noqa: E501
-
-        :return: The description of this Body20.  # noqa: E501
-        :rtype: str
-        """
-        return self._description
-
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Body20.
-
-        Description of the tree leaf type.  # noqa: E501
-
-        :param description: The description of this Body20.  # noqa: E501
+        :param email: The email of this Body20.  # noqa: E501
         :type: str
         """
 
-        self._description = description
+        self._email = email
+
+    @property
+    def first_name(self):
+        """Gets the first_name of this Body20.  # noqa: E501
+
+
+        :return: The first_name of this Body20.  # noqa: E501
+        :rtype: str
+        """
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, first_name):
+        """Sets the first_name of this Body20.
+
+
+        :param first_name: The first_name of this Body20.  # noqa: E501
+        :type: str
+        """
+
+        self._first_name = first_name
+
+    @property
+    def last_name(self):
+        """Gets the last_name of this Body20.  # noqa: E501
+
+
+        :return: The last_name of this Body20.  # noqa: E501
+        :rtype: str
+        """
+        return self._last_name
+
+    @last_name.setter
+    def last_name(self, last_name):
+        """Sets the last_name of this Body20.
+
+
+        :param last_name: The last_name of this Body20.  # noqa: E501
+        :type: str
+        """
+
+        self._last_name = last_name
+
+    @property
+    def username(self):
+        """Gets the username of this Body20.  # noqa: E501
+
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+
+        :return: The username of this Body20.  # noqa: E501
+        :rtype: str
+        """
+        return self._username
+
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Body20.
+
+        Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.  # noqa: E501
+
+        :param username: The username of this Body20.  # noqa: E501
+        :type: str
+        """
+
+        self._username = username
 
     def to_dict(self):
         """Returns the model properties as a dict"""
