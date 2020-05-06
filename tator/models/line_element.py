@@ -36,7 +36,6 @@ class LineElement(object):
         'attributes': 'dict(str, object)',
         'email': 'str',
         'frame': 'int',
-        'height': 'float',
         'id': 'int',
         'media': 'int',
         'meta': 'int',
@@ -44,16 +43,16 @@ class LineElement(object):
         'project': 'int',
         'thumbnail_image': 'str',
         'version': 'int',
-        'width': 'float',
-        'x': 'float',
-        'y': 'float'
+        'x0': 'float',
+        'x1': 'float',
+        'y0': 'float',
+        'y1': 'float'
     }
 
     attribute_map = {
         'attributes': 'attributes',
         'email': 'email',
         'frame': 'frame',
-        'height': 'height',
         'id': 'id',
         'media': 'media',
         'meta': 'meta',
@@ -61,12 +60,13 @@ class LineElement(object):
         'project': 'project',
         'thumbnail_image': 'thumbnail_image',
         'version': 'version',
-        'width': 'width',
-        'x': 'x',
-        'y': 'y'
+        'x0': 'x0',
+        'x1': 'x1',
+        'y0': 'y0',
+        'y1': 'y1'
     }
 
-    def __init__(self, attributes=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, version=None, x0=None, x1=None, y0=None, y1=None, local_vars_configuration=None):  # noqa: E501
         """LineElement - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -75,7 +75,6 @@ class LineElement(object):
         self._attributes = None
         self._email = None
         self._frame = None
-        self._height = None
         self._id = None
         self._media = None
         self._meta = None
@@ -83,9 +82,10 @@ class LineElement(object):
         self._project = None
         self._thumbnail_image = None
         self._version = None
-        self._width = None
-        self._x = None
-        self._y = None
+        self._x0 = None
+        self._x1 = None
+        self._y0 = None
+        self._y1 = None
         self.discriminator = None
 
         if attributes is not None:
@@ -94,8 +94,6 @@ class LineElement(object):
             self.email = email
         if frame is not None:
             self.frame = frame
-        if height is not None:
-            self.height = height
         if id is not None:
             self.id = id
         if media is not None:
@@ -110,12 +108,14 @@ class LineElement(object):
             self.thumbnail_image = thumbnail_image
         if version is not None:
             self.version = version
-        if width is not None:
-            self.width = width
-        if x is not None:
-            self.x = x
-        if y is not None:
-            self.y = y
+        if x0 is not None:
+            self.x0 = x0
+        if x1 is not None:
+            self.x1 = x1
+        if y0 is not None:
+            self.y0 = y0
+        if y1 is not None:
+            self.y1 = y1
 
     @property
     def attributes(self):
@@ -185,35 +185,6 @@ class LineElement(object):
         """
 
         self._frame = frame
-
-    @property
-    def height(self):
-        """Gets the height of this LineElement.  # noqa: E501
-
-        Normalized height of bounding box for `box` localization types.  # noqa: E501
-
-        :return: The height of this LineElement.  # noqa: E501
-        :rtype: float
-        """
-        return self._height
-
-    @height.setter
-    def height(self, height):
-        """Sets the height of this LineElement.
-
-        Normalized height of bounding box for `box` localization types.  # noqa: E501
-
-        :param height: The height of this LineElement.  # noqa: E501
-        :type: float
-        """
-        if (self.local_vars_configuration.client_side_validation and
-                height is not None and height > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `height`, must be a value less than or equal to `1.0`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                height is not None and height < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `height`, must be a value greater than or equal to `0.0`")  # noqa: E501
-
-        self._height = height
 
     @property
     def id(self):
@@ -377,91 +348,120 @@ class LineElement(object):
         self._version = version
 
     @property
-    def width(self):
-        """Gets the width of this LineElement.  # noqa: E501
+    def x0(self):
+        """Gets the x0 of this LineElement.  # noqa: E501
 
-        Normalized width of bounding box for `box` localization types.  # noqa: E501
+        Normalized horizontal position of start of line for `line` localization types.  # noqa: E501
 
-        :return: The width of this LineElement.  # noqa: E501
+        :return: The x0 of this LineElement.  # noqa: E501
         :rtype: float
         """
-        return self._width
+        return self._x0
 
-    @width.setter
-    def width(self, width):
-        """Sets the width of this LineElement.
+    @x0.setter
+    def x0(self, x0):
+        """Sets the x0 of this LineElement.
 
-        Normalized width of bounding box for `box` localization types.  # noqa: E501
+        Normalized horizontal position of start of line for `line` localization types.  # noqa: E501
 
-        :param width: The width of this LineElement.  # noqa: E501
+        :param x0: The x0 of this LineElement.  # noqa: E501
         :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
-                width is not None and width > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `width`, must be a value less than or equal to `1.0`")  # noqa: E501
+                x0 is not None and x0 > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `x0`, must be a value less than or equal to `1.0`")  # noqa: E501
         if (self.local_vars_configuration.client_side_validation and
-                width is not None and width < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `width`, must be a value greater than or equal to `0.0`")  # noqa: E501
+                x0 is not None and x0 < 0.0):  # noqa: E501
+            raise ValueError("Invalid value for `x0`, must be a value greater than or equal to `0.0`")  # noqa: E501
 
-        self._width = width
+        self._x0 = x0
 
     @property
-    def x(self):
-        """Gets the x of this LineElement.  # noqa: E501
+    def x1(self):
+        """Gets the x1 of this LineElement.  # noqa: E501
 
-        Normalized horizontal position of left edge of bounding box.  # noqa: E501
+        Normalized horizontal position of end of line for `line` localization types.  # noqa: E501
 
-        :return: The x of this LineElement.  # noqa: E501
+        :return: The x1 of this LineElement.  # noqa: E501
         :rtype: float
         """
-        return self._x
+        return self._x1
 
-    @x.setter
-    def x(self, x):
-        """Sets the x of this LineElement.
+    @x1.setter
+    def x1(self, x1):
+        """Sets the x1 of this LineElement.
 
-        Normalized horizontal position of left edge of bounding box.  # noqa: E501
+        Normalized horizontal position of end of line for `line` localization types.  # noqa: E501
 
-        :param x: The x of this LineElement.  # noqa: E501
+        :param x1: The x1 of this LineElement.  # noqa: E501
         :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
-                x is not None and x > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `x`, must be a value less than or equal to `1.0`")  # noqa: E501
+                x1 is not None and x1 > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `x1`, must be a value less than or equal to `1.0`")  # noqa: E501
         if (self.local_vars_configuration.client_side_validation and
-                x is not None and x < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `x`, must be a value greater than or equal to `0.0`")  # noqa: E501
+                x1 is not None and x1 < 0.0):  # noqa: E501
+            raise ValueError("Invalid value for `x1`, must be a value greater than or equal to `0.0`")  # noqa: E501
 
-        self._x = x
+        self._x1 = x1
 
     @property
-    def y(self):
-        """Gets the y of this LineElement.  # noqa: E501
+    def y0(self):
+        """Gets the y0 of this LineElement.  # noqa: E501
 
-        Normalized vertical position of top edge of bounding box.  # noqa: E501
+        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
 
-        :return: The y of this LineElement.  # noqa: E501
+        :return: The y0 of this LineElement.  # noqa: E501
         :rtype: float
         """
-        return self._y
+        return self._y0
 
-    @y.setter
-    def y(self, y):
-        """Sets the y of this LineElement.
+    @y0.setter
+    def y0(self, y0):
+        """Sets the y0 of this LineElement.
 
-        Normalized vertical position of top edge of bounding box.  # noqa: E501
+        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
 
-        :param y: The y of this LineElement.  # noqa: E501
+        :param y0: The y0 of this LineElement.  # noqa: E501
         :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
-                y is not None and y > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `y`, must be a value less than or equal to `1.0`")  # noqa: E501
+                y0 is not None and y0 > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `y0`, must be a value less than or equal to `1.0`")  # noqa: E501
         if (self.local_vars_configuration.client_side_validation and
-                y is not None and y < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `y`, must be a value greater than or equal to `0.0`")  # noqa: E501
+                y0 is not None and y0 < 0.0):  # noqa: E501
+            raise ValueError("Invalid value for `y0`, must be a value greater than or equal to `0.0`")  # noqa: E501
 
-        self._y = y
+        self._y0 = y0
+
+    @property
+    def y1(self):
+        """Gets the y1 of this LineElement.  # noqa: E501
+
+        Normalized vertical position of end of line for `line` localization types.  # noqa: E501
+
+        :return: The y1 of this LineElement.  # noqa: E501
+        :rtype: float
+        """
+        return self._y1
+
+    @y1.setter
+    def y1(self, y1):
+        """Sets the y1 of this LineElement.
+
+        Normalized vertical position of end of line for `line` localization types.  # noqa: E501
+
+        :param y1: The y1 of this LineElement.  # noqa: E501
+        :type: float
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                y1 is not None and y1 > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `y1`, must be a value less than or equal to `1.0`")  # noqa: E501
+        if (self.local_vars_configuration.client_side_validation and
+                y1 is not None and y1 < 0.0):  # noqa: E501
+            raise ValueError("Invalid value for `y1`, must be a value greater than or equal to `0.0`")  # noqa: E501
+
+        self._y1 = y1
 
     def to_dict(self):
         """Returns the model properties as a dict"""

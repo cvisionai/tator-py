@@ -39,7 +39,6 @@ class TestDotElement(unittest.TestCase):
                 attributes = { }, 
                 email = '0', 
                 frame = 56, 
-                height = 0.0, 
                 id = 56, 
                 media = 56, 
                 meta = 56, 
@@ -47,7 +46,6 @@ class TestDotElement(unittest.TestCase):
                 project = 56, 
                 thumbnail_image = '0', 
                 version = 56, 
-                width = 0.0, 
                 x = 0.0, 
                 y = 0.0
             )

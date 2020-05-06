@@ -34,7 +34,7 @@ class ManySpec(object):
     """
     openapi_types = {
         'frame': 'int',
-        'many': 'list[OneOfmapmapmap]',
+        'many': 'list[LocalizationProps]',
         'media_id': 'int',
         'modified': 'bool',
         'type': 'int',
@@ -104,7 +104,7 @@ class ManySpec(object):
         List of localizations if this request is for bulkcreate.  # noqa: E501
 
         :return: The many of this ManySpec.  # noqa: E501
-        :rtype: list[OneOfmapmapmap]
+        :rtype: list[LocalizationProps]
         """
         return self._many
 
@@ -115,7 +115,7 @@ class ManySpec(object):
         List of localizations if this request is for bulkcreate.  # noqa: E501
 
         :param many: The many of this ManySpec.  # noqa: E501
-        :type: list[OneOfmapmapmap]
+        :type: list[LocalizationProps]
         """
         if self.local_vars_configuration.client_side_validation and many is None:  # noqa: E501
             raise ValueError("Invalid value for `many`, must not be `None`")  # noqa: E501

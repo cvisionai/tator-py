@@ -5,7 +5,7 @@ Many localizations.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **frame** | **int** | Frame number of this localization if it is in a video. | [optional] 
-**many** | [**list[OneOfmapmapmap]**](OneOfmapmapmap.md) | List of localizations if this request is for bulkcreate. | 
+**many** | [**list[LocalizationProps]**](LocalizationProps.md) | List of localizations if this request is for bulkcreate. | 
 **media_id** | **int** | Unique integer identifying a media. Required if &#x60;many&#x60; is not given. | 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] [default to False]
 **type** | **int** | Unique integer identifying a localization type.Required if &#x60;many&#x60; is not given. | 

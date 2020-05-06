@@ -46,7 +46,7 @@ class LocalizationSpec(object):
         'x1': 'float',
         'y0': 'float',
         'y1': 'float',
-        'many': 'list[OneOfmapmapmap]'
+        'many': 'list[LocalizationProps]'
     }
 
     attribute_map = {
@@ -481,7 +481,7 @@ class LocalizationSpec(object):
         List of localizations if this request is for bulkcreate.  # noqa: E501
 
         :return: The many of this LocalizationSpec.  # noqa: E501
-        :rtype: list[OneOfmapmapmap]
+        :rtype: list[LocalizationProps]
         """
         return self._many
 
@@ -492,7 +492,7 @@ class LocalizationSpec(object):
         List of localizations if this request is for bulkcreate.  # noqa: E501
 
         :param many: The many of this LocalizationSpec.  # noqa: E501
-        :type: list[OneOfmapmapmap]
+        :type: list[LocalizationProps]
         """
         if self.local_vars_configuration.client_side_validation and many is None:  # noqa: E501
             raise ValueError("Invalid value for `many`, must not be `None`")  # noqa: E501

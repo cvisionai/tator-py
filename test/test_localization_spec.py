@@ -50,7 +50,7 @@ class TestLocalizationSpec(unittest.TestCase):
                 y0 = 0.0, 
                 y1 = 0.0, 
                 many = [
-                    null
+                    None
                     ]
             )
         else :
@@ -67,7 +67,7 @@ class TestLocalizationSpec(unittest.TestCase):
                 y0 = 0.0,
                 y1 = 0.0,
                 many = [
-                    null
+                    None
                     ],
         )
 

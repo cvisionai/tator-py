@@ -49,7 +49,11 @@ class TestLocalizationElement(unittest.TestCase):
                 version = 56, 
                 width = 0.0, 
                 x = 0.0, 
-                y = 0.0
+                y = 0.0, 
+                x0 = 0.0, 
+                x1 = 0.0, 
+                y0 = 0.0, 
+                y1 = 0.0
             )
         else :
             return LocalizationElement(

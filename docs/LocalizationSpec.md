@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **x1** | **float** | Normalized horizontal position of end of line for &#x60;line&#x60; localization types. | 
 **y0** | **float** | Normalized vertical position of start of line for &#x60;line&#x60; localization types. | 
 **y1** | **float** | Normalized vertical position of end of line for &#x60;line&#x60; localization types. | 
-**many** | [**list[OneOfmapmapmap]**](OneOfmapmapmap.md) | List of localizations if this request is for bulkcreate. | 
+**many** | [**list[LocalizationProps]**](LocalizationProps.md) | List of localizations if this request is for bulkcreate. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -38,7 +38,7 @@ class TestManySpec(unittest.TestCase):
             return ManySpec(
                 frame = 56, 
                 many = [
-                    null
+                    None
                     ], 
                 media_id = 56, 
                 modified = True, 
@@ -48,7 +48,7 @@ class TestManySpec(unittest.TestCase):
         else :
             return ManySpec(
                 many = [
-                    null
+                    None
                     ],
                 media_id = 56,
                 type = 56,

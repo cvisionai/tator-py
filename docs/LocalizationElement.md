@@ -15,8 +15,12 @@ Name | Type | Description | Notes
 **thumbnail_image** | **str** | URL of thumbnail corresponding to this localization. | [optional] 
 **version** | **int** | Unique integer identifying a version. | [optional] 
 **width** | **float** | Normalized width of bounding box for &#x60;box&#x60; localization types. | [optional] 
-**x** | **float** | Normalized horizontal position of left edge of bounding box. | [optional] 
-**y** | **float** | Normalized vertical position of top edge of bounding box. | [optional] 
+**x** | **float** | Normalized horizontal position of dot. | [optional] 
+**y** | **float** | Normalized vertical position of dot. | [optional] 
+**x0** | **float** | Normalized horizontal position of start of line for &#x60;line&#x60; localization types. | [optional] 
+**x1** | **float** | Normalized horizontal position of end of line for &#x60;line&#x60; localization types. | [optional] 
+**y0** | **float** | Normalized vertical position of start of line for &#x60;line&#x60; localization types. | [optional] 
+**y1** | **float** | Normalized vertical position of end of line for &#x60;line&#x60; localization types. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
