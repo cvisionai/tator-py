@@ -287,6 +287,7 @@ Class | Method | HTTP request | Description
  - [LocalizationList](docs/LocalizationList.md)
  - [LocalizationSpec](docs/LocalizationSpec.md)
  - [LocalizationUpdate](docs/LocalizationUpdate.md)
+ - [ManySpec](docs/ManySpec.md)
  - [MessageResponse](docs/MessageResponse.md)
  - [VideoSpec](docs/VideoSpec.md)
  - [VideoUpdate](docs/VideoUpdate.md)

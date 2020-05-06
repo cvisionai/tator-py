@@ -113,6 +113,7 @@ from tator.models.localization_association_update import LocalizationAssociation
 from tator.models.localization_list import LocalizationList
 from tator.models.localization_spec import LocalizationSpec
 from tator.models.localization_update import LocalizationUpdate
+from tator.models.many_spec import ManySpec
 from tator.models.message_response import MessageResponse
 from tator.models.video_spec import VideoSpec
 from tator.models.video_update import VideoUpdate

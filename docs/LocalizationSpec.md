@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**frame** | **int** | Frame number of this localization if it is in a video. | 
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | 
 **media_id** | **int** | Unique integer identifying a media. Required if &#x60;many&#x60; is not given. | 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] [default to False]
@@ -15,6 +16,7 @@ Name | Type | Description | Notes
 **x1** | **float** | Normalized horizontal position of end of line for &#x60;line&#x60; localization types. | 
 **y0** | **float** | Normalized vertical position of start of line for &#x60;line&#x60; localization types. | 
 **y1** | **float** | Normalized vertical position of end of line for &#x60;line&#x60; localization types. | 
+**many** | [**list[OneOfmapmapmap]**](OneOfmapmapmap.md) | List of localizations if this request is for bulkcreate. | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

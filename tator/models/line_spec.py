@@ -33,6 +33,7 @@ class LineSpec(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'frame': 'int',
         'media_id': 'int',
         'modified': 'bool',
         'type': 'int',
@@ -44,6 +45,7 @@ class LineSpec(object):
     }
 
     attribute_map = {
+        'frame': 'frame',
         'media_id': 'media_id',
         'modified': 'modified',
         'type': 'type',
@@ -54,12 +56,13 @@ class LineSpec(object):
         'y1': 'y1'
     }
 
-    def __init__(self, media_id=None, modified=False, type=None, version=None, x0=None, x1=None, y0=None, y1=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, frame=None, media_id=None, modified=False, type=None, version=None, x0=None, x1=None, y0=None, y1=None, local_vars_configuration=None):  # noqa: E501
         """LineSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._frame = None
         self._media_id = None
         self._modified = None
         self._type = None
@@ -70,6 +73,7 @@ class LineSpec(object):
         self._y1 = None
         self.discriminator = None
 
+        self.frame = frame
         self.media_id = media_id
         if modified is not None:
             self.modified = modified
@@ -80,6 +84,31 @@ class LineSpec(object):
         self.x1 = x1
         self.y0 = y0
         self.y1 = y1
+
+    @property
+    def frame(self):
+        """Gets the frame of this LineSpec.  # noqa: E501
+
+        Frame number of this localization if it is in a video.  # noqa: E501
+
+        :return: The frame of this LineSpec.  # noqa: E501
+        :rtype: int
+        """
+        return self._frame
+
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this LineSpec.
+
+        Frame number of this localization if it is in a video.  # noqa: E501
+
+        :param frame: The frame of this LineSpec.  # noqa: E501
+        :type: int
+        """
+        if self.local_vars_configuration.client_side_validation and frame is None:  # noqa: E501
+            raise ValueError("Invalid value for `frame`, must not be `None`")  # noqa: E501
+
+        self._frame = frame
 
     @property
     def media_id(self):

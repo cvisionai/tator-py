@@ -36,6 +36,7 @@ class TestBoxSpec(unittest.TestCase):
         # model = tator.models.box_spec.BoxSpec()  # noqa: E501
         if include_optional :
             return BoxSpec(
+                frame = 56, 
                 height = 0.0, 
                 media_id = 56, 
                 modified = True, 
@@ -47,6 +48,7 @@ class TestBoxSpec(unittest.TestCase):
             )
         else :
             return BoxSpec(
+                frame = 56,
                 height = 0.0,
                 media_id = 56,
                 type = 56,

@@ -36,6 +36,7 @@ class TestLineSpec(unittest.TestCase):
         # model = tator.models.line_spec.LineSpec()  # noqa: E501
         if include_optional :
             return LineSpec(
+                frame = 56, 
                 media_id = 56, 
                 modified = True, 
                 type = 56, 
@@ -47,6 +48,7 @@ class TestLineSpec(unittest.TestCase):
             )
         else :
             return LineSpec(
+                frame = 56,
                 media_id = 56,
                 type = 56,
                 x0 = 0.0,

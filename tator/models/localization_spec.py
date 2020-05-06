@@ -33,6 +33,7 @@ class LocalizationSpec(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'frame': 'int',
         'height': 'float',
         'media_id': 'int',
         'modified': 'bool',
@@ -44,10 +45,12 @@ class LocalizationSpec(object):
         'x0': 'float',
         'x1': 'float',
         'y0': 'float',
-        'y1': 'float'
+        'y1': 'float',
+        'many': 'list[OneOfmapmapmap]'
     }
 
     attribute_map = {
+        'frame': 'frame',
         'height': 'height',
         'media_id': 'media_id',
         'modified': 'modified',
@@ -59,15 +62,17 @@ class LocalizationSpec(object):
         'x0': 'x0',
         'x1': 'x1',
         'y0': 'y0',
-        'y1': 'y1'
+        'y1': 'y1',
+        'many': 'many'
     }
 
-    def __init__(self, height=None, media_id=None, modified=False, type=None, version=None, width=None, x=None, y=None, x0=None, x1=None, y0=None, y1=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, frame=None, height=None, media_id=None, modified=False, type=None, version=None, width=None, x=None, y=None, x0=None, x1=None, y0=None, y1=None, many=None, local_vars_configuration=None):  # noqa: E501
         """LocalizationSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._frame = None
         self._height = None
         self._media_id = None
         self._modified = None
@@ -80,8 +85,10 @@ class LocalizationSpec(object):
         self._x1 = None
         self._y0 = None
         self._y1 = None
+        self._many = None
         self.discriminator = None
 
+        self.frame = frame
         self.height = height
         self.media_id = media_id
         if modified is not None:
@@ -96,6 +103,32 @@ class LocalizationSpec(object):
         self.x1 = x1
         self.y0 = y0
         self.y1 = y1
+        self.many = many
+
+    @property
+    def frame(self):
+        """Gets the frame of this LocalizationSpec.  # noqa: E501
+
+        Frame number of this localization if it is in a video.  # noqa: E501
+
+        :return: The frame of this LocalizationSpec.  # noqa: E501
+        :rtype: int
+        """
+        return self._frame
+
+    @frame.setter
+    def frame(self, frame):
+        """Sets the frame of this LocalizationSpec.
+
+        Frame number of this localization if it is in a video.  # noqa: E501
+
+        :param frame: The frame of this LocalizationSpec.  # noqa: E501
+        :type: int
+        """
+        if self.local_vars_configuration.client_side_validation and frame is None:  # noqa: E501
+            raise ValueError("Invalid value for `frame`, must not be `None`")  # noqa: E501
+
+        self._frame = frame
 
     @property
     def height(self):
@@ -440,6 +473,31 @@ class LocalizationSpec(object):
             raise ValueError("Invalid value for `y1`, must be a value greater than or equal to `0.0`")  # noqa: E501
 
         self._y1 = y1
+
+    @property
+    def many(self):
+        """Gets the many of this LocalizationSpec.  # noqa: E501
+
+        List of localizations if this request is for bulkcreate.  # noqa: E501
+
+        :return: The many of this LocalizationSpec.  # noqa: E501
+        :rtype: list[OneOfmapmapmap]
+        """
+        return self._many
+
+    @many.setter
+    def many(self, many):
+        """Sets the many of this LocalizationSpec.
+
+        List of localizations if this request is for bulkcreate.  # noqa: E501
+
+        :param many: The many of this LocalizationSpec.  # noqa: E501
+        :type: list[OneOfmapmapmap]
+        """
+        if self.local_vars_configuration.client_side_validation and many is None:  # noqa: E501
+            raise ValueError("Invalid value for `many`, must not be `None`")  # noqa: E501
+
+        self._many = many
 
     def to_dict(self):
         """Returns the model properties as a dict"""

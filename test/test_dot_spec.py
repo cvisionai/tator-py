@@ -36,6 +36,7 @@ class TestDotSpec(unittest.TestCase):
         # model = tator.models.dot_spec.DotSpec()  # noqa: E501
         if include_optional :
             return DotSpec(
+                frame = 56, 
                 media_id = 56, 
                 modified = True, 
                 type = 56, 
@@ -45,6 +46,7 @@ class TestDotSpec(unittest.TestCase):
             )
         else :
             return DotSpec(
+                frame = 56,
                 media_id = 56,
                 type = 56,
                 x = 0.0,
