@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.localization_spec import LocalizationSpec  # noqa: E501
+from tator.models.localization_props import LocalizationProps  # noqa: E501
 from tator.rest import ApiException
 
-class TestLocalizationSpec(unittest.TestCase):
-    """LocalizationSpec unit test stubs"""
+class TestLocalizationProps(unittest.TestCase):
+    """LocalizationProps unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,36 +29,25 @@ class TestLocalizationSpec(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test LocalizationSpec
+        """Test LocalizationProps
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.localization_spec.LocalizationSpec()  # noqa: E501
+        # model = tator.models.localization_props.LocalizationProps()  # noqa: E501
         if include_optional :
-            return LocalizationSpec(
-                frame = 56, 
+            return LocalizationProps(
                 height = 0.0, 
-                media_id = 56, 
-                modified = True, 
-                type = 56, 
-                version = 56, 
                 width = 0.0, 
                 x = 0.0, 
                 y = 0.0, 
                 x0 = 0.0, 
                 x1 = 0.0, 
                 y0 = 0.0, 
-                y1 = 0.0, 
-                many = [
-                    null
-                    ]
+                y1 = 0.0
             )
         else :
-            return LocalizationSpec(
-                frame = 56,
+            return LocalizationProps(
                 height = 0.0,
-                media_id = 56,
-                type = 56,
                 width = 0.0,
                 x = 0.0,
                 y = 0.0,
@@ -66,13 +55,10 @@ class TestLocalizationSpec(unittest.TestCase):
                 x1 = 0.0,
                 y0 = 0.0,
                 y1 = 0.0,
-                many = [
-                    null
-                    ],
         )
 
-    def testLocalizationSpec(self):
-        """Test LocalizationSpec"""
+    def testLocalizationProps(self):
+        """Test LocalizationProps"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

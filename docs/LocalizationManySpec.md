@@ -1,4 +1,4 @@
-# ManySpec
+# LocalizationManySpec
 
 Many localizations.
 ## Properties

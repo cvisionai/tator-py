@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.many_spec import ManySpec  # noqa: E501
+from tator.models.dot_props import DotProps  # noqa: E501
 from tator.rest import ApiException
 
-class TestManySpec(unittest.TestCase):
-    """ManySpec unit test stubs"""
+class TestDotProps(unittest.TestCase):
+    """DotProps unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,33 +29,24 @@ class TestManySpec(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test ManySpec
+        """Test DotProps
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.many_spec.ManySpec()  # noqa: E501
+        # model = tator.models.dot_props.DotProps()  # noqa: E501
         if include_optional :
-            return ManySpec(
-                frame = 56, 
-                many = [
-                    None
-                    ], 
-                media_id = 56, 
-                modified = True, 
-                type = 56, 
-                version = 56
+            return DotProps(
+                x = 0.0, 
+                y = 0.0
             )
         else :
-            return ManySpec(
-                many = [
-                    None
-                    ],
-                media_id = 56,
-                type = 56,
+            return DotProps(
+                x = 0.0,
+                y = 0.0,
         )
 
-    def testManySpec(self):
-        """Test ManySpec"""
+    def testDotProps(self):
+        """Test DotProps"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 
