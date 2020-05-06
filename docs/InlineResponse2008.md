@@ -1,13 +1,12 @@
 # InlineResponse2008
 
+State type.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**association** | **int** | Unique integer identifying the state association. | [optional] 
-**id** | **int** | Unique integer identifying the state. | [optional] 
-**meta** | **int** | Unique integer identifying the entity type. | [optional] 
-**modified** | **bool** | Whether this localization was created in the web UI. | [optional] [default to False]
-**version** | **int** | Unique integer identifying the version. | [optional] 
+**columns** | [**list[OneOfobjectobjectobjectobjectobjectobjectobject]**](OneOfobjectobjectobjectobjectobjectobjectobject.md) | Attribute types associated with this state type. | [optional] 
+**type** | [**InlineResponse2008Type**](InlineResponse2008Type.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
 
