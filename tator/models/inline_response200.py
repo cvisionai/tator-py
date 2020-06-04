@@ -33,73 +33,47 @@ class InlineResponse200(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'columns': 'list[OneOfobjectobjectobjectobjectobjectobjectobject]',
-        'type': 'InlineResponse200Type'
+        'token': 'str'
     }
 
     attribute_map = {
-        'columns': 'columns',
-        'type': 'type'
+        'token': 'token'
     }
 
-    def __init__(self, columns=None, type=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, token=None, local_vars_configuration=None):  # noqa: E501
         """InlineResponse200 - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
-        self._columns = None
-        self._type = None
+        self._token = None
         self.discriminator = None
 
-        if columns is not None:
-            self.columns = columns
-        if type is not None:
-            self.type = type
+        if token is not None:
+            self.token = token
 
     @property
-    def columns(self):
-        """Gets the columns of this InlineResponse200.  # noqa: E501
+    def token(self):
+        """Gets the token of this InlineResponse200.  # noqa: E501
 
-        Attribute types associated with this localization type.  # noqa: E501
+        API token.  # noqa: E501
 
-        :return: The columns of this InlineResponse200.  # noqa: E501
-        :rtype: list[OneOfobjectobjectobjectobjectobjectobjectobject]
+        :return: The token of this InlineResponse200.  # noqa: E501
+        :rtype: str
         """
-        return self._columns
+        return self._token
 
-    @columns.setter
-    def columns(self, columns):
-        """Sets the columns of this InlineResponse200.
+    @token.setter
+    def token(self, token):
+        """Sets the token of this InlineResponse200.
 
-        Attribute types associated with this localization type.  # noqa: E501
+        API token.  # noqa: E501
 
-        :param columns: The columns of this InlineResponse200.  # noqa: E501
-        :type: list[OneOfobjectobjectobjectobjectobjectobjectobject]
-        """
-
-        self._columns = columns
-
-    @property
-    def type(self):
-        """Gets the type of this InlineResponse200.  # noqa: E501
-
-
-        :return: The type of this InlineResponse200.  # noqa: E501
-        :rtype: InlineResponse200Type
-        """
-        return self._type
-
-    @type.setter
-    def type(self, type):
-        """Sets the type of this InlineResponse200.
-
-
-        :param type: The type of this InlineResponse200.  # noqa: E501
-        :type: InlineResponse200Type
+        :param token: The token of this InlineResponse200.  # noqa: E501
+        :type: str
         """
 
-        self._type = type
+        self._token = token
 
     def to_dict(self):
         """Returns the model properties as a dict"""

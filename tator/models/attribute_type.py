@@ -33,110 +33,134 @@ class AttributeType(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'applies_to': 'int',
-        'default': 'list[float]',
-        'description': 'str',
-        'dtype': 'str',
-        'name': 'str',
-        'order': 'int',
-        'lower_bound': 'float',
-        'upper_bound': 'float',
         'autocomplete': 'object',
         'choices': 'list[str]',
+        'default': 'OneOfbooleannumberstringarray',
+        'description': 'str',
+        'dtype': 'str',
         'labels': 'list[str]',
+        'maximum': 'float',
+        'minimum': 'float',
+        'name': 'str',
+        'order': 'int',
+        'required': 'bool',
         'use_current': 'bool'
     }
 
     attribute_map = {
-        'applies_to': 'applies_to',
+        'autocomplete': 'autocomplete',
+        'choices': 'choices',
         'default': 'default',
         'description': 'description',
         'dtype': 'dtype',
+        'labels': 'labels',
+        'maximum': 'maximum',
+        'minimum': 'minimum',
         'name': 'name',
         'order': 'order',
-        'lower_bound': 'lower_bound',
-        'upper_bound': 'upper_bound',
-        'autocomplete': 'autocomplete',
-        'choices': 'choices',
-        'labels': 'labels',
+        'required': 'required',
         'use_current': 'use_current'
     }
 
-    def __init__(self, applies_to=None, default=None, description='', dtype=None, name=None, order=0, lower_bound=None, upper_bound=None, autocomplete=None, choices=None, labels=None, use_current=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, autocomplete=None, choices=None, default=None, description='', dtype=None, labels=None, maximum=None, minimum=None, name=None, order=0, required=False, use_current=None, local_vars_configuration=None):  # noqa: E501
         """AttributeType - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
-        self._applies_to = None
+        self._autocomplete = None
+        self._choices = None
         self._default = None
         self._description = None
         self._dtype = None
+        self._labels = None
+        self._maximum = None
+        self._minimum = None
         self._name = None
         self._order = None
-        self._lower_bound = None
-        self._upper_bound = None
-        self._autocomplete = None
-        self._choices = None
-        self._labels = None
+        self._required = None
         self._use_current = None
         self.discriminator = None
 
-        self.applies_to = applies_to
-        if default is not None:
-            self.default = default
-        if description is not None:
-            self.description = description
-        self.dtype = dtype
-        self.name = name
-        if order is not None:
-            self.order = order
-        if lower_bound is not None:
-            self.lower_bound = lower_bound
-        if upper_bound is not None:
-            self.upper_bound = upper_bound
         if autocomplete is not None:
             self.autocomplete = autocomplete
         if choices is not None:
             self.choices = choices
+        if default is not None:
+            self.default = default
+        if description is not None:
+            self.description = description
+        if dtype is not None:
+            self.dtype = dtype
         if labels is not None:
             self.labels = labels
+        if maximum is not None:
+            self.maximum = maximum
+        if minimum is not None:
+            self.minimum = minimum
+        if name is not None:
+            self.name = name
+        if order is not None:
+            self.order = order
+        if required is not None:
+            self.required = required
         if use_current is not None:
             self.use_current = use_current
 
     @property
-    def applies_to(self):
-        """Gets the applies_to of this AttributeType.  # noqa: E501
+    def autocomplete(self):
+        """Gets the autocomplete of this AttributeType.  # noqa: E501
 
-        Unique integer identifying the entity type that this attribute describes.  # noqa: E501
+        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
 
-        :return: The applies_to of this AttributeType.  # noqa: E501
-        :rtype: int
+        :return: The autocomplete of this AttributeType.  # noqa: E501
+        :rtype: object
         """
-        return self._applies_to
+        return self._autocomplete
 
-    @applies_to.setter
-    def applies_to(self, applies_to):
-        """Sets the applies_to of this AttributeType.
+    @autocomplete.setter
+    def autocomplete(self, autocomplete):
+        """Sets the autocomplete of this AttributeType.
 
-        Unique integer identifying the entity type that this attribute describes.  # noqa: E501
+        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
 
-        :param applies_to: The applies_to of this AttributeType.  # noqa: E501
-        :type: int
+        :param autocomplete: The autocomplete of this AttributeType.  # noqa: E501
+        :type: object
         """
-        if self.local_vars_configuration.client_side_validation and applies_to is None:  # noqa: E501
-            raise ValueError("Invalid value for `applies_to`, must not be `None`")  # noqa: E501
 
-        self._applies_to = applies_to
+        self._autocomplete = autocomplete
+
+    @property
+    def choices(self):
+        """Gets the choices of this AttributeType.  # noqa: E501
+
+        Array of possible values for enum dtype.  # noqa: E501
+
+        :return: The choices of this AttributeType.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._choices
+
+    @choices.setter
+    def choices(self, choices):
+        """Sets the choices of this AttributeType.
+
+        Array of possible values for enum dtype.  # noqa: E501
+
+        :param choices: The choices of this AttributeType.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._choices = choices
 
     @property
     def default(self):
         """Gets the default of this AttributeType.  # noqa: E501
 
-        Default value for the attribute. Order is lon, lat.  # noqa: E501
+        Default value for the attribute.  # noqa: E501
 
         :return: The default of this AttributeType.  # noqa: E501
-        :rtype: list[float]
+        :rtype: OneOfbooleannumberstringarray
         """
         return self._default
 
@@ -144,10 +168,10 @@ class AttributeType(object):
     def default(self, default):
         """Sets the default of this AttributeType.
 
-        Default value for the attribute. Order is lon, lat.  # noqa: E501
+        Default value for the attribute.  # noqa: E501
 
         :param default: The default of this AttributeType.  # noqa: E501
-        :type: list[float]
+        :type: OneOfbooleannumberstringarray
         """
 
         self._default = default
@@ -195,9 +219,7 @@ class AttributeType(object):
         :param dtype: The dtype of this AttributeType.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and dtype is None:  # noqa: E501
-            raise ValueError("Invalid value for `dtype`, must not be `None`")  # noqa: E501
-        allowed_values = ["geopos"]  # noqa: E501
+        allowed_values = ["bool", "int", "float", "enum", "string", "datetime", "geopos"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and dtype not in allowed_values:  # noqa: E501
             raise ValueError(
                 "Invalid value for `dtype` ({0}), must be one of {1}"  # noqa: E501
@@ -205,6 +227,75 @@ class AttributeType(object):
             )
 
         self._dtype = dtype
+
+    @property
+    def labels(self):
+        """Gets the labels of this AttributeType.  # noqa: E501
+
+        Array of labels for enum dtype.  # noqa: E501
+
+        :return: The labels of this AttributeType.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._labels
+
+    @labels.setter
+    def labels(self, labels):
+        """Sets the labels of this AttributeType.
+
+        Array of labels for enum dtype.  # noqa: E501
+
+        :param labels: The labels of this AttributeType.  # noqa: E501
+        :type: list[str]
+        """
+
+        self._labels = labels
+
+    @property
+    def maximum(self):
+        """Gets the maximum of this AttributeType.  # noqa: E501
+
+        Upper bound for int or float dtype.  # noqa: E501
+
+        :return: The maximum of this AttributeType.  # noqa: E501
+        :rtype: float
+        """
+        return self._maximum
+
+    @maximum.setter
+    def maximum(self, maximum):
+        """Sets the maximum of this AttributeType.
+
+        Upper bound for int or float dtype.  # noqa: E501
+
+        :param maximum: The maximum of this AttributeType.  # noqa: E501
+        :type: float
+        """
+
+        self._maximum = maximum
+
+    @property
+    def minimum(self):
+        """Gets the minimum of this AttributeType.  # noqa: E501
+
+        Lower bound for int or float dtype.  # noqa: E501
+
+        :return: The minimum of this AttributeType.  # noqa: E501
+        :rtype: float
+        """
+        return self._minimum
+
+    @minimum.setter
+    def minimum(self, minimum):
+        """Sets the minimum of this AttributeType.
+
+        Lower bound for int or float dtype.  # noqa: E501
+
+        :param minimum: The minimum of this AttributeType.  # noqa: E501
+        :type: float
+        """
+
+        self._minimum = minimum
 
     @property
     def name(self):
@@ -226,8 +317,6 @@ class AttributeType(object):
         :param name: The name of this AttributeType.  # noqa: E501
         :type: str
         """
-        if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
@@ -255,119 +344,27 @@ class AttributeType(object):
         self._order = order
 
     @property
-    def lower_bound(self):
-        """Gets the lower_bound of this AttributeType.  # noqa: E501
+    def required(self):
+        """Gets the required of this AttributeType.  # noqa: E501
 
-        Lower bound.  # noqa: E501
+        True if this attribute is required for POST requests.  # noqa: E501
 
-        :return: The lower_bound of this AttributeType.  # noqa: E501
-        :rtype: float
+        :return: The required of this AttributeType.  # noqa: E501
+        :rtype: bool
         """
-        return self._lower_bound
+        return self._required
 
-    @lower_bound.setter
-    def lower_bound(self, lower_bound):
-        """Sets the lower_bound of this AttributeType.
+    @required.setter
+    def required(self, required):
+        """Sets the required of this AttributeType.
 
-        Lower bound.  # noqa: E501
+        True if this attribute is required for POST requests.  # noqa: E501
 
-        :param lower_bound: The lower_bound of this AttributeType.  # noqa: E501
-        :type: float
-        """
-
-        self._lower_bound = lower_bound
-
-    @property
-    def upper_bound(self):
-        """Gets the upper_bound of this AttributeType.  # noqa: E501
-
-        Upper bound.  # noqa: E501
-
-        :return: The upper_bound of this AttributeType.  # noqa: E501
-        :rtype: float
-        """
-        return self._upper_bound
-
-    @upper_bound.setter
-    def upper_bound(self, upper_bound):
-        """Sets the upper_bound of this AttributeType.
-
-        Upper bound.  # noqa: E501
-
-        :param upper_bound: The upper_bound of this AttributeType.  # noqa: E501
-        :type: float
+        :param required: The required of this AttributeType.  # noqa: E501
+        :type: bool
         """
 
-        self._upper_bound = upper_bound
-
-    @property
-    def autocomplete(self):
-        """Gets the autocomplete of this AttributeType.  # noqa: E501
-
-        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
-
-        :return: The autocomplete of this AttributeType.  # noqa: E501
-        :rtype: object
-        """
-        return self._autocomplete
-
-    @autocomplete.setter
-    def autocomplete(self, autocomplete):
-        """Sets the autocomplete of this AttributeType.
-
-        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
-
-        :param autocomplete: The autocomplete of this AttributeType.  # noqa: E501
-        :type: object
-        """
-
-        self._autocomplete = autocomplete
-
-    @property
-    def choices(self):
-        """Gets the choices of this AttributeType.  # noqa: E501
-
-        Array of possible values.  # noqa: E501
-
-        :return: The choices of this AttributeType.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._choices
-
-    @choices.setter
-    def choices(self, choices):
-        """Sets the choices of this AttributeType.
-
-        Array of possible values.  # noqa: E501
-
-        :param choices: The choices of this AttributeType.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._choices = choices
-
-    @property
-    def labels(self):
-        """Gets the labels of this AttributeType.  # noqa: E501
-
-        Array of labels.  # noqa: E501
-
-        :return: The labels of this AttributeType.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._labels
-
-    @labels.setter
-    def labels(self, labels):
-        """Sets the labels of this AttributeType.
-
-        Array of labels.  # noqa: E501
-
-        :param labels: The labels of this AttributeType.  # noqa: E501
-        :type: list[str]
-        """
-
-        self._labels = labels
+        self._required = required
 
     @property
     def use_current(self):

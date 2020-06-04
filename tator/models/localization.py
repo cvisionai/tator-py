@@ -43,14 +43,12 @@ class Localization(object):
         'modified': 'bool',
         'project': 'int',
         'thumbnail_image': 'str',
+        'u': 'float',
+        'v': 'float',
         'version': 'int',
         'width': 'float',
         'x': 'float',
-        'y': 'float',
-        'x0': 'float',
-        'x1': 'float',
-        'y0': 'float',
-        'y1': 'float'
+        'y': 'float'
     }
 
     attribute_map = {
@@ -64,17 +62,15 @@ class Localization(object):
         'modified': 'modified',
         'project': 'project',
         'thumbnail_image': 'thumbnail_image',
+        'u': 'u',
+        'v': 'v',
         'version': 'version',
         'width': 'width',
         'x': 'x',
-        'y': 'y',
-        'x0': 'x0',
-        'x1': 'x1',
-        'y0': 'y0',
-        'y1': 'y1'
+        'y': 'y'
     }
 
-    def __init__(self, attributes=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, version=None, width=None, x=None, y=None, x0=None, x1=None, y0=None, y1=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=0, height=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """Localization - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -90,14 +86,12 @@ class Localization(object):
         self._modified = None
         self._project = None
         self._thumbnail_image = None
+        self._u = None
+        self._v = None
         self._version = None
         self._width = None
         self._x = None
         self._y = None
-        self._x0 = None
-        self._x1 = None
-        self._y0 = None
-        self._y1 = None
         self.discriminator = None
 
         if attributes is not None:
@@ -106,8 +100,7 @@ class Localization(object):
             self.email = email
         if frame is not None:
             self.frame = frame
-        if height is not None:
-            self.height = height
+        self.height = height
         if id is not None:
             self.id = id
         if media is not None:
@@ -120,22 +113,13 @@ class Localization(object):
             self.project = project
         if thumbnail_image is not None:
             self.thumbnail_image = thumbnail_image
+        self.u = u
+        self.v = v
         if version is not None:
             self.version = version
-        if width is not None:
-            self.width = width
-        if x is not None:
-            self.x = x
-        if y is not None:
-            self.y = y
-        if x0 is not None:
-            self.x0 = x0
-        if x1 is not None:
-            self.x1 = x1
-        if y0 is not None:
-            self.y0 = y0
-        if y1 is not None:
-            self.y1 = y1
+        self.width = width
+        self.x = x
+        self.y = y
 
     @property
     def attributes(self):
@@ -374,6 +358,64 @@ class Localization(object):
         self._thumbnail_image = thumbnail_image
 
     @property
+    def u(self):
+        """Gets the u of this Localization.  # noqa: E501
+
+        Horizontal vector component for `line` localization types.  # noqa: E501
+
+        :return: The u of this Localization.  # noqa: E501
+        :rtype: float
+        """
+        return self._u
+
+    @u.setter
+    def u(self, u):
+        """Sets the u of this Localization.
+
+        Horizontal vector component for `line` localization types.  # noqa: E501
+
+        :param u: The u of this Localization.  # noqa: E501
+        :type: float
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                u is not None and u > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `u`, must be a value less than or equal to `1.0`")  # noqa: E501
+        if (self.local_vars_configuration.client_side_validation and
+                u is not None and u < -1.0):  # noqa: E501
+            raise ValueError("Invalid value for `u`, must be a value greater than or equal to `-1.0`")  # noqa: E501
+
+        self._u = u
+
+    @property
+    def v(self):
+        """Gets the v of this Localization.  # noqa: E501
+
+        Vertical vector component for `line` localization types.  # noqa: E501
+
+        :return: The v of this Localization.  # noqa: E501
+        :rtype: float
+        """
+        return self._v
+
+    @v.setter
+    def v(self, v):
+        """Sets the v of this Localization.
+
+        Vertical vector component for `line` localization types.  # noqa: E501
+
+        :param v: The v of this Localization.  # noqa: E501
+        :type: float
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                v is not None and v > 1.0):  # noqa: E501
+            raise ValueError("Invalid value for `v`, must be a value less than or equal to `1.0`")  # noqa: E501
+        if (self.local_vars_configuration.client_side_validation and
+                v is not None and v < -1.0):  # noqa: E501
+            raise ValueError("Invalid value for `v`, must be a value greater than or equal to `-1.0`")  # noqa: E501
+
+        self._v = v
+
+    @property
     def version(self):
         """Gets the version of this Localization.  # noqa: E501
 
@@ -429,7 +471,7 @@ class Localization(object):
     def x(self):
         """Gets the x of this Localization.  # noqa: E501
 
-        Normalized horizontal position of dot.  # noqa: E501
+        Normalized horizontal position of left edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :return: The x of this Localization.  # noqa: E501
         :rtype: float
@@ -440,7 +482,7 @@ class Localization(object):
     def x(self, x):
         """Sets the x of this Localization.
 
-        Normalized horizontal position of dot.  # noqa: E501
+        Normalized horizontal position of left edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param x: The x of this Localization.  # noqa: E501
         :type: float
@@ -458,7 +500,7 @@ class Localization(object):
     def y(self):
         """Gets the y of this Localization.  # noqa: E501
 
-        Normalized vertical position of dot.  # noqa: E501
+        Normalized vertical position of top edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :return: The y of this Localization.  # noqa: E501
         :rtype: float
@@ -469,7 +511,7 @@ class Localization(object):
     def y(self, y):
         """Sets the y of this Localization.
 
-        Normalized vertical position of dot.  # noqa: E501
+        Normalized vertical position of top edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param y: The y of this Localization.  # noqa: E501
         :type: float
@@ -482,122 +524,6 @@ class Localization(object):
             raise ValueError("Invalid value for `y`, must be a value greater than or equal to `0.0`")  # noqa: E501
 
         self._y = y
-
-    @property
-    def x0(self):
-        """Gets the x0 of this Localization.  # noqa: E501
-
-        Normalized horizontal position of start of line for `line` localization types.  # noqa: E501
-
-        :return: The x0 of this Localization.  # noqa: E501
-        :rtype: float
-        """
-        return self._x0
-
-    @x0.setter
-    def x0(self, x0):
-        """Sets the x0 of this Localization.
-
-        Normalized horizontal position of start of line for `line` localization types.  # noqa: E501
-
-        :param x0: The x0 of this Localization.  # noqa: E501
-        :type: float
-        """
-        if (self.local_vars_configuration.client_side_validation and
-                x0 is not None and x0 > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `x0`, must be a value less than or equal to `1.0`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                x0 is not None and x0 < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `x0`, must be a value greater than or equal to `0.0`")  # noqa: E501
-
-        self._x0 = x0
-
-    @property
-    def x1(self):
-        """Gets the x1 of this Localization.  # noqa: E501
-
-        Normalized horizontal position of end of line for `line` localization types.  # noqa: E501
-
-        :return: The x1 of this Localization.  # noqa: E501
-        :rtype: float
-        """
-        return self._x1
-
-    @x1.setter
-    def x1(self, x1):
-        """Sets the x1 of this Localization.
-
-        Normalized horizontal position of end of line for `line` localization types.  # noqa: E501
-
-        :param x1: The x1 of this Localization.  # noqa: E501
-        :type: float
-        """
-        if (self.local_vars_configuration.client_side_validation and
-                x1 is not None and x1 > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `x1`, must be a value less than or equal to `1.0`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                x1 is not None and x1 < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `x1`, must be a value greater than or equal to `0.0`")  # noqa: E501
-
-        self._x1 = x1
-
-    @property
-    def y0(self):
-        """Gets the y0 of this Localization.  # noqa: E501
-
-        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
-
-        :return: The y0 of this Localization.  # noqa: E501
-        :rtype: float
-        """
-        return self._y0
-
-    @y0.setter
-    def y0(self, y0):
-        """Sets the y0 of this Localization.
-
-        Normalized vertical position of start of line for `line` localization types.  # noqa: E501
-
-        :param y0: The y0 of this Localization.  # noqa: E501
-        :type: float
-        """
-        if (self.local_vars_configuration.client_side_validation and
-                y0 is not None and y0 > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `y0`, must be a value less than or equal to `1.0`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                y0 is not None and y0 < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `y0`, must be a value greater than or equal to `0.0`")  # noqa: E501
-
-        self._y0 = y0
-
-    @property
-    def y1(self):
-        """Gets the y1 of this Localization.  # noqa: E501
-
-        Normalized vertical position of end of line for `line` localization types.  # noqa: E501
-
-        :return: The y1 of this Localization.  # noqa: E501
-        :rtype: float
-        """
-        return self._y1
-
-    @y1.setter
-    def y1(self, y1):
-        """Sets the y1 of this Localization.
-
-        Normalized vertical position of end of line for `line` localization types.  # noqa: E501
-
-        :param y1: The y1 of this Localization.  # noqa: E501
-        :type: float
-        """
-        if (self.local_vars_configuration.client_side_validation and
-                y1 is not None and y1 > 1.0):  # noqa: E501
-            raise ValueError("Invalid value for `y1`, must be a value less than or equal to `1.0`")  # noqa: E501
-        if (self.local_vars_configuration.client_side_validation and
-                y1 is not None and y1 < 0.0):  # noqa: E501
-            raise ValueError("Invalid value for `y1`, must be a value greater than or equal to `0.0`")  # noqa: E501
-
-        self._y1 = y1
 
     def to_dict(self):
         """Returns the model properties as a dict"""

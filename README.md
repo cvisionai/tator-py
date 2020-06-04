@@ -97,25 +97,25 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *TatorApi* | [**algorithm_launch**](docs/TatorApi.md#algorithm_launch) | **POST** /rest/AlgorithmLaunch/{project} | 
 *TatorApi* | [**create_analysis**](docs/TatorApi.md#create_analysis) | **POST** /rest/Analyses/{project} | 
-*TatorApi* | [**create_attribute_type**](docs/TatorApi.md#create_attribute_type) | **POST** /rest/AttributeTypes/{project} | 
+*TatorApi* | [**create_leaf**](docs/TatorApi.md#create_leaf) | **POST** /rest/Leaves/{project} | 
+*TatorApi* | [**create_leaf_type**](docs/TatorApi.md#create_leaf_type) | **POST** /rest/LeafTypes/{project} | 
 *TatorApi* | [**create_localization**](docs/TatorApi.md#create_localization) | **POST** /rest/Localizations/{project} | 
 *TatorApi* | [**create_localization_type**](docs/TatorApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
 *TatorApi* | [**create_media_type**](docs/TatorApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
 *TatorApi* | [**create_membership**](docs/TatorApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
 *TatorApi* | [**create_obtain_auth_token**](docs/TatorApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
+*TatorApi* | [**create_progress_summary_api**](docs/TatorApi.md#create_progress_summary_api) | **POST** /rest/ProgressSummary/{project} | 
 *TatorApi* | [**create_project**](docs/TatorApi.md#create_project) | **POST** /rest/Projects | 
 *TatorApi* | [**create_state**](docs/TatorApi.md#create_state) | **POST** /rest/States/{project} | 
 *TatorApi* | [**create_state_type**](docs/TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
 *TatorApi* | [**create_temporary_file**](docs/TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
-*TatorApi* | [**create_tree_leaf**](docs/TatorApi.md#create_tree_leaf) | **POST** /rest/TreeLeaves/{project} | 
-*TatorApi* | [**create_tree_leaf_type**](docs/TatorApi.md#create_tree_leaf_type) | **POST** /rest/TreeLeafTypes/{project} | 
 *TatorApi* | [**create_version**](docs/TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
-*TatorApi* | [**delete_attribute_type**](docs/TatorApi.md#delete_attribute_type) | **DELETE** /rest/AttributeType/{id} | 
-*TatorApi* | [**delete_frame_association**](docs/TatorApi.md#delete_frame_association) | **DELETE** /rest/FrameAssociation/{id} | 
 *TatorApi* | [**delete_job**](docs/TatorApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
 *TatorApi* | [**delete_job_group**](docs/TatorApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
+*TatorApi* | [**delete_leaf**](docs/TatorApi.md#delete_leaf) | **DELETE** /rest/Leaf/{id} | 
+*TatorApi* | [**delete_leaf_list**](docs/TatorApi.md#delete_leaf_list) | **DELETE** /rest/Leaves/{project} | 
+*TatorApi* | [**delete_leaf_type**](docs/TatorApi.md#delete_leaf_type) | **DELETE** /rest/LeafType/{id} | 
 *TatorApi* | [**delete_localization**](docs/TatorApi.md#delete_localization) | **DELETE** /rest/Localization/{id} | 
-*TatorApi* | [**delete_localization_association**](docs/TatorApi.md#delete_localization_association) | **DELETE** /rest/LocalizationAssociation/{id} | 
 *TatorApi* | [**delete_localization_list**](docs/TatorApi.md#delete_localization_list) | **DELETE** /rest/Localizations/{project} | 
 *TatorApi* | [**delete_localization_type**](docs/TatorApi.md#delete_localization_type) | **DELETE** /rest/LocalizationType/{id} | 
 *TatorApi* | [**delete_media**](docs/TatorApi.md#delete_media) | **DELETE** /rest/Media/{id} | 
@@ -128,20 +128,16 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**delete_state_type**](docs/TatorApi.md#delete_state_type) | **DELETE** /rest/StateType/{id} | 
 *TatorApi* | [**delete_temporary_file**](docs/TatorApi.md#delete_temporary_file) | **DELETE** /rest/TemporaryFile/{id} | 
 *TatorApi* | [**delete_temporary_file_list**](docs/TatorApi.md#delete_temporary_file_list) | **DELETE** /rest/TemporaryFiles/{project} | 
-*TatorApi* | [**delete_tree_leaf**](docs/TatorApi.md#delete_tree_leaf) | **DELETE** /rest/TreeLeaf/{id} | 
-*TatorApi* | [**delete_tree_leaf_list**](docs/TatorApi.md#delete_tree_leaf_list) | **DELETE** /rest/TreeLeaves/{project} | 
-*TatorApi* | [**delete_tree_leaf_type**](docs/TatorApi.md#delete_tree_leaf_type) | **DELETE** /rest/TreeLeafType/{id} | 
 *TatorApi* | [**delete_version**](docs/TatorApi.md#delete_version) | **DELETE** /rest/Version/{id} | 
 *TatorApi* | [**get_algorithm_list**](docs/TatorApi.md#get_algorithm_list) | **GET** /rest/Algorithms/{project} | 
 *TatorApi* | [**get_analysis_list**](docs/TatorApi.md#get_analysis_list) | **GET** /rest/Analyses/{project} | 
-*TatorApi* | [**get_attribute_type**](docs/TatorApi.md#get_attribute_type) | **GET** /rest/AttributeType/{id} | 
-*TatorApi* | [**get_attribute_type_list**](docs/TatorApi.md#get_attribute_type_list) | **GET** /rest/AttributeTypes/{project} | 
 *TatorApi* | [**get_clip**](docs/TatorApi.md#get_clip) | **GET** /rest/GetClip/{id} | 
-*TatorApi* | [**get_entity_type_schema**](docs/TatorApi.md#get_entity_type_schema) | **GET** /rest/EntityTypeSchema/{id} | 
 *TatorApi* | [**get_frame**](docs/TatorApi.md#get_frame) | **GET** /rest/GetFrame/{id} | 
-*TatorApi* | [**get_frame_association**](docs/TatorApi.md#get_frame_association) | **GET** /rest/FrameAssociation/{id} | 
+*TatorApi* | [**get_leaf**](docs/TatorApi.md#get_leaf) | **GET** /rest/Leaf/{id} | 
+*TatorApi* | [**get_leaf_list**](docs/TatorApi.md#get_leaf_list) | **GET** /rest/Leaves/{project} | 
+*TatorApi* | [**get_leaf_type**](docs/TatorApi.md#get_leaf_type) | **GET** /rest/LeafType/{id} | 
+*TatorApi* | [**get_leaf_type_list**](docs/TatorApi.md#get_leaf_type_list) | **GET** /rest/LeafTypes/{project} | 
 *TatorApi* | [**get_localization**](docs/TatorApi.md#get_localization) | **GET** /rest/Localization/{id} | 
-*TatorApi* | [**get_localization_association**](docs/TatorApi.md#get_localization_association) | **GET** /rest/LocalizationAssociation/{id} | 
 *TatorApi* | [**get_localization_list**](docs/TatorApi.md#get_localization_list) | **GET** /rest/Localizations/{project} | 
 *TatorApi* | [**get_localization_type**](docs/TatorApi.md#get_localization_type) | **GET** /rest/LocalizationType/{id} | 
 *TatorApi* | [**get_localization_type_list**](docs/TatorApi.md#get_localization_type_list) | **GET** /rest/LocalizationTypes/{project} | 
@@ -163,12 +159,9 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**get_state_type_list**](docs/TatorApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
 *TatorApi* | [**get_temporary_file**](docs/TatorApi.md#get_temporary_file) | **GET** /rest/TemporaryFile/{id} | 
 *TatorApi* | [**get_temporary_file_list**](docs/TatorApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
-*TatorApi* | [**get_tree_leaf**](docs/TatorApi.md#get_tree_leaf) | **GET** /rest/TreeLeaf/{id} | 
-*TatorApi* | [**get_tree_leaf_list**](docs/TatorApi.md#get_tree_leaf_list) | **GET** /rest/TreeLeaves/{project} | 
-*TatorApi* | [**get_tree_leaf_type**](docs/TatorApi.md#get_tree_leaf_type) | **GET** /rest/TreeLeafType/{id} | 
-*TatorApi* | [**get_tree_leaf_type_list**](docs/TatorApi.md#get_tree_leaf_type_list) | **GET** /rest/TreeLeafTypes/{project} | 
 *TatorApi* | [**get_user**](docs/TatorApi.md#get_user) | **GET** /rest/User/{id} | 
 *TatorApi* | [**get_version**](docs/TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
+*TatorApi* | [**leaf_suggestion**](docs/TatorApi.md#leaf_suggestion) | **GET** /rest/Leaves/Suggestion/{ancestor}/{project} | 
 *TatorApi* | [**notify**](docs/TatorApi.md#notify) | **POST** /rest/Notify | 
 *TatorApi* | [**partial_update_save_video_api**](docs/TatorApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
 *TatorApi* | [**progress**](docs/TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
@@ -177,11 +170,10 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**save_image**](docs/TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
 *TatorApi* | [**save_video**](docs/TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
 *TatorApi* | [**transcode**](docs/TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
-*TatorApi* | [**tree_leaf_suggestion**](docs/TatorApi.md#tree_leaf_suggestion) | **GET** /rest/TreeLeaves/Suggestion/{ancestor}/{project} | 
-*TatorApi* | [**update_attribute_type**](docs/TatorApi.md#update_attribute_type) | **PATCH** /rest/AttributeType/{id} | 
-*TatorApi* | [**update_frame_association**](docs/TatorApi.md#update_frame_association) | **PATCH** /rest/FrameAssociation/{id} | 
+*TatorApi* | [**update_leaf**](docs/TatorApi.md#update_leaf) | **PATCH** /rest/Leaf/{id} | 
+*TatorApi* | [**update_leaf_list**](docs/TatorApi.md#update_leaf_list) | **PATCH** /rest/Leaves/{project} | 
+*TatorApi* | [**update_leaf_type**](docs/TatorApi.md#update_leaf_type) | **PATCH** /rest/LeafType/{id} | 
 *TatorApi* | [**update_localization**](docs/TatorApi.md#update_localization) | **PATCH** /rest/Localization/{id} | 
-*TatorApi* | [**update_localization_association**](docs/TatorApi.md#update_localization_association) | **PATCH** /rest/LocalizationAssociation/{id} | 
 *TatorApi* | [**update_localization_list**](docs/TatorApi.md#update_localization_list) | **PATCH** /rest/Localizations/{project} | 
 *TatorApi* | [**update_localization_type**](docs/TatorApi.md#update_localization_type) | **PATCH** /rest/LocalizationType/{id} | 
 *TatorApi* | [**update_media**](docs/TatorApi.md#update_media) | **PATCH** /rest/Media/{id} | 
@@ -192,107 +184,70 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**update_state**](docs/TatorApi.md#update_state) | **PATCH** /rest/State/{id} | 
 *TatorApi* | [**update_state_list**](docs/TatorApi.md#update_state_list) | **PATCH** /rest/States/{project} | 
 *TatorApi* | [**update_state_type**](docs/TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
-*TatorApi* | [**update_tree_leaf**](docs/TatorApi.md#update_tree_leaf) | **PATCH** /rest/TreeLeaf/{id} | 
-*TatorApi* | [**update_tree_leaf_list**](docs/TatorApi.md#update_tree_leaf_list) | **PATCH** /rest/TreeLeaves/{project} | 
-*TatorApi* | [**update_tree_leaf_type**](docs/TatorApi.md#update_tree_leaf_type) | **PATCH** /rest/TreeLeafType/{id} | 
 *TatorApi* | [**update_user**](docs/TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
 *TatorApi* | [**update_version**](docs/TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
-*TatorApi* | [**who_am_i**](docs/TatorApi.md#who_am_i) | **GET** /rest/User/GetCurrent | 
+*TatorApi* | [**whoami**](docs/TatorApi.md#whoami) | **GET** /rest/User/GetCurrent | 
 
 
 ## Documentation For Models
 
- - [AlgorithmLaunchResponse](docs/AlgorithmLaunchResponse.md)
+ - [Algorithm](docs/Algorithm.md)
+ - [AlgorithmLaunch](docs/AlgorithmLaunch.md)
  - [AlgorithmLaunchSpec](docs/AlgorithmLaunchSpec.md)
+ - [Analysis](docs/Analysis.md)
  - [AnalysisSpec](docs/AnalysisSpec.md)
  - [AttributeBulkUpdate](docs/AttributeBulkUpdate.md)
  - [AttributeType](docs/AttributeType.md)
- - [AttributeTypeOneOf](docs/AttributeTypeOneOf.md)
- - [AttributeTypeOneOf1](docs/AttributeTypeOneOf1.md)
- - [AttributeTypeOneOf2](docs/AttributeTypeOneOf2.md)
- - [AttributeTypeOneOf3](docs/AttributeTypeOneOf3.md)
- - [AttributeTypeOneOf4](docs/AttributeTypeOneOf4.md)
- - [AttributeTypeOneOf5](docs/AttributeTypeOneOf5.md)
- - [AttributeTypeOneOf6](docs/AttributeTypeOneOf6.md)
- - [AttributeTypeSpec](docs/AttributeTypeSpec.md)
  - [AttributeTypeUpdate](docs/AttributeTypeUpdate.md)
- - [Box](docs/Box.md)
- - [BoxElement](docs/BoxElement.md)
- - [BoxProps](docs/BoxProps.md)
- - [BoxSpec](docs/BoxSpec.md)
- - [BoxUpdate](docs/BoxUpdate.md)
  - [CreateResponse](docs/CreateResponse.md)
- - [Dot](docs/Dot.md)
- - [DotElement](docs/DotElement.md)
- - [DotProps](docs/DotProps.md)
- - [DotSpec](docs/DotSpec.md)
- - [DotUpdate](docs/DotUpdate.md)
- - [EntityTypeSchema](docs/EntityTypeSchema.md)
+ - [ImageSpec](docs/ImageSpec.md)
  - [InlineObject](docs/InlineObject.md)
- - [InlineObject1](docs/InlineObject1.md)
- - [InlineObject10](docs/InlineObject10.md)
- - [InlineObject11](docs/InlineObject11.md)
- - [InlineObject12](docs/InlineObject12.md)
- - [InlineObject13](docs/InlineObject13.md)
- - [InlineObject14](docs/InlineObject14.md)
- - [InlineObject15](docs/InlineObject15.md)
- - [InlineObject16](docs/InlineObject16.md)
- - [InlineObject17](docs/InlineObject17.md)
- - [InlineObject18](docs/InlineObject18.md)
- - [InlineObject19](docs/InlineObject19.md)
- - [InlineObject2](docs/InlineObject2.md)
- - [InlineObject20](docs/InlineObject20.md)
- - [InlineObject21](docs/InlineObject21.md)
- - [InlineObject22](docs/InlineObject22.md)
- - [InlineObject23](docs/InlineObject23.md)
- - [InlineObject24](docs/InlineObject24.md)
- - [InlineObject25](docs/InlineObject25.md)
- - [InlineObject3](docs/InlineObject3.md)
- - [InlineObject4](docs/InlineObject4.md)
- - [InlineObject5](docs/InlineObject5.md)
- - [InlineObject6](docs/InlineObject6.md)
- - [InlineObject7](docs/InlineObject7.md)
- - [InlineObject8](docs/InlineObject8.md)
- - [InlineObject9](docs/InlineObject9.md)
  - [InlineResponse200](docs/InlineResponse200.md)
- - [InlineResponse2001](docs/InlineResponse2001.md)
- - [InlineResponse20010](docs/InlineResponse20010.md)
- - [InlineResponse20011](docs/InlineResponse20011.md)
- - [InlineResponse20012](docs/InlineResponse20012.md)
- - [InlineResponse20012Type](docs/InlineResponse20012Type.md)
- - [InlineResponse20013](docs/InlineResponse20013.md)
- - [InlineResponse20014](docs/InlineResponse20014.md)
- - [InlineResponse20015](docs/InlineResponse20015.md)
- - [InlineResponse2002](docs/InlineResponse2002.md)
- - [InlineResponse2003](docs/InlineResponse2003.md)
- - [InlineResponse2004](docs/InlineResponse2004.md)
- - [InlineResponse2005](docs/InlineResponse2005.md)
- - [InlineResponse2005Type](docs/InlineResponse2005Type.md)
- - [InlineResponse2006](docs/InlineResponse2006.md)
- - [InlineResponse2007](docs/InlineResponse2007.md)
- - [InlineResponse2008](docs/InlineResponse2008.md)
- - [InlineResponse2008Type](docs/InlineResponse2008Type.md)
- - [InlineResponse2009](docs/InlineResponse2009.md)
- - [InlineResponse200Type](docs/InlineResponse200Type.md)
- - [InlineResponse201](docs/InlineResponse201.md)
- - [InlineResponse2011](docs/InlineResponse2011.md)
- - [InlineResponse2012](docs/InlineResponse2012.md)
- - [InlineResponse2013](docs/InlineResponse2013.md)
  - [InlineResponse400](docs/InlineResponse400.md)
  - [InlineResponse404](docs/InlineResponse404.md)
- - [Line](docs/Line.md)
- - [LineElement](docs/LineElement.md)
- - [LineProps](docs/LineProps.md)
- - [LineSpec](docs/LineSpec.md)
- - [LineUpdate](docs/LineUpdate.md)
+ - [Leaf](docs/Leaf.md)
+ - [LeafSpec](docs/LeafSpec.md)
+ - [LeafSuggestion](docs/LeafSuggestion.md)
+ - [LeafType](docs/LeafType.md)
+ - [LeafTypeSpec](docs/LeafTypeSpec.md)
+ - [LeafTypeUpdate](docs/LeafTypeUpdate.md)
+ - [LeafUpdate](docs/LeafUpdate.md)
  - [Localization](docs/Localization.md)
- - [LocalizationAssociationUpdate](docs/LocalizationAssociationUpdate.md)
- - [LocalizationElement](docs/LocalizationElement.md)
- - [LocalizationManySpec](docs/LocalizationManySpec.md)
- - [LocalizationProps](docs/LocalizationProps.md)
  - [LocalizationSpec](docs/LocalizationSpec.md)
+ - [LocalizationType](docs/LocalizationType.md)
+ - [LocalizationTypeSpec](docs/LocalizationTypeSpec.md)
+ - [LocalizationTypeUpdate](docs/LocalizationTypeUpdate.md)
  - [LocalizationUpdate](docs/LocalizationUpdate.md)
+ - [Media](docs/Media.md)
+ - [MediaNext](docs/MediaNext.md)
+ - [MediaPrev](docs/MediaPrev.md)
+ - [MediaType](docs/MediaType.md)
+ - [MediaTypeSpec](docs/MediaTypeSpec.md)
+ - [MediaTypeUpdate](docs/MediaTypeUpdate.md)
+ - [MediaUpdate](docs/MediaUpdate.md)
+ - [Membership](docs/Membership.md)
+ - [MembershipSpec](docs/MembershipSpec.md)
+ - [MembershipUpdate](docs/MembershipUpdate.md)
  - [MessageResponse](docs/MessageResponse.md)
+ - [NotifySpec](docs/NotifySpec.md)
+ - [ProgressSpec](docs/ProgressSpec.md)
+ - [ProgressSummarySpec](docs/ProgressSummarySpec.md)
+ - [Project](docs/Project.md)
+ - [ProjectSpec](docs/ProjectSpec.md)
+ - [State](docs/State.md)
+ - [StateSpec](docs/StateSpec.md)
+ - [StateType](docs/StateType.md)
+ - [StateTypeSpec](docs/StateTypeSpec.md)
+ - [StateTypeUpdate](docs/StateTypeUpdate.md)
+ - [StateUpdate](docs/StateUpdate.md)
+ - [TemporaryFile](docs/TemporaryFile.md)
+ - [TemporaryFileSpec](docs/TemporaryFileSpec.md)
+ - [Transcode](docs/Transcode.md)
+ - [TranscodeSpec](docs/TranscodeSpec.md)
+ - [User](docs/User.md)
+ - [UserUpdate](docs/UserUpdate.md)
+ - [Version](docs/Version.md)
+ - [VersionSpec](docs/VersionSpec.md)
  - [VideoSpec](docs/VideoSpec.md)
  - [VideoUpdate](docs/VideoUpdate.md)
 

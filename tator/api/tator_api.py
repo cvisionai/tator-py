@@ -55,7 +55,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: AlgorithmLaunchResponse
+        :return: AlgorithmLaunch
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -83,7 +83,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(AlgorithmLaunchResponse, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(AlgorithmLaunch, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -151,7 +151,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='AlgorithmLaunchResponse',  # noqa: E501
+            response_type='AlgorithmLaunch',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -162,7 +162,7 @@ class TatorApi(object):
     def create_analysis(self, project, **kwargs):  # noqa: E501
         """create_analysis  # noqa: E501
 
-        Create analysis for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_analysis(project, async_req=True)
@@ -188,7 +188,7 @@ class TatorApi(object):
     def create_analysis_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_analysis  # noqa: E501
 
-        Create analysis for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_analysis_with_http_info(project, async_req=True)
@@ -282,18 +282,18 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_attribute_type(self, project, **kwargs):  # noqa: E501
-        """create_attribute_type  # noqa: E501
+    def create_leaf(self, project, **kwargs):  # noqa: E501
+        """create_leaf  # noqa: E501
 
-        Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_attribute_type(project, async_req=True)
+        >>> thread = api.create_leaf(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AttributeTypeSpec attribute_type_spec:
+        :param list[Leaf] leaf:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -306,20 +306,20 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_attribute_type_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_leaf_with_http_info(project, **kwargs)  # noqa: E501
 
-    def create_attribute_type_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_attribute_type  # noqa: E501
+    def create_leaf_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_leaf  # noqa: E501
 
-        Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_attribute_type_with_http_info(project, async_req=True)
+        >>> thread = api.create_leaf_with_http_info(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AttributeTypeSpec attribute_type_spec:
+        :param list[Leaf] leaf:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -338,7 +338,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'attribute_type_spec'
+            'leaf'
         ]
         all_params.extend(
             [
@@ -353,14 +353,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_attribute_type" % key
+                    " to method create_leaf" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'project' is set
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_attribute_type`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_leaf`")  # noqa: E501
 
         collection_formats = {}
 
@@ -376,8 +376,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'attribute_type_spec' in local_var_params:
-            body_params = local_var_params['attribute_type_spec']
+        if 'leaf' in local_var_params:
+            body_params = local_var_params['leaf']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -390,7 +390,130 @@ class TatorApi(object):
         auth_settings = ['TokenAuth']  # noqa: E501
 
         return self.api_client.call_api(
-            '/rest/AttributeTypes/{project}', 'POST',
+            '/rest/Leaves/{project}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='CreateResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def create_leaf_type(self, project, **kwargs):  # noqa: E501
+        """create_leaf_type  # noqa: E501
+
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.create_leaf_type(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param LeafTypeSpec leaf_type_spec:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: CreateResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.create_leaf_type_with_http_info(project, **kwargs)  # noqa: E501
+
+    def create_leaf_type_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_leaf_type  # noqa: E501
+
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.create_leaf_type_with_http_info(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param LeafTypeSpec leaf_type_spec:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'leaf_type_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_leaf_type" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_leaf_type`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'leaf_type_spec' in local_var_params:
+            body_params = local_var_params['leaf_type_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/LeafTypes/{project}', 'POST',
             path_params,
             query_params,
             header_params,
@@ -408,7 +531,7 @@ class TatorApi(object):
     def create_localization(self, project, **kwargs):  # noqa: E501
         """create_localization  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_localization(project, async_req=True)
@@ -416,7 +539,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LocalizationSpec localization_spec:
+        :param list[LocalizationSpec] localization_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -434,7 +557,7 @@ class TatorApi(object):
     def create_localization_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_localization  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_localization_with_http_info(project, async_req=True)
@@ -442,7 +565,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LocalizationSpec localization_spec:
+        :param list[LocalizationSpec] localization_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -531,7 +654,7 @@ class TatorApi(object):
     def create_localization_type(self, project, **kwargs):  # noqa: E501
         """create_localization_type  # noqa: E501
 
-        Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_localization_type(project, async_req=True)
@@ -539,7 +662,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject2 inline_object2:
+        :param LocalizationTypeSpec localization_type_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -547,7 +670,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse201
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -557,7 +680,7 @@ class TatorApi(object):
     def create_localization_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_localization_type  # noqa: E501
 
-        Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_localization_type_with_http_info(project, async_req=True)
@@ -565,7 +688,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject2 inline_object2:
+        :param LocalizationTypeSpec localization_type_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -575,7 +698,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse201, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -584,7 +707,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object2'
+            'localization_type_spec'
         ]
         all_params.extend(
             [
@@ -622,8 +745,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object2' in local_var_params:
-            body_params = local_var_params['inline_object2']
+        if 'localization_type_spec' in local_var_params:
+            body_params = local_var_params['localization_type_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -643,7 +766,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse201',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -654,7 +777,7 @@ class TatorApi(object):
     def create_media_type(self, project, **kwargs):  # noqa: E501
         """create_media_type  # noqa: E501
 
-        Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_media_type(project, async_req=True)
@@ -662,7 +785,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject5 inline_object5:
+        :param MediaTypeSpec media_type_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -670,7 +793,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse201
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -680,7 +803,7 @@ class TatorApi(object):
     def create_media_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_media_type  # noqa: E501
 
-        Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_media_type_with_http_info(project, async_req=True)
@@ -688,7 +811,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject5 inline_object5:
+        :param MediaTypeSpec media_type_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -698,7 +821,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse201, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -707,7 +830,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object5'
+            'media_type_spec'
         ]
         all_params.extend(
             [
@@ -745,8 +868,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object5' in local_var_params:
-            body_params = local_var_params['inline_object5']
+        if 'media_type_spec' in local_var_params:
+            body_params = local_var_params['media_type_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -766,7 +889,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse201',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -785,7 +908,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject8 inline_object8:
+        :param MembershipSpec membership_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -793,7 +916,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2011
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -811,7 +934,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject8 inline_object8:
+        :param MembershipSpec membership_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -821,7 +944,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2011, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -830,7 +953,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object8'
+            'membership_spec'
         ]
         all_params.extend(
             [
@@ -868,8 +991,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object8' in local_var_params:
-            body_params = local_var_params['inline_object8']
+        if 'membership_spec' in local_var_params:
+            body_params = local_var_params['membership_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -889,7 +1012,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2011',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -906,7 +1029,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject18 inline_object18:
+        :param InlineObject inline_object:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -914,7 +1037,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse20010
+        :return: InlineResponse200
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -930,7 +1053,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject18 inline_object18:
+        :param InlineObject inline_object:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -940,7 +1063,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse20010, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(InlineResponse200, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -948,7 +1071,7 @@ class TatorApi(object):
         local_var_params = locals()
 
         all_params = [
-            'inline_object18'
+            'inline_object'
         ]
         all_params.extend(
             [
@@ -980,8 +1103,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object18' in local_var_params:
-            body_params = local_var_params['inline_object18']
+        if 'inline_object' in local_var_params:
+            body_params = local_var_params['inline_object']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -1001,7 +1124,130 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20010',  # noqa: E501
+            response_type='InlineResponse200',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def create_progress_summary_api(self, project, **kwargs):  # noqa: E501
+        """create_progress_summary_api  # noqa: E501
+
+        Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.create_progress_summary_api(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param ProgressSummarySpec progress_summary_spec:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: MessageResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.create_progress_summary_api_with_http_info(project, **kwargs)  # noqa: E501
+
+    def create_progress_summary_api_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_progress_summary_api  # noqa: E501
+
+        Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.create_progress_summary_api_with_http_info(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param ProgressSummarySpec progress_summary_spec:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'progress_summary_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_progress_summary_api" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_progress_summary_api`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'progress_summary_spec' in local_var_params:
+            body_params = local_var_params['progress_summary_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/ProgressSummary/{project}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='MessageResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -1019,7 +1265,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject11 inline_object11:
+        :param ProjectSpec project_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1027,7 +1273,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2012
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1044,7 +1290,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject11 inline_object11:
+        :param ProjectSpec project_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1054,7 +1300,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2012, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1062,7 +1308,7 @@ class TatorApi(object):
         local_var_params = locals()
 
         all_params = [
-            'inline_object11'
+            'project_spec'
         ]
         all_params.extend(
             [
@@ -1094,8 +1340,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object11' in local_var_params:
-            body_params = local_var_params['inline_object11']
+        if 'project_spec' in local_var_params:
+            body_params = local_var_params['project_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -1115,7 +1361,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2012',  # noqa: E501
+            response_type='CreateResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -1126,7 +1372,7 @@ class TatorApi(object):
     def create_state(self, project, **kwargs):  # noqa: E501
         """create_state  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_state(project, async_req=True)
@@ -1134,7 +1380,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param dict(str, object) request_body:
+        :param list[StateSpec] state_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1152,7 +1398,7 @@ class TatorApi(object):
     def create_state_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_state  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_state_with_http_info(project, async_req=True)
@@ -1160,7 +1406,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param dict(str, object) request_body:
+        :param list[StateSpec] state_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1179,7 +1425,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'request_body'
+            'state_spec'
         ]
         all_params.extend(
             [
@@ -1217,8 +1463,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'request_body' in local_var_params:
-            body_params = local_var_params['request_body']
+        if 'state_spec' in local_var_params:
+            body_params = local_var_params['state_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -1249,7 +1495,7 @@ class TatorApi(object):
     def create_state_type(self, project, **kwargs):  # noqa: E501
         """create_state_type  # noqa: E501
 
-        Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_state_type(project, async_req=True)
@@ -1257,7 +1503,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject15 inline_object15:
+        :param StateTypeSpec state_type_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1275,7 +1521,7 @@ class TatorApi(object):
     def create_state_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_state_type  # noqa: E501
 
-        Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.create_state_type_with_http_info(project, async_req=True)
@@ -1283,7 +1529,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject15 inline_object15:
+        :param StateTypeSpec state_type_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1302,7 +1548,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object15'
+            'state_type_spec'
         ]
         all_params.extend(
             [
@@ -1340,8 +1586,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object15' in local_var_params:
-            body_params = local_var_params['inline_object15']
+        if 'state_type_spec' in local_var_params:
+            body_params = local_var_params['state_type_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -1380,7 +1626,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject17 inline_object17:
+        :param TemporaryFileSpec temporary_file_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1388,7 +1634,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: object
+        :return: CreateResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1406,7 +1652,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject17 inline_object17:
+        :param TemporaryFileSpec temporary_file_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1416,7 +1662,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1425,7 +1671,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object17'
+            'temporary_file_spec'
         ]
         all_params.extend(
             [
@@ -1463,11 +1709,11 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object17' in local_var_params:
-            body_params = local_var_params['inline_object17']
+        if 'temporary_file_spec' in local_var_params:
+            body_params = local_var_params['temporary_file_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
@@ -1478,252 +1724,6 @@ class TatorApi(object):
 
         return self.api_client.call_api(
             '/rest/TemporaryFiles/{project}', 'POST',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='object',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def create_tree_leaf(self, project, **kwargs):  # noqa: E501
-        """create_tree_leaf  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_tree_leaf(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param dict(str, object) request_body:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: CreateResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.create_tree_leaf_with_http_info(project, **kwargs)  # noqa: E501
-
-    def create_tree_leaf_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_tree_leaf  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_tree_leaf_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param dict(str, object) request_body:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'request_body'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_tree_leaf" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_tree_leaf`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'request_body' in local_var_params:
-            body_params = local_var_params['request_body']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaves/{project}', 'POST',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='CreateResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def create_tree_leaf_type(self, project, **kwargs):  # noqa: E501
-        """create_tree_leaf_type  # noqa: E501
-
-        Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_tree_leaf_type(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param InlineObject22 inline_object22:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: CreateResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.create_tree_leaf_type_with_http_info(project, **kwargs)  # noqa: E501
-
-    def create_tree_leaf_type_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_tree_leaf_type  # noqa: E501
-
-        Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_tree_leaf_type_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param InlineObject22 inline_object22:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'inline_object22'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_tree_leaf_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_tree_leaf_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'inline_object22' in local_var_params:
-            body_params = local_var_params['inline_object22']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeafTypes/{project}', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1749,7 +1749,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject25 inline_object25:
+        :param VersionSpec version_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1775,7 +1775,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject25 inline_object25:
+        :param VersionSpec version_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1794,7 +1794,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object25'
+            'version_spec'
         ]
         all_params.extend(
             [
@@ -1832,8 +1832,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object25' in local_var_params:
-            body_params = local_var_params['inline_object25']
+        if 'version_spec' in local_var_params:
+            body_params = local_var_params['version_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -1854,234 +1854,6 @@ class TatorApi(object):
             post_params=form_params,
             files=local_var_files,
             response_type='CreateResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def delete_attribute_type(self, id, **kwargs):  # noqa: E501
-        """delete_attribute_type  # noqa: E501
-
-        Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_attribute_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_attribute_type_with_http_info(id, **kwargs)  # noqa: E501
-
-    def delete_attribute_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """delete_attribute_type  # noqa: E501
-
-        Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_attribute_type_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_attribute_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `delete_attribute_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/AttributeType/{id}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def delete_frame_association(self, id, **kwargs):  # noqa: E501
-        """delete_frame_association  # noqa: E501
-
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_frame_association(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_frame_association_with_http_info(id, **kwargs)  # noqa: E501
-
-    def delete_frame_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """delete_frame_association  # noqa: E501
-
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_frame_association_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_frame_association" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `delete_frame_association`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/FrameAssociation/{id}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -2317,10 +2089,422 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
+    def delete_leaf(self, id, **kwargs):  # noqa: E501
+        """delete_leaf  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a leaf. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.delete_leaf_with_http_info(id, **kwargs)  # noqa: E501
+
+    def delete_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
+        """delete_leaf  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a leaf. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_leaf" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `delete_leaf`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Leaf/{id}', 'DELETE',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def delete_leaf_list(self, project, **kwargs):  # noqa: E501
+        """delete_leaf_list  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf_list(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: MessageResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.delete_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
+
+    def delete_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """delete_leaf_list  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf_list_with_http_info(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'ancestor',
+            'type',
+            'name',
+            'attribute',
+            'attribute_lt',
+            'attribute_lte',
+            'attribute_gt',
+            'attribute_gte',
+            'attribute_contains',
+            'attribute_distance',
+            'attribute_null',
+            'operation',
+            'start',
+            'stop'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_leaf_list" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `delete_leaf_list`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
+            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
+        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
+            query_params.append(('type', local_var_params['type']))  # noqa: E501
+        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
+            query_params.append(('name', local_var_params['name']))  # noqa: E501
+        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
+            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
+        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
+            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
+        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
+            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
+        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
+            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
+        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
+            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
+        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
+            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
+        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
+            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
+        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
+            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
+        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
+            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
+        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
+            query_params.append(('start', local_var_params['start']))  # noqa: E501
+        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
+            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Leaves/{project}', 'DELETE',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='MessageResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def delete_leaf_type(self, id, **kwargs):  # noqa: E501
+        """delete_leaf_type  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf_type(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.delete_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
+
+    def delete_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
+        """delete_leaf_type  # noqa: E501
+
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.delete_leaf_type_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_leaf_type" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `delete_leaf_type`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/LeafType/{id}', 'DELETE',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def delete_localization(self, id, **kwargs):  # noqa: E501
         """delete_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization(id, async_req=True)
@@ -2345,7 +2529,7 @@ class TatorApi(object):
     def delete_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization_with_http_info(id, async_req=True)
@@ -2431,124 +2615,10 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def delete_localization_association(self, id, **kwargs):  # noqa: E501
-        """delete_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_localization_association(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_localization_association_with_http_info(id, **kwargs)  # noqa: E501
-
-    def delete_localization_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """delete_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_localization_association_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_localization_association" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `delete_localization_association`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/LocalizationAssociation/{id}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
     def delete_localization_list(self, project, **kwargs):  # noqa: E501
         """delete_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization_list(project, async_req=True)
@@ -2559,7 +2629,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -2591,7 +2661,7 @@ class TatorApi(object):
     def delete_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization_list_with_http_info(project, async_req=True)
@@ -2602,7 +2672,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -2692,6 +2762,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -2753,7 +2824,7 @@ class TatorApi(object):
     def delete_localization_type(self, id, **kwargs):  # noqa: E501
         """delete_localization_type  # noqa: E501
 
-        Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization_type(id, async_req=True)
@@ -2778,7 +2849,7 @@ class TatorApi(object):
     def delete_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_localization_type  # noqa: E501
 
-        Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_localization_type_with_http_info(id, async_req=True)
@@ -2867,7 +2938,7 @@ class TatorApi(object):
     def delete_media(self, id, **kwargs):  # noqa: E501
         """delete_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media(id, async_req=True)
@@ -2892,7 +2963,7 @@ class TatorApi(object):
     def delete_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media_with_http_info(id, async_req=True)
@@ -2981,7 +3052,7 @@ class TatorApi(object):
     def delete_media_list(self, project, **kwargs):  # noqa: E501
         """delete_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media_list(project, async_req=True)
@@ -3023,7 +3094,7 @@ class TatorApi(object):
     def delete_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media_list_with_http_info(project, async_req=True)
@@ -3181,7 +3252,7 @@ class TatorApi(object):
     def delete_media_type(self, id, **kwargs):  # noqa: E501
         """delete_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media_type(id, async_req=True)
@@ -3206,7 +3277,7 @@ class TatorApi(object):
     def delete_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_media_type_with_http_info(id, async_req=True)
@@ -3523,7 +3594,7 @@ class TatorApi(object):
     def delete_state(self, id, **kwargs):  # noqa: E501
         """delete_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state(id, async_req=True)
@@ -3548,7 +3619,7 @@ class TatorApi(object):
     def delete_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state_with_http_info(id, async_req=True)
@@ -3637,7 +3708,7 @@ class TatorApi(object):
     def delete_state_list(self, project, **kwargs):  # noqa: E501
         """delete_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state_list(project, async_req=True)
@@ -3648,7 +3719,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -3680,7 +3751,7 @@ class TatorApi(object):
     def delete_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state_list_with_http_info(project, async_req=True)
@@ -3691,7 +3762,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -3781,6 +3852,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -3842,7 +3914,7 @@ class TatorApi(object):
     def delete_state_type(self, id, **kwargs):  # noqa: E501
         """delete_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state_type(id, async_req=True)
@@ -3867,7 +3939,7 @@ class TatorApi(object):
     def delete_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.delete_state_type_with_http_info(id, async_req=True)
@@ -3963,7 +4035,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param str id: A unique integer value identifying this temporary file. (required)
+        :param int id: A unique integer identifying a temporary file. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -3988,7 +4060,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param str id: A unique integer value identifying this temporary file. (required)
+        :param int id: A unique integer identifying a temporary file. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -4044,6 +4116,10 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
 
@@ -4159,423 +4235,15 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/rest/TemporaryFiles/{project}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def delete_tree_leaf(self, id, **kwargs):  # noqa: E501
-        """delete_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_tree_leaf_with_http_info(id, **kwargs)  # noqa: E501
-
-    def delete_tree_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
-        """delete_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_tree_leaf" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `delete_tree_leaf`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaf/{id}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def delete_tree_leaf_list(self, project, **kwargs):  # noqa: E501
-        """delete_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf_list(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: MessageResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_tree_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
-
-    def delete_tree_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
-        """delete_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf_list_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'ancestor',
-            'type',
-            'name',
-            'attribute',
-            'attribute_lt',
-            'attribute_lte',
-            'attribute_gt',
-            'attribute_gte',
-            'attribute_contains',
-            'attribute_distance',
-            'attribute_null',
-            'operation',
-            'start',
-            'stop'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_tree_leaf_list" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `delete_tree_leaf_list`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
-            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
-        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
-            query_params.append(('type', local_var_params['type']))  # noqa: E501
-        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
-            query_params.append(('name', local_var_params['name']))  # noqa: E501
-        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
-            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
-        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
-            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
-            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
-            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
-            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
-            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
-            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
-            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
-        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
-            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
-        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
-            query_params.append(('start', local_var_params['start']))  # noqa: E501
-        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
-            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaves/{project}', 'DELETE',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def delete_tree_leaf_type(self, id, **kwargs):  # noqa: E501
-        """delete_tree_leaf_type  # noqa: E501
-
-        Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.delete_tree_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
-
-    def delete_tree_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """delete_tree_leaf_type  # noqa: E501
-
-        Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_tree_leaf_type_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_tree_leaf_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `delete_tree_leaf_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeafType/{id}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -4722,7 +4390,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[object]
+        :return: list[Algorithm]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4749,7 +4417,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[object], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Algorithm], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4810,7 +4478,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[object]',  # noqa: E501
+            response_type='list[Algorithm]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -4821,7 +4489,7 @@ class TatorApi(object):
     def get_analysis_list(self, project, **kwargs):  # noqa: E501
         """get_analysis_list  # noqa: E501
 
-        List analyses for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_analysis_list(project, async_req=True)
@@ -4836,7 +4504,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[object]
+        :return: list[Analysis]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4846,7 +4514,7 @@ class TatorApi(object):
     def get_analysis_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_analysis_list  # noqa: E501
 
-        List analyses for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_analysis_list_with_http_info(project, async_req=True)
@@ -4863,7 +4531,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[object], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Analysis], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -4924,240 +4592,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[object]',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_attribute_type(self, id, **kwargs):  # noqa: E501
-        """get_attribute_type  # noqa: E501
-
-        Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_attribute_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: AttributeType
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_attribute_type_with_http_info(id, **kwargs)  # noqa: E501
-
-    def get_attribute_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_attribute_type  # noqa: E501
-
-        Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_attribute_type_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(AttributeType, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_attribute_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_attribute_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/AttributeType/{id}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='AttributeType',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_attribute_type_list(self, project, **kwargs):  # noqa: E501
-        """get_attribute_type_list  # noqa: E501
-
-        Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_attribute_type_list(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param int applies_to: Unique integer identifying the entity type that this attribute describes.
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: list[OneOfobjectobjectobjectobjectobjectobjectobject]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_attribute_type_list_with_http_info(project, **kwargs)  # noqa: E501
-
-    def get_attribute_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
-        """get_attribute_type_list  # noqa: E501
-
-        Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_attribute_type_list_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param int applies_to: Unique integer identifying the entity type that this attribute describes.
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(list[OneOfobjectobjectobjectobjectobjectobjectobject], status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'applies_to'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_attribute_type_list" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `get_attribute_type_list`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-        if 'applies_to' in local_var_params and local_var_params['applies_to'] is not None:  # noqa: E501
-            query_params.append(('applies_to', local_var_params['applies_to']))  # noqa: E501
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/AttributeTypes/{project}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='list[OneOfobjectobjectobjectobjectobjectobjectobject]',  # noqa: E501
+            response_type='list[Analysis]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -5168,7 +4603,7 @@ class TatorApi(object):
     def get_clip(self, id, frame_ranges, **kwargs):  # noqa: E501
         """get_clip  # noqa: E501
 
-        Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_clip(id, frame_ranges, async_req=True)
@@ -5195,7 +4630,7 @@ class TatorApi(object):
     def get_clip_with_http_info(self, id, frame_ranges, **kwargs):  # noqa: E501
         """get_clip  # noqa: E501
 
-        Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_clip_with_http_info(id, frame_ranges, async_req=True)
@@ -5296,124 +4731,10 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def get_entity_type_schema(self, id, **kwargs):  # noqa: E501
-        """get_entity_type_schema  # noqa: E501
-
-        Output required fields for inserting a new object based on an EntityType.  Various REST calls take a polymorphic argument, which is dependent on what type is being added. This method provides a way to interrogate the service provider for what fields are required for a given addition.  The parameter to this function is the type id (i.e. the EntityTypeState or EntityTypeLocalization*** object that applies to a given media type.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_entity_type_schema(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an entity type. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: EntityTypeSchema
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_entity_type_schema_with_http_info(id, **kwargs)  # noqa: E501
-
-    def get_entity_type_schema_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_entity_type_schema  # noqa: E501
-
-        Output required fields for inserting a new object based on an EntityType.  Various REST calls take a polymorphic argument, which is dependent on what type is being added. This method provides a way to interrogate the service provider for what fields are required for a given addition.  The parameter to this function is the type id (i.e. the EntityTypeState or EntityTypeLocalization*** object that applies to a given media type.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_entity_type_schema_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an entity type. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(EntityTypeSchema, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_entity_type_schema" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_entity_type_schema`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/EntityTypeSchema/{id}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='EntityTypeSchema',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
     def get_frame(self, id, **kwargs):  # noqa: E501
         """get_frame  # noqa: E501
 
-        Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_frame(id, async_req=True)
@@ -5443,7 +4764,7 @@ class TatorApi(object):
     def get_frame_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_frame  # noqa: E501
 
-        Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_frame_with_http_info(id, async_req=True)
@@ -5559,17 +4880,17 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def get_frame_association(self, id, **kwargs):  # noqa: E501
-        """get_frame_association  # noqa: E501
+    def get_leaf(self, id, **kwargs):  # noqa: E501
+        """get_leaf  # noqa: E501
 
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_frame_association(id, async_req=True)
+        >>> thread = api.get_leaf(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
+        :param int id: A unique integer identifying a leaf. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -5577,24 +4898,24 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: dict(str, object)
+        :return: Leaf
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.get_frame_association_with_http_info(id, **kwargs)  # noqa: E501
+        return self.get_leaf_with_http_info(id, **kwargs)  # noqa: E501
 
-    def get_frame_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_frame_association  # noqa: E501
+    def get_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
+        """get_leaf  # noqa: E501
 
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_frame_association_with_http_info(id, async_req=True)
+        >>> thread = api.get_leaf_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
+        :param int id: A unique integer identifying a leaf. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -5604,7 +4925,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(dict(str, object), status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Leaf, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5627,14 +4948,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method get_frame_association" % key
+                    " to method get_leaf" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'id' is set
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_frame_association`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `get_leaf`")  # noqa: E501
 
         collection_formats = {}
 
@@ -5658,14 +4979,426 @@ class TatorApi(object):
         auth_settings = ['TokenAuth']  # noqa: E501
 
         return self.api_client.call_api(
-            '/rest/FrameAssociation/{id}', 'GET',
+            '/rest/Leaf/{id}', 'GET',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, object)',  # noqa: E501
+            response_type='Leaf',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def get_leaf_list(self, project, **kwargs):  # noqa: E501
+        """get_leaf_list  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_list(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: list[Leaf]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.get_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
+
+    def get_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """get_leaf_list  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_list_with_http_info(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(list[Leaf], status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'ancestor',
+            'type',
+            'name',
+            'attribute',
+            'attribute_lt',
+            'attribute_lte',
+            'attribute_gt',
+            'attribute_gte',
+            'attribute_contains',
+            'attribute_distance',
+            'attribute_null',
+            'operation',
+            'start',
+            'stop'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_leaf_list" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `get_leaf_list`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
+            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
+        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
+            query_params.append(('type', local_var_params['type']))  # noqa: E501
+        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
+            query_params.append(('name', local_var_params['name']))  # noqa: E501
+        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
+            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
+        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
+            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
+        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
+            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
+        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
+            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
+        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
+            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
+        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
+            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
+        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
+            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
+        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
+            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
+        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
+            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
+        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
+            query_params.append(('start', local_var_params['start']))  # noqa: E501
+        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
+            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Leaves/{project}', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='list[Leaf]',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def get_leaf_type(self, id, **kwargs):  # noqa: E501
+        """get_leaf_type  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_type(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: LeafType
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.get_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
+
+    def get_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
+        """get_leaf_type  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_type_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(LeafType, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_leaf_type" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `get_leaf_type`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/LeafType/{id}', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='LeafType',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def get_leaf_type_list(self, project, **kwargs):  # noqa: E501
+        """get_leaf_type_list  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_type_list(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: list[LeafType]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.get_leaf_type_list_with_http_info(project, **kwargs)  # noqa: E501
+
+    def get_leaf_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """get_leaf_type_list  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.get_leaf_type_list_with_http_info(project, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(list[LeafType], status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_leaf_type_list" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `get_leaf_type_list`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/LeafTypes/{project}', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='list[LeafType]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -5676,7 +5409,7 @@ class TatorApi(object):
     def get_localization(self, id, **kwargs):  # noqa: E501
         """get_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization(id, async_req=True)
@@ -5701,7 +5434,7 @@ class TatorApi(object):
     def get_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_with_http_info(id, async_req=True)
@@ -5787,124 +5520,10 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def get_localization_association(self, id, **kwargs):  # noqa: E501
-        """get_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_localization_association(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: dict(str, object)
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_localization_association_with_http_info(id, **kwargs)  # noqa: E501
-
-    def get_localization_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_localization_association_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(dict(str, object), status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_localization_association" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_localization_association`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/LocalizationAssociation/{id}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='dict(str, object)',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
     def get_localization_list(self, project, **kwargs):  # noqa: E501
         """get_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_list(project, async_req=True)
@@ -5915,7 +5534,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -5937,7 +5556,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[LocalizationElement]
+        :return: list[Localization]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -5947,7 +5566,7 @@ class TatorApi(object):
     def get_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_list_with_http_info(project, async_req=True)
@@ -5958,7 +5577,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -5982,7 +5601,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[LocalizationElement], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Localization], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6048,6 +5667,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -6098,7 +5718,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[LocalizationElement]',  # noqa: E501
+            response_type='list[Localization]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6109,7 +5729,7 @@ class TatorApi(object):
     def get_localization_type(self, id, **kwargs):  # noqa: E501
         """get_localization_type  # noqa: E501
 
-        Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_type(id, async_req=True)
@@ -6124,7 +5744,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse200
+        :return: LocalizationType
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6134,7 +5754,7 @@ class TatorApi(object):
     def get_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_localization_type  # noqa: E501
 
-        Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_type_with_http_info(id, async_req=True)
@@ -6151,7 +5771,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse200, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(LocalizationType, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6212,7 +5832,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse200',  # noqa: E501
+            response_type='LocalizationType',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6223,7 +5843,7 @@ class TatorApi(object):
     def get_localization_type_list(self, project, **kwargs):  # noqa: E501
         """get_localization_type_list  # noqa: E501
 
-        Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_type_list(project, async_req=True)
@@ -6240,7 +5860,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse200]
+        :return: list[LocalizationType]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6250,7 +5870,7 @@ class TatorApi(object):
     def get_localization_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_localization_type_list  # noqa: E501
 
-        Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_localization_type_list_with_http_info(project, async_req=True)
@@ -6269,7 +5889,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse200], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[LocalizationType], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6337,7 +5957,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse200]',  # noqa: E501
+            response_type='list[LocalizationType]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6348,7 +5968,7 @@ class TatorApi(object):
     def get_media(self, id, **kwargs):  # noqa: E501
         """get_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media(id, async_req=True)
@@ -6363,7 +5983,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2001
+        :return: Media
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6373,7 +5993,7 @@ class TatorApi(object):
     def get_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_with_http_info(id, async_req=True)
@@ -6390,7 +6010,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2001, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Media, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6451,7 +6071,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2001',  # noqa: E501
+            response_type='Media',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6462,7 +6082,7 @@ class TatorApi(object):
     def get_media_list(self, project, **kwargs):  # noqa: E501
         """get_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_list(project, async_req=True)
@@ -6494,7 +6114,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2001]
+        :return: list[Media]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6504,7 +6124,7 @@ class TatorApi(object):
     def get_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_list_with_http_info(project, async_req=True)
@@ -6538,7 +6158,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2001], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Media], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6651,7 +6271,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2001]',  # noqa: E501
+            response_type='list[Media]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6694,7 +6314,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2002
+        :return: MediaNext
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6738,7 +6358,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2002, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(MediaNext, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6851,7 +6471,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2002',  # noqa: E501
+            response_type='MediaNext',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -6894,7 +6514,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2003
+        :return: MediaPrev
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -6938,7 +6558,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2003, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(MediaPrev, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7051,7 +6671,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2003',  # noqa: E501
+            response_type='MediaPrev',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7094,7 +6714,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: dict(str, InlineResponse2004)
+        :return: dict(str, object)
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7138,7 +6758,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(dict(str, InlineResponse2004), status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(dict(str, object), status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7251,7 +6871,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, InlineResponse2004)',  # noqa: E501
+            response_type='dict(str, object)',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7262,7 +6882,7 @@ class TatorApi(object):
     def get_media_type(self, id, **kwargs):  # noqa: E501
         """get_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_type(id, async_req=True)
@@ -7277,7 +6897,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2005
+        :return: MediaType
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7287,7 +6907,7 @@ class TatorApi(object):
     def get_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_type_with_http_info(id, async_req=True)
@@ -7304,7 +6924,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2005, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(MediaType, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7365,7 +6985,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2005',  # noqa: E501
+            response_type='MediaType',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7376,7 +6996,7 @@ class TatorApi(object):
     def get_media_type_list(self, project, **kwargs):  # noqa: E501
         """get_media_type_list  # noqa: E501
 
-        Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_type_list(project, async_req=True)
@@ -7391,7 +7011,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2005]
+        :return: list[MediaType]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7401,7 +7021,7 @@ class TatorApi(object):
     def get_media_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_media_type_list  # noqa: E501
 
-        Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_media_type_list_with_http_info(project, async_req=True)
@@ -7418,7 +7038,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2005], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[MediaType], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7479,7 +7099,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2005]',  # noqa: E501
+            response_type='list[MediaType]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7505,7 +7125,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2006
+        :return: Membership
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7532,7 +7152,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2006, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Membership, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7593,7 +7213,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2006',  # noqa: E501
+            response_type='Membership',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7619,7 +7239,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2006]
+        :return: list[Membership]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7646,7 +7266,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2006], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Membership], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7707,7 +7327,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2006]',  # noqa: E501
+            response_type='list[Membership]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7733,7 +7353,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2007
+        :return: Project
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7760,7 +7380,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2007, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Project, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7821,7 +7441,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2007',  # noqa: E501
+            response_type='Project',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -7846,7 +7466,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2007]
+        :return: list[Project]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7872,7 +7492,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2007], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Project], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -7926,7 +7546,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2007]',  # noqa: E501
+            response_type='list[Project]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -8117,7 +7737,7 @@ class TatorApi(object):
     def get_state(self, id, **kwargs):  # noqa: E501
         """get_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state(id, async_req=True)
@@ -8142,7 +7762,7 @@ class TatorApi(object):
     def get_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_with_http_info(id, async_req=True)
@@ -8231,7 +7851,7 @@ class TatorApi(object):
     def get_state_list(self, project, **kwargs):  # noqa: E501
         """get_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_list(project, async_req=True)
@@ -8242,7 +7862,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -8264,7 +7884,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2009]
+        :return: list[State]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8274,7 +7894,7 @@ class TatorApi(object):
     def get_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_list_with_http_info(project, async_req=True)
@@ -8285,7 +7905,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -8309,7 +7929,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2009], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[State], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8375,6 +7995,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -8425,7 +8046,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2009]',  # noqa: E501
+            response_type='list[State]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -8436,7 +8057,7 @@ class TatorApi(object):
     def get_state_type(self, id, **kwargs):  # noqa: E501
         """get_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_type(id, async_req=True)
@@ -8451,7 +8072,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2008
+        :return: StateType
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8461,7 +8082,7 @@ class TatorApi(object):
     def get_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_type_with_http_info(id, async_req=True)
@@ -8478,7 +8099,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2008, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(StateType, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8539,7 +8160,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2008',  # noqa: E501
+            response_type='StateType',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -8550,7 +8171,7 @@ class TatorApi(object):
     def get_state_type_list(self, project, **kwargs):  # noqa: E501
         """get_state_type_list  # noqa: E501
 
-        Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_type_list(project, async_req=True)
@@ -8567,7 +8188,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse2008]
+        :return: list[StateType]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8577,7 +8198,7 @@ class TatorApi(object):
     def get_state_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_state_type_list  # noqa: E501
 
-        Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_state_type_list_with_http_info(project, async_req=True)
@@ -8596,7 +8217,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse2008], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[StateType], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8664,7 +8285,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse2008]',  # noqa: E501
+            response_type='list[StateType]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -8682,7 +8303,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param str id: A unique integer value identifying this temporary file. (required)
+        :param int id: A unique integer identifying a temporary file. (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -8690,7 +8311,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: object
+        :return: TemporaryFile
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8707,7 +8328,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param str id: A unique integer value identifying this temporary file. (required)
+        :param int id: A unique integer identifying a temporary file. (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -8717,7 +8338,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(TemporaryFile, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8765,7 +8386,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -8778,7 +8399,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type='TemporaryFile',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -8805,7 +8426,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: object
+        :return: list[TemporaryFile]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8833,7 +8454,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[TemporaryFile], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -8884,7 +8505,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -8897,533 +8518,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_tree_leaf(self, id, **kwargs):  # noqa: E501
-        """get_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: InlineResponse20011
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_tree_leaf_with_http_info(id, **kwargs)  # noqa: E501
-
-    def get_tree_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(InlineResponse20011, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_tree_leaf" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_tree_leaf`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaf/{id}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='InlineResponse20011',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_tree_leaf_list(self, project, **kwargs):  # noqa: E501
-        """get_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_list(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: list[InlineResponse20011]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_tree_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
-
-    def get_tree_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
-        """get_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_list_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(list[InlineResponse20011], status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'ancestor',
-            'type',
-            'name',
-            'attribute',
-            'attribute_lt',
-            'attribute_lte',
-            'attribute_gt',
-            'attribute_gte',
-            'attribute_contains',
-            'attribute_distance',
-            'attribute_null',
-            'operation',
-            'start',
-            'stop'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_tree_leaf_list" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `get_tree_leaf_list`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
-            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
-        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
-            query_params.append(('type', local_var_params['type']))  # noqa: E501
-        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
-            query_params.append(('name', local_var_params['name']))  # noqa: E501
-        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
-            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
-        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
-            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
-            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
-            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
-            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
-            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
-            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
-            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
-        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
-            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
-        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
-            query_params.append(('start', local_var_params['start']))  # noqa: E501
-        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
-            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaves/{project}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='list[InlineResponse20011]',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_tree_leaf_type(self, id, **kwargs):  # noqa: E501
-        """get_tree_leaf_type  # noqa: E501
-
-        Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: InlineResponse20012
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_tree_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
-
-    def get_tree_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """get_tree_leaf_type  # noqa: E501
-
-        Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_type_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(InlineResponse20012, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_tree_leaf_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `get_tree_leaf_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeafType/{id}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='InlineResponse20012',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def get_tree_leaf_type_list(self, project, **kwargs):  # noqa: E501
-        """get_tree_leaf_type_list  # noqa: E501
-
-        Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_type_list(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: list[InlineResponse20012]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.get_tree_leaf_type_list_with_http_info(project, **kwargs)  # noqa: E501
-
-    def get_tree_leaf_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
-        """get_tree_leaf_type_list  # noqa: E501
-
-        Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_tree_leaf_type_list_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(list[InlineResponse20012], status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_tree_leaf_type_list" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `get_tree_leaf_type_list`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeafTypes/{project}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='list[InlineResponse20012]',  # noqa: E501
+            response_type='list[TemporaryFile]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -9449,7 +8544,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: object
+        :return: User
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9476,7 +8571,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(User, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9524,7 +8619,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -9537,7 +8632,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type='User',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -9563,7 +8658,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse20015
+        :return: Version
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9590,7 +8685,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse20015, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Version, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -9651,7 +8746,144 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20015',  # noqa: E501
+            response_type='Version',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def leaf_suggestion(self, project, ancestor, query, **kwargs):  # noqa: E501
+        """leaf_suggestion  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.leaf_suggestion(project, ancestor, query, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
+        :param str query: String to search for matching names. (required)
+        :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: list[LeafSuggestion]
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.leaf_suggestion_with_http_info(project, ancestor, query, **kwargs)  # noqa: E501
+
+    def leaf_suggestion_with_http_info(self, project, ancestor, query, **kwargs):  # noqa: E501
+        """leaf_suggestion  # noqa: E501
+
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.leaf_suggestion_with_http_info(project, ancestor, query, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
+        :param str query: String to search for matching names. (required)
+        :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(list[LeafSuggestion], status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'ancestor',
+            'query',
+            'min_level'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method leaf_suggestion" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `leaf_suggestion`")  # noqa: E501
+        # verify the required parameter 'ancestor' is set
+        if self.api_client.client_side_validation and ('ancestor' not in local_var_params or  # noqa: E501
+                                                        local_var_params['ancestor'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `ancestor` when calling `leaf_suggestion`")  # noqa: E501
+        # verify the required parameter 'query' is set
+        if self.api_client.client_side_validation and ('query' not in local_var_params or  # noqa: E501
+                                                        local_var_params['query'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `query` when calling `leaf_suggestion`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+        if 'ancestor' in local_var_params:
+            path_params['ancestor'] = local_var_params['ancestor']  # noqa: E501
+
+        query_params = []
+        if 'min_level' in local_var_params and local_var_params['min_level'] is not None:  # noqa: E501
+            query_params.append(('minLevel', local_var_params['min_level']))  # noqa: E501
+        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
+            query_params.append(('query', local_var_params['query']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Leaves/Suggestion/{ancestor}/{project}', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='list[LeafSuggestion]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -9669,7 +8901,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject9 inline_object9:
+        :param NotifySpec notify_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -9694,7 +8926,7 @@ class TatorApi(object):
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param InlineObject9 inline_object9:
+        :param NotifySpec notify_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -9712,7 +8944,7 @@ class TatorApi(object):
         local_var_params = locals()
 
         all_params = [
-            'inline_object9'
+            'notify_spec'
         ]
         all_params.extend(
             [
@@ -9744,8 +8976,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object9' in local_var_params:
-            body_params = local_var_params['inline_object9']
+        if 'notify_spec' in local_var_params:
+            body_params = local_var_params['notify_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -9776,7 +9008,7 @@ class TatorApi(object):
     def partial_update_save_video_api(self, project, **kwargs):  # noqa: E501
         """partial_update_save_video_api  # noqa: E501
 
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.partial_update_save_video_api(project, async_req=True)
@@ -9802,7 +9034,7 @@ class TatorApi(object):
     def partial_update_save_video_api_with_http_info(self, project, **kwargs):  # noqa: E501
         """partial_update_save_video_api  # noqa: E501
 
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.partial_update_save_video_api_with_http_info(project, async_req=True)
@@ -9907,7 +9139,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[InlineObject] inline_object:
+        :param list[ProgressSpec] progress_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -9933,7 +9165,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[InlineObject] inline_object:
+        :param list[ProgressSpec] progress_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -9952,7 +9184,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object'
+            'progress_spec'
         ]
         all_params.extend(
             [
@@ -9990,8 +9222,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object' in local_var_params:
-            body_params = local_var_params['inline_object']
+        if 'progress_spec' in local_var_params:
+            body_params = local_var_params['progress_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -10022,7 +9254,7 @@ class TatorApi(object):
     def retrieve_state_graphic_api(self, id, **kwargs):  # noqa: E501
         """retrieve_state_graphic_api  # noqa: E501
 
-        Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.retrieve_state_graphic_api(id, async_req=True)
@@ -10050,7 +9282,7 @@ class TatorApi(object):
     def retrieve_state_graphic_api_with_http_info(self, id, **kwargs):  # noqa: E501
         """retrieve_state_graphic_api  # noqa: E501
 
-        Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg.  # noqa: E501
+        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.retrieve_state_graphic_api_with_http_info(id, async_req=True)
@@ -10167,7 +9399,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: list[InlineResponse20015]
+        :return: list[Version]
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10195,7 +9427,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(list[InlineResponse20015], status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(list[Version], status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10259,7 +9491,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[InlineResponse20015]',  # noqa: E501
+            response_type='list[Version]',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -10278,7 +9510,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject12 inline_object12:
+        :param ImageSpec image_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10304,7 +9536,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject12 inline_object12:
+        :param ImageSpec image_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10323,7 +9555,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object12'
+            'image_spec'
         ]
         all_params.extend(
             [
@@ -10361,8 +9593,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object12' in local_var_params:
-            body_params = local_var_params['inline_object12']
+        if 'image_spec' in local_var_params:
+            body_params = local_var_params['image_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -10393,7 +9625,7 @@ class TatorApi(object):
     def save_video(self, project, **kwargs):  # noqa: E501
         """save_video  # noqa: E501
 
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.save_video(project, async_req=True)
@@ -10419,7 +9651,7 @@ class TatorApi(object):
     def save_video_with_http_info(self, project, **kwargs):  # noqa: E501
         """save_video  # noqa: E501
 
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.save_video_with_http_info(project, async_req=True)
@@ -10524,7 +9756,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject19 inline_object19:
+        :param TranscodeSpec transcode_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10532,7 +9764,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse2013
+        :return: Transcode
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10550,7 +9782,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param InlineObject19 inline_object19:
+        :param TranscodeSpec transcode_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10560,7 +9792,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse2013, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(Transcode, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -10569,7 +9801,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
-            'inline_object19'
+            'transcode_spec'
         ]
         all_params.extend(
             [
@@ -10607,8 +9839,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object19' in local_var_params:
-            body_params = local_var_params['inline_object19']
+        if 'transcode_spec' in local_var_params:
+            body_params = local_var_params['transcode_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -10628,7 +9860,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse2013',  # noqa: E501
+            response_type='Transcode',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -10636,155 +9868,18 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def tree_leaf_suggestion(self, project, ancestor, query, **kwargs):  # noqa: E501
-        """tree_leaf_suggestion  # noqa: E501
+    def update_leaf(self, id, **kwargs):  # noqa: E501
+        """update_leaf  # noqa: E501
 
-        Rest Endpoint compatible with devbridge suggestion format.  <https://github.com/kraaden/autocomplete>  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.tree_leaf_suggestion(project, ancestor, query, async_req=True)
+        >>> thread = api.update_leaf(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
-        :param str query: String to search for matching names. (required)
-        :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: list[InlineResponse20013]
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.tree_leaf_suggestion_with_http_info(project, ancestor, query, **kwargs)  # noqa: E501
-
-    def tree_leaf_suggestion_with_http_info(self, project, ancestor, query, **kwargs):  # noqa: E501
-        """tree_leaf_suggestion  # noqa: E501
-
-        Rest Endpoint compatible with devbridge suggestion format.  <https://github.com/kraaden/autocomplete>  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.tree_leaf_suggestion_with_http_info(project, ancestor, query, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (required)
-        :param str query: String to search for matching names. (required)
-        :param int min_level: Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter.
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(list[InlineResponse20013], status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'ancestor',
-            'query',
-            'min_level'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method tree_leaf_suggestion" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `tree_leaf_suggestion`")  # noqa: E501
-        # verify the required parameter 'ancestor' is set
-        if self.api_client.client_side_validation and ('ancestor' not in local_var_params or  # noqa: E501
-                                                        local_var_params['ancestor'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `ancestor` when calling `tree_leaf_suggestion`")  # noqa: E501
-        # verify the required parameter 'query' is set
-        if self.api_client.client_side_validation and ('query' not in local_var_params or  # noqa: E501
-                                                        local_var_params['query'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `query` when calling `tree_leaf_suggestion`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-        if 'ancestor' in local_var_params:
-            path_params['ancestor'] = local_var_params['ancestor']  # noqa: E501
-
-        query_params = []
-        if 'min_level' in local_var_params and local_var_params['min_level'] is not None:  # noqa: E501
-            query_params.append(('minLevel', local_var_params['min_level']))  # noqa: E501
-        if 'query' in local_var_params and local_var_params['query'] is not None:  # noqa: E501
-            query_params.append(('query', local_var_params['query']))  # noqa: E501
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaves/Suggestion/{ancestor}/{project}', 'GET',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='list[InlineResponse20013]',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_attribute_type(self, id, **kwargs):  # noqa: E501
-        """update_attribute_type  # noqa: E501
-
-        Updates a localization type.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_attribute_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param AttributeTypeUpdate attribute_type_update:
+        :param int id: A unique integer identifying a leaf. (required)
+        :param LeafUpdate leaf_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10797,20 +9892,20 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_attribute_type_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_leaf_with_http_info(id, **kwargs)  # noqa: E501
 
-    def update_attribute_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_attribute_type  # noqa: E501
+    def update_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
+        """update_leaf  # noqa: E501
 
-        Updates a localization type.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_attribute_type_with_http_info(id, async_req=True)
+        >>> thread = api.update_leaf_with_http_info(id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an attribute type. (required)
-        :param AttributeTypeUpdate attribute_type_update:
+        :param int id: A unique integer identifying a leaf. (required)
+        :param LeafUpdate leaf_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10829,7 +9924,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'attribute_type_update'
+            'leaf_update'
         ]
         all_params.extend(
             [
@@ -10844,14 +9939,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_attribute_type" % key
+                    " to method update_leaf" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'id' is set
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `update_attribute_type`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `update_leaf`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10867,8 +9962,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'attribute_type_update' in local_var_params:
-            body_params = local_var_params['attribute_type_update']
+        if 'leaf_update' in local_var_params:
+            body_params = local_var_params['leaf_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -10881,7 +9976,7 @@ class TatorApi(object):
         auth_settings = ['TokenAuth']  # noqa: E501
 
         return self.api_client.call_api(
-            '/rest/AttributeType/{id}', 'PATCH',
+            '/rest/Leaf/{id}', 'PATCH',
             path_params,
             query_params,
             header_params,
@@ -10896,18 +9991,32 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_frame_association(self, id, **kwargs):  # noqa: E501
-        """update_frame_association  # noqa: E501
+    def update_leaf_list(self, project, **kwargs):  # noqa: E501
+        """update_leaf_list  # noqa: E501
 
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_frame_association(id, async_req=True)
+        >>> thread = api.update_leaf_list(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
-        :param InlineObject inline_object:
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10920,20 +10029,199 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_frame_association_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
 
-    def update_frame_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_frame_association  # noqa: E501
+    def update_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """update_leaf_list  # noqa: E501
 
-        Modify a frame association.  Frame associations specify which frames that a `State` object applies to.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_frame_association_with_http_info(id, async_req=True)
+        >>> thread = api.update_leaf_list_with_http_info(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a frame association. (required)
-        :param InlineObject inline_object:
+        :param int project: A unique integer identifying a project. (required)
+        :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+        :param int type: Unique integer identifying a leaf type.
+        :param str name: Name of the leaf element.
+        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
+        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
+        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
+        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
+        :param int start: Pagination start index. Index of the first item in a larger list to return.
+        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param AttributeBulkUpdate attribute_bulk_update:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'ancestor',
+            'type',
+            'name',
+            'attribute',
+            'attribute_lt',
+            'attribute_lte',
+            'attribute_gt',
+            'attribute_gte',
+            'attribute_contains',
+            'attribute_distance',
+            'attribute_null',
+            'operation',
+            'start',
+            'stop',
+            'attribute_bulk_update'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_leaf_list" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `update_leaf_list`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
+            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
+        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
+            query_params.append(('type', local_var_params['type']))  # noqa: E501
+        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
+            query_params.append(('name', local_var_params['name']))  # noqa: E501
+        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
+            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
+        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
+            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
+        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
+            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
+        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
+            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
+        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
+            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
+        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
+            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
+        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
+            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
+        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
+            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
+        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
+            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
+        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
+            query_params.append(('start', local_var_params['start']))  # noqa: E501
+        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
+            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'attribute_bulk_update' in local_var_params:
+            body_params = local_var_params['attribute_bulk_update']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Leaves/{project}', 'PATCH',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='MessageResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def update_leaf_type(self, id, **kwargs):  # noqa: E501
+        """update_leaf_type  # noqa: E501
+
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.update_leaf_type(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param LeafTypeUpdate leaf_type_update:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: MessageResponse
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.update_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
+
+    def update_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
+        """update_leaf_type  # noqa: E501
+
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.update_leaf_type_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying an leaf type. (required)
+        :param LeafTypeUpdate leaf_type_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10952,7 +10240,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object'
+            'leaf_type_update'
         ]
         all_params.extend(
             [
@@ -10967,14 +10255,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method update_frame_association" % key
+                    " to method update_leaf_type" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'id' is set
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `update_frame_association`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `update_leaf_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10990,8 +10278,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object' in local_var_params:
-            body_params = local_var_params['inline_object']
+        if 'leaf_type_update' in local_var_params:
+            body_params = local_var_params['leaf_type_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -11004,7 +10292,7 @@ class TatorApi(object):
         auth_settings = ['TokenAuth']  # noqa: E501
 
         return self.api_client.call_api(
-            '/rest/FrameAssociation/{id}', 'PATCH',
+            '/rest/LeafType/{id}', 'PATCH',
             path_params,
             query_params,
             header_params,
@@ -11022,7 +10310,7 @@ class TatorApi(object):
     def update_localization(self, id, **kwargs):  # noqa: E501
         """update_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization(id, async_req=True)
@@ -11048,7 +10336,7 @@ class TatorApi(object):
     def update_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_localization  # noqa: E501
 
-        Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization_with_http_info(id, async_req=True)
@@ -11142,133 +10430,10 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_localization_association(self, id, **kwargs):  # noqa: E501
-        """update_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_localization_association(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param LocalizationAssociationUpdate localization_association_update:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: MessageResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.update_localization_association_with_http_info(id, **kwargs)  # noqa: E501
-
-    def update_localization_association_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_localization_association  # noqa: E501
-
-        Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_localization_association_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a localization association. (required)
-        :param LocalizationAssociationUpdate localization_association_update:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id',
-            'localization_association_update'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_localization_association" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `update_localization_association`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'localization_association_update' in local_var_params:
-            body_params = local_var_params['localization_association_update']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/LocalizationAssociation/{id}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
     def update_localization_list(self, project, **kwargs):  # noqa: E501
         """update_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization_list(project, async_req=True)
@@ -11279,7 +10444,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -11312,7 +10477,7 @@ class TatorApi(object):
     def update_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_localization_list  # noqa: E501
 
-        Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization_list_with_http_info(project, async_req=True)
@@ -11323,7 +10488,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -11415,6 +10580,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -11482,7 +10648,7 @@ class TatorApi(object):
     def update_localization_type(self, id, **kwargs):  # noqa: E501
         """update_localization_type  # noqa: E501
 
-        Updates a localization type.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization_type(id, async_req=True)
@@ -11490,7 +10656,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an localization type. (required)
-        :param InlineObject1 inline_object1:
+        :param LocalizationTypeUpdate localization_type_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11508,7 +10674,7 @@ class TatorApi(object):
     def update_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_localization_type  # noqa: E501
 
-        Updates a localization type.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_localization_type_with_http_info(id, async_req=True)
@@ -11516,7 +10682,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an localization type. (required)
-        :param InlineObject1 inline_object1:
+        :param LocalizationTypeUpdate localization_type_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11535,7 +10701,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object1'
+            'localization_type_update'
         ]
         all_params.extend(
             [
@@ -11573,8 +10739,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object1' in local_var_params:
-            body_params = local_var_params['inline_object1']
+        if 'localization_type_update' in local_var_params:
+            body_params = local_var_params['localization_type_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -11605,7 +10771,7 @@ class TatorApi(object):
     def update_media(self, id, **kwargs):  # noqa: E501
         """update_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media(id, async_req=True)
@@ -11613,7 +10779,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a media. (required)
-        :param InlineObject3 inline_object3:
+        :param MediaUpdate media_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11631,7 +10797,7 @@ class TatorApi(object):
     def update_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_media  # noqa: E501
 
-        Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media_with_http_info(id, async_req=True)
@@ -11639,7 +10805,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a media. (required)
-        :param InlineObject3 inline_object3:
+        :param MediaUpdate media_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11658,7 +10824,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object3'
+            'media_update'
         ]
         all_params.extend(
             [
@@ -11696,8 +10862,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object3' in local_var_params:
-            body_params = local_var_params['inline_object3']
+        if 'media_update' in local_var_params:
+            body_params = local_var_params['media_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -11728,7 +10894,7 @@ class TatorApi(object):
     def update_media_list(self, project, **kwargs):  # noqa: E501
         """update_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media_list(project, async_req=True)
@@ -11753,7 +10919,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject6 inline_object6:
+        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11771,7 +10937,7 @@ class TatorApi(object):
     def update_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_media_list  # noqa: E501
 
-        Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media_list_with_http_info(project, async_req=True)
@@ -11796,7 +10962,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject6 inline_object6:
+        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11832,7 +10998,7 @@ class TatorApi(object):
             'operation',
             'start',
             'stop',
-            'inline_object6'
+            'attribute_bulk_update'
         ]
         all_params.extend(
             [
@@ -11905,8 +11071,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object6' in local_var_params:
-            body_params = local_var_params['inline_object6']
+        if 'attribute_bulk_update' in local_var_params:
+            body_params = local_var_params['attribute_bulk_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -11937,7 +11103,7 @@ class TatorApi(object):
     def update_media_type(self, id, **kwargs):  # noqa: E501
         """update_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media_type(id, async_req=True)
@@ -11945,7 +11111,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an media type. (required)
-        :param InlineObject4 inline_object4:
+        :param MediaTypeUpdate media_type_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11963,7 +11129,7 @@ class TatorApi(object):
     def update_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_media_type  # noqa: E501
 
-        Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_media_type_with_http_info(id, async_req=True)
@@ -11971,7 +11137,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an media type. (required)
-        :param InlineObject4 inline_object4:
+        :param MediaTypeUpdate media_type_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11990,7 +11156,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object4'
+            'media_type_update'
         ]
         all_params.extend(
             [
@@ -12028,8 +11194,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object4' in local_var_params:
-            body_params = local_var_params['inline_object4']
+        if 'media_type_update' in local_var_params:
+            body_params = local_var_params['media_type_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12068,7 +11234,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a membership. (required)
-        :param InlineObject7 inline_object7:
+        :param MembershipUpdate membership_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12094,7 +11260,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a membership. (required)
-        :param InlineObject7 inline_object7:
+        :param MembershipUpdate membership_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12113,7 +11279,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object7'
+            'membership_update'
         ]
         all_params.extend(
             [
@@ -12151,8 +11317,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object7' in local_var_params:
-            body_params = local_var_params['inline_object7']
+        if 'membership_update' in local_var_params:
+            body_params = local_var_params['membership_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12191,7 +11357,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a project. (required)
-        :param InlineObject10 inline_object10:
+        :param ProjectSpec project_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12217,7 +11383,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a project. (required)
-        :param InlineObject10 inline_object10:
+        :param ProjectSpec project_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12236,7 +11402,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object10'
+            'project_spec'
         ]
         all_params.extend(
             [
@@ -12274,8 +11440,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object10' in local_var_params:
-            body_params = local_var_params['inline_object10']
+        if 'project_spec' in local_var_params:
+            body_params = local_var_params['project_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12306,7 +11472,7 @@ class TatorApi(object):
     def update_state(self, id, **kwargs):  # noqa: E501
         """update_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state(id, async_req=True)
@@ -12314,7 +11480,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state. (required)
-        :param InlineObject13 inline_object13:
+        :param StateUpdate state_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12332,7 +11498,7 @@ class TatorApi(object):
     def update_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_state  # noqa: E501
 
-        Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state_with_http_info(id, async_req=True)
@@ -12340,7 +11506,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state. (required)
-        :param InlineObject13 inline_object13:
+        :param StateUpdate state_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12359,7 +11525,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object13'
+            'state_update'
         ]
         all_params.extend(
             [
@@ -12397,8 +11563,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object13' in local_var_params:
-            body_params = local_var_params['inline_object13']
+        if 'state_update' in local_var_params:
+            body_params = local_var_params['state_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12429,7 +11595,7 @@ class TatorApi(object):
     def update_state_list(self, project, **kwargs):  # noqa: E501
         """update_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state_list(project, async_req=True)
@@ -12440,7 +11606,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -12455,7 +11621,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject16 inline_object16:
+        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12473,7 +11639,7 @@ class TatorApi(object):
     def update_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_state_list  # noqa: E501
 
-        Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state_list_with_http_info(project, async_req=True)
@@ -12484,7 +11650,7 @@ class TatorApi(object):
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
-        :param int version: Unique integer identifying a version.
+        :param list[int] version: List of integers representing versions to fetch
         :param int modified: Whether to return original or modified annotations, 0 or 1.
         :param int after: If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range.
         :param str search: Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_.
@@ -12499,7 +11665,7 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject16 inline_object16:
+        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12536,7 +11702,7 @@ class TatorApi(object):
             'operation',
             'start',
             'stop',
-            'inline_object16'
+            'attribute_bulk_update'
         ]
         all_params.extend(
             [
@@ -12576,6 +11742,7 @@ class TatorApi(object):
             query_params.append(('type', local_var_params['type']))  # noqa: E501
         if 'version' in local_var_params and local_var_params['version'] is not None:  # noqa: E501
             query_params.append(('version', local_var_params['version']))  # noqa: E501
+            collection_formats['version'] = 'csv'  # noqa: E501
         if 'modified' in local_var_params and local_var_params['modified'] is not None:  # noqa: E501
             query_params.append(('modified', local_var_params['modified']))  # noqa: E501
         if 'after' in local_var_params and local_var_params['after'] is not None:  # noqa: E501
@@ -12611,8 +11778,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object16' in local_var_params:
-            body_params = local_var_params['inline_object16']
+        if 'attribute_bulk_update' in local_var_params:
+            body_params = local_var_params['attribute_bulk_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12643,7 +11810,7 @@ class TatorApi(object):
     def update_state_type(self, id, **kwargs):  # noqa: E501
         """update_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state_type(id, async_req=True)
@@ -12651,7 +11818,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state type. (required)
-        :param InlineObject14 inline_object14:
+        :param StateTypeUpdate state_type_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12669,7 +11836,7 @@ class TatorApi(object):
     def update_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_state_type  # noqa: E501
 
-        Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.update_state_type_with_http_info(id, async_req=True)
@@ -12677,7 +11844,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state type. (required)
-        :param InlineObject14 inline_object14:
+        :param StateTypeUpdate state_type_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12696,7 +11863,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object14'
+            'state_type_update'
         ]
         all_params.extend(
             [
@@ -12734,8 +11901,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object14' in local_var_params:
-            body_params = local_var_params['inline_object14']
+        if 'state_type_update' in local_var_params:
+            body_params = local_var_params['state_type_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -12763,445 +11930,6 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_tree_leaf(self, id, **kwargs):  # noqa: E501
-        """update_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param InlineObject20 inline_object20:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: MessageResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.update_tree_leaf_with_http_info(id, **kwargs)  # noqa: E501
-
-    def update_tree_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_tree_leaf  # noqa: E501
-
-        Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying a tree leaf. (required)
-        :param InlineObject20 inline_object20:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id',
-            'inline_object20'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_tree_leaf" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `update_tree_leaf`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'inline_object20' in local_var_params:
-            body_params = local_var_params['inline_object20']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaf/{id}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_tree_leaf_list(self, project, **kwargs):  # noqa: E501
-        """update_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf_list(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject23 inline_object23:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: MessageResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.update_tree_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
-
-    def update_tree_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
-        """update_tree_leaf_list  # noqa: E501
-
-        Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf_list_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param str ancestor: Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-        :param int type: Unique integer identifying a tree leaf type.
-        :param str name: Name of the tree leaf element.
-        :param str attribute: Attribute equality filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lt: Attribute less than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_lte: Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gt: Attribute greater than filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_gte: Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_contains: Attribute contains filter. Format is attribute1::value1,[attribute2::value2].
-        :param str attribute_distance: Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2].
-        :param str attribute_null: Attribute null filter. Returns elements for which a given attribute is not defined.
-        :param str operation: Set to \"count\" to return a count of objects instead of the objects.
-        :param int start: Pagination start index. Index of the first item in a larger list to return.
-        :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param InlineObject23 inline_object23:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'ancestor',
-            'type',
-            'name',
-            'attribute',
-            'attribute_lt',
-            'attribute_lte',
-            'attribute_gt',
-            'attribute_gte',
-            'attribute_contains',
-            'attribute_distance',
-            'attribute_null',
-            'operation',
-            'start',
-            'stop',
-            'inline_object23'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_tree_leaf_list" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `update_tree_leaf_list`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-        if 'ancestor' in local_var_params and local_var_params['ancestor'] is not None:  # noqa: E501
-            query_params.append(('ancestor', local_var_params['ancestor']))  # noqa: E501
-        if 'type' in local_var_params and local_var_params['type'] is not None:  # noqa: E501
-            query_params.append(('type', local_var_params['type']))  # noqa: E501
-        if 'name' in local_var_params and local_var_params['name'] is not None:  # noqa: E501
-            query_params.append(('name', local_var_params['name']))  # noqa: E501
-        if 'attribute' in local_var_params and local_var_params['attribute'] is not None:  # noqa: E501
-            query_params.append(('attribute', local_var_params['attribute']))  # noqa: E501
-        if 'attribute_lt' in local_var_params and local_var_params['attribute_lt'] is not None:  # noqa: E501
-            query_params.append(('attribute_lt', local_var_params['attribute_lt']))  # noqa: E501
-        if 'attribute_lte' in local_var_params and local_var_params['attribute_lte'] is not None:  # noqa: E501
-            query_params.append(('attribute_lte', local_var_params['attribute_lte']))  # noqa: E501
-        if 'attribute_gt' in local_var_params and local_var_params['attribute_gt'] is not None:  # noqa: E501
-            query_params.append(('attribute_gt', local_var_params['attribute_gt']))  # noqa: E501
-        if 'attribute_gte' in local_var_params and local_var_params['attribute_gte'] is not None:  # noqa: E501
-            query_params.append(('attribute_gte', local_var_params['attribute_gte']))  # noqa: E501
-        if 'attribute_contains' in local_var_params and local_var_params['attribute_contains'] is not None:  # noqa: E501
-            query_params.append(('attribute_contains', local_var_params['attribute_contains']))  # noqa: E501
-        if 'attribute_distance' in local_var_params and local_var_params['attribute_distance'] is not None:  # noqa: E501
-            query_params.append(('attribute_distance', local_var_params['attribute_distance']))  # noqa: E501
-        if 'attribute_null' in local_var_params and local_var_params['attribute_null'] is not None:  # noqa: E501
-            query_params.append(('attribute_null', local_var_params['attribute_null']))  # noqa: E501
-        if 'operation' in local_var_params and local_var_params['operation'] is not None:  # noqa: E501
-            query_params.append(('operation', local_var_params['operation']))  # noqa: E501
-        if 'start' in local_var_params and local_var_params['start'] is not None:  # noqa: E501
-            query_params.append(('start', local_var_params['start']))  # noqa: E501
-        if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
-            query_params.append(('stop', local_var_params['stop']))  # noqa: E501
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'inline_object23' in local_var_params:
-            body_params = local_var_params['inline_object23']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeaves/{project}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_tree_leaf_type(self, id, **kwargs):  # noqa: E501
-        """update_tree_leaf_type  # noqa: E501
-
-        Updates a tree leaf type.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf_type(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param InlineObject21 inline_object21:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: MessageResponse
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.update_tree_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
-
-    def update_tree_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
-        """update_tree_leaf_type  # noqa: E501
-
-        Updates a tree leaf type.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_tree_leaf_type_with_http_info(id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int id: A unique integer identifying an tree_leaf type. (required)
-        :param InlineObject21 inline_object21:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'id',
-            'inline_object21'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_tree_leaf_type" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'id' is set
-        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
-                                                        local_var_params['id'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `id` when calling `update_tree_leaf_type`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'id' in local_var_params:
-            path_params['id'] = local_var_params['id']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'inline_object21' in local_var_params:
-            body_params = local_var_params['inline_object21']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/TreeLeafType/{id}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
     def update_user(self, id, **kwargs):  # noqa: E501
         """update_user  # noqa: E501
 
@@ -13213,7 +11941,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization association. (required)
-        :param UNKNOWN_BASE_TYPE unknown_base_type:
+        :param UserUpdate user_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -13221,7 +11949,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: object
+        :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -13239,7 +11967,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization association. (required)
-        :param UNKNOWN_BASE_TYPE unknown_base_type:
+        :param UserUpdate user_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -13249,7 +11977,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(object, status_code(int), headers(HTTPHeaderDict))
+        :return: None
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -13258,7 +11986,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'unknown_base_type'
+            'user_update'
         ]
         all_params.extend(
             [
@@ -13296,15 +12024,15 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'unknown_base_type' in local_var_params:
-            body_params = local_var_params['unknown_base_type']
+        if 'user_update' in local_var_params:
+            body_params = local_var_params['user_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json', 'text/plain'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # HTTP header `Content-Type`
         header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'])  # noqa: E501
+            ['application/json'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
@@ -13317,7 +12045,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type=None,  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -13336,7 +12064,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param InlineObject24 inline_object24:
+        :param VersionSpec version_spec:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -13362,7 +12090,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param InlineObject24 inline_object24:
+        :param VersionSpec version_spec:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -13381,7 +12109,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'inline_object24'
+            'version_spec'
         ]
         all_params.extend(
             [
@@ -13419,8 +12147,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'inline_object24' in local_var_params:
-            body_params = local_var_params['inline_object24']
+        if 'version_spec' in local_var_params:
+            body_params = local_var_params['version_spec']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -13448,13 +12176,13 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def who_am_i(self, **kwargs):  # noqa: E501
-        """who_am_i  # noqa: E501
+    def whoami(self, **kwargs):  # noqa: E501
+        """whoami  # noqa: E501
 
         Returns the current user.  This is the equivalent of a whoami() operation.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.who_am_i(async_req=True)
+        >>> thread = api.whoami(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -13465,20 +12193,20 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: InlineResponse20014
+        :return: User
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.who_am_i_with_http_info(**kwargs)  # noqa: E501
+        return self.whoami_with_http_info(**kwargs)  # noqa: E501
 
-    def who_am_i_with_http_info(self, **kwargs):  # noqa: E501
-        """who_am_i  # noqa: E501
+    def whoami_with_http_info(self, **kwargs):  # noqa: E501
+        """whoami  # noqa: E501
 
         Returns the current user.  This is the equivalent of a whoami() operation.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.who_am_i_with_http_info(async_req=True)
+        >>> thread = api.whoami_with_http_info(async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -13491,7 +12219,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(InlineResponse20014, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(User, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -13513,7 +12241,7 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method who_am_i" % key
+                    " to method whoami" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
@@ -13545,7 +12273,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='InlineResponse20014',  # noqa: E501
+            response_type='User',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

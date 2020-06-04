@@ -36,17 +36,7 @@ class TestInlineResponse200(unittest.TestCase):
         # model = tator.models.inline_response200.InlineResponse200()  # noqa: E501
         if include_optional :
             return InlineResponse200(
-                columns = [
-                    null
-                    ], 
-                type = tator.models.inline_response_200_type.inline_response_200_type(
-                    color_map = { }, 
-                    description = '0', 
-                    dtype = 'box', 
-                    id = 56, 
-                    line_width = 1, 
-                    name = '0', 
-                    resourcetype = 'EntityTypeLocalizationBox', )
+                token = '0'
             )
         else :
             return InlineResponse200(

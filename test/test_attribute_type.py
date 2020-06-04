@@ -36,30 +36,25 @@ class TestAttributeType(unittest.TestCase):
         # model = tator.models.attribute_type.AttributeType()  # noqa: E501
         if include_optional :
             return AttributeType(
-                applies_to = 56, 
-                default = [
-                    1.337
-                    ], 
-                description = '0', 
-                dtype = 'geopos', 
-                name = '0', 
-                order = 56, 
-                lower_bound = 1.337, 
-                upper_bound = 1.337, 
                 autocomplete = None, 
                 choices = [
                     '0'
                     ], 
+                default = null, 
+                description = '0', 
+                dtype = 'bool', 
                 labels = [
                     '0'
                     ], 
+                maximum = 1.337, 
+                minimum = 1.337, 
+                name = '0', 
+                order = 56, 
+                required = True, 
                 use_current = True
             )
         else :
             return AttributeType(
-                applies_to = 56,
-                dtype = 'geopos',
-                name = '0',
         )
 
     def testAttributeType(self):

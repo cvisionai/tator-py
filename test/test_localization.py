@@ -46,14 +46,12 @@ class TestLocalization(unittest.TestCase):
                 modified = True, 
                 project = 56, 
                 thumbnail_image = '0', 
+                u = -1.0, 
+                v = -1.0, 
                 version = 56, 
                 width = 0.0, 
                 x = 0.0, 
-                y = 0.0, 
-                x0 = 0.0, 
-                x1 = 0.0, 
-                y0 = 0.0, 
-                y1 = 0.0
+                y = 0.0
             )
         else :
             return Localization(

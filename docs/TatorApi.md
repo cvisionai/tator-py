@@ -6,25 +6,25 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**algorithm_launch**](TatorApi.md#algorithm_launch) | **POST** /rest/AlgorithmLaunch/{project} | 
 [**create_analysis**](TatorApi.md#create_analysis) | **POST** /rest/Analyses/{project} | 
-[**create_attribute_type**](TatorApi.md#create_attribute_type) | **POST** /rest/AttributeTypes/{project} | 
+[**create_leaf**](TatorApi.md#create_leaf) | **POST** /rest/Leaves/{project} | 
+[**create_leaf_type**](TatorApi.md#create_leaf_type) | **POST** /rest/LeafTypes/{project} | 
 [**create_localization**](TatorApi.md#create_localization) | **POST** /rest/Localizations/{project} | 
 [**create_localization_type**](TatorApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
 [**create_media_type**](TatorApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
 [**create_membership**](TatorApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
 [**create_obtain_auth_token**](TatorApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
+[**create_progress_summary_api**](TatorApi.md#create_progress_summary_api) | **POST** /rest/ProgressSummary/{project} | 
 [**create_project**](TatorApi.md#create_project) | **POST** /rest/Projects | 
 [**create_state**](TatorApi.md#create_state) | **POST** /rest/States/{project} | 
 [**create_state_type**](TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
 [**create_temporary_file**](TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
-[**create_tree_leaf**](TatorApi.md#create_tree_leaf) | **POST** /rest/TreeLeaves/{project} | 
-[**create_tree_leaf_type**](TatorApi.md#create_tree_leaf_type) | **POST** /rest/TreeLeafTypes/{project} | 
 [**create_version**](TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
-[**delete_attribute_type**](TatorApi.md#delete_attribute_type) | **DELETE** /rest/AttributeType/{id} | 
-[**delete_frame_association**](TatorApi.md#delete_frame_association) | **DELETE** /rest/FrameAssociation/{id} | 
 [**delete_job**](TatorApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
 [**delete_job_group**](TatorApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
+[**delete_leaf**](TatorApi.md#delete_leaf) | **DELETE** /rest/Leaf/{id} | 
+[**delete_leaf_list**](TatorApi.md#delete_leaf_list) | **DELETE** /rest/Leaves/{project} | 
+[**delete_leaf_type**](TatorApi.md#delete_leaf_type) | **DELETE** /rest/LeafType/{id} | 
 [**delete_localization**](TatorApi.md#delete_localization) | **DELETE** /rest/Localization/{id} | 
-[**delete_localization_association**](TatorApi.md#delete_localization_association) | **DELETE** /rest/LocalizationAssociation/{id} | 
 [**delete_localization_list**](TatorApi.md#delete_localization_list) | **DELETE** /rest/Localizations/{project} | 
 [**delete_localization_type**](TatorApi.md#delete_localization_type) | **DELETE** /rest/LocalizationType/{id} | 
 [**delete_media**](TatorApi.md#delete_media) | **DELETE** /rest/Media/{id} | 
@@ -37,20 +37,16 @@ Method | HTTP request | Description
 [**delete_state_type**](TatorApi.md#delete_state_type) | **DELETE** /rest/StateType/{id} | 
 [**delete_temporary_file**](TatorApi.md#delete_temporary_file) | **DELETE** /rest/TemporaryFile/{id} | 
 [**delete_temporary_file_list**](TatorApi.md#delete_temporary_file_list) | **DELETE** /rest/TemporaryFiles/{project} | 
-[**delete_tree_leaf**](TatorApi.md#delete_tree_leaf) | **DELETE** /rest/TreeLeaf/{id} | 
-[**delete_tree_leaf_list**](TatorApi.md#delete_tree_leaf_list) | **DELETE** /rest/TreeLeaves/{project} | 
-[**delete_tree_leaf_type**](TatorApi.md#delete_tree_leaf_type) | **DELETE** /rest/TreeLeafType/{id} | 
 [**delete_version**](TatorApi.md#delete_version) | **DELETE** /rest/Version/{id} | 
 [**get_algorithm_list**](TatorApi.md#get_algorithm_list) | **GET** /rest/Algorithms/{project} | 
 [**get_analysis_list**](TatorApi.md#get_analysis_list) | **GET** /rest/Analyses/{project} | 
-[**get_attribute_type**](TatorApi.md#get_attribute_type) | **GET** /rest/AttributeType/{id} | 
-[**get_attribute_type_list**](TatorApi.md#get_attribute_type_list) | **GET** /rest/AttributeTypes/{project} | 
 [**get_clip**](TatorApi.md#get_clip) | **GET** /rest/GetClip/{id} | 
-[**get_entity_type_schema**](TatorApi.md#get_entity_type_schema) | **GET** /rest/EntityTypeSchema/{id} | 
 [**get_frame**](TatorApi.md#get_frame) | **GET** /rest/GetFrame/{id} | 
-[**get_frame_association**](TatorApi.md#get_frame_association) | **GET** /rest/FrameAssociation/{id} | 
+[**get_leaf**](TatorApi.md#get_leaf) | **GET** /rest/Leaf/{id} | 
+[**get_leaf_list**](TatorApi.md#get_leaf_list) | **GET** /rest/Leaves/{project} | 
+[**get_leaf_type**](TatorApi.md#get_leaf_type) | **GET** /rest/LeafType/{id} | 
+[**get_leaf_type_list**](TatorApi.md#get_leaf_type_list) | **GET** /rest/LeafTypes/{project} | 
 [**get_localization**](TatorApi.md#get_localization) | **GET** /rest/Localization/{id} | 
-[**get_localization_association**](TatorApi.md#get_localization_association) | **GET** /rest/LocalizationAssociation/{id} | 
 [**get_localization_list**](TatorApi.md#get_localization_list) | **GET** /rest/Localizations/{project} | 
 [**get_localization_type**](TatorApi.md#get_localization_type) | **GET** /rest/LocalizationType/{id} | 
 [**get_localization_type_list**](TatorApi.md#get_localization_type_list) | **GET** /rest/LocalizationTypes/{project} | 
@@ -72,12 +68,9 @@ Method | HTTP request | Description
 [**get_state_type_list**](TatorApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
 [**get_temporary_file**](TatorApi.md#get_temporary_file) | **GET** /rest/TemporaryFile/{id} | 
 [**get_temporary_file_list**](TatorApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
-[**get_tree_leaf**](TatorApi.md#get_tree_leaf) | **GET** /rest/TreeLeaf/{id} | 
-[**get_tree_leaf_list**](TatorApi.md#get_tree_leaf_list) | **GET** /rest/TreeLeaves/{project} | 
-[**get_tree_leaf_type**](TatorApi.md#get_tree_leaf_type) | **GET** /rest/TreeLeafType/{id} | 
-[**get_tree_leaf_type_list**](TatorApi.md#get_tree_leaf_type_list) | **GET** /rest/TreeLeafTypes/{project} | 
 [**get_user**](TatorApi.md#get_user) | **GET** /rest/User/{id} | 
 [**get_version**](TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
+[**leaf_suggestion**](TatorApi.md#leaf_suggestion) | **GET** /rest/Leaves/Suggestion/{ancestor}/{project} | 
 [**notify**](TatorApi.md#notify) | **POST** /rest/Notify | 
 [**partial_update_save_video_api**](TatorApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
 [**progress**](TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
@@ -86,11 +79,10 @@ Method | HTTP request | Description
 [**save_image**](TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
 [**save_video**](TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
 [**transcode**](TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
-[**tree_leaf_suggestion**](TatorApi.md#tree_leaf_suggestion) | **GET** /rest/TreeLeaves/Suggestion/{ancestor}/{project} | 
-[**update_attribute_type**](TatorApi.md#update_attribute_type) | **PATCH** /rest/AttributeType/{id} | 
-[**update_frame_association**](TatorApi.md#update_frame_association) | **PATCH** /rest/FrameAssociation/{id} | 
+[**update_leaf**](TatorApi.md#update_leaf) | **PATCH** /rest/Leaf/{id} | 
+[**update_leaf_list**](TatorApi.md#update_leaf_list) | **PATCH** /rest/Leaves/{project} | 
+[**update_leaf_type**](TatorApi.md#update_leaf_type) | **PATCH** /rest/LeafType/{id} | 
 [**update_localization**](TatorApi.md#update_localization) | **PATCH** /rest/Localization/{id} | 
-[**update_localization_association**](TatorApi.md#update_localization_association) | **PATCH** /rest/LocalizationAssociation/{id} | 
 [**update_localization_list**](TatorApi.md#update_localization_list) | **PATCH** /rest/Localizations/{project} | 
 [**update_localization_type**](TatorApi.md#update_localization_type) | **PATCH** /rest/LocalizationType/{id} | 
 [**update_media**](TatorApi.md#update_media) | **PATCH** /rest/Media/{id} | 
@@ -101,16 +93,13 @@ Method | HTTP request | Description
 [**update_state**](TatorApi.md#update_state) | **PATCH** /rest/State/{id} | 
 [**update_state_list**](TatorApi.md#update_state_list) | **PATCH** /rest/States/{project} | 
 [**update_state_type**](TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
-[**update_tree_leaf**](TatorApi.md#update_tree_leaf) | **PATCH** /rest/TreeLeaf/{id} | 
-[**update_tree_leaf_list**](TatorApi.md#update_tree_leaf_list) | **PATCH** /rest/TreeLeaves/{project} | 
-[**update_tree_leaf_type**](TatorApi.md#update_tree_leaf_type) | **PATCH** /rest/TreeLeafType/{id} | 
 [**update_user**](TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
 [**update_version**](TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
-[**who_am_i**](TatorApi.md#who_am_i) | **GET** /rest/User/GetCurrent | 
+[**whoami**](TatorApi.md#whoami) | **GET** /rest/User/GetCurrent | 
 
 
 # **algorithm_launch**
-> AlgorithmLaunchResponse algorithm_launch(project, algorithm_launch_spec=algorithm_launch_spec)
+> AlgorithmLaunch algorithm_launch(project, algorithm_launch_spec=algorithm_launch_spec)
 
 
 
@@ -169,7 +158,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AlgorithmLaunchResponse**](AlgorithmLaunchResponse.md)
+[**AlgorithmLaunch**](AlgorithmLaunch.md)
 
 ### Authorization
 
@@ -194,7 +183,7 @@ Name | Type | Description  | Notes
 
 
 
-Create analysis for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -231,7 +220,7 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-analysis_spec = {"data_type":1,"name":"Boxes"} # AnalysisSpec |  (optional)
+analysis_spec = {"name":"Boxes"} # AnalysisSpec |  (optional)
 
     try:
         api_response = api_instance.create_analysis(project, analysis_spec=analysis_spec)
@@ -269,12 +258,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_attribute_type**
-> CreateResponse create_attribute_type(project, attribute_type_spec=attribute_type_spec)
+# **create_leaf**
+> CreateResponse create_leaf(project, leaf=leaf)
 
 
 
-Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -311,13 +300,13 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-attribute_type_spec = {"applies_to":1,"default":false,"dtype":"bool","name":"My Boolean"} # AttributeTypeSpec |  (optional)
+leaf = [tator.Leaf()] # list[Leaf] |  (optional)
 
     try:
-        api_response = api_instance.create_attribute_type(project, attribute_type_spec=attribute_type_spec)
+        api_response = api_instance.create_leaf(project, leaf=leaf)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->create_attribute_type: %s\n" % e)
+        print("Exception when calling TatorApi->create_leaf: %s\n" % e)
 ```
 
 ### Parameters
@@ -325,7 +314,7 @@ attribute_type_spec = {"applies_to":1,"default":false,"dtype":"bool","name":"My 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **attribute_type_spec** | [**AttributeTypeSpec**](AttributeTypeSpec.md)|  | [optional] 
+ **leaf** | [**list[Leaf]**](Leaf.md)|  | [optional] 
 
 ### Return type
 
@@ -343,18 +332,18 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Successful creation of attribute type. |  -  |
+**201** | Successful creation of leaf. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_localization**
-> MessageResponse create_localization(project, localization_spec=localization_spec)
+# **create_leaf_type**
+> CreateResponse create_leaf_type(project, leaf_type_spec=leaf_type_spec)
 
 
 
-Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -391,7 +380,87 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-localization_spec = {"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2} # LocalizationSpec |  (optional)
+leaf_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"name":"My leaf type"} # LeafTypeSpec |  (optional)
+
+    try:
+        api_response = api_instance.create_leaf_type(project, leaf_type_spec=leaf_type_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->create_leaf_type: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **leaf_type_spec** | [**LeafTypeSpec**](LeafTypeSpec.md)|  | [optional] 
+
+### Return type
+
+[**CreateResponse**](CreateResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful creation of leaf type. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **create_localization**
+> MessageResponse create_localization(project, localization_spec=localization_spec)
+
+
+
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2}] # list[LocalizationSpec] |  (optional)
 
     try:
         api_response = api_instance.create_localization(project, localization_spec=localization_spec)
@@ -405,7 +474,7 @@ localization_spec = {"My First Attribute":"value1","My Second Attribute":"value2
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **localization_spec** | [**LocalizationSpec**](LocalizationSpec.md)|  | [optional] 
+ **localization_spec** | [**list[LocalizationSpec]**](LocalizationSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -430,11 +499,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization_type**
-> InlineResponse201 create_localization_type(project, inline_object2=inline_object2)
+> CreateResponse create_localization_type(project, localization_type_spec=localization_type_spec)
 
 
 
-Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -471,10 +540,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object2 = tator.InlineObject2() # InlineObject2 |  (optional)
+localization_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"box","media_types":[1],"name":"My localization type"} # LocalizationTypeSpec |  (optional)
 
     try:
-        api_response = api_instance.create_localization_type(project, inline_object2=inline_object2)
+        api_response = api_instance.create_localization_type(project, localization_type_spec=localization_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_localization_type: %s\n" % e)
@@ -485,11 +554,11 @@ inline_object2 = tator.InlineObject2() # InlineObject2 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object2** | [**InlineObject2**](InlineObject2.md)|  | [optional] 
+ **localization_type_spec** | [**LocalizationTypeSpec**](LocalizationTypeSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -510,11 +579,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_media_type**
-> InlineResponse201 create_media_type(project, inline_object5=inline_object5)
+> CreateResponse create_media_type(project, media_type_spec=media_type_spec)
 
 
 
-Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -551,10 +620,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object5 = tator.InlineObject5() # InlineObject5 |  (optional)
+media_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"video","name":"My media type"} # MediaTypeSpec |  (optional)
 
     try:
-        api_response = api_instance.create_media_type(project, inline_object5=inline_object5)
+        api_response = api_instance.create_media_type(project, media_type_spec=media_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_media_type: %s\n" % e)
@@ -565,11 +634,11 @@ inline_object5 = tator.InlineObject5() # InlineObject5 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object5** | [**InlineObject5**](InlineObject5.md)|  | [optional] 
+ **media_type_spec** | [**MediaTypeSpec**](MediaTypeSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -590,7 +659,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_membership**
-> InlineResponse2011 create_membership(project, inline_object8=inline_object8)
+> CreateResponse create_membership(project, membership_spec=membership_spec)
 
 
 
@@ -631,10 +700,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object8 = tator.InlineObject8() # InlineObject8 |  (optional)
+membership_spec = {"permission":"Full Control","user":1} # MembershipSpec |  (optional)
 
     try:
-        api_response = api_instance.create_membership(project, inline_object8=inline_object8)
+        api_response = api_instance.create_membership(project, membership_spec=membership_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_membership: %s\n" % e)
@@ -645,11 +714,11 @@ inline_object8 = tator.InlineObject8() # InlineObject8 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object8** | [**InlineObject8**](InlineObject8.md)|  | [optional] 
+ **membership_spec** | [**MembershipSpec**](MembershipSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2011**](InlineResponse2011.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -670,7 +739,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_obtain_auth_token**
-> InlineResponse20010 create_obtain_auth_token(inline_object18=inline_object18)
+> InlineResponse200 create_obtain_auth_token(inline_object=inline_object)
 
 
 
@@ -708,10 +777,10 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    inline_object18 = tator.InlineObject18() # InlineObject18 |  (optional)
+    inline_object = tator.InlineObject() # InlineObject |  (optional)
 
     try:
-        api_response = api_instance.create_obtain_auth_token(inline_object18=inline_object18)
+        api_response = api_instance.create_obtain_auth_token(inline_object=inline_object)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_obtain_auth_token: %s\n" % e)
@@ -721,11 +790,11 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inline_object18** | [**InlineObject18**](InlineObject18.md)|  | [optional] 
+ **inline_object** | [**InlineObject**](InlineObject.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse20010**](InlineResponse20010.md)
+[**InlineResponse200**](InlineResponse200.md)
 
 ### Authorization
 
@@ -744,8 +813,88 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **create_progress_summary_api**
+> MessageResponse create_progress_summary_api(project, progress_summary_spec=progress_summary_spec)
+
+
+
+Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+progress_summary_spec = tator.ProgressSummarySpec() # ProgressSummarySpec |  (optional)
+
+    try:
+        api_response = api_instance.create_progress_summary_api(project, progress_summary_spec=progress_summary_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->create_progress_summary_api: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **progress_summary_spec** | [**ProgressSummarySpec**](ProgressSummarySpec.md)|  | [optional] 
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful creation of progress summary message. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **create_project**
-> InlineResponse2012 create_project(inline_object11=inline_object11)
+> CreateResponse create_project(project_spec=project_spec)
 
 
 
@@ -785,10 +934,10 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    inline_object11 = tator.InlineObject11() # InlineObject11 |  (optional)
+    project_spec = {"name":"My Project","summary":"First project"} # ProjectSpec |  (optional)
 
     try:
-        api_response = api_instance.create_project(inline_object11=inline_object11)
+        api_response = api_instance.create_project(project_spec=project_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_project: %s\n" % e)
@@ -798,11 +947,11 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inline_object11** | [**InlineObject11**](InlineObject11.md)|  | [optional] 
+ **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2012**](InlineResponse2012.md)
+[**CreateResponse**](CreateResponse.md)
 
 ### Authorization
 
@@ -823,11 +972,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state**
-> CreateResponse create_state(project, request_body=request_body)
+> CreateResponse create_state(project, state_spec=state_spec)
 
 
 
-Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -864,10 +1013,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-request_body = {"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1} # dict(str, object) |  (optional)
+state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1}] # list[StateSpec] |  (optional)
 
     try:
-        api_response = api_instance.create_state(project, request_body=request_body)
+        api_response = api_instance.create_state(project, state_spec=state_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_state: %s\n" % e)
@@ -878,7 +1027,7 @@ request_body = {"My First Attribute":"value1","My Second Attribute":"value2","fr
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **request_body** | [**dict(str, object)**](object.md)|  | [optional] 
+ **state_spec** | [**list[StateSpec]**](StateSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -903,11 +1052,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state_type**
-> CreateResponse create_state_type(project, inline_object15=inline_object15)
+> CreateResponse create_state_type(project, state_type_spec=state_type_spec)
 
 
 
-Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -944,10 +1093,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object15 = tator.InlineObject15() # InlineObject15 |  (optional)
+state_type_spec = {"association":"Frame","attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"media_types":[1],"name":"My state type"} # StateTypeSpec |  (optional)
 
     try:
-        api_response = api_instance.create_state_type(project, inline_object15=inline_object15)
+        api_response = api_instance.create_state_type(project, state_type_spec=state_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_state_type: %s\n" % e)
@@ -958,7 +1107,7 @@ inline_object15 = tator.InlineObject15() # InlineObject15 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object15** | [**InlineObject15**](InlineObject15.md)|  | [optional] 
+ **state_type_spec** | [**StateTypeSpec**](StateTypeSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -983,7 +1132,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_temporary_file**
-> object create_temporary_file(project, inline_object17=inline_object17)
+> CreateResponse create_temporary_file(project, temporary_file_spec=temporary_file_spec)
 
 
 
@@ -1024,10 +1173,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object17 = tator.InlineObject17() # InlineObject17 |  (optional)
+temporary_file_spec = tator.TemporaryFileSpec() # TemporaryFileSpec |  (optional)
 
     try:
-        api_response = api_instance.create_temporary_file(project, inline_object17=inline_object17)
+        api_response = api_instance.create_temporary_file(project, temporary_file_spec=temporary_file_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_temporary_file: %s\n" % e)
@@ -1038,85 +1187,7 @@ inline_object17 = tator.InlineObject17() # InlineObject17 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object17** | [**InlineObject17**](InlineObject17.md)|  | [optional] 
-
-### Return type
-
-**object**
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **create_tree_leaf**
-> CreateResponse create_tree_leaf(project, request_body=request_body)
-
-
-
-Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-request_body = None # dict(str, object) |  (optional)
-
-    try:
-        api_response = api_instance.create_tree_leaf(project, request_body=request_body)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->create_tree_leaf: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **request_body** | [**dict(str, object)**](object.md)|  | [optional] 
+ **temporary_file_spec** | [**TemporaryFileSpec**](TemporaryFileSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -1134,94 +1205,14 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Successful creation of tree leaf. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **create_tree_leaf_type**
-> CreateResponse create_tree_leaf_type(project, inline_object22=inline_object22)
-
-
-
-Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-inline_object22 = tator.InlineObject22() # InlineObject22 |  (optional)
-
-    try:
-        api_response = api_instance.create_tree_leaf_type(project, inline_object22=inline_object22)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->create_tree_leaf_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **inline_object22** | [**InlineObject22**](InlineObject22.md)|  | [optional] 
-
-### Return type
-
-[**CreateResponse**](CreateResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Successful creation of tree leaf type. |  -  |
+**201** | Successful creation of temporary file. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_version**
-> CreateResponse create_version(project, inline_object25=inline_object25)
+> CreateResponse create_version(project, version_spec=version_spec)
 
 
 
@@ -1262,10 +1253,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object25 = tator.InlineObject25() # InlineObject25 |  (optional)
+version_spec = {"name":"My new version"} # VersionSpec |  (optional)
 
     try:
-        api_response = api_instance.create_version(project, inline_object25=inline_object25)
+        api_response = api_instance.create_version(project, version_spec=version_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_version: %s\n" % e)
@@ -1276,7 +1267,7 @@ inline_object25 = tator.InlineObject25() # InlineObject25 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object25** | [**InlineObject25**](InlineObject25.md)|  | [optional] 
+ **version_spec** | [**VersionSpec**](VersionSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -1295,160 +1286,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Successful creation of version. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_attribute_type**
-> delete_attribute_type(id)
-
-
-
-Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an attribute type.
-
-    try:
-        api_instance.delete_attribute_type(id)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_attribute_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an attribute type. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful deletion of attribute type. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_frame_association**
-> delete_frame_association(id)
-
-
-
-Modify a frame association.  Frame associations specify which frames that a `State` object applies to.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a frame association.
-
-    try:
-        api_instance.delete_frame_association(id)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_frame_association: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a frame association. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful delete of frame association. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -1610,12 +1447,272 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **delete_leaf**
+> delete_leaf(id)
+
+
+
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a leaf.
+
+    try:
+        api_instance.delete_leaf(id)
+    except ApiException as e:
+        print("Exception when calling TatorApi->delete_leaf: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a leaf. | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | Successful deletion of leaf. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_leaf_list**
+> MessageResponse delete_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+
+
+
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a leaf type. (optional)
+name = 'name_example' # str | Name of the leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+    try:
+        api_response = api_instance.delete_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->delete_leaf_list: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **ancestor** | **str**| Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
+ **type** | **int**| Unique integer identifying a leaf type. | [optional] 
+ **name** | **str**| Name of the leaf element. | [optional] 
+ **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
+ **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
+ **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
+ **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
+ **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | Successful deletion of leaf list. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_leaf_type**
+> delete_leaf_type(id)
+
+
+
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying an leaf type.
+
+    try:
+        api_instance.delete_leaf_type(id)
+    except ApiException as e:
+        print("Exception when calling TatorApi->delete_leaf_type: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying an leaf type. | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | Successful deletion of leaf type. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **delete_localization**
 > delete_localization(id)
 
 
 
-Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -1687,89 +1784,12 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **delete_localization_association**
-> delete_localization_association(id)
-
-
-
-Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a localization association.
-
-    try:
-        api_instance.delete_localization_association(id)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_localization_association: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a localization association. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful delete of localization association. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **delete_localization_list**
 > MessageResponse delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
-Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -1809,8 +1829,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -1840,8 +1860,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -1883,7 +1903,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -1960,7 +1980,7 @@ void (empty response body)
 
 
 
-Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2037,7 +2057,7 @@ void (empty response body)
 
 
 
-Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2149,7 +2169,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2380,7 +2400,7 @@ void (empty response body)
 
 
 
-Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2457,7 +2477,7 @@ void (empty response body)
 
 
 
-Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2497,8 +2517,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -2528,8 +2548,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -2571,7 +2591,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -2684,7 +2704,7 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    id = 'id_example' # str | A unique integer value identifying this temporary file.
+    id = 56 # int | A unique integer identifying a temporary file.
 
     try:
         api_instance.delete_temporary_file(id)
@@ -2696,7 +2716,7 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| A unique integer value identifying this temporary file. | 
+ **id** | **int**| A unique integer identifying a temporary file. | 
 
 ### Return type
 
@@ -2709,12 +2729,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** |  |  -  |
+**204** | Successful deletion of temporary file. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2786,270 +2808,11 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_tree_leaf**
-> delete_tree_leaf(id)
-
-
-
-Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a tree leaf.
-
-    try:
-        api_instance.delete_tree_leaf(id)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_tree_leaf: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a tree leaf. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Successful deletion of tree leaf. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_tree_leaf_list**
-> MessageResponse delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
-
-
-
-Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
-type = 56 # int | Unique integer identifying a tree leaf type. (optional)
-name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-
-    try:
-        api_response = api_instance.delete_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_tree_leaf_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **ancestor** | **str**| Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
- **type** | **int**| Unique integer identifying a tree leaf type. | [optional] 
- **name** | **str**| Name of the tree leaf element. | [optional] 
- **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
- **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
- **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
- **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
- **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful deletion of tree leaf list. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_tree_leaf_type**
-> delete_tree_leaf_type(id)
-
-
-
-Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an tree_leaf type.
-
-    try:
-        api_instance.delete_tree_leaf_type(id)
-    except ApiException as e:
-        print("Exception when calling TatorApi->delete_tree_leaf_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an tree_leaf type. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful deletion of tree leaf type. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -3133,7 +2896,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_algorithm_list**
-> list[object] get_algorithm_list(project)
+> list[Algorithm] get_algorithm_list(project)
 
 
 
@@ -3190,7 +2953,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**list[object]**
+[**list[Algorithm]**](Algorithm.md)
 
 ### Authorization
 
@@ -3211,11 +2974,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_analysis_list**
-> list[object] get_analysis_list(project)
+> list[Analysis] get_analysis_list(project)
 
 
 
-List analyses for a project.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3268,7 +3031,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**list[object]**
+[**list[Analysis]**](Analysis.md)
 
 ### Authorization
 
@@ -3288,170 +3051,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_attribute_type**
-> AttributeType get_attribute_type(id)
-
-
-
-Interact with an individual attribute type.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an attribute type.
-
-    try:
-        api_response = api_instance.get_attribute_type(id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_attribute_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an attribute type. | 
-
-### Return type
-
-[**AttributeType**](AttributeType.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of attribute type. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_attribute_type_list**
-> list[OneOfobjectobjectobjectobjectobjectobjectobject] get_attribute_type_list(project, applies_to=applies_to)
-
-
-
-Create or list attribute types.  Attribute types are used to define data types that describe entities. An attribute may give information about a media, localization, or state entity  in the form of a boolean, integer, float, string, enumeration, datetime,  or geoposition. Besides the data type, attribute types define attribute defaults, bounds, and other constraints.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-applies_to = 56 # int | Unique integer identifying the entity type that this attribute describes. (optional)
-
-    try:
-        api_response = api_instance.get_attribute_type_list(project, applies_to=applies_to)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_attribute_type_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **applies_to** | **int**| Unique integer identifying the entity type that this attribute describes. | [optional] 
-
-### Return type
-
-[**list[OneOfobjectobjectobjectobjectobjectobjectobject]**](OneOfobjectobjectobjectobjectobjectobjectobject.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of attribute type list. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_clip**
 > file get_clip(id, frame_ranges, quality=quality)
 
 
 
-Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3528,90 +3133,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_entity_type_schema**
-> EntityTypeSchema get_entity_type_schema(id)
-
-
-
-Output required fields for inserting a new object based on an EntityType.  Various REST calls take a polymorphic argument, which is dependent on what type is being added. This method provides a way to interrogate the service provider for what fields are required for a given addition.  The parameter to this function is the type id (i.e. the EntityTypeState or EntityTypeLocalization*** object that applies to a given media type.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an entity type.
-
-    try:
-        api_response = api_instance.get_entity_type_schema(id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_entity_type_schema: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an entity type. | 
-
-### Return type
-
-[**EntityTypeSchema**](EntityTypeSchema.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of entity type schema. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_frame**
 > file get_frame(id, frames=frames, tile=tile, roi=roi, animate=animate, quality=quality)
 
 
 
-Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3694,12 +3221,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_frame_association**
-> dict(str, object) get_frame_association(id)
+# **get_leaf**
+> Leaf get_leaf(id)
 
 
 
-Modify a frame association.  Frame associations specify which frames that a `State` object applies to.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3735,24 +3262,24 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a frame association.
+    id = 56 # int | A unique integer identifying a leaf.
 
     try:
-        api_response = api_instance.get_frame_association(id)
+        api_response = api_instance.get_leaf(id)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->get_frame_association: %s\n" % e)
+        print("Exception when calling TatorApi->get_leaf: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a frame association. | 
+ **id** | **int**| A unique integer identifying a leaf. | 
 
 ### Return type
 
-**dict(str, object)**
+[**Leaf**](Leaf.md)
 
 ### Authorization
 
@@ -3766,7 +3293,269 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful retrieval of frame association. |  -  |
+**200** | Successful retrieval of leaf. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_leaf_list**
+> list[Leaf] get_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+
+
+
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a leaf type. (optional)
+name = 'name_example' # str | Name of the leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+
+    try:
+        api_response = api_instance.get_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_leaf_list: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **ancestor** | **str**| Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
+ **type** | **int**| Unique integer identifying a leaf type. | [optional] 
+ **name** | **str**| Name of the leaf element. | [optional] 
+ **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
+ **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
+ **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
+ **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
+ **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+
+### Return type
+
+[**list[Leaf]**](Leaf.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of leaf list. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_leaf_type**
+> LeafType get_leaf_type(id)
+
+
+
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying an leaf type.
+
+    try:
+        api_response = api_instance.get_leaf_type(id)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_leaf_type: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying an leaf type. | 
+
+### Return type
+
+[**LeafType**](LeafType.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of leaf type. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_leaf_type_list**
+> list[LeafType] get_leaf_type_list(project)
+
+
+
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+
+    try:
+        api_response = api_instance.get_leaf_type_list(project)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_leaf_type_list: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+
+### Return type
+
+[**list[LeafType]**](LeafType.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of leaf type list. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -3777,7 +3566,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3850,90 +3639,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_localization_association**
-> dict(str, object) get_localization_association(id)
-
-
-
-Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a localization association.
-
-    try:
-        api_response = api_instance.get_localization_association(id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_localization_association: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a localization association. | 
-
-### Return type
-
-**dict(str, object)**
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of localization association. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_localization_list**
-> list[LocalizationElement] get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[Localization] get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
-Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -3973,8 +3684,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -4004,8 +3715,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -4022,7 +3733,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[LocalizationElement]**](LocalizationElement.md)
+[**list[Localization]**](Localization.md)
 
 ### Authorization
 
@@ -4043,11 +3754,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_type**
-> InlineResponse200 get_localization_type(id)
+> LocalizationType get_localization_type(id)
 
 
 
-Interact with an individual localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4100,7 +3811,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**LocalizationType**](LocalizationType.md)
 
 ### Authorization
 
@@ -4121,11 +3832,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_type_list**
-> list[InlineResponse200] get_localization_type_list(project, media_id=media_id, type=type)
+> list[LocalizationType] get_localization_type_list(project, media_id=media_id, type=type)
 
 
 
-Create or retrieve localization types.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4182,7 +3893,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse200]**](InlineResponse200.md)
+[**list[LocalizationType]**](LocalizationType.md)
 
 ### Authorization
 
@@ -4203,11 +3914,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media**
-> InlineResponse2001 get_media(id)
+> Media get_media(id)
 
 
 
-Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4260,7 +3971,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2001**](InlineResponse2001.md)
+[**Media**](Media.md)
 
 ### Authorization
 
@@ -4281,11 +3992,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_list**
-> list[InlineResponse2001] get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[Media] get_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
-Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4372,7 +4083,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2001]**](InlineResponse2001.md)
+[**list[Media]**](Media.md)
 
 ### Authorization
 
@@ -4393,7 +4104,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_next**
-> InlineResponse2002 get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MediaNext get_media_next(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -4484,7 +4195,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2002**](InlineResponse2002.md)
+[**MediaNext**](MediaNext.md)
 
 ### Authorization
 
@@ -4505,7 +4216,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_prev**
-> InlineResponse2003 get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MediaPrev get_media_prev(id, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -4596,7 +4307,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2003**](InlineResponse2003.md)
+[**MediaPrev**](MediaPrev.md)
 
 ### Authorization
 
@@ -4617,7 +4328,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_sections**
-> dict(str, InlineResponse2004) get_media_sections(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> dict(str, object) get_media_sections(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -4708,7 +4419,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**dict(str, InlineResponse2004)**](InlineResponse2004.md)
+**dict(str, object)**
 
 ### Authorization
 
@@ -4729,11 +4440,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_type**
-> InlineResponse2005 get_media_type(id)
+> MediaType get_media_type(id)
 
 
 
-Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4786,7 +4497,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2005**](InlineResponse2005.md)
+[**MediaType**](MediaType.md)
 
 ### Authorization
 
@@ -4807,11 +4518,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_type_list**
-> list[InlineResponse2005] get_media_type_list(project)
+> list[MediaType] get_media_type_list(project)
 
 
 
-Create or retrieve localization types.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -4864,7 +4575,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2005]**](InlineResponse2005.md)
+[**list[MediaType]**](MediaType.md)
 
 ### Authorization
 
@@ -4885,7 +4596,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_membership**
-> InlineResponse2006 get_membership(id)
+> Membership get_membership(id)
 
 
 
@@ -4942,7 +4653,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2006**](InlineResponse2006.md)
+[**Membership**](Membership.md)
 
 ### Authorization
 
@@ -4963,7 +4674,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_membership_list**
-> list[InlineResponse2006] get_membership_list(project)
+> list[Membership] get_membership_list(project)
 
 
 
@@ -5020,7 +4731,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2006]**](InlineResponse2006.md)
+[**list[Membership]**](Membership.md)
 
 ### Authorization
 
@@ -5041,7 +4752,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project**
-> InlineResponse2007 get_project(id)
+> Project get_project(id)
 
 
 
@@ -5098,7 +4809,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2007**](InlineResponse2007.md)
+[**Project**](Project.md)
 
 ### Authorization
 
@@ -5119,7 +4830,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_list**
-> list[InlineResponse2007] get_project_list()
+> list[Project] get_project_list()
 
 
 
@@ -5172,7 +4883,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[InlineResponse2007]**](InlineResponse2007.md)
+[**list[Project]**](Project.md)
 
 ### Authorization
 
@@ -5301,7 +5012,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -5373,11 +5084,11 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_list**
-> list[InlineResponse2009] get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[State] get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
-Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -5417,8 +5128,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -5448,8 +5159,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -5466,7 +5177,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2009]**](InlineResponse2009.md)
+[**list[State]**](State.md)
 
 ### Authorization
 
@@ -5487,11 +5198,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_type**
-> InlineResponse2008 get_state_type(id)
+> StateType get_state_type(id)
 
 
 
-Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -5544,7 +5255,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse2008**](InlineResponse2008.md)
+[**StateType**](StateType.md)
 
 ### Authorization
 
@@ -5565,11 +5276,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state_type_list**
-> list[InlineResponse2008] get_state_type_list(project, media_id=media_id, type=type)
+> list[StateType] get_state_type_list(project, media_id=media_id, type=type)
 
 
 
-Create or retrieve state types.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -5626,7 +5337,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse2008]**](InlineResponse2008.md)
+[**list[StateType]**](StateType.md)
 
 ### Authorization
 
@@ -5647,7 +5358,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_temporary_file**
-> object get_temporary_file(id)
+> TemporaryFile get_temporary_file(id)
 
 
 
@@ -5687,7 +5398,7 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    id = 'id_example' # str | A unique integer value identifying this temporary file.
+    id = 56 # int | A unique integer identifying a temporary file.
 
     try:
         api_response = api_instance.get_temporary_file(id)
@@ -5700,11 +5411,11 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**| A unique integer value identifying this temporary file. | 
+ **id** | **int**| A unique integer identifying a temporary file. | 
 
 ### Return type
 
-**object**
+[**TemporaryFile**](TemporaryFile.md)
 
 ### Authorization
 
@@ -5713,17 +5424,19 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successful retrieval of temporary file. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_temporary_file_list**
-> object get_temporary_file_list(project, expired=expired)
+> list[TemporaryFile] get_temporary_file_list(project, expired=expired)
 
 
 
@@ -5782,83 +5495,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_tree_leaf**
-> InlineResponse20011 get_tree_leaf(id)
-
-
-
-Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a tree leaf.
-
-    try:
-        api_response = api_instance.get_tree_leaf(id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_tree_leaf: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a tree leaf. | 
-
-### Return type
-
-[**InlineResponse20011**](InlineResponse20011.md)
+[**list[TemporaryFile]**](TemporaryFile.md)
 
 ### Authorization
 
@@ -5872,276 +5509,14 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful retrieval of tree leaf. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_tree_leaf_list**
-> list[InlineResponse20011] get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
-
-
-
-Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
-type = 56 # int | Unique integer identifying a tree leaf type. (optional)
-name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-
-    try:
-        api_response = api_instance.get_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_tree_leaf_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **ancestor** | **str**| Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
- **type** | **int**| Unique integer identifying a tree leaf type. | [optional] 
- **name** | **str**| Name of the tree leaf element. | [optional] 
- **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
- **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
- **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
- **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
- **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
-
-### Return type
-
-[**list[InlineResponse20011]**](InlineResponse20011.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of tree leaf list. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_tree_leaf_type**
-> InlineResponse20012 get_tree_leaf_type(id)
-
-
-
-Interact with individual tree leaf type.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an tree_leaf type.
-
-    try:
-        api_response = api_instance.get_tree_leaf_type(id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_tree_leaf_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an tree_leaf type. | 
-
-### Return type
-
-[**InlineResponse20012**](InlineResponse20012.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of tree leaf type. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_tree_leaf_type_list**
-> list[InlineResponse20012] get_tree_leaf_type_list(project)
-
-
-
-Interact with tree leaf type list.  A tree leaf type is the metadata definition object for a tree leaf. It includes name, description, and (like other entity types) may have any number of attribute types associated with it.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-
-    try:
-        api_response = api_instance.get_tree_leaf_type_list(project)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->get_tree_leaf_type_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
-
-### Return type
-
-[**list[InlineResponse20012]**](InlineResponse20012.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of tree leaf type list. |  -  |
+**200** | Successful retrieval of temporary file list. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_user**
-> object get_user(id)
+> User get_user(id)
 
 
 
@@ -6198,7 +5573,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+[**User**](User.md)
 
 ### Authorization
 
@@ -6207,17 +5582,19 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**200** | Successful retrieval of user. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_version**
-> InlineResponse20015 get_version(id)
+> Version get_version(id)
 
 
 
@@ -6274,7 +5651,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse20015**](InlineResponse20015.md)
+[**Version**](Version.md)
 
 ### Authorization
 
@@ -6294,8 +5671,92 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **leaf_suggestion**
+> list[LeafSuggestion] leaf_suggestion(project, ancestor, query, min_level=min_level)
+
+
+
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
+query = 'query_example' # str | String to search for matching names.
+min_level = 56 # int | Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter. (optional)
+
+    try:
+        api_response = api_instance.leaf_suggestion(project, ancestor, query, min_level=min_level)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->leaf_suggestion: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **ancestor** | **str**| Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). | 
+ **query** | **str**| String to search for matching names. | 
+ **min_level** | **int**| Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the &#x60;ancestor&#x60; parameter. | [optional] 
+
+### Return type
+
+[**list[LeafSuggestion]**](LeafSuggestion.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of suggestions. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **notify**
-> notify(inline_object9=inline_object9)
+> notify(notify_spec=notify_spec)
 
 
 
@@ -6335,10 +5796,10 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    inline_object9 = tator.InlineObject9() # InlineObject9 |  (optional)
+    notify_spec = tator.NotifySpec() # NotifySpec |  (optional)
 
     try:
-        api_instance.notify(inline_object9=inline_object9)
+        api_instance.notify(notify_spec=notify_spec)
     except ApiException as e:
         print("Exception when calling TatorApi->notify: %s\n" % e)
 ```
@@ -6347,7 +5808,7 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inline_object9** | [**InlineObject9**](InlineObject9.md)|  | [optional] 
+ **notify_spec** | [**NotifySpec**](NotifySpec.md)|  | [optional] 
 
 ### Return type
 
@@ -6377,7 +5838,7 @@ void (empty response body)
 
 
 
-Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
+Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
 
 ### Example
 
@@ -6451,7 +5912,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **progress**
-> MessageResponse progress(project, inline_object=inline_object)
+> MessageResponse progress(project, progress_spec=progress_spec)
 
 
 
@@ -6492,10 +5953,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algorithm","media_ids":"1,2","message":"Job started!","name":"name_of_file.mp4","progress":70,"sections":"Section 1,Section 2","state":"started","uid":"b43d7e54-8272-11ea-8e10-000c294f07cf"}] # list[InlineObject] |  (optional)
+progress_spec = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algorithm","media_ids":"1,2","message":"Job started!","name":"name_of_file.mp4","progress":70,"sections":"Section 1,Section 2","state":"started","uid":"b43d7e54-8272-11ea-8e10-000c294f07cf"}] # list[ProgressSpec] |  (optional)
 
     try:
-        api_response = api_instance.progress(project, inline_object=inline_object)
+        api_response = api_instance.progress(project, progress_spec=progress_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->progress: %s\n" % e)
@@ -6506,7 +5967,7 @@ inline_object = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algor
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object** | [**list[InlineObject]**](InlineObject.md)|  | [optional] 
+ **progress_spec** | [**list[ProgressSpec]**](ProgressSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -6535,7 +5996,7 @@ Name | Type | Description  | Notes
 
 
 
-Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg.
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -6615,7 +6076,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **retrieve_version_list**
-> list[InlineResponse20015] retrieve_version_list(project, media_id=media_id)
+> list[Version] retrieve_version_list(project, media_id=media_id)
 
 
 
@@ -6674,7 +6135,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**list[InlineResponse20015]**](InlineResponse20015.md)
+[**list[Version]**](Version.md)
 
 ### Authorization
 
@@ -6695,7 +6156,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **save_image**
-> CreateResponse save_image(project, inline_object12=inline_object12)
+> CreateResponse save_image(project, image_spec=image_spec)
 
 
 
@@ -6736,10 +6197,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object12 = tator.InlineObject12() # InlineObject12 |  (optional)
+image_spec = tator.ImageSpec() # ImageSpec |  (optional)
 
     try:
-        api_response = api_instance.save_image(project, inline_object12=inline_object12)
+        api_response = api_instance.save_image(project, image_spec=image_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->save_image: %s\n" % e)
@@ -6750,7 +6211,7 @@ inline_object12 = tator.InlineObject12() # InlineObject12 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object12** | [**InlineObject12**](InlineObject12.md)|  | [optional] 
+ **image_spec** | [**ImageSpec**](ImageSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -6779,7 +6240,7 @@ Name | Type | Description  | Notes
 
 
 
-Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the  `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
+Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
 
 ### Example
 
@@ -6855,7 +6316,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transcode**
-> InlineResponse2013 transcode(project, inline_object19=inline_object19)
+> Transcode transcode(project, transcode_spec=transcode_spec)
 
 
 
@@ -6896,10 +6357,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-inline_object19 = tator.InlineObject19() # InlineObject19 |  (optional)
+transcode_spec = tator.TranscodeSpec() # TranscodeSpec |  (optional)
 
     try:
-        api_response = api_instance.transcode(project, inline_object19=inline_object19)
+        api_response = api_instance.transcode(project, transcode_spec=transcode_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->transcode: %s\n" % e)
@@ -6910,11 +6371,11 @@ inline_object19 = tator.InlineObject19() # InlineObject19 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **inline_object19** | [**InlineObject19**](InlineObject19.md)|  | [optional] 
+ **transcode_spec** | [**TranscodeSpec**](TranscodeSpec.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse2013**](InlineResponse2013.md)
+[**Transcode**](Transcode.md)
 
 ### Authorization
 
@@ -6934,12 +6395,92 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **tree_leaf_suggestion**
-> list[InlineResponse20013] tree_leaf_suggestion(project, ancestor, query, min_level=min_level)
+# **update_leaf**
+> MessageResponse update_leaf(id, leaf_update=leaf_update)
 
 
 
-Rest Endpoint compatible with devbridge suggestion format.  <https://github.com/kraaden/autocomplete>
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a leaf.
+leaf_update = tator.LeafUpdate() # LeafUpdate |  (optional)
+
+    try:
+        api_response = api_instance.update_leaf(id, leaf_update=leaf_update)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->update_leaf: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a leaf. | 
+ **leaf_update** | [**LeafUpdate**](LeafUpdate.md)|  | [optional] 
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful update of leaf. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_leaf_list**
+> MessageResponse update_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+
+
+
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -6976,15 +6517,27 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia).
-query = 'query_example' # str | String to search for matching names.
-min_level = 56 # int | Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the `ancestor` parameter. (optional)
+ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
+type = 56 # int | Unique integer identifying a leaf type. (optional)
+name = 'name_example' # str | Name of the leaf element. (optional)
+attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
+attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
+attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
+operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
+start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
+stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+attribute_bulk_update = tator.AttributeBulkUpdate() # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.tree_leaf_suggestion(project, ancestor, query, min_level=min_level)
+        api_response = api_instance.update_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->tree_leaf_suggestion: %s\n" % e)
+        print("Exception when calling TatorApi->update_leaf_list: %s\n" % e)
 ```
 
 ### Parameters
@@ -6992,13 +6545,25 @@ min_level = 56 # int | Integer specifying level of results that may be returned.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **ancestor** | **str**| Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). | 
- **query** | **str**| String to search for matching names. | 
- **min_level** | **int**| Integer specifying level of results that may be returned. For example, 2 refers to grandchildren of the level specified by the &#x60;ancestor&#x60; parameter. | [optional] 
+ **ancestor** | **str**| Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
+ **type** | **int**| Unique integer identifying a leaf type. | [optional] 
+ **name** | **str**| Name of the leaf element. | [optional] 
+ **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
+ **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
+ **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
+ **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
+ **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
+ **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
-[**list[InlineResponse20013]**](InlineResponse20013.md)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -7006,24 +6571,24 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful retrieval of suggestions. |  -  |
+**200** | Successful update of leaf list. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_attribute_type**
-> MessageResponse update_attribute_type(id, attribute_type_update=attribute_type_update)
+# **update_leaf_type**
+> MessageResponse update_leaf_type(id, leaf_type_update=leaf_type_update)
 
 
 
-Updates a localization type.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7059,22 +6624,22 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an attribute type.
-attribute_type_update = {"description":"New description","name":"New name"} # AttributeTypeUpdate |  (optional)
+    id = 56 # int | A unique integer identifying an leaf type.
+leaf_type_update = {"description":"New description","name":"New name"} # LeafTypeUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_attribute_type(id, attribute_type_update=attribute_type_update)
+        api_response = api_instance.update_leaf_type(id, leaf_type_update=leaf_type_update)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->update_attribute_type: %s\n" % e)
+        print("Exception when calling TatorApi->update_leaf_type: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an attribute type. | 
- **attribute_type_update** | [**AttributeTypeUpdate**](AttributeTypeUpdate.md)|  | [optional] 
+ **id** | **int**| A unique integer identifying an leaf type. | 
+ **leaf_type_update** | [**LeafTypeUpdate**](LeafTypeUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7092,87 +6657,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful update of attribute type. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_frame_association**
-> MessageResponse update_frame_association(id, inline_object=inline_object)
-
-
-
-Modify a frame association.  Frame associations specify which frames that a `State` object applies to.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a frame association.
-inline_object = tator.InlineObject() # InlineObject |  (optional)
-
-    try:
-        api_response = api_instance.update_frame_association(id, inline_object=inline_object)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_frame_association: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a frame association. | 
- **inline_object** | [**InlineObject**](InlineObject.md)|  | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful update of frame association. |  -  |
+**200** | Successful update of leaf type. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -7183,7 +6668,7 @@ Name | Type | Description  | Notes
 
 
 
-Interact with single localization.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7258,92 +6743,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_localization_association**
-> MessageResponse update_localization_association(id, localization_association_update=localization_association_update)
-
-
-
-Modify a localization association.  Localization associations specify which localizations that a `State` object applies to.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a localization association.
-localization_association_update = {"color":"#03a1fc","localizations":[1,5,10]} # LocalizationAssociationUpdate |  (optional)
-
-    try:
-        api_response = api_instance.update_localization_association(id, localization_association_update=localization_association_update)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_localization_association: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a localization association. | 
- **localization_association_update** | [**LocalizationAssociationUpdate**](LocalizationAssociationUpdate.md)|  | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful update of localization association. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **update_localization_list**
 > MessageResponse update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
 
 
 
-Interact with list of localizations.  Localizations are shape annotations drawn on a video or image. They are currently of type box, line, or dot. Each shape has slightly different data members. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7383,8 +6788,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -7415,8 +6820,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -7455,11 +6860,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_type**
-> MessageResponse update_localization_type(id, inline_object1=inline_object1)
+> MessageResponse update_localization_type(id, localization_type_update=localization_type_update)
 
 
 
-Updates a localization type.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7496,10 +6901,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an localization type.
-inline_object1 = tator.InlineObject1() # InlineObject1 |  (optional)
+localization_type_update = {"description":"New description","name":"New name"} # LocalizationTypeUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_localization_type(id, inline_object1=inline_object1)
+        api_response = api_instance.update_localization_type(id, localization_type_update=localization_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_localization_type: %s\n" % e)
@@ -7510,7 +6915,7 @@ inline_object1 = tator.InlineObject1() # InlineObject1 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an localization type. | 
- **inline_object1** | [**InlineObject1**](InlineObject1.md)|  | [optional] 
+ **localization_type_update** | [**LocalizationTypeUpdate**](LocalizationTypeUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7535,11 +6940,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media**
-> MessageResponse update_media(id, inline_object3=inline_object3)
+> MessageResponse update_media(id, media_update=media_update)
 
 
 
-Interact with individual media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7576,10 +6981,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media.
-inline_object3 = tator.InlineObject3() # InlineObject3 |  (optional)
+media_update = tator.MediaUpdate() # MediaUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_media(id, inline_object3=inline_object3)
+        api_response = api_instance.update_media(id, media_update=media_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media: %s\n" % e)
@@ -7590,7 +6995,7 @@ inline_object3 = tator.InlineObject3() # InlineObject3 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a media. | 
- **inline_object3** | [**InlineObject3**](InlineObject3.md)|  | [optional] 
+ **media_update** | [**MediaUpdate**](MediaUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7615,11 +7020,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_list**
-> MessageResponse update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object6=inline_object6)
+> MessageResponse update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
 
 
 
-Interact with list of media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined localization attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  This endpoint does not include a POST method. Creating media must be preceded by an upload, after which a separate media creation endpoint must be called. The media creation endpoints are `Transcode` to launch a transcode of an uploaded video and `SaveImage` to save an uploaded image. If you would like to perform transcodes on local assets, you can use the `SaveVideo` endpoint to save an already transcoded video. Local transcodes may be performed with the script at `scripts/transcoder/transcodePipeline.py` in the Tator source code.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7673,10 +7078,10 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-inline_object6 = tator.InlineObject6() # InlineObject6 |  (optional)
+attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object6=inline_object6)
+        api_response = api_instance.update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media_list: %s\n" % e)
@@ -7704,7 +7109,7 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **inline_object6** | [**InlineObject6**](InlineObject6.md)|  | [optional] 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7729,11 +7134,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_type**
-> MessageResponse update_media_type(id, inline_object4=inline_object4)
+> MessageResponse update_media_type(id, media_type_update=media_type_update)
 
 
 
-Interact with an individual media type.  A media type is the metadata definition object for media. It includes file format, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -7770,10 +7175,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an media type.
-inline_object4 = tator.InlineObject4() # InlineObject4 |  (optional)
+media_type_update = {"description":"New description","name":"New name"} # MediaTypeUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_media_type(id, inline_object4=inline_object4)
+        api_response = api_instance.update_media_type(id, media_type_update=media_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media_type: %s\n" % e)
@@ -7784,7 +7189,7 @@ inline_object4 = tator.InlineObject4() # InlineObject4 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an media type. | 
- **inline_object4** | [**InlineObject4**](InlineObject4.md)|  | [optional] 
+ **media_type_update** | [**MediaTypeUpdate**](MediaTypeUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7809,7 +7214,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_membership**
-> MessageResponse update_membership(id, inline_object7=inline_object7)
+> MessageResponse update_membership(id, membership_update=membership_update)
 
 
 
@@ -7850,10 +7255,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a membership.
-inline_object7 = tator.InlineObject7() # InlineObject7 |  (optional)
+membership_update = {"permission":"View Only"} # MembershipUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_membership(id, inline_object7=inline_object7)
+        api_response = api_instance.update_membership(id, membership_update=membership_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_membership: %s\n" % e)
@@ -7864,7 +7269,7 @@ inline_object7 = tator.InlineObject7() # InlineObject7 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a membership. | 
- **inline_object7** | [**InlineObject7**](InlineObject7.md)|  | [optional] 
+ **membership_update** | [**MembershipUpdate**](MembershipUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7889,7 +7294,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_project**
-> MessageResponse update_project(id, inline_object10=inline_object10)
+> MessageResponse update_project(id, project_spec=project_spec)
 
 
 
@@ -7930,10 +7335,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a project.
-inline_object10 = tator.InlineObject10() # InlineObject10 |  (optional)
+project_spec = {"name":"New name","summary":"New summary"} # ProjectSpec |  (optional)
 
     try:
-        api_response = api_instance.update_project(id, inline_object10=inline_object10)
+        api_response = api_instance.update_project(id, project_spec=project_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_project: %s\n" % e)
@@ -7944,7 +7349,7 @@ inline_object10 = tator.InlineObject10() # InlineObject10 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a project. | 
- **inline_object10** | [**InlineObject10**](InlineObject10.md)|  | [optional] 
+ **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -7969,11 +7374,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state**
-> MessageResponse update_state(id, inline_object13=inline_object13)
+> MessageResponse update_state(id, state_update=state_update)
 
 
 
-Interact with an individual state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a types of entity in Tator, meaning they can be described by user defined attributes.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -8010,10 +7415,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
-inline_object13 = tator.InlineObject13() # InlineObject13 |  (optional)
+state_update = {"frame":1001} # StateUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_state(id, inline_object13=inline_object13)
+        api_response = api_instance.update_state(id, state_update=state_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state: %s\n" % e)
@@ -8024,7 +7429,7 @@ inline_object13 = tator.InlineObject13() # InlineObject13 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state. | 
- **inline_object13** | [**InlineObject13**](InlineObject13.md)|  | [optional] 
+ **state_update** | [**StateUpdate**](StateUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -8049,11 +7454,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_list**
-> MessageResponse update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object16=inline_object16)
+> MessageResponse update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
 
 
 
-Interact with list of states.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.  This endpoint supports bulk patch of user-defined state attributes and bulk delete. Both are accomplished using the same query parameters used for a GET request.  It is importarant to know the fields required for a given entity_type_id as they are expected in the request data for this function. As an example, if the entity_type_id has attribute types associated with it named time and position, the JSON object must have them specified as keys.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -8093,8 +7498,8 @@ with tator.ApiClient(configuration) as api_client:
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
-version = 56 # int | Unique integer identifying a version. (optional)
-modified = 56 # int | Whether to return original or modified annotations, 0 or 1. (optional)
+version = [56] # list[int] | List of integers representing versions to fetch (optional)
+modified = 1 # int | Whether to return original or modified annotations, 0 or 1. (optional) (default to 1)
 after = 56 # int | If given, all results returned will be after the localization with this ID. The `start` and `stop` parameters are relative to this modified range. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
 attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
@@ -8108,10 +7513,10 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-inline_object16 = tator.InlineObject16() # InlineObject16 |  (optional)
+attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object16=inline_object16)
+        api_response = api_instance.update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state_list: %s\n" % e)
@@ -8125,8 +7530,8 @@ Name | Type | Description  | Notes
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
- **version** | **int**| Unique integer identifying a version. | [optional] 
- **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] 
+ **version** | [**list[int]**](int.md)| List of integers representing versions to fetch | [optional] 
+ **modified** | **int**| Whether to return original or modified annotations, 0 or 1. | [optional] [default to 1]
  **after** | **int**| If given, all results returned will be after the localization with this ID. The &#x60;start&#x60; and &#x60;stop&#x60; parameters are relative to this modified range. | [optional] 
  **search** | **str**| Lucene query syntax string for use with Elasticsearch. See &#x60;reference &lt;https://lucene.apache.org/core/2_9_4/queryparsersyntax.html&gt;&#x60;_. | [optional] 
  **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
@@ -8140,7 +7545,7 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **inline_object16** | [**InlineObject16**](InlineObject16.md)|  | [optional] 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -8165,11 +7570,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_type**
-> MessageResponse update_state_type(id, inline_object14=inline_object14)
+> MessageResponse update_state_type(id, state_type_update=state_type_update)
 
 
 
-Interact with an individual state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
 
 ### Example
 
@@ -8206,10 +7611,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state type.
-inline_object14 = tator.InlineObject14() # InlineObject14 |  (optional)
+state_type_update = {"description":"New description","name":"New name"} # StateTypeUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_state_type(id, inline_object14=inline_object14)
+        api_response = api_instance.update_state_type(id, state_type_update=state_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state_type: %s\n" % e)
@@ -8220,7 +7625,7 @@ inline_object14 = tator.InlineObject14() # InlineObject14 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state type. | 
- **inline_object14** | [**InlineObject14**](InlineObject14.md)|  | [optional] 
+ **state_type_update** | [**StateTypeUpdate**](StateTypeUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -8244,276 +7649,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_tree_leaf**
-> MessageResponse update_tree_leaf(id, inline_object20=inline_object20)
-
-
-
-Interact with individual tree leaf.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a tree leaf.
-inline_object20 = tator.InlineObject20() # InlineObject20 |  (optional)
-
-    try:
-        api_response = api_instance.update_tree_leaf(id, inline_object20=inline_object20)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_tree_leaf: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a tree leaf. | 
- **inline_object20** | [**InlineObject20**](InlineObject20.md)|  | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful update of tree leaf. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_tree_leaf_list**
-> MessageResponse update_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object23=inline_object23)
-
-
-
-Interact with a list of tree leaves.  Tree leaves are used to define label hierarchies that can be used for autocompletion of string attribute types.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-ancestor = 'ancestor_example' # str | Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
-type = 56 # int | Unique integer identifying a tree leaf type. (optional)
-name = 'name_example' # str | Name of the tree leaf element. (optional)
-attribute = 'attribute_example' # str | Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lt = 'attribute_lt_example' # str | Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_lte = 'attribute_lte_example' # str | Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gt = 'attribute_gt_example' # str | Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_gte = 'attribute_gte_example' # str | Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_contains = 'attribute_contains_example' # str | Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. (optional)
-attribute_distance = 'attribute_distance_example' # str | Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. (optional)
-attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns elements for which a given attribute is not defined. (optional)
-operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
-start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
-stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-inline_object23 = tator.InlineObject23() # InlineObject23 |  (optional)
-
-    try:
-        api_response = api_instance.update_tree_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, inline_object23=inline_object23)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_tree_leaf_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **ancestor** | **str**| Get descendents of a tree leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
- **type** | **int**| Unique integer identifying a tree leaf type. | [optional] 
- **name** | **str**| Name of the tree leaf element. | [optional] 
- **attribute** | **str**| Attribute equality filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lt** | **str**| Attribute less than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_lte** | **str**| Attribute less than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gt** | **str**| Attribute greater than filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_gte** | **str**| Attribute greater than or equal filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_contains** | **str**| Attribute contains filter. Format is attribute1::value1,[attribute2::value2]. | [optional] 
- **attribute_distance** | **str**| Range filter for geoposition attributes. Format is attribute1::distance_km2::lat2::lon2,[attribute2::distancekm2::lat2::lon2]. | [optional] 
- **attribute_null** | **str**| Attribute null filter. Returns elements for which a given attribute is not defined. | [optional] 
- **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
- **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
- **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **inline_object23** | [**InlineObject23**](InlineObject23.md)|  | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful update of tree leaf list. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_tree_leaf_type**
-> MessageResponse update_tree_leaf_type(id, inline_object21=inline_object21)
-
-
-
-Updates a tree leaf type.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying an tree_leaf type.
-inline_object21 = tator.InlineObject21() # InlineObject21 |  (optional)
-
-    try:
-        api_response = api_instance.update_tree_leaf_type(id, inline_object21=inline_object21)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_tree_leaf_type: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying an tree_leaf type. | 
- **inline_object21** | [**InlineObject21**](InlineObject21.md)|  | [optional] 
-
-### Return type
-
-[**MessageResponse**](MessageResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful update of tree leaf type. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **update_user**
-> object update_user(id, unknown_base_type=unknown_base_type)
+> update_user(id, user_update=user_update)
 
 
 
@@ -8554,11 +7691,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization association.
-unknown_base_type = tator.UNKNOWN_BASE_TYPE() # UNKNOWN_BASE_TYPE |  (optional)
+user_update = tator.UserUpdate() # UserUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_user(id, unknown_base_type=unknown_base_type)
-        pprint(api_response)
+        api_instance.update_user(id, user_update=user_update)
     except ApiException as e:
         print("Exception when calling TatorApi->update_user: %s\n" % e)
 ```
@@ -8568,11 +7704,11 @@ unknown_base_type = tator.UNKNOWN_BASE_TYPE() # UNKNOWN_BASE_TYPE |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization association. | 
- **unknown_base_type** | [**UNKNOWN_BASE_TYPE**](UNKNOWN_BASE_TYPE.md)|  | [optional] 
+ **user_update** | [**UserUpdate**](UserUpdate.md)|  | [optional] 
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -8580,18 +7716,19 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
- - **Accept**: application/json, text/plain
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** |  |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_version**
-> MessageResponse update_version(id, inline_object24=inline_object24)
+> MessageResponse update_version(id, version_spec=version_spec)
 
 
 
@@ -8632,10 +7769,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
-inline_object24 = tator.InlineObject24() # InlineObject24 |  (optional)
+version_spec = {"description":"New description","name":"New name"} # VersionSpec |  (optional)
 
     try:
-        api_response = api_instance.update_version(id, inline_object24=inline_object24)
+        api_response = api_instance.update_version(id, version_spec=version_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_version: %s\n" % e)
@@ -8646,7 +7783,7 @@ inline_object24 = tator.InlineObject24() # InlineObject24 |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a version. | 
- **inline_object24** | [**InlineObject24**](InlineObject24.md)|  | [optional] 
+ **version_spec** | [**VersionSpec**](VersionSpec.md)|  | [optional] 
 
 ### Return type
 
@@ -8670,8 +7807,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **who_am_i**
-> InlineResponse20014 who_am_i()
+# **whoami**
+> User whoami()
 
 
 
@@ -8713,10 +7850,10 @@ with tator.ApiClient(configuration) as api_client:
     api_instance = tator.TatorApi(api_client)
     
     try:
-        api_response = api_instance.who_am_i()
+        api_response = api_instance.whoami()
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->who_am_i: %s\n" % e)
+        print("Exception when calling TatorApi->whoami: %s\n" % e)
 ```
 
 ### Parameters
@@ -8724,7 +7861,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**InlineResponse20014**](InlineResponse20014.md)
+[**User**](User.md)
 
 ### Authorization
 

@@ -36,27 +36,13 @@ class TestInlineObject(unittest.TestCase):
         # model = tator.models.inline_object.InlineObject()  # noqa: E501
         if include_optional :
             return InlineObject(
-                gid = '0', 
-                job_type = 'upload', 
-                media_ids = '0', 
-                message = '0', 
-                name = '0', 
-                progress = 0, 
-                section = '0', 
-                sections = '0', 
-                state = 'queued', 
-                swid = '0', 
-                uid = '0'
+                password = '0', 
+                username = '0'
             )
         else :
             return InlineObject(
-                gid = '0',
-                job_type = 'upload',
-                message = '0',
-                name = '0',
-                progress = 0,
-                state = 'queued',
-                uid = '0',
+                password = '0',
+                username = '0',
         )
 
     def testInlineObject(self):

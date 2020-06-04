@@ -39,13 +39,12 @@ class TestLocalizationUpdate(unittest.TestCase):
                 attributes = { }, 
                 frame = 56, 
                 height = 0.0, 
+                modified = True, 
+                u = -1.0, 
+                v = -1.0, 
                 width = 0.0, 
                 x = 0.0, 
-                y = 0.0, 
-                x0 = 0.0, 
-                x1 = 0.0, 
-                y0 = 0.0, 
-                y1 = 0.0
+                y = 0.0
             )
         else :
             return LocalizationUpdate(

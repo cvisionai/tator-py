@@ -34,30 +34,26 @@ class AnalysisSpec(object):
     """
     openapi_types = {
         'data_query': 'str',
-        'data_type': 'int',
         'name': 'str'
     }
 
     attribute_map = {
         'data_query': 'data_query',
-        'data_type': 'data_type',
         'name': 'name'
     }
 
-    def __init__(self, data_query='*', data_type=None, name=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, data_query='*', name=None, local_vars_configuration=None):  # noqa: E501
         """AnalysisSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._data_query = None
-        self._data_type = None
         self._name = None
         self.discriminator = None
 
         if data_query is not None:
             self.data_query = data_query
-        self.data_type = data_type
         self.name = name
 
     @property
@@ -82,31 +78,6 @@ class AnalysisSpec(object):
         """
 
         self._data_query = data_query
-
-    @property
-    def data_type(self):
-        """Gets the data_type of this AnalysisSpec.  # noqa: E501
-
-        A unique integer identifying an entity type to analyze.  # noqa: E501
-
-        :return: The data_type of this AnalysisSpec.  # noqa: E501
-        :rtype: int
-        """
-        return self._data_type
-
-    @data_type.setter
-    def data_type(self, data_type):
-        """Sets the data_type of this AnalysisSpec.
-
-        A unique integer identifying an entity type to analyze.  # noqa: E501
-
-        :param data_type: The data_type of this AnalysisSpec.  # noqa: E501
-        :type: int
-        """
-        if self.local_vars_configuration.client_side_validation and data_type is None:  # noqa: E501
-            raise ValueError("Invalid value for `data_type`, must not be `None`")  # noqa: E501
-
-        self._data_type = data_type
 
     @property
     def name(self):

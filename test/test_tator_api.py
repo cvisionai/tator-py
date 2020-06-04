@@ -40,8 +40,14 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_create_attribute_type(self):
-        """Test case for create_attribute_type
+    def test_create_leaf(self):
+        """Test case for create_leaf
+
+        """
+        pass
+
+    def test_create_leaf_type(self):
+        """Test case for create_leaf_type
 
         """
         pass
@@ -76,6 +82,12 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
+    def test_create_progress_summary_api(self):
+        """Test case for create_progress_summary_api
+
+        """
+        pass
+
     def test_create_project(self):
         """Test case for create_project
 
@@ -100,32 +112,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_create_tree_leaf(self):
-        """Test case for create_tree_leaf
-
-        """
-        pass
-
-    def test_create_tree_leaf_type(self):
-        """Test case for create_tree_leaf_type
-
-        """
-        pass
-
     def test_create_version(self):
         """Test case for create_version
-
-        """
-        pass
-
-    def test_delete_attribute_type(self):
-        """Test case for delete_attribute_type
-
-        """
-        pass
-
-    def test_delete_frame_association(self):
-        """Test case for delete_frame_association
 
         """
         pass
@@ -142,14 +130,26 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_delete_localization(self):
-        """Test case for delete_localization
+    def test_delete_leaf(self):
+        """Test case for delete_leaf
 
         """
         pass
 
-    def test_delete_localization_association(self):
-        """Test case for delete_localization_association
+    def test_delete_leaf_list(self):
+        """Test case for delete_leaf_list
+
+        """
+        pass
+
+    def test_delete_leaf_type(self):
+        """Test case for delete_leaf_type
+
+        """
+        pass
+
+    def test_delete_localization(self):
+        """Test case for delete_localization
 
         """
         pass
@@ -226,24 +226,6 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_delete_tree_leaf(self):
-        """Test case for delete_tree_leaf
-
-        """
-        pass
-
-    def test_delete_tree_leaf_list(self):
-        """Test case for delete_tree_leaf_list
-
-        """
-        pass
-
-    def test_delete_tree_leaf_type(self):
-        """Test case for delete_tree_leaf_type
-
-        """
-        pass
-
     def test_delete_version(self):
         """Test case for delete_version
 
@@ -262,26 +244,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_get_attribute_type(self):
-        """Test case for get_attribute_type
-
-        """
-        pass
-
-    def test_get_attribute_type_list(self):
-        """Test case for get_attribute_type_list
-
-        """
-        pass
-
     def test_get_clip(self):
         """Test case for get_clip
-
-        """
-        pass
-
-    def test_get_entity_type_schema(self):
-        """Test case for get_entity_type_schema
 
         """
         pass
@@ -292,20 +256,32 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_get_frame_association(self):
-        """Test case for get_frame_association
+    def test_get_leaf(self):
+        """Test case for get_leaf
+
+        """
+        pass
+
+    def test_get_leaf_list(self):
+        """Test case for get_leaf_list
+
+        """
+        pass
+
+    def test_get_leaf_type(self):
+        """Test case for get_leaf_type
+
+        """
+        pass
+
+    def test_get_leaf_type_list(self):
+        """Test case for get_leaf_type_list
 
         """
         pass
 
     def test_get_localization(self):
         """Test case for get_localization
-
-        """
-        pass
-
-    def test_get_localization_association(self):
-        """Test case for get_localization_association
 
         """
         pass
@@ -436,30 +412,6 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_get_tree_leaf(self):
-        """Test case for get_tree_leaf
-
-        """
-        pass
-
-    def test_get_tree_leaf_list(self):
-        """Test case for get_tree_leaf_list
-
-        """
-        pass
-
-    def test_get_tree_leaf_type(self):
-        """Test case for get_tree_leaf_type
-
-        """
-        pass
-
-    def test_get_tree_leaf_type_list(self):
-        """Test case for get_tree_leaf_type_list
-
-        """
-        pass
-
     def test_get_user(self):
         """Test case for get_user
 
@@ -468,6 +420,12 @@ class TestTatorApi(unittest.TestCase):
 
     def test_get_version(self):
         """Test case for get_version
+
+        """
+        pass
+
+    def test_leaf_suggestion(self):
+        """Test case for leaf_suggestion
 
         """
         pass
@@ -520,32 +478,26 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_tree_leaf_suggestion(self):
-        """Test case for tree_leaf_suggestion
+    def test_update_leaf(self):
+        """Test case for update_leaf
 
         """
         pass
 
-    def test_update_attribute_type(self):
-        """Test case for update_attribute_type
+    def test_update_leaf_list(self):
+        """Test case for update_leaf_list
 
         """
         pass
 
-    def test_update_frame_association(self):
-        """Test case for update_frame_association
+    def test_update_leaf_type(self):
+        """Test case for update_leaf_type
 
         """
         pass
 
     def test_update_localization(self):
         """Test case for update_localization
-
-        """
-        pass
-
-    def test_update_localization_association(self):
-        """Test case for update_localization_association
 
         """
         pass
@@ -610,24 +562,6 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_update_tree_leaf(self):
-        """Test case for update_tree_leaf
-
-        """
-        pass
-
-    def test_update_tree_leaf_list(self):
-        """Test case for update_tree_leaf_list
-
-        """
-        pass
-
-    def test_update_tree_leaf_type(self):
-        """Test case for update_tree_leaf_type
-
-        """
-        pass
-
     def test_update_user(self):
         """Test case for update_user
 
@@ -640,8 +574,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_who_am_i(self):
-        """Test case for who_am_i
+    def test_whoami(self):
+        """Test case for whoami
 
         """
         pass

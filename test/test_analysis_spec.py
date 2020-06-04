@@ -37,12 +37,10 @@ class TestAnalysisSpec(unittest.TestCase):
         if include_optional :
             return AnalysisSpec(
                 data_query = '*', 
-                data_type = 56, 
                 name = '0'
             )
         else :
             return AnalysisSpec(
-                data_type = 56,
                 name = '0',
         )
 
