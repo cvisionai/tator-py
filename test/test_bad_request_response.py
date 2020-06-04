@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.inline_response400 import InlineResponse400  # noqa: E501
+from tator.models.bad_request_response import BadRequestResponse  # noqa: E501
 from tator.rest import ApiException
 
-class TestInlineResponse400(unittest.TestCase):
-    """InlineResponse400 unit test stubs"""
+class TestBadRequestResponse(unittest.TestCase):
+    """BadRequestResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,22 +29,22 @@ class TestInlineResponse400(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test InlineResponse400
+        """Test BadRequestResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.inline_response400.InlineResponse400()  # noqa: E501
+        # model = tator.models.bad_request_response.BadRequestResponse()  # noqa: E501
         if include_optional :
-            return InlineResponse400(
+            return BadRequestResponse(
                 details = '0', 
                 message = '0'
             )
         else :
-            return InlineResponse400(
+            return BadRequestResponse(
         )
 
-    def testInlineResponse400(self):
-        """Test InlineResponse400"""
+    def testBadRequestResponse(self):
+        """Test BadRequestResponse"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

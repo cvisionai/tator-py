@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.inline_response404 import InlineResponse404  # noqa: E501
+from tator.models.not_found_response import NotFoundResponse  # noqa: E501
 from tator.rest import ApiException
 
-class TestInlineResponse404(unittest.TestCase):
-    """InlineResponse404 unit test stubs"""
+class TestNotFoundResponse(unittest.TestCase):
+    """NotFoundResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,21 +29,21 @@ class TestInlineResponse404(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test InlineResponse404
+        """Test NotFoundResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.inline_response404.InlineResponse404()  # noqa: E501
+        # model = tator.models.not_found_response.NotFoundResponse()  # noqa: E501
         if include_optional :
-            return InlineResponse404(
+            return NotFoundResponse(
                 message = '0'
             )
         else :
-            return InlineResponse404(
+            return NotFoundResponse(
         )
 
-    def testInlineResponse404(self):
-        """Test InlineResponse404"""
+    def testNotFoundResponse(self):
+        """Test NotFoundResponse"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

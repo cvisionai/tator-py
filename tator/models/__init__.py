@@ -22,11 +22,10 @@ from tator.models.analysis_spec import AnalysisSpec
 from tator.models.attribute_bulk_update import AttributeBulkUpdate
 from tator.models.attribute_type import AttributeType
 from tator.models.attribute_type_update import AttributeTypeUpdate
+from tator.models.bad_request_response import BadRequestResponse
 from tator.models.create_response import CreateResponse
 from tator.models.credentials import Credentials
 from tator.models.image_spec import ImageSpec
-from tator.models.inline_response400 import InlineResponse400
-from tator.models.inline_response404 import InlineResponse404
 from tator.models.leaf import Leaf
 from tator.models.leaf_spec import LeafSpec
 from tator.models.leaf_suggestion import LeafSuggestion
@@ -51,6 +50,7 @@ from tator.models.membership import Membership
 from tator.models.membership_spec import MembershipSpec
 from tator.models.membership_update import MembershipUpdate
 from tator.models.message_response import MessageResponse
+from tator.models.not_found_response import NotFoundResponse
 from tator.models.notify_spec import NotifySpec
 from tator.models.progress_spec import ProgressSpec
 from tator.models.progress_summary_spec import ProgressSummarySpec
