@@ -1,4 +1,4 @@
-# InlineResponse200
+# Token
 
 ## Properties
 Name | Type | Description | Notes

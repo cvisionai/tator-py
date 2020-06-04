@@ -52,8 +52,7 @@ class AnalysisSpec(object):
         self._name = None
         self.discriminator = None
 
-        if data_query is not None:
-            self.data_query = data_query
+        self.data_query = data_query
         self.name = name
 
     @property
@@ -76,6 +75,8 @@ class AnalysisSpec(object):
         :param data_query: The data_query of this AnalysisSpec.  # noqa: E501
         :type: str
         """
+        if self.local_vars_configuration.client_side_validation and data_query is None:  # noqa: E501
+            raise ValueError("Invalid value for `data_query`, must not be `None`")  # noqa: E501
 
         self._data_query = data_query
 

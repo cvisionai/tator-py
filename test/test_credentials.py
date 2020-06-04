@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.inline_response200 import InlineResponse200  # noqa: E501
+from tator.models.credentials import Credentials  # noqa: E501
 from tator.rest import ApiException
 
-class TestInlineResponse200(unittest.TestCase):
-    """InlineResponse200 unit test stubs"""
+class TestCredentials(unittest.TestCase):
+    """Credentials unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,21 +29,24 @@ class TestInlineResponse200(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test InlineResponse200
+        """Test Credentials
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.inline_response200.InlineResponse200()  # noqa: E501
+        # model = tator.models.credentials.Credentials()  # noqa: E501
         if include_optional :
-            return InlineResponse200(
-                token = '0'
+            return Credentials(
+                password = '0', 
+                username = '0'
             )
         else :
-            return InlineResponse200(
+            return Credentials(
+                password = '0',
+                username = '0',
         )
 
-    def testInlineResponse200(self):
-        """Test InlineResponse200"""
+    def testCredentials(self):
+        """Test Credentials"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -37,9 +37,8 @@ from tator.models.attribute_bulk_update import AttributeBulkUpdate
 from tator.models.attribute_type import AttributeType
 from tator.models.attribute_type_update import AttributeTypeUpdate
 from tator.models.create_response import CreateResponse
+from tator.models.credentials import Credentials
 from tator.models.image_spec import ImageSpec
-from tator.models.inline_object import InlineObject
-from tator.models.inline_response200 import InlineResponse200
 from tator.models.inline_response400 import InlineResponse400
 from tator.models.inline_response404 import InlineResponse404
 from tator.models.leaf import Leaf
@@ -79,6 +78,7 @@ from tator.models.state_type_update import StateTypeUpdate
 from tator.models.state_update import StateUpdate
 from tator.models.temporary_file import TemporaryFile
 from tator.models.temporary_file_spec import TemporaryFileSpec
+from tator.models.token import Token
 from tator.models.transcode import Transcode
 from tator.models.transcode_spec import TranscodeSpec
 from tator.models.user import User

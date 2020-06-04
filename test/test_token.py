@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.inline_object import InlineObject  # noqa: E501
+from tator.models.token import Token  # noqa: E501
 from tator.rest import ApiException
 
-class TestInlineObject(unittest.TestCase):
-    """InlineObject unit test stubs"""
+class TestToken(unittest.TestCase):
+    """Token unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,24 +29,21 @@ class TestInlineObject(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test InlineObject
+        """Test Token
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.inline_object.InlineObject()  # noqa: E501
+        # model = tator.models.token.Token()  # noqa: E501
         if include_optional :
-            return InlineObject(
-                password = '0', 
-                username = '0'
+            return Token(
+                token = '0'
             )
         else :
-            return InlineObject(
-                password = '0',
-                username = '0',
+            return Token(
         )
 
-    def testInlineObject(self):
-        """Test InlineObject"""
+    def testToken(self):
+        """Test Token"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

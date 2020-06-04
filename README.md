@@ -154,6 +154,7 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**get_project_list**](docs/TatorApi.md#get_project_list) | **GET** /rest/Projects | 
 *TatorApi* | [**get_section_analysis**](docs/TatorApi.md#get_section_analysis) | **GET** /rest/SectionAnalysis/{project} | 
 *TatorApi* | [**get_state**](docs/TatorApi.md#get_state) | **GET** /rest/State/{id} | 
+*TatorApi* | [**get_state_graphic**](docs/TatorApi.md#get_state_graphic) | **GET** /rest/StateGraphic/{id} | 
 *TatorApi* | [**get_state_list**](docs/TatorApi.md#get_state_list) | **GET** /rest/States/{project} | 
 *TatorApi* | [**get_state_type**](docs/TatorApi.md#get_state_type) | **GET** /rest/StateType/{id} | 
 *TatorApi* | [**get_state_type_list**](docs/TatorApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
@@ -161,12 +162,10 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**get_temporary_file_list**](docs/TatorApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
 *TatorApi* | [**get_user**](docs/TatorApi.md#get_user) | **GET** /rest/User/{id} | 
 *TatorApi* | [**get_version**](docs/TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
+*TatorApi* | [**get_version_list**](docs/TatorApi.md#get_version_list) | **GET** /rest/Versions/{project} | 
 *TatorApi* | [**leaf_suggestion**](docs/TatorApi.md#leaf_suggestion) | **GET** /rest/Leaves/Suggestion/{ancestor}/{project} | 
 *TatorApi* | [**notify**](docs/TatorApi.md#notify) | **POST** /rest/Notify | 
-*TatorApi* | [**partial_update_save_video_api**](docs/TatorApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
 *TatorApi* | [**progress**](docs/TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
-*TatorApi* | [**retrieve_state_graphic_api**](docs/TatorApi.md#retrieve_state_graphic_api) | **GET** /rest/StateGraphic/{id} | 
-*TatorApi* | [**retrieve_version_list**](docs/TatorApi.md#retrieve_version_list) | **GET** /rest/Versions/{project} | 
 *TatorApi* | [**save_image**](docs/TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
 *TatorApi* | [**save_video**](docs/TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
 *TatorApi* | [**transcode**](docs/TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
@@ -186,6 +185,7 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**update_state_type**](docs/TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
 *TatorApi* | [**update_user**](docs/TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
 *TatorApi* | [**update_version**](docs/TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
+*TatorApi* | [**update_video**](docs/TatorApi.md#update_video) | **PATCH** /rest/SaveVideo/{project} | 
 *TatorApi* | [**whoami**](docs/TatorApi.md#whoami) | **GET** /rest/User/GetCurrent | 
 
 
@@ -200,9 +200,8 @@ Class | Method | HTTP request | Description
  - [AttributeType](docs/AttributeType.md)
  - [AttributeTypeUpdate](docs/AttributeTypeUpdate.md)
  - [CreateResponse](docs/CreateResponse.md)
+ - [Credentials](docs/Credentials.md)
  - [ImageSpec](docs/ImageSpec.md)
- - [InlineObject](docs/InlineObject.md)
- - [InlineResponse200](docs/InlineResponse200.md)
  - [InlineResponse400](docs/InlineResponse400.md)
  - [InlineResponse404](docs/InlineResponse404.md)
  - [Leaf](docs/Leaf.md)
@@ -242,6 +241,7 @@ Class | Method | HTTP request | Description
  - [StateUpdate](docs/StateUpdate.md)
  - [TemporaryFile](docs/TemporaryFile.md)
  - [TemporaryFileSpec](docs/TemporaryFileSpec.md)
+ - [Token](docs/Token.md)
  - [Transcode](docs/Transcode.md)
  - [TranscodeSpec](docs/TranscodeSpec.md)
  - [User](docs/User.md)

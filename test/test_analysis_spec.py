@@ -41,6 +41,7 @@ class TestAnalysisSpec(unittest.TestCase):
             )
         else :
             return AnalysisSpec(
+                data_query = '*',
                 name = '0',
         )
 

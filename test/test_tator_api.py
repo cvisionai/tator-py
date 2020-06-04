@@ -382,6 +382,12 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
+    def test_get_state_graphic(self):
+        """Test case for get_state_graphic
+
+        """
+        pass
+
     def test_get_state_list(self):
         """Test case for get_state_list
 
@@ -424,6 +430,12 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
+    def test_get_version_list(self):
+        """Test case for get_version_list
+
+        """
+        pass
+
     def test_leaf_suggestion(self):
         """Test case for leaf_suggestion
 
@@ -436,26 +448,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_partial_update_save_video_api(self):
-        """Test case for partial_update_save_video_api
-
-        """
-        pass
-
     def test_progress(self):
         """Test case for progress
-
-        """
-        pass
-
-    def test_retrieve_state_graphic_api(self):
-        """Test case for retrieve_state_graphic_api
-
-        """
-        pass
-
-    def test_retrieve_version_list(self):
-        """Test case for retrieve_version_list
 
         """
         pass
@@ -570,6 +564,12 @@ class TestTatorApi(unittest.TestCase):
 
     def test_update_version(self):
         """Test case for update_version
+
+        """
+        pass
+
+    def test_update_video(self):
+        """Test case for update_video
 
         """
         pass

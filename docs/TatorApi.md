@@ -63,6 +63,7 @@ Method | HTTP request | Description
 [**get_project_list**](TatorApi.md#get_project_list) | **GET** /rest/Projects | 
 [**get_section_analysis**](TatorApi.md#get_section_analysis) | **GET** /rest/SectionAnalysis/{project} | 
 [**get_state**](TatorApi.md#get_state) | **GET** /rest/State/{id} | 
+[**get_state_graphic**](TatorApi.md#get_state_graphic) | **GET** /rest/StateGraphic/{id} | 
 [**get_state_list**](TatorApi.md#get_state_list) | **GET** /rest/States/{project} | 
 [**get_state_type**](TatorApi.md#get_state_type) | **GET** /rest/StateType/{id} | 
 [**get_state_type_list**](TatorApi.md#get_state_type_list) | **GET** /rest/StateTypes/{project} | 
@@ -70,12 +71,10 @@ Method | HTTP request | Description
 [**get_temporary_file_list**](TatorApi.md#get_temporary_file_list) | **GET** /rest/TemporaryFiles/{project} | 
 [**get_user**](TatorApi.md#get_user) | **GET** /rest/User/{id} | 
 [**get_version**](TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
+[**get_version_list**](TatorApi.md#get_version_list) | **GET** /rest/Versions/{project} | 
 [**leaf_suggestion**](TatorApi.md#leaf_suggestion) | **GET** /rest/Leaves/Suggestion/{ancestor}/{project} | 
 [**notify**](TatorApi.md#notify) | **POST** /rest/Notify | 
-[**partial_update_save_video_api**](TatorApi.md#partial_update_save_video_api) | **PATCH** /rest/SaveVideo/{project} | 
 [**progress**](TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
-[**retrieve_state_graphic_api**](TatorApi.md#retrieve_state_graphic_api) | **GET** /rest/StateGraphic/{id} | 
-[**retrieve_version_list**](TatorApi.md#retrieve_version_list) | **GET** /rest/Versions/{project} | 
 [**save_image**](TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
 [**save_video**](TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
 [**transcode**](TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
@@ -95,6 +94,7 @@ Method | HTTP request | Description
 [**update_state_type**](TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
 [**update_user**](TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
 [**update_version**](TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
+[**update_video**](TatorApi.md#update_video) | **PATCH** /rest/SaveVideo/{project} | 
 [**whoami**](TatorApi.md#whoami) | **GET** /rest/User/GetCurrent | 
 
 
@@ -739,7 +739,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_obtain_auth_token**
-> InlineResponse200 create_obtain_auth_token(inline_object=inline_object)
+> Token create_obtain_auth_token(credentials=credentials)
 
 
 
@@ -777,10 +777,10 @@ configuration = tator.Configuration(
 with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
-    inline_object = tator.InlineObject() # InlineObject |  (optional)
+    credentials = tator.Credentials() # Credentials |  (optional)
 
     try:
-        api_response = api_instance.create_obtain_auth_token(inline_object=inline_object)
+        api_response = api_instance.create_obtain_auth_token(credentials=credentials)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_obtain_auth_token: %s\n" % e)
@@ -790,11 +790,11 @@ with tator.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **inline_object** | [**InlineObject**](InlineObject.md)|  | [optional] 
+ **credentials** | [**Credentials**](Credentials.md)|  | [optional] 
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**Token**](Token.md)
 
 ### Authorization
 
@@ -5083,6 +5083,90 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_state_graphic**
+> file get_state_graphic(id, mode=mode, fps=fps, force_scale=force_scale)
+
+
+
+Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a state.
+mode = 'animate' # str | Whether to animate or tile. (optional) (default to 'animate')
+fps = 2 # float | Frame rate if `mode` is `animate`. (optional) (default to 2)
+force_scale = '240x240' # str | wxh to force each tile prior to stich (optional)
+
+    try:
+        api_response = api_instance.get_state_graphic(id, mode=mode, fps=fps, force_scale=force_scale)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_state_graphic: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a state. | 
+ **mode** | **str**| Whether to animate or tile. | [optional] [default to &#39;animate&#39;]
+ **fps** | **float**| Frame rate if &#x60;mode&#x60; is &#x60;animate&#x60;. | [optional] [default to 2]
+ **force_scale** | **str**| wxh to force each tile prior to stich | [optional] 
+
+### Return type
+
+**file**
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: image/*, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of state graphic. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_state_list**
 > list[State] get_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
@@ -5671,6 +5755,86 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_version_list**
+> list[Version] get_version_list(project, media_id=media_id)
+
+
+
+Interact with a list of versions.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+media_id = 56 # int | Unique integer identifying a media. (optional)
+
+    try:
+        api_response = api_instance.get_version_list(project, media_id=media_id)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_version_list: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **media_id** | **int**| Unique integer identifying a media. | [optional] 
+
+### Return type
+
+[**list[Version]**](Version.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of version list. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **leaf_suggestion**
 > list[LeafSuggestion] leaf_suggestion(project, ancestor, query, min_level=min_level)
 
@@ -5833,84 +5997,6 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **partial_update_save_video_api**
-> partial_update_save_video_api(project, video_update=video_update)
-
-
-
-Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-video_update = tator.VideoUpdate() # VideoUpdate |  (optional)
-
-    try:
-        api_instance.partial_update_save_video_api(project, video_update=video_update)
-    except ApiException as e:
-        print("Exception when calling TatorApi->partial_update_save_video_api: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **video_update** | [**VideoUpdate**](VideoUpdate.md)|  | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **progress**
 > MessageResponse progress(project, progress_spec=progress_spec)
 
@@ -5986,170 +6072,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful creation of progress message. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **retrieve_state_graphic_api**
-> file retrieve_state_graphic_api(id, mode=mode, fps=fps, force_scale=force_scale)
-
-
-
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    id = 56 # int | A unique integer identifying a state.
-mode = 'animate' # str | Whether to animate or tile. (optional) (default to 'animate')
-fps = 2 # float | Frame rate if `mode` is `animate`. (optional) (default to 2)
-force_scale = '240x240' # str | wxh to force each tile prior to stich (optional)
-
-    try:
-        api_response = api_instance.retrieve_state_graphic_api(id, mode=mode, fps=fps, force_scale=force_scale)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->retrieve_state_graphic_api: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| A unique integer identifying a state. | 
- **mode** | **str**| Whether to animate or tile. | [optional] [default to &#39;animate&#39;]
- **fps** | **float**| Frame rate if &#x60;mode&#x60; is &#x60;animate&#x60;. | [optional] [default to 2]
- **force_scale** | **str**| wxh to force each tile prior to stich | [optional] 
-
-### Return type
-
-**file**
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: image/*, application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of state graphic. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **retrieve_version_list**
-> list[Version] retrieve_version_list(project, media_id=media_id)
-
-
-
-Interact with a list of versions.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator
-from tator.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-media_id = 56 # int | Unique integer identifying a media. (optional)
-
-    try:
-        api_response = api_instance.retrieve_version_list(project, media_id=media_id)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->retrieve_version_list: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **media_id** | **int**| Unique integer identifying a media. | [optional] 
-
-### Return type
-
-[**list[Version]**](Version.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful retrieval of version list. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -7802,6 +7724,84 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful update of version. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_video**
+> update_video(project, video_update=video_update)
+
+
+
+Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The script at `scripts/transcoder/transcodePipeline.py` in the Tator source code provides an example of how to transcode a Tator-compatible video, upload it, and save it to the database using this endpoint.
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator
+from tator.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+video_update = tator.VideoUpdate() # VideoUpdate |  (optional)
+
+    try:
+        api_instance.update_video(project, video_update=video_update)
+    except ApiException as e:
+        print("Exception when calling TatorApi->update_video: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **video_update** | [**VideoUpdate**](VideoUpdate.md)|  | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
