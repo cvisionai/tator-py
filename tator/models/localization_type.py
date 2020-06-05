@@ -34,7 +34,7 @@ class LocalizationType(object):
     """
     openapi_types = {
         'attribute_types': 'list[AttributeType]',
-        'color_map': 'dict(str, object)',
+        'color_map': 'ColorMap',
         'description': 'str',
         'dtype': 'str',
         'id': 'int',
@@ -126,7 +126,7 @@ class LocalizationType(object):
 
 
         :return: The color_map of this LocalizationType.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: ColorMap
         """
         return self._color_map
 
@@ -136,7 +136,7 @@ class LocalizationType(object):
 
 
         :param color_map: The color_map of this LocalizationType.  # noqa: E501
-        :type: dict(str, object)
+        :type: ColorMap
         """
 
         self._color_map = color_map

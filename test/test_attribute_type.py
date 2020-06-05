@@ -36,7 +36,8 @@ class TestAttributeType(unittest.TestCase):
         # model = tator.models.attribute_type.AttributeType()  # noqa: E501
         if include_optional :
             return AttributeType(
-                autocomplete = None, 
+                autocomplete = tator.models.autocomplete_service.AutocompleteService(
+                    service_url = '0', ), 
                 choices = [
                     '0'
                     ], 

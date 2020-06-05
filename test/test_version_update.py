@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.localization_update import LocalizationUpdate  # noqa: E501
+from tator.models.version_update import VersionUpdate  # noqa: E501
 from tator.rest import ApiException
 
-class TestLocalizationUpdate(unittest.TestCase):
-    """LocalizationUpdate unit test stubs"""
+class TestVersionUpdate(unittest.TestCase):
+    """VersionUpdate unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,30 +29,26 @@ class TestLocalizationUpdate(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test LocalizationUpdate
+        """Test VersionUpdate
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.localization_update.LocalizationUpdate()  # noqa: E501
+        # model = tator.models.version_update.VersionUpdate()  # noqa: E501
         if include_optional :
-            return LocalizationUpdate(
-                attributes = { }, 
-                frame = 56, 
-                height = 0.0, 
-                modified = True, 
-                parent = 1.337, 
-                u = -1.0, 
-                v = -1.0, 
-                width = 0.0, 
-                x = 0.0, 
-                y = 0.0
+            return VersionUpdate(
+                bases = [
+                    56
+                    ], 
+                description = '0', 
+                name = '0', 
+                show_empty = True
             )
         else :
-            return LocalizationUpdate(
+            return VersionUpdate(
         )
 
-    def testLocalizationUpdate(self):
-        """Test LocalizationUpdate"""
+    def testVersionUpdate(self):
+        """Test VersionUpdate"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

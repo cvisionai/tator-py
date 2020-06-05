@@ -33,29 +33,65 @@ class LocalizationTypeUpdate(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'color_map': 'ColorMap',
         'description': 'str',
-        'name': 'str'
+        'line_width': 'int',
+        'name': 'str',
+        'visible': 'bool'
     }
 
     attribute_map = {
+        'color_map': 'colorMap',
         'description': 'description',
-        'name': 'name'
+        'line_width': 'line_width',
+        'name': 'name',
+        'visible': 'visible'
     }
 
-    def __init__(self, description=None, name=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, color_map=None, description=None, line_width=None, name=None, visible=True, local_vars_configuration=None):  # noqa: E501
         """LocalizationTypeUpdate - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._color_map = None
         self._description = None
+        self._line_width = None
         self._name = None
+        self._visible = None
         self.discriminator = None
 
+        if color_map is not None:
+            self.color_map = color_map
         if description is not None:
             self.description = description
+        if line_width is not None:
+            self.line_width = line_width
         if name is not None:
             self.name = name
+        if visible is not None:
+            self.visible = visible
+
+    @property
+    def color_map(self):
+        """Gets the color_map of this LocalizationTypeUpdate.  # noqa: E501
+
+
+        :return: The color_map of this LocalizationTypeUpdate.  # noqa: E501
+        :rtype: ColorMap
+        """
+        return self._color_map
+
+    @color_map.setter
+    def color_map(self, color_map):
+        """Sets the color_map of this LocalizationTypeUpdate.
+
+
+        :param color_map: The color_map of this LocalizationTypeUpdate.  # noqa: E501
+        :type: ColorMap
+        """
+
+        self._color_map = color_map
 
     @property
     def description(self):
@@ -81,6 +117,32 @@ class LocalizationTypeUpdate(object):
         self._description = description
 
     @property
+    def line_width(self):
+        """Gets the line_width of this LocalizationTypeUpdate.  # noqa: E501
+
+        Width of the line used to draw the localization.  # noqa: E501
+
+        :return: The line_width of this LocalizationTypeUpdate.  # noqa: E501
+        :rtype: int
+        """
+        return self._line_width
+
+    @line_width.setter
+    def line_width(self, line_width):
+        """Sets the line_width of this LocalizationTypeUpdate.
+
+        Width of the line used to draw the localization.  # noqa: E501
+
+        :param line_width: The line_width of this LocalizationTypeUpdate.  # noqa: E501
+        :type: int
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                line_width is not None and line_width < 1):  # noqa: E501
+            raise ValueError("Invalid value for `line_width`, must be a value greater than or equal to `1`")  # noqa: E501
+
+        self._line_width = line_width
+
+    @property
     def name(self):
         """Gets the name of this LocalizationTypeUpdate.  # noqa: E501
 
@@ -102,6 +164,29 @@ class LocalizationTypeUpdate(object):
         """
 
         self._name = name
+
+    @property
+    def visible(self):
+        """Gets the visible of this LocalizationTypeUpdate.  # noqa: E501
+
+        Whether this type should be displayed in the UI.  # noqa: E501
+
+        :return: The visible of this LocalizationTypeUpdate.  # noqa: E501
+        :rtype: bool
+        """
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible):
+        """Sets the visible of this LocalizationTypeUpdate.
+
+        Whether this type should be displayed in the UI.  # noqa: E501
+
+        :param visible: The visible of this LocalizationTypeUpdate.  # noqa: E501
+        :type: bool
+        """
+
+        self._visible = visible
 
     def to_dict(self):
         """Returns the model properties as a dict"""

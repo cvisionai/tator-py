@@ -36,7 +36,10 @@ from tator.models.analysis_spec import AnalysisSpec
 from tator.models.attribute_bulk_update import AttributeBulkUpdate
 from tator.models.attribute_type import AttributeType
 from tator.models.attribute_type_update import AttributeTypeUpdate
+from tator.models.autocomplete_service import AutocompleteService
 from tator.models.bad_request_response import BadRequestResponse
+from tator.models.color import Color
+from tator.models.color_map import ColorMap
 from tator.models.create_response import CreateResponse
 from tator.models.credentials import Credentials
 from tator.models.image_spec import ImageSpec
@@ -85,6 +88,7 @@ from tator.models.user import User
 from tator.models.user_update import UserUpdate
 from tator.models.version import Version
 from tator.models.version_spec import VersionSpec
+from tator.models.version_update import VersionUpdate
 from tator.models.video_spec import VideoSpec
 from tator.models.video_update import VideoUpdate
 

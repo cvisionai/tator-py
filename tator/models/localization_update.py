@@ -37,6 +37,7 @@ class LocalizationUpdate(object):
         'frame': 'int',
         'height': 'float',
         'modified': 'bool',
+        'parent': 'float',
         'u': 'float',
         'v': 'float',
         'width': 'float',
@@ -49,6 +50,7 @@ class LocalizationUpdate(object):
         'frame': 'frame',
         'height': 'height',
         'modified': 'modified',
+        'parent': 'parent',
         'u': 'u',
         'v': 'v',
         'width': 'width',
@@ -56,7 +58,7 @@ class LocalizationUpdate(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, frame=0, height=None, modified=None, u=None, v=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=0, height=None, modified=None, parent=None, u=None, v=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """LocalizationUpdate - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -66,6 +68,7 @@ class LocalizationUpdate(object):
         self._frame = None
         self._height = None
         self._modified = None
+        self._parent = None
         self._u = None
         self._v = None
         self._width = None
@@ -79,6 +82,7 @@ class LocalizationUpdate(object):
             self.frame = frame
         self.height = height
         self.modified = modified
+        self.parent = parent
         self.u = u
         self.v = v
         self.width = width
@@ -182,6 +186,29 @@ class LocalizationUpdate(object):
         """
 
         self._modified = modified
+
+    @property
+    def parent(self):
+        """Gets the parent of this LocalizationUpdate.  # noqa: E501
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :return: The parent of this LocalizationUpdate.  # noqa: E501
+        :rtype: float
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        """Sets the parent of this LocalizationUpdate.
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :param parent: The parent of this LocalizationUpdate.  # noqa: E501
+        :type: float
+        """
+
+        self._parent = parent
 
     @property
     def u(self):

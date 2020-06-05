@@ -16,11 +16,11 @@ import unittest
 import datetime
 
 import tator
-from tator.models.localization_update import LocalizationUpdate  # noqa: E501
+from tator.models.color import Color  # noqa: E501
 from tator.rest import ApiException
 
-class TestLocalizationUpdate(unittest.TestCase):
-    """LocalizationUpdate unit test stubs"""
+class TestColor(unittest.TestCase):
+    """Color unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,30 +29,20 @@ class TestLocalizationUpdate(unittest.TestCase):
         pass
 
     def make_instance(self, include_optional):
-        """Test LocalizationUpdate
+        """Test Color
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # model = tator.models.localization_update.LocalizationUpdate()  # noqa: E501
+        # model = tator.models.color.Color()  # noqa: E501
         if include_optional :
-            return LocalizationUpdate(
-                attributes = { }, 
-                frame = 56, 
-                height = 0.0, 
-                modified = True, 
-                parent = 1.337, 
-                u = -1.0, 
-                v = -1.0, 
-                width = 0.0, 
-                x = 0.0, 
-                y = 0.0
+            return Color(
             )
         else :
-            return LocalizationUpdate(
+            return Color(
         )
 
-    def testLocalizationUpdate(self):
-        """Test LocalizationUpdate"""
+    def testColor(self):
+        """Test Color"""
         inst_req_only = self.make_instance(include_optional=False)
         inst_req_and_optional = self.make_instance(include_optional=True)
 

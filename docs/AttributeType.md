@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**autocomplete** | [**object**](.md) | Object indicating URL of autocomplete service for string dtype. | [optional] 
+**autocomplete** | [**AutocompleteService**](AutocompleteService.md) |  | [optional] 
 **choices** | **list[str]** | Array of possible values for enum dtype. | [optional] 
 **default** | [**OneOfbooleannumberstringarray**](OneOfbooleannumberstringarray.md) | Default value for the attribute. | [optional] 
 **description** | **str** | Description of the attribute. | [optional] [default to '']

@@ -33,7 +33,7 @@ class AttributeType(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'autocomplete': 'object',
+        'autocomplete': 'AutocompleteService',
         'choices': 'list[str]',
         'default': 'OneOfbooleannumberstringarray',
         'description': 'str',
@@ -111,10 +111,9 @@ class AttributeType(object):
     def autocomplete(self):
         """Gets the autocomplete of this AttributeType.  # noqa: E501
 
-        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
 
         :return: The autocomplete of this AttributeType.  # noqa: E501
-        :rtype: object
+        :rtype: AutocompleteService
         """
         return self._autocomplete
 
@@ -122,10 +121,9 @@ class AttributeType(object):
     def autocomplete(self, autocomplete):
         """Sets the autocomplete of this AttributeType.
 
-        Object indicating URL of autocomplete service for string dtype.  # noqa: E501
 
         :param autocomplete: The autocomplete of this AttributeType.  # noqa: E501
-        :type: object
+        :type: AutocompleteService
         """
 
         self._autocomplete = autocomplete

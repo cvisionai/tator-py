@@ -38,7 +38,8 @@ class TestLeafType(unittest.TestCase):
             return LeafType(
                 attribute_types = [
                     tator.models.attribute_type.AttributeType(
-                        autocomplete = tator.models.autocomplete.autocomplete(), 
+                        autocomplete = tator.models.autocomplete_service.AutocompleteService(
+                            service_url = '0', ), 
                         choices = [
                             '0'
                             ], 

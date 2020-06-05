@@ -41,6 +41,7 @@ class Localization(object):
         'media': 'int',
         'meta': 'int',
         'modified': 'bool',
+        'parent': 'float',
         'project': 'int',
         'thumbnail_image': 'str',
         'u': 'float',
@@ -60,6 +61,7 @@ class Localization(object):
         'media': 'media',
         'meta': 'meta',
         'modified': 'modified',
+        'parent': 'parent',
         'project': 'project',
         'thumbnail_image': 'thumbnail_image',
         'u': 'u',
@@ -70,7 +72,7 @@ class Localization(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, email=None, frame=0, height=None, id=None, media=None, meta=None, modified=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=0, height=None, id=None, media=None, meta=None, modified=None, parent=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """Localization - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -84,6 +86,7 @@ class Localization(object):
         self._media = None
         self._meta = None
         self._modified = None
+        self._parent = None
         self._project = None
         self._thumbnail_image = None
         self._u = None
@@ -109,6 +112,7 @@ class Localization(object):
             self.meta = meta
         if modified is not None:
             self.modified = modified
+        self.parent = parent
         if project is not None:
             self.project = project
         if thumbnail_image is not None:
@@ -310,6 +314,29 @@ class Localization(object):
         """
 
         self._modified = modified
+
+    @property
+    def parent(self):
+        """Gets the parent of this Localization.  # noqa: E501
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :return: The parent of this Localization.  # noqa: E501
+        :rtype: float
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        """Sets the parent of this Localization.
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :param parent: The parent of this Localization.  # noqa: E501
+        :type: float
+        """
+
+        self._parent = parent
 
     @property
     def project(self):

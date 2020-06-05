@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
 **media_id** | **int** | Unique integer identifying a media. | 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] 
+**parent** | **float** | If a clone, the pk of the parent. | [optional] 
 **type** | **int** | Unique integer identifying a localization type. | 
 **u** | **float** | Horizontal vector component for &#x60;line&#x60; localization types. | [optional] 
 **v** | **float** | Vertical vector component for &#x60;line&#x60; localization types. | [optional] 

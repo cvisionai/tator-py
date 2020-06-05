@@ -33,6 +33,7 @@ class Version(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'bases': 'list[int]',
         'created_by': 'str',
         'created_datetime': 'str',
         'description': 'str',
@@ -48,6 +49,7 @@ class Version(object):
     }
 
     attribute_map = {
+        'bases': 'bases',
         'created_by': 'created_by',
         'created_datetime': 'created_datetime',
         'description': 'description',
@@ -62,12 +64,13 @@ class Version(object):
         'show_empty': 'show_empty'
     }
 
-    def __init__(self, created_by=None, created_datetime=None, description=None, id=None, modified_by=None, modified_datetime=None, name=None, num_created=None, num_modified=None, number=None, project=None, show_empty=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, bases=None, created_by=None, created_datetime=None, description='', id=None, modified_by=None, modified_datetime=None, name=None, num_created=None, num_modified=None, number=None, project=None, show_empty=False, local_vars_configuration=None):  # noqa: E501
         """Version - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._bases = None
         self._created_by = None
         self._created_datetime = None
         self._description = None
@@ -82,6 +85,8 @@ class Version(object):
         self._show_empty = None
         self.discriminator = None
 
+        if bases is not None:
+            self.bases = bases
         if created_by is not None:
             self.created_by = created_by
         if created_datetime is not None:
@@ -106,6 +111,29 @@ class Version(object):
             self.project = project
         if show_empty is not None:
             self.show_empty = show_empty
+
+    @property
+    def bases(self):
+        """Gets the bases of this Version.  # noqa: E501
+
+        Array of other version IDs that are dependencies of this version.  # noqa: E501
+
+        :return: The bases of this Version.  # noqa: E501
+        :rtype: list[int]
+        """
+        return self._bases
+
+    @bases.setter
+    def bases(self, bases):
+        """Sets the bases of this Version.
+
+        Array of other version IDs that are dependencies of this version.  # noqa: E501
+
+        :param bases: The bases of this Version.  # noqa: E501
+        :type: list[int]
+        """
+
+        self._bases = bases
 
     @property
     def created_by(self):

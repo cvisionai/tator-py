@@ -44,6 +44,7 @@ class TestLocalization(unittest.TestCase):
                 media = 56, 
                 meta = 56, 
                 modified = True, 
+                parent = 1.337, 
                 project = 56, 
                 thumbnail_image = '0', 
                 u = -1.0, 

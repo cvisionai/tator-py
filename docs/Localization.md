@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **media** | **int** | Unique integer identifying media of this localization. | [optional] 
 **meta** | **int** | Unique integer identifying entity type of this localization. | [optional] 
 **modified** | **bool** | Indicates whether this localization has been modified in the web UI. | [optional] 
+**parent** | **float** | If a clone, the pk of the parent. | [optional] 
 **project** | **int** | Unique integer identifying project of this localization. | [optional] 
 **thumbnail_image** | **str** | URL of thumbnail corresponding to this localization. | [optional] 
 **u** | **float** | Horizontal vector component for &#x60;line&#x60; localization types. | [optional] 

@@ -1253,7 +1253,7 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-version_spec = {"name":"My new version"} # VersionSpec |  (optional)
+version_spec = {"bases":[1],"description":"New description","name":"My new version","show_empty":true} # VersionSpec |  (optional)
 
     try:
         api_response = api_instance.create_version(project, version_spec=version_spec)
@@ -1785,7 +1785,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_localization_list**
-> MessageResponse delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> MessageResponse delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
 
 
 
@@ -1844,9 +1844,11 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+exclude_parents = 0 # int | If a clone is present, do not send parent. (0 or 1) (optional) (default to 0)
+frame = 56 # int | Frame number of this localization if it is in a video. (optional)
 
     try:
-        api_response = api_instance.delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+        api_response = api_instance.delete_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->delete_localization_list: %s\n" % e)
@@ -1875,6 +1877,8 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+ **exclude_parents** | **int**| If a clone is present, do not send parent. (0 or 1) | [optional] [default to 0]
+ **frame** | **int**| Frame number of this localization if it is in a video. | [optional] 
 
 ### Return type
 
@@ -3640,7 +3644,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_list**
-> list[Localization] get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+> list[Localization] get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
 
 
 
@@ -3699,9 +3703,11 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+exclude_parents = 0 # int | If a clone is present, do not send parent. (0 or 1) (optional) (default to 0)
+frame = 56 # int | Frame number of this localization if it is in a video. (optional)
 
     try:
-        api_response = api_instance.get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
+        api_response = api_instance.get_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->get_localization_list: %s\n" % e)
@@ -3730,6 +3736,8 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+ **exclude_parents** | **int**| If a clone is present, do not send parent. (0 or 1) | [optional] [default to 0]
+ **frame** | **int**| Frame number of this localization if it is in a video. | [optional] 
 
 ### Return type
 
@@ -6666,7 +6674,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_list**
-> MessageResponse update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+> MessageResponse update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame, attribute_bulk_update=attribute_bulk_update)
 
 
 
@@ -6725,10 +6733,12 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
+exclude_parents = 0 # int | If a clone is present, do not send parent. (0 or 1) (optional) (default to 0)
+frame = 56 # int | Frame number of this localization if it is in a video. (optional)
 attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+        api_response = api_instance.update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame, attribute_bulk_update=attribute_bulk_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_localization_list: %s\n" % e)
@@ -6757,6 +6767,8 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
+ **exclude_parents** | **int**| If a clone is present, do not send parent. (0 or 1) | [optional] [default to 0]
+ **frame** | **int**| Frame number of this localization if it is in a video. | [optional] 
  **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
@@ -7650,7 +7662,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_version**
-> MessageResponse update_version(id, version_spec=version_spec)
+> MessageResponse update_version(id, version_update=version_update)
 
 
 
@@ -7691,10 +7703,10 @@ with tator.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
-version_spec = {"description":"New description","name":"New name"} # VersionSpec |  (optional)
+version_update = {"bases":[1],"description":"New description","name":"New name","show_empty":true} # VersionUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_version(id, version_spec=version_spec)
+        api_response = api_instance.update_version(id, version_update=version_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_version: %s\n" % e)
@@ -7705,7 +7717,7 @@ version_spec = {"description":"New description","name":"New name"} # VersionSpec
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a version. | 
- **version_spec** | [**VersionSpec**](VersionSpec.md)|  | [optional] 
+ **version_update** | [**VersionUpdate**](VersionUpdate.md)|  | [optional] 
 
 ### Return type
 

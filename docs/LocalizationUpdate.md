@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **frame** | **int** | Frame number of this localization if it is in a video. | [optional] [default to 0]
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] 
+**parent** | **float** | If a clone, the pk of the parent. | [optional] 
 **u** | **float** | Horizontal vector component for &#x60;line&#x60; localization types. | [optional] 
 **v** | **float** | Vertical vector component for &#x60;line&#x60; localization types. | [optional] 
 **width** | **float** | Normalized width of bounding box for &#x60;box&#x60; localization types. | [optional] 

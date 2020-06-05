@@ -5,7 +5,7 @@ Localization type.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **attribute_types** | [**list[AttributeType]**](AttributeType.md) | Attribute type definitions. | [optional] 
-**color_map** | **dict(str, object)** |  | [optional] 
+**color_map** | [**ColorMap**](ColorMap.md) |  | [optional] 
 **description** | **str** | Description of the localization type. | [optional] 
 **dtype** | **str** | Shape of this localization type. | [optional] 
 **id** | **int** | Unique integer identifying a localization type. | [optional] 

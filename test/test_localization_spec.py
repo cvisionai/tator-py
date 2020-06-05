@@ -41,6 +41,7 @@ class TestLocalizationSpec(unittest.TestCase):
                 height = 0.0, 
                 media_id = 56, 
                 modified = True, 
+                parent = 1.337, 
                 type = 56, 
                 u = -1.0, 
                 v = -1.0, 

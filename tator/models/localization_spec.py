@@ -38,6 +38,7 @@ class LocalizationSpec(object):
         'height': 'float',
         'media_id': 'int',
         'modified': 'bool',
+        'parent': 'float',
         'type': 'int',
         'u': 'float',
         'v': 'float',
@@ -53,6 +54,7 @@ class LocalizationSpec(object):
         'height': 'height',
         'media_id': 'media_id',
         'modified': 'modified',
+        'parent': 'parent',
         'type': 'type',
         'u': 'u',
         'v': 'v',
@@ -62,7 +64,7 @@ class LocalizationSpec(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, frame=0, height=None, media_id=None, modified=None, type=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=0, height=None, media_id=None, modified=None, parent=None, type=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """LocalizationSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -73,6 +75,7 @@ class LocalizationSpec(object):
         self._height = None
         self._media_id = None
         self._modified = None
+        self._parent = None
         self._type = None
         self._u = None
         self._v = None
@@ -88,6 +91,7 @@ class LocalizationSpec(object):
         self.height = height
         self.media_id = media_id
         self.modified = modified
+        self.parent = parent
         self.type = type
         self.u = u
         self.v = v
@@ -221,6 +225,29 @@ class LocalizationSpec(object):
         """
 
         self._modified = modified
+
+    @property
+    def parent(self):
+        """Gets the parent of this LocalizationSpec.  # noqa: E501
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :return: The parent of this LocalizationSpec.  # noqa: E501
+        :rtype: float
+        """
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent):
+        """Sets the parent of this LocalizationSpec.
+
+        If a clone, the pk of the parent.  # noqa: E501
+
+        :param parent: The parent of this LocalizationSpec.  # noqa: E501
+        :type: float
+        """
+
+        self._parent = parent
 
     @property
     def type(self):

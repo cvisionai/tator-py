@@ -2644,6 +2644,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -2687,6 +2689,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -2722,7 +2726,9 @@ class TatorApi(object):
             'attribute_null',
             'operation',
             'start',
-            'stop'
+            'stop',
+            'exclude_parents',
+            'frame'
         ]
         all_params.extend(
             [
@@ -2746,6 +2752,12 @@ class TatorApi(object):
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `delete_localization_list`")  # noqa: E501
 
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] > 1:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `delete_localization_list`, must be a value less than or equal to `1`")  # noqa: E501
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `delete_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
+        if self.api_client.client_side_validation and 'frame' in local_var_params and local_var_params['frame'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `frame` when calling `delete_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}
@@ -2791,6 +2803,10 @@ class TatorApi(object):
             query_params.append(('start', local_var_params['start']))  # noqa: E501
         if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
             query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+        if 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] is not None:  # noqa: E501
+            query_params.append(('excludeParents', local_var_params['exclude_parents']))  # noqa: E501
+        if 'frame' in local_var_params and local_var_params['frame'] is not None:  # noqa: E501
+            query_params.append(('frame', local_var_params['frame']))  # noqa: E501
 
         header_params = {}
 
@@ -5549,6 +5565,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -5592,6 +5610,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -5627,7 +5647,9 @@ class TatorApi(object):
             'attribute_null',
             'operation',
             'start',
-            'stop'
+            'stop',
+            'exclude_parents',
+            'frame'
         ]
         all_params.extend(
             [
@@ -5651,6 +5673,12 @@ class TatorApi(object):
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `get_localization_list`")  # noqa: E501
 
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] > 1:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `get_localization_list`, must be a value less than or equal to `1`")  # noqa: E501
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `get_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
+        if self.api_client.client_side_validation and 'frame' in local_var_params and local_var_params['frame'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `frame` when calling `get_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}
@@ -5696,6 +5724,10 @@ class TatorApi(object):
             query_params.append(('start', local_var_params['start']))  # noqa: E501
         if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
             query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+        if 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] is not None:  # noqa: E501
+            query_params.append(('excludeParents', local_var_params['exclude_parents']))  # noqa: E501
+        if 'frame' in local_var_params and local_var_params['frame'] is not None:  # noqa: E501
+            query_params.append(('frame', local_var_params['frame']))  # noqa: E501
 
         header_params = {}
 
@@ -10336,6 +10368,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
@@ -10380,6 +10414,8 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
+        :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
+        :param int frame: Frame number of this localization if it is in a video.
         :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
@@ -10417,6 +10453,8 @@ class TatorApi(object):
             'operation',
             'start',
             'stop',
+            'exclude_parents',
+            'frame',
             'attribute_bulk_update'
         ]
         all_params.extend(
@@ -10441,6 +10479,12 @@ class TatorApi(object):
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `update_localization_list`")  # noqa: E501
 
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] > 1:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `update_localization_list`, must be a value less than or equal to `1`")  # noqa: E501
+        if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `update_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
+        if self.api_client.client_side_validation and 'frame' in local_var_params and local_var_params['frame'] < 0:  # noqa: E501
+            raise ApiValueError("Invalid value for parameter `frame` when calling `update_localization_list`, must be a value greater than or equal to `0`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}
@@ -10486,6 +10530,10 @@ class TatorApi(object):
             query_params.append(('start', local_var_params['start']))  # noqa: E501
         if 'stop' in local_var_params and local_var_params['stop'] is not None:  # noqa: E501
             query_params.append(('stop', local_var_params['stop']))  # noqa: E501
+        if 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] is not None:  # noqa: E501
+            query_params.append(('excludeParents', local_var_params['exclude_parents']))  # noqa: E501
+        if 'frame' in local_var_params and local_var_params['frame'] is not None:  # noqa: E501
+            query_params.append(('frame', local_var_params['frame']))  # noqa: E501
 
         header_params = {}
 
@@ -11941,7 +11989,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param VersionSpec version_spec:
+        :param VersionUpdate version_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11967,7 +12015,7 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param VersionSpec version_spec:
+        :param VersionUpdate version_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11986,7 +12034,7 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'version_spec'
+            'version_update'
         ]
         all_params.extend(
             [
@@ -12024,8 +12072,8 @@ class TatorApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'version_spec' in local_var_params:
-            body_params = local_var_params['version_spec']
+        if 'version_update' in local_var_params:
+            body_params = local_var_params['version_update']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501

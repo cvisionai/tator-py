@@ -36,8 +36,12 @@ class TestVersionSpec(unittest.TestCase):
         # model = tator.models.version_spec.VersionSpec()  # noqa: E501
         if include_optional :
             return VersionSpec(
+                bases = [
+                    56
+                    ], 
                 description = '0', 
-                name = '0'
+                name = '0', 
+                show_empty = True
             )
         else :
             return VersionSpec(

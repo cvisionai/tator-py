@@ -38,7 +38,8 @@ class TestLocalizationTypeSpec(unittest.TestCase):
             return LocalizationTypeSpec(
                 attribute_types = [
                     tator.models.attribute_type.AttributeType(
-                        autocomplete = tator.models.autocomplete.autocomplete(), 
+                        autocomplete = tator.models.autocomplete_service.AutocompleteService(
+                            service_url = '0', ), 
                         choices = [
                             '0'
                             ], 
@@ -55,12 +56,28 @@ class TestLocalizationTypeSpec(unittest.TestCase):
                         required = True, 
                         use_current = True, )
                     ], 
+                color_map = tator.models.color_map.ColorMap(
+                    alpha_ranges = {
+                        'key' : [
+                            1.337
+                            ]
+                        }, 
+                    default = null, 
+                    key = '0', 
+                    map = {
+                        'key' : null
+                        }, 
+                    version = {
+                        'key' : null
+                        }, ), 
                 description = '0', 
                 dtype = 'box', 
+                line_width = 1, 
                 media_types = [
                     1
                     ], 
-                name = '0'
+                name = '0', 
+                visible = True
             )
         else :
             return LocalizationTypeSpec(

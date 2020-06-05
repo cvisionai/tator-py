@@ -199,7 +199,10 @@ Class | Method | HTTP request | Description
  - [AttributeBulkUpdate](docs/AttributeBulkUpdate.md)
  - [AttributeType](docs/AttributeType.md)
  - [AttributeTypeUpdate](docs/AttributeTypeUpdate.md)
+ - [AutocompleteService](docs/AutocompleteService.md)
  - [BadRequestResponse](docs/BadRequestResponse.md)
+ - [Color](docs/Color.md)
+ - [ColorMap](docs/ColorMap.md)
  - [CreateResponse](docs/CreateResponse.md)
  - [Credentials](docs/Credentials.md)
  - [ImageSpec](docs/ImageSpec.md)
@@ -248,6 +251,7 @@ Class | Method | HTTP request | Description
  - [UserUpdate](docs/UserUpdate.md)
  - [Version](docs/Version.md)
  - [VersionSpec](docs/VersionSpec.md)
+ - [VersionUpdate](docs/VersionUpdate.md)
  - [VideoSpec](docs/VideoSpec.md)
  - [VideoUpdate](docs/VideoUpdate.md)
 

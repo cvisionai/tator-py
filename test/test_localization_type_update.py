@@ -36,8 +36,24 @@ class TestLocalizationTypeUpdate(unittest.TestCase):
         # model = tator.models.localization_type_update.LocalizationTypeUpdate()  # noqa: E501
         if include_optional :
             return LocalizationTypeUpdate(
+                color_map = tator.models.color_map.ColorMap(
+                    alpha_ranges = {
+                        'key' : [
+                            1.337
+                            ]
+                        }, 
+                    default = null, 
+                    key = '0', 
+                    map = {
+                        'key' : null
+                        }, 
+                    version = {
+                        'key' : null
+                        }, ), 
                 description = '0', 
-                name = '0'
+                line_width = 1, 
+                name = '0', 
+                visible = True
             )
         else :
             return LocalizationTypeUpdate(
