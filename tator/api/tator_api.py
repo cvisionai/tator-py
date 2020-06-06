@@ -301,7 +301,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: CreateResponse
+        :return: CreateListResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -329,7 +329,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateListResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -397,7 +397,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateResponse',  # noqa: E501
+            response_type='CreateListResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -547,7 +547,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: MessageResponse
+        :return: CreateListResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -575,7 +575,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(MessageResponse, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateListResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -643,7 +643,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='MessageResponse',  # noqa: E501
+            response_type='CreateListResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
@@ -1388,7 +1388,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: CreateResponse
+        :return: CreateListResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1416,7 +1416,7 @@ class TatorApi(object):
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
                                  (connection, read) timeouts.
-        :return: tuple(CreateResponse, status_code(int), headers(HTTPHeaderDict))
+        :return: tuple(CreateListResponse, status_code(int), headers(HTTPHeaderDict))
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1484,7 +1484,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateResponse',  # noqa: E501
+            response_type='CreateListResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

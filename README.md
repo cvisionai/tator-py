@@ -203,6 +203,7 @@ Class | Method | HTTP request | Description
  - [BadRequestResponse](docs/BadRequestResponse.md)
  - [Color](docs/Color.md)
  - [ColorMap](docs/ColorMap.md)
+ - [CreateListResponse](docs/CreateListResponse.md)
  - [CreateResponse](docs/CreateResponse.md)
  - [Credentials](docs/Credentials.md)
  - [ImageSpec](docs/ImageSpec.md)

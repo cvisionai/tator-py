@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_leaf_list**
-> CreateResponse create_leaf_list(project, leaf=leaf)
+> CreateListResponse create_leaf_list(project, leaf=leaf)
 
 
 
@@ -318,7 +318,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateResponse**](CreateResponse.md)
+[**CreateListResponse**](CreateListResponse.md)
 
 ### Authorization
 
@@ -419,7 +419,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization_list**
-> MessageResponse create_localization_list(project, localization_spec=localization_spec)
+> CreateListResponse create_localization_list(project, localization_spec=localization_spec)
 
 
 
@@ -478,7 +478,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MessageResponse**](MessageResponse.md)
+[**CreateListResponse**](CreateListResponse.md)
 
 ### Authorization
 
@@ -972,7 +972,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state_list**
-> CreateResponse create_state_list(project, state_spec=state_spec)
+> CreateListResponse create_state_list(project, state_spec=state_spec)
 
 
 
@@ -1031,7 +1031,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateResponse**](CreateResponse.md)
+[**CreateListResponse**](CreateListResponse.md)
 
 ### Authorization
 

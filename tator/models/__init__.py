@@ -26,6 +26,7 @@ from tator.models.autocomplete_service import AutocompleteService
 from tator.models.bad_request_response import BadRequestResponse
 from tator.models.color import Color
 from tator.models.color_map import ColorMap
+from tator.models.create_list_response import CreateListResponse
 from tator.models.create_response import CreateResponse
 from tator.models.credentials import Credentials
 from tator.models.image_spec import ImageSpec
