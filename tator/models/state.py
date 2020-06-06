@@ -56,7 +56,7 @@ class State(object):
         'version': 'version'
     }
 
-    def __init__(self, association=None, attributes=None, frame=None, id=None, localization_ids=None, media_ids=None, meta=None, modified=False, version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, association=None, attributes=None, frame=None, id=None, localization_ids=None, media_ids=None, meta=None, modified=None, version=None, local_vars_configuration=None):  # noqa: E501
         """State - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -87,8 +87,7 @@ class State(object):
             self.media_ids = media_ids
         if meta is not None:
             self.meta = meta
-        if modified is not None:
-            self.modified = modified
+        self.modified = modified
         if version is not None:
             self.version = version
 
@@ -257,7 +256,7 @@ class State(object):
     def modified(self):
         """Gets the modified of this State.  # noqa: E501
 
-        Whether this localization was created in the web UI.  # noqa: E501
+        Whether this state was created in the web UI.  # noqa: E501
 
         :return: The modified of this State.  # noqa: E501
         :rtype: bool
@@ -268,7 +267,7 @@ class State(object):
     def modified(self, modified):
         """Sets the modified of this State.
 
-        Whether this localization was created in the web UI.  # noqa: E501
+        Whether this state was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this State.  # noqa: E501
         :type: bool

@@ -40,8 +40,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_create_leaf(self):
-        """Test case for create_leaf
+    def test_create_leaf_list(self):
+        """Test case for create_leaf_list
 
         """
         pass
@@ -52,8 +52,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_create_localization(self):
-        """Test case for create_localization
+    def test_create_localization_list(self):
+        """Test case for create_localization_list
 
         """
         pass
@@ -94,8 +94,8 @@ class TestTatorApi(unittest.TestCase):
         """
         pass
 
-    def test_create_state(self):
-        """Test case for create_state
+    def test_create_state_list(self):
+        """Test case for create_state_list
 
         """
         pass

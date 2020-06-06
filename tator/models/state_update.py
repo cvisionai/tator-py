@@ -69,8 +69,7 @@ class StateUpdate(object):
             self.localization_ids = localization_ids
         if media_ids is not None:
             self.media_ids = media_ids
-        if modified is not None:
-            self.modified = modified
+        self.modified = modified
 
     @property
     def attributes(self):

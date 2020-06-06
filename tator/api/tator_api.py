@@ -282,13 +282,13 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_leaf(self, project, **kwargs):  # noqa: E501
-        """create_leaf  # noqa: E501
+    def create_leaf_list(self, project, **kwargs):  # noqa: E501
+        """create_leaf_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_leaf(project, async_req=True)
+        >>> thread = api.create_leaf_list(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -306,15 +306,15 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_leaf_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
 
-    def create_leaf_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_leaf  # noqa: E501
+    def create_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_leaf_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_leaf_with_http_info(project, async_req=True)
+        >>> thread = api.create_leaf_list_with_http_info(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -353,14 +353,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_leaf" % key
+                    " to method create_leaf_list" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'project' is set
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_leaf`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_leaf_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -528,13 +528,13 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_localization(self, project, **kwargs):  # noqa: E501
-        """create_localization  # noqa: E501
+    def create_localization_list(self, project, **kwargs):  # noqa: E501
+        """create_localization_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_localization(project, async_req=True)
+        >>> thread = api.create_localization_list(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -552,15 +552,15 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_localization_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_localization_list_with_http_info(project, **kwargs)  # noqa: E501
 
-    def create_localization_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_localization  # noqa: E501
+    def create_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_localization_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_localization_with_http_info(project, async_req=True)
+        >>> thread = api.create_localization_list_with_http_info(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -599,14 +599,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_localization" % key
+                    " to method create_localization_list" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'project' is set
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_localization`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_localization_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1369,13 +1369,13 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_state(self, project, **kwargs):  # noqa: E501
-        """create_state  # noqa: E501
+    def create_state_list(self, project, **kwargs):  # noqa: E501
+        """create_state_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_state(project, async_req=True)
+        >>> thread = api.create_state_list(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -1393,15 +1393,15 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_state_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_state_list_with_http_info(project, **kwargs)  # noqa: E501
 
-    def create_state_with_http_info(self, project, **kwargs):  # noqa: E501
-        """create_state  # noqa: E501
+    def create_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
+        """create_state_list  # noqa: E501
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.create_state_with_http_info(project, async_req=True)
+        >>> thread = api.create_state_list_with_http_info(project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
@@ -1440,14 +1440,14 @@ class TatorApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method create_state" % key
+                    " to method create_state_list" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'project' is set
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `create_state`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_state_list`")  # noqa: E501
 
         collection_formats = {}
 

@@ -6,16 +6,16 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**algorithm_launch**](TatorApi.md#algorithm_launch) | **POST** /rest/AlgorithmLaunch/{project} | 
 [**create_analysis**](TatorApi.md#create_analysis) | **POST** /rest/Analyses/{project} | 
-[**create_leaf**](TatorApi.md#create_leaf) | **POST** /rest/Leaves/{project} | 
+[**create_leaf_list**](TatorApi.md#create_leaf_list) | **POST** /rest/Leaves/{project} | 
 [**create_leaf_type**](TatorApi.md#create_leaf_type) | **POST** /rest/LeafTypes/{project} | 
-[**create_localization**](TatorApi.md#create_localization) | **POST** /rest/Localizations/{project} | 
+[**create_localization_list**](TatorApi.md#create_localization_list) | **POST** /rest/Localizations/{project} | 
 [**create_localization_type**](TatorApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
 [**create_media_type**](TatorApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
 [**create_membership**](TatorApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
 [**create_obtain_auth_token**](TatorApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
 [**create_progress_summary_api**](TatorApi.md#create_progress_summary_api) | **POST** /rest/ProgressSummary/{project} | 
 [**create_project**](TatorApi.md#create_project) | **POST** /rest/Projects | 
-[**create_state**](TatorApi.md#create_state) | **POST** /rest/States/{project} | 
+[**create_state_list**](TatorApi.md#create_state_list) | **POST** /rest/States/{project} | 
 [**create_state_type**](TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
 [**create_temporary_file**](TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
 [**create_version**](TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
@@ -258,8 +258,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_leaf**
-> CreateResponse create_leaf(project, leaf=leaf)
+# **create_leaf_list**
+> CreateResponse create_leaf_list(project, leaf=leaf)
 
 
 
@@ -303,10 +303,10 @@ with tator.ApiClient(configuration) as api_client:
 leaf = [tator.Leaf()] # list[Leaf] |  (optional)
 
     try:
-        api_response = api_instance.create_leaf(project, leaf=leaf)
+        api_response = api_instance.create_leaf_list(project, leaf=leaf)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->create_leaf: %s\n" % e)
+        print("Exception when calling TatorApi->create_leaf_list: %s\n" % e)
 ```
 
 ### Parameters
@@ -418,8 +418,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_localization**
-> MessageResponse create_localization(project, localization_spec=localization_spec)
+# **create_localization_list**
+> MessageResponse create_localization_list(project, localization_spec=localization_spec)
 
 
 
@@ -463,10 +463,10 @@ with tator.ApiClient(configuration) as api_client:
 localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2}] # list[LocalizationSpec] |  (optional)
 
     try:
-        api_response = api_instance.create_localization(project, localization_spec=localization_spec)
+        api_response = api_instance.create_localization_list(project, localization_spec=localization_spec)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->create_localization: %s\n" % e)
+        print("Exception when calling TatorApi->create_localization_list: %s\n" % e)
 ```
 
 ### Parameters
@@ -971,8 +971,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_state**
-> CreateResponse create_state(project, state_spec=state_spec)
+# **create_state_list**
+> CreateResponse create_state_list(project, state_spec=state_spec)
 
 
 
@@ -1016,10 +1016,10 @@ with tator.ApiClient(configuration) as api_client:
 state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1}] # list[StateSpec] |  (optional)
 
     try:
-        api_response = api_instance.create_state(project, state_spec=state_spec)
+        api_response = api_instance.create_state_list(project, state_spec=state_spec)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling TatorApi->create_state: %s\n" % e)
+        print("Exception when calling TatorApi->create_state_list: %s\n" % e)
 ```
 
 ### Parameters

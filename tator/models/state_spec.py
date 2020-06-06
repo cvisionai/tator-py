@@ -52,7 +52,7 @@ class StateSpec(object):
         'version': 'version'
     }
 
-    def __init__(self, attributes=None, frame=None, localization_ids=None, media_ids=None, modified=False, type=None, version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=None, localization_ids=None, media_ids=None, modified=None, type=None, version=None, local_vars_configuration=None):  # noqa: E501
         """StateSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -74,8 +74,7 @@ class StateSpec(object):
         if localization_ids is not None:
             self.localization_ids = localization_ids
         self.media_ids = media_ids
-        if modified is not None:
-            self.modified = modified
+        self.modified = modified
         self.type = type
         if version is not None:
             self.version = version
@@ -178,7 +177,7 @@ class StateSpec(object):
     def modified(self):
         """Gets the modified of this StateSpec.  # noqa: E501
 
-        Whether this localization was created in the web UI.  # noqa: E501
+        Whether this state was created in the web UI.  # noqa: E501
 
         :return: The modified of this StateSpec.  # noqa: E501
         :rtype: bool
@@ -189,7 +188,7 @@ class StateSpec(object):
     def modified(self, modified):
         """Sets the modified of this StateSpec.
 
-        Whether this localization was created in the web UI.  # noqa: E501
+        Whether this state was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this StateSpec.  # noqa: E501
         :type: bool
