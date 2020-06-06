@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **description** | **str** | Description of the state type. | [optional] 
 **dtype** | **str** | String indicating data type. Always equal to \&quot;state\&quot;. | [optional] 
 **id** | **int** | Unique integer identifying a state type. | [optional] 
-**interpolation** | **str** | Interpolation method used by the web interface. | [optional] 
+**interpolation** | **str** | Interpolation method used by the web interface. | [optional] [default to 'latest']
 **media** | **list[int]** | List of integers identifying media types that this state type may apply to. | [optional] 
 **name** | **str** | Name of the state type. | [optional] 
 **project** | **int** | Unique integer identifying project for this state type. | [optional] 

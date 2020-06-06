@@ -58,7 +58,7 @@ class StateType(object):
         'visible': 'visible'
     }
 
-    def __init__(self, association=None, attribute_types=None, description=None, dtype=None, id=None, interpolation=None, media=None, name=None, project=None, visible=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, association=None, attribute_types=None, description=None, dtype=None, id=None, interpolation='latest', media=None, name=None, project=None, visible=None, local_vars_configuration=None):  # noqa: E501
         """StateType - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -238,7 +238,7 @@ class StateType(object):
         :param interpolation: The interpolation of this StateType.  # noqa: E501
         :type: str
         """
-        allowed_values = ["latest"]  # noqa: E501
+        allowed_values = ["none", "latest"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and interpolation not in allowed_values:  # noqa: E501
             raise ValueError(
                 "Invalid value for `interpolation` ({0}), must be one of {1}"  # noqa: E501
