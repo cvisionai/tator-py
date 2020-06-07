@@ -40,10 +40,10 @@ class TestState(unittest.TestCase):
                 attributes = { }, 
                 frame = 56, 
                 id = 56, 
-                localization_ids = [
+                localizations = [
                     56
                     ], 
-                media_ids = [
+                media = [
                     56
                     ], 
                 meta = 56, 

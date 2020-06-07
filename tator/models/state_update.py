@@ -35,20 +35,16 @@ class StateUpdate(object):
     openapi_types = {
         'attributes': 'dict(str, object)',
         'frame': 'int',
-        'localization_ids': 'list[int]',
-        'media_ids': 'list[int]',
         'modified': 'bool'
     }
 
     attribute_map = {
         'attributes': 'attributes',
         'frame': 'frame',
-        'localization_ids': 'localization_ids',
-        'media_ids': 'media_ids',
         'modified': 'modified'
     }
 
-    def __init__(self, attributes=None, frame=None, localization_ids=None, media_ids=None, modified=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=None, modified=None, local_vars_configuration=None):  # noqa: E501
         """StateUpdate - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -56,8 +52,6 @@ class StateUpdate(object):
 
         self._attributes = None
         self._frame = None
-        self._localization_ids = None
-        self._media_ids = None
         self._modified = None
         self.discriminator = None
 
@@ -65,10 +59,6 @@ class StateUpdate(object):
             self.attributes = attributes
         if frame is not None:
             self.frame = frame
-        if localization_ids is not None:
-            self.localization_ids = localization_ids
-        if media_ids is not None:
-            self.media_ids = media_ids
         self.modified = modified
 
     @property
@@ -116,52 +106,6 @@ class StateUpdate(object):
         """
 
         self._frame = frame
-
-    @property
-    def localization_ids(self):
-        """Gets the localization_ids of this StateUpdate.  # noqa: E501
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :return: The localization_ids of this StateUpdate.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._localization_ids
-
-    @localization_ids.setter
-    def localization_ids(self, localization_ids):
-        """Sets the localization_ids of this StateUpdate.
-
-        List of localization IDs that this state applies to.  # noqa: E501
-
-        :param localization_ids: The localization_ids of this StateUpdate.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._localization_ids = localization_ids
-
-    @property
-    def media_ids(self):
-        """Gets the media_ids of this StateUpdate.  # noqa: E501
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :return: The media_ids of this StateUpdate.  # noqa: E501
-        :rtype: list[int]
-        """
-        return self._media_ids
-
-    @media_ids.setter
-    def media_ids(self, media_ids):
-        """Sets the media_ids of this StateUpdate.
-
-        List of media IDs that this state applies to.  # noqa: E501
-
-        :param media_ids: The media_ids of this StateUpdate.  # noqa: E501
-        :type: list[int]
-        """
-
-        self._media_ids = media_ids
 
     @property
     def modified(self):

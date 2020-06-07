@@ -37,8 +37,8 @@ class State(object):
         'attributes': 'dict(str, object)',
         'frame': 'int',
         'id': 'int',
-        'localization_ids': 'list[int]',
-        'media_ids': 'list[int]',
+        'localizations': 'list[int]',
+        'media': 'list[int]',
         'meta': 'int',
         'modified': 'bool',
         'version': 'int'
@@ -49,14 +49,14 @@ class State(object):
         'attributes': 'attributes',
         'frame': 'frame',
         'id': 'id',
-        'localization_ids': 'localization_ids',
-        'media_ids': 'media_ids',
+        'localizations': 'localizations',
+        'media': 'media',
         'meta': 'meta',
         'modified': 'modified',
         'version': 'version'
     }
 
-    def __init__(self, association=None, attributes=None, frame=None, id=None, localization_ids=None, media_ids=None, meta=None, modified=None, version=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, association=None, attributes=None, frame=None, id=None, localizations=None, media=None, meta=None, modified=None, version=None, local_vars_configuration=None):  # noqa: E501
         """State - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -66,8 +66,8 @@ class State(object):
         self._attributes = None
         self._frame = None
         self._id = None
-        self._localization_ids = None
-        self._media_ids = None
+        self._localizations = None
+        self._media = None
         self._meta = None
         self._modified = None
         self._version = None
@@ -81,10 +81,10 @@ class State(object):
             self.frame = frame
         if id is not None:
             self.id = id
-        if localization_ids is not None:
-            self.localization_ids = localization_ids
-        if media_ids is not None:
-            self.media_ids = media_ids
+        if localizations is not None:
+            self.localizations = localizations
+        if media is not None:
+            self.media = media
         if meta is not None:
             self.meta = meta
         self.modified = modified
@@ -184,50 +184,50 @@ class State(object):
         self._id = id
 
     @property
-    def localization_ids(self):
-        """Gets the localization_ids of this State.  # noqa: E501
+    def localizations(self):
+        """Gets the localizations of this State.  # noqa: E501
 
         List of localization IDs that this state applies to.  # noqa: E501
 
-        :return: The localization_ids of this State.  # noqa: E501
+        :return: The localizations of this State.  # noqa: E501
         :rtype: list[int]
         """
-        return self._localization_ids
+        return self._localizations
 
-    @localization_ids.setter
-    def localization_ids(self, localization_ids):
-        """Sets the localization_ids of this State.
+    @localizations.setter
+    def localizations(self, localizations):
+        """Sets the localizations of this State.
 
         List of localization IDs that this state applies to.  # noqa: E501
 
-        :param localization_ids: The localization_ids of this State.  # noqa: E501
+        :param localizations: The localizations of this State.  # noqa: E501
         :type: list[int]
         """
 
-        self._localization_ids = localization_ids
+        self._localizations = localizations
 
     @property
-    def media_ids(self):
-        """Gets the media_ids of this State.  # noqa: E501
+    def media(self):
+        """Gets the media of this State.  # noqa: E501
 
         List of media IDs that this state applies to.  # noqa: E501
 
-        :return: The media_ids of this State.  # noqa: E501
+        :return: The media of this State.  # noqa: E501
         :rtype: list[int]
         """
-        return self._media_ids
+        return self._media
 
-    @media_ids.setter
-    def media_ids(self, media_ids):
-        """Sets the media_ids of this State.
+    @media.setter
+    def media(self, media):
+        """Sets the media of this State.
 
         List of media IDs that this state applies to.  # noqa: E501
 
-        :param media_ids: The media_ids of this State.  # noqa: E501
+        :param media: The media of this State.  # noqa: E501
         :type: list[int]
         """
 
-        self._media_ids = media_ids
+        self._media = media
 
     @property
     def meta(self):

@@ -38,12 +38,6 @@ class TestStateUpdate(unittest.TestCase):
             return StateUpdate(
                 attributes = { }, 
                 frame = 56, 
-                localization_ids = [
-                    56
-                    ], 
-                media_ids = [
-                    56
-                    ], 
                 modified = True
             )
         else :
