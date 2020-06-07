@@ -1,6 +1,5 @@
 # StateType
 
-State type.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -16,5 +15,4 @@ Name | Type | Description | Notes
 **visible** | **bool** | Whether this state type should be displayed. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 

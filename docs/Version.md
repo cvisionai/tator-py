@@ -1,6 +1,5 @@
 # Version
 
-Version object.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -19,5 +18,4 @@ Name | Type | Description | Notes
 **show_empty** | **bool** | Whether to show this version on media for which no annotations exist. | [optional] [default to False]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
 
