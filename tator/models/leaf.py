@@ -29,7 +29,7 @@ class Leaf(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)',
+        'attributes': 'dict(str, AttributeValue)',
         'id': 'int',
         'name': 'str',
         'parent': 'int',
@@ -75,7 +75,7 @@ class Leaf(object):
         Object containing attribute values.  # noqa: E501
 
         :return: The attributes of this Leaf.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -86,7 +86,7 @@ class Leaf(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this Leaf.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
 
         self._attributes = attributes

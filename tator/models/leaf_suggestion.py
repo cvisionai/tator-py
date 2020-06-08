@@ -29,7 +29,7 @@ class LeafSuggestion(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'data': 'dict(str, object)',
+        'data': 'dict(str, AttributeValue)',
         'group': 'str',
         'value': 'str'
     }
@@ -60,7 +60,7 @@ class LeafSuggestion(object):
         Auxiliary data associated with the leaf.  # noqa: E501
 
         :return: The data of this LeafSuggestion.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._data
 
@@ -71,7 +71,7 @@ class LeafSuggestion(object):
         Auxiliary data associated with the leaf.  # noqa: E501
 
         :param data: The data of this LeafSuggestion.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
 
         self._data = data

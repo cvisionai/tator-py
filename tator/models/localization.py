@@ -29,7 +29,7 @@ class Localization(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)',
+        'attributes': 'dict(str, AttributeValue)',
         'email': 'str',
         'frame': 'int',
         'height': 'float',
@@ -130,7 +130,7 @@ class Localization(object):
         Object containing attribute values.  # noqa: E501
 
         :return: The attributes of this Localization.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -141,7 +141,7 @@ class Localization(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this Localization.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
 
         self._attributes = attributes

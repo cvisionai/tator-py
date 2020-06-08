@@ -1,9 +1,10 @@
 # Leaf
 
+Leaf object.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
+**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
 **id** | **int** | Unique integer identifying the leaf. | [optional] 
 **name** | **str** | Name of the leaf. | [optional] 
 **parent** | **int** | ID to use as parent if there is one. | [optional] 
@@ -11,4 +12,5 @@ Name | Type | Description | Notes
 **project** | **int** | Unique integer identifying a project. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
 

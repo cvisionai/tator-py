@@ -31,7 +31,7 @@ class AttributeType(object):
     swagger_types = {
         'autocomplete': 'AutocompleteService',
         'choices': 'list[str]',
-        'default': 'OneOfAttributeTypeDefault',
+        'default': 'AttributeValue',
         'description': 'str',
         'dtype': 'str',
         'labels': 'list[str]',
@@ -146,10 +146,9 @@ class AttributeType(object):
     def default(self):
         """Gets the default of this AttributeType.  # noqa: E501
 
-        Default value for the attribute.  # noqa: E501
 
         :return: The default of this AttributeType.  # noqa: E501
-        :rtype: OneOfAttributeTypeDefault
+        :rtype: AttributeValue
         """
         return self._default
 
@@ -157,10 +156,9 @@ class AttributeType(object):
     def default(self, default):
         """Sets the default of this AttributeType.
 
-        Default value for the attribute.  # noqa: E501
 
         :param default: The default of this AttributeType.  # noqa: E501
-        :type: OneOfAttributeTypeDefault
+        :type: AttributeValue
         """
 
         self._default = default

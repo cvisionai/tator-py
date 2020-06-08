@@ -249,7 +249,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Leaf] body:
+        :param list[LeafSpec] body:
         :return: CreateListResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -272,7 +272,7 @@ class TatorApi(object):
 
         :param async_req bool
         :param int project: A unique integer identifying a project. (required)
-        :param list[Leaf] body:
+        :param list[LeafSpec] body:
         :return: CreateListResponse
                  If the method is called asynchronously,
                  returns the request thread.

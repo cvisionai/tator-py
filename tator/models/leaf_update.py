@@ -29,7 +29,7 @@ class LeafUpdate(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)',
+        'attributes': 'dict(str, AttributeValue)',
         'name': 'str'
     }
 
@@ -55,7 +55,7 @@ class LeafUpdate(object):
         Attribute values to update.  # noqa: E501
 
         :return: The attributes of this LeafUpdate.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -66,7 +66,7 @@ class LeafUpdate(object):
         Attribute values to update.  # noqa: E501
 
         :param attributes: The attributes of this LeafUpdate.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
 
         self._attributes = attributes

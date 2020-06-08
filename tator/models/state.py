@@ -29,8 +29,7 @@ class State(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'association': 'int',
-        'attributes': 'dict(str, object)',
+        'attributes': 'dict(str, AttributeValue)',
         'frame': 'int',
         'id': 'int',
         'localizations': 'list[int]',
@@ -41,7 +40,6 @@ class State(object):
     }
 
     attribute_map = {
-        'association': 'association',
         'attributes': 'attributes',
         'frame': 'frame',
         'id': 'id',
@@ -52,9 +50,8 @@ class State(object):
         'version': 'version'
     }
 
-    def __init__(self, association=None, attributes=None, frame=None, id=None, localizations=None, media=None, meta=None, modified=None, version=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=None, id=None, localizations=None, media=None, meta=None, modified=None, version=None):  # noqa: E501
         """State - a model defined in Swagger"""  # noqa: E501
-        self._association = None
         self._attributes = None
         self._frame = None
         self._id = None
@@ -64,8 +61,6 @@ class State(object):
         self._modified = None
         self._version = None
         self.discriminator = None
-        if association is not None:
-            self.association = association
         if attributes is not None:
             self.attributes = attributes
         if frame is not None:
@@ -84,36 +79,13 @@ class State(object):
             self.version = version
 
     @property
-    def association(self):
-        """Gets the association of this State.  # noqa: E501
-
-        Unique integer identifying the state association.  # noqa: E501
-
-        :return: The association of this State.  # noqa: E501
-        :rtype: int
-        """
-        return self._association
-
-    @association.setter
-    def association(self, association):
-        """Sets the association of this State.
-
-        Unique integer identifying the state association.  # noqa: E501
-
-        :param association: The association of this State.  # noqa: E501
-        :type: int
-        """
-
-        self._association = association
-
-    @property
     def attributes(self):
         """Gets the attributes of this State.  # noqa: E501
 
         Object containing attribute values.  # noqa: E501
 
         :return: The attributes of this State.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -124,7 +96,7 @@ class State(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this State.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
 
         self._attributes = attributes

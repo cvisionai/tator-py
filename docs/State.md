@@ -3,8 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**association** | **int** | Unique integer identifying the state association. | [optional] 
-**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
+**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
 **frame** | **int** | Frame number this state applies to. | [optional] 
 **id** | **int** | Unique integer identifying the state. | [optional] 
 **localizations** | **list[int]** | List of localization IDs that this state applies to. | [optional] 
@@ -14,4 +13,5 @@ Name | Type | Description | Notes
 **version** | **int** | Unique integer identifying the version. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
 

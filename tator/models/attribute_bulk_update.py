@@ -29,7 +29,7 @@ class AttributeBulkUpdate(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'attributes': 'dict(str, object)'
+        'attributes': 'dict(str, AttributeValue)'
     }
 
     attribute_map = {
@@ -49,7 +49,7 @@ class AttributeBulkUpdate(object):
         Attribute values to bulk update an entity list.  # noqa: E501
 
         :return: The attributes of this AttributeBulkUpdate.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -60,7 +60,7 @@ class AttributeBulkUpdate(object):
         Attribute values to bulk update an entity list.  # noqa: E501
 
         :param attributes: The attributes of this AttributeBulkUpdate.  # noqa: E501
-        :type: dict(str, object)
+        :type: dict(str, AttributeValue)
         """
         if attributes is None:
             raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501

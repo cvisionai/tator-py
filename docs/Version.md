@@ -1,5 +1,6 @@
 # Version
 
+Version object.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
@@ -15,7 +16,8 @@ Name | Type | Description | Notes
 **num_modified** | **int** | Number of modified annotations in this version. | [optional] 
 **number** | **int** | Version number. | [optional] 
 **project** | **int** | Unique integer identifying a project. | [optional] 
-**show_empty** | **bool** | Whether to show this version on media for which no annotations exist. | [optional] [default to False]
+**show_empty** | **bool** | Whether to show this version on media for which no annotations exist. | [optional] [default to True]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
 

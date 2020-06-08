@@ -28,7 +28,7 @@ from tator.models.analysis import Analysis
 from tator.models.analysis_spec import AnalysisSpec
 from tator.models.attribute_bulk_update import AttributeBulkUpdate
 from tator.models.attribute_type import AttributeType
-from tator.models.attribute_type_update import AttributeTypeUpdate
+from tator.models.attribute_value import AttributeValue
 from tator.models.autocomplete_service import AutocompleteService
 from tator.models.bad_request_response import BadRequestResponse
 from tator.models.color import Color
@@ -65,7 +65,7 @@ from tator.models.membership_update import MembershipUpdate
 from tator.models.message_response import MessageResponse
 from tator.models.not_found_response import NotFoundResponse
 from tator.models.notify_spec import NotifySpec
-from tator.models.one_of_attribute_type_default import OneOfAttributeTypeDefault
+from tator.models.one_of_attribute_value import OneOfAttributeValue
 from tator.models.one_of_color import OneOfColor
 from tator.models.progress_spec import ProgressSpec
 from tator.models.progress_summary_spec import ProgressSummarySpec

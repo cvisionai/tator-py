@@ -42,7 +42,7 @@ class VersionUpdate(object):
         'show_empty': 'show_empty'
     }
 
-    def __init__(self, bases=None, description='', name=None, show_empty=False):  # noqa: E501
+    def __init__(self, bases=None, description='', name=None, show_empty=True):  # noqa: E501
         """VersionUpdate - a model defined in Swagger"""  # noqa: E501
         self._bases = None
         self._description = None
