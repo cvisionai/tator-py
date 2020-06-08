@@ -33,7 +33,7 @@ class AttributeBulkUpdate(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'attributes': 'dict(str, AttributeValue)'
+        'attributes': 'dict(str, object)'
     }
 
     attribute_map = {
@@ -58,7 +58,7 @@ class AttributeBulkUpdate(object):
         Attribute values to bulk update an entity list.  # noqa: E501
 
         :return: The attributes of this AttributeBulkUpdate.  # noqa: E501
-        :rtype: dict(str, AttributeValue)
+        :rtype: dict(str, object)
         """
         return self._attributes
 
@@ -69,7 +69,7 @@ class AttributeBulkUpdate(object):
         Attribute values to bulk update an entity list.  # noqa: E501
 
         :param attributes: The attributes of this AttributeBulkUpdate.  # noqa: E501
-        :type attributes: dict(str, AttributeValue)
+        :type attributes: dict(str, object)
         """
         if self.local_vars_configuration.client_side_validation and attributes is None:  # noqa: E501
             raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501

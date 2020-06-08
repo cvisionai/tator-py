@@ -35,7 +35,7 @@ class AttributeType(object):
     openapi_types = {
         'autocomplete': 'AutocompleteService',
         'choices': 'list[str]',
-        'default': 'AttributeValue',
+        'default': 'object',
         'description': 'str',
         'dtype': 'str',
         'labels': 'list[str]',
@@ -86,8 +86,7 @@ class AttributeType(object):
             self.autocomplete = autocomplete
         if choices is not None:
             self.choices = choices
-        if default is not None:
-            self.default = default
+        self.default = default
         if description is not None:
             self.description = description
         if dtype is not None:
@@ -155,9 +154,10 @@ class AttributeType(object):
     def default(self):
         """Gets the default of this AttributeType.  # noqa: E501
 
+        Boolean, integer, float, string, datetime, or [lon, lat].  # noqa: E501
 
         :return: The default of this AttributeType.  # noqa: E501
-        :rtype: AttributeValue
+        :rtype: object
         """
         return self._default
 
@@ -165,9 +165,10 @@ class AttributeType(object):
     def default(self, default):
         """Sets the default of this AttributeType.
 
+        Boolean, integer, float, string, datetime, or [lon, lat].  # noqa: E501
 
         :param default: The default of this AttributeType.  # noqa: E501
-        :type default: AttributeValue
+        :type default: object
         """
 
         self._default = default

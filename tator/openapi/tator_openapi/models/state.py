@@ -33,7 +33,7 @@ class State(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'attributes': 'dict(str, AttributeValue)',
+        'attributes': 'dict(str, object)',
         'frame': 'int',
         'id': 'int',
         'localizations': 'list[int]',
@@ -93,7 +93,7 @@ class State(object):
         Object containing attribute values.  # noqa: E501
 
         :return: The attributes of this State.  # noqa: E501
-        :rtype: dict(str, AttributeValue)
+        :rtype: dict(str, object)
         """
         return self._attributes
 
@@ -104,7 +104,7 @@ class State(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this State.  # noqa: E501
-        :type attributes: dict(str, AttributeValue)
+        :type attributes: dict(str, object)
         """
 
         self._attributes = attributes

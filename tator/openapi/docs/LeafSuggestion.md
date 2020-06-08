@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**dict(str, AttributeValue)**](AttributeValue.md) | Auxiliary data associated with the leaf. | [optional] 
+**data** | **dict(str, object)** | Auxiliary data associated with the leaf. | [optional] 
 **group** | **str** | Group of the suggestion. | [optional] 
 **value** | **str** | Name of the suggestion. | [optional] 
 

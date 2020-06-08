@@ -34,10 +34,10 @@ class ColorMap(object):
     """
     openapi_types = {
         'alpha_ranges': 'dict(str, list)',
-        'default': 'Color',
+        'default': 'object',
         'key': 'str',
-        'map': 'dict(str, Color)',
-        'version': 'dict(str, Color)'
+        'map': 'dict(str, object)',
+        'version': 'dict(str, object)'
     }
 
     attribute_map = {
@@ -63,8 +63,7 @@ class ColorMap(object):
 
         if alpha_ranges is not None:
             self.alpha_ranges = alpha_ranges
-        if default is not None:
-            self.default = default
+        self.default = default
         if key is not None:
             self.key = key
         if map is not None:
@@ -99,9 +98,10 @@ class ColorMap(object):
     def default(self):
         """Gets the default of this ColorMap.  # noqa: E501
 
+        RGB array, RGBA array, or hex string.  # noqa: E501
 
         :return: The default of this ColorMap.  # noqa: E501
-        :rtype: Color
+        :rtype: object
         """
         return self._default
 
@@ -109,9 +109,10 @@ class ColorMap(object):
     def default(self, default):
         """Sets the default of this ColorMap.
 
+        RGB array, RGBA array, or hex string.  # noqa: E501
 
         :param default: The default of this ColorMap.  # noqa: E501
-        :type default: Color
+        :type default: object
         """
 
         self._default = default
@@ -146,7 +147,7 @@ class ColorMap(object):
         Map of attribute values to colors.  # noqa: E501
 
         :return: The map of this ColorMap.  # noqa: E501
-        :rtype: dict(str, Color)
+        :rtype: dict(str, object)
         """
         return self._map
 
@@ -157,7 +158,7 @@ class ColorMap(object):
         Map of attribute values to colors.  # noqa: E501
 
         :param map: The map of this ColorMap.  # noqa: E501
-        :type map: dict(str, Color)
+        :type map: dict(str, object)
         """
 
         self._map = map
@@ -169,7 +170,7 @@ class ColorMap(object):
         Map of version IDs to colors.  # noqa: E501
 
         :return: The version of this ColorMap.  # noqa: E501
-        :rtype: dict(str, Color)
+        :rtype: dict(str, object)
         """
         return self._version
 
@@ -180,7 +181,7 @@ class ColorMap(object):
         Map of version IDs to colors.  # noqa: E501
 
         :param version: The version of this ColorMap.  # noqa: E501
-        :type version: dict(str, Color)
+        :type version: dict(str, object)
         """
 
         self._version = version

@@ -33,7 +33,7 @@ class LeafSuggestion(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'data': 'dict(str, AttributeValue)',
+        'data': 'dict(str, object)',
         'group': 'str',
         'value': 'str'
     }
@@ -69,7 +69,7 @@ class LeafSuggestion(object):
         Auxiliary data associated with the leaf.  # noqa: E501
 
         :return: The data of this LeafSuggestion.  # noqa: E501
-        :rtype: dict(str, AttributeValue)
+        :rtype: dict(str, object)
         """
         return self._data
 
@@ -80,7 +80,7 @@ class LeafSuggestion(object):
         Auxiliary data associated with the leaf.  # noqa: E501
 
         :param data: The data of this LeafSuggestion.  # noqa: E501
-        :type data: dict(str, AttributeValue)
+        :type data: dict(str, object)
         """
 
         self._data = data

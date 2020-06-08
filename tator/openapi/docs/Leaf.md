@@ -4,7 +4,7 @@ Leaf object.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
+**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
 **id** | **int** | Unique integer identifying the leaf. | [optional] 
 **name** | **str** | Name of the leaf. | [optional] 
 **parent** | **int** | ID to use as parent if there is one. | [optional] 

@@ -33,7 +33,7 @@ class LeafUpdate(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'attributes': 'dict(str, AttributeValue)',
+        'attributes': 'dict(str, object)',
         'name': 'str'
     }
 
@@ -64,7 +64,7 @@ class LeafUpdate(object):
         Attribute values to update.  # noqa: E501
 
         :return: The attributes of this LeafUpdate.  # noqa: E501
-        :rtype: dict(str, AttributeValue)
+        :rtype: dict(str, object)
         """
         return self._attributes
 
@@ -75,7 +75,7 @@ class LeafUpdate(object):
         Attribute values to update.  # noqa: E501
 
         :param attributes: The attributes of this LeafUpdate.  # noqa: E501
-        :type attributes: dict(str, AttributeValue)
+        :type attributes: dict(str, object)
         """
 
         self._attributes = attributes
