@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
+**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
 **frame** | **int** | Frame number this state applies to. | [optional] 
 **id** | **int** | Unique integer identifying the state. | [optional] 
 **localizations** | **list[int]** | List of localization IDs that this state applies to. | [optional] 

@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
+**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
 **frame** | **int** | Frame number this state applies to. | [optional] 
 **modified** | **bool** | Whether this state was created in the web UI. | [optional] 
 
