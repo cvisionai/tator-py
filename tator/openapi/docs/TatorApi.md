@@ -1,4 +1,4 @@
-# tator.TatorApi
+# tator_openapi.TatorApi
 
 All URIs are relative to *http://localhost*
 
@@ -111,12 +111,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -126,7 +126,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -136,9 +136,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} # AlgorithmLaunchSpec |  (optional)
 
@@ -191,12 +191,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -206,7 +206,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -216,9 +216,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 analysis_spec = {"name":"Boxes"} # AnalysisSpec |  (optional)
 
@@ -271,12 +271,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -286,7 +286,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -296,11 +296,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-leaf_spec = [tator.LeafSpec()] # list[LeafSpec] |  (optional)
+leaf_spec = [tator_openapi.LeafSpec()] # list[LeafSpec] |  (optional)
 
     try:
         api_response = api_instance.create_leaf_list(project, leaf_spec=leaf_spec)
@@ -351,12 +351,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -366,7 +366,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -376,9 +376,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 leaf_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"name":"My leaf type"} # LeafTypeSpec |  (optional)
 
@@ -431,12 +431,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -446,7 +446,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -456,9 +456,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2}] # list[LocalizationSpec] |  (optional)
 
@@ -511,12 +511,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -526,7 +526,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -536,9 +536,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 localization_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"box","media_types":[1],"name":"My localization type"} # LocalizationTypeSpec |  (optional)
 
@@ -591,12 +591,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -606,7 +606,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -616,9 +616,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"video","name":"My media type"} # MediaTypeSpec |  (optional)
 
@@ -671,12 +671,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -686,7 +686,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -696,9 +696,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 membership_spec = {"permission":"Full Control","user":1} # MembershipSpec |  (optional)
 
@@ -749,12 +749,12 @@ Name | Type | Description  | Notes
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -764,7 +764,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -774,10 +774,10 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    credentials = tator.Credentials() # Credentials |  (optional)
+    api_instance = tator_openapi.TatorApi(api_client)
+    credentials = tator_openapi.Credentials() # Credentials |  (optional)
 
     try:
         api_response = api_instance.create_obtain_auth_token(credentials=credentials)
@@ -826,12 +826,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -841,7 +841,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -851,11 +851,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-progress_summary_spec = tator.ProgressSummarySpec() # ProgressSummarySpec |  (optional)
+progress_summary_spec = tator_openapi.ProgressSummarySpec() # ProgressSummarySpec |  (optional)
 
     try:
         api_response = api_instance.create_progress_summary_api(project, progress_summary_spec=progress_summary_spec)
@@ -906,12 +906,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -921,7 +921,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -931,9 +931,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project_spec = {"name":"My Project","summary":"First project"} # ProjectSpec |  (optional)
 
     try:
@@ -984,12 +984,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -999,7 +999,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1009,9 +1009,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1}] # list[StateSpec] |  (optional)
 
@@ -1064,12 +1064,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1079,7 +1079,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1089,9 +1089,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 state_type_spec = {"association":"Frame","attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"media_types":[1],"name":"My state type"} # StateTypeSpec |  (optional)
 
@@ -1144,12 +1144,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1159,7 +1159,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1169,11 +1169,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-temporary_file_spec = tator.TemporaryFileSpec() # TemporaryFileSpec |  (optional)
+temporary_file_spec = tator_openapi.TemporaryFileSpec() # TemporaryFileSpec |  (optional)
 
     try:
         api_response = api_instance.create_temporary_file(project, temporary_file_spec=temporary_file_spec)
@@ -1224,12 +1224,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1239,7 +1239,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1249,9 +1249,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 version_spec = {"bases":[1],"description":"New description","name":"My new version","show_empty":true} # VersionSpec |  (optional)
 
@@ -1304,12 +1304,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1319,7 +1319,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1329,9 +1329,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     run_uid = 'run_uid_example' # str | A uuid1 string identifying to single Job.
 
     try:
@@ -1382,12 +1382,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1397,7 +1397,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1407,9 +1407,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     group_id = 'group_id_example' # str | A uuid1 string identifying a group of jobs.
 
     try:
@@ -1460,12 +1460,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1475,7 +1475,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1485,9 +1485,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a leaf.
 
     try:
@@ -1537,12 +1537,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1552,7 +1552,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1562,9 +1562,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a leaf type. (optional)
@@ -1643,12 +1643,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1658,7 +1658,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1668,9 +1668,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an leaf type.
 
     try:
@@ -1721,12 +1721,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1736,7 +1736,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1746,9 +1746,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization.
 
     try:
@@ -1799,12 +1799,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1814,7 +1814,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1824,9 +1824,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -1917,12 +1917,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -1932,7 +1932,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -1942,9 +1942,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an localization type.
 
     try:
@@ -1995,12 +1995,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2010,7 +2010,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2020,9 +2020,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media.
 
     try:
@@ -2073,12 +2073,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2088,7 +2088,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2098,9 +2098,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -2185,12 +2185,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2200,7 +2200,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2210,9 +2210,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an media type.
 
     try:
@@ -2263,12 +2263,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2278,7 +2278,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2288,9 +2288,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a membership.
 
     try:
@@ -2341,12 +2341,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2356,7 +2356,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2366,9 +2366,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a project.
 
     try:
@@ -2419,12 +2419,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2434,7 +2434,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2444,9 +2444,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
 
     try:
@@ -2497,12 +2497,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2512,7 +2512,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2522,9 +2522,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -2611,12 +2611,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2626,7 +2626,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2636,9 +2636,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state type.
 
     try:
@@ -2689,12 +2689,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2704,7 +2704,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2714,9 +2714,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a temporary file.
 
     try:
@@ -2767,12 +2767,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2782,7 +2782,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2792,9 +2792,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 expired = 0 # int | If greater than 0 will return only expired files (optional) (default to 0)
 
@@ -2845,12 +2845,12 @@ Delete state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2860,7 +2860,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2870,9 +2870,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
 
     try:
@@ -2923,12 +2923,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -2938,7 +2938,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -2948,9 +2948,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 
     try:
@@ -3001,12 +3001,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3016,7 +3016,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3026,9 +3026,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 
     try:
@@ -3079,12 +3079,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3094,7 +3094,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3104,9 +3104,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media object.
 frame_ranges = ['[\"0:30\",\"50:90\"]'] # list[str] | Comma-seperated list of frame ranges to capture.
 quality = 56 # int | Source resolution to use (default to highest quality) (optional)
@@ -3161,12 +3161,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3176,7 +3176,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3186,9 +3186,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media object.
 frames = [0] # list[int] | Comma-seperated list of frames to capture. (optional) (default to [0])
 tile = 'tile_example' # str | wxh, if not supplied is made as squarish as possible. (optional)
@@ -3249,12 +3249,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3264,7 +3264,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3274,9 +3274,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a leaf.
 
     try:
@@ -3327,12 +3327,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3342,7 +3342,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3352,9 +3352,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a leaf type. (optional)
@@ -3433,12 +3433,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3448,7 +3448,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3458,9 +3458,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an leaf type.
 
     try:
@@ -3511,12 +3511,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3526,7 +3526,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3536,9 +3536,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 
     try:
@@ -3589,12 +3589,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3604,7 +3604,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3614,9 +3614,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization.
 
     try:
@@ -3667,12 +3667,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3682,7 +3682,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3692,9 +3692,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -3785,12 +3785,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3800,7 +3800,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3810,9 +3810,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an localization type.
 
     try:
@@ -3863,12 +3863,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3878,7 +3878,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3888,9 +3888,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of unique integers identifying a media. (optional)
 type = 56 # int | Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID. (optional)
@@ -3945,12 +3945,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -3960,7 +3960,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -3970,9 +3970,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media.
 
     try:
@@ -4023,12 +4023,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4038,7 +4038,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4048,9 +4048,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -4135,12 +4135,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4150,7 +4150,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4160,9 +4160,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media object.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -4247,12 +4247,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4262,7 +4262,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4272,9 +4272,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media object.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -4359,12 +4359,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4374,7 +4374,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4384,9 +4384,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -4471,12 +4471,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4486,7 +4486,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4496,9 +4496,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an media type.
 
     try:
@@ -4549,12 +4549,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4564,7 +4564,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4574,9 +4574,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 
     try:
@@ -4627,12 +4627,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4642,7 +4642,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4652,9 +4652,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a membership.
 
     try:
@@ -4705,12 +4705,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4720,7 +4720,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4730,9 +4730,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 
     try:
@@ -4783,12 +4783,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4798,7 +4798,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4808,9 +4808,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a project.
 
     try:
@@ -4861,12 +4861,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4876,7 +4876,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4886,9 +4886,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     
     try:
         api_response = api_instance.get_project_list()
@@ -4935,12 +4935,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -4950,7 +4950,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -4960,9 +4960,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | Unique integer identifying a media. Use this to do analyis on a single file instead of sections. (optional)
 search = '\"My search string\"' # str | Lucene query syntax string for use with Elasticsearch. See `reference <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>`_. (optional)
@@ -5039,12 +5039,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5054,7 +5054,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5064,9 +5064,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
 
     try:
@@ -5115,12 +5115,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5130,7 +5130,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5140,9 +5140,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
 mode = 'animate' # str | Whether to animate or tile. (optional) (default to 'animate')
 fps = 2 # float | Frame rate if `mode` is `animate`. (optional) (default to 2)
@@ -5199,12 +5199,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5214,7 +5214,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5224,9 +5224,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -5313,12 +5313,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5328,7 +5328,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5338,9 +5338,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state type.
 
     try:
@@ -5391,12 +5391,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5406,7 +5406,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5416,9 +5416,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of unique integers identifying a media. (optional)
 type = 56 # int | Deprecated. Use `LocalizationType` endpoint to retrieve individual localization type by ID. (optional)
@@ -5473,12 +5473,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5488,7 +5488,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5498,9 +5498,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a temporary file.
 
     try:
@@ -5551,12 +5551,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5566,7 +5566,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5576,9 +5576,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 expired = 0 # int | If greater than 0 will return only expired files (optional) (default to 0)
 
@@ -5631,12 +5631,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5646,7 +5646,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5656,9 +5656,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization association.
 
     try:
@@ -5709,12 +5709,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5724,7 +5724,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5734,9 +5734,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
 
     try:
@@ -5787,12 +5787,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5802,7 +5802,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5812,9 +5812,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = 56 # int | Unique integer identifying a media. (optional)
 
@@ -5867,12 +5867,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5882,7 +5882,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5892,9 +5892,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
 query = 'query_example' # str | String to search for matching names.
@@ -5951,12 +5951,12 @@ Send a notification to administrators.  Uses the Slack API to send a notificatio
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -5966,7 +5966,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -5976,10 +5976,10 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
-    notify_spec = tator.NotifySpec() # NotifySpec |  (optional)
+    api_instance = tator_openapi.TatorApi(api_client)
+    notify_spec = tator_openapi.NotifySpec() # NotifySpec |  (optional)
 
     try:
         api_instance.notify(notify_spec=notify_spec)
@@ -6029,12 +6029,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6044,7 +6044,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6054,9 +6054,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 progress_spec = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algorithm","media_ids":"1,2","message":"Job started!","name":"name_of_file.mp4","progress":70,"sections":"Section 1,Section 2","state":"started","uid":"b43d7e54-8272-11ea-8e10-000c294f07cf"}] # list[ProgressSpec] |  (optional)
 
@@ -6109,12 +6109,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6124,7 +6124,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6134,11 +6134,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-image_spec = tator.ImageSpec() # ImageSpec |  (optional)
+image_spec = tator_openapi.ImageSpec() # ImageSpec |  (optional)
 
     try:
         api_response = api_instance.save_image(project, image_spec=image_spec)
@@ -6189,12 +6189,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6204,7 +6204,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6214,11 +6214,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-video_spec = tator.VideoSpec() # VideoSpec |  (optional)
+video_spec = tator_openapi.VideoSpec() # VideoSpec |  (optional)
 
     try:
         api_response = api_instance.save_video(project, video_spec=video_spec)
@@ -6269,12 +6269,12 @@ Create state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6284,7 +6284,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6294,11 +6294,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-transcode_spec = tator.TranscodeSpec() # TranscodeSpec |  (optional)
+transcode_spec = tator_openapi.TranscodeSpec() # TranscodeSpec |  (optional)
 
     try:
         api_response = api_instance.transcode(project, transcode_spec=transcode_spec)
@@ -6349,12 +6349,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6364,7 +6364,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6374,11 +6374,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a leaf.
-leaf_update = tator.LeafUpdate() # LeafUpdate |  (optional)
+leaf_update = tator_openapi.LeafUpdate() # LeafUpdate |  (optional)
 
     try:
         api_response = api_instance.update_leaf(id, leaf_update=leaf_update)
@@ -6429,12 +6429,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6444,7 +6444,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6454,9 +6454,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a leaf type. (optional)
@@ -6472,7 +6472,7 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-attribute_bulk_update = tator.AttributeBulkUpdate() # AttributeBulkUpdate |  (optional)
+attribute_bulk_update = tator_openapi.AttributeBulkUpdate() # AttributeBulkUpdate |  (optional)
 
     try:
         api_response = api_instance.update_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
@@ -6537,12 +6537,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6552,7 +6552,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6562,9 +6562,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an leaf type.
 leaf_type_update = {"description":"New description","name":"New name"} # LeafTypeUpdate |  (optional)
 
@@ -6617,12 +6617,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6632,7 +6632,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6642,9 +6642,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization.
 localization_update = {"height":0.25,"width":0.25,"x":0.25,"y":0.25} # LocalizationUpdate |  (optional)
 
@@ -6697,12 +6697,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6712,7 +6712,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6722,9 +6722,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -6817,12 +6817,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6832,7 +6832,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6842,9 +6842,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an localization type.
 localization_type_update = {"description":"New description","name":"New name"} # LocalizationTypeUpdate |  (optional)
 
@@ -6897,12 +6897,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6912,7 +6912,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -6922,11 +6922,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media.
-media_update = tator.MediaUpdate() # MediaUpdate |  (optional)
+media_update = tator_openapi.MediaUpdate() # MediaUpdate |  (optional)
 
     try:
         api_response = api_instance.update_media(id, media_update=media_update)
@@ -6977,12 +6977,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -6992,7 +6992,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7002,9 +7002,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
@@ -7091,12 +7091,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7106,7 +7106,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7116,9 +7116,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an media type.
 media_type_update = {"description":"New description","name":"New name"} # MediaTypeUpdate |  (optional)
 
@@ -7171,12 +7171,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7186,7 +7186,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7196,9 +7196,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a membership.
 membership_update = {"permission":"View Only"} # MembershipUpdate |  (optional)
 
@@ -7251,12 +7251,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7266,7 +7266,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7276,9 +7276,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a project.
 project_spec = {"name":"New name","summary":"New summary"} # ProjectSpec |  (optional)
 
@@ -7331,12 +7331,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7346,7 +7346,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7356,9 +7356,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
 state_update = {"frame":1001} # StateUpdate |  (optional)
 
@@ -7411,12 +7411,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7426,7 +7426,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7436,9 +7436,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
@@ -7527,12 +7527,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7542,7 +7542,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7552,9 +7552,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state type.
 state_type_update = {"description":"New description","name":"New name"} # StateTypeUpdate |  (optional)
 
@@ -7607,12 +7607,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7622,7 +7622,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7632,11 +7632,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization association.
-user_update = tator.UserUpdate() # UserUpdate |  (optional)
+user_update = tator_openapi.UserUpdate() # UserUpdate |  (optional)
 
     try:
         api_instance.update_user(id, user_update=user_update)
@@ -7685,12 +7685,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7700,7 +7700,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7710,9 +7710,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
 version_update = {"bases":[1],"description":"New description","name":"New name","show_empty":true} # VersionUpdate |  (optional)
 
@@ -7765,12 +7765,12 @@ Update state type.  A state type is the metadata definition object for a state. 
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7780,7 +7780,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7790,11 +7790,11 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-video_update = tator.VideoUpdate() # VideoUpdate |  (optional)
+video_update = tator_openapi.VideoUpdate() # VideoUpdate |  (optional)
 
     try:
         api_instance.update_video(project, video_update=video_update)
@@ -7843,12 +7843,12 @@ Retrieve state type.  A state type is the metadata definition object for a state
 ```python
 from __future__ import print_function
 import time
-import tator
-from tator.rest import ApiException
+import tator_openapi
+from tator_openapi.rest import ApiException
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost"
 )
 
@@ -7858,7 +7858,7 @@ configuration = tator.Configuration(
 # satisfies your auth use case.
 
 # Configure API key authorization: TokenAuth
-configuration = tator.Configuration(
+configuration = tator_openapi.Configuration(
     host = "http://localhost",
     api_key = {
         'Authorization': 'YOUR_API_KEY'
@@ -7868,9 +7868,9 @@ configuration = tator.Configuration(
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with tator.ApiClient(configuration) as api_client:
+with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = tator.TatorApi(api_client)
+    api_instance = tator_openapi.TatorApi(api_client)
     
     try:
         api_response = api_instance.whoami()
