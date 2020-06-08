@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
+**attributes** | [**dict(str, AttributeValue)**](AttributeValue.md) | Object containing attribute values. | [optional] 
 **codec** | **str** | Codec for videos. | [optional] 
 **created_by** | **int** | Unique integer identifying user who created this media. | [optional] 
 **created_datetime** | **str** | Datetime when this media was created. | [optional] 

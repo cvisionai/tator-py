@@ -33,7 +33,7 @@ class LocalizationUpdate(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'attributes': 'dict(str, object)',
+        'attributes': 'dict(str, AttributeValue)',
         'frame': 'int',
         'height': 'float',
         'modified': 'bool',
@@ -96,7 +96,7 @@ class LocalizationUpdate(object):
         Object containing attribute values.  # noqa: E501
 
         :return: The attributes of this LocalizationUpdate.  # noqa: E501
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         return self._attributes
 
@@ -107,7 +107,7 @@ class LocalizationUpdate(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this LocalizationUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type attributes: dict(str, AttributeValue)
         """
 
         self._attributes = attributes

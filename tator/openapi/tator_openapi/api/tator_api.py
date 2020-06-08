@@ -8650,7 +8650,7 @@ class TatorApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: dict(str, object)
+        :rtype: dict(str, AttributeValue)
         """
         kwargs['_return_http_data_only'] = True
         return self.get_section_analysis_with_http_info(project, **kwargs)  # noqa: E501
@@ -8709,7 +8709,7 @@ class TatorApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(dict(str, object), status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(dict(str, AttributeValue), status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -8808,7 +8808,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='dict(str, object)',  # noqa: E501
+            response_type='dict(str, AttributeValue)',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

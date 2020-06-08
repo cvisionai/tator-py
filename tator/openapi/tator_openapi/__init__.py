@@ -36,8 +36,10 @@ from tator_openapi.models.analysis import Analysis
 from tator_openapi.models.analysis_spec import AnalysisSpec
 from tator_openapi.models.attribute_bulk_update import AttributeBulkUpdate
 from tator_openapi.models.attribute_type import AttributeType
+from tator_openapi.models.attribute_value import AttributeValue
 from tator_openapi.models.autocomplete_service import AutocompleteService
 from tator_openapi.models.bad_request_response import BadRequestResponse
+from tator_openapi.models.color import Color
 from tator_openapi.models.color_map import ColorMap
 from tator_openapi.models.create_list_response import CreateListResponse
 from tator_openapi.models.create_response import CreateResponse
