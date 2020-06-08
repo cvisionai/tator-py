@@ -7,19 +7,9 @@ import tator as pytator
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Creates a test project.")
-    parser.add_argument('--host', default='https://www.tatorapp.com')
-    parser.add_argument('--token', help="Your API token.")
-    return parser.parse_args()
-
 if __name__ == '__main__':
-    args = parse_args()
-    config = pytator.Configuration()
-    config.host=args.host
-    config.api_key['Authorization'] = args.token
-    config.api_key_prefix['Authorization'] = 'Token'
-    tator = pytator.TatorApi(pytator.ApiClient(config))
+    args = tator.get_parser().parse_args()
+    tator = pytator.get_api(args.host, args.token)
 
     # Create the project.
     result = tator.create_project(body={'name': 'Test Project', 'summary': 'A test project.'})
