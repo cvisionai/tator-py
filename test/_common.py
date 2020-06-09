@@ -18,6 +18,10 @@ def assert_vector_equal(a,b):
         assert(a[idx] == b[idx])
 
 def assert_close_enough(a, b, exclude):
+    if not isinstance(a, dict):
+        a = a.to_dict()
+    if not isinstance(b, dict):
+        b = b.to_dict()
     for key in a:
         if key in exclude:
             continue

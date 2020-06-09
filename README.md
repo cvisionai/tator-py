@@ -30,7 +30,7 @@ Visit the [examples](examples) for more.
 
 ## API documentation
 
-Documentation for all API functions and models can be found in the [OpenAPI documentation](tator/openapi/docs).
+Documentation for all API functions and models can be found in the [OpenAPI documentation](tator/openapi/docs/TatorApi.md).
 
 ## Authors
 
