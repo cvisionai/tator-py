@@ -1,5 +1,7 @@
 from uuid import uuid1
 import mimetypes
+import os
+import math
 
 from tusclient.client import TusClient
 from urllib.parse import urljoin
@@ -7,7 +9,7 @@ from urllib.parse import urlsplit
 
 from .md5sum import md5sum
 
-def upload_media(path, type_id, api, md5=None, section=None, fname=None
+def upload_media(path, type_id, api, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=2*1024*1024):
     """ Uploads a single media file.
 
@@ -20,7 +22,7 @@ def upload_media(path, type_id, api, md5=None, section=None, fname=None
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :returns: Response object from `TatorApi.save_video` or `TatorApi.save_image`.
+    :returns: Response object from `TatorApi.save_video` or `TatorApi.transcode`.
     """
     if md5==None:
         md5 = md5sum(path)
@@ -41,20 +43,18 @@ def upload_media(path, type_id, api, md5=None, section=None, fname=None
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
 
     last_progress = 0
-    yield last_progress
 
     for chunk_count in range(num_chunks):
         uploader.upload_chunk()
         this_progress = round((chunk_count / num_chunks) *100,1)
         if this_progress != last_progress:
-            yield this_progress
             last_progress = this_progress
 
     mime,_ = mimetypes.guess_type(fname)
-    response = api.get_media_type(typeId)
+    response = api.get_media_type(type_id)
     project_id = response.project
     spec = {
-        'type': typeId,
+        'type': type_id,
         'uid': upload_uid,
         'gid': upload_gid,
         'url': uploader.url,
@@ -67,6 +67,4 @@ def upload_media(path, type_id, api, md5=None, section=None, fname=None
         response = api.transcode(project_id, transcode_spec=spec)
     else:
         response = api.save_image(project_id, image_spec=spec)
-
-    print("{}, {}".format(fname, response.message))
-    yield 100
+    return response
