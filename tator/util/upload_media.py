@@ -9,13 +9,13 @@ from urllib.parse import urlsplit
 
 from .md5sum import md5sum
 
-def upload_media(path, type_id, api, md5=None, section=None, fname=None,
+def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=2*1024*1024):
     """ Uploads a single media file.
 
-    :param path: Path to the media file.
-    :param type_id: Unique integer identifying a media type.
     :param api: `TatorApi` object.
+    :param type_id: Unique integer identifying a media type.
+    :param path: Path to the media file.
     :param md5: [Optional] md5 sum of the media.
     :param section: [Optional] Media section to upload to.
     :param fname: [Optional] Filename to use for upload.
