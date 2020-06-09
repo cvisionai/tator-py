@@ -77,6 +77,22 @@ def project(request):
     status = tator_api.delete_project(project_id)
 
 @pytest.fixture(scope='session')
+def image_type(request, project):
+    import tator
+    url = request.config.option.url
+    token = request.config.option.token
+    tator_api = tator.get_api(url, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'image_type',
+        'description': 'Test image type',
+        'project': project,
+        'dtype': 'video',
+    })
+    image_type_id = response.id
+    yield image_type_id
+    response = tator_api.delete_media_type(image_type_id)
+
+@pytest.fixture(scope='session')
 def video_type(request, project):
     import tator
     url = request.config.option.url
@@ -108,7 +124,7 @@ def video(request, project, video_type):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-    response = upload_media(out_path, video_type, tator_api)
+    response = upload_media(tator_api, video_type, out_path)
     print(response.message)
     while True:
         response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')
