@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 # import apis into sdk package
 from tator_openapi.api.tator_api import TatorApi
