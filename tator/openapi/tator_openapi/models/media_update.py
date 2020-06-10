@@ -36,7 +36,7 @@ class MediaUpdate(object):
         'attributes': 'dict(str, object)',
         'last_edit_end': 'datetime',
         'last_edit_start': 'datetime',
-        'media_files': 'list[str]',
+        'media_files': 'MediaFiles',
         'name': 'str'
     }
 
@@ -145,10 +145,9 @@ class MediaUpdate(object):
     def media_files(self):
         """Gets the media_files of this MediaUpdate.  # noqa: E501
 
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
 
         :return: The media_files of this MediaUpdate.  # noqa: E501
-        :rtype: list[str]
+        :rtype: MediaFiles
         """
         return self._media_files
 
@@ -156,10 +155,9 @@ class MediaUpdate(object):
     def media_files(self, media_files):
         """Sets the media_files of this MediaUpdate.
 
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
 
         :param media_files: The media_files of this MediaUpdate.  # noqa: E501
-        :type media_files: list[str]
+        :type media_files: MediaFiles
         """
 
         self._media_files = media_files

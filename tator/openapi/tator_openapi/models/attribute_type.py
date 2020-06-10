@@ -82,8 +82,7 @@ class AttributeType(object):
         self._use_current = None
         self.discriminator = None
 
-        if autocomplete is not None:
-            self.autocomplete = autocomplete
+        self.autocomplete = autocomplete
         if choices is not None:
             self.choices = choices
         self.default = default

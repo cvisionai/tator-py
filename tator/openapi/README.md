@@ -198,6 +198,7 @@ Class | Method | HTTP request | Description
  - [AnalysisSpec](docs/AnalysisSpec.md)
  - [AttributeBulkUpdate](docs/AttributeBulkUpdate.md)
  - [AttributeType](docs/AttributeType.md)
+ - [AudioDefinition](docs/AudioDefinition.md)
  - [AutocompleteService](docs/AutocompleteService.md)
  - [BadRequestResponse](docs/BadRequestResponse.md)
  - [ColorMap](docs/ColorMap.md)
@@ -219,6 +220,7 @@ Class | Method | HTTP request | Description
  - [LocalizationTypeUpdate](docs/LocalizationTypeUpdate.md)
  - [LocalizationUpdate](docs/LocalizationUpdate.md)
  - [Media](docs/Media.md)
+ - [MediaFiles](docs/MediaFiles.md)
  - [MediaNext](docs/MediaNext.md)
  - [MediaPrev](docs/MediaPrev.md)
  - [MediaType](docs/MediaType.md)
@@ -251,6 +253,7 @@ Class | Method | HTTP request | Description
  - [Version](docs/Version.md)
  - [VersionSpec](docs/VersionSpec.md)
  - [VersionUpdate](docs/VersionUpdate.md)
+ - [VideoDefinition](docs/VideoDefinition.md)
  - [VideoSpec](docs/VideoSpec.md)
  - [VideoUpdate](docs/VideoUpdate.md)
 
