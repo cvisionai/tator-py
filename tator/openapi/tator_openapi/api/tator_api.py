@@ -8841,7 +8841,7 @@ class TatorApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: None
+        :rtype: State
         """
         kwargs['_return_http_data_only'] = True
         return self.get_state_with_http_info(id, **kwargs)  # noqa: E501
@@ -8874,7 +8874,7 @@ class TatorApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: None
+        :rtype: tuple(State, status_code(int), headers(HTTPHeaderDict))
         """
 
         local_var_params = locals()
@@ -8933,7 +8933,7 @@ class TatorApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type=None,  # noqa: E501
+            response_type='State',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

@@ -5027,7 +5027,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_state**
-> get_state(id)
+> State get_state(id)
 
 
 
@@ -5070,7 +5070,8 @@ with tator_openapi.ApiClient(configuration) as api_client:
     id = 56 # int | A unique integer identifying a state.
 
     try:
-        api_instance.get_state(id)
+        api_response = api_instance.get_state(id)
+        pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->get_state: %s\n" % e)
 ```
@@ -5083,7 +5084,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**State**](State.md)
 
 ### Authorization
 
@@ -5097,6 +5098,7 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+**200** | Successful retrieval of state. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
