@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 def download_media(api, media, out_path):
     """ Download a media file from Tator to an off-line location.
 
+    :param api: `TatorApi` object.
     :param media: `Media` object.
     :param path-like out_path: Path to where to download.
     """
