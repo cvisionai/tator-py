@@ -1,17 +1,19 @@
+import tator
+from tator.util import get_images
 
-import pytator
 from ._common import assert_vector_equal
 
 def test_get_frame(url, token, project, video):
-    tator = pytator.Tator(url, token, project)
-    video_obj = tator.Media.get(pk=video)
+    tator_api = tator.get_api(url, token)
+    video_obj = tator_api.get_media(video)
 
     frames = [50,100,150]
-    code,frame_bgr = tator.GetFrame.get_bgr(video, frames)
+    file_path = tator_api.get_frame(video, frames=frames)
+    frame_bgr = get_images(file_path, video_obj)
 
-    assert(code == 200)
-    assert(len(frame_bgr) == 3)
+    assert(len(frame_bgr) == 4)
     for frame_data in frame_bgr:
-        assert_vector_equal(frame_data.shape, (720,1280,3))
+        size = (frame_data.height, frame_data.width, len(frame_data.mode))
+        assert_vector_equal(size, (720,1280,3))
     
 
