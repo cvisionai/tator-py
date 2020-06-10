@@ -36,6 +36,7 @@ from tator_openapi.models.analysis import Analysis
 from tator_openapi.models.analysis_spec import AnalysisSpec
 from tator_openapi.models.attribute_bulk_update import AttributeBulkUpdate
 from tator_openapi.models.attribute_type import AttributeType
+from tator_openapi.models.audio_definition import AudioDefinition
 from tator_openapi.models.autocomplete_service import AutocompleteService
 from tator_openapi.models.bad_request_response import BadRequestResponse
 from tator_openapi.models.color_map import ColorMap
@@ -57,6 +58,7 @@ from tator_openapi.models.localization_type_spec import LocalizationTypeSpec
 from tator_openapi.models.localization_type_update import LocalizationTypeUpdate
 from tator_openapi.models.localization_update import LocalizationUpdate
 from tator_openapi.models.media import Media
+from tator_openapi.models.media_files import MediaFiles
 from tator_openapi.models.media_next import MediaNext
 from tator_openapi.models.media_prev import MediaPrev
 from tator_openapi.models.media_type import MediaType
@@ -89,6 +91,7 @@ from tator_openapi.models.user_update import UserUpdate
 from tator_openapi.models.version import Version
 from tator_openapi.models.version_spec import VersionSpec
 from tator_openapi.models.version_update import VersionUpdate
+from tator_openapi.models.video_definition import VideoDefinition
 from tator_openapi.models.video_spec import VideoSpec
 from tator_openapi.models.video_update import VideoUpdate
 

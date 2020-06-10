@@ -38,7 +38,7 @@ class VideoSpec(object):
         'gid': 'str',
         'height': 'int',
         'md5': 'str',
-        'media_files': 'list[str]',
+        'media_files': 'MediaFiles',
         'name': 'str',
         'num_frames': 'int',
         'progress_name': 'str',
@@ -237,10 +237,9 @@ class VideoSpec(object):
     def media_files(self):
         """Gets the media_files of this VideoSpec.  # noqa: E501
 
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
 
         :return: The media_files of this VideoSpec.  # noqa: E501
-        :rtype: list[str]
+        :rtype: MediaFiles
         """
         return self._media_files
 
@@ -248,10 +247,9 @@ class VideoSpec(object):
     def media_files(self, media_files):
         """Sets the media_files of this VideoSpec.
 
-        Object containing upload urls for the transcoded file and corresponding `VideoDefinition`.  # noqa: E501
 
         :param media_files: The media_files of this VideoSpec.  # noqa: E501
-        :type media_files: list[str]
+        :type media_files: MediaFiles
         """
         if self.local_vars_configuration.client_side_validation and media_files is None:  # noqa: E501
             raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
