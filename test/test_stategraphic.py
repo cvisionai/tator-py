@@ -38,7 +38,7 @@ def test_stategraphic(url, token, project, video, box_type, track_type):
     track_id = response.id[0]
 
     # Get state graphic.
-    file_path = tator_api.get_state_graphic(track_id)
+    file_path = tator_api.get_state_graphic(track_id, mode='tile')
     state = tator_api.get_state(track_id)
     stategraphic = get_images(file_path, state)
     assert(len(stategraphic) == 10)
