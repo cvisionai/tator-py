@@ -1,4 +1,6 @@
-import pytator
+import tator
+from tator.util import get_images
+
 from ._common import assert_vector_equal
 
 def _make_box(project, box_type, video, frame):
@@ -14,31 +16,33 @@ def _make_box(project, box_type, video, frame):
     }
 
 def test_stategraphic(url, token, project, video, box_type, track_type):
-    tator = pytator.Tator(url, token, project)
-    video_obj = tator.Media.get(pk=video)
+    tator_api = tator.get_api(url, token)
+    video_obj = tator_api.get_media(video)
 
     # Make boxes for track.
     boxes = [_make_box(project, box_type, video, frame) for frame in range(10)]
-    status, response = tator.Localization.new(boxes)
-    print(f"New localization response: {response}")
-    assert status == 201
-    box_ids = response['id']
+    response = tator_api.create_localization_list(project, localization_spec=boxes)
+    assert isinstance(response, tator.CreateListResponse)
+    print(response.message)
+    box_ids = response.id
 
     # Make track.
-    status, response = tator.State.new([{
+    response = tator_api.create_state_list(project, state_spec=[{
         'project': project,
         'type': track_type,
         'media_ids': [video],
         'localization_ids': box_ids,
     }])
-    assert(status == 201)
-    track_id = response['id'][0]
+    print(response.message)
+    assert isinstance(response, tator.CreateListResponse)
+    track_id = response.id[0]
 
     # Get state graphic.
-    code, stategraphic = tator.StateGraphic.get_bgr(track_id)
-    assert(code == 200)
+    file_path = tator_api.get_state_graphic(track_id)
+    state = tator_api.get_state(track_id)
+    stategraphic = get_images(file_path, state)
     assert(len(stategraphic) == 10)
     for frame_data in stategraphic:
-        assert_vector_equal(frame_data.shape, (720,1280,3))
-    
+        size = (frame_data.height, frame_data.width, len(frame_data.mode))
+        assert_vector_equal(size, (720,1280,3))
 
