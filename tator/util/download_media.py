@@ -5,11 +5,12 @@ import requests
 from urllib.parse import urljoin
 from urllib.parse import urlsplit
 
-def download_media(media, out_path):
+def download_media(media, out_path, progress=False):
     """ Download a media file from Tator to an off-line location.
 
     :param media: `Media` object.
     :param path-like out_path: Path to where to download.
+    :param progress: [Optional] If true, yield progress. Default is false.
     """
     if media.media_files is not None:
         archival = media.media_files.get('archival', [])
@@ -34,7 +35,8 @@ def download_media(media, out_path):
         total_chunks = math.ceil(int(total_size) / 8192)
         chunk_count = 0
         last_progress = 0
-        yield last_progress
+        if progress:
+            yield last_progress
         with open(out_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
                 if chunk:
@@ -42,6 +44,8 @@ def download_media(media, out_path):
                     f.write(chunk)
                     this_progress = round((chunk_count / total_chunks) *100,1)
                     if this_progress != last_progress:
-                        yield this_progress
+                        if progress:
+                            yield this_progress
                         last_progress = this_progress
-        yield 100
+        if progress:
+            yield 100
