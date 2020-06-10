@@ -5,6 +5,7 @@ import time
 
 import tator
 from tator.util import chunked_create
+from tator.util import to_dataframe
 from ._common import assert_close_enough
 
 def random_localization(project, box_type, video_obj, post=False):
@@ -90,8 +91,8 @@ def test_localization_crud(url, token, project, video_type, video, box_type):
 
     # Verify all boxes have been updated.
     boxes = tator_api.get_localization_list(project, **params)
-    #dataframe = tator_api.Localization.dataframe(params)
-    #assert(len(boxes)==len(dataframe))
+    dataframe = to_dataframe(boxes)
+    assert(len(boxes)==len(dataframe))
     for box in boxes:
         assert_close_enough(bulk_patch, box, exclude)
     
