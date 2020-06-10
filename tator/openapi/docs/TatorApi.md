@@ -5175,7 +5175,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: image/*, application/json
+ - **Accept**: image/*
 
 ### HTTP response details
 | Status code | Description | Response headers |

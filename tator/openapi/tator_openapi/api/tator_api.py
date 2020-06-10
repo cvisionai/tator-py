@@ -9066,7 +9066,7 @@ class TatorApi(object):
         body_params = None
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
-            ['image/*', 'application/json'])  # noqa: E501
+            ['image/*'])  # noqa: E501
 
         # Authentication setting
         auth_settings = ['TokenAuth']  # noqa: E501
