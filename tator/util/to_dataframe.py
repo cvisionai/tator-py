@@ -1,7 +1,7 @@
 import pandas as pd
 
 def to_dataframe(objects):
-    """ Converts list of objects to pandas dataframe.
+    """ Converts list of objects to :class:`pandas.DataFrame`.
 
     :param object: List of objects.
     :returns: Pandas dataframe.

@@ -14,12 +14,13 @@ from .md5sum import md5sum
 def upload_media_archive(api, project, paths, section="Test Section", chunk_size=2*1024*1024):
     """ Uploads multiple media files as an archive.
 
-    :param api: `TatorApi` object.
+    :param api: :class:`tator.TatorApi` object.
     :param project: Unique integer identifying a project.
     :param paths: List of paths to the media files.
     :param section: [Optional] Media section to upload to.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :returns: Response object from `TatorApi.save_video` or `TatorApi.transcode`.
+    :returns: Response object from :meth:`tator.TatorApi.save_video` or
+        :meth:`tator.TatorApi.transcode`.
     """
     upload_uid = str(uuid1())
     upload_gid = str(uuid1())

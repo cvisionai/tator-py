@@ -13,7 +13,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=2*1024*1024):
     """ Uploads a single media file.
 
-    :param api: `TatorApi` object.
+    :param api: :class:`tator.TatorApi` object.
     :param type_id: Unique integer identifying a media type.
     :param path: Path to the media file.
     :param md5: [Optional] md5 sum of the media.
@@ -22,7 +22,8 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :returns: Response object from `TatorApi.save_video` or `TatorApi.transcode`.
+    :returns: Response object from :meth:`tator.TatorApi.save_video` or 
+        :meth:`tator.TatorApi.transcode`.
     """
     if md5==None:
         md5 = md5sum(path)

@@ -11,7 +11,7 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
                           name=None, chunk_size=100*1024*1024):
     """ Upload a file to the temporary file storage location.
 
-    :param api: `TatorApi` object.
+    :param api: :class:`tator.TatorApi` object.
     :param project: Unique integer identifying a project.
     :param path: Path to the file.
     :param lookup: [Optional] md5hash of lookup parameters.

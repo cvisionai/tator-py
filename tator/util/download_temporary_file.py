@@ -8,8 +8,8 @@ from urllib.parse import urlsplit
 def download_temporary_file(api, temporary_file, out_path):
     """ Download a temporary file from Tator to an off-line location.
 
-    :param api: `TatorApi` object.
-    :param temporary_file: `TemporaryFile` object.
+    :param api: :class:`tator.TatorApi` object.
+    :param temporary_file: :class:`tator.TemporaryFile` object.
     :param path-like out_path: Path to where to download.
     """
     config = api.api_client.configuration
