@@ -39,7 +39,7 @@ class TatorApi(object):
     def algorithm_launch(self, project, **kwargs):  # noqa: E501
         """algorithm_launch  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Launch a registered algorithm.  This will create one or more Argo workflows that execute the named algorithm registration. To get a list of available algorithms, use the `Algorithms` endpoint. A media list will be submitted for processing using either a query string or  a list of media IDs. If neither are included, the algorithm will be launched on all media in the project.   Media is divided into batches for based on the `files_per_job` field of the  `Algorithm` object. One batch is submitted to each Argo workflow.  Submitted algorithm jobs may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -71,7 +71,7 @@ class TatorApi(object):
     def algorithm_launch_with_http_info(self, project, **kwargs):  # noqa: E501
         """algorithm_launch  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Launch a registered algorithm.  This will create one or more Argo workflows that execute the named algorithm registration. To get a list of available algorithms, use the `Algorithms` endpoint. A media list will be submitted for processing using either a query string or  a list of media IDs. If neither are included, the algorithm will be launched on all media in the project.   Media is divided into batches for based on the `files_per_job` field of the  `Algorithm` object. One batch is submitted to each Argo workflow.  Submitted algorithm jobs may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -175,7 +175,7 @@ class TatorApi(object):
     def create_analysis(self, project, **kwargs):  # noqa: E501
         """create_analysis  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -207,7 +207,7 @@ class TatorApi(object):
     def create_analysis_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_analysis  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -311,7 +311,7 @@ class TatorApi(object):
     def create_leaf_list(self, project, **kwargs):  # noqa: E501
         """create_leaf_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk create on a list of `LeafSpec` objects. A  maximum of 500 leaves may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -343,7 +343,7 @@ class TatorApi(object):
     def create_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_leaf_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk create on a list of `LeafSpec` objects. A  maximum of 500 leaves may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -447,7 +447,7 @@ class TatorApi(object):
     def create_leaf_type(self, project, **kwargs):  # noqa: E501
         """create_leaf_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -479,7 +479,7 @@ class TatorApi(object):
     def create_leaf_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_leaf_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -583,7 +583,7 @@ class TatorApi(object):
     def create_localization_list(self, project, **kwargs):  # noqa: E501
         """create_localization_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `LocalizationSpec` objects. A  maximum of 500 localizations may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -615,7 +615,7 @@ class TatorApi(object):
     def create_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_localization_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `LocalizationSpec` objects. A  maximum of 500 localizations may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -719,7 +719,7 @@ class TatorApi(object):
     def create_localization_type(self, project, **kwargs):  # noqa: E501
         """create_localization_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -751,7 +751,7 @@ class TatorApi(object):
     def create_localization_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_localization_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -855,7 +855,7 @@ class TatorApi(object):
     def create_media_type(self, project, **kwargs):  # noqa: E501
         """create_media_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -887,7 +887,7 @@ class TatorApi(object):
     def create_media_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_media_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -991,7 +991,7 @@ class TatorApi(object):
     def create_membership(self, project, **kwargs):  # noqa: E501
         """create_membership  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1023,7 +1023,7 @@ class TatorApi(object):
     def create_membership_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_membership  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1250,7 +1250,7 @@ class TatorApi(object):
     def create_progress_summary_api(self, project, **kwargs):  # noqa: E501
         """create_progress_summary_api  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1282,7 +1282,7 @@ class TatorApi(object):
     def create_progress_summary_api_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_progress_summary_api  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1386,7 +1386,7 @@ class TatorApi(object):
     def create_project(self, **kwargs):  # noqa: E501
         """create_project  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1416,7 +1416,7 @@ class TatorApi(object):
     def create_project_with_http_info(self, **kwargs):  # noqa: E501
         """create_project  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1511,7 +1511,7 @@ class TatorApi(object):
     def create_state_list(self, project, **kwargs):  # noqa: E501
         """create_state_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `StateSpec` objects. A  maximum of 500 states may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1543,7 +1543,7 @@ class TatorApi(object):
     def create_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_state_list  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `StateSpec` objects. A  maximum of 500 states may be created in one request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1647,7 +1647,7 @@ class TatorApi(object):
     def create_state_type(self, project, **kwargs):  # noqa: E501
         """create_state_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1679,7 +1679,7 @@ class TatorApi(object):
     def create_state_type_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_state_type  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1783,7 +1783,7 @@ class TatorApi(object):
     def create_temporary_file(self, project, **kwargs):  # noqa: E501
         """create_temporary_file  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create temporary file.  Temporary files are files stored server side for a defined duration.   The file must first be uploaded via tus, and can subsequently be saved using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1815,7 +1815,7 @@ class TatorApi(object):
     def create_temporary_file_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_temporary_file  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create temporary file.  Temporary files are files stored server side for a defined duration.   The file must first be uploaded via tus, and can subsequently be saved using this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1919,7 +1919,7 @@ class TatorApi(object):
     def create_version(self, project, **kwargs):  # noqa: E501
         """create_version  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1951,7 +1951,7 @@ class TatorApi(object):
     def create_version_with_http_info(self, project, **kwargs):  # noqa: E501
         """create_version  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Create version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2055,7 +2055,7 @@ class TatorApi(object):
     def delete_job(self, run_uid, **kwargs):  # noqa: E501
         """delete_job  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Cancel a background job.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a job using the `run_uid` returned by either the `AlgorithmLaunch` or `Transcode` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2085,7 +2085,7 @@ class TatorApi(object):
     def delete_job_with_http_info(self, run_uid, **kwargs):  # noqa: E501
         """delete_job  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Cancel a background job.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a job using the `run_uid` returned by either the `AlgorithmLaunch` or `Transcode` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2180,7 +2180,7 @@ class TatorApi(object):
     def delete_job_group(self, group_id, **kwargs):  # noqa: E501
         """delete_job_group  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Cancel a group of background jobs.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a group of jobs using the `group_id`  returned by either the `AlgorithmLaunch` or `Transcode` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2210,7 +2210,7 @@ class TatorApi(object):
     def delete_job_group_with_http_info(self, group_id, **kwargs):  # noqa: E501
         """delete_job_group  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Cancel a group of background jobs.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a group of jobs using the `group_id`  returned by either the `AlgorithmLaunch` or `Transcode` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2305,7 +2305,7 @@ class TatorApi(object):
     def delete_leaf(self, id, **kwargs):  # noqa: E501
         """delete_leaf  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2335,7 +2335,7 @@ class TatorApi(object):
     def delete_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_leaf  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2430,7 +2430,7 @@ class TatorApi(object):
     def delete_leaf_list(self, project, **kwargs):  # noqa: E501
         """delete_leaf_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method performs a bulk delete on all leaves matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2488,7 +2488,7 @@ class TatorApi(object):
     def delete_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_leaf_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method performs a bulk delete on all leaves matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2653,7 +2653,7 @@ class TatorApi(object):
     def delete_leaf_type(self, id, **kwargs):  # noqa: E501
         """delete_leaf_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2683,7 +2683,7 @@ class TatorApi(object):
     def delete_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_leaf_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2778,7 +2778,7 @@ class TatorApi(object):
     def delete_localization(self, id, **kwargs):  # noqa: E501
         """delete_localization  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2808,7 +2808,7 @@ class TatorApi(object):
     def delete_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_localization  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2903,7 +2903,7 @@ class TatorApi(object):
     def delete_localization_list(self, project, **kwargs):  # noqa: E501
         """delete_localization_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all localizations matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2973,7 +2973,7 @@ class TatorApi(object):
     def delete_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_localization_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all localizations matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3176,7 +3176,7 @@ class TatorApi(object):
     def delete_localization_type(self, id, **kwargs):  # noqa: E501
         """delete_localization_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any localizations associated with the localization type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3206,7 +3206,7 @@ class TatorApi(object):
     def delete_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_localization_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any localizations associated with the localization type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3301,7 +3301,7 @@ class TatorApi(object):
     def delete_media(self, id, **kwargs):  # noqa: E501
         """delete_media  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3331,7 +3331,7 @@ class TatorApi(object):
     def delete_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_media  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3426,7 +3426,7 @@ class TatorApi(object):
     def delete_media_list(self, project, **kwargs):  # noqa: E501
         """delete_media_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all media matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3490,7 +3490,7 @@ class TatorApi(object):
     def delete_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_media_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all media matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3671,7 +3671,7 @@ class TatorApi(object):
     def delete_media_type(self, id, **kwargs):  # noqa: E501
         """delete_media_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   Note that this will also delete any media associated with the media type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3701,7 +3701,7 @@ class TatorApi(object):
     def delete_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_media_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   Note that this will also delete any media associated with the media type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3796,7 +3796,7 @@ class TatorApi(object):
     def delete_membership(self, id, **kwargs):  # noqa: E501
         """delete_membership  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3826,7 +3826,7 @@ class TatorApi(object):
     def delete_membership_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_membership  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3921,7 +3921,7 @@ class TatorApi(object):
     def delete_project(self, id, **kwargs):  # noqa: E501
         """delete_project  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Only project owners may delete a project. Note that deleting a project will also delete all media and annotations within a project.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3951,7 +3951,7 @@ class TatorApi(object):
     def delete_project_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_project  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Only project owners may delete a project. Note that deleting a project will also delete all media and annotations within a project.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4046,7 +4046,7 @@ class TatorApi(object):
     def delete_state(self, id, **kwargs):  # noqa: E501
         """delete_state  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4076,7 +4076,7 @@ class TatorApi(object):
     def delete_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_state  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4171,7 +4171,7 @@ class TatorApi(object):
     def delete_state_list(self, project, **kwargs):  # noqa: E501
         """delete_state_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all states matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4237,7 +4237,7 @@ class TatorApi(object):
     def delete_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_state_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all states matching a query. It is  recommended to use a GET request first to check what is being deleted.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4424,7 +4424,7 @@ class TatorApi(object):
     def delete_state_type(self, id, **kwargs):  # noqa: E501
         """delete_state_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any states associated with the state type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4454,7 +4454,7 @@ class TatorApi(object):
     def delete_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_state_type  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any states associated with the state type.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4549,7 +4549,7 @@ class TatorApi(object):
     def delete_temporary_file(self, id, **kwargs):  # noqa: E501
         """delete_temporary_file  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete temporary file.  Temporary files are files stored server side for a defined duration.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4579,7 +4579,7 @@ class TatorApi(object):
     def delete_temporary_file_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_temporary_file  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete temporary file.  Temporary files are files stored server side for a defined duration.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4674,7 +4674,7 @@ class TatorApi(object):
     def delete_temporary_file_list(self, project, **kwargs):  # noqa: E501
         """delete_temporary_file_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete temporary file list.  Temporary files are files stored server side for a defined duration.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4706,7 +4706,7 @@ class TatorApi(object):
     def delete_temporary_file_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """delete_temporary_file_list  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete temporary file list.  Temporary files are files stored server side for a defined duration.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4806,7 +4806,7 @@ class TatorApi(object):
     def delete_version(self, id, **kwargs):  # noqa: E501
         """delete_version  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   Note that this will also delete any localizations or states associated with the deleted version.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4836,7 +4836,7 @@ class TatorApi(object):
     def delete_version_with_http_info(self, id, **kwargs):  # noqa: E501
         """delete_version  # noqa: E501
 
-        Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Delete version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   Note that this will also delete any localizations or states associated with the deleted version.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4931,7 +4931,7 @@ class TatorApi(object):
     def get_algorithm_list(self, project, **kwargs):  # noqa: E501
         """get_algorithm_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4961,7 +4961,7 @@ class TatorApi(object):
     def get_algorithm_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_algorithm_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5056,7 +5056,7 @@ class TatorApi(object):
     def get_analysis_list(self, project, **kwargs):  # noqa: E501
         """get_analysis_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5086,7 +5086,7 @@ class TatorApi(object):
     def get_analysis_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_analysis_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5181,7 +5181,7 @@ class TatorApi(object):
     def get_clip(self, id, frame_ranges, **kwargs):  # noqa: E501
         """get_clip  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get video clip.  Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5215,7 +5215,7 @@ class TatorApi(object):
     def get_clip_with_http_info(self, id, frame_ranges, **kwargs):  # noqa: E501
         """get_clip  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get video clip.  Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5327,7 +5327,7 @@ class TatorApi(object):
     def get_frame(self, id, **kwargs):  # noqa: E501
         """get_frame  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get frame(s) from a video.  Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5367,7 +5367,7 @@ class TatorApi(object):
     def get_frame_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_frame  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get frame(s) from a video.  Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5497,7 +5497,7 @@ class TatorApi(object):
     def get_leaf(self, id, **kwargs):  # noqa: E501
         """get_leaf  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5527,7 +5527,7 @@ class TatorApi(object):
     def get_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_leaf  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5622,7 +5622,7 @@ class TatorApi(object):
     def get_leaf_list(self, project, **kwargs):  # noqa: E501
         """get_leaf_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5680,7 +5680,7 @@ class TatorApi(object):
     def get_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_leaf_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5845,7 +5845,7 @@ class TatorApi(object):
     def get_leaf_type(self, id, **kwargs):  # noqa: E501
         """get_leaf_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5875,7 +5875,7 @@ class TatorApi(object):
     def get_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_leaf_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -5970,7 +5970,7 @@ class TatorApi(object):
     def get_leaf_type_list(self, project, **kwargs):  # noqa: E501
         """get_leaf_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf type list.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6000,7 +6000,7 @@ class TatorApi(object):
     def get_leaf_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_leaf_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get leaf type list.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6095,7 +6095,7 @@ class TatorApi(object):
     def get_localization(self, id, **kwargs):  # noqa: E501
         """get_localization  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6125,7 +6125,7 @@ class TatorApi(object):
     def get_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_localization  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6220,7 +6220,7 @@ class TatorApi(object):
     def get_localization_list(self, project, **kwargs):  # noqa: E501
         """get_localization_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6290,7 +6290,7 @@ class TatorApi(object):
     def get_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_localization_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6493,7 +6493,7 @@ class TatorApi(object):
     def get_localization_type(self, id, **kwargs):  # noqa: E501
         """get_localization_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6523,7 +6523,7 @@ class TatorApi(object):
     def get_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_localization_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6618,7 +6618,7 @@ class TatorApi(object):
     def get_localization_type_list(self, project, **kwargs):  # noqa: E501
         """get_localization_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization type list.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6652,7 +6652,7 @@ class TatorApi(object):
     def get_localization_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_localization_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get localization type list.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6758,7 +6758,7 @@ class TatorApi(object):
     def get_media(self, id, **kwargs):  # noqa: E501
         """get_media  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6788,7 +6788,7 @@ class TatorApi(object):
     def get_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6883,7 +6883,7 @@ class TatorApi(object):
     def get_media_list(self, project, **kwargs):  # noqa: E501
         """get_media_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -6947,7 +6947,7 @@ class TatorApi(object):
     def get_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_media_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7128,7 +7128,7 @@ class TatorApi(object):
     def get_media_next(self, id, **kwargs):  # noqa: E501
         """get_media_next  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve ID of next media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the next media ID from the media passed as a path parameter. This allows iteration through a media list without serializing the entire list, which may be large.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7192,7 +7192,7 @@ class TatorApi(object):
     def get_media_next_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media_next  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve ID of next media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the next media ID from the media passed as a path parameter. This allows iteration through a media list without serializing the entire list, which may be large.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7373,7 +7373,7 @@ class TatorApi(object):
     def get_media_prev(self, id, **kwargs):  # noqa: E501
         """get_media_prev  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve ID of previous media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the previous media ID from the media passed as a path parameter. This  allows iteration through a media list without serializing the entire list, which may be  large.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7437,7 +7437,7 @@ class TatorApi(object):
     def get_media_prev_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media_prev  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve ID of previous media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the previous media ID from the media passed as a path parameter. This  allows iteration through a media list without serializing the entire list, which may be  large.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7618,7 +7618,7 @@ class TatorApi(object):
     def get_media_sections(self, project, **kwargs):  # noqa: E501
         """get_media_sections  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve media counts by section.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the number of images and videos per sections.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7682,7 +7682,7 @@ class TatorApi(object):
     def get_media_sections_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_media_sections  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve media counts by section.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the number of images and videos per sections.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7863,7 +7863,7 @@ class TatorApi(object):
     def get_media_type(self, id, **kwargs):  # noqa: E501
         """get_media_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7893,7 +7893,7 @@ class TatorApi(object):
     def get_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_media_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -7988,7 +7988,7 @@ class TatorApi(object):
     def get_media_type_list(self, project, **kwargs):  # noqa: E501
         """get_media_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media type list.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8018,7 +8018,7 @@ class TatorApi(object):
     def get_media_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_media_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get media type list.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8113,7 +8113,7 @@ class TatorApi(object):
     def get_membership(self, id, **kwargs):  # noqa: E501
         """get_membership  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8143,7 +8143,7 @@ class TatorApi(object):
     def get_membership_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_membership  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8238,7 +8238,7 @@ class TatorApi(object):
     def get_membership_list(self, project, **kwargs):  # noqa: E501
         """get_membership_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get membership list.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8268,7 +8268,7 @@ class TatorApi(object):
     def get_membership_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_membership_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get membership list.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8363,7 +8363,7 @@ class TatorApi(object):
     def get_project(self, id, **kwargs):  # noqa: E501
         """get_project  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8393,7 +8393,7 @@ class TatorApi(object):
     def get_project_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_project  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8488,7 +8488,7 @@ class TatorApi(object):
     def get_project_list(self, **kwargs):  # noqa: E501
         """get_project_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get project list.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Returns all projects that a user has access to.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8516,7 +8516,7 @@ class TatorApi(object):
     def get_project_list_with_http_info(self, **kwargs):  # noqa: E501
         """get_project_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get project list.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Returns all projects that a user has access to.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8602,7 +8602,7 @@ class TatorApi(object):
     def get_section_analysis(self, project, **kwargs):  # noqa: E501
         """get_section_analysis  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve analysis results for a media list.  This endpoint uses objects created with the `Analysis` endpoint to perform analysis on filtered media lists.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8658,7 +8658,7 @@ class TatorApi(object):
     def get_section_analysis_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_section_analysis  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Retrieve analysis results for a media list.  This endpoint uses objects created with the `Analysis` endpoint to perform analysis on filtered media lists.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8819,7 +8819,7 @@ class TatorApi(object):
     def get_state(self, id, **kwargs):  # noqa: E501
         """get_state  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8849,7 +8849,7 @@ class TatorApi(object):
     def get_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_state  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8944,7 +8944,7 @@ class TatorApi(object):
     def get_state_graphic(self, id, **kwargs):  # noqa: E501
         """get_state_graphic  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+         Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -8980,7 +8980,7 @@ class TatorApi(object):
     def get_state_graphic_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_state_graphic  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+         Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9090,7 +9090,7 @@ class TatorApi(object):
     def get_state_list(self, project, **kwargs):  # noqa: E501
         """get_state_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9156,7 +9156,7 @@ class TatorApi(object):
     def get_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_state_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9343,7 +9343,7 @@ class TatorApi(object):
     def get_state_type(self, id, **kwargs):  # noqa: E501
         """get_state_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9373,7 +9373,7 @@ class TatorApi(object):
     def get_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_state_type  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9468,7 +9468,7 @@ class TatorApi(object):
     def get_state_type_list(self, project, **kwargs):  # noqa: E501
         """get_state_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state type list.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9502,7 +9502,7 @@ class TatorApi(object):
     def get_state_type_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_state_type_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get state type list.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9608,7 +9608,7 @@ class TatorApi(object):
     def get_temporary_file(self, id, **kwargs):  # noqa: E501
         """get_temporary_file  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get temporary file.  Temporary files are files stored server side for a defined duration.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9638,7 +9638,7 @@ class TatorApi(object):
     def get_temporary_file_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_temporary_file  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get temporary file.  Temporary files are files stored server side for a defined duration.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9733,7 +9733,7 @@ class TatorApi(object):
     def get_temporary_file_list(self, project, **kwargs):  # noqa: E501
         """get_temporary_file_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get temporary file list.  Temporary files are files stored server side for a defined duration.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9765,7 +9765,7 @@ class TatorApi(object):
     def get_temporary_file_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_temporary_file_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get temporary file list.  Temporary files are files stored server side for a defined duration.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9865,7 +9865,7 @@ class TatorApi(object):
     def get_user(self, id, **kwargs):  # noqa: E501
         """get_user  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9895,7 +9895,7 @@ class TatorApi(object):
     def get_user_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_user  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -9990,7 +9990,7 @@ class TatorApi(object):
     def get_version(self, id, **kwargs):  # noqa: E501
         """get_version  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10020,7 +10020,7 @@ class TatorApi(object):
     def get_version_with_http_info(self, id, **kwargs):  # noqa: E501
         """get_version  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10115,7 +10115,7 @@ class TatorApi(object):
     def get_version_list(self, project, **kwargs):  # noqa: E501
         """get_version_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get version list.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10147,7 +10147,7 @@ class TatorApi(object):
     def get_version_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """get_version_list  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get version list.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10247,7 +10247,7 @@ class TatorApi(object):
     def leaf_suggestion(self, project, ancestor, query, **kwargs):  # noqa: E501
         """leaf_suggestion  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get list of autocomplete suggestions.  This endpoint is compatible with devbridge suggestion format. It performs a glob search on leaf objects in the project.  <https://github.com/kraaden/autocomplete>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10283,7 +10283,7 @@ class TatorApi(object):
     def leaf_suggestion_with_http_info(self, project, ancestor, query, **kwargs):  # noqa: E501
         """leaf_suggestion  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get list of autocomplete suggestions.  This endpoint is compatible with devbridge suggestion format. It performs a glob search on leaf objects in the project.  <https://github.com/kraaden/autocomplete>   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10401,7 +10401,7 @@ class TatorApi(object):
     def notify(self, **kwargs):  # noqa: E501
         """notify  # noqa: E501
 
-        Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.  # noqa: E501
+        Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10431,7 +10431,7 @@ class TatorApi(object):
     def notify_with_http_info(self, **kwargs):  # noqa: E501
         """notify  # noqa: E501
 
-        Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.  # noqa: E501
+        Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10526,7 +10526,7 @@ class TatorApi(object):
     def progress(self, project, **kwargs):  # noqa: E501
         """progress  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Broadcast progress update.  Progress messages are sent in the web UI via WebSocket, and are displayed as progress bars associated with individual media files and as a summary in the webpage header. All members of a project can see progress bars from uploads and background jobs initiated by other users within the project. This endpoint accepts an array of messages, allowing for progress messages to be batched into a single request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10558,7 +10558,7 @@ class TatorApi(object):
     def progress_with_http_info(self, project, **kwargs):  # noqa: E501
         """progress  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Broadcast progress update.  Progress messages are sent in the web UI via WebSocket, and are displayed as progress bars associated with individual media files and as a summary in the webpage header. All members of a project can see progress bars from uploads and background jobs initiated by other users within the project. This endpoint accepts an array of messages, allowing for progress messages to be batched into a single request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10662,7 +10662,7 @@ class TatorApi(object):
     def save_image(self, project, **kwargs):  # noqa: E501
         """save_image  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10694,7 +10694,7 @@ class TatorApi(object):
     def save_image_with_http_info(self, project, **kwargs):  # noqa: E501
         """save_image  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10798,7 +10798,7 @@ class TatorApi(object):
     def save_video(self, project, **kwargs):  # noqa: E501
         """save_video  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10830,7 +10830,7 @@ class TatorApi(object):
     def save_video_with_http_info(self, project, **kwargs):  # noqa: E501
         """save_video  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10934,7 +10934,7 @@ class TatorApi(object):
     def transcode(self, project, **kwargs):  # noqa: E501
         """transcode  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Start a transcode.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. This endpoint launches a transcode on raw uploaded video by creating an Argo workflow. The workflow will download the uploaded raw video, transcode it to the proper format, upload the transcoded video, and save the video using the  `SaveVideo` endpoint.  Note that the raw video must be uploaded first via tus, which is a separate mechanism  from the REST API. This endpoint requires a group and run UUID associated with this  upload. If no progress messages were generated during upload, then the group and run  UUIDs can be newly generated.  Transcodes may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -10966,7 +10966,7 @@ class TatorApi(object):
     def transcode_with_http_info(self, project, **kwargs):  # noqa: E501
         """transcode  # noqa: E501
 
-        Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Start a transcode.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. This endpoint launches a transcode on raw uploaded video by creating an Argo workflow. The workflow will download the uploaded raw video, transcode it to the proper format, upload the transcoded video, and save the video using the  `SaveVideo` endpoint.  Note that the raw video must be uploaded first via tus, which is a separate mechanism  from the REST API. This endpoint requires a group and run UUID associated with this  upload. If no progress messages were generated during upload, then the group and run  UUIDs can be newly generated.  Transcodes may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11070,7 +11070,7 @@ class TatorApi(object):
     def update_leaf(self, id, **kwargs):  # noqa: E501
         """update_leaf  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11102,7 +11102,7 @@ class TatorApi(object):
     def update_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_leaf  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11206,7 +11206,7 @@ class TatorApi(object):
     def update_leaf_list(self, project, **kwargs):  # noqa: E501
         """update_leaf_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk update on all leaves matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11266,7 +11266,7 @@ class TatorApi(object):
     def update_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_leaf_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk update on all leaves matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11440,7 +11440,7 @@ class TatorApi(object):
     def update_leaf_type(self, id, **kwargs):  # noqa: E501
         """update_leaf_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11472,7 +11472,7 @@ class TatorApi(object):
     def update_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_leaf_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11576,7 +11576,7 @@ class TatorApi(object):
     def update_localization(self, id, **kwargs):  # noqa: E501
         """update_localization  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11608,7 +11608,7 @@ class TatorApi(object):
     def update_localization_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_localization  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11712,7 +11712,7 @@ class TatorApi(object):
     def update_localization_list(self, project, **kwargs):  # noqa: E501
         """update_localization_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all localizations matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11784,7 +11784,7 @@ class TatorApi(object):
     def update_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_localization_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all localizations matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -11996,7 +11996,7 @@ class TatorApi(object):
     def update_localization_type(self, id, **kwargs):  # noqa: E501
         """update_localization_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12028,7 +12028,7 @@ class TatorApi(object):
     def update_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_localization_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12132,7 +12132,7 @@ class TatorApi(object):
     def update_media(self, id, **kwargs):  # noqa: E501
         """update_media  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12164,7 +12164,7 @@ class TatorApi(object):
     def update_media_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_media  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12268,7 +12268,7 @@ class TatorApi(object):
     def update_media_list(self, project, **kwargs):  # noqa: E501
         """update_media_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all media matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12334,7 +12334,7 @@ class TatorApi(object):
     def update_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_media_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all media matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12524,7 +12524,7 @@ class TatorApi(object):
     def update_media_type(self, id, **kwargs):  # noqa: E501
         """update_media_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12556,7 +12556,7 @@ class TatorApi(object):
     def update_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_media_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12660,7 +12660,7 @@ class TatorApi(object):
     def update_membership(self, id, **kwargs):  # noqa: E501
         """update_membership  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12692,7 +12692,7 @@ class TatorApi(object):
     def update_membership_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_membership  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12796,7 +12796,7 @@ class TatorApi(object):
     def update_project(self, id, **kwargs):  # noqa: E501
         """update_project  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12828,7 +12828,7 @@ class TatorApi(object):
     def update_project_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_project  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12932,7 +12932,7 @@ class TatorApi(object):
     def update_state(self, id, **kwargs):  # noqa: E501
         """update_state  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -12964,7 +12964,7 @@ class TatorApi(object):
     def update_state_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_state  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13068,7 +13068,7 @@ class TatorApi(object):
     def update_state_list(self, project, **kwargs):  # noqa: E501
         """update_state_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all states matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13136,7 +13136,7 @@ class TatorApi(object):
     def update_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_state_list  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all states matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13332,7 +13332,7 @@ class TatorApi(object):
     def update_state_type(self, id, **kwargs):  # noqa: E501
         """update_state_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13364,7 +13364,7 @@ class TatorApi(object):
     def update_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_state_type  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13468,7 +13468,7 @@ class TatorApi(object):
     def update_user(self, id, **kwargs):  # noqa: E501
         """update_user  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13500,7 +13500,7 @@ class TatorApi(object):
     def update_user_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_user  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update user.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13604,7 +13604,7 @@ class TatorApi(object):
     def update_version(self, id, **kwargs):  # noqa: E501
         """update_version  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13636,7 +13636,7 @@ class TatorApi(object):
     def update_version_with_http_info(self, id, **kwargs):  # noqa: E501
         """update_version  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Update version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13740,7 +13740,7 @@ class TatorApi(object):
     def update_video(self, project, **kwargs):  # noqa: E501
         """update_video  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13772,7 +13772,7 @@ class TatorApi(object):
     def update_video_with_http_info(self, project, **kwargs):  # noqa: E501
         """update_video  # noqa: E501
 
-        Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13876,7 +13876,7 @@ class TatorApi(object):
     def whoami(self, **kwargs):  # noqa: E501
         """whoami  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get current user.  Retrieves user making the request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -13904,7 +13904,7 @@ class TatorApi(object):
     def whoami_with_http_info(self, **kwargs):  # noqa: E501
         """whoami  # noqa: E501
 
-        Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.  # noqa: E501
+        Get current user.  Retrieves user making the request.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

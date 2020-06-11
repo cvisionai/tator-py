@@ -103,7 +103,7 @@ Method | HTTP request | Description
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Launch a registered algorithm.  This will create one or more Argo workflows that execute the named algorithm registration. To get a list of available algorithms, use the `Algorithms` endpoint. A media list will be submitted for processing using either a query string or  a list of media IDs. If neither are included, the algorithm will be launched on all media in the project.   Media is divided into batches for based on the `files_per_job` field of the  `Algorithm` object. One batch is submitted to each Argo workflow.  Submitted algorithm jobs may be cancelled via the `Job` or `JobGroup` endpoints. 
 
 ### Example
 
@@ -183,7 +183,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported. 
 
 ### Example
 
@@ -220,7 +220,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-analysis_spec = {"name":"Boxes"} # AnalysisSpec |  (optional)
+analysis_spec = {"data_query":"_meta:1","name":"Boxes"} # AnalysisSpec |  (optional)
 
     try:
         api_response = api_instance.create_analysis(project, analysis_spec=analysis_spec)
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk create on a list of `LeafSpec` objects. A  maximum of 500 leaves may be created in one request. 
 
 ### Example
 
@@ -343,7 +343,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -423,7 +423,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `LocalizationSpec` objects. A  maximum of 500 localizations may be created in one request. 
 
 ### Example
 
@@ -503,7 +503,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -583,7 +583,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it. 
 
 ### Example
 
@@ -663,7 +663,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
 
 ### Example
 
@@ -818,7 +818,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group. 
 
 ### Example
 
@@ -898,7 +898,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   
 
 ### Example
 
@@ -976,7 +976,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `StateSpec` objects. A  maximum of 500 states may be created in one request. 
 
 ### Example
 
@@ -1056,7 +1056,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -1136,7 +1136,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create temporary file.  Temporary files are files stored server side for a defined duration.   The file must first be uploaded via tus, and can subsequently be saved using this endpoint.
 
 ### Example
 
@@ -1216,7 +1216,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Create version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating. 
 
 ### Example
 
@@ -1296,7 +1296,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Cancel a background job.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a job using the `run_uid` returned by either the `AlgorithmLaunch` or `Transcode` endpoints. 
 
 ### Example
 
@@ -1374,7 +1374,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Cancel a group of background jobs.  Algorithms and transcodes create argo workflows that are annotated with two uuid1 strings, one identifying the run and the other identifying the group. Jobs that are submitted together have the same group id, but each workflow has a unique run id.  This endpoint allows the user to cancel a group of jobs using the `group_id`  returned by either the `AlgorithmLaunch` or `Transcode` endpoints. 
 
 ### Example
 
@@ -1452,7 +1452,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes. 
 
 ### Example
 
@@ -1529,7 +1529,7 @@ void (empty response body)
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method performs a bulk delete on all leaves matching a query. It is  recommended to use a GET request first to check what is being deleted. 
 
 ### Example
 
@@ -1635,7 +1635,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -1713,7 +1713,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -1791,7 +1791,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all localizations matching a query. It is  recommended to use a GET request first to check what is being deleted. 
 
 ### Example
 
@@ -1909,7 +1909,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any localizations associated with the localization type. 
 
 ### Example
 
@@ -1987,7 +1987,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -2065,7 +2065,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all media matching a query. It is  recommended to use a GET request first to check what is being deleted. 
 
 ### Example
 
@@ -2177,7 +2177,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   Note that this will also delete any media associated with the media type. 
 
 ### Example
 
@@ -2255,7 +2255,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
 
 ### Example
 
@@ -2333,7 +2333,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Only project owners may delete a project. Note that deleting a project will also delete all media and annotations within a project. 
 
 ### Example
 
@@ -2411,7 +2411,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -2489,7 +2489,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method performs a bulk delete on all states matching a query. It is  recommended to use a GET request first to check what is being deleted. 
 
 ### Example
 
@@ -2603,7 +2603,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   Note that this will also delete any states associated with the state type. 
 
 ### Example
 
@@ -2681,7 +2681,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete temporary file.  Temporary files are files stored server side for a defined duration. 
 
 ### Example
 
@@ -2759,7 +2759,7 @@ Name | Type | Description  | Notes
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete temporary file list.  Temporary files are files stored server side for a defined duration.   
 
 ### Example
 
@@ -2837,7 +2837,7 @@ void (empty response body)
 
 
 
-Delete state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Delete version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   Note that this will also delete any localizations or states associated with the deleted version. 
 
 ### Example
 
@@ -2915,7 +2915,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms> 
 
 ### Example
 
@@ -2993,7 +2993,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported. 
 
 ### Example
 
@@ -3071,7 +3071,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get video clip.  Facility to get a clip from the server. Returns a temporary file object that expires in 24 hours. 
 
 ### Example
 
@@ -3153,7 +3153,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get frame(s) from a video.  Facility to get a frame(jpg/png) of a given video frame, returns a square tile of frames based on the input parameter. 
 
 ### Example
 
@@ -3241,7 +3241,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes. 
 
 ### Example
 
@@ -3319,7 +3319,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   
 
 ### Example
 
@@ -3425,7 +3425,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -3503,7 +3503,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get leaf type list.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -3581,7 +3581,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -3659,7 +3659,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get localization list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -3777,7 +3777,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   
 
 ### Example
 
@@ -3855,7 +3855,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get localization type list.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -3937,7 +3937,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -4015,7 +4015,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -4127,7 +4127,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve ID of next media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the next media ID from the media passed as a path parameter. This allows iteration through a media list without serializing the entire list, which may be large. 
 
 ### Example
 
@@ -4239,7 +4239,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve ID of previous media in a media list.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the previous media ID from the media passed as a path parameter. This  allows iteration through a media list without serializing the entire list, which may be  large. 
 
 ### Example
 
@@ -4351,7 +4351,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve media counts by section.  This endpoint accepts the same query parameters as a GET request to the `Medias` endpoint, but only returns the number of images and videos per sections. 
 
 ### Example
 
@@ -4463,7 +4463,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   
 
 ### Example
 
@@ -4541,7 +4541,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get media type list.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it. 
 
 ### Example
 
@@ -4619,7 +4619,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
 
 ### Example
 
@@ -4697,7 +4697,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get membership list.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
 
 ### Example
 
@@ -4775,7 +4775,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   
 
 ### Example
 
@@ -4853,7 +4853,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get project list.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   Returns all projects that a user has access to.
 
 ### Example
 
@@ -4927,7 +4927,7 @@ This endpoint does not need any parameter.
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Retrieve analysis results for a media list.  This endpoint uses objects created with the `Analysis` endpoint to perform analysis on filtered media lists. 
 
 ### Example
 
@@ -5031,7 +5031,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -5109,7 +5109,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+ Get frame(s) of a given localization-associated state.  Use the mode argument to control whether it is an animated gif or a tiled jpg. 
 
 ### Example
 
@@ -5193,7 +5193,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -5307,7 +5307,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   
 
 ### Example
 
@@ -5385,7 +5385,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get state type list.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -5467,7 +5467,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get temporary file.  Temporary files are files stored server side for a defined duration. 
 
 ### Example
 
@@ -5545,7 +5545,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get temporary file list.  Temporary files are files stored server side for a defined duration.   
 
 ### Example
 
@@ -5625,7 +5625,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get user.
 
 ### Example
 
@@ -5703,7 +5703,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   
 
 ### Example
 
@@ -5781,7 +5781,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get version list.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating. 
 
 ### Example
 
@@ -5861,7 +5861,7 @@ Name | Type | Description  | Notes
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get list of autocomplete suggestions.  This endpoint is compatible with devbridge suggestion format. It performs a glob search on leaf objects in the project.  <https://github.com/kraaden/autocomplete> 
 
 ### Example
 
@@ -5945,7 +5945,7 @@ Name | Type | Description  | Notes
 
 
 
-Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.
+Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings. 
 
 ### Example
 
@@ -6023,7 +6023,7 @@ void (empty response body)
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Broadcast progress update.  Progress messages are sent in the web UI via WebSocket, and are displayed as progress bars associated with individual media files and as a summary in the webpage header. All members of a project can see progress bars from uploads and background jobs initiated by other users within the project. This endpoint accepts an array of messages, allowing for progress messages to be batched into a single request. 
 
 ### Example
 
@@ -6103,7 +6103,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint. 
 
 ### Example
 
@@ -6183,7 +6183,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
 
 ### Example
 
@@ -6263,7 +6263,7 @@ Name | Type | Description  | Notes
 
 
 
-Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Start a transcode.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. This endpoint launches a transcode on raw uploaded video by creating an Argo workflow. The workflow will download the uploaded raw video, transcode it to the proper format, upload the transcoded video, and save the video using the  `SaveVideo` endpoint.  Note that the raw video must be uploaded first via tus, which is a separate mechanism  from the REST API. This endpoint requires a group and run UUID associated with this  upload. If no progress messages were generated during upload, then the group and run  UUIDs can be newly generated.  Transcodes may be cancelled via the `Job` or `JobGroup` endpoints. 
 
 ### Example
 
@@ -6343,7 +6343,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes. 
 
 ### Example
 
@@ -6423,7 +6423,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk update on all leaves matching a query. Only  user-defined attributes may be bulk updated. 
 
 ### Example
 
@@ -6531,7 +6531,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
 
 ### Example
 
@@ -6611,7 +6611,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -6691,7 +6691,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all localizations matching a query. Only  user-defined attributes may be bulk updated. 
 
 ### Example
 
@@ -6811,7 +6811,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   
 
 ### Example
 
@@ -6891,7 +6891,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   
 
 ### Example
 
@@ -6971,7 +6971,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all media matching a query. Only  user-defined attributes may be bulk updated. 
 
 ### Example
 
@@ -7085,7 +7085,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   
 
 ### Example
 
@@ -7165,7 +7165,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
 
 ### Example
 
@@ -7245,7 +7245,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   
 
 ### Example
 
@@ -7325,7 +7325,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes. 
 
 ### Example
 
@@ -7405,7 +7405,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all states matching a query. Only  user-defined attributes may be bulk updated. 
 
 ### Example
 
@@ -7521,7 +7521,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   
 
 ### Example
 
@@ -7601,7 +7601,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update user.
 
 ### Example
 
@@ -7679,7 +7679,7 @@ void (empty response body)
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Update version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   
 
 ### Example
 
@@ -7759,7 +7759,7 @@ Name | Type | Description  | Notes
 
 
 
-Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
 
 ### Example
 
@@ -7837,7 +7837,7 @@ void (empty response body)
 
 
 
-Retrieve state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and (like other entity types) may have any number of attribute types associated with it.
+Get current user.  Retrieves user making the request. 
 
 ### Example
 
