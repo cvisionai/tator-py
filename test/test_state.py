@@ -4,8 +4,6 @@ import uuid
 import time
 
 import tator
-from tator.util import chunked_create
-from tator.util import to_dataframe
 from ._common import assert_close_enough
 
 def random_state(project, state_type, video_obj, post=False):
@@ -43,8 +41,8 @@ def test_state_crud(url, token, project, video_type, video, state_type):
         random_state(project, state_type, video_obj, post=True)
         for _ in range(num_states)
     ]
-    state_ids = chunked_create(tator_api.create_state_list,
-                               project, state_spec=states)
+    state_ids = tator.chunked_create(tator_api.create_state_list,
+                                     project, state_spec=states)
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")
 
@@ -85,6 +83,8 @@ def test_state_crud(url, token, project, video_type, video, state_type):
 
     # Verify all states have been updated.
     states = tator_api.get_state_list(project, **params)
+    dataframe = tator.to_dataframe(states)
+    assert(len(states)==len(dataframe))
     for state in states:
         assert_close_enough(bulk_patch, state, exclude)
     

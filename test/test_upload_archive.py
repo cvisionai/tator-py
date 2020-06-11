@@ -3,7 +3,6 @@ import tarfile
 
 import requests
 import tator
-from tator.util import upload_media_archive
 
 def test_upload_archive(url, token, project, image_type):
     tator_api = tator.get_api(url, token)
@@ -29,7 +28,7 @@ def test_upload_archive(url, token, project, image_type):
 
     paths = os.listdir(extract_path)
     paths = [os.path.join(extract_path, path) for path in paths]
-    response = upload_media_archive(tator_api, project, paths)
+    response = tator.upload_media_archive(tator_api, project, paths)
     assert isinstance(response, tator.Transcode)
     print(response.message)
     

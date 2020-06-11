@@ -1,5 +1,4 @@
 import tator
-from tator.util import get_images
 
 from ._common import assert_vector_equal
 
@@ -40,7 +39,7 @@ def test_stategraphic(url, token, project, video, box_type, track_type):
     # Get state graphic.
     file_path = tator_api.get_state_graphic(track_id, mode='tile')
     state = tator_api.get_state(track_id)
-    stategraphic = get_images(file_path, state)
+    stategraphic = tator.get_images(file_path, state)
     assert(len(stategraphic) == 10)
     for frame_data in stategraphic:
         size = (frame_data.height, frame_data.width, len(frame_data.mode))

@@ -111,7 +111,6 @@ def video_type(request, project):
 @pytest.fixture(scope='session')
 def video(request, project, video_type):
     import tator
-    from tator.util import upload_media
     url = request.config.option.url
     token = request.config.option.token
     tator_api = tator.get_api(url, token)
@@ -124,7 +123,7 @@ def video(request, project, video_type):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-    response = upload_media(tator_api, video_type, out_path)
+    response = tator.upload_media(tator_api, video_type, out_path)
     print(response.message)
     while True:
         response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')
