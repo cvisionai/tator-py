@@ -123,7 +123,8 @@ def video(request, project, video_type):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-    response = tator.upload_media(tator_api, video_type, out_path)
+    for progress, response in tator.upload_media(tator_api, video_type, out_path):
+        print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
         response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')

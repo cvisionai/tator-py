@@ -13,6 +13,14 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=2*1024*1024):
     """ Uploads a single media file.
 
+    Example:
+    .. highlight:: python
+    .. code-block:: python
+        api = tator.get_api(host, token)
+        for progress, response in tator.upload_media(api, type_id, path):
+            print(f"Upload progress: {progress}%")
+        print(response.message)
+
     :param api: :class:`tator.TatorApi` object.
     :param type_id: Unique integer identifying a media type.
     :param path: Path to the media file.
@@ -22,7 +30,9 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :returns: Response object from :meth:`tator.TatorApi.save_video` or 
+    :returns: Generator that yields tuple containing progress (0-100) and a
+        response. The response is `None` until the last yield, when the response
+        is the response object from :meth:`tator.TatorApi.save_video` or 
         :meth:`tator.TatorApi.transcode`.
     """
     if md5==None:
@@ -44,11 +54,13 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
 
     last_progress = 0
+    yield (last_progress, None)
 
     for chunk_count in range(num_chunks):
         uploader.upload_chunk()
         this_progress = round((chunk_count / num_chunks) *100,1)
         if this_progress != last_progress:
+            yield (this_progress, None)
             last_progress = this_progress
 
     mime,_ = mimetypes.guess_type(fname)
@@ -68,4 +80,4 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         response = api.transcode(project_id, transcode_spec=spec)
     else:
         response = api.save_image(project_id, image_spec=spec)
-    return response
+    yield (100, response)
