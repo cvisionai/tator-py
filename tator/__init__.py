@@ -7,6 +7,7 @@ from .util.download_media import download_media
 from .util.download_temporary_file import download_temporary_file
 from .util.upload_media import upload_media
 from .util.upload_media_archive import upload_media_archive
+from .util.chunked_file_list import chunked_file_list
 from .util.upload_temporary_file import upload_temporary_file
 from .util.md5sum import md5sum
 from .util.get_images import get_images
