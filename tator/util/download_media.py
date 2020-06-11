@@ -8,9 +8,19 @@ from urllib.parse import urlsplit
 def download_media(api, media, out_path):
     """ Download a media file from Tator to an off-line location.
 
+    Example:
+    .. highlight:: python
+    .. code-block:: python
+        api = tator.get_api(host, token)
+        media = api.get_media(media_id)
+        out_path = f'/tmp/{media.name}'
+        for progress in tator.download_media(api, media, out_path):
+            print(f"Download progress: {progress}%")
+
     :param api: :class:`tator.TatorApi` object.
     :param media: :class:`tator.Media` object.
     :param path-like out_path: Path to where to download.
+    :returns: Generator the yields progress (0-100).
     """
     config = api.api_client.configuration
     host = config.host
@@ -42,6 +52,7 @@ def download_media(api, media, out_path):
         total_chunks = math.ceil(int(total_size) / 8192)
         chunk_count = 0
         last_progress = 0
+        yield last_progress
         with open(out_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
                 if chunk:
@@ -49,4 +60,6 @@ def download_media(api, media, out_path):
                     f.write(chunk)
                     this_progress = round((chunk_count / total_chunks) *100,1)
                     if this_progress != last_progress:
+                        yield this_progress
                         last_progress = this_progress
+        yield 100

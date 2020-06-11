@@ -41,8 +41,10 @@ def test_state_crud(url, token, project, video_type, video, state_type):
         random_state(project, state_type, video_obj, post=True)
         for _ in range(num_states)
     ]
-    state_ids = tator.chunked_create(tator_api.create_state_list,
-                                     project, state_spec=states)
+    state_ids = []
+    for response in tator.chunked_create(tator_api.create_state_list,
+                                         project, state_spec=states):
+        state_ids += response.id
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")
 

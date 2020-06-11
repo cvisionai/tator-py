@@ -28,7 +28,8 @@ def test_upload_archive(url, token, project, image_type):
 
     paths = os.listdir(extract_path)
     paths = [os.path.join(extract_path, path) for path in paths]
-    response = tator.upload_media_archive(tator_api, project, paths)
+    for progress, response in tator.upload_media_archive(tator_api, project, paths):
+        print(f"Archive upload progress: {progress}%")
     assert isinstance(response, tator.Transcode)
     print(response.message)
     

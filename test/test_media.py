@@ -11,7 +11,8 @@ def test_get_file(url, token, project, video):
 
     with tempfile.TemporaryDirectory() as temp_dir:
         outpath = os.path.join(temp_dir, "video.mp4")
-        tator.download_media(tator_api, video_obj, outpath)
+        for progress in tator.download_media(tator_api, video_obj, outpath):
+            print(f"Video download progress: {progress}%")
         assert(os.path.exists(outpath))
 
 def test_get_audio(url, token, project, video):

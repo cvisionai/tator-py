@@ -11,6 +11,14 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
                           name=None, chunk_size=100*1024*1024):
     """ Upload a file to the temporary file storage location.
 
+    Example:
+    .. highlight:: python
+    .. code-block:: python
+        api = tator.get_api(host, token)
+        for progress, response in tator.upload_temporary_file(api, project_id, path):
+            print(f"Upload progress: {progress}%")
+        print(response.message)
+
     :param api: :class:`tator.TatorApi` object.
     :param project: Unique integer identifying a project.
     :param path: Path to the file.
@@ -18,6 +26,9 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     :param hours: [Optional] Number of hourse file is kept alive. Default is 24.
     :param name: [Optional] Name of temporary file in database. Defaults to basename of path.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 100MB.
+    :returns: Generator that yields tuple containing progress (0-100) and a
+        response. The response is `None` until the last yield, when the response
+        is the response object from :meth:`tator.TatorApi.create_temporary_file`.
     """
     if name is None:
         name = os.path.basename(path)
@@ -30,9 +41,15 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     tus = TusClient(tusURL)
     uploader = tus.uploader(path, chunk_size=chunk_size,
                             retries=10, retry_delay=15)
+    last_progress = 0
+    yield (last_progress, None)
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
-    for _ in range(num_chunks):
+    for chunk_count in range(num_chunks):
         uploader.upload_chunk()
+        this_progress = round((chunk_count / num_chunks) *100,1)
+        if this_progress != last_progress:
+            yield (this_progress, None)
+            last_progress = this_progress
 
     response = api.create_temporary_file(project, temporary_file_spec={
         "url": uploader.url,
@@ -40,4 +57,5 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
         "lookup": lookup,
         "hours": 24,
     })
+    yield (100, response)
 
