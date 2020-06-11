@@ -1,4 +1,3 @@
-from PIL import Image
 import tator
 
 def get_images(file_path, media_or_state):
@@ -9,6 +8,10 @@ def get_images(file_path, media_or_state):
     :param file_path: Path to image file.
     :param media_or_state: :class:`tator.Media` or :class:`tator.State` object.
     """
+    try:
+        from PIL import Image
+    except:
+        raise RuntimeError("Utility get_images requires pillow to be installed: `pip install pillow`")
     # Read in raw image.
     img = Image.open(file_path)
 
