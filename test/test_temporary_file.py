@@ -20,7 +20,8 @@ def test_temporary_file(url, token, project):
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_fp = os.path.join(temp_dir, "foo.txt")
         temp_element = tator_api.get_temporary_file_list(project)[0]
-        tator.download_temporary_file(tator_api, temp_element, temp_fp)
+        for progress in tator.download_temporary_file(tator_api, temp_element, temp_fp):
+            print(f"Temporary file download progress: {progress}%")
         with open(temp_fp, 'r') as temp_file:
             contents = temp_file.read()
             assert contents == "foo"

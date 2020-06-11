@@ -9,6 +9,6 @@ def test_download_media(url, token, video):
     if os.path.exists(video_path):
         os.remove(video_path)
     for progress in tator.download_media(tator_api, video_obj, video_path):
-        print(f"Download progress: {progress}%")
+        print(f"Media download progress: {progress}%")
     assert os.path.exists(video_path)
     assert os.stat(video_path).st_size == 2299653
