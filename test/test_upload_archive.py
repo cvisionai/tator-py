@@ -26,10 +26,15 @@ def test_upload_archive(url, token, project, image_type):
         for item in tar:
             tar.extract(item, extract_path)
 
-    paths = os.listdir(extract_path)
-    paths = [os.path.join(extract_path, path) for path in paths]
-    for progress, response in tator.upload_media_archive(tator_api, project, paths):
-        print(f"Archive upload progress: {progress}%")
-    assert isinstance(response, tator.Transcode)
-    print(response.message)
+    image_path = os.path.join(extract_path, 'lfw')
+    paths = os.listdir(image_path)
+    paths = [os.path.join(image_path, path) for path in paths]
+    batch_num = 0
+    for batch in tator.chunked_file_list(paths):
+        print(f"Uploading file {batch_num*100} / {len(paths)}")
+        for progress, response in tator.upload_media_archive(tator_api, project, batch):
+            print(f"Archive upload progress: {progress}%")
+        batch_num += 1
+        assert isinstance(response, tator.Transcode)
+        print(response.message)
     
