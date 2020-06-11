@@ -14,13 +14,22 @@ from .md5sum import md5sum
 def upload_media_archive(api, project, paths, section="Test Section", chunk_size=2*1024*1024):
     """ Uploads multiple media files as an archive.
 
+    Example:
+    .. highlight:: python
+    .. code-block:: python
+        api = tator.get_api(host, token)
+        for progress, response in tator.upload_media_archive(api, project_id, paths):
+            print(f"Upload progress: {progress}%")
+        print(response.message)
+
     :param api: :class:`tator.TatorApi` object.
     :param project: Unique integer identifying a project.
     :param paths: List of paths to the media files.
     :param section: [Optional] Media section to upload to.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :returns: Response object from :meth:`tator.TatorApi.save_video` or
-        :meth:`tator.TatorApi.transcode`.
+    :returns: Generator that yields tuple containing progress (0-100) and a
+        response. The response is `None` until the last yield, when the response
+        is the response object from :meth:`tator.TatorApi.transcode`.
     """
     upload_uid = str(uuid1())
     upload_gid = str(uuid1())
@@ -36,10 +45,12 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
                             retries=10, retry_delay=15)
     last_progress = 0
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
+    yield (last_progress, None)
     for chunk_count in range(num_chunks):
         uploader.upload_chunk()
         this_progress = round((chunk_count / num_chunks) *100,1)
         if this_progress != last_progress:
+            yield (this_progress, None)
             last_progress = this_progress
 
     # Initiate transcode.
@@ -53,4 +64,4 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
         'md5': "N/A",
     }
     response = api.transcode(project, transcode_spec=spec)
-    return response
+    yield (100, response)
