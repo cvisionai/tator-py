@@ -13,7 +13,10 @@ def test_temporary_file(url, token, project):
     with tempfile.NamedTemporaryFile(mode='w',suffix=".txt") as temp:
         temp.write("foo")
         temp.flush()
-        tator.upload_temporary_file(tator_api, project, temp.name)
+        for progress, response in tator.upload_temporary_file(tator_api, project, temp.name):
+            print(f"Temporary file upload progress: {progress}%")
+        assert isinstance(response, tator.CreateResponse)
+        print(response.message)
         all_temps = tator_api.get_temporary_file_list(project)
         assert len(all_temps) == 1
 
