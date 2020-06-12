@@ -1,23 +1,31 @@
+#!/usr/bin/env python
+
+""" This example demonstrates how to create a project and configure media
+    and metadata type definitions.
+"""
+
 import argparse
 import logging
 import sys
 
-import tator as pytator
+import tator
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     args = tator.get_parser().parse_args()
-    tator = pytator.get_api(args.host, args.token)
+    tator_api = tator.get_api(args.host, args.token)
 
     # Create the project.
-    result = tator.create_project(body={'name': 'Test Project', 'summary': 'A test project.'})
+    result = tator_api.create_project(project_spec={
+        'name': 'Test Project', 'summary': 'A test project.',
+    })
     project = result.id
     logger.info(result.message)
 
     # Create image type.
-    result = tator.create_media_type(project, body={
+    result = tator_api.create_media_type(project, media_type_spec={
         "name": "Test Images",
         "description": "A test image type.",
         "dtype": "image",
@@ -75,7 +83,7 @@ if __name__ == '__main__':
     logger.info(result.message)
 
     # Create video type.
-    result = tator.create_media_type(project, body={
+    result = tator_api.create_media_type(project, media_type_spec={
         "name": "Test Videos",
         "description": "A test video type.",
         "dtype": "video",
@@ -134,10 +142,10 @@ if __name__ == '__main__':
     logger.info(result.message)
 
     # Get baseline version.
-    baseline_version = tator.get_version_list(project)[0].id
+    baseline_version = tator_api.get_version_list(project)[0].id
 
     # Create additional version.
-    result = tator.create_version(project, body={
+    result = tator_api.create_version(project, version_spec={
         "name": "Test Version",
         "description": "A test version.",
         "show_empty": True,
@@ -147,7 +155,7 @@ if __name__ == '__main__':
     logger.info(result.message)
 
     # Create box type.
-    result = tator.create_localization_type(project, body={
+    result = tator_api.create_localization_type(project, localization_type_spec={
         "name": "Test Boxes",
         "description": "A test box type.",
         "dtype": "box",
@@ -214,7 +222,7 @@ if __name__ == '__main__':
     logger.info(result.message)
 
     # Create line type.
-    result = tator.create_localization_type(project, body={
+    result = tator_api.create_localization_type(project, localization_type_spec={
         "name": "Test Lines",
         "description": "A test line type.",
         "dtype": "line",
@@ -273,7 +281,7 @@ if __name__ == '__main__':
     logger.info(result.message)
 
     # Create dot type.
-    result = tator.create_localization_type(project, body={
+    result = tator_api.create_localization_type(project, localization_type_spec={
         "name": "Test Dots",
         "description": "A test dot type.",
         "dtype": "dot",
