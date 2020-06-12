@@ -38,8 +38,8 @@ if __name__ == '__main__':
 
     # Download the media.
     for media in media_list:
-        print(f"Downloading {media.name}...")
+        logger.info(f"Downloading {media.name}...")
         file_path = os.path.join(args.save_path, media.name)
         for progress in tator.download_media(tator_api, media, file_path):
-            print(f"Download progress: {progress}%")
+            logger.info(f"Download progress: {progress}%")
     
