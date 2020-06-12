@@ -6,12 +6,12 @@ import pytest
 import requests
 
 def pytest_addoption(parser):
-    parser.addoption('--url', help='Tator host url', default='https://adamant.duckdns.org')
+    parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
     parser.addoption('--token', help='API token', default='')
 
 def pytest_generate_tests(metafunc):
-    if 'url' in metafunc.fixturenames:
-          metafunc.parametrize('url', [metafunc.config.getoption('url')])
+    if 'host' in metafunc.fixturenames:
+          metafunc.parametrize('host', [metafunc.config.getoption('host')])
     if 'token' in metafunc.fixturenames:
           metafunc.parametrize('token', [metafunc.config.getoption('token')])
 
@@ -63,9 +63,9 @@ def make_attribute_types():
 def project(request):
     """ Project ID for a created project. """
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_project(project_spec={
@@ -79,9 +79,9 @@ def project(request):
 @pytest.fixture(scope='session')
 def image_type(request, project):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     response = tator_api.create_media_type(project, media_type_spec={
         'name': 'image_type',
         'description': 'Test image type',
@@ -95,9 +95,9 @@ def image_type(request, project):
 @pytest.fixture(scope='session')
 def video_type(request, project):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     response = tator_api.create_media_type(project, media_type_spec={
         'name': 'video_type',
         'description': 'Test video type',
@@ -111,9 +111,9 @@ def video_type(request, project):
 @pytest.fixture(scope='session')
 def video(request, project, video_type):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     out_path = '/tmp/ForBiggerEscapes.mp4'
     if not os.path.exists(out_path):
         url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
@@ -139,9 +139,9 @@ def video(request, project, video_type):
 @pytest.fixture(scope='session')
 def box_type(request, project, video_type):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     response = tator_api.create_localization_type(project, localization_type_spec={
         'name': 'box_type',
         'description': 'Test box type',
@@ -157,9 +157,9 @@ def box_type(request, project, video_type):
 @pytest.fixture(scope='session')
 def state_type(request, project, video_type):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     response = tator_api.create_state_type(project, state_type_spec={
         'name': 'state_type',
         'description': 'Test state type',
@@ -175,9 +175,9 @@ def state_type(request, project, video_type):
 @pytest.fixture(scope='session')
 def track_type(request, project, video_type):
     import tator
-    url = request.config.option.url
+    host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(url, token)
+    tator_api = tator.get_api(host, token)
     response = tator_api.create_state_type(project, state_type_spec={
         'name': 'track_type',
         'description': 'Test track type',

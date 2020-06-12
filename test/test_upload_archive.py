@@ -4,8 +4,8 @@ import tarfile
 import requests
 import tator
 
-def test_upload_archive(url, token, project, image_type):
-    tator_api = tator.get_api(url, token)
+def test_upload_archive(host, token, project, image_type):
+    tator_api = tator.get_api(host, token)
     out_path = '/tmp/lfw.tgz'
     extract_path = '/tmp/lfw'
 

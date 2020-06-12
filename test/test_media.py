@@ -5,8 +5,8 @@ import tator
 
 from._common import assert_vector_equal
 
-def test_get_file(url, token, project, video):
-    tator_api = tator.get_api(url, token)
+def test_get_file(host, token, project, video):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -15,8 +15,8 @@ def test_get_file(url, token, project, video):
             print(f"Video download progress: {progress}%")
         assert(os.path.exists(outpath))
 
-def test_get_audio(url, token, project, video):
-    tator_api = tator.get_api(url, token)
+def test_get_audio(host, token, project, video):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     audio = video_obj.media_files.audio

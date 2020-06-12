@@ -3,8 +3,8 @@ import os
 
 import tator
 
-def test_temporary_file(url, token, project):
-    tator_api = tator.get_api(url, token)
+def test_temporary_file(host, token, project):
+    tator_api = tator.get_api(host, token)
 
     all_temps = tator_api.get_temporary_file_list(project)
     assert  all_temps is not None

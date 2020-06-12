@@ -2,8 +2,8 @@ import tator
 
 from ._common import assert_vector_equal
 
-def test_get_frame(url, token, project, video):
-    tator_api = tator.get_api(url, token)
+def test_get_frame(host, token, project, video):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     frames = [50,100,150]
