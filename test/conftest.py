@@ -118,7 +118,7 @@ def image_set(request):
 
     image_path = os.path.join(extract_path, 'lfw')
     yield image_path
-    shutil.rmtree(image_path)
+    shutil.rmtree(extract_path)
 
 @pytest.fixture(scope='session')
 def video_type(request, project):
