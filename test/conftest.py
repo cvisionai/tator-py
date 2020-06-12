@@ -1,6 +1,8 @@
 import datetime
 import os
+import shutil
 import time
+import tarfile
 
 import pytest
 import requests
@@ -91,6 +93,32 @@ def image_type(request, project):
     image_type_id = response.id
     yield image_type_id
     response = tator_api.delete_media_type(image_type_id)
+
+@pytest.fixture(scope='session')
+def image_set(request):
+    out_path = '/tmp/lfw.tgz'
+    extract_path = '/tmp/lfw'
+
+    # Download Labeled Faces in the Wild dataset.
+    if not os.path.exists(out_path):
+        url = 'http://vis-www.cs.umass.edu/lfw/lfw.tgz'
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(out_path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+
+    # Extract the images.
+    if not os.path.exists(extract_path):
+        os.makedirs(extract_path, exist_ok=True)
+        tar = tarfile.open(out_path)
+        for item in tar:
+            tar.extract(item, extract_path)
+
+    image_path = os.path.join(extract_path, 'lfw')
+    yield image_path
+    shutil.rmtree(image_path)
 
 @pytest.fixture(scope='session')
 def video_type(request, project):
