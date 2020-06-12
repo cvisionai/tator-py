@@ -109,11 +109,7 @@ def video_type(request, project):
     response = tator_api.delete_media_type(video_type_id)
 
 @pytest.fixture(scope='session')
-def video(request, project, video_type):
-    import tator
-    host = request.config.option.host
-    token = request.config.option.token
-    tator_api = tator.get_api(host, token)
+def video_file(request):
     out_path = '/tmp/ForBiggerEscapes.mp4'
     if not os.path.exists(out_path):
         url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
@@ -123,7 +119,16 @@ def video(request, project, video_type):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
-    for progress, response in tator.upload_media(tator_api, video_type, out_path):
+    yield out_path
+    os.remove(out_path)
+
+@pytest.fixture(scope='session')
+def video(request, project, video_type, video_file):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    for progress, response in tator.upload_media(tator_api, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
