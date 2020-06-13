@@ -4,7 +4,7 @@ Python client for [Tator](https://github.com/cvisionai/tator).
 
 ## Requirements
 
-Python 2.7 and 3.4+
+Python 3.6+
 
 ## Installation
 
@@ -15,7 +15,8 @@ pip install tator
 
 ### From source
 ```
-python setup.py install --user
+pip3 install -r requirements.txt --user
+python3 setup.py install --user
 ```
 
 ## Example usage
