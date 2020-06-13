@@ -6,6 +6,7 @@ def test_upload_archive(host, token, project, image_type, image_set):
     tator_api = tator.get_api(host, token)
     paths = os.listdir(image_set)
     paths = [os.path.join(image_set, path) for path in paths]
+    paths = paths[:1000] # Only upload the first 1000 files.
     batch_num = 0
     for batch in tator.chunked_file_list(paths):
         print(f"Uploading file {batch_num*100} / {len(paths)}")
