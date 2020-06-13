@@ -2,7 +2,7 @@ import subprocess
 
 import tator
 
-def test_localizations(host, token, video_type, video):
+def test_tracks(host, token, video_type, video):
     cmd = [
         'python3',
         'examples/tracks.py',
