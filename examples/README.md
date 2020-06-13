@@ -7,5 +7,6 @@
 | [Upload media archive](upload_media_archive.py) | Upload multiple videos or images to a project. |
 | [Work with localizations](localizations.py) | Create, filter, update, and delete localizations in a video. |
 | [Work with tracks](tracks.py) | Use localization associated states to create tracks in a video. |
+| [Work with activities](activities.py) | Use frame associated states to label activities in a video. |
 
 
