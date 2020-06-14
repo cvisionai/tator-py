@@ -5,7 +5,7 @@ def chunked_create(func, project, **kwargs):
     .. highlight:: python
     .. code-block:: python
         created_ids = []
-        for progress in tator.chunked_create(api.create_localization_list,
+        for response in tator.chunked_create(api.create_localization_list,
                                              1, localization_spec=my_long_list):
             created_ids += response.id
 

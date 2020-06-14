@@ -14,7 +14,7 @@ def chunked_file_list(paths, chunk_size=100):
             batch_num += 1
 
     :param paths: List of file paths.
-    :param chunk_size: Size of batches for file upload. Archive uploads are created in
+    :param chunk_size: [Optional] Size of batches for file upload. Archive uploads are created in
         memory, so this should be set to a reasonable value based on file size. Default
         is 100.
     :returns: Generator that yields batches of file paths.

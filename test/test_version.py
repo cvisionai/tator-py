@@ -1,7 +1,7 @@
 import tator
 
-def test_version_crud(url, token, project):
-    tator_api = tator.get_api(url, token)
+def test_version_crud(host, token, project):
+    tator_api = tator.get_api(host, token)
 
     # Test single create.
     response = tator_api.create_version(project, version_spec={

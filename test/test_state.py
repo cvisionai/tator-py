@@ -28,8 +28,8 @@ def random_state(project, state_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
-def test_state_crud(url, token, project, video_type, video, state_type):
-    tator_api = tator.get_api(url, token)
+def test_state_crud(host, token, project, video_type, video, state_type):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.

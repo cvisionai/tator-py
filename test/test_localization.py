@@ -36,8 +36,8 @@ def random_localization(project, box_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
-def test_localization_crud(url, token, project, video_type, video, box_type):
-    tator_api = tator.get_api(url, token)
+def test_localization_crud(host, token, project, video_type, video, box_type):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.

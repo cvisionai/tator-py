@@ -14,8 +14,8 @@ def _make_box(project, box_type, video, frame):
         'frame': frame,
     }
 
-def test_stategraphic(url, token, project, video, box_type, track_type):
-    tator_api = tator.get_api(url, token)
+def test_stategraphic(host, token, project, video, box_type, track_type):
+    tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     # Make boxes for track.
