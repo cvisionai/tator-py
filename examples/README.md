@@ -10,5 +10,8 @@
 | [Work with activities](activities.py) | Use frame associated states to label activities in a video. |
 | [Upload temporary files](upload_temporary_files.py) | Upload temporary files. |
 | [Download temporary files](download_temporary_files.py) | Download temporary files. |
+| [Get video clips](video_clips.py) | Retrieve video clips from a video. |
+| [Get video frames](video_frames.py) | Get video frames from a video. |
+| [Get state graphics](state_graphics.py) | Get localization
 
 
