@@ -13,13 +13,13 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    # Create a parser that includes path to text file.
+    # Create a parser that includes save path.
     parser = tator.get_parser()
     parser.add_argument('--temporary_file_id',
                         help='Temporary file ID.',
                         required=True, type=int)
     parser.add_argument('--file_path',
-                        help='Path to the file on disk.',
+                        help='Save path for the file.',
                         required=True)
     args = parser.parse_args()
 

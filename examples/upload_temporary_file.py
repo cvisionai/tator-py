@@ -13,7 +13,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    # Create a parser that includes path to text file.
+    # Create a parser that includes path to file to upload.
     parser = tator.get_parser()
     parser.add_argument('--project_id',
                         help='Project ID.',
