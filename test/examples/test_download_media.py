@@ -27,6 +27,5 @@ def test_download_media(host, token, project, video):
     ]
     subprocess.run(cmd, check=True)
 
-    # Assert the download then delete it.
+    # Assert the download exists.
     assert os.path.exists(expected_path)
-    os.remove(expected_path)
