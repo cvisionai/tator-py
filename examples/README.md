@@ -12,6 +12,4 @@
 | [Download temporary files](download_temporary_files.py) | Download temporary files. |
 | [Get video clips](video_clips.py) | Retrieve video clips from a video. |
 | [Get video frames](video_frames.py) | Get video frames from a video. |
-| [Get state graphics](state_graphics.py) | Get localization
-
 

@@ -12,7 +12,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    # Create a parser that includes path to text file.
+    # Create a parser.
     parser = tator.get_parser()
     parser.add_argument('--video_id',
                         help='Media ID for a video.',
