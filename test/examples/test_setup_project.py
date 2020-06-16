@@ -5,7 +5,7 @@ import tator
 def test_setup_project(host, token):
     cmd = [
         'python3',
-        '../examples/setup_project.py',
+        'examples/setup_project.py',
         '--host', host,
         '--token', token,
     ]
