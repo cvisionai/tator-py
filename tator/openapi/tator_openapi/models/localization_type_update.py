@@ -88,7 +88,7 @@ class LocalizationTypeUpdate(object):
 
 
         :param color_map: The color_map of this LocalizationTypeUpdate.  # noqa: E501
-        :type color_map: ColorMap
+        :type: ColorMap
         """
 
         self._color_map = color_map
@@ -111,7 +111,7 @@ class LocalizationTypeUpdate(object):
         Description of the localization type.  # noqa: E501
 
         :param description: The description of this LocalizationTypeUpdate.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -134,7 +134,7 @@ class LocalizationTypeUpdate(object):
         Width of the line used to draw the localization.  # noqa: E501
 
         :param line_width: The line_width of this LocalizationTypeUpdate.  # noqa: E501
-        :type line_width: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 line_width is not None and line_width < 1):  # noqa: E501
@@ -160,7 +160,7 @@ class LocalizationTypeUpdate(object):
         Name of the localization type.  # noqa: E501
 
         :param name: The name of this LocalizationTypeUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -183,7 +183,7 @@ class LocalizationTypeUpdate(object):
         Whether this type should be displayed in the UI.  # noqa: E501
 
         :param visible: The visible of this LocalizationTypeUpdate.  # noqa: E501
-        :type visible: bool
+        :type: bool
         """
 
         self._visible = visible

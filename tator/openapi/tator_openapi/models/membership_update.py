@@ -70,7 +70,7 @@ class MembershipUpdate(object):
         User permission level for the project.  # noqa: E501
 
         :param permission: The permission of this MembershipUpdate.  # noqa: E501
-        :type permission: str
+        :type: str
         """
         allowed_values = ["View Only", "Can Edit", "Can Transfer", "Can Execute", "Full Control"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and permission not in allowed_values:  # noqa: E501

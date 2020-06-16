@@ -87,7 +87,7 @@ class StateTypeSpec(object):
         Type of object this state type is associated with.  # noqa: E501
 
         :param association: The association of this StateTypeSpec.  # noqa: E501
-        :type association: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and association is None:  # noqa: E501
             raise ValueError("Invalid value for `association`, must not be `None`")  # noqa: E501
@@ -118,7 +118,7 @@ class StateTypeSpec(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this StateTypeSpec.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -141,7 +141,7 @@ class StateTypeSpec(object):
         Description of the state type.  # noqa: E501
 
         :param description: The description of this StateTypeSpec.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -164,7 +164,7 @@ class StateTypeSpec(object):
         List of integers identifying media types that this state type may apply to.  # noqa: E501
 
         :param media_types: The media_types of this StateTypeSpec.  # noqa: E501
-        :type media_types: list[int]
+        :type: list[int]
         """
         if self.local_vars_configuration.client_side_validation and media_types is None:  # noqa: E501
             raise ValueError("Invalid value for `media_types`, must not be `None`")  # noqa: E501
@@ -189,7 +189,7 @@ class StateTypeSpec(object):
         Name of the state type.  # noqa: E501
 
         :param name: The name of this StateTypeSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501

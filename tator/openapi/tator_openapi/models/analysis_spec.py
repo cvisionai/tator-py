@@ -73,7 +73,7 @@ class AnalysisSpec(object):
         Lucene query string used to retrieve entities to analyze.  # noqa: E501
 
         :param data_query: The data_query of this AnalysisSpec.  # noqa: E501
-        :type data_query: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and data_query is None:  # noqa: E501
             raise ValueError("Invalid value for `data_query`, must not be `None`")  # noqa: E501
@@ -98,7 +98,7 @@ class AnalysisSpec(object):
         Name of analysis.  # noqa: E501
 
         :param name: The name of this AnalysisSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501

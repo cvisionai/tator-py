@@ -95,7 +95,7 @@ class Leaf(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this Leaf.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -118,7 +118,7 @@ class Leaf(object):
         Unique integer identifying the leaf.  # noqa: E501
 
         :param id: The id of this Leaf.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -141,7 +141,7 @@ class Leaf(object):
         Name of the leaf.  # noqa: E501
 
         :param name: The name of this Leaf.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -164,7 +164,7 @@ class Leaf(object):
         ID to use as parent if there is one.  # noqa: E501
 
         :param parent: The parent of this Leaf.  # noqa: E501
-        :type parent: int
+        :type: int
         """
 
         self._parent = parent
@@ -187,7 +187,7 @@ class Leaf(object):
         Full path to leaf in hierarchy.  # noqa: E501
 
         :param path: The path of this Leaf.  # noqa: E501
-        :type path: str
+        :type: str
         """
 
         self._path = path
@@ -210,7 +210,7 @@ class Leaf(object):
         Unique integer identifying a project.  # noqa: E501
 
         :param project: The project of this Leaf.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project

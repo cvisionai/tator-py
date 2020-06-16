@@ -105,7 +105,7 @@ class Project(object):
         Unique integer identifying the project.  # noqa: E501
 
         :param id: The id of this Project.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -128,7 +128,7 @@ class Project(object):
         Name of the project.  # noqa: E501
 
         :param name: The name of this Project.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -151,7 +151,7 @@ class Project(object):
         Number of files in the project.  # noqa: E501
 
         :param num_files: The num_files of this Project.  # noqa: E501
-        :type num_files: int
+        :type: int
         """
 
         self._num_files = num_files
@@ -174,7 +174,7 @@ class Project(object):
         Permission level of user making request.  # noqa: E501
 
         :param permission: The permission of this Project.  # noqa: E501
-        :type permission: str
+        :type: str
         """
 
         self._permission = permission
@@ -197,7 +197,7 @@ class Project(object):
         Size of the project in bytes.  # noqa: E501
 
         :param size: The size of this Project.  # noqa: E501
-        :type size: int
+        :type: int
         """
 
         self._size = size
@@ -220,7 +220,7 @@ class Project(object):
         Summary of the project.  # noqa: E501
 
         :param summary: The summary of this Project.  # noqa: E501
-        :type summary: str
+        :type: str
         """
 
         self._summary = summary
@@ -243,7 +243,7 @@ class Project(object):
         URL of thumbnail used to represent the project.  # noqa: E501
 
         :param thumb: The thumb of this Project.  # noqa: E501
-        :type thumb: str
+        :type: str
         """
 
         self._thumb = thumb
@@ -266,7 +266,7 @@ class Project(object):
         List of usernames of project members.  # noqa: E501
 
         :param usernames: The usernames of this Project.  # noqa: E501
-        :type usernames: list[str]
+        :type: list[str]
         """
 
         self._usernames = usernames

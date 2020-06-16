@@ -74,7 +74,7 @@ class ProjectSpec(object):
         Name of the project.  # noqa: E501
 
         :param name: The name of this ProjectSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -99,7 +99,7 @@ class ProjectSpec(object):
         Summary of the project.  # noqa: E501
 
         :param summary: The summary of this ProjectSpec.  # noqa: E501
-        :type summary: str
+        :type: str
         """
 
         self._summary = summary

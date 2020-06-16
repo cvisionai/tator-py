@@ -80,7 +80,7 @@ class AlgorithmLaunch(object):
         A uuid1 string identifying the group of jobs started.  # noqa: E501
 
         :param group_id: The group_id of this AlgorithmLaunch.  # noqa: E501
-        :type group_id: str
+        :type: str
         """
 
         self._group_id = group_id
@@ -103,7 +103,7 @@ class AlgorithmLaunch(object):
         Message indicating successful launch.  # noqa: E501
 
         :param message: The message of this AlgorithmLaunch.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message
@@ -126,7 +126,7 @@ class AlgorithmLaunch(object):
         A list of uuid1 strings identifying each job started.  # noqa: E501
 
         :param run_uids: The run_uids of this AlgorithmLaunch.  # noqa: E501
-        :type run_uids: list[str]
+        :type: list[str]
         """
 
         self._run_uids = run_uids

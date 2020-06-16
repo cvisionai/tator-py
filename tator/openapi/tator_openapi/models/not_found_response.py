@@ -70,7 +70,7 @@ class NotFoundResponse(object):
         Message explaining not found error.  # noqa: E501
 
         :param message: The message of this NotFoundResponse.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message

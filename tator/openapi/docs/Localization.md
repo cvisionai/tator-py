@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
 **email** | **str** | Email of last user who modified/created this localization. | [optional] 
-**frame** | **int** | Frame number of this localization if it is in a video. | [optional] [default to 0]
+**frame** | **int** | Frame number of this localization if it is in a video. | [optional] 
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
 **id** | **int** | Unique integer identifying this localization. | [optional] 
 **media** | **int** | Unique integer identifying media of this localization. | [optional] 

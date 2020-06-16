@@ -73,7 +73,7 @@ class Credentials(object):
         Account password.  # noqa: E501
 
         :param password: The password of this Credentials.  # noqa: E501
-        :type password: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and password is None:  # noqa: E501
             raise ValueError("Invalid value for `password`, must not be `None`")  # noqa: E501
@@ -98,7 +98,7 @@ class Credentials(object):
         Account username.  # noqa: E501
 
         :param username: The username of this Credentials.  # noqa: E501
-        :type username: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and username is None:  # noqa: E501
             raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501

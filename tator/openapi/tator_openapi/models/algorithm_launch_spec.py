@@ -79,7 +79,7 @@ class AlgorithmLaunchSpec(object):
         Name of the algorithm to execute.  # noqa: E501
 
         :param algorithm_name: The algorithm_name of this AlgorithmLaunchSpec.  # noqa: E501
-        :type algorithm_name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and algorithm_name is None:  # noqa: E501
             raise ValueError("Invalid value for `algorithm_name`, must not be `None`")  # noqa: E501
@@ -104,7 +104,7 @@ class AlgorithmLaunchSpec(object):
         List of media IDs. Must supply media_query or media_ids.  # noqa: E501
 
         :param media_ids: The media_ids of this AlgorithmLaunchSpec.  # noqa: E501
-        :type media_ids: list[int]
+        :type: list[int]
         """
 
         self._media_ids = media_ids
@@ -127,7 +127,7 @@ class AlgorithmLaunchSpec(object):
         Query string used to filter media IDs. If supplied, media_ids will be ignored.  # noqa: E501
 
         :param media_query: The media_query of this AlgorithmLaunchSpec.  # noqa: E501
-        :type media_query: str
+        :type: str
         """
 
         self._media_query = media_query

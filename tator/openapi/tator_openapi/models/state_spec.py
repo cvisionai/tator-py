@@ -92,7 +92,7 @@ class StateSpec(object):
         Frame number this state applies to.  # noqa: E501
 
         :param frame: The frame of this StateSpec.  # noqa: E501
-        :type frame: int
+        :type: int
         """
 
         self._frame = frame
@@ -115,7 +115,7 @@ class StateSpec(object):
         List of localization IDs that this state applies to.  # noqa: E501
 
         :param localization_ids: The localization_ids of this StateSpec.  # noqa: E501
-        :type localization_ids: list[int]
+        :type: list[int]
         """
 
         self._localization_ids = localization_ids
@@ -138,7 +138,7 @@ class StateSpec(object):
         List of media IDs that this state applies to.  # noqa: E501
 
         :param media_ids: The media_ids of this StateSpec.  # noqa: E501
-        :type media_ids: list[int]
+        :type: list[int]
         """
         if self.local_vars_configuration.client_side_validation and media_ids is None:  # noqa: E501
             raise ValueError("Invalid value for `media_ids`, must not be `None`")  # noqa: E501
@@ -163,7 +163,7 @@ class StateSpec(object):
         Whether this state was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this StateSpec.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified
@@ -186,7 +186,7 @@ class StateSpec(object):
         Unique integer identifying a state type.  # noqa: E501
 
         :param type: The type of this StateSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
@@ -211,7 +211,7 @@ class StateSpec(object):
         Unique integer identifying the version.  # noqa: E501
 
         :param version: The version of this StateSpec.  # noqa: E501
-        :type version: int
+        :type: int
         """
 
         self._version = version

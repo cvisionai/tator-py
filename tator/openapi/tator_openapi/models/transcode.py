@@ -80,7 +80,7 @@ class Transcode(object):
         UUID identifying the job group.  # noqa: E501
 
         :param group_id: The group_id of this Transcode.  # noqa: E501
-        :type group_id: str
+        :type: str
         """
 
         self._group_id = group_id
@@ -103,7 +103,7 @@ class Transcode(object):
         Message indicating transcode started successfully.  # noqa: E501
 
         :param message: The message of this Transcode.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message
@@ -126,7 +126,7 @@ class Transcode(object):
         UUID identifying the job.  # noqa: E501
 
         :param run_uid: The run_uid of this Transcode.  # noqa: E501
-        :type run_uid: str
+        :type: str
         """
 
         self._run_uid = run_uid

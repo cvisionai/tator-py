@@ -75,7 +75,7 @@ class MembershipSpec(object):
         User permission level for the project.  # noqa: E501
 
         :param permission: The permission of this MembershipSpec.  # noqa: E501
-        :type permission: str
+        :type: str
         """
         allowed_values = ["View Only", "Can Edit", "Can Transfer", "Can Execute", "Full Control"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and permission not in allowed_values:  # noqa: E501
@@ -104,7 +104,7 @@ class MembershipSpec(object):
         Unique integer identifying a user.  # noqa: E501
 
         :param user: The user of this MembershipSpec.  # noqa: E501
-        :type user: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 user is not None and user < 1):  # noqa: E501

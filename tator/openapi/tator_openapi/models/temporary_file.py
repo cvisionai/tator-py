@@ -105,7 +105,7 @@ class TemporaryFile(object):
         Datetime when this temporary file was created.  # noqa: E501
 
         :param created_datetime: The created_datetime of this TemporaryFile.  # noqa: E501
-        :type created_datetime: str
+        :type: str
         """
 
         self._created_datetime = created_datetime
@@ -128,7 +128,7 @@ class TemporaryFile(object):
         Datetime when this temporary file may be deleted.  # noqa: E501
 
         :param eol_datetime: The eol_datetime of this TemporaryFile.  # noqa: E501
-        :type eol_datetime: str
+        :type: str
         """
 
         self._eol_datetime = eol_datetime
@@ -151,7 +151,7 @@ class TemporaryFile(object):
         Unique integer identifying a temporary file.  # noqa: E501
 
         :param id: The id of this TemporaryFile.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -174,7 +174,7 @@ class TemporaryFile(object):
         md5hash of lookup parameters  # noqa: E501
 
         :param lookup: The lookup of this TemporaryFile.  # noqa: E501
-        :type lookup: str
+        :type: str
         """
 
         self._lookup = lookup
@@ -197,7 +197,7 @@ class TemporaryFile(object):
         Unique name for the temporary file  # noqa: E501
 
         :param name: The name of this TemporaryFile.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -220,7 +220,7 @@ class TemporaryFile(object):
         Full URL to the temporary file.  # noqa: E501
 
         :param path: The path of this TemporaryFile.  # noqa: E501
-        :type path: str
+        :type: str
         """
 
         self._path = path
@@ -243,7 +243,7 @@ class TemporaryFile(object):
         Unique integer identifying a project.  # noqa: E501
 
         :param project: The project of this TemporaryFile.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -266,7 +266,7 @@ class TemporaryFile(object):
         Unique integer identifying user who created this file.  # noqa: E501
 
         :param user: The user of this TemporaryFile.  # noqa: E501
-        :type user: int
+        :type: int
         """
 
         self._user = user

@@ -80,7 +80,7 @@ class Algorithm(object):
         Description of the algorithm.  # noqa: E501
 
         :param description: The description of this Algorithm.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -103,7 +103,7 @@ class Algorithm(object):
         Unique integer identifying the algorithm.  # noqa: E501
 
         :param id: The id of this Algorithm.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -126,7 +126,7 @@ class Algorithm(object):
         Name of the algorithm.  # noqa: E501
 
         :param name: The name of this Algorithm.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

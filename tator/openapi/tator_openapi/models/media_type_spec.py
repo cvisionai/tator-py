@@ -98,7 +98,7 @@ class MediaTypeSpec(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this MediaTypeSpec.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -121,7 +121,7 @@ class MediaTypeSpec(object):
         Default audio volume for this media type.  # noqa: E501
 
         :param default_volume: The default_volume of this MediaTypeSpec.  # noqa: E501
-        :type default_volume: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 default_volume is not None and default_volume > 100):  # noqa: E501
@@ -150,7 +150,7 @@ class MediaTypeSpec(object):
         Description of the media type.  # noqa: E501
 
         :param description: The description of this MediaTypeSpec.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -173,7 +173,7 @@ class MediaTypeSpec(object):
         Type of the media, image or video.  # noqa: E501
 
         :param dtype: The dtype of this MediaTypeSpec.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and dtype is None:  # noqa: E501
             raise ValueError("Invalid value for `dtype`, must not be `None`")  # noqa: E501
@@ -204,7 +204,7 @@ class MediaTypeSpec(object):
         File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
 
         :param file_format: The file_format of this MediaTypeSpec.  # noqa: E501
-        :type file_format: str
+        :type: str
         """
         if (self.local_vars_configuration.client_side_validation and
                 file_format is not None and len(file_format) > 4):
@@ -230,7 +230,7 @@ class MediaTypeSpec(object):
         For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
 
         :param keep_original: The keep_original of this MediaTypeSpec.  # noqa: E501
-        :type keep_original: bool
+        :type: bool
         """
 
         self._keep_original = keep_original
@@ -253,7 +253,7 @@ class MediaTypeSpec(object):
         Name of the media type.  # noqa: E501
 
         :param name: The name of this MediaTypeSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501

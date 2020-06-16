@@ -70,7 +70,7 @@ class AutocompleteService(object):
         URL of the autocomplete service.  # noqa: E501
 
         :param service_url: The service_url of this AutocompleteService.  # noqa: E501
-        :type service_url: str
+        :type: str
         """
 
         self._service_url = service_url

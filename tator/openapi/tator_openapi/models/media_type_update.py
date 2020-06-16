@@ -85,7 +85,7 @@ class MediaTypeUpdate(object):
         Description of the media type.  # noqa: E501
 
         :param description: The description of this MediaTypeUpdate.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -108,7 +108,7 @@ class MediaTypeUpdate(object):
         File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
 
         :param file_format: The file_format of this MediaTypeUpdate.  # noqa: E501
-        :type file_format: str
+        :type: str
         """
         if (self.local_vars_configuration.client_side_validation and
                 file_format is not None and len(file_format) > 4):
@@ -134,7 +134,7 @@ class MediaTypeUpdate(object):
         For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
 
         :param keep_original: The keep_original of this MediaTypeUpdate.  # noqa: E501
-        :type keep_original: bool
+        :type: bool
         """
 
         self._keep_original = keep_original
@@ -157,7 +157,7 @@ class MediaTypeUpdate(object):
         Name of the media type.  # noqa: E501
 
         :param name: The name of this MediaTypeUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

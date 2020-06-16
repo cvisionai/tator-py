@@ -82,7 +82,7 @@ class TemporaryFileSpec(object):
         Number of hours file is to be kept alive  # noqa: E501
 
         :param hours: The hours of this TemporaryFileSpec.  # noqa: E501
-        :type hours: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 hours is not None and hours > 24):  # noqa: E501
@@ -111,7 +111,7 @@ class TemporaryFileSpec(object):
         md5hash of lookup parameters  # noqa: E501
 
         :param lookup: The lookup of this TemporaryFileSpec.  # noqa: E501
-        :type lookup: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and lookup is None:  # noqa: E501
             raise ValueError("Invalid value for `lookup`, must not be `None`")  # noqa: E501
@@ -136,7 +136,7 @@ class TemporaryFileSpec(object):
         Unique name for the temporary file  # noqa: E501
 
         :param name: The name of this TemporaryFileSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -161,7 +161,7 @@ class TemporaryFileSpec(object):
         URL for the temporary file  # noqa: E501
 
         :param url: The url of this TemporaryFileSpec.  # noqa: E501
-        :type url: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and url is None:  # noqa: E501
             raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501

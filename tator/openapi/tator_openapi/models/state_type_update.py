@@ -75,7 +75,7 @@ class StateTypeUpdate(object):
         Description of the state type.  # noqa: E501
 
         :param description: The description of this StateTypeUpdate.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -98,7 +98,7 @@ class StateTypeUpdate(object):
         Name of the state type.  # noqa: E501
 
         :param name: The name of this StateTypeUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

@@ -72,7 +72,7 @@ class Localization(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, email=None, frame=0, height=None, id=None, media=None, meta=None, modified=None, parent=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, parent=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """Localization - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -143,7 +143,7 @@ class Localization(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this Localization.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -166,7 +166,7 @@ class Localization(object):
         Email of last user who modified/created this localization.  # noqa: E501
 
         :param email: The email of this Localization.  # noqa: E501
-        :type email: str
+        :type: str
         """
 
         self._email = email
@@ -189,7 +189,7 @@ class Localization(object):
         Frame number of this localization if it is in a video.  # noqa: E501
 
         :param frame: The frame of this Localization.  # noqa: E501
-        :type frame: int
+        :type: int
         """
 
         self._frame = frame
@@ -212,7 +212,7 @@ class Localization(object):
         Normalized height of bounding box for `box` localization types.  # noqa: E501
 
         :param height: The height of this Localization.  # noqa: E501
-        :type height: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 height is not None and height > 1.0):  # noqa: E501
@@ -241,7 +241,7 @@ class Localization(object):
         Unique integer identifying this localization.  # noqa: E501
 
         :param id: The id of this Localization.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -264,7 +264,7 @@ class Localization(object):
         Unique integer identifying media of this localization.  # noqa: E501
 
         :param media: The media of this Localization.  # noqa: E501
-        :type media: int
+        :type: int
         """
 
         self._media = media
@@ -287,7 +287,7 @@ class Localization(object):
         Unique integer identifying entity type of this localization.  # noqa: E501
 
         :param meta: The meta of this Localization.  # noqa: E501
-        :type meta: int
+        :type: int
         """
 
         self._meta = meta
@@ -310,7 +310,7 @@ class Localization(object):
         Indicates whether this localization has been modified in the web UI.  # noqa: E501
 
         :param modified: The modified of this Localization.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified
@@ -333,7 +333,7 @@ class Localization(object):
         If a clone, the pk of the parent.  # noqa: E501
 
         :param parent: The parent of this Localization.  # noqa: E501
-        :type parent: float
+        :type: float
         """
 
         self._parent = parent
@@ -356,7 +356,7 @@ class Localization(object):
         Unique integer identifying project of this localization.  # noqa: E501
 
         :param project: The project of this Localization.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -379,7 +379,7 @@ class Localization(object):
         URL of thumbnail corresponding to this localization.  # noqa: E501
 
         :param thumbnail_image: The thumbnail_image of this Localization.  # noqa: E501
-        :type thumbnail_image: str
+        :type: str
         """
 
         self._thumbnail_image = thumbnail_image
@@ -402,7 +402,7 @@ class Localization(object):
         Horizontal vector component for `line` localization types.  # noqa: E501
 
         :param u: The u of this Localization.  # noqa: E501
-        :type u: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 u is not None and u > 1.0):  # noqa: E501
@@ -431,7 +431,7 @@ class Localization(object):
         Vertical vector component for `line` localization types.  # noqa: E501
 
         :param v: The v of this Localization.  # noqa: E501
-        :type v: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 v is not None and v > 1.0):  # noqa: E501
@@ -460,7 +460,7 @@ class Localization(object):
         Unique integer identifying a version.  # noqa: E501
 
         :param version: The version of this Localization.  # noqa: E501
-        :type version: int
+        :type: int
         """
 
         self._version = version
@@ -483,7 +483,7 @@ class Localization(object):
         Normalized width of bounding box for `box` localization types.  # noqa: E501
 
         :param width: The width of this Localization.  # noqa: E501
-        :type width: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 width is not None and width > 1.0):  # noqa: E501
@@ -512,7 +512,7 @@ class Localization(object):
         Normalized horizontal position of left edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param x: The x of this Localization.  # noqa: E501
-        :type x: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 x is not None and x > 1.0):  # noqa: E501
@@ -541,7 +541,7 @@ class Localization(object):
         Normalized vertical position of top edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param y: The y of this Localization.  # noqa: E501
-        :type y: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 y is not None and y > 1.0):  # noqa: E501

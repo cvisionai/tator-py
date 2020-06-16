@@ -93,7 +93,7 @@ class TranscodeSpec(object):
         UUID generated for the job group. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :param gid: The gid of this TranscodeSpec.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -118,7 +118,7 @@ class TranscodeSpec(object):
         MD5 sum of the media file.  # noqa: E501
 
         :param md5: The md5 of this TranscodeSpec.  # noqa: E501
-        :type md5: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and md5 is None:  # noqa: E501
             raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
@@ -143,7 +143,7 @@ class TranscodeSpec(object):
         Name of the file.  # noqa: E501
 
         :param name: The name of this TranscodeSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -168,7 +168,7 @@ class TranscodeSpec(object):
         Media section name to upload to.  # noqa: E501
 
         :param section: The section of this TranscodeSpec.  # noqa: E501
-        :type section: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and section is None:  # noqa: E501
             raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
@@ -193,7 +193,7 @@ class TranscodeSpec(object):
         Unique integer identifying a video type.  # noqa: E501
 
         :param type: The type of this TranscodeSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
@@ -218,7 +218,7 @@ class TranscodeSpec(object):
         UUID generated for the individual job. This value may be associated with messages generated during upload via the `Progress` endpoint, or it may be newly generated. The transcode workflow will use this value to generate progress messages.  # noqa: E501
 
         :param uid: The uid of this TranscodeSpec.  # noqa: E501
-        :type uid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and uid is None:  # noqa: E501
             raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
@@ -243,7 +243,7 @@ class TranscodeSpec(object):
         Upload URL for the raw video.  # noqa: E501
 
         :param url: The url of this TranscodeSpec.  # noqa: E501
-        :type url: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and url is None:  # noqa: E501
             raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501

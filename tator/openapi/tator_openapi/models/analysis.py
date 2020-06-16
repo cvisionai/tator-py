@@ -80,7 +80,7 @@ class Analysis(object):
         Lucene query string used to retrieve entities to analyze.  # noqa: E501
 
         :param data_query: The data_query of this Analysis.  # noqa: E501
-        :type data_query: str
+        :type: str
         """
 
         self._data_query = data_query
@@ -103,7 +103,7 @@ class Analysis(object):
         Unique integer identifying the analysis.  # noqa: E501
 
         :param id: The id of this Analysis.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -126,7 +126,7 @@ class Analysis(object):
         Name of analysis.  # noqa: E501
 
         :param name: The name of this Analysis.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

@@ -34,7 +34,7 @@ class NotifySpec(object):
     """
     openapi_types = {
         'message': 'str',
-        'send_as_file': 'str'
+        'send_as_file': 'int'
     }
 
     attribute_map = {
@@ -53,7 +53,8 @@ class NotifySpec(object):
         self.discriminator = None
 
         self.message = message
-        self.send_as_file = send_as_file
+        if send_as_file is not None:
+            self.send_as_file = send_as_file
 
     @property
     def message(self):
@@ -73,7 +74,7 @@ class NotifySpec(object):
         Message to send to administrators.  # noqa: E501
 
         :param message: The message of this NotifySpec.  # noqa: E501
-        :type message: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and message is None:  # noqa: E501
             raise ValueError("Invalid value for `message`, must not be `None`")  # noqa: E501
@@ -84,10 +85,10 @@ class NotifySpec(object):
     def send_as_file(self):
         """Gets the send_as_file of this NotifySpec.  # noqa: E501
 
-        Whether to send message as a file.  # noqa: E501
+        Whether to send message as a file. (0 or 1)  # noqa: E501
 
         :return: The send_as_file of this NotifySpec.  # noqa: E501
-        :rtype: str
+        :rtype: int
         """
         return self._send_as_file
 
@@ -95,13 +96,11 @@ class NotifySpec(object):
     def send_as_file(self, send_as_file):
         """Sets the send_as_file of this NotifySpec.
 
-        Whether to send message as a file.  # noqa: E501
+        Whether to send message as a file. (0 or 1)  # noqa: E501
 
         :param send_as_file: The send_as_file of this NotifySpec.  # noqa: E501
-        :type send_as_file: str
+        :type: int
         """
-        if self.local_vars_configuration.client_side_validation and send_as_file is None:  # noqa: E501
-            raise ValueError("Invalid value for `send_as_file`, must not be `None`")  # noqa: E501
 
         self._send_as_file = send_as_file
 

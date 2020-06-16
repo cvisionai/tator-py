@@ -85,7 +85,7 @@ class VersionUpdate(object):
         Array of other version IDs that are dependencies of this version.  # noqa: E501
 
         :param bases: The bases of this VersionUpdate.  # noqa: E501
-        :type bases: list[int]
+        :type: list[int]
         """
 
         self._bases = bases
@@ -108,7 +108,7 @@ class VersionUpdate(object):
         Description of the version.  # noqa: E501
 
         :param description: The description of this VersionUpdate.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -131,7 +131,7 @@ class VersionUpdate(object):
         Name of the version.  # noqa: E501
 
         :param name: The name of this VersionUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -154,7 +154,7 @@ class VersionUpdate(object):
         Whether to show this version on media for which no annotations exist.  # noqa: E501
 
         :param show_empty: The show_empty of this VersionUpdate.  # noqa: E501
-        :type show_empty: bool
+        :type: bool
         """
 
         self._show_empty = show_empty

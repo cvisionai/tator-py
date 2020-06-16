@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **autocomplete** | [**AutocompleteService**](AutocompleteService.md) |  | [optional] 
 **choices** | **list[str]** | Array of possible values for enum dtype. | [optional] 
-**default** | **object** | Boolean, integer, float, string, datetime, or [lon, lat]. | [optional] 
+**default** | [**object**](.md) | Boolean, integer, float, string, datetime, or [lon, lat]. | [optional] 
 **description** | **str** | Description of the attribute. | [optional] [default to '']
 **dtype** | **str** | Data type of the attribute. | [optional] 
 **labels** | **list[str]** | Array of labels for enum dtype. | [optional] 

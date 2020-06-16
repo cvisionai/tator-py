@@ -77,7 +77,7 @@ class ProgressSummarySpec(object):
         UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param gid: The gid of this ProgressSummarySpec.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -102,7 +102,7 @@ class ProgressSummarySpec(object):
         Number of jobs completed in this job group.  # noqa: E501
 
         :param num_complete: The num_complete of this ProgressSummarySpec.  # noqa: E501
-        :type num_complete: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and num_complete is None:  # noqa: E501
             raise ValueError("Invalid value for `num_complete`, must not be `None`")  # noqa: E501
@@ -127,7 +127,7 @@ class ProgressSummarySpec(object):
         Number of jobs in this job group.  # noqa: E501
 
         :param num_jobs: The num_jobs of this ProgressSummarySpec.  # noqa: E501
-        :type num_jobs: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and num_jobs is None:  # noqa: E501
             raise ValueError("Invalid value for `num_jobs`, must not be `None`")  # noqa: E501

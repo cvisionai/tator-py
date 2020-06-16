@@ -102,7 +102,7 @@ class LocalizationTypeSpec(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this LocalizationTypeSpec.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -123,7 +123,7 @@ class LocalizationTypeSpec(object):
 
 
         :param color_map: The color_map of this LocalizationTypeSpec.  # noqa: E501
-        :type color_map: ColorMap
+        :type: ColorMap
         """
 
         self._color_map = color_map
@@ -146,7 +146,7 @@ class LocalizationTypeSpec(object):
         Description of the localization type.  # noqa: E501
 
         :param description: The description of this LocalizationTypeSpec.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -169,7 +169,7 @@ class LocalizationTypeSpec(object):
         Shape of this localization type.  # noqa: E501
 
         :param dtype: The dtype of this LocalizationTypeSpec.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and dtype is None:  # noqa: E501
             raise ValueError("Invalid value for `dtype`, must not be `None`")  # noqa: E501
@@ -200,7 +200,7 @@ class LocalizationTypeSpec(object):
         Width of the line used to draw the localization.  # noqa: E501
 
         :param line_width: The line_width of this LocalizationTypeSpec.  # noqa: E501
-        :type line_width: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 line_width is not None and line_width < 1):  # noqa: E501
@@ -226,7 +226,7 @@ class LocalizationTypeSpec(object):
         List of integers identifying media types that this localization type may apply to.  # noqa: E501
 
         :param media_types: The media_types of this LocalizationTypeSpec.  # noqa: E501
-        :type media_types: list[int]
+        :type: list[int]
         """
         if self.local_vars_configuration.client_side_validation and media_types is None:  # noqa: E501
             raise ValueError("Invalid value for `media_types`, must not be `None`")  # noqa: E501
@@ -251,7 +251,7 @@ class LocalizationTypeSpec(object):
         Name of the localization type.  # noqa: E501
 
         :param name: The name of this LocalizationTypeSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -276,7 +276,7 @@ class LocalizationTypeSpec(object):
         Whether this type should be displayed in the UI.  # noqa: E501
 
         :param visible: The visible of this LocalizationTypeSpec.  # noqa: E501
-        :type visible: bool
+        :type: bool
         """
 
         self._visible = visible

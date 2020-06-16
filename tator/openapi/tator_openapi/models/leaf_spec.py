@@ -78,7 +78,7 @@ class LeafSpec(object):
         Name of the leaf.  # noqa: E501
 
         :param name: The name of this LeafSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -103,7 +103,7 @@ class LeafSpec(object):
         ID to use as parent if there is one.  # noqa: E501
 
         :param parent: The parent of this LeafSpec.  # noqa: E501
-        :type parent: int
+        :type: int
         """
 
         self._parent = parent
@@ -126,7 +126,7 @@ class LeafSpec(object):
         Unique integer identifying a leaf type.  # noqa: E501
 
         :param type: The type of this LeafSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501

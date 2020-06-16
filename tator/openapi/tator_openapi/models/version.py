@@ -130,7 +130,7 @@ class Version(object):
         Array of other version IDs that are dependencies of this version.  # noqa: E501
 
         :param bases: The bases of this Version.  # noqa: E501
-        :type bases: list[int]
+        :type: list[int]
         """
 
         self._bases = bases
@@ -153,7 +153,7 @@ class Version(object):
         Name of user who created the last unmodified annotation in this version.  # noqa: E501
 
         :param created_by: The created_by of this Version.  # noqa: E501
-        :type created_by: str
+        :type: str
         """
 
         self._created_by = created_by
@@ -176,7 +176,7 @@ class Version(object):
         Datetime when the last unmodified annotation was created.  # noqa: E501
 
         :param created_datetime: The created_datetime of this Version.  # noqa: E501
-        :type created_datetime: str
+        :type: str
         """
 
         self._created_datetime = created_datetime
@@ -199,7 +199,7 @@ class Version(object):
         Description of the version.  # noqa: E501
 
         :param description: The description of this Version.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -222,7 +222,7 @@ class Version(object):
         Unique integer identifying a membership.  # noqa: E501
 
         :param id: The id of this Version.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -245,7 +245,7 @@ class Version(object):
         Name of user who modified annotations in this version most recently.  # noqa: E501
 
         :param modified_by: The modified_by of this Version.  # noqa: E501
-        :type modified_by: str
+        :type: str
         """
 
         self._modified_by = modified_by
@@ -268,7 +268,7 @@ class Version(object):
         Datetime when last annotation was modified in the web interface.  # noqa: E501
 
         :param modified_datetime: The modified_datetime of this Version.  # noqa: E501
-        :type modified_datetime: str
+        :type: str
         """
 
         self._modified_datetime = modified_datetime
@@ -291,7 +291,7 @@ class Version(object):
         Name of the version.  # noqa: E501
 
         :param name: The name of this Version.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -314,7 +314,7 @@ class Version(object):
         Number of created annotations in this version.  # noqa: E501
 
         :param num_created: The num_created of this Version.  # noqa: E501
-        :type num_created: int
+        :type: int
         """
 
         self._num_created = num_created
@@ -337,7 +337,7 @@ class Version(object):
         Number of modified annotations in this version.  # noqa: E501
 
         :param num_modified: The num_modified of this Version.  # noqa: E501
-        :type num_modified: int
+        :type: int
         """
 
         self._num_modified = num_modified
@@ -360,7 +360,7 @@ class Version(object):
         Version number.  # noqa: E501
 
         :param number: The number of this Version.  # noqa: E501
-        :type number: int
+        :type: int
         """
 
         self._number = number
@@ -383,7 +383,7 @@ class Version(object):
         Unique integer identifying a project.  # noqa: E501
 
         :param project: The project of this Version.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -406,7 +406,7 @@ class Version(object):
         Whether to show this version on media for which no annotations exist.  # noqa: E501
 
         :param show_empty: The show_empty of this Version.  # noqa: E501
-        :type show_empty: bool
+        :type: bool
         """
 
         self._show_empty = show_empty

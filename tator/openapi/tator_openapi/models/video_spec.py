@@ -126,7 +126,7 @@ class VideoSpec(object):
         Codec of the original video.  # noqa: E501
 
         :param codec: The codec of this VideoSpec.  # noqa: E501
-        :type codec: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and codec is None:  # noqa: E501
             raise ValueError("Invalid value for `codec`, must not be `None`")  # noqa: E501
@@ -151,7 +151,7 @@ class VideoSpec(object):
         Frame rate of the video.  # noqa: E501
 
         :param fps: The fps of this VideoSpec.  # noqa: E501
-        :type fps: float
+        :type: float
         """
         if self.local_vars_configuration.client_side_validation and fps is None:  # noqa: E501
             raise ValueError("Invalid value for `fps`, must not be `None`")  # noqa: E501
@@ -176,7 +176,7 @@ class VideoSpec(object):
         UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param gid: The gid of this VideoSpec.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -201,7 +201,7 @@ class VideoSpec(object):
         Pixel height of the video.  # noqa: E501
 
         :param height: The height of this VideoSpec.  # noqa: E501
-        :type height: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and height is None:  # noqa: E501
             raise ValueError("Invalid value for `height`, must not be `None`")  # noqa: E501
@@ -226,7 +226,7 @@ class VideoSpec(object):
         MD5 sum of the media file.  # noqa: E501
 
         :param md5: The md5 of this VideoSpec.  # noqa: E501
-        :type md5: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and md5 is None:  # noqa: E501
             raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
@@ -249,7 +249,7 @@ class VideoSpec(object):
 
 
         :param media_files: The media_files of this VideoSpec.  # noqa: E501
-        :type media_files: MediaFiles
+        :type: MediaFiles
         """
         if self.local_vars_configuration.client_side_validation and media_files is None:  # noqa: E501
             raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
@@ -274,7 +274,7 @@ class VideoSpec(object):
         Name of the file.  # noqa: E501
 
         :param name: The name of this VideoSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -299,7 +299,7 @@ class VideoSpec(object):
         Number of frames in the video.  # noqa: E501
 
         :param num_frames: The num_frames of this VideoSpec.  # noqa: E501
-        :type num_frames: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and num_frames is None:  # noqa: E501
             raise ValueError("Invalid value for `num_frames`, must not be `None`")  # noqa: E501
@@ -327,7 +327,7 @@ class VideoSpec(object):
         Name to use for progress update.  # noqa: E501
 
         :param progress_name: The progress_name of this VideoSpec.  # noqa: E501
-        :type progress_name: str
+        :type: str
         """
 
         self._progress_name = progress_name
@@ -350,7 +350,7 @@ class VideoSpec(object):
         Media section name.  # noqa: E501
 
         :param section: The section of this VideoSpec.  # noqa: E501
-        :type section: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and section is None:  # noqa: E501
             raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
@@ -375,7 +375,7 @@ class VideoSpec(object):
         Upload URL for the thumbnail gif.  # noqa: E501
 
         :param thumbnail_gif_url: The thumbnail_gif_url of this VideoSpec.  # noqa: E501
-        :type thumbnail_gif_url: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and thumbnail_gif_url is None:  # noqa: E501
             raise ValueError("Invalid value for `thumbnail_gif_url`, must not be `None`")  # noqa: E501
@@ -400,7 +400,7 @@ class VideoSpec(object):
         Upload URL for the thumbnail.  # noqa: E501
 
         :param thumbnail_url: The thumbnail_url of this VideoSpec.  # noqa: E501
-        :type thumbnail_url: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and thumbnail_url is None:  # noqa: E501
             raise ValueError("Invalid value for `thumbnail_url`, must not be `None`")  # noqa: E501
@@ -425,7 +425,7 @@ class VideoSpec(object):
         Unique integer identifying a video type. Use -1 to automatically select the video type if only one video type exists in a project.  # noqa: E501
 
         :param type: The type of this VideoSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
@@ -453,7 +453,7 @@ class VideoSpec(object):
         UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param uid: The uid of this VideoSpec.  # noqa: E501
-        :type uid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and uid is None:  # noqa: E501
             raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
@@ -478,7 +478,7 @@ class VideoSpec(object):
         Pixel width of the video.  # noqa: E501
 
         :param width: The width of this VideoSpec.  # noqa: E501
-        :type width: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and width is None:  # noqa: E501
             raise ValueError("Invalid value for `width`, must not be `None`")  # noqa: E501

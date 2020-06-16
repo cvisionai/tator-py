@@ -69,7 +69,7 @@ class AttributeBulkUpdate(object):
         Attribute values to bulk update an entity list.  # noqa: E501
 
         :param attributes: The attributes of this AttributeBulkUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
         if self.local_vars_configuration.client_side_validation and attributes is None:  # noqa: E501
             raise ValueError("Invalid value for `attributes`, must not be `None`")  # noqa: E501

@@ -4,7 +4,7 @@ Localization creation spec. Attribute key/values must be included in the base ob
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**frame** | **int** | Frame number of this localization if it is in a video. | [default to 0]
+**frame** | **int** | Frame number of this localization if it is in a video. | 
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
 **media_id** | **int** | Unique integer identifying a media. | 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] 

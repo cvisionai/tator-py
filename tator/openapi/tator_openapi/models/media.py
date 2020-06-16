@@ -180,7 +180,7 @@ class Media(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this Media.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -203,7 +203,7 @@ class Media(object):
         Codec for videos.  # noqa: E501
 
         :param codec: The codec of this Media.  # noqa: E501
-        :type codec: str
+        :type: str
         """
 
         self._codec = codec
@@ -226,7 +226,7 @@ class Media(object):
         Unique integer identifying user who created this media.  # noqa: E501
 
         :param created_by: The created_by of this Media.  # noqa: E501
-        :type created_by: int
+        :type: int
         """
 
         self._created_by = created_by
@@ -249,7 +249,7 @@ class Media(object):
         Datetime when this media was created.  # noqa: E501
 
         :param created_datetime: The created_datetime of this Media.  # noqa: E501
-        :type created_datetime: str
+        :type: str
         """
 
         self._created_datetime = created_datetime
@@ -272,7 +272,7 @@ class Media(object):
         URL of the media file. Relative to https://<domain>/media/.  # noqa: E501
 
         :param file: The file of this Media.  # noqa: E501
-        :type file: str
+        :type: str
         """
 
         self._file = file
@@ -295,7 +295,7 @@ class Media(object):
         Frame rate for videos.  # noqa: E501
 
         :param fps: The fps of this Media.  # noqa: E501
-        :type fps: int
+        :type: int
         """
 
         self._fps = fps
@@ -318,7 +318,7 @@ class Media(object):
         Vertical resolution in pixels.  # noqa: E501
 
         :param height: The height of this Media.  # noqa: E501
-        :type height: int
+        :type: int
         """
 
         self._height = height
@@ -341,7 +341,7 @@ class Media(object):
         Unique integer identifying this media.  # noqa: E501
 
         :param id: The id of this Media.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -364,7 +364,7 @@ class Media(object):
         Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
 
         :param last_edit_end: The last_edit_end of this Media.  # noqa: E501
-        :type last_edit_end: datetime
+        :type: datetime
         """
 
         self._last_edit_end = last_edit_end
@@ -387,7 +387,7 @@ class Media(object):
         Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
 
         :param last_edit_start: The last_edit_start of this Media.  # noqa: E501
-        :type last_edit_start: datetime
+        :type: datetime
         """
 
         self._last_edit_start = last_edit_start
@@ -410,7 +410,7 @@ class Media(object):
         MD5 checksum of the media file.  # noqa: E501
 
         :param md5: The md5 of this Media.  # noqa: E501
-        :type md5: str
+        :type: str
         """
 
         self._md5 = md5
@@ -431,7 +431,7 @@ class Media(object):
 
 
         :param media_files: The media_files of this Media.  # noqa: E501
-        :type media_files: MediaFiles
+        :type: MediaFiles
         """
 
         self._media_files = media_files
@@ -454,7 +454,7 @@ class Media(object):
         Unique integer identifying entity type of this media.  # noqa: E501
 
         :param meta: The meta of this Media.  # noqa: E501
-        :type meta: int
+        :type: int
         """
 
         self._meta = meta
@@ -477,7 +477,7 @@ class Media(object):
         Unique integer identifying user who last modified this media.  # noqa: E501
 
         :param modified_by: The modified_by of this Media.  # noqa: E501
-        :type modified_by: int
+        :type: int
         """
 
         self._modified_by = modified_by
@@ -500,7 +500,7 @@ class Media(object):
         Datetime when this media was last modified.  # noqa: E501
 
         :param modified_datetime: The modified_datetime of this Media.  # noqa: E501
-        :type modified_datetime: str
+        :type: str
         """
 
         self._modified_datetime = modified_datetime
@@ -523,7 +523,7 @@ class Media(object):
         Name of the media.  # noqa: E501
 
         :param name: The name of this Media.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -546,7 +546,7 @@ class Media(object):
         Number of frames for videos.  # noqa: E501
 
         :param num_frames: The num_frames of this Media.  # noqa: E501
-        :type num_frames: int
+        :type: int
         """
 
         self._num_frames = num_frames
@@ -569,7 +569,7 @@ class Media(object):
         DEPRECATED. Use media_files. Stores path to original media file.  # noqa: E501
 
         :param original: The original of this Media.  # noqa: E501
-        :type original: str
+        :type: str
         """
 
         self._original = original
@@ -592,7 +592,7 @@ class Media(object):
         Unique integer identifying project of this media.  # noqa: E501
 
         :param project: The project of this Media.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -615,7 +615,7 @@ class Media(object):
         Path to segment info.  # noqa: E501
 
         :param segment_info: The segment_info of this Media.  # noqa: E501
-        :type segment_info: str
+        :type: str
         """
 
         self._segment_info = segment_info
@@ -638,7 +638,7 @@ class Media(object):
         URL of the thumbnail. Relative to https://<domain>/media/.  # noqa: E501
 
         :param thumbnail: The thumbnail of this Media.  # noqa: E501
-        :type thumbnail: str
+        :type: str
         """
 
         self._thumbnail = thumbnail
@@ -661,7 +661,7 @@ class Media(object):
         URL of the thumbnail gif for videos. Relative to https://<domain>/media/.  # noqa: E501
 
         :param thumbnail_gif: The thumbnail_gif of this Media.  # noqa: E501
-        :type thumbnail_gif: str
+        :type: str
         """
 
         self._thumbnail_gif = thumbnail_gif
@@ -684,7 +684,7 @@ class Media(object):
         Horizontal resolution in pixels.  # noqa: E501
 
         :param width: The width of this Media.  # noqa: E501
-        :type width: int
+        :type: int
         """
 
         self._width = width

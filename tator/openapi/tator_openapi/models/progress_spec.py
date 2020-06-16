@@ -113,7 +113,7 @@ class ProgressSpec(object):
         UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param gid: The gid of this ProgressSpec.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -138,7 +138,7 @@ class ProgressSpec(object):
         Type of background job.  # noqa: E501
 
         :param job_type: The job_type of this ProgressSpec.  # noqa: E501
-        :type job_type: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and job_type is None:  # noqa: E501
             raise ValueError("Invalid value for `job_type`, must not be `None`")  # noqa: E501
@@ -169,7 +169,7 @@ class ProgressSpec(object):
         Comma separated string of media ids, one for each media that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
         :param media_ids: The media_ids of this ProgressSpec.  # noqa: E501
-        :type media_ids: str
+        :type: str
         """
 
         self._media_ids = media_ids
@@ -192,7 +192,7 @@ class ProgressSpec(object):
         Progress message. This should be short to fit in the UI.  # noqa: E501
 
         :param message: The message of this ProgressSpec.  # noqa: E501
-        :type message: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and message is None:  # noqa: E501
             raise ValueError("Invalid value for `message`, must not be `None`")  # noqa: E501
@@ -217,7 +217,7 @@ class ProgressSpec(object):
         Name of the job.  # noqa: E501
 
         :param name: The name of this ProgressSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -242,7 +242,7 @@ class ProgressSpec(object):
         Progress percent completion. This is used to display the progress bar associated with the job.  # noqa: E501
 
         :param progress: The progress of this ProgressSpec.  # noqa: E501
-        :type progress: float
+        :type: float
         """
         if self.local_vars_configuration.client_side_validation and progress is None:  # noqa: E501
             raise ValueError("Invalid value for `progress`, must not be `None`")  # noqa: E501
@@ -273,7 +273,7 @@ class ProgressSpec(object):
         Media section name. Required only for `job_type` of `upload`.  # noqa: E501
 
         :param section: The section of this ProgressSpec.  # noqa: E501
-        :type section: str
+        :type: str
         """
 
         self._section = section
@@ -296,7 +296,7 @@ class ProgressSpec(object):
         Comma separated string of media sections, one for each media ID that this job applies to. Required only for `job_type` of `algorithm`.  # noqa: E501
 
         :param sections: The sections of this ProgressSpec.  # noqa: E501
-        :type sections: str
+        :type: str
         """
 
         self._sections = sections
@@ -319,7 +319,7 @@ class ProgressSpec(object):
         State of the job.  # noqa: E501
 
         :param state: The state of this ProgressSpec.  # noqa: E501
-        :type state: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and state is None:  # noqa: E501
             raise ValueError("Invalid value for `state`, must not be `None`")  # noqa: E501
@@ -350,7 +350,7 @@ class ProgressSpec(object):
         UUID generated for the service worker that is doing an upload. This field is required if the `job_type` is `upload`.  # noqa: E501
 
         :param swid: The swid of this ProgressSpec.  # noqa: E501
-        :type swid: str
+        :type: str
         """
 
         self._swid = swid
@@ -373,7 +373,7 @@ class ProgressSpec(object):
         UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param uid: The uid of this ProgressSpec.  # noqa: E501
-        :type uid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and uid is None:  # noqa: E501
             raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501

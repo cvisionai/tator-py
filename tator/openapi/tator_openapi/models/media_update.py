@@ -90,7 +90,7 @@ class MediaUpdate(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this MediaUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -113,7 +113,7 @@ class MediaUpdate(object):
         Datetime of the end of the session when this media or its annotations were last edited.  # noqa: E501
 
         :param last_edit_end: The last_edit_end of this MediaUpdate.  # noqa: E501
-        :type last_edit_end: datetime
+        :type: datetime
         """
 
         self._last_edit_end = last_edit_end
@@ -136,7 +136,7 @@ class MediaUpdate(object):
         Datetime of the start of the session when this media or its annotations were last edited.  # noqa: E501
 
         :param last_edit_start: The last_edit_start of this MediaUpdate.  # noqa: E501
-        :type last_edit_start: datetime
+        :type: datetime
         """
 
         self._last_edit_start = last_edit_start
@@ -157,7 +157,7 @@ class MediaUpdate(object):
 
 
         :param media_files: The media_files of this MediaUpdate.  # noqa: E501
-        :type media_files: MediaFiles
+        :type: MediaFiles
         """
 
         self._media_files = media_files
@@ -180,7 +180,7 @@ class MediaUpdate(object):
         Name of the media.  # noqa: E501
 
         :param name: The name of this MediaUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

@@ -75,7 +75,7 @@ class BadRequestResponse(object):
         Detailed error message for bad request.  # noqa: E501
 
         :param details: The details of this BadRequestResponse.  # noqa: E501
-        :type details: str
+        :type: str
         """
 
         self._details = details
@@ -98,7 +98,7 @@ class BadRequestResponse(object):
         Error message for bad request.  # noqa: E501
 
         :param message: The message of this BadRequestResponse.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message

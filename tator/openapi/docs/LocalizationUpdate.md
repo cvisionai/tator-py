@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
-**frame** | **int** | Frame number of this localization if it is in a video. | [optional] [default to 0]
+**frame** | **int** | Frame number of this localization if it is in a video. | [optional] 
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
 **modified** | **bool** | Whether this localization was created in the web UI. | [optional] 
 **parent** | **float** | If a clone, the pk of the parent. | [optional] 

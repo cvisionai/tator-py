@@ -58,7 +58,7 @@ class LocalizationUpdate(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, frame=0, height=None, modified=None, parent=None, u=None, v=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, frame=None, height=None, modified=None, parent=None, u=None, v=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """LocalizationUpdate - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -107,7 +107,7 @@ class LocalizationUpdate(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this LocalizationUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -130,7 +130,7 @@ class LocalizationUpdate(object):
         Frame number of this localization if it is in a video.  # noqa: E501
 
         :param frame: The frame of this LocalizationUpdate.  # noqa: E501
-        :type frame: int
+        :type: int
         """
 
         self._frame = frame
@@ -153,7 +153,7 @@ class LocalizationUpdate(object):
         Normalized height of bounding box for `box` localization types.  # noqa: E501
 
         :param height: The height of this LocalizationUpdate.  # noqa: E501
-        :type height: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 height is not None and height > 1.0):  # noqa: E501
@@ -182,7 +182,7 @@ class LocalizationUpdate(object):
         Whether this localization was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this LocalizationUpdate.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified
@@ -205,7 +205,7 @@ class LocalizationUpdate(object):
         If a clone, the pk of the parent.  # noqa: E501
 
         :param parent: The parent of this LocalizationUpdate.  # noqa: E501
-        :type parent: float
+        :type: float
         """
 
         self._parent = parent
@@ -228,7 +228,7 @@ class LocalizationUpdate(object):
         Horizontal vector component for `line` localization types.  # noqa: E501
 
         :param u: The u of this LocalizationUpdate.  # noqa: E501
-        :type u: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 u is not None and u > 1.0):  # noqa: E501
@@ -257,7 +257,7 @@ class LocalizationUpdate(object):
         Vertical vector component for `line` localization types.  # noqa: E501
 
         :param v: The v of this LocalizationUpdate.  # noqa: E501
-        :type v: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 v is not None and v > 1.0):  # noqa: E501
@@ -286,7 +286,7 @@ class LocalizationUpdate(object):
         Normalized width of bounding box for `box` localization types.  # noqa: E501
 
         :param width: The width of this LocalizationUpdate.  # noqa: E501
-        :type width: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 width is not None and width > 1.0):  # noqa: E501
@@ -315,7 +315,7 @@ class LocalizationUpdate(object):
         Normalized horizontal position of left edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param x: The x of this LocalizationUpdate.  # noqa: E501
-        :type x: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 x is not None and x > 1.0):  # noqa: E501
@@ -344,7 +344,7 @@ class LocalizationUpdate(object):
         Normalized vertical position of top edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param y: The y of this LocalizationUpdate.  # noqa: E501
-        :type y: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 y is not None and y > 1.0):  # noqa: E501

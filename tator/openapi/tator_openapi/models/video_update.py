@@ -81,7 +81,7 @@ class VideoUpdate(object):
         UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param gid: The gid of this VideoUpdate.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -106,7 +106,7 @@ class VideoUpdate(object):
         Unique integer identifying a media.  # noqa: E501
 
         :param id: The id of this VideoUpdate.  # noqa: E501
-        :type id: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and id is None:  # noqa: E501
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
@@ -129,7 +129,7 @@ class VideoUpdate(object):
 
 
         :param media_files: The media_files of this VideoUpdate.  # noqa: E501
-        :type media_files: MediaFiles
+        :type: MediaFiles
         """
         if self.local_vars_configuration.client_side_validation and media_files is None:  # noqa: E501
             raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
@@ -154,7 +154,7 @@ class VideoUpdate(object):
         UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param uid: The uid of this VideoUpdate.  # noqa: E501
-        :type uid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and uid is None:  # noqa: E501
             raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501

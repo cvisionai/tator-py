@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-__version__ = "0.0.13"
+__version__ = "0.0.14"
 
 # import apis into sdk package
 from tator_openapi.api.tator_api import TatorApi
@@ -26,7 +26,6 @@ from tator_openapi.exceptions import OpenApiException
 from tator_openapi.exceptions import ApiTypeError
 from tator_openapi.exceptions import ApiValueError
 from tator_openapi.exceptions import ApiKeyError
-from tator_openapi.exceptions import ApiAttributeError
 from tator_openapi.exceptions import ApiException
 # import models into sdk package
 from tator_openapi.models.algorithm import Algorithm

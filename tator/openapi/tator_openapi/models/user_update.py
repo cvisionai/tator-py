@@ -85,7 +85,7 @@ class UserUpdate(object):
         Email address of user.  # noqa: E501
 
         :param email: The email of this UserUpdate.  # noqa: E501
-        :type email: str
+        :type: str
         """
 
         self._email = email
@@ -108,7 +108,7 @@ class UserUpdate(object):
         First name of user.  # noqa: E501
 
         :param first_name: The first_name of this UserUpdate.  # noqa: E501
-        :type first_name: str
+        :type: str
         """
 
         self._first_name = first_name
@@ -131,7 +131,7 @@ class UserUpdate(object):
         Last name of user.  # noqa: E501
 
         :param last_name: The last_name of this UserUpdate.  # noqa: E501
-        :type last_name: str
+        :type: str
         """
 
         self._last_name = last_name
@@ -154,7 +154,7 @@ class UserUpdate(object):
         Username of user.  # noqa: E501
 
         :param username: The username of this UserUpdate.  # noqa: E501
-        :type username: str
+        :type: str
         """
 
         self._username = username

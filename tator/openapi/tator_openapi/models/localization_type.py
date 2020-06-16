@@ -115,7 +115,7 @@ class LocalizationType(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this LocalizationType.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -136,7 +136,7 @@ class LocalizationType(object):
 
 
         :param color_map: The color_map of this LocalizationType.  # noqa: E501
-        :type color_map: ColorMap
+        :type: ColorMap
         """
 
         self._color_map = color_map
@@ -159,7 +159,7 @@ class LocalizationType(object):
         Description of the localization type.  # noqa: E501
 
         :param description: The description of this LocalizationType.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -182,7 +182,7 @@ class LocalizationType(object):
         Shape of this localization type.  # noqa: E501
 
         :param dtype: The dtype of this LocalizationType.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
         allowed_values = ["box", "line", "dot"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and dtype not in allowed_values:  # noqa: E501
@@ -211,7 +211,7 @@ class LocalizationType(object):
         Unique integer identifying a localization type.  # noqa: E501
 
         :param id: The id of this LocalizationType.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -234,7 +234,7 @@ class LocalizationType(object):
         Width of the line used to draw the localization.  # noqa: E501
 
         :param line_width: The line_width of this LocalizationType.  # noqa: E501
-        :type line_width: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 line_width is not None and line_width < 1):  # noqa: E501
@@ -260,7 +260,7 @@ class LocalizationType(object):
         List of integers identifying media types that this localization type may apply to.  # noqa: E501
 
         :param media: The media of this LocalizationType.  # noqa: E501
-        :type media: list[int]
+        :type: list[int]
         """
 
         self._media = media
@@ -283,7 +283,7 @@ class LocalizationType(object):
         Name of the localization type.  # noqa: E501
 
         :param name: The name of this LocalizationType.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -306,7 +306,7 @@ class LocalizationType(object):
         Unique integer identifying project for this leaf type.  # noqa: E501
 
         :param project: The project of this LocalizationType.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -329,7 +329,7 @@ class LocalizationType(object):
         Whether this type should be displayed in the UI.  # noqa: E501
 
         :param visible: The visible of this LocalizationType.  # noqa: E501
-        :type visible: bool
+        :type: bool
         """
 
         self._visible = visible

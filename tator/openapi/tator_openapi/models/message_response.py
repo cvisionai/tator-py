@@ -70,7 +70,7 @@ class MessageResponse(object):
         Message explaining response.  # noqa: E501
 
         :param message: The message of this MessageResponse.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message

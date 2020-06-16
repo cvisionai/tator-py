@@ -121,7 +121,7 @@ class AttributeType(object):
 
 
         :param autocomplete: The autocomplete of this AttributeType.  # noqa: E501
-        :type autocomplete: AutocompleteService
+        :type: AutocompleteService
         """
 
         self._autocomplete = autocomplete
@@ -144,7 +144,7 @@ class AttributeType(object):
         Array of possible values for enum dtype.  # noqa: E501
 
         :param choices: The choices of this AttributeType.  # noqa: E501
-        :type choices: list[str]
+        :type: list[str]
         """
 
         self._choices = choices
@@ -167,7 +167,7 @@ class AttributeType(object):
         Boolean, integer, float, string, datetime, or [lon, lat].  # noqa: E501
 
         :param default: The default of this AttributeType.  # noqa: E501
-        :type default: object
+        :type: object
         """
 
         self._default = default
@@ -190,7 +190,7 @@ class AttributeType(object):
         Description of the attribute.  # noqa: E501
 
         :param description: The description of this AttributeType.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -213,7 +213,7 @@ class AttributeType(object):
         Data type of the attribute.  # noqa: E501
 
         :param dtype: The dtype of this AttributeType.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
         allowed_values = ["bool", "int", "float", "enum", "string", "datetime", "geopos"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and dtype not in allowed_values:  # noqa: E501
@@ -242,7 +242,7 @@ class AttributeType(object):
         Array of labels for enum dtype.  # noqa: E501
 
         :param labels: The labels of this AttributeType.  # noqa: E501
-        :type labels: list[str]
+        :type: list[str]
         """
 
         self._labels = labels
@@ -265,7 +265,7 @@ class AttributeType(object):
         Upper bound for int or float dtype.  # noqa: E501
 
         :param maximum: The maximum of this AttributeType.  # noqa: E501
-        :type maximum: float
+        :type: float
         """
 
         self._maximum = maximum
@@ -288,7 +288,7 @@ class AttributeType(object):
         Lower bound for int or float dtype.  # noqa: E501
 
         :param minimum: The minimum of this AttributeType.  # noqa: E501
-        :type minimum: float
+        :type: float
         """
 
         self._minimum = minimum
@@ -311,7 +311,7 @@ class AttributeType(object):
         Name of the attribute.  # noqa: E501
 
         :param name: The name of this AttributeType.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -334,7 +334,7 @@ class AttributeType(object):
         Integer specifying relative order this attribute is displayed in the UI. Negative values are hidden by default.  # noqa: E501
 
         :param order: The order of this AttributeType.  # noqa: E501
-        :type order: int
+        :type: int
         """
 
         self._order = order
@@ -357,7 +357,7 @@ class AttributeType(object):
         True if this attribute is required for POST requests.  # noqa: E501
 
         :param required: The required of this AttributeType.  # noqa: E501
-        :type required: bool
+        :type: bool
         """
 
         self._required = required
@@ -380,7 +380,7 @@ class AttributeType(object):
         True to use current datetime as default for datetime dtype.  # noqa: E501
 
         :param use_current: The use_current of this AttributeType.  # noqa: E501
-        :type use_current: bool
+        :type: bool
         """
 
         self._use_current = use_current

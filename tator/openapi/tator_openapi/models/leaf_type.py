@@ -95,7 +95,7 @@ class LeafType(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this LeafType.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -118,7 +118,7 @@ class LeafType(object):
         Description of the leaf type.  # noqa: E501
 
         :param description: The description of this LeafType.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -141,7 +141,7 @@ class LeafType(object):
         Name of this data type, value is always \"leaf\".  # noqa: E501
 
         :param dtype: The dtype of this LeafType.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
 
         self._dtype = dtype
@@ -164,7 +164,7 @@ class LeafType(object):
         Unique integer identifying a leaf type.  # noqa: E501
 
         :param id: The id of this LeafType.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -187,7 +187,7 @@ class LeafType(object):
         Name of the leaf type.  # noqa: E501
 
         :param name: The name of this LeafType.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -210,7 +210,7 @@ class LeafType(object):
         Unique integer identifying project for this leaf type.  # noqa: E501
 
         :param project: The project of this LeafType.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project

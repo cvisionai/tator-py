@@ -90,7 +90,7 @@ class User(object):
         Email address of user.  # noqa: E501
 
         :param email: The email of this User.  # noqa: E501
-        :type email: str
+        :type: str
         """
 
         self._email = email
@@ -113,7 +113,7 @@ class User(object):
         First name of user.  # noqa: E501
 
         :param first_name: The first_name of this User.  # noqa: E501
-        :type first_name: str
+        :type: str
         """
 
         self._first_name = first_name
@@ -136,7 +136,7 @@ class User(object):
         Unique integer identifying a user.  # noqa: E501
 
         :param id: The id of this User.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -159,7 +159,7 @@ class User(object):
         Last name of user.  # noqa: E501
 
         :param last_name: The last_name of this User.  # noqa: E501
-        :type last_name: str
+        :type: str
         """
 
         self._last_name = last_name
@@ -182,7 +182,7 @@ class User(object):
         Username of user.  # noqa: E501
 
         :param username: The username of this User.  # noqa: E501
-        :type username: str
+        :type: str
         """
 
         self._username = username

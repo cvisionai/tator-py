@@ -75,7 +75,7 @@ class LeafUpdate(object):
         Attribute values to update.  # noqa: E501
 
         :param attributes: The attributes of this LeafUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -98,7 +98,7 @@ class LeafUpdate(object):
         Name of the leaf.  # noqa: E501
 
         :param name: The name of this LeafUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

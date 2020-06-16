@@ -68,7 +68,7 @@ class MediaPrev(object):
 
 
         :param prev: The prev of this MediaPrev.  # noqa: E501
-        :type prev: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 prev is not None and prev < 0):  # noqa: E501

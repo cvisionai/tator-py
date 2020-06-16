@@ -80,7 +80,7 @@ class LeafSuggestion(object):
         Auxiliary data associated with the leaf.  # noqa: E501
 
         :param data: The data of this LeafSuggestion.  # noqa: E501
-        :type data: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._data = data
@@ -103,7 +103,7 @@ class LeafSuggestion(object):
         Group of the suggestion.  # noqa: E501
 
         :param group: The group of this LeafSuggestion.  # noqa: E501
-        :type group: str
+        :type: str
         """
 
         self._group = group
@@ -126,7 +126,7 @@ class LeafSuggestion(object):
         Name of the suggestion.  # noqa: E501
 
         :param value: The value of this LeafSuggestion.  # noqa: E501
-        :type value: str
+        :type: str
         """
 
         self._value = value

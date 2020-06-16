@@ -104,7 +104,7 @@ class State(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this State.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -127,7 +127,7 @@ class State(object):
         Frame number this state applies to.  # noqa: E501
 
         :param frame: The frame of this State.  # noqa: E501
-        :type frame: int
+        :type: int
         """
 
         self._frame = frame
@@ -150,7 +150,7 @@ class State(object):
         Unique integer identifying the state.  # noqa: E501
 
         :param id: The id of this State.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -173,7 +173,7 @@ class State(object):
         List of localization IDs that this state applies to.  # noqa: E501
 
         :param localizations: The localizations of this State.  # noqa: E501
-        :type localizations: list[int]
+        :type: list[int]
         """
 
         self._localizations = localizations
@@ -196,7 +196,7 @@ class State(object):
         List of media IDs that this state applies to.  # noqa: E501
 
         :param media: The media of this State.  # noqa: E501
-        :type media: list[int]
+        :type: list[int]
         """
 
         self._media = media
@@ -219,7 +219,7 @@ class State(object):
         Unique integer identifying the entity type.  # noqa: E501
 
         :param meta: The meta of this State.  # noqa: E501
-        :type meta: int
+        :type: int
         """
 
         self._meta = meta
@@ -242,7 +242,7 @@ class State(object):
         Whether this state was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this State.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified
@@ -265,7 +265,7 @@ class State(object):
         Unique integer identifying the version.  # noqa: E501
 
         :param version: The version of this State.  # noqa: E501
-        :type version: int
+        :type: int
         """
 
         self._version = version

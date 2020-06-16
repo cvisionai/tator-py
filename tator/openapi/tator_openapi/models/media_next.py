@@ -68,7 +68,7 @@ class MediaNext(object):
 
 
         :param next: The next of this MediaNext.  # noqa: E501
-        :type next: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 next is not None and next < 0):  # noqa: E501

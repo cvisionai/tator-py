@@ -98,7 +98,7 @@ class ImageSpec(object):
         UUID generated for the job group. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param gid: The gid of this ImageSpec.  # noqa: E501
-        :type gid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and gid is None:  # noqa: E501
             raise ValueError("Invalid value for `gid`, must not be `None`")  # noqa: E501
@@ -123,7 +123,7 @@ class ImageSpec(object):
         MD5 sum of the media file.  # noqa: E501
 
         :param md5: The md5 of this ImageSpec.  # noqa: E501
-        :type md5: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and md5 is None:  # noqa: E501
             raise ValueError("Invalid value for `md5`, must not be `None`")  # noqa: E501
@@ -148,7 +148,7 @@ class ImageSpec(object):
         Name of the file.  # noqa: E501
 
         :param name: The name of this ImageSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
@@ -173,7 +173,7 @@ class ImageSpec(object):
         Media section name.  # noqa: E501
 
         :param section: The section of this ImageSpec.  # noqa: E501
-        :type section: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and section is None:  # noqa: E501
             raise ValueError("Invalid value for `section`, must not be `None`")  # noqa: E501
@@ -198,7 +198,7 @@ class ImageSpec(object):
         Upload URL for the thumbnail if already generated.  # noqa: E501
 
         :param thumbnail_url: The thumbnail_url of this ImageSpec.  # noqa: E501
-        :type thumbnail_url: str
+        :type: str
         """
 
         self._thumbnail_url = thumbnail_url
@@ -221,7 +221,7 @@ class ImageSpec(object):
         Unique integer identifying an image type. Use -1 to automatically select the image type if only one image type exists in a project.  # noqa: E501
 
         :param type: The type of this ImageSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
@@ -249,7 +249,7 @@ class ImageSpec(object):
         UUID generated for the individual job. This value is returned in the response of the `AlgorithmLaunch` and `Transcode` endpoints.  # noqa: E501
 
         :param uid: The uid of this ImageSpec.  # noqa: E501
-        :type uid: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and uid is None:  # noqa: E501
             raise ValueError("Invalid value for `uid`, must not be `None`")  # noqa: E501
@@ -274,7 +274,7 @@ class ImageSpec(object):
         Upload URL for the image.  # noqa: E501
 
         :param url: The url of this ImageSpec.  # noqa: E501
-        :type url: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and url is None:  # noqa: E501
             raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501

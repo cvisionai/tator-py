@@ -75,7 +75,7 @@ class CreateListResponse(object):
         List of unique integers identifying created objects.  # noqa: E501
 
         :param id: The id of this CreateListResponse.  # noqa: E501
-        :type id: list[int]
+        :type: list[int]
         """
 
         self._id = id
@@ -98,7 +98,7 @@ class CreateListResponse(object):
         Message indicating successful creation.  # noqa: E501
 
         :param message: The message of this CreateListResponse.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message

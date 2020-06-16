@@ -80,7 +80,7 @@ class Membership(object):
         Unique integer identifying a membership.  # noqa: E501
 
         :param id: The id of this Membership.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -103,7 +103,7 @@ class Membership(object):
         User permission level for the project.  # noqa: E501
 
         :param permission: The permission of this Membership.  # noqa: E501
-        :type permission: str
+        :type: str
         """
         allowed_values = ["view_only", "can_edit", "can_transfer", "can_execute", "full_control"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and permission not in allowed_values:  # noqa: E501
@@ -132,7 +132,7 @@ class Membership(object):
         Username for the membership.  # noqa: E501
 
         :param username: The username of this Membership.  # noqa: E501
-        :type username: str
+        :type: str
         """
 
         self._username = username

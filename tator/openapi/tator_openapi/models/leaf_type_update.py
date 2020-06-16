@@ -75,7 +75,7 @@ class LeafTypeUpdate(object):
         Description of the leaf type.  # noqa: E501
 
         :param description: The description of this LeafTypeUpdate.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -98,7 +98,7 @@ class LeafTypeUpdate(object):
         Name of the leaf type.  # noqa: E501
 
         :param name: The name of this LeafTypeUpdate.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

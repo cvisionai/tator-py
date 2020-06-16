@@ -78,7 +78,7 @@ class MediaFiles(object):
 
 
         :param archival: The archival of this MediaFiles.  # noqa: E501
-        :type archival: list[VideoDefinition]
+        :type: list[VideoDefinition]
         """
 
         self._archival = archival
@@ -99,7 +99,7 @@ class MediaFiles(object):
 
 
         :param audio: The audio of this MediaFiles.  # noqa: E501
-        :type audio: list[AudioDefinition]
+        :type: list[AudioDefinition]
         """
 
         self._audio = audio
@@ -120,7 +120,7 @@ class MediaFiles(object):
 
 
         :param streaming: The streaming of this MediaFiles.  # noqa: E501
-        :type streaming: list[VideoDefinition]
+        :type: list[VideoDefinition]
         """
 
         self._streaming = streaming

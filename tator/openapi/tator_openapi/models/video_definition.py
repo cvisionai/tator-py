@@ -103,7 +103,7 @@ class VideoDefinition(object):
         Human readable codec.  # noqa: E501
 
         :param codec: The codec of this VideoDefinition.  # noqa: E501
-        :type codec: str
+        :type: str
         """
         if self.local_vars_configuration.client_side_validation and codec is None:  # noqa: E501
             raise ValueError("Invalid value for `codec`, must not be `None`")  # noqa: E501
@@ -128,7 +128,7 @@ class VideoDefinition(object):
         Description other than codec.  # noqa: E501
 
         :param codec_description: The codec_description of this VideoDefinition.  # noqa: E501
-        :type codec_description: str
+        :type: str
         """
 
         self._codec_description = codec_description
@@ -151,7 +151,7 @@ class VideoDefinition(object):
         Example mime: \"video/mp4; codecs=\"avc1.64001e\"\". Only relevant for streaming files, will assume example above if not present.  # noqa: E501
 
         :param codec_mime: The codec_mime of this VideoDefinition.  # noqa: E501
-        :type codec_mime: str
+        :type: str
         """
 
         self._codec_mime = codec_mime
@@ -174,7 +174,7 @@ class VideoDefinition(object):
         If supplied will use this instead of currently connected host, e.g. https://example.com  # noqa: E501
 
         :param host: The host of this VideoDefinition.  # noqa: E501
-        :type host: str
+        :type: str
         """
 
         self._host = host
@@ -197,7 +197,7 @@ class VideoDefinition(object):
         If specified will be used for HTTP authorization in request for media, i.e. \"bearer <token>\".  # noqa: E501
 
         :param http_auth: The http_auth of this VideoDefinition.  # noqa: E501
-        :type http_auth: str
+        :type: str
         """
 
         self._http_auth = http_auth
@@ -220,7 +220,7 @@ class VideoDefinition(object):
         Path to file.  # noqa: E501
 
         :param path: The path of this VideoDefinition.  # noqa: E501
-        :type path: str
+        :type: str
         """
 
         self._path = path
@@ -243,7 +243,7 @@ class VideoDefinition(object):
         Resolution of the video in pixels (height, width).  # noqa: E501
 
         :param resolution: The resolution of this VideoDefinition.  # noqa: E501
-        :type resolution: list[int]
+        :type: list[int]
         """
         if self.local_vars_configuration.client_side_validation and resolution is None:  # noqa: E501
             raise ValueError("Invalid value for `resolution`, must not be `None`")  # noqa: E501
@@ -268,7 +268,7 @@ class VideoDefinition(object):
         Path to json file containing segment info.  # noqa: E501
 
         :param segment_info: The segment_info of this VideoDefinition.  # noqa: E501
-        :type segment_info: str
+        :type: str
         """
 
         self._segment_info = segment_info

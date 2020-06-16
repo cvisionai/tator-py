@@ -70,7 +70,7 @@ class Token(object):
         API token.  # noqa: E501
 
         :param token: The token of this Token.  # noqa: E501
-        :type token: str
+        :type: str
         """
 
         self._token = token

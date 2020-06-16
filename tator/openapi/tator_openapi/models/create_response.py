@@ -75,7 +75,7 @@ class CreateResponse(object):
         Unique integer identifying the created object.  # noqa: E501
 
         :param id: The id of this CreateResponse.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -98,7 +98,7 @@ class CreateResponse(object):
         Message indicating successful creation.  # noqa: E501
 
         :param message: The message of this CreateResponse.  # noqa: E501
-        :type message: str
+        :type: str
         """
 
         self._message = message

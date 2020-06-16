@@ -62,7 +62,7 @@ class LocalizationSpec(object):
         'y': 'y'
     }
 
-    def __init__(self, frame=0, height=None, media_id=None, modified=None, parent=None, type=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, frame=None, height=None, media_id=None, modified=None, parent=None, type=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """LocalizationSpec - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -114,7 +114,7 @@ class LocalizationSpec(object):
         Frame number of this localization if it is in a video.  # noqa: E501
 
         :param frame: The frame of this LocalizationSpec.  # noqa: E501
-        :type frame: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and frame is None:  # noqa: E501
             raise ValueError("Invalid value for `frame`, must not be `None`")  # noqa: E501
@@ -139,7 +139,7 @@ class LocalizationSpec(object):
         Normalized height of bounding box for `box` localization types.  # noqa: E501
 
         :param height: The height of this LocalizationSpec.  # noqa: E501
-        :type height: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 height is not None and height > 1.0):  # noqa: E501
@@ -168,7 +168,7 @@ class LocalizationSpec(object):
         Unique integer identifying a media.  # noqa: E501
 
         :param media_id: The media_id of this LocalizationSpec.  # noqa: E501
-        :type media_id: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and media_id is None:  # noqa: E501
             raise ValueError("Invalid value for `media_id`, must not be `None`")  # noqa: E501
@@ -193,7 +193,7 @@ class LocalizationSpec(object):
         Whether this localization was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this LocalizationSpec.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified
@@ -216,7 +216,7 @@ class LocalizationSpec(object):
         If a clone, the pk of the parent.  # noqa: E501
 
         :param parent: The parent of this LocalizationSpec.  # noqa: E501
-        :type parent: float
+        :type: float
         """
 
         self._parent = parent
@@ -239,7 +239,7 @@ class LocalizationSpec(object):
         Unique integer identifying a localization type.  # noqa: E501
 
         :param type: The type of this LocalizationSpec.  # noqa: E501
-        :type type: int
+        :type: int
         """
         if self.local_vars_configuration.client_side_validation and type is None:  # noqa: E501
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
@@ -264,7 +264,7 @@ class LocalizationSpec(object):
         Horizontal vector component for `line` localization types.  # noqa: E501
 
         :param u: The u of this LocalizationSpec.  # noqa: E501
-        :type u: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 u is not None and u > 1.0):  # noqa: E501
@@ -293,7 +293,7 @@ class LocalizationSpec(object):
         Vertical vector component for `line` localization types.  # noqa: E501
 
         :param v: The v of this LocalizationSpec.  # noqa: E501
-        :type v: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 v is not None and v > 1.0):  # noqa: E501
@@ -322,7 +322,7 @@ class LocalizationSpec(object):
         Unique integer identifying the version.  # noqa: E501
 
         :param version: The version of this LocalizationSpec.  # noqa: E501
-        :type version: int
+        :type: int
         """
 
         self._version = version
@@ -345,7 +345,7 @@ class LocalizationSpec(object):
         Normalized width of bounding box for `box` localization types.  # noqa: E501
 
         :param width: The width of this LocalizationSpec.  # noqa: E501
-        :type width: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 width is not None and width > 1.0):  # noqa: E501
@@ -374,7 +374,7 @@ class LocalizationSpec(object):
         Normalized horizontal position of left edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param x: The x of this LocalizationSpec.  # noqa: E501
-        :type x: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 x is not None and x > 1.0):  # noqa: E501
@@ -403,7 +403,7 @@ class LocalizationSpec(object):
         Normalized vertical position of top edge of bounding box for `box` localization types, start of line for `line` localization types, or position of dot for `dot` localization types.  # noqa: E501
 
         :param y: The y of this LocalizationSpec.  # noqa: E501
-        :type y: float
+        :type: float
         """
         if (self.local_vars_configuration.client_side_validation and
                 y is not None and y > 1.0):  # noqa: E501

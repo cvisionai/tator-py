@@ -80,7 +80,7 @@ class LeafTypeSpec(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this LeafTypeSpec.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -103,7 +103,7 @@ class LeafTypeSpec(object):
         Description of the leaf type.  # noqa: E501
 
         :param description: The description of this LeafTypeSpec.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -126,7 +126,7 @@ class LeafTypeSpec(object):
         Name of the leaf type.  # noqa: E501
 
         :param name: The name of this LeafTypeSpec.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name

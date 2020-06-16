@@ -110,7 +110,7 @@ class MediaType(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this MediaType.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -133,7 +133,7 @@ class MediaType(object):
         Default audio volume for this media type.  # noqa: E501
 
         :param default_volume: The default_volume of this MediaType.  # noqa: E501
-        :type default_volume: int
+        :type: int
         """
         if (self.local_vars_configuration.client_side_validation and
                 default_volume is not None and default_volume > 100):  # noqa: E501
@@ -162,7 +162,7 @@ class MediaType(object):
         Description of the media type.  # noqa: E501
 
         :param description: The description of this MediaType.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -185,7 +185,7 @@ class MediaType(object):
         Type of the media, image or video.  # noqa: E501
 
         :param dtype: The dtype of this MediaType.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
         allowed_values = ["image", "video"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and dtype not in allowed_values:  # noqa: E501
@@ -214,7 +214,7 @@ class MediaType(object):
         File extension. If omitted, any recognized file extension for the given dtype is accepted for upload. Do not include a dot prefix.  # noqa: E501
 
         :param file_format: The file_format of this MediaType.  # noqa: E501
-        :type file_format: str
+        :type: str
         """
         if (self.local_vars_configuration.client_side_validation and
                 file_format is not None and len(file_format) > 4):
@@ -240,7 +240,7 @@ class MediaType(object):
         Unique integer identifying a media type.  # noqa: E501
 
         :param id: The id of this MediaType.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -263,7 +263,7 @@ class MediaType(object):
         For video dtype, whether to keep the original video file for archival purposes after transcoding. If true, the originally uploaded file will be available for download, otherwise downloads will use the transcoded videos.  # noqa: E501
 
         :param keep_original: The keep_original of this MediaType.  # noqa: E501
-        :type keep_original: bool
+        :type: bool
         """
 
         self._keep_original = keep_original
@@ -286,7 +286,7 @@ class MediaType(object):
         Name of the media type.  # noqa: E501
 
         :param name: The name of this MediaType.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -309,7 +309,7 @@ class MediaType(object):
         Unique integer identifying project for this media type.  # noqa: E501
 
         :param project: The project of this MediaType.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project

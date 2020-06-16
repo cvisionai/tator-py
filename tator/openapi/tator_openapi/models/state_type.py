@@ -115,7 +115,7 @@ class StateType(object):
         Type of object this state type is associated with.  # noqa: E501
 
         :param association: The association of this StateType.  # noqa: E501
-        :type association: str
+        :type: str
         """
         allowed_values = ["Media", "Frame", "Localization"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and association not in allowed_values:  # noqa: E501
@@ -144,7 +144,7 @@ class StateType(object):
         Attribute type definitions.  # noqa: E501
 
         :param attribute_types: The attribute_types of this StateType.  # noqa: E501
-        :type attribute_types: list[AttributeType]
+        :type: list[AttributeType]
         """
 
         self._attribute_types = attribute_types
@@ -167,7 +167,7 @@ class StateType(object):
         Description of the state type.  # noqa: E501
 
         :param description: The description of this StateType.  # noqa: E501
-        :type description: str
+        :type: str
         """
 
         self._description = description
@@ -190,7 +190,7 @@ class StateType(object):
         String indicating data type. Always equal to \"state\".  # noqa: E501
 
         :param dtype: The dtype of this StateType.  # noqa: E501
-        :type dtype: str
+        :type: str
         """
 
         self._dtype = dtype
@@ -213,7 +213,7 @@ class StateType(object):
         Unique integer identifying a state type.  # noqa: E501
 
         :param id: The id of this StateType.  # noqa: E501
-        :type id: int
+        :type: int
         """
 
         self._id = id
@@ -236,7 +236,7 @@ class StateType(object):
         Interpolation method used by the web interface.  # noqa: E501
 
         :param interpolation: The interpolation of this StateType.  # noqa: E501
-        :type interpolation: str
+        :type: str
         """
         allowed_values = ["none", "latest"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and interpolation not in allowed_values:  # noqa: E501
@@ -265,7 +265,7 @@ class StateType(object):
         List of integers identifying media types that this state type may apply to.  # noqa: E501
 
         :param media: The media of this StateType.  # noqa: E501
-        :type media: list[int]
+        :type: list[int]
         """
 
         self._media = media
@@ -288,7 +288,7 @@ class StateType(object):
         Name of the state type.  # noqa: E501
 
         :param name: The name of this StateType.  # noqa: E501
-        :type name: str
+        :type: str
         """
 
         self._name = name
@@ -311,7 +311,7 @@ class StateType(object):
         Unique integer identifying project for this state type.  # noqa: E501
 
         :param project: The project of this StateType.  # noqa: E501
-        :type project: int
+        :type: int
         """
 
         self._project = project
@@ -334,7 +334,7 @@ class StateType(object):
         Whether this state type should be displayed.  # noqa: E501
 
         :param visible: The visible of this StateType.  # noqa: E501
-        :type visible: bool
+        :type: bool
         """
 
         self._visible = visible

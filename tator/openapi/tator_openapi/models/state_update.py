@@ -79,7 +79,7 @@ class StateUpdate(object):
         Object containing attribute values.  # noqa: E501
 
         :param attributes: The attributes of this StateUpdate.  # noqa: E501
-        :type attributes: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._attributes = attributes
@@ -102,7 +102,7 @@ class StateUpdate(object):
         Frame number this state applies to.  # noqa: E501
 
         :param frame: The frame of this StateUpdate.  # noqa: E501
-        :type frame: int
+        :type: int
         """
 
         self._frame = frame
@@ -125,7 +125,7 @@ class StateUpdate(object):
         Whether this state was created in the web UI.  # noqa: E501
 
         :param modified: The modified of this StateUpdate.  # noqa: E501
-        :type modified: bool
+        :type: bool
         """
 
         self._modified = modified

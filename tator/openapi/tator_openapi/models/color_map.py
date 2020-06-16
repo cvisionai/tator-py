@@ -63,7 +63,8 @@ class ColorMap(object):
 
         if alpha_ranges is not None:
             self.alpha_ranges = alpha_ranges
-        self.default = default
+        if default is not None:
+            self.default = default
         if key is not None:
             self.key = key
         if map is not None:
@@ -89,7 +90,7 @@ class ColorMap(object):
         Map of attribute values to alpha level.  # noqa: E501
 
         :param alpha_ranges: The alpha_ranges of this ColorMap.  # noqa: E501
-        :type alpha_ranges: dict(str, list)
+        :type: dict(str, list)
         """
 
         self._alpha_ranges = alpha_ranges
@@ -112,7 +113,7 @@ class ColorMap(object):
         RGB array, RGBA array, or hex string.  # noqa: E501
 
         :param default: The default of this ColorMap.  # noqa: E501
-        :type default: object
+        :type: object
         """
 
         self._default = default
@@ -135,7 +136,7 @@ class ColorMap(object):
         Attribute name.  # noqa: E501
 
         :param key: The key of this ColorMap.  # noqa: E501
-        :type key: str
+        :type: str
         """
 
         self._key = key
@@ -158,7 +159,7 @@ class ColorMap(object):
         Map of attribute values to colors.  # noqa: E501
 
         :param map: The map of this ColorMap.  # noqa: E501
-        :type map: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._map = map
@@ -181,7 +182,7 @@ class ColorMap(object):
         Map of version IDs to colors.  # noqa: E501
 
         :param version: The version of this ColorMap.  # noqa: E501
-        :type version: dict(str, object)
+        :type: dict(str, object)
         """
 
         self._version = version
