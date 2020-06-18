@@ -14,8 +14,9 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     """ Uploads a single media file.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         api = tator.get_api(host, token)
         for progress, response in tator.upload_media(api, type_id, path):
             print(f"Upload progress: {progress}%")

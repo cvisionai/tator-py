@@ -9,8 +9,9 @@ def download_temporary_file(api, temporary_file, out_path):
     """ Download a temporary file from Tator to an off-line location.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         api = tator.get_api(host, token)
         temporary_file = api.get_temporary_file(temporary_file_id)
         out_path = f'/tmp/{temporary_file.name}'

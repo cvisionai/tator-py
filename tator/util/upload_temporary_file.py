@@ -12,8 +12,9 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     """ Upload a file to the temporary file storage location.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         api = tator.get_api(host, token)
         for progress, response in tator.upload_temporary_file(api, project_id, path):
             print(f"Upload progress: {progress}%")

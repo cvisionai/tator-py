@@ -1,17 +1,19 @@
 import tator
 
 def get_images(file_path, media_or_state, num_images=None, width=None, height=None):
-    """ Loads image saved by :meth:`tator.TatorApi.get_frame` or 
-        :meth:`tator.TatorApi.get_state_graphic` into a list of
-        :class:`PIL.Image.Image`.
+    """ Loads image saved by :meth:`tator.api.get_frame`
+
+    Can also be used with :meth:`tator.api.get_state_graphic`.
+
+    :returns: A list of :class:`PIL.Image.Image`
 
     :param file_path: Path to image file.
     :param media_or_state: :class:`tator.Media` or :class:`tator.State` object.
     :param num_images: [Optional] The number of images to unwrap if this
         is an image saved by :meth:`tator.TatorApi.get_frame`.
-    :param width: [Optional] Width of ROI if this is an image saved by 
+    :param width: [Optional] Width of ROI if this is an image saved by
         :meth:`tator.TatorApi.get_frame`.
-    :param height: [Optional] Height of ROI if this is an image saved by 
+    :param height: [Optional] Height of ROI if this is an image saved by
         :meth:`tator.TatorApi.get_frame`.
     """
     try:
@@ -31,7 +33,7 @@ def get_images(file_path, media_or_state, num_images=None, width=None, height=No
             width = media_or_state.width
         if height is None:
             height = media_or_state.height
-    
+
     # Make list of crops.
     images = []
     for top in range(0, img.height, height):

@@ -2,8 +2,9 @@ def chunked_create(func, project, **kwargs):
     """ Breaks a create_*_list operation into chunks.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         created_ids = []
         for response in tator.chunked_create(api.create_localization_list,
                                              1, localization_spec=my_long_list):

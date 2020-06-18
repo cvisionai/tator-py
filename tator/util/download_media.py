@@ -9,8 +9,9 @@ def download_media(api, media, out_path):
     """ Download a media file from Tator to an off-line location.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         api = tator.get_api(host, token)
         media = api.get_media(media_id)
         out_path = f'/tmp/{media.name}'

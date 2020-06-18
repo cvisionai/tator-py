@@ -15,8 +15,9 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
     """ Uploads multiple media files as an archive.
 
     Example:
-    .. highlight:: python
+
     .. code-block:: python
+
         api = tator.get_api(host, token)
         for progress, response in tator.upload_media_archive(api, project_id, paths):
             print(f"Upload progress: {progress}%")
