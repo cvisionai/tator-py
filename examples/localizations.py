@@ -51,7 +51,7 @@ if __name__ == '__main__':
     # Create the localizations. A maximum of 500 localizations can be created 
     # per request, so we use `chunked_create` to break up our large list.
     created_ids = []
-    for response in tator.chunked_create(tator_api.create_localization_list,
+    for response in tator.util.chunked_create(tator_api.create_localization_list,
                                          project, localization_spec=localizations):
         created_ids += response.id
     logger.info(f"Created {len(created_ids)} localizations!")

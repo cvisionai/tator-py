@@ -40,6 +40,6 @@ if __name__ == '__main__':
     for media in media_list:
         logger.info(f"Downloading {media.name}...")
         file_path = os.path.join(args.save_path, media.name)
-        for progress in tator.download_media(tator_api, media, file_path):
+        for progress in tator.util.download_media(tator_api, media, file_path):
             logger.info(f"Download progress: {progress}%")
     

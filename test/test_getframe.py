@@ -8,7 +8,7 @@ def test_get_frame(host, token, project, video):
 
     frames = [50,100,150]
     file_path = tator_api.get_frame(video, frames=frames)
-    frame_bgr = tator.get_images(file_path, video_obj)
+    frame_bgr = tator.util.get_images(file_path, video_obj)
 
     assert(len(frame_bgr) == 4)
     for frame_data in frame_bgr:

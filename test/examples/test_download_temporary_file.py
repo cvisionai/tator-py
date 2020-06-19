@@ -9,7 +9,7 @@ def test_download_temporary_file(host, token, project, video_file):
     with tempfile.NamedTemporaryFile(mode='w',suffix=".txt") as temp:
         temp.write("foo")
         temp.flush()
-        for progress, response in tator.upload_temporary_file(tator_api, project, temp.name):
+        for progress, response in tator.util.upload_temporary_file(tator_api, project, temp.name):
             print(f"Temporary file upload progress: {progress}%")
         print(response.message)
         temporary_file_id = response.id

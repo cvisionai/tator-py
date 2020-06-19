@@ -30,7 +30,7 @@ if __name__ == '__main__':
     temporary_file = tator_api.get_temporary_file(args.temporary_file_id)
 
     # Download the file.
-    for progress in tator.download_temporary_file(tator_api, temporary_file,
+    for progress in tator.util.download_temporary_file(tator_api, temporary_file,
                                                   args.file_path):
         logger.info(f"Download progress: {progress}%")
     

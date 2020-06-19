@@ -14,7 +14,7 @@ def test_transcode_fault_handling(host, token, project):
                                                         'type':200,
                                                         'uid':str(uuid1()),
                                                         'url':"blah"})
-    except tator.exceptions.ApiException as e:
+    except Exception as e:
         exception = True
         code = e.status
 

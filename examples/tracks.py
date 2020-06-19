@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def random_box(video, type_id, frame):
     """ Returns random localization spec for given video object and frame.
 
-    :param video: :class:`tator.Media` object.
+    :param video: :class:`tator.models.Media` object.
     :param type_id: Localization type ID.
     :returns: Random localization spec.
     """
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     # Create one localization per frame.
     localizations = [random_box(video, loc_type_id, frame) for frame in range(video.num_frames)] 
     localization_ids = []
-    for response in tator.chunked_create(tator_api.create_localization_list,
+    for response in tator.util.chunked_create(tator_api.create_localization_list,
                                          video_type.project, localization_spec=localizations):
         localization_ids += response.id
     logger.info(f"Created {len(localization_ids)} localizations!")
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         'Label': f'Track {int(idx / 10)}', # Providing values for attributes is optional
     } for idx in range(0, len(localization_ids), 10)]
     state_ids = []
-    for response in tator.chunked_create(tator_api.create_state_list,
+    for response in tator.util.chunked_create(tator_api.create_state_list,
                                          video_type.project, state_spec=states):
         state_ids += response.id
     logger.info(f"Created {len(state_ids)} tracks!")
@@ -96,4 +96,4 @@ if __name__ == '__main__':
     # Tiled images can be detiled using the get_images utility. It returns
     # a list of PIL.Image objects.
     track = tator_api.get_state(state_ids[0])
-    images = tator.get_images(image_path, track)
+    images = tator.util.get_images(image_path, track)

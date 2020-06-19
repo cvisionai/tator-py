@@ -29,10 +29,10 @@ if __name__ == '__main__':
     # The get_images utility can be used to retrieve individual frames from
     # the tiled output image. The returned value is a list of PIL.Image.
     video = tator_api.get_media(args.video_id)
-    images = tator.get_images(image_path, video)
+    images = tator.util.get_images(image_path, video)
 
     # Region of interest can also be specified. This will retrieve the 100x100 
     # square in the top left of the frame (format is w:h:x:y).
     image_path = tator_api.get_frame(args.video_id, frames=[0, 50, 100, 150],
                                       roi='100:100:0:0')
-    roi_images = tator.get_images(image_path, video, width=100, height=100)
+    roi_images = tator.util.get_images(image_path, video, width=100, height=100)

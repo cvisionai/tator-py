@@ -42,7 +42,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
         for _ in range(num_states)
     ]
     state_ids = []
-    for response in tator.chunked_create(tator_api.create_state_list,
+    for response in tator.util.chunked_create(tator_api.create_state_list,
                                          project, state_spec=states):
         state_ids += response.id
     assert len(state_ids) == len(states)
@@ -51,24 +51,24 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
     response = tator_api.create_state_list(project, state_spec=[state])
-    assert isinstance(response, tator.CreateListResponse)
+    assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]
 
     # Patch single state.
     patch = random_state(project, state_type, video_obj)
     response = tator_api.update_state(state_id, state_update=patch)
-    assert isinstance(response, tator.MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
     # Get single state.
     updated_state = tator_api.get_state(state_id)
-    assert isinstance(updated_state, tator.State)
+    assert isinstance(updated_state, tator.models.State)
     assert_close_enough(patch, updated_state, exclude)
     
     # Delete single state.
     response = tator_api.delete_state(state_id)
-    assert isinstance(response, tator.MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
     # ES can be slow at indexing so wait for a bit.
@@ -80,19 +80,19 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     params = {'media_id': [video], 'type': state_type}
     response = tator_api.update_state_list(project, **params,
                                            attribute_bulk_update=bulk_patch)
-    assert isinstance(response, tator.MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
     # Verify all states have been updated.
     states = tator_api.get_state_list(project, **params)
-    dataframe = tator.to_dataframe(states)
+    dataframe = tator.util.to_dataframe(states)
     assert(len(states)==len(dataframe))
     for state in states:
         assert_close_enough(bulk_patch, state, exclude)
     
     # Delete all state.
     status = tator_api.delete_state_list(project, **params)
-    assert isinstance(response, tator.MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
     time.sleep(1)
 
     # Verify all states are gone.

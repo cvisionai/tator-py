@@ -24,11 +24,11 @@ def get_images(file_path, media_or_state, num_images=None, width=None, height=No
     img = Image.open(file_path)
 
     # Get tile width/height.
-    if isinstance(media_or_state, tator.State):
+    if isinstance(media_or_state, tator.models.State):
         num_localizations = len(media_or_state.localizations)
         width = int(img.width / num_localizations)
         height = img.height
-    elif isinstance(media_or_state, tator.Media):
+    elif isinstance(media_or_state, tator.models.Media):
         if width is None:
             width = media_or_state.width
         if height is None:

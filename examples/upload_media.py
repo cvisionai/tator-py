@@ -24,7 +24,7 @@ if __name__ == '__main__':
     tator_api = tator.get_api(args.host, args.token)
 
     # Upload the media.
-    for progress, response in tator.upload_media(tator_api, args.type_id, args.media_path):
+    for progress, response in tator.util.upload_media(tator_api, args.type_id, args.media_path):
         logger.info(f"Upload progress: {progress}%")
     logger.info(response.message)
     

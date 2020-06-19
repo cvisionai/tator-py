@@ -20,7 +20,7 @@ def download_temporary_file(api, temporary_file, out_path):
             print(f"Download progress: {progress}%")
 
     :param api: :class:`tator.TatorApi` object.
-    :param temporary_file: :class:`tator.TemporaryFile` object.
+    :param temporary_file: :class:`tator.models.TemporaryFile` object.
     :param path-like out_path: Path to where to download.
     :returns: Generator that yields progress (0-100).
     """

@@ -29,7 +29,7 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     :param chunk_size: [Optional] Chunk size in bytes. Default is 100MB.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
-        is the response object from :meth:`tator.TatorApi.create_temporary_file`.
+        is the response object from :meth:`tator.util.TatorApi.create_temporary_file`.
     """
     if name is None:
         name = os.path.basename(path)

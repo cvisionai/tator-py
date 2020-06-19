@@ -156,7 +156,7 @@ def video(request, project, video_type, video_file):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    for progress, response in tator.upload_media(tator_api, video_type, video_file):
+    for progress, response in tator.util.upload_media(tator_api, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:

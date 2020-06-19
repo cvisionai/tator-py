@@ -33,9 +33,9 @@ if __name__ == '__main__':
 
     # Upload the media.
     batch_num = 0
-    for batch in tator.chunked_file_list(paths):
+    for batch in tator.util.chunked_file_list(paths):
         print(f"Uploading file {batch_num*100} / {len(paths)}")
-        for progress, response in tator.upload_media_archive(tator_api, args.project_id, batch):
+        for progress, response in tator.util.upload_media_archive(tator_api, args.project_id, batch):
             logger.info(f"Upload progress: {progress}%")
         logger.info(response.message)
         batch_num += 1
