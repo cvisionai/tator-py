@@ -15,7 +15,7 @@ def download_media(api, media, out_path):
         api = tator.get_api(host, token)
         media = api.get_media(media_id)
         out_path = f'/tmp/{media.name}'
-        for progress in tator.download_media(api, media, out_path):
+        for progress in tator.util.download_media(api, media, out_path):
             print(f"Download progress: {progress}%")
 
     :param api: :class:`tator.TatorApi` object.

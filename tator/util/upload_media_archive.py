@@ -19,7 +19,7 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
     .. code-block:: python
 
         api = tator.get_api(host, token)
-        for progress, response in tator.upload_media_archive(api, project_id, paths):
+        for progress, response in tator.util.upload_media_archive(api, project_id, paths):
             print(f"Upload progress: {progress}%")
         print(response.message)
 

@@ -7,9 +7,9 @@ def chunked_file_list(paths, chunk_size=100):
 
         api = tator.get_api(host, token)
         batch_num = 0
-        for batch in tator.chunked_file_list(paths):
+        for batch in tator.util.chunked_file_list(paths):
             print(f"Uploading file {batch_num*100} / {len(paths)}")
-            for progress, response in tator.upload_media_archive(api, project_id, batch):
+            for progress, response in tator.util.upload_media_archive(api, project_id, batch):
                 print(f"Upload progress: {progress}%")
             print(response.message)
             batch_num += 1

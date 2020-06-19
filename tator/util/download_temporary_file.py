@@ -15,7 +15,7 @@ def download_temporary_file(api, temporary_file, out_path):
         api = tator.get_api(host, token)
         temporary_file = api.get_temporary_file(temporary_file_id)
         out_path = f'/tmp/{temporary_file.name}'
-        for progress in tator.download_temporary_file(api, temporary_file,
+        for progress in tator.util.download_temporary_file(api, temporary_file,
                                                       out_path):
             print(f"Download progress: {progress}%")
 

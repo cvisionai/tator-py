@@ -18,7 +18,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     .. code-block:: python
 
         api = tator.get_api(host, token)
-        for progress, response in tator.upload_media(api, type_id, path):
+        for progress, response in tator.util.upload_media(api, type_id, path):
             print(f"Upload progress: {progress}%")
         print(response.message)
 

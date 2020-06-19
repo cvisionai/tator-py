@@ -16,7 +16,7 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     .. code-block:: python
 
         api = tator.get_api(host, token)
-        for progress, response in tator.upload_temporary_file(api, project_id, path):
+        for progress, response in tator.util.upload_temporary_file(api, project_id, path):
             print(f"Upload progress: {progress}%")
         print(response.message)
 
