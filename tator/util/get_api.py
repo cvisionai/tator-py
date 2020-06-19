@@ -10,6 +10,7 @@ def get_api(host='https://www.tatorapp.com', token=os.getenv('TATOR_TOKEN')):
     """
     config = pytator.Configuration()
     config.host = host
-    config.api_key['Authorization'] = token
-    config.api_key_prefix['Authorization'] = 'Token'
+    if token:
+        config.api_key['Authorization'] = token
+        config.api_key_prefix['Authorization'] = 'Token'
     return pytator.TatorApi(pytator.ApiClient(config))
