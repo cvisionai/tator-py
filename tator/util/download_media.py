@@ -36,7 +36,8 @@ def download_media(api, media, out_path):
             url = urljoin(host, streaming[0].path)
     else:
         # Legacy way of using streaming prior to streaming
-        url = os.path.join("media", media.file)
+        # and images
+        url = f"media/{media.file}"
         if media.original:
             url = os.path.join("data/raw", media.original)
         url = urljoin(host, url)
