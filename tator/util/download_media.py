@@ -39,7 +39,7 @@ def download_media(api, media, out_path):
         # and images
         url = f"media/{media.file}"
         if media.original:
-            url = os.path.join("data/raw", media.original)
+            url = f"data/raw/{media.original}"
         url = urljoin(host, url)
 
     # Supply token here for eventual media authorization
