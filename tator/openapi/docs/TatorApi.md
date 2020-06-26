@@ -47,6 +47,7 @@ Method | HTTP request | Description
 [**get_leaf_type**](TatorApi.md#get_leaf_type) | **GET** /rest/LeafType/{id} | 
 [**get_leaf_type_list**](TatorApi.md#get_leaf_type_list) | **GET** /rest/LeafTypes/{project} | 
 [**get_localization**](TatorApi.md#get_localization) | **GET** /rest/Localization/{id} | 
+[**get_localization_graphic**](TatorApi.md#get_localization_graphic) | **GET** /rest/LocalizationGraphic/{id} | 
 [**get_localization_list**](TatorApi.md#get_localization_list) | **GET** /rest/Localizations/{project} | 
 [**get_localization_type**](TatorApi.md#get_localization_type) | **GET** /rest/LocalizationType/{id} | 
 [**get_localization_type_list**](TatorApi.md#get_localization_type_list) | **GET** /rest/LocalizationTypes/{project} | 
@@ -3649,6 +3650,94 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful retrieval of localization. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_localization_graphic**
+> file get_localization_graphic(id, mode=mode, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
+
+
+
+Get localization graphic from a media object. 
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a localization.
+mode = 'create' # str | Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create (optional) (default to 'create')
+force_scale = 'force_scale_example' # str | Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100  (optional)
+use_default_margins = True # bool | Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create.  (optional) (default to True)
+margin_x = 56 # int | Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false.  (optional)
+margin_y = 56 # int | Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false.  (optional)
+
+    try:
+        api_response = api_instance.get_localization_graphic(id, mode=mode, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->get_localization_graphic: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a localization. | 
+ **mode** | **str**| Set to &#39;existing&#39; to use existing thumbnail or &#39;create&#39; to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create | [optional] [default to &#39;create&#39;]
+ **force_scale** | **str**| Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode &#x3D; create. Example: 100x100  | [optional] 
+ **use_default_margins** | **bool**| Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode &#x3D; create.  | [optional] [default to True]
+ **margin_x** | **int**| Pixel margin to apply to the height of the localization when generating the image. Valid only if mode &#x3D; create. Valid only if use_default_margins is false.  | [optional] 
+ **margin_y** | **int**| Pixel margin to apply to the width of the localization when generating the image. Valid only if mode &#x3D; create. Valid only if use_default_margins is false.  | [optional] 
+
+### Return type
+
+**file**
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: image/*
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful retrieval of localization graphic. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 

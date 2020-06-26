@@ -5659,6 +5659,148 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
+    def get_localization_graphic(self, id, **kwargs):
+        """get_localization_graphic
+
+        Get localization graphic from a media object. 
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_localization_graphic(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a localization. (required)
+        :param str mode: Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create
+        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100 
+        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create. 
+        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.file`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.get_localization_graphic_with_http_info(id, **kwargs)  # noqa: E501
+
+    def get_localization_graphic_with_http_info(self, id, **kwargs):  # noqa: E501
+        """
+        Get localization graphic from a media object.   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_localization_graphic_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a localization. (required)
+        :param str mode: Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create
+        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100 
+        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create. 
+        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.file`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id',
+            'mode',
+            'force_scale',
+            'use_default_margins',
+            'margin_x',
+            'margin_y'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_localization_graphic" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `get_localization_graphic`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+        if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
+            query_params.append(('mode', local_var_params['mode']))  # noqa: E501
+        if 'force_scale' in local_var_params and local_var_params['force_scale'] is not None:  # noqa: E501
+            query_params.append(('force_scale', local_var_params['force_scale']))  # noqa: E501
+        if 'use_default_margins' in local_var_params and local_var_params['use_default_margins'] is not None:  # noqa: E501
+            query_params.append(('use_default_margins', local_var_params['use_default_margins']))  # noqa: E501
+        if 'margin_x' in local_var_params and local_var_params['margin_x'] is not None:  # noqa: E501
+            query_params.append(('margin_x', local_var_params['margin_x']))  # noqa: E501
+        if 'margin_y' in local_var_params and local_var_params['margin_y'] is not None:  # noqa: E501
+            query_params.append(('margin_y', local_var_params['margin_y']))  # noqa: E501
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['image/*'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/LocalizationGraphic/{id}', 'GET',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='file',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def get_localization_list(self, project, **kwargs):
         """get_localization_list
 
