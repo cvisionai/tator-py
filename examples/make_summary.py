@@ -11,7 +11,12 @@ import progressbar
 import tator
 import tator_openapi
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(
+    filename='make_summary.logs',
+    filemode='a',
+    format='%(asctime)s %(levelname)s:%(message)s',
+    datefmt='%m/%d/%Y %I:%M:%S %p',
+    level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # TODO This probably should be based on the OS, but this number is a conservative one
@@ -252,10 +257,6 @@ def processSection(
         Images of the localizations created in the image folder
         .csv report of the section created
     """
-
-    # #TODO Should pipe logging errors/warnings to a different file
-    errors = []
-
     # Display a progress bar in the console based on the medias processed
     bar = progressbar.ProgressBar()
 
@@ -286,20 +287,16 @@ def processSection(
                 except Exception:
                     error_msg = f'Error encountered processing localization {localization.id}'
                     logging.error(error_msg)
-                    errors.append(error_msg)
 
                     error_msg = traceback.format_exc()
                     logging.error(error_msg)
-                    errors.append(error_msg)
 
         except Exception:
                 error_msg = f'Error encountered processing media {media.id}'
                 logging.error(error_msg)
-                errors.append(error_msg)
 
                 error_msg = traceback.format_exc()
                 logging.error(error_msg)
-                errors.append(error_msg)
 
 
     # Create the final .csv report
@@ -312,14 +309,6 @@ def processSection(
 
     df = pd.DataFrame(data=report_data, columns=column_names)
     df.to_csv(output_name, index=False)
-
-    # Create the error file if needed
-    if len(errors) > 0:
-        error_filename = f'make_summary_{section_name}.err'
-        with open(error_filename) as file_handle:
-            file_handle.write()
-            for error in errors:
-                file_handle.write(error)
 
 def processProject(
         host: str,
