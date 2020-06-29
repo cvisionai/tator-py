@@ -7,8 +7,11 @@ from uuid import uuid1
 from progressbar import progressbar
 
 from ..util import md5sum
+from ..util import get_api
 
-from .transcode import transcode
+from .transcode import convert_streaming
+from .transcode import convert_archival
+from .transcode import convert_audio
 from .make_thumbnails import make_thumbnails
 from .upload_transcoded_video import upload_transcoded_video
 
@@ -17,8 +20,7 @@ def parse_args():
     parser.add_argument('path', type=str, help='Path to directory containing video files, or a video file.')
     parser.add_argument('--extension', type=str, default='mp4', help='File extension to upload. '
                                                                      'Ignored if path is a file.')
-    parser.add_argument('--tus_url', type=str, default='https://www.tatorapp.com/files/', help='TUS URL.')
-    parser.add_argument('--url', type=str, default='https://www.tatorapp.com/rest', help='REST API URL.')
+    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
@@ -47,18 +49,46 @@ def transcode_single(path, args, gid):
     # Get base filename.
     name = os.path.basename(paths['original'])
 
+    # Create the media object.
+    api = get_api(args.host, args.token)
+    response = api.create_media(args.project, media_spec={
+        'type': args.type,
+        'section': args.section,
+        'name': name,
+        'md5': md5,
+    })
+    assert isinstance(response, tator.models.CreateResponse)
+    media_id = response.id
+
+    # Get media type object.
+    media_type = api.get_media_type(args.type)
+    assert isinstance(media_type, tator.models.MediaType)
+
+    # Determine transcodes that need to be done.
+    workloads = determine_transcode(path, archive_config=None)
+
     # Transcode the video file.
-    transcode(paths['original'], paths['transcoded'])
+    for workload in workloads:
+        category = workload['category']
+        del workload['category']
+        if category == 'streaming':
+            convert_streaming(**workload, outpath=paths['transcoded'])
+        elif category == 'archival':
+            convert_archival(**workload, outpath=paths['transcoded'])
+        elif category == 'audio':
+            convert_audio(**workload, outpath=paths['transcoded'])
     
     # Make thumbnails.
     make_thumbnails(paths['original'], paths['thumbnail'], paths['thumbnail_gif'])
     
     # Upload the results.
+    """
     uid = str(uuid1())
     upload_transcoded_video(paths['original'], paths['transcoded'],
-                            paths['thumbnail'], paths['thumbnail_gif'], args.tus_url, args.url,
+                            paths['thumbnail'], paths['thumbnail_gif'], args.host,
                             args.token, args.project, args.type, gid, uid, args.section, 
                             name, md5)
+    """
 
 if __name__ == '__main__':
     args = parse_args()
