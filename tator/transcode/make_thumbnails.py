@@ -123,9 +123,8 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     codec, fps, num_frames, width, height = get_metadata(video_path)
 
     # Upload thumbnail and thumbnail gif.
-    tus_url = os.path.join(host, '/files/')
-    thumbnail_url = upload_file(thumb_path, tus_url)
-    thumbnail_gif_url = upload_file(thumb_gif_path, tus_url)
+    thumbnail_url = upload_file(thumb_path, host)
+    thumbnail_gif_url = upload_file(thumb_gif_path, host)
 
     # Update the media object.
     api = tator.get_api(host, token)
