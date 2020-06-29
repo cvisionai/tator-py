@@ -173,7 +173,22 @@ def processLocalization(
                 margin_y=50)
 
         else:
-            image_path = tator_api.get_localization_graphic(localization.id)
+            try:
+                image_path = tator_api.get_localization_graphic(localization.id)
+            except:
+                # This is a band-aid that should not happen anymore if the endpoint is updated
+                # on the server. There was an issue with the localization graphic endpoint with
+                # localizations that might result in a 1 pixel width and/or height. This would
+                # result in an exception and this try/except block attempts to redo the graphic
+                # with a small margin around the presumable box. If another exception occurs,
+                # then that is a problem that should be raised.
+                #
+                # #TODO It's worth revisiting removing this down the road based on the comments above.
+                image_path = tator_api.get_localization_graphic(
+                    localization.id,
+                    use_default_margins=False,
+                    margin_x=1,
+                    margin_y=1)
 
         # The thumbnail created is a temporary file. Move it using a specific filename/path.
         # The filename of the thumbnail will have the following format:
