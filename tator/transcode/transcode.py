@@ -78,14 +78,22 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     f"[0:v:0]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
                     "-map", f"[outv{ridx}]",
                     output_file])
-        # Default action if no archive config is upload raw video.
+        
+        segments_file = os.path.join(outpath, f"{resolution}.json")
+        make_fragment_info(output_file, segments_file)
+
+        logger.info("Uploading transcoded file...")
         url = upload_file(output_file, host)
        
+        logger.info("Uploading segments file...")
+        segments_url = upload_file(segments_file, host)
+
         # Move video file with the api.
         api = tator.get_api(host, token)
         response = tator.move_video(media_id, move_video_spec={
             'media_files': {'archival': make_video_definition(path)},
-            'upload_url': url,
+            'url': url,
+            'segments_url': segments_url,
         })
         assert isinstance(response, tator.models.CreateResponse)
     logger.info('ffmpeg cmd = {}'.format(cmd))
@@ -100,7 +108,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height, r
     api = tator.get_api(host, token)
     response = tator.move_video(media_id, move_video_spec={
         'media_files': {'archival': make_video_definition(path)},
-        'upload_url': url,
+        'url': url,
     })
     assert isinstance(response, tator.models.CreateResponse)
 
@@ -144,7 +152,7 @@ def convert_audio(host, token, media_id, path, outpath):
     api = tator.get_api(host, token)
     response = tator.move_video(media_id, move_video_spec={
         'media_files': {'audio': make_audio_definition(output_file)},
-        'upload_url': url,
+        'url': url,
     })
     assert isinstance(response, tator.models.CreateResponse)
 
