@@ -77,7 +77,8 @@ def processLocalization(
         localization: tator_openapi.models.localization.Localization,
         localization_types_df: pd.DataFrame,
         attribute_types_info: dict,
-        image_folder: str) -> dict:
+        image_folder: str,
+        disable_thumbnails: bool) -> dict:
     """ Returns a dictionary of localization properties and generates a thumbnail image
 
     Args:
@@ -90,6 +91,7 @@ def processLocalization(
         localization_types_df: DataFrame of localization types associated with the localization
         attribute_types_info: Output of getAttributeTypeData
         image_folder: Folder that will contain the thumbnail image
+        disable_thumbnails: Don't create thumbnails if true
 
     Returns:
         Dictionary of localization data. Keys are localization properties.
@@ -159,70 +161,76 @@ def processLocalization(
     # Save the attributes of the localization specific to the localization type
     datum.update(localization.attributes)
 
-    # Lastly, create the thumbnail of this localization and move it to the user defined location
-    # If the localization is a dot, take a large enough image segment, otherwise use the default marigins
-    if dtype =='dot':
-        image_path = tator_api.get_localization_graphic(
-            localization.id,
-            use_default_margins=False,
-            margin_x=50,
-            margin_y=50)
+    if not disable_thumbnails:
+        # Lastly, create the thumbnail of this localization and move it to the user defined location
+        # If the localization is a dot, take a large enough image segment, 
+        # otherwise use the default marigins
+        if dtype =='dot':
+            image_path = tator_api.get_localization_graphic(
+                localization.id,
+                use_default_margins=False,
+                margin_x=50,
+                margin_y=50)
 
+        else:
+            image_path = tator_api.get_localization_graphic(localization.id)
+
+        # The thumbnail created is a temporary file. Move it using a specific filename/path.
+        # The filename of the thumbnail will have the following format:
+        # - primary attribute (if available, order == 0)
+        # - media name
+        # - frame number
+        # - localization id
+        # - all other attributes
+        # - .png
+        target_filename = ''
+        main_basename = f'{sanitizeString(media.name)}_Frame_{localization.frame}_Id_{localization.id}'
+        extension = '.png'
+        set_main_basename = False
+        if len(attribute_types_info[localization.meta]) > 0:
+            # Since we have a sorted attribute type dataframe, if the first entry doesn't
+            # have a 'primary attribute flag' (i.e. order == 0), we can just iterate over
+            # the entries.
+            for idx, row in attribute_types_info[localization.meta].iterrows():
+
+                # Not all of the attributes available for a localization will always be used
+                # If it doesn't exist, skip over it
+                attr_name = row['name']
+                if attr_name in localization.attributes:
+                    attr_val = str(localization.attributes[attr_name])
+                else:
+                    continue
+
+                if row['order'] == 0:
+                    target_filename += f"{sanitizeString(attr_val)}_"
+
+                else:
+                    target_filename += f"{sanitizeString(row['name'])}_{sanitizeString(attr_val)}_"
+
+                if not set_main_basename:
+                    target_filename += main_basename
+                    set_main_basename = True
+
+        else:
+            # In the case where there are no attributes associated with the localizaiton, just use
+            # the base string defined earlier.
+            target_filename = main_basename
+
+        # Move the thumbnail using the new filename and save it to the outgoing datum
+        if len(target_filename) > MAX_FILENAME_LEN:
+            new_target_filename = target_filename[:MAX_FILENAME_LEN]
+            log_msg = f"Trimming image filename: {target_filename} to {new_target_filename}"
+            logging.warning(log_msg)
+            target_filename = new_target_filename
+
+        target_filename += '.png'
+        target_path = os.path.join(image_folder, target_filename)
+        os.makedirs(image_folder, exist_ok=True)
+        shutil.move(image_path, target_path)
     else:
-        image_path = tator_api.get_localization_graphic(localization.id)
+        # No thumbnail created. Empty string for the outgoing datum
+        target_path = ''
 
-    # The thumbnail created is a temporary file. Move it using a specific filename/path.
-    # The filename of the thumbnail will have the following format:
-    # - primary attribute (if available, order == 0)
-    # - media name
-    # - frame number
-    # - localization id
-    # - all other attributes
-    # - .png
-    target_filename = ''
-    main_basename = f'{sanitizeString(media.name)}_Frame_{localization.frame}_Id_{localization.id}'
-    extension = '.png'
-    set_main_basename = False
-    if len(attribute_types_info[localization.meta]) > 0:
-        # Since we have a sorted attribute type dataframe, if the first entry doesn't
-        # have a 'primary attribute flag' (i.e. order == 0), we can just iterate over
-        # the entries.
-        for idx, row in attribute_types_info[localization.meta].iterrows():
-
-            # Not all of the attributes available for a localization will always be used
-            # If it doesn't exist, skip over it
-            attr_name = row['name']
-            if attr_name in localization.attributes:
-                attr_val = str(localization.attributes[attr_name])
-            else:
-                continue
-
-            if row['order'] == 0:
-                target_filename += f"{sanitizeString(attr_val)}_"
-
-            else:
-                target_filename += f"{sanitizeString(row['name'])}_{sanitizeString(attr_val)}_"
-
-            if not set_main_basename:
-                target_filename += main_basename
-                set_main_basename = True
-
-    else:
-        # In the case where there are no attributes associated with the localizaiton, just use
-        # the base string defined earlier.
-        target_filename = main_basename
-
-    # Move the thumbnail using the new filename and save it to the outgoing datum
-    if len(target_filename) > MAX_FILENAME_LEN:
-        new_target_filename = target_filename[:MAX_FILENAME_LEN]
-        log_msg = f"Trimming image filename: {target_filename} to {new_target_filename}"
-        logging.warning(log_msg)
-        target_filename = new_target_filename
-
-    target_filename += '.png'
-    target_path = os.path.join(image_folder, target_filename)
-    os.makedirs(image_folder, exist_ok=True)
-    shutil.move(image_path, target_path)
     datum.update({'thumbnail': target_path})
 
     return datum
@@ -237,7 +245,8 @@ def processSection(
         attribute_types_info: dict,
         column_names: list,
         summary_filename: str=None,
-        image_folder: str='images') -> None:
+        image_folder: str='images',
+        disable_thumbnails: bool=False) -> None:
     """ Creates the report for the given project section
 
     Args:
@@ -252,6 +261,7 @@ def processSection(
         summary_filename: File name to use for the summary report
             If None, then section_name_summary.csv is used
         image_folder: Folder that will contain the thumbnail image
+        disable_thumbnails: Don't create thumbnails if true
 
     Postconditions:
         Images of the localizations created in the image folder
@@ -281,7 +291,8 @@ def processSection(
                         localization=localization,
                         localization_types_df=localization_types_df,
                         attribute_types_info=attribute_types_info,
-                        image_folder=image_folder)
+                        image_folder=image_folder,
+                        disable_thumbnails=disable_thumbnails)
                     report_data.append(datum)
 
                 except Exception:
@@ -315,7 +326,8 @@ def processProject(
         token: str,
         project_id: int,
         section_name: str=None,
-        summary_filename: str=None) -> None:
+        summary_filename: str=None,
+        disable_thumbnails: bool=False) -> None:
     """ Creates the sumamry report and thumbnail image for the given project/section
 
     Args:
@@ -327,6 +339,7 @@ def processProject(
         summary_filename: File name to use for the summary report
             If None, then section_name_summary.csv is used
             Only valid if section_name is not None
+        disable_thumbnails: Don't create thumbnails if true
 
     Postconditions:
         Images of localizations created in images/
@@ -366,9 +379,8 @@ def processProject(
 
     for loc_type in localization_types:
         for attr in loc_type.attribute_types:
-            if attr not in column_names:
+            if attr.name not in column_names:
                 column_names.append(attr.name)
-
 
     # Grab the localization types again associated with this section.
     # Convert this to a dataframe to make it easier to use.
@@ -423,7 +435,8 @@ def processProject(
             column_names=column_names,
             localization_types_df=localization_types_df,
             attribute_types_info=attribute_types_info,
-            summary_filename=section_sumamry_filename)
+            summary_filename=section_sumamry_filename,
+            disable_thumbnails=disable_thumbnails)
 
 def main():
     """ Main routine of this script
@@ -437,6 +450,8 @@ def main():
         help='Optional section name to process')
     parser.add_argument('--output', type=str, required=False,
         help='Filename of section csv report. Only use if section was provided.')
+    parser.add_argument('--disable-thumbnails', action='store_true',
+        help='Ignore thumbnail creation, no thumbnails reported.')
     args = parser.parse_args()
 
     # Create the report(s) and thumbnail(s)
@@ -445,7 +460,8 @@ def main():
         token=args.token,
         project_id=args.project,
         section_name=args.section,
-        summary_filename=args.output)
+        summary_filename=args.output,
+        disable_thumbnails=args.disable_thumbnails)
 
 if __name__=="__main__":
 
