@@ -37,7 +37,9 @@ class VideoDefinition(object):
         'http_auth': 'str',
         'path': 'str',
         'resolution': 'list[int]',
-        'segment_info': 'str'
+        'segment_info': 'str',
+        'segments_url': 'str',
+        'url': 'str'
     }
 
     attribute_map = {
@@ -48,10 +50,12 @@ class VideoDefinition(object):
         'http_auth': 'http_auth',
         'path': 'path',
         'resolution': 'resolution',
-        'segment_info': 'segment_info'
+        'segment_info': 'segment_info',
+        'segments_url': 'segments_url',
+        'url': 'url'
     }
 
-    def __init__(self, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, resolution=None, segment_info=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, resolution=None, segment_info=None, segments_url=None, url=None, local_vars_configuration=None):  # noqa: E501
         """VideoDefinition - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -65,6 +69,8 @@ class VideoDefinition(object):
         self._path = None
         self._resolution = None
         self._segment_info = None
+        self._segments_url = None
+        self._url = None
         self.discriminator = None
 
         self.codec = codec
@@ -81,6 +87,10 @@ class VideoDefinition(object):
         self.resolution = resolution
         if segment_info is not None:
             self.segment_info = segment_info
+        if segments_url is not None:
+            self.segments_url = segments_url
+        if url is not None:
+            self.url = url
 
     @property
     def codec(self):
@@ -192,7 +202,7 @@ class VideoDefinition(object):
     @property
     def path(self):
         """
-        Path to file.
+        Relative URL to the file.
 
         :return: The path of this VideoDefinition. 
         :rtype: str
@@ -202,7 +212,7 @@ class VideoDefinition(object):
     @path.setter
     def path(self, path):
         """
-        Path to file.
+        Relative URL to the file.
 
         :param path: The path of this VideoDefinition.
         :type: str
@@ -253,6 +263,48 @@ class VideoDefinition(object):
         """
 
         self._segment_info = segment_info
+
+    @property
+    def segments_url(self):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the segments file. It is is used to determine the src path.
+
+        :return: The segments_url of this VideoDefinition. 
+        :rtype: str
+        """
+        return self._segments_url
+
+    @segments_url.setter
+    def segments_url(self, segments_url):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the segments file. It is is used to determine the src path.
+
+        :param segments_url: The segments_url of this VideoDefinition.
+        :type: str
+        """
+
+        self._segments_url = segments_url
+
+    @property
+    def url(self):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the video file. It is is used to determine the src path.
+
+        :return: The url of this VideoDefinition. 
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the video file. It is is used to determine the src path.
+
+        :param url: The url of this VideoDefinition.
+        :type: str
+        """
+
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

@@ -31,35 +31,62 @@ class MediaUpdate(object):
     """
     openapi_types = {
         'attributes': 'dict(str, object)',
+        'codec': 'str',
+        'fps': 'float',
+        'height': 'int',
         'last_edit_end': 'datetime',
         'last_edit_start': 'datetime',
         'media_files': 'MediaFiles',
-        'name': 'str'
+        'name': 'str',
+        'num_frames': 'int',
+        'thumbnail_gif_url': 'str',
+        'thumbnail_url': 'str',
+        'width': 'int'
     }
 
     attribute_map = {
         'attributes': 'attributes',
+        'codec': 'codec',
+        'fps': 'fps',
+        'height': 'height',
         'last_edit_end': 'last_edit_end',
         'last_edit_start': 'last_edit_start',
         'media_files': 'media_files',
-        'name': 'name'
+        'name': 'name',
+        'num_frames': 'num_frames',
+        'thumbnail_gif_url': 'thumbnail_gif_url',
+        'thumbnail_url': 'thumbnail_url',
+        'width': 'width'
     }
 
-    def __init__(self, attributes=None, last_edit_end=None, last_edit_start=None, media_files=None, name=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, codec=None, fps=None, height=None, last_edit_end=None, last_edit_start=None, media_files=None, name=None, num_frames=None, thumbnail_gif_url=None, thumbnail_url=None, width=None, local_vars_configuration=None):  # noqa: E501
         """MediaUpdate - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._attributes = None
+        self._codec = None
+        self._fps = None
+        self._height = None
         self._last_edit_end = None
         self._last_edit_start = None
         self._media_files = None
         self._name = None
+        self._num_frames = None
+        self._thumbnail_gif_url = None
+        self._thumbnail_url = None
+        self._width = None
         self.discriminator = None
 
         if attributes is not None:
             self.attributes = attributes
+        if codec is not None:
+            self.codec = codec
+        if fps is not None:
+            self.fps = fps
+        if height is not None:
+            self.height = height
         if last_edit_end is not None:
             self.last_edit_end = last_edit_end
         if last_edit_start is not None:
@@ -68,6 +95,14 @@ class MediaUpdate(object):
             self.media_files = media_files
         if name is not None:
             self.name = name
+        if num_frames is not None:
+            self.num_frames = num_frames
+        if thumbnail_gif_url is not None:
+            self.thumbnail_gif_url = thumbnail_gif_url
+        if thumbnail_url is not None:
+            self.thumbnail_url = thumbnail_url
+        if width is not None:
+            self.width = width
 
     @property
     def attributes(self):
@@ -89,6 +124,69 @@ class MediaUpdate(object):
         """
 
         self._attributes = attributes
+
+    @property
+    def codec(self):
+        """
+        Codec of the original video.
+
+        :return: The codec of this MediaUpdate. 
+        :rtype: str
+        """
+        return self._codec
+
+    @codec.setter
+    def codec(self, codec):
+        """
+        Codec of the original video.
+
+        :param codec: The codec of this MediaUpdate.
+        :type: str
+        """
+
+        self._codec = codec
+
+    @property
+    def fps(self):
+        """
+        Frame rate of the video.
+
+        :return: The fps of this MediaUpdate. 
+        :rtype: float
+        """
+        return self._fps
+
+    @fps.setter
+    def fps(self, fps):
+        """
+        Frame rate of the video.
+
+        :param fps: The fps of this MediaUpdate.
+        :type: float
+        """
+
+        self._fps = fps
+
+    @property
+    def height(self):
+        """
+        Pixel height of the video.
+
+        :return: The height of this MediaUpdate. 
+        :rtype: int
+        """
+        return self._height
+
+    @height.setter
+    def height(self, height):
+        """
+        Pixel height of the video.
+
+        :param height: The height of this MediaUpdate.
+        :type: int
+        """
+
+        self._height = height
 
     @property
     def last_edit_end(self):
@@ -171,6 +269,93 @@ class MediaUpdate(object):
         """
 
         self._name = name
+
+    @property
+    def num_frames(self):
+        """
+        Number of frames in the video.
+
+        :return: The num_frames of this MediaUpdate. 
+        :rtype: int
+        """
+        return self._num_frames
+
+    @num_frames.setter
+    def num_frames(self, num_frames):
+        """
+        Number of frames in the video.
+
+        :param num_frames: The num_frames of this MediaUpdate.
+        :type: int
+        """
+        if (self.local_vars_configuration.client_side_validation and
+                num_frames is not None and num_frames < 0):  # noqa: E501
+            raise ValueError("Invalid value for `num_frames`, must be a value greater than or equal to `0`")  # noqa: E501
+
+        self._num_frames = num_frames
+
+    @property
+    def thumbnail_gif_url(self):
+        """
+        Upload URL for the thumbnail gif.
+
+        :return: The thumbnail_gif_url of this MediaUpdate. 
+        :rtype: str
+        """
+        return self._thumbnail_gif_url
+
+    @thumbnail_gif_url.setter
+    def thumbnail_gif_url(self, thumbnail_gif_url):
+        """
+        Upload URL for the thumbnail gif.
+
+        :param thumbnail_gif_url: The thumbnail_gif_url of this MediaUpdate.
+        :type: str
+        """
+
+        self._thumbnail_gif_url = thumbnail_gif_url
+
+    @property
+    def thumbnail_url(self):
+        """
+        Upload URL for the thumbnail.
+
+        :return: The thumbnail_url of this MediaUpdate. 
+        :rtype: str
+        """
+        return self._thumbnail_url
+
+    @thumbnail_url.setter
+    def thumbnail_url(self, thumbnail_url):
+        """
+        Upload URL for the thumbnail.
+
+        :param thumbnail_url: The thumbnail_url of this MediaUpdate.
+        :type: str
+        """
+
+        self._thumbnail_url = thumbnail_url
+
+    @property
+    def width(self):
+        """
+        Pixel width of the video.
+
+        :return: The width of this MediaUpdate. 
+        :rtype: int
+        """
+        return self._width
+
+    @width.setter
+    def width(self, width):
+        """
+        Pixel width of the video.
+
+        :param width: The width of this MediaUpdate.
+        :type: int
+        """
+
+        self._width = width
 
     def to_dict(self):
         """Returns the model properties as a dict"""

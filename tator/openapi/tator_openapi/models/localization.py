@@ -31,7 +31,6 @@ class Localization(object):
     """
     openapi_types = {
         'attributes': 'dict(str, object)',
-        'created_datetime': 'datetime',
         'email': 'str',
         'frame': 'int',
         'height': 'float',
@@ -39,13 +38,10 @@ class Localization(object):
         'media': 'int',
         'meta': 'int',
         'modified': 'bool',
-        'modified_by': 'int',
-        'modified_datetime': 'datetime',
         'parent': 'float',
         'project': 'int',
         'thumbnail_image': 'str',
         'u': 'float',
-        'user': 'int',
         'v': 'float',
         'version': 'int',
         'width': 'float',
@@ -55,7 +51,6 @@ class Localization(object):
 
     attribute_map = {
         'attributes': 'attributes',
-        'created_datetime': 'created_datetime',
         'email': 'email',
         'frame': 'frame',
         'height': 'height',
@@ -63,13 +58,10 @@ class Localization(object):
         'media': 'media',
         'meta': 'meta',
         'modified': 'modified',
-        'modified_by': 'modified_by',
-        'modified_datetime': 'modified_datetime',
         'parent': 'parent',
         'project': 'project',
         'thumbnail_image': 'thumbnail_image',
         'u': 'u',
-        'user': 'user',
         'v': 'v',
         'version': 'version',
         'width': 'width',
@@ -77,14 +69,13 @@ class Localization(object):
         'y': 'y'
     }
 
-    def __init__(self, attributes=None, created_datetime=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, modified_by=None, modified_datetime=None, parent=None, project=None, thumbnail_image=None, u=None, user=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, email=None, frame=None, height=None, id=None, media=None, meta=None, modified=None, parent=None, project=None, thumbnail_image=None, u=None, v=None, version=None, width=None, x=None, y=None, local_vars_configuration=None):  # noqa: E501
         """Localization - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._attributes = None
-        self._created_datetime = None
         self._email = None
         self._frame = None
         self._height = None
@@ -92,13 +83,10 @@ class Localization(object):
         self._media = None
         self._meta = None
         self._modified = None
-        self._modified_by = None
-        self._modified_datetime = None
         self._parent = None
         self._project = None
         self._thumbnail_image = None
         self._u = None
-        self._user = None
         self._v = None
         self._version = None
         self._width = None
@@ -108,8 +96,6 @@ class Localization(object):
 
         if attributes is not None:
             self.attributes = attributes
-        if created_datetime is not None:
-            self.created_datetime = created_datetime
         if email is not None:
             self.email = email
         if frame is not None:
@@ -123,18 +109,12 @@ class Localization(object):
             self.meta = meta
         if modified is not None:
             self.modified = modified
-        if modified_by is not None:
-            self.modified_by = modified_by
-        if modified_datetime is not None:
-            self.modified_datetime = modified_datetime
         self.parent = parent
         if project is not None:
             self.project = project
         if thumbnail_image is not None:
             self.thumbnail_image = thumbnail_image
         self.u = u
-        if user is not None:
-            self.user = user
         self.v = v
         if version is not None:
             self.version = version
@@ -162,27 +142,6 @@ class Localization(object):
         """
 
         self._attributes = attributes
-
-    @property
-    def created_datetime(self):
-        """
-        Datetime this localization was created.
-
-        :return: The created_datetime of this Localization. 
-        :rtype: datetime
-        """
-        return self._created_datetime
-
-    @created_datetime.setter
-    def created_datetime(self, created_datetime):
-        """
-        Datetime this localization was created.
-
-        :param created_datetime: The created_datetime of this Localization.
-        :type: datetime
-        """
-
-        self._created_datetime = created_datetime
 
     @property
     def email(self):
@@ -338,48 +297,6 @@ class Localization(object):
         self._modified = modified
 
     @property
-    def modified_by(self):
-        """
-        Unique integer identifying the user who last modified this localization.
-
-        :return: The modified_by of this Localization. 
-        :rtype: int
-        """
-        return self._modified_by
-
-    @modified_by.setter
-    def modified_by(self, modified_by):
-        """
-        Unique integer identifying the user who last modified this localization.
-
-        :param modified_by: The modified_by of this Localization.
-        :type: int
-        """
-
-        self._modified_by = modified_by
-
-    @property
-    def modified_datetime(self):
-        """
-        Datetime this localization was last modified.
-
-        :return: The modified_datetime of this Localization. 
-        :rtype: datetime
-        """
-        return self._modified_datetime
-
-    @modified_datetime.setter
-    def modified_datetime(self, modified_datetime):
-        """
-        Datetime this localization was last modified.
-
-        :param modified_datetime: The modified_datetime of this Localization.
-        :type: datetime
-        """
-
-        self._modified_datetime = modified_datetime
-
-    @property
     def parent(self):
         """
         If a clone, the pk of the parent.
@@ -468,27 +385,6 @@ class Localization(object):
             raise ValueError("Invalid value for `u`, must be a value greater than or equal to `-1.0`")  # noqa: E501
 
         self._u = u
-
-    @property
-    def user(self):
-        """
-        Unique integer identifying the user who created this localization.
-
-        :return: The user of this Localization. 
-        :rtype: int
-        """
-        return self._user
-
-    @user.setter
-    def user(self, user):
-        """
-        Unique integer identifying the user who created this localization.
-
-        :param user: The user of this Localization.
-        :type: int
-        """
-
-        self._user = user
 
     @property
     def v(self):

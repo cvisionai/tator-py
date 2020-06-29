@@ -35,7 +35,8 @@ class AudioDefinition(object):
         'codec_mime': 'str',
         'host': 'str',
         'http_auth': 'str',
-        'path': 'str'
+        'path': 'str',
+        'url': 'str'
     }
 
     attribute_map = {
@@ -44,10 +45,11 @@ class AudioDefinition(object):
         'codec_mime': 'codec_mime',
         'host': 'host',
         'http_auth': 'http_auth',
-        'path': 'path'
+        'path': 'path',
+        'url': 'url'
     }
 
-    def __init__(self, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, url=None, local_vars_configuration=None):  # noqa: E501
         """AudioDefinition - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -59,6 +61,7 @@ class AudioDefinition(object):
         self._host = None
         self._http_auth = None
         self._path = None
+        self._url = None
         self.discriminator = None
 
         self.codec = codec
@@ -72,6 +75,8 @@ class AudioDefinition(object):
             self.http_auth = http_auth
         if path is not None:
             self.path = path
+        if url is not None:
+            self.url = url
 
     @property
     def codec(self):
@@ -183,7 +188,7 @@ class AudioDefinition(object):
     @property
     def path(self):
         """
-        Path to file.
+        Relative URL to the file.
 
         :return: The path of this AudioDefinition. 
         :rtype: str
@@ -193,13 +198,34 @@ class AudioDefinition(object):
     @path.setter
     def path(self, path):
         """
-        Path to file.
+        Relative URL to the file.
 
         :param path: The path of this AudioDefinition.
         :type: str
         """
 
         self._path = path
+
+    @property
+    def url(self):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the audio file. It is is used for the src path and to create `path` field.
+
+        :return: The url of this AudioDefinition. 
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the audio file. It is is used for the src path and to create `path` field.
+
+        :param url: The url of this AudioDefinition.
+        :type: str
+        """
+
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""
