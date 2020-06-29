@@ -3,9 +3,13 @@
 import subprocess
 import json
 import argparse
+import logging
+import os
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
 MAX_RESOLUTION=max(STREAMING_RESOLUTIONS)
+
+logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -68,14 +72,18 @@ def determine_transcode(path, media_type):
 
     # Archival workloads
     # TODO: Make this configurable with codec, resolution, storage location in media type.
-    workloads = += [{
+    workloads += [{
         'category': 'archival',
+        'path': path,
+        'raw_height': height,
+        'raw_width': width,
     }]
 
     # Audio workloads
     if audio:
         workloads += [{
             'category': 'audio',
+            'path': path,
         }]
     
     return workloads

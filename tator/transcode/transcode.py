@@ -6,6 +6,9 @@ import subprocess
 import json
 import os
 
+from ..util import get_api
+from ..openapi.tator_openapi.models import CreateResponse
+
 from .upload import upload_file
 from .make_fragment_info import make_fragment_info
 
@@ -49,9 +52,7 @@ def make_video_definition(disk_file):
 def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions):
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
-    path = workload['path']
-    resolutions = workload['resolutions']
-    vid_dims = [workload['raw_height'], workload['raw_width']]
+    vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
         "-i", path,
@@ -89,28 +90,32 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         segments_url = upload_file(segments_file, host)
 
         # Move video file with the api.
-        api = tator.get_api(host, token)
-        response = tator.move_video(media_id, move_video_spec={
-            'media_files': {'archival': make_video_definition(path)},
-            'url': url,
-            'segments_url': segments_url,
+        api = get_api(host, token)
+        response = api.move_video(media, move_video_spec={
+            'media_files': {'archival': [{
+                **make_video_definition(path),
+                'url': url,
+                'segments_url': segments_url,
+            }]}
         })
-        assert isinstance(response, tator.models.CreateResponse)
+        assert isinstance(response, CreateResponse)
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
 
-def convert_archival(host, token, media, path, outpath, raw_width, raw_height, resolutions):
+def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
     # TODO Check for media type's archive config and transcode if necessary.
     # Default action if no archive config is upload raw video.
-    url = upload_file(output_file, host)
+    url = upload_file(path, host)
    
     # Move video file with the api.
-    api = tator.get_api(host, token)
-    response = tator.move_video(media_id, move_video_spec={
-        'media_files': {'archival': make_video_definition(path)},
-        'url': url,
+    api = get_api(host, token)
+    response = api.move_video(media, move_video_spec={
+        'media_files': {'archival': [{
+            **make_video_definition(path),
+            'url': url,
+        }]},
     })
-    assert isinstance(response, tator.models.CreateResponse)
+    assert isinstance(response, CreateResponse)
 
 def make_audio_definition(disk_file):
     cmd = [
@@ -133,7 +138,7 @@ def make_audio_definition(disk_file):
                  "codec_description": stream["codec_long_name"]}
     return audio_def
 
-def convert_audio(host, token, media_id, path, outpath):
+def convert_audio(host, token, media, path, outpath):
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
     audio_extraction=["ffmpeg", "-y",
@@ -149,12 +154,14 @@ def convert_audio(host, token, media_id, path, outpath):
     url = upload_file(output_file, host)
    
     # Move video file with the api.
-    api = tator.get_api(host, token)
-    response = tator.move_video(media_id, move_video_spec={
-        'media_files': {'audio': make_audio_definition(output_file)},
-        'url': url,
+    api = get_api(host, token)
+    response = api.move_video(media, move_video_spec={
+        'media_files': {'audio': [{
+            **make_audio_definition(output_file),
+            'url': url,
+        }]},
     })
-    assert isinstance(response, tator.models.CreateResponse)
+    assert isinstance(response, CreateResponse)
 
 if __name__ == '__main__':
     args = parse_args()

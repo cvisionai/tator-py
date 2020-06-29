@@ -3,17 +3,23 @@
 import argparse
 import os
 from uuid import uuid1
+import logging
 
 from progressbar import progressbar
 
 from ..util import md5sum
 from ..util import get_api
+from ..openapi.tator_openapi.models import MediaType
+from ..openapi.tator_openapi.models import CreateResponse
 
+from .determine_transcode import determine_transcode
 from .transcode import convert_streaming
 from .transcode import convert_archival
 from .transcode import convert_audio
 from .make_thumbnails import make_thumbnails
 from .upload_transcoded_video import upload_transcoded_video
+
+logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
@@ -57,39 +63,33 @@ def transcode_single(path, args, gid):
         'name': name,
         'md5': md5,
     })
-    assert isinstance(response, tator.models.CreateResponse)
+    assert isinstance(response, CreateResponse)
     media_id = response.id
 
     # Get media type object.
     media_type = api.get_media_type(args.type)
-    assert isinstance(media_type, tator.models.MediaType)
+    assert isinstance(media_type, MediaType)
 
     # Determine transcodes that need to be done.
-    workloads = determine_transcode(path, archive_config=None)
+    workloads = determine_transcode(path, media_type)
 
     # Transcode the video file.
     for workload in workloads:
         category = workload['category']
         del workload['category']
         if category == 'streaming':
-            convert_streaming(**workload, outpath=paths['transcoded'])
+            convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
+                              outpath=paths['transcoded'])
         elif category == 'archival':
-            convert_archival(**workload, outpath=paths['transcoded'])
+            convert_archival(**workload, host=args.host, token=args.token, media=media_id,
+                             outpath=paths['transcoded'])
         elif category == 'audio':
-            convert_audio(**workload, outpath=paths['transcoded'])
+            convert_audio(**workload, host=args.host, token=args.token, media=media_id,
+                          outpath=paths['transcoded'])
     
     # Make thumbnails.
     make_thumbnails(paths['original'], paths['thumbnail'], paths['thumbnail_gif'])
     
-    # Upload the results.
-    """
-    uid = str(uuid1())
-    upload_transcoded_video(paths['original'], paths['transcoded'],
-                            paths['thumbnail'], paths['thumbnail_gif'], args.host,
-                            args.token, args.project, args.type, gid, uid, args.section, 
-                            name, md5)
-    """
-
 if __name__ == '__main__':
     args = parse_args()
     if os.path.isdir(args.path):
