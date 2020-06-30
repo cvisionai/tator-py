@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument('path', help='Path to original file.')
     parser.add_argument('--media_type', type=int, help='Unique integer identifying a media type.')
     parser.add_argument('--output', help='Path to output json file.')
-    args = parser.parse_args()
+    return parser.parse_args()
 
 def determine_transcode(host, token, media_type, path, group_to=480):
     """ Determine transcode workloads to be performed.
