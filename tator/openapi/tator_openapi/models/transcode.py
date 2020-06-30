@@ -31,33 +31,29 @@ class Transcode(object):
     """
     openapi_types = {
         'group_id': 'str',
-        'media_id': 'int',
         'message': 'str',
         'run_uid': 'str'
     }
 
     attribute_map = {
         'group_id': 'group_id',
-        'media_id': 'media_id',
         'message': 'message',
         'run_uid': 'run_uid'
     }
 
-    def __init__(self, group_id=None, media_id=None, message=None, run_uid=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, group_id=None, message=None, run_uid=None, local_vars_configuration=None):  # noqa: E501
         """Transcode - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
         self._group_id = None
-        self._media_id = None
         self._message = None
         self._run_uid = None
         self.discriminator = None
 
         if group_id is not None:
             self.group_id = group_id
-        self.media_id = media_id
         if message is not None:
             self.message = message
         if run_uid is not None:
@@ -83,27 +79,6 @@ class Transcode(object):
         """
 
         self._group_id = group_id
-
-    @property
-    def media_id(self):
-        """
-        Unique integer identifying a media. This value is null for archive transcodes.
-
-        :return: The media_id of this Transcode. 
-        :rtype: int
-        """
-        return self._media_id
-
-    @media_id.setter
-    def media_id(self, media_id):
-        """
-        Unique integer identifying a media. This value is null for archive transcodes.
-
-        :param media_id: The media_id of this Transcode.
-        :type: int
-        """
-
-        self._media_id = media_id
 
     @property
     def message(self):
