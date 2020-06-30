@@ -85,6 +85,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     subprocess.run(cmd, check=True)
 
     for resolution in resolutions:
+        output_file = os.path.join(outpath, f"{resolution}.mp4")
+
         segments_file = os.path.join(outpath, f"{resolution}.json")
         make_fragment_info(output_file, segments_file)
 
@@ -98,7 +100,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         api = get_api(host, token)
         response = api.move_video(media, move_video_spec={
             'media_files': {'streaming': [{
-                **make_video_definition(path),
+                **make_video_definition(output_file),
                 'url': url,
                 'segments_url': segments_url,
             }]}
