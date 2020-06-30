@@ -187,4 +187,4 @@ if __name__ == '__main__':
         convert_archival(args.host, args.token, args.media, args.path, args.output,
                          args.raw_width, args.raw_height, resolutions)
     elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, args.path, args.output)
+        convert_audio(args.host, args.token, args.media, args.input, args.output)
