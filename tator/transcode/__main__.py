@@ -75,7 +75,7 @@ def transcode_single(path, args, gid):
     assert isinstance(media_type, MediaType)
 
     # Determine transcodes that need to be done.
-    workloads = determine_transcode(path, media_type)
+    workloads = determine_transcode(path, media_type, group_to=1080)
 
     # Transcode the video file.
     for workload in workloads:

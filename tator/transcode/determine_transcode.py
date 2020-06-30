@@ -17,8 +17,12 @@ def parse_args():
     parser.add_argument('out', help='Path to output json file.')
     args = parser.parse_args()
 
-def determine_transcode(path, media_type):
+def determine_transcode(path, media_type, group_to=480):
     """ Determine transcode workloads to be performed.
+
+    :param path: Path to original file.
+    :param media_type: `tator.models.MediaType` object.
+    :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
     cmd = [
         "ffprobe",
@@ -67,8 +71,15 @@ def determine_transcode(path, media_type):
         'path': path,
         'raw_height': height,
         'raw_width': width,
+        'resolutions': [str(resolution) for resolution in resolutions if resolution <= group_to],
+    }]
+    workloads += [{
+        'category': 'streaming',
+        'path': path,
+        'raw_height': height,
+        'raw_width': width,
         'resolutions': [str(resolution)],
-    } for resolution in resolutions]
+    } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads
     # TODO: Make this configurable with codec, resolution, storage location in media type.
