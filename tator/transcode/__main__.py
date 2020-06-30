@@ -60,12 +60,8 @@ def transcode_single(path, args, gid):
     make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
                     paths['thumbnail_gif'])
 
-    # Get media type object.
-    media_type = api.get_media_type(args.type)
-    assert isinstance(media_type, MediaType)
-
     # Determine transcodes that need to be done.
-    workloads = determine_transcode(path, media_type, group_to=1080)
+    workloads = determine_transcode(args.host, args.token, args.type, path, group_to=1080)
 
     # Transcode the video file.
     for workload in workloads:

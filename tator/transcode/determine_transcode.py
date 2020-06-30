@@ -6,22 +6,29 @@ import argparse
 import logging
 import os
 
+from ..openapi.tator_openapi.models import MediaType
+from ..util import get_api
+from ..util import get_parser
+
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
 MAX_RESOLUTION=max(STREAMING_RESOLUTIONS)
 
 logger = logging.getLogger(__name__)
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = get_parser()
+    parser.add_argument('media_type', type=int, help='Unique integer identifying a media type.')
     parser.add_argument('path', help='Path to original file.')
     parser.add_argument('out', help='Path to output json file.')
     args = parser.parse_args()
 
-def determine_transcode(path, media_type, group_to=480):
+def determine_transcode(host, token, media_type, path, group_to=480):
     """ Determine transcode workloads to be performed.
 
+    :param host: URL of host.
+    :param token: API token.
+    :param media_type: Unique integer identifying a media type.
     :param path: Path to original file.
-    :param media_type: `tator.models.MediaType` object.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
     cmd = [
@@ -65,7 +72,12 @@ def determine_transcode(path, media_type, group_to=480):
     # Generate output path
     base, ext = os.path.splitext(path)
 
-    # Streaming workloads
+    # Get media type object.
+    api = get_api(host, token)
+    media_type_obj = api.get_media_type(media_type)
+    assert isinstance(media_type_obj, MediaType)
+
+    # Streaming workloads (low res)
     workloads = [{
         'category': 'streaming',
         'path': path,
@@ -73,6 +85,8 @@ def determine_transcode(path, media_type, group_to=480):
         'raw_width': width,
         'resolutions': [str(resolution) for resolution in resolutions if resolution <= group_to],
     }]
+
+    # Streaming workloads (higher res)
     workloads += [{
         'category': 'streaming',
         'path': path,
@@ -82,7 +96,7 @@ def determine_transcode(path, media_type, group_to=480):
     } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads
-    # TODO: Make this configurable with codec, resolution, storage location in media type.
+    # TODO: Make this configurable with codec, resolution, storage location in media type object.
     workloads += [{
         'category': 'archival',
         'path': path,
@@ -101,7 +115,7 @@ def determine_transcode(path, media_type, group_to=480):
 
 if __name__ == '__main__':
     args = parse_args()
-    workloads = determine_transcode(args.path)
+    workloads = determine_transcode(args.host, args.token, args.media_type, args.path)
     with open(args.out, 'w') as f:
         json.dump(workloads, f)
 
