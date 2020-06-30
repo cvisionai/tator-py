@@ -177,14 +177,14 @@ if __name__ == '__main__':
             resolutions = []
         else:
             resolutions = [int(res) for res in args.resolutions.split(',')]
-        convert_streaming(args.host, args.token, args.media, args.path, args.output,
+        convert_streaming(args.host, args.token, args.media, args.input, args.output,
                           args.raw_width, args.raw_height, resolutions)
     elif args.category == 'archival':
         if args.resolutions == '':
             resolutions = []
         else:
             resolutions = [int(res) for res in args.resolutions.split(',')]
-        convert_archival(args.host, args.token, args.media, args.path, args.output,
+        convert_archival(args.host, args.token, args.media, args.input, args.output,
                          args.raw_width, args.raw_height, resolutions)
     elif args.category == 'audio':
         convert_audio(args.host, args.token, args.media, args.input, args.output)
