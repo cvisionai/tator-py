@@ -173,11 +173,17 @@ def convert_audio(host, token, media, path, outpath):
 if __name__ == '__main__':
     args = parse_args()
     if args.category == 'streaming':
-        resolutions = [int(res) for res in args.resolutions.split(',')]
+        if args.resolutions == '':
+            resolutions = []
+        else:
+            resolutions = [int(res) for res in args.resolutions.split(',')]
         convert_streaming(args.host, args.token, args.media, args.path, args.output,
                           args.raw_width, args.raw_height, resolutions)
     elif args.category == 'archival':
-        resolutions = [int(res) for res in args.resolutions.split(',')]
+        if args.resolutions == '':
+            resolutions = []
+        else:
+            resolutions = [int(res) for res in args.resolutions.split(',')]
         convert_archival(args.host, args.token, args.media, args.path, args.output,
                          args.raw_width, args.raw_height, resolutions)
     elif args.category == 'audio':
