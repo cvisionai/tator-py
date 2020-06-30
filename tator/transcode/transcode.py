@@ -52,6 +52,7 @@ def make_video_definition(disk_file):
 def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions):
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
+    os.makedirs(outpath, exist_ok=True)
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
@@ -80,6 +81,10 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     "-map", f"[outv{ridx}]",
                     output_file])
         
+    logger.info('ffmpeg cmd = {}'.format(cmd))
+    subprocess.run(cmd, check=True)
+
+    for resolution in resolutions:
         segments_file = os.path.join(outpath, f"{resolution}.json")
         make_fragment_info(output_file, segments_file)
 
@@ -92,17 +97,16 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         # Move video file with the api.
         api = get_api(host, token)
         response = api.move_video(media, move_video_spec={
-            'media_files': {'archival': [{
+            'media_files': {'streaming': [{
                 **make_video_definition(path),
                 'url': url,
                 'segments_url': segments_url,
             }]}
         })
         assert isinstance(response, CreateResponse)
-    logger.info('ffmpeg cmd = {}'.format(cmd))
-    subprocess.run(cmd, check=True)
 
 def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
+    os.makedirs(outpath, exist_ok=True)
     # TODO Check for media type's archive config and transcode if necessary.
     # Default action if no archive config is upload raw video.
     url = upload_file(path, host)
@@ -118,6 +122,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
     assert isinstance(response, CreateResponse)
 
 def make_audio_definition(disk_file):
+    os.makedirs(outpath, exist_ok=True)
     cmd = [
         "ffprobe",
         "-v","error",
