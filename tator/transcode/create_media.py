@@ -42,4 +42,4 @@ if __name__ == '__main__':
     media_id = create_media(args.host, args.token, args.project, args.media_type,
                             args.section, args.name, args.md5)
     with open(args.output, 'w') as f:
-        json.dump({'media_id': media_id}, f)
+        f.write(str(media_id))
