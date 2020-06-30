@@ -8,10 +8,8 @@ import logging
 from progressbar import progressbar
 
 from ..util import md5sum
-from ..util import get_api
-from ..openapi.tator_openapi.models import MediaType
-from ..openapi.tator_openapi.models import CreateResponse
 
+from .create_media import create_media
 from .determine_transcode import determine_transcode
 from .transcode import convert_streaming
 from .transcode import convert_archival
@@ -56,15 +54,7 @@ def transcode_single(path, args, gid):
     name = os.path.basename(paths['original'])
 
     # Create the media object.
-    api = get_api(args.host, args.token)
-    response = api.create_media(args.project, media_spec={
-        'type': args.type,
-        'section': args.section,
-        'name': name,
-        'md5': md5,
-    })
-    assert isinstance(response, CreateResponse)
-    media_id = response.id
+    media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5)
 
     # Make thumbnails.
     make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
