@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = get_parser()
-    parser.add_argument('media_type', type=int, help='Unique integer identifying a media type.')
     parser.add_argument('path', help='Path to original file.')
-    parser.add_argument('out', help='Path to output json file.')
+    parser.add_argument('--media_type', type=int, help='Unique integer identifying a media type.')
+    parser.add_argument('--output', help='Path to output json file.')
     args = parser.parse_args()
 
 def determine_transcode(host, token, media_type, path, group_to=480):
@@ -102,6 +102,7 @@ def determine_transcode(host, token, media_type, path, group_to=480):
         'path': path,
         'raw_height': height,
         'raw_width': width,
+        'resolutions': [],
     }]
 
     # Audio workloads
@@ -109,6 +110,9 @@ def determine_transcode(host, token, media_type, path, group_to=480):
         workloads += [{
             'category': 'audio',
             'path': path,
+            'raw_height': height,
+            'raw_width': width,
+            'resolutions': [],
         }]
     
     return workloads
@@ -116,6 +120,8 @@ def determine_transcode(host, token, media_type, path, group_to=480):
 if __name__ == '__main__':
     args = parse_args()
     workloads = determine_transcode(args.host, args.token, args.media_type, args.path)
-    with open(args.out, 'w') as f:
+    for workload in workloads:
+        workload['resolutions'] = ','.join(workload['resolutions'])
+    with open(args.output, 'w') as f:
         json.dump(workloads, f)
 
