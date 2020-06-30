@@ -12,6 +12,8 @@ from uuid import uuid1
 import imageio
 from PIL import Image
 
+from ..util import get_api
+
 from .upload import upload_file
 
 logger = logging.getLogger(__name__)
@@ -127,8 +129,8 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     thumbnail_gif_url = upload_file(thumb_gif_path, host)
 
     # Update the media object.
-    api = tator.get_api(host, token)
-    response = api.update_media(media_id, media_spec={
+    api = get_api(host, token)
+    response = api.update_media(media_id, media_update={
         'thumbnail_url': thumbnail_url,
         'thumbnail_gif_url': thumbnail_gif_url,
         'num_frames': num_frames,

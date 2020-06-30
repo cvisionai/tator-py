@@ -66,6 +66,10 @@ def transcode_single(path, args, gid):
     assert isinstance(response, CreateResponse)
     media_id = response.id
 
+    # Make thumbnails.
+    make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
+                    paths['thumbnail_gif'])
+
     # Get media type object.
     media_type = api.get_media_type(args.type)
     assert isinstance(media_type, MediaType)
@@ -87,8 +91,6 @@ def transcode_single(path, args, gid):
             convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                           outpath=paths['transcoded'])
     
-    # Make thumbnails.
-    make_thumbnails(paths['original'], paths['thumbnail'], paths['thumbnail_gif'])
     
 if __name__ == '__main__':
     args = parse_args()
