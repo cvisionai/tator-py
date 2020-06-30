@@ -1,8 +1,8 @@
 import json
 
 from ..openapi.tator_openapi.models import CreateResponse
-from ..util import get_api
-from ..util import get_parser
+from ..util.get_api import get_api
+from ..util.get_parser import get_parser
 
 def parse_args():
     parser = get_parser()

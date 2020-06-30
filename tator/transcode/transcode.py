@@ -6,7 +6,7 @@ import subprocess
 import json
 import os
 
-from ..util import get_api
+from ..util.get_api import get_api
 from ..openapi.tator_openapi.models import CreateResponse
 
 from .upload import upload_file
