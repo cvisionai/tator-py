@@ -69,17 +69,22 @@ def transcode_single(path, args, gid):
         del workload['category']
         if category == 'streaming':
             convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                              outpath=paths['transcoded'])
+                              outpath=paths['transcoded'], gid=gid, uid=str(uuid1()))
         elif category == 'archival':
+            del workload['resolutions']
             convert_archival(**workload, host=args.host, token=args.token, media=media_id,
                              outpath=paths['transcoded'])
         elif category == 'audio':
+            del workload['resolutions']
+            del workload['raw_width']
+            del workload['raw_height']
             convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                           outpath=paths['transcoded'])
     
     
 if __name__ == '__main__':
     args = parse_args()
+    gid = str(uuid1())
     if os.path.isdir(args.path):
         file_list = []
         for root, dirs, files in os.walk(args.path):
@@ -87,9 +92,7 @@ if __name__ == '__main__':
                 if fname.endswith(args.extension):
                     path = os.path.join(root, fname)
                     file_list.append(path)
-        gid = str(uuid1())
         for path in progressbar(file_list):
             transcode_single(path, args, gid)
     else:
-        gid = str(uuid1())
         transcode_single(args.path, args, gid)
