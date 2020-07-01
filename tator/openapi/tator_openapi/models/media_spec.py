@@ -33,6 +33,7 @@ class MediaSpec(object):
         'gid': 'str',
         'md5': 'str',
         'name': 'str',
+        'progress_name': 'str',
         'section': 'str',
         'thumbnail_url': 'str',
         'type': 'int',
@@ -44,6 +45,7 @@ class MediaSpec(object):
         'gid': 'gid',
         'md5': 'md5',
         'name': 'name',
+        'progress_name': 'progress_name',
         'section': 'section',
         'thumbnail_url': 'thumbnail_url',
         'type': 'type',
@@ -51,7 +53,7 @@ class MediaSpec(object):
         'url': 'url'
     }
 
-    def __init__(self, gid=None, md5=None, name=None, section=None, thumbnail_url=None, type=None, uid=None, url=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, gid=None, md5=None, name=None, progress_name=None, section=None, thumbnail_url=None, type=None, uid=None, url=None, local_vars_configuration=None):  # noqa: E501
         """MediaSpec - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -60,6 +62,7 @@ class MediaSpec(object):
         self._gid = None
         self._md5 = None
         self._name = None
+        self._progress_name = None
         self._section = None
         self._thumbnail_url = None
         self._type = None
@@ -71,6 +74,8 @@ class MediaSpec(object):
             self.gid = gid
         self.md5 = md5
         self.name = name
+        if progress_name is not None:
+            self.progress_name = progress_name
         self.section = section
         if thumbnail_url is not None:
             self.thumbnail_url = thumbnail_url
@@ -146,6 +151,27 @@ class MediaSpec(object):
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
+
+    @property
+    def progress_name(self):
+        """
+        Replaces name in progress message.
+
+        :return: The progress_name of this MediaSpec. 
+        :rtype: str
+        """
+        return self._progress_name
+
+    @progress_name.setter
+    def progress_name(self, progress_name):
+        """
+        Replaces name in progress message.
+
+        :param progress_name: The progress_name of this MediaSpec.
+        :type: str
+        """
+
+        self._progress_name = progress_name
 
     @property
     def section(self):
