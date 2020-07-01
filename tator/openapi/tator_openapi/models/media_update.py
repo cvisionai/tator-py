@@ -33,6 +33,7 @@ class MediaUpdate(object):
         'attributes': 'dict(str, object)',
         'codec': 'str',
         'fps': 'float',
+        'gid': 'str',
         'height': 'int',
         'last_edit_end': 'datetime',
         'last_edit_start': 'datetime',
@@ -41,6 +42,7 @@ class MediaUpdate(object):
         'num_frames': 'int',
         'thumbnail_gif_url': 'str',
         'thumbnail_url': 'str',
+        'uid': 'str',
         'width': 'int'
     }
 
@@ -48,6 +50,7 @@ class MediaUpdate(object):
         'attributes': 'attributes',
         'codec': 'codec',
         'fps': 'fps',
+        'gid': 'gid',
         'height': 'height',
         'last_edit_end': 'last_edit_end',
         'last_edit_start': 'last_edit_start',
@@ -56,10 +59,11 @@ class MediaUpdate(object):
         'num_frames': 'num_frames',
         'thumbnail_gif_url': 'thumbnail_gif_url',
         'thumbnail_url': 'thumbnail_url',
+        'uid': 'uid',
         'width': 'width'
     }
 
-    def __init__(self, attributes=None, codec=None, fps=None, height=None, last_edit_end=None, last_edit_start=None, media_files=None, name=None, num_frames=None, thumbnail_gif_url=None, thumbnail_url=None, width=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, attributes=None, codec=None, fps=None, gid=None, height=None, last_edit_end=None, last_edit_start=None, media_files=None, name=None, num_frames=None, thumbnail_gif_url=None, thumbnail_url=None, uid=None, width=None, local_vars_configuration=None):  # noqa: E501
         """MediaUpdate - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -68,6 +72,7 @@ class MediaUpdate(object):
         self._attributes = None
         self._codec = None
         self._fps = None
+        self._gid = None
         self._height = None
         self._last_edit_end = None
         self._last_edit_start = None
@@ -76,6 +81,7 @@ class MediaUpdate(object):
         self._num_frames = None
         self._thumbnail_gif_url = None
         self._thumbnail_url = None
+        self._uid = None
         self._width = None
         self.discriminator = None
 
@@ -85,6 +91,8 @@ class MediaUpdate(object):
             self.codec = codec
         if fps is not None:
             self.fps = fps
+        if gid is not None:
+            self.gid = gid
         if height is not None:
             self.height = height
         if last_edit_end is not None:
@@ -101,6 +109,8 @@ class MediaUpdate(object):
             self.thumbnail_gif_url = thumbnail_gif_url
         if thumbnail_url is not None:
             self.thumbnail_url = thumbnail_url
+        if uid is not None:
+            self.uid = uid
         if width is not None:
             self.width = width
 
@@ -166,6 +176,27 @@ class MediaUpdate(object):
         """
 
         self._fps = fps
+
+    @property
+    def gid(self):
+        """
+        UUID corresponding to a group of uploads. If given, a progress message will be sent for this media.
+
+        :return: The gid of this MediaUpdate. 
+        :rtype: str
+        """
+        return self._gid
+
+    @gid.setter
+    def gid(self, gid):
+        """
+        UUID corresponding to a group of uploads. If given, a progress message will be sent for this media.
+
+        :param gid: The gid of this MediaUpdate.
+        :type: str
+        """
+
+        self._gid = gid
 
     @property
     def height(self):
@@ -335,6 +366,27 @@ class MediaUpdate(object):
         """
 
         self._thumbnail_url = thumbnail_url
+
+    @property
+    def uid(self):
+        """
+        UUID corresponding to an upload. If given, a progress message will be sent for this media.
+
+        :return: The uid of this MediaUpdate. 
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """
+        UUID corresponding to an upload. If given, a progress message will be sent for this media.
+
+        :param uid: The uid of this MediaUpdate.
+        :type: str
+        """
+
+        self._uid = uid
 
     @property
     def width(self):

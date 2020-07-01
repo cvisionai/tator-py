@@ -30,23 +30,54 @@ class MoveVideoSpec(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'media_files': 'MediaFiles'
+        'gid': 'str',
+        'media_files': 'MediaFiles',
+        'uid': 'str'
     }
 
     attribute_map = {
-        'media_files': 'media_files'
+        'gid': 'gid',
+        'media_files': 'media_files',
+        'uid': 'uid'
     }
 
-    def __init__(self, media_files=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, gid=None, media_files=None, uid=None, local_vars_configuration=None):  # noqa: E501
         """MoveVideoSpec - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._gid = None
         self._media_files = None
+        self._uid = None
         self.discriminator = None
 
+        if gid is not None:
+            self.gid = gid
         self.media_files = media_files
+        if uid is not None:
+            self.uid = uid
+
+    @property
+    def gid(self):
+        """
+        UUID corresponding to a group of uploads. If given, a progress message will be sent for this media when the move is complete.
+
+        :return: The gid of this MoveVideoSpec. 
+        :rtype: str
+        """
+        return self._gid
+
+    @gid.setter
+    def gid(self, gid):
+        """
+        UUID corresponding to a group of uploads. If given, a progress message will be sent for this media when the move is complete.
+
+        :param gid: The gid of this MoveVideoSpec.
+        :type: str
+        """
+
+        self._gid = gid
 
     @property
     def media_files(self):
@@ -68,6 +99,27 @@ class MoveVideoSpec(object):
             raise ValueError("Invalid value for `media_files`, must not be `None`")  # noqa: E501
 
         self._media_files = media_files
+
+    @property
+    def uid(self):
+        """
+        UUID corresponding to an upload. If given, a progress message will be sent for this media when the move is complete.
+
+        :return: The uid of this MoveVideoSpec. 
+        :rtype: str
+        """
+        return self._uid
+
+    @uid.setter
+    def uid(self, uid):
+        """
+        UUID corresponding to an upload. If given, a progress message will be sent for this media when the move is complete.
+
+        :param uid: The uid of this MoveVideoSpec.
+        :type: str
+        """
+
+        self._uid = uid
 
     def to_dict(self):
         """Returns the model properties as a dict"""
