@@ -92,7 +92,6 @@ def image_type(request, project):
     })
     image_type_id = response.id
     yield image_type_id
-    response = tator_api.delete_media_type(image_type_id)
 
 @pytest.fixture(scope='session')
 def image_file(request):
@@ -131,7 +130,6 @@ def image(request, project, image_type, image_file):
         time.sleep(0.5)
 
     yield image_id
-    response = tator_api.delete_media(image_id)
 
 @pytest.fixture(scope='session')
 def image_set(request):
@@ -174,7 +172,6 @@ def video_type(request, project):
     })
     video_type_id = response.id
     yield video_type_id
-    response = tator_api.delete_media_type(video_type_id)
 
 @pytest.fixture(scope='session')
 def video_file(request):
@@ -213,7 +210,6 @@ def video(request, project, video_type, video_file):
             video_id = response[0].id
             break
     yield video_id
-    response = tator_api.delete_media(video_id)
 
 @pytest.fixture(scope='session')
 def dot_type(request, project, video_type, image_type):
@@ -231,7 +227,6 @@ def dot_type(request, project, video_type, image_type):
     })
     dot_type_id = response.id
     yield dot_type_id
-    response = tator_api.delete_localization_type(dot_type_id)
 
 @pytest.fixture(scope='session')
 def line_type(request, project, video_type, image_type):
@@ -249,7 +244,6 @@ def line_type(request, project, video_type, image_type):
     })
     line_type_id = response.id
     yield line_type_id
-    response = tator_api.delete_localization_type(line_type_id)
 
 @pytest.fixture(scope='session')
 def box_type(request, project, video_type, image_type):
@@ -267,7 +261,6 @@ def box_type(request, project, video_type, image_type):
     })
     box_type_id = response.id
     yield box_type_id
-    response = tator_api.delete_localization_type(box_type_id)
 
 @pytest.fixture(scope='session')
 def state_type(request, project, video_type):
@@ -285,7 +278,6 @@ def state_type(request, project, video_type):
     })
     state_type_id = response.id
     yield state_type_id
-    response = tator_api.delete_state_type(state_type_id)
 
 @pytest.fixture(scope='session')
 def track_type(request, project, video_type):
@@ -303,4 +295,3 @@ def track_type(request, project, video_type):
     })
     state_type_id = response.id
     yield state_type_id
-    response = tator_api.delete_state_type(state_type_id)
