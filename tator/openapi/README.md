@@ -79,10 +79,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} # AlgorithmLaunchSpec |  (optional)
+algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} # AlgorithmLaunchSpec | 
 
     try:
-        api_response = api_instance.algorithm_launch(project, algorithm_launch_spec=algorithm_launch_spec)
+        api_response = api_instance.algorithm_launch(project, algorithm_launch_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->algorithm_launch: %s\n" % e)

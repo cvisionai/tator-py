@@ -99,7 +99,7 @@ Method | HTTP request | Description
 
 
 # **algorithm_launch**
-> AlgorithmLaunch algorithm_launch(project, algorithm_launch_spec=algorithm_launch_spec)
+> AlgorithmLaunch algorithm_launch(project, algorithm_launch_spec)
 
 
 
@@ -140,10 +140,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} # AlgorithmLaunchSpec |  (optional)
+algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} # AlgorithmLaunchSpec | 
 
     try:
-        api_response = api_instance.algorithm_launch(project, algorithm_launch_spec=algorithm_launch_spec)
+        api_response = api_instance.algorithm_launch(project, algorithm_launch_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->algorithm_launch: %s\n" % e)
@@ -154,7 +154,7 @@ algorithm_launch_spec = {"algorithm_name":"My Algorithm","media_ids":[1,5,10]} #
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **algorithm_launch_spec** | [**AlgorithmLaunchSpec**](AlgorithmLaunchSpec.md)|  | [optional] 
+ **algorithm_launch_spec** | [**AlgorithmLaunchSpec**](AlgorithmLaunchSpec.md)|  | 
 
 ### Return type
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_analysis**
-> CreateResponse create_analysis(project, analysis_spec=analysis_spec)
+> CreateResponse create_analysis(project, analysis_spec)
 
 
 
@@ -220,10 +220,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-analysis_spec = {"data_query":"_meta:1","name":"Boxes"} # AnalysisSpec |  (optional)
+analysis_spec = {"data_query":"_meta:1","name":"Boxes"} # AnalysisSpec | 
 
     try:
-        api_response = api_instance.create_analysis(project, analysis_spec=analysis_spec)
+        api_response = api_instance.create_analysis(project, analysis_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_analysis: %s\n" % e)
@@ -234,7 +234,7 @@ analysis_spec = {"data_query":"_meta:1","name":"Boxes"} # AnalysisSpec |  (optio
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **analysis_spec** | [**AnalysisSpec**](AnalysisSpec.md)|  | [optional] 
+ **analysis_spec** | [**AnalysisSpec**](AnalysisSpec.md)|  | 
 
 ### Return type
 
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_leaf_list**
-> CreateListResponse create_leaf_list(project, leaf_spec=leaf_spec)
+> CreateListResponse create_leaf_list(project, leaf_spec)
 
 
 
@@ -300,10 +300,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-leaf_spec = [tator_openapi.LeafSpec()] # list[LeafSpec] |  (optional)
+leaf_spec = [tator_openapi.LeafSpec()] # list[LeafSpec] | 
 
     try:
-        api_response = api_instance.create_leaf_list(project, leaf_spec=leaf_spec)
+        api_response = api_instance.create_leaf_list(project, leaf_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_leaf_list: %s\n" % e)
@@ -314,7 +314,7 @@ leaf_spec = [tator_openapi.LeafSpec()] # list[LeafSpec] |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **leaf_spec** | [**list[LeafSpec]**](LeafSpec.md)|  | [optional] 
+ **leaf_spec** | [**list[LeafSpec]**](LeafSpec.md)|  | 
 
 ### Return type
 
@@ -339,7 +339,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_leaf_type**
-> CreateResponse create_leaf_type(project, leaf_type_spec=leaf_type_spec)
+> CreateResponse create_leaf_type(project, leaf_type_spec)
 
 
 
@@ -380,10 +380,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-leaf_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"name":"My leaf type"} # LeafTypeSpec |  (optional)
+leaf_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"name":"My leaf type"} # LeafTypeSpec | 
 
     try:
-        api_response = api_instance.create_leaf_type(project, leaf_type_spec=leaf_type_spec)
+        api_response = api_instance.create_leaf_type(project, leaf_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_leaf_type: %s\n" % e)
@@ -394,7 +394,7 @@ leaf_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **leaf_type_spec** | [**LeafTypeSpec**](LeafTypeSpec.md)|  | [optional] 
+ **leaf_type_spec** | [**LeafTypeSpec**](LeafTypeSpec.md)|  | 
 
 ### Return type
 
@@ -419,7 +419,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization_list**
-> CreateListResponse create_localization_list(project, localization_spec=localization_spec)
+> CreateListResponse create_localization_list(project, localization_spec)
 
 
 
@@ -460,10 +460,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2}] # list[LocalizationSpec] |  (optional)
+localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"height":0.4,"media_id":1,"type":1,"width":0.3,"x":0.1,"y":0.2}] # list[LocalizationSpec] | 
 
     try:
-        api_response = api_instance.create_localization_list(project, localization_spec=localization_spec)
+        api_response = api_instance.create_localization_list(project, localization_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_localization_list: %s\n" % e)
@@ -474,7 +474,7 @@ localization_spec = [{"My First Attribute":"value1","My Second Attribute":"value
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **localization_spec** | [**list[LocalizationSpec]**](LocalizationSpec.md)|  | [optional] 
+ **localization_spec** | [**list[LocalizationSpec]**](LocalizationSpec.md)|  | 
 
 ### Return type
 
@@ -499,7 +499,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_localization_type**
-> CreateResponse create_localization_type(project, localization_type_spec=localization_type_spec)
+> CreateResponse create_localization_type(project, localization_type_spec)
 
 
 
@@ -540,10 +540,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-localization_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"box","media_types":[1],"name":"My localization type"} # LocalizationTypeSpec |  (optional)
+localization_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"box","media_types":[1],"name":"My localization type"} # LocalizationTypeSpec | 
 
     try:
-        api_response = api_instance.create_localization_type(project, localization_type_spec=localization_type_spec)
+        api_response = api_instance.create_localization_type(project, localization_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_localization_type: %s\n" % e)
@@ -554,7 +554,7 @@ localization_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","na
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **localization_type_spec** | [**LocalizationTypeSpec**](LocalizationTypeSpec.md)|  | [optional] 
+ **localization_type_spec** | [**LocalizationTypeSpec**](LocalizationTypeSpec.md)|  | 
 
 ### Return type
 
@@ -579,7 +579,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_media**
-> CreateResponse create_media(project, media_spec=media_spec)
+> CreateResponse create_media(project, media_spec)
 
 
 
@@ -620,10 +620,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-media_spec = tator_openapi.MediaSpec() # MediaSpec |  (optional)
+media_spec = tator_openapi.MediaSpec() # MediaSpec | 
 
     try:
-        api_response = api_instance.create_media(project, media_spec=media_spec)
+        api_response = api_instance.create_media(project, media_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_media: %s\n" % e)
@@ -634,7 +634,7 @@ media_spec = tator_openapi.MediaSpec() # MediaSpec |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **media_spec** | [**MediaSpec**](MediaSpec.md)|  | [optional] 
+ **media_spec** | [**MediaSpec**](MediaSpec.md)|  | 
 
 ### Return type
 
@@ -659,7 +659,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_media_type**
-> CreateResponse create_media_type(project, media_type_spec=media_type_spec)
+> CreateResponse create_media_type(project, media_type_spec)
 
 
 
@@ -700,10 +700,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-media_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"video","name":"My media type"} # MediaTypeSpec |  (optional)
+media_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"dtype":"video","name":"My media type"} # MediaTypeSpec | 
 
     try:
-        api_response = api_instance.create_media_type(project, media_type_spec=media_type_spec)
+        api_response = api_instance.create_media_type(project, media_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_media_type: %s\n" % e)
@@ -714,7 +714,7 @@ media_type_spec = {"attribute_types":[{"default":false,"dtype":"bool","name":"My
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **media_type_spec** | [**MediaTypeSpec**](MediaTypeSpec.md)|  | [optional] 
+ **media_type_spec** | [**MediaTypeSpec**](MediaTypeSpec.md)|  | 
 
 ### Return type
 
@@ -739,7 +739,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_membership**
-> CreateResponse create_membership(project, membership_spec=membership_spec)
+> CreateResponse create_membership(project, membership_spec)
 
 
 
@@ -780,10 +780,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-membership_spec = {"permission":"Full Control","user":1} # MembershipSpec |  (optional)
+membership_spec = {"permission":"Full Control","user":1} # MembershipSpec | 
 
     try:
-        api_response = api_instance.create_membership(project, membership_spec=membership_spec)
+        api_response = api_instance.create_membership(project, membership_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_membership: %s\n" % e)
@@ -794,7 +794,7 @@ membership_spec = {"permission":"Full Control","user":1} # MembershipSpec |  (op
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **membership_spec** | [**MembershipSpec**](MembershipSpec.md)|  | [optional] 
+ **membership_spec** | [**MembershipSpec**](MembershipSpec.md)|  | 
 
 ### Return type
 
@@ -894,7 +894,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_progress_summary_api**
-> MessageResponse create_progress_summary_api(project, progress_summary_spec=progress_summary_spec)
+> MessageResponse create_progress_summary_api(project, progress_summary_spec)
 
 
 
@@ -935,10 +935,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-progress_summary_spec = tator_openapi.ProgressSummarySpec() # ProgressSummarySpec |  (optional)
+progress_summary_spec = tator_openapi.ProgressSummarySpec() # ProgressSummarySpec | 
 
     try:
-        api_response = api_instance.create_progress_summary_api(project, progress_summary_spec=progress_summary_spec)
+        api_response = api_instance.create_progress_summary_api(project, progress_summary_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_progress_summary_api: %s\n" % e)
@@ -949,7 +949,7 @@ progress_summary_spec = tator_openapi.ProgressSummarySpec() # ProgressSummarySpe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **progress_summary_spec** | [**ProgressSummarySpec**](ProgressSummarySpec.md)|  | [optional] 
+ **progress_summary_spec** | [**ProgressSummarySpec**](ProgressSummarySpec.md)|  | 
 
 ### Return type
 
@@ -974,7 +974,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_project**
-> CreateResponse create_project(project_spec=project_spec)
+> CreateResponse create_project(project_spec)
 
 
 
@@ -1014,10 +1014,10 @@ configuration = tator_openapi.Configuration(
 with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
-    project_spec = {"name":"My Project","summary":"First project"} # ProjectSpec |  (optional)
+    project_spec = {"name":"My Project","summary":"First project"} # ProjectSpec | 
 
     try:
-        api_response = api_instance.create_project(project_spec=project_spec)
+        api_response = api_instance.create_project(project_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_project: %s\n" % e)
@@ -1027,7 +1027,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | [optional] 
+ **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | 
 
 ### Return type
 
@@ -1052,7 +1052,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state_list**
-> CreateListResponse create_state_list(project, state_spec=state_spec)
+> CreateListResponse create_state_list(project, state_spec)
 
 
 
@@ -1093,10 +1093,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1}] # list[StateSpec] |  (optional)
+state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","frame":1000,"media_ids":[1],"type":1}] # list[StateSpec] | 
 
     try:
-        api_response = api_instance.create_state_list(project, state_spec=state_spec)
+        api_response = api_instance.create_state_list(project, state_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_state_list: %s\n" % e)
@@ -1107,7 +1107,7 @@ state_spec = [{"My First Attribute":"value1","My Second Attribute":"value2","fra
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **state_spec** | [**list[StateSpec]**](StateSpec.md)|  | [optional] 
+ **state_spec** | [**list[StateSpec]**](StateSpec.md)|  | 
 
 ### Return type
 
@@ -1132,7 +1132,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_state_type**
-> CreateResponse create_state_type(project, state_type_spec=state_type_spec)
+> CreateResponse create_state_type(project, state_type_spec)
 
 
 
@@ -1173,10 +1173,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-state_type_spec = {"association":"Frame","attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"media_types":[1],"name":"My state type"} # StateTypeSpec |  (optional)
+state_type_spec = {"association":"Frame","attribute_types":[{"default":false,"dtype":"bool","name":"My Boolean"},{"default":0,"dtype":"int","maximum":1,"minimum":-1,"name":"My Integer"},{"default":0.0,"dtype":"float","maximum":1.0,"minimum":-1.0,"name":"My Float"},{"choices":["a","b","c"],"default":"a","dtype":"enum","labels":["a","b","c"],"name":"My Enumeration"},{"autocomplete":{"serviceUrl":"https://www.example.com/suggestion"},"default":"---","dtype":"string","name":"My String"},{"dtype":"datetime","name":"My Datetime","use_current":true},{"default":[-179.0,90.0],"dtype":"geopos","name":"My Geoposition"}],"media_types":[1],"name":"My state type"} # StateTypeSpec | 
 
     try:
-        api_response = api_instance.create_state_type(project, state_type_spec=state_type_spec)
+        api_response = api_instance.create_state_type(project, state_type_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_state_type: %s\n" % e)
@@ -1187,7 +1187,7 @@ state_type_spec = {"association":"Frame","attribute_types":[{"default":false,"dt
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **state_type_spec** | [**StateTypeSpec**](StateTypeSpec.md)|  | [optional] 
+ **state_type_spec** | [**StateTypeSpec**](StateTypeSpec.md)|  | 
 
 ### Return type
 
@@ -1212,7 +1212,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_temporary_file**
-> CreateResponse create_temporary_file(project, temporary_file_spec=temporary_file_spec)
+> CreateResponse create_temporary_file(project, temporary_file_spec)
 
 
 
@@ -1253,10 +1253,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-temporary_file_spec = tator_openapi.TemporaryFileSpec() # TemporaryFileSpec |  (optional)
+temporary_file_spec = tator_openapi.TemporaryFileSpec() # TemporaryFileSpec | 
 
     try:
-        api_response = api_instance.create_temporary_file(project, temporary_file_spec=temporary_file_spec)
+        api_response = api_instance.create_temporary_file(project, temporary_file_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_temporary_file: %s\n" % e)
@@ -1267,7 +1267,7 @@ temporary_file_spec = tator_openapi.TemporaryFileSpec() # TemporaryFileSpec |  (
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **temporary_file_spec** | [**TemporaryFileSpec**](TemporaryFileSpec.md)|  | [optional] 
+ **temporary_file_spec** | [**TemporaryFileSpec**](TemporaryFileSpec.md)|  | 
 
 ### Return type
 
@@ -1292,7 +1292,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_version**
-> CreateResponse create_version(project, version_spec=version_spec)
+> CreateResponse create_version(project, version_spec)
 
 
 
@@ -1333,10 +1333,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-version_spec = {"bases":[1],"description":"New description","name":"My new version","show_empty":true} # VersionSpec |  (optional)
+version_spec = {"bases":[1],"description":"New description","name":"My new version","show_empty":true} # VersionSpec | 
 
     try:
-        api_response = api_instance.create_version(project, version_spec=version_spec)
+        api_response = api_instance.create_version(project, version_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->create_version: %s\n" % e)
@@ -1347,7 +1347,7 @@ version_spec = {"bases":[1],"description":"New description","name":"My new versi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **version_spec** | [**VersionSpec**](VersionSpec.md)|  | [optional] 
+ **version_spec** | [**VersionSpec**](VersionSpec.md)|  | 
 
 ### Return type
 
@@ -3735,7 +3735,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_localization_graphic**
-> file get_localization_graphic(id, mode=mode, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
+> file get_localization_graphic(id, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
 
 
 
@@ -3776,14 +3776,13 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization.
-mode = 'create' # str | Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create (optional) (default to 'create')
-force_scale = 'force_scale_example' # str | Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100  (optional)
-use_default_margins = True # bool | Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create.  (optional) (default to True)
-margin_x = 56 # int | Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false.  (optional)
-margin_y = 56 # int | Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false.  (optional)
+force_scale = 'force_scale_example' # str | Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Example: 100x100  (optional)
+use_default_margins = True # bool | Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0)  (optional) (default to True)
+margin_x = 56 # int | Pixel margin to apply to the height of the localization when generating the image. Valid only if use_default_margins is false.  (optional)
+margin_y = 56 # int | Pixel margin to apply to the width of the localization when generating the image. Valid only if use_default_margins is false.  (optional)
 
     try:
-        api_response = api_instance.get_localization_graphic(id, mode=mode, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
+        api_response = api_instance.get_localization_graphic(id, force_scale=force_scale, use_default_margins=use_default_margins, margin_x=margin_x, margin_y=margin_y)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->get_localization_graphic: %s\n" % e)
@@ -3794,11 +3793,10 @@ margin_y = 56 # int | Pixel margin to apply to the width of the localization whe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization. | 
- **mode** | **str**| Set to &#39;existing&#39; to use existing thumbnail or &#39;create&#39; to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create | [optional] [default to &#39;create&#39;]
- **force_scale** | **str**| Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode &#x3D; create. Example: 100x100  | [optional] 
- **use_default_margins** | **bool**| Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode &#x3D; create.  | [optional] [default to True]
- **margin_x** | **int**| Pixel margin to apply to the height of the localization when generating the image. Valid only if mode &#x3D; create. Valid only if use_default_margins is false.  | [optional] 
- **margin_y** | **int**| Pixel margin to apply to the width of the localization when generating the image. Valid only if mode &#x3D; create. Valid only if use_default_margins is false.  | [optional] 
+ **force_scale** | **str**| Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Example: 100x100  | [optional] 
+ **use_default_margins** | **bool**| Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0)  | [optional] [default to True]
+ **margin_x** | **int**| Pixel margin to apply to the height of the localization when generating the image. Valid only if use_default_margins is false.  | [optional] 
+ **margin_y** | **int**| Pixel margin to apply to the width of the localization when generating the image. Valid only if use_default_margins is false.  | [optional] 
 
 ### Return type
 
@@ -6189,7 +6187,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **notify**
-> notify(notify_spec=notify_spec)
+> notify(notify_spec)
 
 
 
@@ -6229,10 +6227,10 @@ configuration = tator_openapi.Configuration(
 with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
-    notify_spec = tator_openapi.NotifySpec() # NotifySpec |  (optional)
+    notify_spec = tator_openapi.NotifySpec() # NotifySpec | 
 
     try:
-        api_instance.notify(notify_spec=notify_spec)
+        api_instance.notify(notify_spec)
     except ApiException as e:
         print("Exception when calling TatorApi->notify: %s\n" % e)
 ```
@@ -6241,7 +6239,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **notify_spec** | [**NotifySpec**](NotifySpec.md)|  | [optional] 
+ **notify_spec** | [**NotifySpec**](NotifySpec.md)|  | 
 
 ### Return type
 
@@ -6267,7 +6265,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **progress**
-> MessageResponse progress(project, progress_spec=progress_spec)
+> MessageResponse progress(project, progress_spec)
 
 
 
@@ -6308,10 +6306,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-progress_spec = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algorithm","media_ids":"1,2","message":"Job started!","name":"name_of_file.mp4","progress":70,"sections":"Section 1,Section 2","state":"started","uid":"b43d7e54-8272-11ea-8e10-000c294f07cf"}] # list[ProgressSpec] |  (optional)
+progress_spec = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algorithm","media_ids":"1,2","message":"Job started!","name":"name_of_file.mp4","progress":70,"sections":"Section 1,Section 2","state":"started","uid":"b43d7e54-8272-11ea-8e10-000c294f07cf"}] # list[ProgressSpec] | 
 
     try:
-        api_response = api_instance.progress(project, progress_spec=progress_spec)
+        api_response = api_instance.progress(project, progress_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->progress: %s\n" % e)
@@ -6322,7 +6320,7 @@ progress_spec = [{"gid":"b722e83e-8272-11ea-8e10-000c294f07cf","job_type":"algor
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **progress_spec** | [**list[ProgressSpec]**](ProgressSpec.md)|  | [optional] 
+ **progress_spec** | [**list[ProgressSpec]**](ProgressSpec.md)|  | 
 
 ### Return type
 
@@ -6347,7 +6345,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **transcode**
-> Transcode transcode(project, transcode_spec=transcode_spec)
+> Transcode transcode(project, transcode_spec)
 
 
 
@@ -6388,10 +6386,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
-transcode_spec = tator_openapi.TranscodeSpec() # TranscodeSpec |  (optional)
+transcode_spec = tator_openapi.TranscodeSpec() # TranscodeSpec | 
 
     try:
-        api_response = api_instance.transcode(project, transcode_spec=transcode_spec)
+        api_response = api_instance.transcode(project, transcode_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->transcode: %s\n" % e)
@@ -6402,7 +6400,7 @@ transcode_spec = tator_openapi.TranscodeSpec() # TranscodeSpec |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
- **transcode_spec** | [**TranscodeSpec**](TranscodeSpec.md)|  | [optional] 
+ **transcode_spec** | [**TranscodeSpec**](TranscodeSpec.md)|  | 
 
 ### Return type
 
@@ -6427,7 +6425,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_leaf**
-> MessageResponse update_leaf(id, leaf_update=leaf_update)
+> MessageResponse update_leaf(id, leaf_update)
 
 
 
@@ -6468,10 +6466,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a leaf.
-leaf_update = tator_openapi.LeafUpdate() # LeafUpdate |  (optional)
+leaf_update = tator_openapi.LeafUpdate() # LeafUpdate | 
 
     try:
-        api_response = api_instance.update_leaf(id, leaf_update=leaf_update)
+        api_response = api_instance.update_leaf(id, leaf_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_leaf: %s\n" % e)
@@ -6482,7 +6480,7 @@ leaf_update = tator_openapi.LeafUpdate() # LeafUpdate |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a leaf. | 
- **leaf_update** | [**LeafUpdate**](LeafUpdate.md)|  | [optional] 
+ **leaf_update** | [**LeafUpdate**](LeafUpdate.md)|  | 
 
 ### Return type
 
@@ -6507,7 +6505,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_leaf_list**
-> MessageResponse update_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+> MessageResponse update_leaf_list(project, attribute_bulk_update, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -6548,6 +6546,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
+attribute_bulk_update = tator_openapi.AttributeBulkUpdate() # AttributeBulkUpdate | 
 ancestor = 'ancestor_example' # str | Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). (optional)
 type = 56 # int | Unique integer identifying a leaf type. (optional)
 name = 'name_example' # str | Name of the leaf element. (optional)
@@ -6562,10 +6561,9 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-attribute_bulk_update = tator_openapi.AttributeBulkUpdate() # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_leaf_list(project, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+        api_response = api_instance.update_leaf_list(project, attribute_bulk_update, ancestor=ancestor, type=type, name=name, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_leaf_list: %s\n" % e)
@@ -6576,6 +6574,7 @@ attribute_bulk_update = tator_openapi.AttributeBulkUpdate() # AttributeBulkUpdat
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | 
  **ancestor** | **str**| Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia). | [optional] 
  **type** | **int**| Unique integer identifying a leaf type. | [optional] 
  **name** | **str**| Name of the leaf element. | [optional] 
@@ -6590,7 +6589,6 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -6615,7 +6613,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_leaf_type**
-> MessageResponse update_leaf_type(id, leaf_type_update=leaf_type_update)
+> MessageResponse update_leaf_type(id, leaf_type_update)
 
 
 
@@ -6656,10 +6654,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an leaf type.
-leaf_type_update = {"description":"New description","name":"New name"} # LeafTypeUpdate |  (optional)
+leaf_type_update = {"description":"New description","name":"New name"} # LeafTypeUpdate | 
 
     try:
-        api_response = api_instance.update_leaf_type(id, leaf_type_update=leaf_type_update)
+        api_response = api_instance.update_leaf_type(id, leaf_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_leaf_type: %s\n" % e)
@@ -6670,7 +6668,7 @@ leaf_type_update = {"description":"New description","name":"New name"} # LeafTyp
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an leaf type. | 
- **leaf_type_update** | [**LeafTypeUpdate**](LeafTypeUpdate.md)|  | [optional] 
+ **leaf_type_update** | [**LeafTypeUpdate**](LeafTypeUpdate.md)|  | 
 
 ### Return type
 
@@ -6695,7 +6693,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization**
-> MessageResponse update_localization(id, localization_update=localization_update)
+> MessageResponse update_localization(id, localization_update)
 
 
 
@@ -6736,10 +6734,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization.
-localization_update = {"height":0.25,"width":0.25,"x":0.25,"y":0.25} # LocalizationUpdate |  (optional)
+localization_update = {"height":0.25,"width":0.25,"x":0.25,"y":0.25} # LocalizationUpdate | 
 
     try:
-        api_response = api_instance.update_localization(id, localization_update=localization_update)
+        api_response = api_instance.update_localization(id, localization_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_localization: %s\n" % e)
@@ -6750,7 +6748,7 @@ localization_update = {"height":0.25,"width":0.25,"x":0.25,"y":0.25} # Localizat
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization. | 
- **localization_update** | [**LocalizationUpdate**](LocalizationUpdate.md)|  | [optional] 
+ **localization_update** | [**LocalizationUpdate**](LocalizationUpdate.md)|  | 
 
 ### Return type
 
@@ -6775,7 +6773,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_list**
-> MessageResponse update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame, attribute_bulk_update=attribute_bulk_update)
+> MessageResponse update_localization_list(project, attribute_bulk_update, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
 
 
 
@@ -6816,6 +6814,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
+attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate | 
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
@@ -6836,10 +6835,9 @@ start = 56 # int | Pagination start index. Index of the first item in a larger l
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
 exclude_parents = 0 # int | If a clone is present, do not send parent. (0 or 1) (optional) (default to 0)
 frame = 56 # int | Frame number of this localization if it is in a video. (optional)
-attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_localization_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame, attribute_bulk_update=attribute_bulk_update)
+        api_response = api_instance.update_localization_list(project, attribute_bulk_update, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, exclude_parents=exclude_parents, frame=frame)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_localization_list: %s\n" % e)
@@ -6850,6 +6848,7 @@ attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | 
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
@@ -6870,7 +6869,6 @@ Name | Type | Description  | Notes
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
  **exclude_parents** | **int**| If a clone is present, do not send parent. (0 or 1) | [optional] [default to 0]
  **frame** | **int**| Frame number of this localization if it is in a video. | [optional] 
- **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -6895,7 +6893,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_localization_type**
-> MessageResponse update_localization_type(id, localization_type_update=localization_type_update)
+> MessageResponse update_localization_type(id, localization_type_update)
 
 
 
@@ -6936,10 +6934,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an localization type.
-localization_type_update = {"description":"New description","name":"New name"} # LocalizationTypeUpdate |  (optional)
+localization_type_update = {"description":"New description","name":"New name"} # LocalizationTypeUpdate | 
 
     try:
-        api_response = api_instance.update_localization_type(id, localization_type_update=localization_type_update)
+        api_response = api_instance.update_localization_type(id, localization_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_localization_type: %s\n" % e)
@@ -6950,7 +6948,7 @@ localization_type_update = {"description":"New description","name":"New name"} #
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an localization type. | 
- **localization_type_update** | [**LocalizationTypeUpdate**](LocalizationTypeUpdate.md)|  | [optional] 
+ **localization_type_update** | [**LocalizationTypeUpdate**](LocalizationTypeUpdate.md)|  | 
 
 ### Return type
 
@@ -6975,7 +6973,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media**
-> MessageResponse update_media(id, media_update=media_update)
+> MessageResponse update_media(id, media_update)
 
 
 
@@ -7016,10 +7014,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a media.
-media_update = tator_openapi.MediaUpdate() # MediaUpdate |  (optional)
+media_update = tator_openapi.MediaUpdate() # MediaUpdate | 
 
     try:
-        api_response = api_instance.update_media(id, media_update=media_update)
+        api_response = api_instance.update_media(id, media_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media: %s\n" % e)
@@ -7030,7 +7028,7 @@ media_update = tator_openapi.MediaUpdate() # MediaUpdate |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a media. | 
- **media_update** | [**MediaUpdate**](MediaUpdate.md)|  | [optional] 
+ **media_update** | [**MediaUpdate**](MediaUpdate.md)|  | 
 
 ### Return type
 
@@ -7055,7 +7053,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_list**
-> MessageResponse update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+> MessageResponse update_media_list(project, attribute_bulk_update, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -7096,6 +7094,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
+attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate | 
 media_id = [56] # list[int] | List of integers identifying media. (optional)
 type = 56 # int | Unique integer identifying media type. (optional)
 name = 'name_example' # str | Name of the media to filter on. (optional)
@@ -7113,10 +7112,9 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_media_list(project, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+        api_response = api_instance.update_media_list(project, attribute_bulk_update, media_id=media_id, type=type, name=name, md5=md5, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media_list: %s\n" % e)
@@ -7127,6 +7125,7 @@ attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | 
  **media_id** | [**list[int]**](int.md)| List of integers identifying media. | [optional] 
  **type** | **int**| Unique integer identifying media type. | [optional] 
  **name** | **str**| Name of the media to filter on. | [optional] 
@@ -7144,7 +7143,6 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7169,7 +7167,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_media_type**
-> MessageResponse update_media_type(id, media_type_update=media_type_update)
+> MessageResponse update_media_type(id, media_type_update)
 
 
 
@@ -7210,10 +7208,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying an media type.
-media_type_update = {"description":"New description","name":"New name"} # MediaTypeUpdate |  (optional)
+media_type_update = {"description":"New description","name":"New name"} # MediaTypeUpdate | 
 
     try:
-        api_response = api_instance.update_media_type(id, media_type_update=media_type_update)
+        api_response = api_instance.update_media_type(id, media_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_media_type: %s\n" % e)
@@ -7224,7 +7222,7 @@ media_type_update = {"description":"New description","name":"New name"} # MediaT
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying an media type. | 
- **media_type_update** | [**MediaTypeUpdate**](MediaTypeUpdate.md)|  | [optional] 
+ **media_type_update** | [**MediaTypeUpdate**](MediaTypeUpdate.md)|  | 
 
 ### Return type
 
@@ -7249,7 +7247,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_membership**
-> MessageResponse update_membership(id, membership_update=membership_update)
+> MessageResponse update_membership(id, membership_update)
 
 
 
@@ -7290,10 +7288,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a membership.
-membership_update = {"permission":"View Only"} # MembershipUpdate |  (optional)
+membership_update = {"permission":"View Only"} # MembershipUpdate | 
 
     try:
-        api_response = api_instance.update_membership(id, membership_update=membership_update)
+        api_response = api_instance.update_membership(id, membership_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_membership: %s\n" % e)
@@ -7304,7 +7302,7 @@ membership_update = {"permission":"View Only"} # MembershipUpdate |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a membership. | 
- **membership_update** | [**MembershipUpdate**](MembershipUpdate.md)|  | [optional] 
+ **membership_update** | [**MembershipUpdate**](MembershipUpdate.md)|  | 
 
 ### Return type
 
@@ -7329,7 +7327,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_project**
-> MessageResponse update_project(id, project_spec=project_spec)
+> MessageResponse update_project(id, project_spec)
 
 
 
@@ -7370,10 +7368,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a project.
-project_spec = {"name":"New name","summary":"New summary"} # ProjectSpec |  (optional)
+project_spec = {"name":"New name","summary":"New summary"} # ProjectSpec | 
 
     try:
-        api_response = api_instance.update_project(id, project_spec=project_spec)
+        api_response = api_instance.update_project(id, project_spec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_project: %s\n" % e)
@@ -7384,7 +7382,7 @@ project_spec = {"name":"New name","summary":"New summary"} # ProjectSpec |  (opt
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a project. | 
- **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | [optional] 
+ **project_spec** | [**ProjectSpec**](ProjectSpec.md)|  | 
 
 ### Return type
 
@@ -7409,7 +7407,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state**
-> MessageResponse update_state(id, state_update=state_update)
+> MessageResponse update_state(id, state_update)
 
 
 
@@ -7450,10 +7448,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state.
-state_update = {"frame":1001} # StateUpdate |  (optional)
+state_update = {"frame":1001} # StateUpdate | 
 
     try:
-        api_response = api_instance.update_state(id, state_update=state_update)
+        api_response = api_instance.update_state(id, state_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state: %s\n" % e)
@@ -7464,7 +7462,7 @@ state_update = {"frame":1001} # StateUpdate |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state. | 
- **state_update** | [**StateUpdate**](StateUpdate.md)|  | [optional] 
+ **state_update** | [**StateUpdate**](StateUpdate.md)|  | 
 
 ### Return type
 
@@ -7489,7 +7487,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_list**
-> MessageResponse update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+> MessageResponse update_state_list(project, attribute_bulk_update, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
 
 
 
@@ -7530,6 +7528,7 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     project = 56 # int | A unique integer identifying a project.
+attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate | 
 media_query = 'media_query_example' # str | Query string used to filter media IDs. If supplied, media_id will be ignored. (optional)
 media_id = [56] # list[int] | Comma-separated list of media IDs. (optional)
 type = 56 # int | Unique integer identifying a annotation type. (optional)
@@ -7548,10 +7547,9 @@ attribute_null = 'attribute_null_example' # str | Attribute null filter. Returns
 operation = 'operation_example' # str | Set to \"count\" to return a count of objects instead of the objects. (optional)
 start = 56 # int | Pagination start index. Index of the first item in a larger list to return. (optional)
 stop = 56 # int | Pagination start index. Non-inclusive ndex of the last item in a larger list to return. (optional)
-attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate |  (optional)
 
     try:
-        api_response = api_instance.update_state_list(project, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop, attribute_bulk_update=attribute_bulk_update)
+        api_response = api_instance.update_state_list(project, attribute_bulk_update, media_query=media_query, media_id=media_id, type=type, version=version, modified=modified, after=after, search=search, attribute=attribute, attribute_lt=attribute_lt, attribute_lte=attribute_lte, attribute_gt=attribute_gt, attribute_gte=attribute_gte, attribute_contains=attribute_contains, attribute_distance=attribute_distance, attribute_null=attribute_null, operation=operation, start=start, stop=stop)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state_list: %s\n" % e)
@@ -7562,6 +7560,7 @@ attribute_bulk_update = {"attributes":{"Species":"Tuna"}} # AttributeBulkUpdate 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project** | **int**| A unique integer identifying a project. | 
+ **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | 
  **media_query** | **str**| Query string used to filter media IDs. If supplied, media_id will be ignored. | [optional] 
  **media_id** | [**list[int]**](int.md)| Comma-separated list of media IDs. | [optional] 
  **type** | **int**| Unique integer identifying a annotation type. | [optional] 
@@ -7580,7 +7579,6 @@ Name | Type | Description  | Notes
  **operation** | **str**| Set to \&quot;count\&quot; to return a count of objects instead of the objects. | [optional] 
  **start** | **int**| Pagination start index. Index of the first item in a larger list to return. | [optional] 
  **stop** | **int**| Pagination start index. Non-inclusive ndex of the last item in a larger list to return. | [optional] 
- **attribute_bulk_update** | [**AttributeBulkUpdate**](AttributeBulkUpdate.md)|  | [optional] 
 
 ### Return type
 
@@ -7605,7 +7603,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_state_type**
-> MessageResponse update_state_type(id, state_type_update=state_type_update)
+> MessageResponse update_state_type(id, state_type_update)
 
 
 
@@ -7646,10 +7644,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a state type.
-state_type_update = {"description":"New description","name":"New name"} # StateTypeUpdate |  (optional)
+state_type_update = {"description":"New description","name":"New name"} # StateTypeUpdate | 
 
     try:
-        api_response = api_instance.update_state_type(id, state_type_update=state_type_update)
+        api_response = api_instance.update_state_type(id, state_type_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_state_type: %s\n" % e)
@@ -7660,7 +7658,7 @@ state_type_update = {"description":"New description","name":"New name"} # StateT
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a state type. | 
- **state_type_update** | [**StateTypeUpdate**](StateTypeUpdate.md)|  | [optional] 
+ **state_type_update** | [**StateTypeUpdate**](StateTypeUpdate.md)|  | 
 
 ### Return type
 
@@ -7685,7 +7683,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_user**
-> update_user(id, user_update=user_update)
+> update_user(id, user_update)
 
 
 
@@ -7726,10 +7724,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a localization association.
-user_update = tator_openapi.UserUpdate() # UserUpdate |  (optional)
+user_update = tator_openapi.UserUpdate() # UserUpdate | 
 
     try:
-        api_instance.update_user(id, user_update=user_update)
+        api_instance.update_user(id, user_update)
     except ApiException as e:
         print("Exception when calling TatorApi->update_user: %s\n" % e)
 ```
@@ -7739,7 +7737,7 @@ user_update = tator_openapi.UserUpdate() # UserUpdate |  (optional)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a localization association. | 
- **user_update** | [**UserUpdate**](UserUpdate.md)|  | [optional] 
+ **user_update** | [**UserUpdate**](UserUpdate.md)|  | 
 
 ### Return type
 
@@ -7763,7 +7761,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_version**
-> MessageResponse update_version(id, version_update=version_update)
+> MessageResponse update_version(id, version_update)
 
 
 
@@ -7804,10 +7802,10 @@ with tator_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = tator_openapi.TatorApi(api_client)
     id = 56 # int | A unique integer identifying a version.
-version_update = {"bases":[1],"description":"New description","name":"New name","show_empty":true} # VersionUpdate |  (optional)
+version_update = {"bases":[1],"description":"New description","name":"New name","show_empty":true} # VersionUpdate | 
 
     try:
-        api_response = api_instance.update_version(id, version_update=version_update)
+        api_response = api_instance.update_version(id, version_update)
         pprint(api_response)
     except ApiException as e:
         print("Exception when calling TatorApi->update_version: %s\n" % e)
@@ -7818,7 +7816,7 @@ version_update = {"bases":[1],"description":"New description","name":"New name",
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **int**| A unique integer identifying a version. | 
- **version_update** | [**VersionUpdate**](VersionUpdate.md)|  | [optional] 
+ **version_update** | [**VersionUpdate**](VersionUpdate.md)|  | 
 
 ### Return type
 
