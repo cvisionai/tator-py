@@ -6,120 +6,193 @@ import subprocess
 import json
 import os
 
-logger = logging.getLogger(__name__)
+from ..util.get_api import get_api
+from ..openapi.tator_openapi.models import CreateResponse
 
-STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
-MAX_RESOLUTION=max(STREAMING_RESOLUTIONS)
+from .upload import upload_file
+from .make_fragment_info import make_fragment_info
+
+logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
-    parser.add_argument('input', type=str, help='Path to input file.')
-    parser.add_argument('--resolutions')
+    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
+    parser.add_argument('--token', type=str, help='REST API token.')
+    parser.add_argument('--media', type=int, help='Unique integer identifying a media.')
+    parser.add_argument('--category', required=True, help='One of streaming, archival, or audio.')
+    parser.add_argument('--raw_width', type=int, help='Pixel width of original video.')
+    parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
+    parser.add_argument('--resolutions', type=str, help='Comma separated list of output resolutions.')
+    parser.add_argument('--gid', type=str, help='Group ID for this upload for sending progress.')
+    parser.add_argument('--uid', type=str, help='Unique ID for this upload for sending progress.')
+    parser.add_argument('--input', type=str, help='Path to raw video.')
     parser.add_argument("-o", "--output");
     return parser.parse_args()
 
-def determine_transcode(path):
-    """ Determines if file is supported as-is by the video player """
+def make_video_definition(disk_file):
     cmd = [
         "ffprobe",
         "-v","error",
         "-show_entries", "stream",
         "-print_format", "json",
-        "-count_frames",
-        "-skip_frame", "nokey",
-        path,
+        "-select_streams", "v",
+        disk_file,
     ]
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     stream_idx=0
-    audio=False
     for idx, stream in enumerate(video_info["streams"]):
         if stream["codec_type"] == "video":
             stream_idx=idx
-        if stream["codec_type"] == "audio":
-            logger.info("Found Audio Track")
-            audio=True
+            break
     stream = video_info["streams"][stream_idx]
-    if "nb_frames" in stream:
-        num_frames = float(stream["nb_frames"])
-    else:
-        fps_fractional = stream["avg_frame_rate"].split("/")
-        fps = float(fps_fractional[0]) / float(fps_fractional[1])
-        seconds = float(stream["duration"]);
-        num_frames = float(fps * seconds)
+    video_def = {"resolution": (stream["height"], stream["width"]),
+                 "codec": stream["codec_name"],
+                 "codec_description": stream["codec_long_name"],
+                 "size": os.stat(disk_file).st_size,
+                 "bit_rate": int(stream["bit_rate"])}
+    return video_def
 
-
-    # Handle up to but not exceeding FHD
-    height = int(stream["height"])
-    width = int(stream["width"])
-    print(f"Height of video is : {height}")
-    resolutions=[resolution for resolution in STREAMING_RESOLUTIONS if resolution < height]
-    if height <= MAX_RESOLUTION:
-        resolutions.append(height)
-    return resolutions, (height,width), audio
-
-def transcode(path, outpath, resolutions=None):
-    """Starts a transcode for the given media file.
-    """
-
-    if resolutions is None:
-        resolutions, vid_dims, audio = determine_transcode(path)
-    else:
-        _, vid_dims, audio = determine_transcode(path)
-        resolutions = args.resolutions.split(',')
-
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions, gid, uid):
     print(f"Transcoding {path} to {outpath}...")
-    print(f"Audio Present: {audio}")
-
+    # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
+    vid_dims = [raw_height, raw_width]
+    cmd = [
+        "ffmpeg", "-y",
+        "-i", path,
+        "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
+    ]
 
-    #Remove audio token
-    try:
-        resolutions.remove('audio')
-    except:
-        pass
-    if len(resolutions) > 0:
-        cmd = [
-            "ffmpeg", "-y",
-            "-i", path,
-            "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
-        ]
+    per_res = ["-an",
+        "-metadata:s", "handler_name=tator",
+        "-vcodec", "libx264",
+        "-g", "25",
+        "-preset", "fast",
+        "-pix_fmt", "yuv420p",
+        "-movflags",
+        "faststart+frag_keyframe+empty_moov+default_base_moof",
+        "-tune", "fastdecode",]
 
-        per_res = ["-an",
-            "-metadata:s", "handler_name=tator",
-            "-vcodec", "libx264",
-            "-g", "25",
-            "-preset", "fast",
-            "-pix_fmt", "yuv420p",
-            "-movflags",
-            "faststart+frag_keyframe+empty_moov+default_base_moof",
-            "-tune", "fastdecode",]
+    print(f"Transcoding to {resolutions}")
+    for ridx, resolution in enumerate(resolutions):
+        logger.info(f"Generating resolution @ {resolution}")
+        output_file = os.path.join(outpath, f"{resolution}.mp4")
+        cmd.extend([*per_res,
+                    "-filter_complex",
+                    # Scale the black mp4 to the input resolution prior to concating and scaling back down.
+                    f"[0:v:0]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
+                    "-map", f"[outv{ridx}]",
+                    output_file])
+        
+    logger.info('ffmpeg cmd = {}'.format(cmd))
+    subprocess.run(cmd, check=True)
 
-        print(f"Transcoding to {resolutions}")
-        for ridx, resolution in enumerate(resolutions):
-            logger.info(f"Generating resolution @ {resolution}")
-            output_file = os.path.join(outpath, f"{resolution}.mp4")
-            cmd.extend([*per_res,
-                        "-filter_complex",
-                        # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                        f"[0:v:0]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
-                        "-map", f"[outv{ridx}]",
-                        output_file])
-        logger.info('ffmpeg cmd = {}'.format(cmd))
-        subprocess.run(cmd, check=True)
+    for resolution in resolutions:
+        output_file = os.path.join(outpath, f"{resolution}.mp4")
 
-    if audio:
-        logger.info("Extracting audio")
-        output_file = os.path.join(outpath, f"audio.m4a")
-        audio_extraction=["ffmpeg", "-y",
-                          "-i", path,
-                          "-vn", # Strip video
-                          "-c:a", "aac",
-                          "-ac", "2",
-                          output_file]
-        subprocess.run(audio_extraction, check=True)
-    logger.info("Transcoding finished!")
+        segments_file = os.path.join(outpath, f"{resolution}.json")
+        make_fragment_info(output_file, segments_file)
+
+        logger.info("Uploading transcoded file...")
+        url = upload_file(output_file, host)
+       
+        logger.info("Uploading segments file...")
+        segments_url = upload_file(segments_file, host)
+
+        # Construct move video spec.
+        spec = {
+            'media_files': {'streaming': [{
+                **make_video_definition(output_file),
+                'url': url,
+                'segments_url': segments_url,
+            }]}
+        }
+        if gid is not None and uid is not None:
+            spec['gid'] = gid
+            spec['uid'] = uid
+
+        # Move video file with the api.
+        api = get_api(host, token)
+        response = api.move_video(media, move_video_spec=spec)
+        assert isinstance(response, CreateResponse)
+
+def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
+    os.makedirs(outpath, exist_ok=True)
+    # TODO Check for media type's archive config and transcode if necessary.
+    # Default action if no archive config is upload raw video.
+    url = upload_file(path, host)
+   
+    # Move video file with the api.
+    api = get_api(host, token)
+    response = api.move_video(media, move_video_spec={
+        'media_files': {'archival': [{
+            **make_video_definition(path),
+            'url': url,
+        }]},
+    })
+    assert isinstance(response, CreateResponse)
+
+def make_audio_definition(disk_file):
+    cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream",
+        "-print_format", "json",
+        "-select_streams", "a",
+        disk_file,
+    ]
+    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    audio_info = json.loads(output)
+    stream_idx=0
+    for idx, stream in enumerate(audio_info["streams"]):
+        if stream["codec_type"] == "audio":
+            stream_idx=idx
+            break
+    stream = audio_info["streams"][stream_idx]
+    audio_def = {"codec": stream["codec_name"],
+                 "codec_description": stream["codec_long_name"],
+                 "size": os.stat(disk_file).st_size,
+                 "bit_rate": int(stream["bit_rate"])}
+    return audio_def
+
+def convert_audio(host, token, media, path, outpath):
+    os.makedirs(outpath, exist_ok=True)
+    logger.info("Extracting audio")
+    output_file = os.path.join(outpath, f"audio.m4a")
+    audio_extraction=["ffmpeg", "-y",
+                      "-i", path,
+                      "-vn", # Strip video
+                      "-c:a", "aac",
+                      "-ac", "2",
+                      output_file]
+    subprocess.run(audio_extraction, check=True)
+    logger.info("Finished extracting audio!")
+  
+    # Upload audio. 
+    url = upload_file(output_file, host)
+   
+    # Move video file with the api.
+    api = get_api(host, token)
+    response = api.move_video(media, move_video_spec={
+        'media_files': {'audio': [{
+            **make_audio_definition(output_file),
+            'url': url,
+        }]},
+    })
+    assert isinstance(response, CreateResponse)
 
 if __name__ == '__main__':
     args = parse_args()
-    transcode(args.input, args.output, args.resolutions)
+    if args.category == 'streaming':
+        if args.resolutions == '':
+            resolutions = []
+        else:
+            resolutions = [int(res) for res in args.resolutions.split(',')]
+        convert_streaming(args.host, args.token, args.media, args.input, args.output,
+                          args.raw_width, args.raw_height, resolutions, args.gid, args.uid)
+    elif args.category == 'archival':
+        convert_archival(args.host, args.token, args.media, args.input, args.output,
+                         args.raw_width, args.raw_height)
+    elif args.category == 'audio':
+        convert_audio(args.host, args.token, args.media, args.input, args.output)

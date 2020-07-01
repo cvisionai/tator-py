@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-__version__ = "0.0.15"
+__version__ = "0.0.16"
 
 # import apis into sdk package
 from tator_openapi.api.tator_api import TatorApi
@@ -42,7 +42,6 @@ from tator_openapi.models.color_map import ColorMap
 from tator_openapi.models.create_list_response import CreateListResponse
 from tator_openapi.models.create_response import CreateResponse
 from tator_openapi.models.credentials import Credentials
-from tator_openapi.models.image_spec import ImageSpec
 from tator_openapi.models.leaf import Leaf
 from tator_openapi.models.leaf_spec import LeafSpec
 from tator_openapi.models.leaf_suggestion import LeafSuggestion
@@ -60,6 +59,7 @@ from tator_openapi.models.media import Media
 from tator_openapi.models.media_files import MediaFiles
 from tator_openapi.models.media_next import MediaNext
 from tator_openapi.models.media_prev import MediaPrev
+from tator_openapi.models.media_spec import MediaSpec
 from tator_openapi.models.media_type import MediaType
 from tator_openapi.models.media_type_spec import MediaTypeSpec
 from tator_openapi.models.media_type_update import MediaTypeUpdate
@@ -68,6 +68,7 @@ from tator_openapi.models.membership import Membership
 from tator_openapi.models.membership_spec import MembershipSpec
 from tator_openapi.models.membership_update import MembershipUpdate
 from tator_openapi.models.message_response import MessageResponse
+from tator_openapi.models.move_video_spec import MoveVideoSpec
 from tator_openapi.models.not_found_response import NotFoundResponse
 from tator_openapi.models.notify_spec import NotifySpec
 from tator_openapi.models.progress_spec import ProgressSpec
@@ -91,6 +92,4 @@ from tator_openapi.models.version import Version
 from tator_openapi.models.version_spec import VersionSpec
 from tator_openapi.models.version_update import VersionUpdate
 from tator_openapi.models.video_definition import VideoDefinition
-from tator_openapi.models.video_spec import VideoSpec
-from tator_openapi.models.video_update import VideoUpdate
 

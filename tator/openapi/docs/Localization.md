@@ -4,7 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **attributes** | **dict(str, object)** | Object containing attribute values. | [optional] 
-**created_datetime** | **datetime** | Datetime this localization was created. | [optional] 
 **email** | **str** | Email of last user who modified/created this localization. | [optional] 
 **frame** | **int** | Frame number of this localization if it is in a video. | [optional] 
 **height** | **float** | Normalized height of bounding box for &#x60;box&#x60; localization types. | [optional] 
@@ -12,13 +11,10 @@ Name | Type | Description | Notes
 **media** | **int** | Unique integer identifying media of this localization. | [optional] 
 **meta** | **int** | Unique integer identifying entity type of this localization. | [optional] 
 **modified** | **bool** | Indicates whether this localization has been modified in the web UI. | [optional] 
-**modified_by** | **int** | Unique integer identifying the user who last modified this localization. | [optional] 
-**modified_datetime** | **datetime** | Datetime this localization was last modified. | [optional] 
 **parent** | **float** | If a clone, the pk of the parent. | [optional] 
 **project** | **int** | Unique integer identifying project of this localization. | [optional] 
 **thumbnail_image** | **str** | URL of thumbnail corresponding to this localization. | [optional] 
 **u** | **float** | Horizontal vector component for &#x60;line&#x60; localization types. | [optional] 
-**user** | **int** | Unique integer identifying the user who created this localization. | [optional] 
 **v** | **float** | Vertical vector component for &#x60;line&#x60; localization types. | [optional] 
 **version** | **int** | Unique integer identifying a version. | [optional] 
 **width** | **float** | Normalized width of bounding box for &#x60;box&#x60; localization types. | [optional] 

@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**create_leaf_type**](TatorApi.md#create_leaf_type) | **POST** /rest/LeafTypes/{project} | 
 [**create_localization_list**](TatorApi.md#create_localization_list) | **POST** /rest/Localizations/{project} | 
 [**create_localization_type**](TatorApi.md#create_localization_type) | **POST** /rest/LocalizationTypes/{project} | 
+[**create_media**](TatorApi.md#create_media) | **POST** /rest/Medias/{project} | 
 [**create_media_type**](TatorApi.md#create_media_type) | **POST** /rest/MediaTypes/{project} | 
 [**create_membership**](TatorApi.md#create_membership) | **POST** /rest/Memberships/{project} | 
 [**create_obtain_auth_token**](TatorApi.md#create_obtain_auth_token) | **POST** /rest/Token | 
@@ -74,10 +75,9 @@ Method | HTTP request | Description
 [**get_version**](TatorApi.md#get_version) | **GET** /rest/Version/{id} | 
 [**get_version_list**](TatorApi.md#get_version_list) | **GET** /rest/Versions/{project} | 
 [**leaf_suggestion**](TatorApi.md#leaf_suggestion) | **GET** /rest/Leaves/Suggestion/{ancestor}/{project} | 
+[**move_video**](TatorApi.md#move_video) | **POST** /rest/MoveVideo/{id} | 
 [**notify**](TatorApi.md#notify) | **POST** /rest/Notify | 
 [**progress**](TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
-[**save_image**](TatorApi.md#save_image) | **POST** /rest/SaveImage/{project} | 
-[**save_video**](TatorApi.md#save_video) | **POST** /rest/SaveVideo/{project} | 
 [**transcode**](TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
 [**update_leaf**](TatorApi.md#update_leaf) | **PATCH** /rest/Leaf/{id} | 
 [**update_leaf_list**](TatorApi.md#update_leaf_list) | **PATCH** /rest/Leaves/{project} | 
@@ -95,7 +95,6 @@ Method | HTTP request | Description
 [**update_state_type**](TatorApi.md#update_state_type) | **PATCH** /rest/StateType/{id} | 
 [**update_user**](TatorApi.md#update_user) | **PATCH** /rest/User/{id} | 
 [**update_version**](TatorApi.md#update_version) | **PATCH** /rest/Version/{id} | 
-[**update_video**](TatorApi.md#update_video) | **PATCH** /rest/SaveVideo/{project} | 
 [**whoami**](TatorApi.md#whoami) | **GET** /rest/User/GetCurrent | 
 
 
@@ -574,6 +573,86 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Successful creation of localization type. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **create_media**
+> CreateResponse create_media(project, media_spec=media_spec)
+
+
+
+Create media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method creates a `Media` object in the database. For images, the  media must already be uploaded and an upload URL must be provided, as well as the group and job IDs associated with the upload. For videos, it is recommended to use the `Transcode` endpoint, which will create the media object itself. This method is only needed for local  transcodes. In that case, it will create an empty Media object; thumbnails, streaming, and archival videos must be subsequently uploaded via tus. Videos must be  moved to the media folder using the `MoveVideo` endpoint,  which also calls the `Media` PATCH method to update the `media_files` field. Thumbnails may be saved by just using the `Media` PATCH method directly. 
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+media_spec = tator_openapi.MediaSpec() # MediaSpec |  (optional)
+
+    try:
+        api_response = api_instance.create_media(project, media_spec=media_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->create_media: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **media_spec** | [**MediaSpec**](MediaSpec.md)|  | [optional] 
+
+### Return type
+
+[**CreateResponse**](CreateResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful creation of media. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -6029,6 +6108,86 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **move_video**
+> CreateResponse move_video(id, move_video_spec=move_video_spec)
+
+
+
+Moves a video file.  This endpoint creates an Argo workflow that moves an uploaded video file into the appropriate project directory. When the move is complete, the workflow will make a PATCH request to the Media endpoint for the given media ID using the given  `media_files` definitions.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The module `tator.transcode` in the tator pip package provides local transcode capability using this endpoint. 
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a media.
+move_video_spec = tator_openapi.MoveVideoSpec() # MoveVideoSpec |  (optional)
+
+    try:
+        api_response = api_instance.move_video(id, move_video_spec=move_video_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->move_video: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a media. | 
+ **move_video_spec** | [**MoveVideoSpec**](MoveVideoSpec.md)|  | [optional] 
+
+### Return type
+
+[**CreateResponse**](CreateResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful creation of move job. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **notify**
 > notify(notify_spec=notify_spec)
 
@@ -6182,166 +6341,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful creation of progress message. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **save_image**
-> CreateResponse save_image(project, image_spec=image_spec)
-
-
-
-Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint. 
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator_openapi
-from tator_openapi.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator_openapi.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator_openapi.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-image_spec = tator_openapi.ImageSpec() # ImageSpec |  (optional)
-
-    try:
-        api_response = api_instance.save_image(project, image_spec=image_spec)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->save_image: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **image_spec** | [**ImageSpec**](ImageSpec.md)|  | [optional] 
-
-### Return type
-
-[**CreateResponse**](CreateResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Successful creation of image. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **save_video**
-> CreateResponse save_video(project, video_spec=video_spec)
-
-
-
-Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator_openapi
-from tator_openapi.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator_openapi.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator_openapi.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-video_spec = tator_openapi.VideoSpec() # VideoSpec |  (optional)
-
-    try:
-        api_response = api_instance.save_video(project, video_spec=video_spec)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling TatorApi->save_video: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **video_spec** | [**VideoSpec**](VideoSpec.md)|  | [optional] 
-
-### Return type
-
-[**CreateResponse**](CreateResponse.md)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Successful creation of video. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -7838,84 +7837,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful update of version. |  -  |
-**400** | Bad request. |  -  |
-**404** | Not found. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_video**
-> update_video(project, video_update=video_update)
-
-
-
-Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
-
-### Example
-
-* Api Key Authentication (TokenAuth):
-```python
-from __future__ import print_function
-import time
-import tator_openapi
-from tator_openapi.rest import ApiException
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = tator_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: TokenAuth
-configuration = tator_openapi.Configuration(
-    host = "http://localhost",
-    api_key = {
-        'Authorization': 'YOUR_API_KEY'
-    }
-)
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['Authorization'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with tator_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = tator_openapi.TatorApi(api_client)
-    project = 56 # int | A unique integer identifying a project.
-video_update = tator_openapi.VideoUpdate() # VideoUpdate |  (optional)
-
-    try:
-        api_instance.update_video(project, video_update=video_update)
-    except ApiException as e:
-        print("Exception when calling TatorApi->update_video: %s\n" % e)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project** | **int**| A unique integer identifying a project. | 
- **video_update** | [**VideoUpdate**](VideoUpdate.md)|  | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[TokenAuth](../README.md#TokenAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
