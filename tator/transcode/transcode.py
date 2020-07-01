@@ -134,7 +134,6 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
     assert isinstance(response, CreateResponse)
 
 def make_audio_definition(disk_file):
-    os.makedirs(outpath, exist_ok=True)
     cmd = [
         "ffprobe",
         "-v","error",
@@ -158,6 +157,7 @@ def make_audio_definition(disk_file):
     return audio_def
 
 def convert_audio(host, token, media, path, outpath):
+    os.makedirs(outpath, exist_ok=True)
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
     audio_extraction=["ffmpeg", "-y",
