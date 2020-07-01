@@ -48,7 +48,7 @@ def make_video_definition(disk_file):
                  "codec": stream["codec_name"],
                  "codec_description": stream["codec_long_name"],
                  "size": os.stat(disk_file).st_size,
-                 "bit_rate": stream["bit_rate"]}
+                 "bit_rate": int(stream["bit_rate"])}
     return video_def
 
 def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions):
@@ -146,7 +146,7 @@ def make_audio_definition(disk_file):
     audio_def = {"codec": stream["codec_name"],
                  "codec_description": stream["codec_long_name"],
                  "size": os.stat(disk_file).st_size,
-                 "bit_rate": stream["bit_rate"]}
+                 "bit_rate": int(stream["bit_rate"])}
     return audio_def
 
 def convert_audio(host, token, media, path, outpath):
