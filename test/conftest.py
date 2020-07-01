@@ -161,11 +161,15 @@ def video(request, project, video_type, video_file):
     print(response.message)
     while True:
         response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')
-        if len(response) > 0:
-            video_id = response[0].id
-            break
         print("Waiting for transcode...")
         time.sleep(2.5)
+        if len(response) == 0:
+            continue
+        if response[0].media_files is None:
+            continue
+        if response[0].media_files.archival:
+            video_id = response[0].id
+            break
     yield video_id
     response = tator_api.delete_media(video_id)
 
