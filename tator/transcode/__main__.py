@@ -81,7 +81,6 @@ def transcode_single(path, args, gid):
             convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                           outpath=paths['transcoded'])
     
-    
 if __name__ == '__main__':
     args = parse_args()
     gid = str(uuid1())

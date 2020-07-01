@@ -167,7 +167,9 @@ def video(request, project, video_type, video_file):
             continue
         if response[0].media_files is None:
             continue
-        if response[0].media_files.archival:
+        have_streaming = response[0].media_files.streaming is not None
+        have_archival = response[0].media_files.archival is not None
+        if have_streaming and have_archival:
             video_id = response[0].id
             break
     yield video_id
