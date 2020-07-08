@@ -90,7 +90,7 @@ def _upload_test_algorithm_manifest(
         token: str,
         project: int,
         manifest_name: str='test_manifest.yaml',
-        break_yaml_file: bool=False) -> str:
+        break_yaml_file: bool=False):
     """ Uploads the provided manifest file
 
     Args:
@@ -99,7 +99,7 @@ def _upload_test_algorithm_manifest(
         project: Unique identifier of test project
 
     Returns:
-        Manifest file URL
+        Response
     """
 
     # Setup the interface to tator
@@ -124,6 +124,7 @@ def _upload_test_algorithm_manifest(
 
     return response
 
+
 def test_save_algorithm_manifest(
         host: str,
         token: str,
@@ -143,13 +144,14 @@ def test_save_algorithm_manifest(
 
     _missing_upload_file(host=host, token=token, project=project)
 
-    response_1 = _upload_test_algorithm_manifest(host=host, token=token, project=project, manifest_name='test.yaml')
-    assert os.path.basename(response_1.server_url) == 'test.yaml'
+    response_1 = _upload_test_algorithm_manifest(
+        host=host, token=token, project=project, manifest_name='test.yaml')
+    assert os.path.basename(response_1.url) == 'test.yaml'
 
-    response_2 = _upload_test_algorithm_manifest(host=host, token=token, project=project, manifest_name='test.yaml')
-    assert os.path.basename(response_2.server_url) == 'test_0.yaml'
+    response_2 = _upload_test_algorithm_manifest(
+        host=host, token=token, project=project, manifest_name='test.yaml')
+    assert os.path.basename(response_2.url) == 'test_0.yaml'
 
-'''
 def test_register_algorithm(
         host: str,
         token: str,
@@ -160,6 +162,7 @@ def test_register_algorithm(
     - Create a request body that has missing pieces
     - Create a request body that's fine, but has bad syntax for the .yaml file
     - Create a request body for a .yaml file that doesn't exist
+    - Normal request body
 
     Args:
         host: Project URL
@@ -167,4 +170,177 @@ def test_register_algorithm(
         project: Unique identifier of test project
 
     """
-'''
+
+    # Get the user ID
+    tator_api = tator.get_api(host=host, token=token)
+    user = tator_api.whoami()
+    user_id = user.id
+
+    # Create a request body that has missing pieces
+
+    # Create a request body that's fine but has bad syntax for the .yaml file
+    caught_exception = False
+    try:
+        response = _upload_test_algorithm_manifest(
+            host=host, token=token, project=project, manifest_name='test.yaml', break_yaml_file=True)
+
+        spec = tator.models.Algorithm(
+            name='test_algo',
+            project=project,
+            user=user_id,
+            description='test_description',
+            manifest=response.url,
+            cluster=None,
+            files_per_job=1)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+            
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Create a request body for a .yaml file that doesn't exist
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            name='test_algo',
+            project=project,
+            user=user_id,
+            description='test_description',
+            manifest='ghost',
+            cluster=None,
+            files_per_job=1)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+            
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Create a normal registration
+    response = _upload_test_algorithm_manifest(
+        host=host, token=token, project=project, manifest_name='test.yaml')
+
+    spec = tator.models.Algorithm(
+        name='test_algo',
+        project=project,
+        user=user_id,
+        description='test_description',
+        manifest=response.url,
+        cluster=None,
+        files_per_job=1)
+
+    response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+
+    # Then attempt to delete it
+    _ = tator_api.delete_algorithm(id=response.id)
+
+def test_register_algorithm_with_missing_fields(
+        host: str,
+        token: str,
+        project: int) -> None:
+    """
+    """
+
+    NAME = 'test_algorithm_workflow'
+    DESCRIPTION = 'description'
+    CLUSTER = 1
+    FILES_PER_JOB = 1
+    
+    # Setup the interface to tator and get the user ID
+    tator_api = tator.get_api(host=host, token=token)
+    user = tator_api.whoami()
+    user_id = user.id
+
+    # Upload a manifest file
+    response = _upload_test_algorithm_manifest(
+        host=host, token=token, project=project, manifest_name='test.yaml')
+    manifest_url = response.url
+
+    # Missing name field
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            project=project,
+            user=user_id,
+            description=DESCRIPTION,
+            manifest=manifest_url,
+            cluster=CLUSTER,
+            files_per_job=FILES_PER_JOB)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Missing user field
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            name=NAME,
+            project=project,
+            description=DESCRIPTION,
+            manifest=manifest_url,
+            cluster=CLUSTER,
+            files_per_job=FILES_PER_JOB)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Missing description field
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            name=NAME,
+            project=project,
+            user=user_id,
+            description=DESCRIPTION,
+            manifest=manifest_url,
+            cluster=CLUSTER,
+            files_per_job=FILES_PER_JOB)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Missing manifest
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            name=NAME,
+            project=project,
+            user=user_id,
+            description=DESCRIPTION,
+            cluster=CLUSTER,
+            files_per_job=FILES_PER_JOB)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+    except:
+        caught_exception = True
+
+    assert caught_exception
+
+    # Missing fields per job
+    caught_exception = False
+    try:
+        spec = tator.models.Algorithm(
+            name=NAME,
+            project=project,
+            user=user_id,
+            description=DESCRIPTION,
+            manifest=manifest_url,
+            cluster=CLUSTER)
+
+        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
+    except:
+        caught_exception = True
+
+    assert caught_exception
