@@ -7,7 +7,6 @@ from textwrap import dedent
 from tusclient.client import TusClient
 
 import tator
-from tator.util.upload_file import upload_file
 
 logger = logging.getLogger(__name__)
 
@@ -19,13 +18,10 @@ def _create_valid_yaml_file_str() -> str:
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: hello-world-
+  generateName: find-edges-
 spec:
   entrypoint: pipeline
-  ttlStrategy:
-    secondsAfterCompletion: 300 # Time to live after workflow is completed, replaces ttlSecondsAfterFinished
-    secondsAfterSuccess: 300    # Time to live after workflow is successful
-    secondsAfterFailure: 3600   # Time to live after workflow fails
+  ttlSecondsAfterFinished: 30
   volumeClaimTemplates:
   - metadata:
       name: workdir
@@ -38,28 +34,137 @@ spec:
   templates:
   - name: pipeline
     steps:
-    - - name: hello
-        template: hello
-    - - name: goodbye
-        template: goodbye
-  - name: hello
+    - - name: setup
+        template: setup
+    - - name: find-edges
+        template: find-edges
+    - - name: teardown
+        template: teardown
+  - name: setup
     script:
-      image: localhost:5000/hello_world
+      image: localhost:5000/tator_algo_marshal
+      resources:
+        limits:
+          cpu: 250m
+          memory: 100Mi
+      env:
+      - name: TATOR_MEDIA_IDS
+        value: "{{workflow.parameters.media_ids}}"
+      - name: TATOR_API_SERVICE
+        value: "{{workflow.parameters.rest_url}}"
+      - name: TATOR_AUTH_TOKEN
+        value: "{{workflow.parameters.rest_token}}"
+      - name: TATOR_PROJECT_ID
+        value: "{{workflow.parameters.project_id}}"
+      volumeMounts:
+      - name: workdir
+        mountPath: /work
+      command: [python]
+      source: |
+        #!/usr/bin/env python
+
+        import os
+        import logging
+        import pytator
+        import time
+
+        log = logging.getLogger(__name__)
+
+        if __name__ == '__main__':
+
+            # Grab necessary environment variables.
+            media_ids = os.getenv('TATOR_MEDIA_IDS')
+            rest_svc = os.getenv('TATOR_API_SERVICE')
+            token = os.getenv('TATOR_AUTH_TOKEN')
+            project = os.getenv('TATOR_PROJECT_ID')
+            work_dir = '/work'
+
+            # Iterate through media IDs.
+            tator = pytator.Tator(rest_svc, token, project)
+            medias = tator.Media
+            for media_id in media_ids.split(','):
+
+                # Get the media objects.
+                media = medias.byId(media_id)
+                print(f"media = {media}, media_id = {media_id}")
+                time.sleep(2)
+                # Download media to working directory.
+                fname = media['file'].split('/')[-1]
+                out_path = os.path.join(work_dir, fname)
+                medias.downloadFile(media, out_path)
+  - name: find-edges
+    script:
+      image: localhost:5000/find_edges
       resources:
         limits:
           cpu: 1000m
           memory: 500Mi
+      env:
+      - name: TATOR_MEDIA_IDS
+        value: "{{workflow.parameters.media_ids}}"
+      - name: TATOR_API_SERVICE
+        value: "{{workflow.parameters.rest_url}}"
+      - name: TATOR_AUTH_TOKEN
+        value: "{{workflow.parameters.rest_token}}"
+      - name: TATOR_PROJECT_ID
+        value: "{{workflow.parameters.project_id}}"
+      - name: TATOR_WORK_DIR
+        value: /work
+      volumeMounts:
+      - name: workdir
+        mountPath: /work
       command: [python]
-      args: [/hello.py]
-  - name: goodbye
+      args: [/find_edges.py]
+  - name: teardown
     script:
-      image: localhost:5000/hello_world
+      image: localhost:5000/tator_algo_marshal
       resources:
         limits:
-          cpu: 1000m
-          memory: 500Mi
+          cpu: 250m
+          memory: 100Mi
+      env:
+      - name: TATOR_MEDIA_IDS
+        value: "{{workflow.parameters.media_ids}}"
+      - name: TATOR_API_SERVICE
+        value: "{{workflow.parameters.rest_url}}"
+      - name: TATOR_AUTH_TOKEN
+        value: "{{workflow.parameters.rest_token}}"
+      - name: TATOR_PROJECT_ID
+        value: "{{workflow.parameters.project_id}}"
+      - name: TATOR_TUS_SERVICE
+        value: "{{workflow.parameters.tus_url}}"
+      volumeMounts:
+      - name: workdir
+        mountPath: /work
       command: [python]
-      args: [/goodbye.py]
+      source: |
+        #!/usr/bin/env python
+
+        import os
+        import subprocess
+
+        if __name__ == '__main__':
+
+            # Grab necessary environment variables.
+            tus_svc = os.getenv('TATOR_TUS_SERVICE')
+            rest_svc = os.getenv('TATOR_API_SERVICE')
+            token = os.getenv('TATOR_AUTH_TOKEN')
+            project_id = os.getenv('TATOR_PROJECT_ID')
+            work_dir = '/work'
+
+            # Use ingestor to upload files.
+            obj = subprocess.Popen([
+                "python",
+                "ingestor.py",
+                "media",
+                "--directory", work_dir,
+                "--typeId", "59",
+                "--url", rest_svc,
+                "--token", token,
+                "--project", project_id,
+                "--extension", "jpg",
+            ], cwd='/')
+            obj.wait()
         """)
 
 def _missing_upload_file(
