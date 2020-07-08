@@ -30,6 +30,7 @@ class VideoDefinition(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'bit_rate': 'int',
         'codec': 'str',
         'codec_description': 'str',
         'codec_mime': 'str',
@@ -37,10 +38,14 @@ class VideoDefinition(object):
         'http_auth': 'str',
         'path': 'str',
         'resolution': 'list[int]',
-        'segment_info': 'str'
+        'segment_info': 'str',
+        'segments_url': 'str',
+        'size': 'int',
+        'url': 'str'
     }
 
     attribute_map = {
+        'bit_rate': 'bit_rate',
         'codec': 'codec',
         'codec_description': 'codec_description',
         'codec_mime': 'codec_mime',
@@ -48,15 +53,19 @@ class VideoDefinition(object):
         'http_auth': 'http_auth',
         'path': 'path',
         'resolution': 'resolution',
-        'segment_info': 'segment_info'
+        'segment_info': 'segment_info',
+        'segments_url': 'segments_url',
+        'size': 'size',
+        'url': 'url'
     }
 
-    def __init__(self, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, resolution=None, segment_info=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, bit_rate=None, codec=None, codec_description=None, codec_mime=None, host=None, http_auth=None, path=None, resolution=None, segment_info=None, segments_url=None, size=None, url=None, local_vars_configuration=None):  # noqa: E501
         """VideoDefinition - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._bit_rate = None
         self._codec = None
         self._codec_description = None
         self._codec_mime = None
@@ -65,8 +74,13 @@ class VideoDefinition(object):
         self._path = None
         self._resolution = None
         self._segment_info = None
+        self._segments_url = None
+        self._size = None
+        self._url = None
         self.discriminator = None
 
+        if bit_rate is not None:
+            self.bit_rate = bit_rate
         self.codec = codec
         if codec_description is not None:
             self.codec_description = codec_description
@@ -81,6 +95,33 @@ class VideoDefinition(object):
         self.resolution = resolution
         if segment_info is not None:
             self.segment_info = segment_info
+        if segments_url is not None:
+            self.segments_url = segments_url
+        if size is not None:
+            self.size = size
+        if url is not None:
+            self.url = url
+
+    @property
+    def bit_rate(self):
+        """
+        Bit rate in bits per second
+
+        :return: The bit_rate of this VideoDefinition. 
+        :rtype: int
+        """
+        return self._bit_rate
+
+    @bit_rate.setter
+    def bit_rate(self, bit_rate):
+        """
+        Bit rate in bits per second
+
+        :param bit_rate: The bit_rate of this VideoDefinition.
+        :type: int
+        """
+
+        self._bit_rate = bit_rate
 
     @property
     def codec(self):
@@ -192,7 +233,7 @@ class VideoDefinition(object):
     @property
     def path(self):
         """
-        Path to file.
+        Relative URL to the file.
 
         :return: The path of this VideoDefinition. 
         :rtype: str
@@ -202,7 +243,7 @@ class VideoDefinition(object):
     @path.setter
     def path(self, path):
         """
-        Path to file.
+        Relative URL to the file.
 
         :param path: The path of this VideoDefinition.
         :type: str
@@ -253,6 +294,69 @@ class VideoDefinition(object):
         """
 
         self._segment_info = segment_info
+
+    @property
+    def segments_url(self):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the segments file. It is is used to determine the src path.
+
+        :return: The segments_url of this VideoDefinition. 
+        :rtype: str
+        """
+        return self._segments_url
+
+    @segments_url.setter
+    def segments_url(self, segments_url):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the segments file. It is is used to determine the src path.
+
+        :param segments_url: The segments_url of this VideoDefinition.
+        :type: str
+        """
+
+        self._segments_url = segments_url
+
+    @property
+    def size(self):
+        """
+        File size in bytes.
+
+        :return: The size of this VideoDefinition. 
+        :rtype: int
+        """
+        return self._size
+
+    @size.setter
+    def size(self, size):
+        """
+        File size in bytes.
+
+        :param size: The size of this VideoDefinition.
+        :type: int
+        """
+
+        self._size = size
+
+    @property
+    def url(self):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the video file. It is is used to determine the src path.
+
+        :return: The url of this VideoDefinition. 
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """
+        Required when this object is used with the MoveVideo endpoint, this field is the upload URL of the video file. It is is used to determine the src path.
+
+        :param url: The url of this VideoDefinition.
+        :type: str
+        """
+
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""

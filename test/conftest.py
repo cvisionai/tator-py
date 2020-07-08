@@ -92,7 +92,6 @@ def image_type(request, project):
     })
     image_type_id = response.id
     yield image_type_id
-    response = tator_api.delete_media_type(image_type_id)
 
 @pytest.fixture(scope='session')
 def image_file(request):
@@ -131,7 +130,6 @@ def image(request, project, image_type, image_file):
         time.sleep(0.5)
 
     yield image_id
-    response = tator_api.delete_media(image_id)
 
 @pytest.fixture(scope='session')
 def image_set(request):
@@ -174,7 +172,6 @@ def video_type(request, project):
     })
     video_type_id = response.id
     yield video_type_id
-    response = tator_api.delete_media_type(video_type_id)
 
 @pytest.fixture(scope='session')
 def video_file(request):
@@ -201,13 +198,18 @@ def video(request, project, video_type, video_file):
     print(response.message)
     while True:
         response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')
-        if len(response) > 0:
-            video_id = response[0].id
-            break
         print("Waiting for transcode...")
         time.sleep(2.5)
+        if len(response) == 0:
+            continue
+        if response[0].media_files is None:
+            continue
+        have_streaming = response[0].media_files.streaming is not None
+        have_archival = response[0].media_files.archival is not None
+        if have_streaming and have_archival:
+            video_id = response[0].id
+            break
     yield video_id
-    response = tator_api.delete_media(video_id)
 
 @pytest.fixture(scope='session')
 def dot_type(request, project, video_type, image_type):
@@ -225,7 +227,6 @@ def dot_type(request, project, video_type, image_type):
     })
     dot_type_id = response.id
     yield dot_type_id
-    response = tator_api.delete_localization_type(dot_type_id)
 
 @pytest.fixture(scope='session')
 def line_type(request, project, video_type, image_type):
@@ -243,7 +244,6 @@ def line_type(request, project, video_type, image_type):
     })
     line_type_id = response.id
     yield line_type_id
-    response = tator_api.delete_localization_type(line_type_id)
 
 @pytest.fixture(scope='session')
 def box_type(request, project, video_type, image_type):
@@ -261,7 +261,6 @@ def box_type(request, project, video_type, image_type):
     })
     box_type_id = response.id
     yield box_type_id
-    response = tator_api.delete_localization_type(box_type_id)
 
 @pytest.fixture(scope='session')
 def state_type(request, project, video_type):
@@ -279,7 +278,6 @@ def state_type(request, project, video_type):
     })
     state_type_id = response.id
     yield state_type_id
-    response = tator_api.delete_state_type(state_type_id)
 
 @pytest.fixture(scope='session')
 def track_type(request, project, video_type):
@@ -297,4 +295,3 @@ def track_type(request, project, video_type):
     })
     state_type_id = response.id
     yield state_type_id
-    response = tator_api.delete_state_type(state_type_id)

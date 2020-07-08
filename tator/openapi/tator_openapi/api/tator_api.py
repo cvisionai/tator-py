@@ -30,7 +30,7 @@ class TatorApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def algorithm_launch(self, project, **kwargs):
+    def algorithm_launch(self, project, algorithm_launch_spec, **kwargs):
         """algorithm_launch
 
         Launch a registered algorithm.  This will create one or more Argo workflows that execute the named algorithm registration. To get a list of available algorithms, use the `Algorithms` endpoint. A media list will be submitted for processing using either a query string or  a list of media IDs. If neither are included, the algorithm will be launched on all media in the project.   Media is divided into batches for based on the `files_per_job` field of the  `Algorithm` object. One batch is submitted to each Argo workflow.  Submitted algorithm jobs may be cancelled via the `Job` or `JobGroup` endpoints. 
@@ -38,12 +38,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.algorithm_launch(project, async_req=True)
+        >>> thread = api.algorithm_launch(project, algorithm_launch_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AlgorithmLaunchSpec algorithm_launch_spec:
+        :param AlgorithmLaunchSpec algorithm_launch_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -56,21 +56,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.algorithm_launch_with_http_info(project, **kwargs)  # noqa: E501
+        return self.algorithm_launch_with_http_info(project, algorithm_launch_spec, **kwargs)  # noqa: E501
 
-    def algorithm_launch_with_http_info(self, project, **kwargs):  # noqa: E501
+    def algorithm_launch_with_http_info(self, project, algorithm_launch_spec, **kwargs):  # noqa: E501
         """
         Launch a registered algorithm.  This will create one or more Argo workflows that execute the named algorithm registration. To get a list of available algorithms, use the `Algorithms` endpoint. A media list will be submitted for processing using either a query string or  a list of media IDs. If neither are included, the algorithm will be launched on all media in the project.   Media is divided into batches for based on the `files_per_job` field of the  `Algorithm` object. One batch is submitted to each Argo workflow.  Submitted algorithm jobs may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.algorithm_launch_with_http_info(project, async_req=True)
+        >>> thread = api.algorithm_launch_with_http_info(project, algorithm_launch_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AlgorithmLaunchSpec algorithm_launch_spec:
+        :param AlgorithmLaunchSpec algorithm_launch_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -112,6 +112,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `algorithm_launch`")  # noqa: E501
+        # verify the required parameter 'algorithm_launch_spec' is set
+        if self.api_client.client_side_validation and ('algorithm_launch_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['algorithm_launch_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `algorithm_launch_spec` when calling `algorithm_launch`")  # noqa: E501
 
         collection_formats = {}
 
@@ -156,7 +160,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_analysis(self, project, **kwargs):
+    def create_analysis(self, project, analysis_spec, **kwargs):
         """create_analysis
 
         Create analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported. 
@@ -164,12 +168,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_analysis(project, async_req=True)
+        >>> thread = api.create_analysis(project, analysis_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AnalysisSpec analysis_spec:
+        :param AnalysisSpec analysis_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -182,21 +186,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_analysis_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_analysis_with_http_info(project, analysis_spec, **kwargs)  # noqa: E501
 
-    def create_analysis_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_analysis_with_http_info(self, project, analysis_spec, **kwargs):  # noqa: E501
         """
         Create analysis.  Analysis objects are used to display information about filtered media lists and/or annotations on the project detail page of the web UI. Currently only counting analysis is supported.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_analysis_with_http_info(project, async_req=True)
+        >>> thread = api.create_analysis_with_http_info(project, analysis_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param AnalysisSpec analysis_spec:
+        :param AnalysisSpec analysis_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -238,6 +242,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_analysis`")  # noqa: E501
+        # verify the required parameter 'analysis_spec' is set
+        if self.api_client.client_side_validation and ('analysis_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['analysis_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `analysis_spec` when calling `create_analysis`")  # noqa: E501
 
         collection_formats = {}
 
@@ -282,7 +290,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_leaf_list(self, project, **kwargs):
+    def create_leaf_list(self, project, leaf_spec, **kwargs):
         """create_leaf_list
 
         Create leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk create on a list of `LeafSpec` objects. A  maximum of 500 leaves may be created in one request. 
@@ -290,12 +298,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_leaf_list(project, async_req=True)
+        >>> thread = api.create_leaf_list(project, leaf_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[LeafSpec] leaf_spec:
+        :param list[LeafSpec] leaf_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -308,21 +316,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_leaf_list_with_http_info(project, leaf_spec, **kwargs)  # noqa: E501
 
-    def create_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_leaf_list_with_http_info(self, project, leaf_spec, **kwargs):  # noqa: E501
         """
         Create leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk create on a list of `LeafSpec` objects. A  maximum of 500 leaves may be created in one request.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_leaf_list_with_http_info(project, async_req=True)
+        >>> thread = api.create_leaf_list_with_http_info(project, leaf_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[LeafSpec] leaf_spec:
+        :param list[LeafSpec] leaf_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -364,6 +372,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_leaf_list`")  # noqa: E501
+        # verify the required parameter 'leaf_spec' is set
+        if self.api_client.client_side_validation and ('leaf_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['leaf_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `leaf_spec` when calling `create_leaf_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -408,7 +420,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_leaf_type(self, project, **kwargs):
+    def create_leaf_type(self, project, leaf_type_spec, **kwargs):
         """create_leaf_type
 
         Create leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
@@ -416,12 +428,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_leaf_type(project, async_req=True)
+        >>> thread = api.create_leaf_type(project, leaf_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LeafTypeSpec leaf_type_spec:
+        :param LeafTypeSpec leaf_type_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -434,21 +446,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_leaf_type_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_leaf_type_with_http_info(project, leaf_type_spec, **kwargs)  # noqa: E501
 
-    def create_leaf_type_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_leaf_type_with_http_info(self, project, leaf_type_spec, **kwargs):  # noqa: E501
         """
         Create leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_leaf_type_with_http_info(project, async_req=True)
+        >>> thread = api.create_leaf_type_with_http_info(project, leaf_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LeafTypeSpec leaf_type_spec:
+        :param LeafTypeSpec leaf_type_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -490,6 +502,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_leaf_type`")  # noqa: E501
+        # verify the required parameter 'leaf_type_spec' is set
+        if self.api_client.client_side_validation and ('leaf_type_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['leaf_type_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `leaf_type_spec` when calling `create_leaf_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -534,7 +550,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_localization_list(self, project, **kwargs):
+    def create_localization_list(self, project, localization_spec, **kwargs):
         """create_localization_list
 
         Create localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `LocalizationSpec` objects. A  maximum of 500 localizations may be created in one request. 
@@ -542,12 +558,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_localization_list(project, async_req=True)
+        >>> thread = api.create_localization_list(project, localization_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[LocalizationSpec] localization_spec:
+        :param list[LocalizationSpec] localization_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -560,21 +576,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_localization_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_localization_list_with_http_info(project, localization_spec, **kwargs)  # noqa: E501
 
-    def create_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_localization_list_with_http_info(self, project, localization_spec, **kwargs):  # noqa: E501
         """
         Create localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `LocalizationSpec` objects. A  maximum of 500 localizations may be created in one request.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_localization_list_with_http_info(project, async_req=True)
+        >>> thread = api.create_localization_list_with_http_info(project, localization_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[LocalizationSpec] localization_spec:
+        :param list[LocalizationSpec] localization_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -616,6 +632,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_localization_list`")  # noqa: E501
+        # verify the required parameter 'localization_spec' is set
+        if self.api_client.client_side_validation and ('localization_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['localization_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `localization_spec` when calling `create_localization_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -660,7 +680,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_localization_type(self, project, **kwargs):
+    def create_localization_type(self, project, localization_type_spec, **kwargs):
         """create_localization_type
 
         Create localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it. 
@@ -668,12 +688,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_localization_type(project, async_req=True)
+        >>> thread = api.create_localization_type(project, localization_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LocalizationTypeSpec localization_type_spec:
+        :param LocalizationTypeSpec localization_type_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -686,21 +706,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_localization_type_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_localization_type_with_http_info(project, localization_type_spec, **kwargs)  # noqa: E501
 
-    def create_localization_type_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_localization_type_with_http_info(self, project, localization_type_spec, **kwargs):  # noqa: E501
         """
         Create localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_localization_type_with_http_info(project, async_req=True)
+        >>> thread = api.create_localization_type_with_http_info(project, localization_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param LocalizationTypeSpec localization_type_spec:
+        :param LocalizationTypeSpec localization_type_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -742,6 +762,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_localization_type`")  # noqa: E501
+        # verify the required parameter 'localization_type_spec' is set
+        if self.api_client.client_side_validation and ('localization_type_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['localization_type_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `localization_type_spec` when calling `create_localization_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -786,20 +810,20 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_media_type(self, project, **kwargs):
-        """create_media_type
+    def create_media(self, project, media_spec, **kwargs):
+        """create_media
 
-        Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it. 
+        Create media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method creates a `Media` object in the database. For images, the  media must already be uploaded and an upload URL must be provided, as well as the group and job IDs associated with the upload. For videos, it is recommended to use the `Transcode` endpoint, which will create the media object itself. This method is only needed for local  transcodes. In that case, it will create an empty Media object; thumbnails, streaming, and archival videos must be subsequently uploaded via tus. Videos must be  moved to the media folder using the `MoveVideo` endpoint,  which also calls the `Media` PATCH method to update the `media_files` field. Thumbnails may be saved by just using the `Media` PATCH method directly. 
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_media_type(project, async_req=True)
+        >>> thread = api.create_media(project, media_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param MediaTypeSpec media_type_spec:
+        :param MediaSpec media_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -812,21 +836,151 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_media_type_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_media_with_http_info(project, media_spec, **kwargs)  # noqa: E501
 
-    def create_media_type_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_media_with_http_info(self, project, media_spec, **kwargs):  # noqa: E501
+        """
+        Create media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method creates a `Media` object in the database. For images, the  media must already be uploaded and an upload URL must be provided, as well as the group and job IDs associated with the upload. For videos, it is recommended to use the `Transcode` endpoint, which will create the media object itself. This method is only needed for local  transcodes. In that case, it will create an empty Media object; thumbnails, streaming, and archival videos must be subsequently uploaded via tus. Videos must be  moved to the media folder using the `MoveVideo` endpoint,  which also calls the `Media` PATCH method to update the `media_files` field. Thumbnails may be saved by just using the `Media` PATCH method directly.   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_media_with_http_info(project, media_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param MediaSpec media_spec: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.CreateResponse`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'media_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_media" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `create_media`")  # noqa: E501
+        # verify the required parameter 'media_spec' is set
+        if self.api_client.client_side_validation and ('media_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['media_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `media_spec` when calling `create_media`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'media_spec' in local_var_params:
+            body_params = local_var_params['media_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Medias/{project}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='CreateResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def create_media_type(self, project, media_type_spec, **kwargs):
+        """create_media_type
+
+        Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it. 
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_media_type(project, media_type_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param MediaTypeSpec media_type_spec: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.CreateResponse`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.create_media_type_with_http_info(project, media_type_spec, **kwargs)  # noqa: E501
+
+    def create_media_type_with_http_info(self, project, media_type_spec, **kwargs):  # noqa: E501
         """
         Create media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_media_type_with_http_info(project, async_req=True)
+        >>> thread = api.create_media_type_with_http_info(project, media_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param MediaTypeSpec media_type_spec:
+        :param MediaTypeSpec media_type_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -868,6 +1022,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_media_type`")  # noqa: E501
+        # verify the required parameter 'media_type_spec' is set
+        if self.api_client.client_side_validation and ('media_type_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['media_type_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `media_type_spec` when calling `create_media_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -912,7 +1070,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_membership(self, project, **kwargs):
+    def create_membership(self, project, membership_spec, **kwargs):
         """create_membership
 
         Create membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
@@ -920,12 +1078,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_membership(project, async_req=True)
+        >>> thread = api.create_membership(project, membership_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param MembershipSpec membership_spec:
+        :param MembershipSpec membership_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -938,21 +1096,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_membership_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_membership_with_http_info(project, membership_spec, **kwargs)  # noqa: E501
 
-    def create_membership_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_membership_with_http_info(self, project, membership_spec, **kwargs):  # noqa: E501
         """
         Create membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_membership_with_http_info(project, async_req=True)
+        >>> thread = api.create_membership_with_http_info(project, membership_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param MembershipSpec membership_spec:
+        :param MembershipSpec membership_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -994,6 +1152,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_membership`")  # noqa: E501
+        # verify the required parameter 'membership_spec' is set
+        if self.api_client.client_side_validation and ('membership_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['membership_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `membership_spec` when calling `create_membership`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1153,7 +1315,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_progress_summary_api(self, project, **kwargs):
+    def create_progress_summary_api(self, project, progress_summary_spec, **kwargs):
         """create_progress_summary_api
 
         Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group. 
@@ -1161,12 +1323,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_progress_summary_api(project, async_req=True)
+        >>> thread = api.create_progress_summary_api(project, progress_summary_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param ProgressSummarySpec progress_summary_spec:
+        :param ProgressSummarySpec progress_summary_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1179,21 +1341,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_progress_summary_api_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_progress_summary_api_with_http_info(project, progress_summary_spec, **kwargs)  # noqa: E501
 
-    def create_progress_summary_api_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_progress_summary_api_with_http_info(self, project, progress_summary_spec, **kwargs):  # noqa: E501
         """
         Create or update a progress summary.  This endpoint sets a key in redis that indicates how many jobs are in a job group as well as how many are completed. This is used to display summary progress in the progress bar. If not used for a given job group, the job completion is computed from the status of individual jobs in the group.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_progress_summary_api_with_http_info(project, async_req=True)
+        >>> thread = api.create_progress_summary_api_with_http_info(project, progress_summary_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param ProgressSummarySpec progress_summary_spec:
+        :param ProgressSummarySpec progress_summary_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1235,6 +1397,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_progress_summary_api`")  # noqa: E501
+        # verify the required parameter 'progress_summary_spec' is set
+        if self.api_client.client_side_validation and ('progress_summary_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['progress_summary_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `progress_summary_spec` when calling `create_progress_summary_api`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1279,7 +1445,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_project(self, **kwargs):
+    def create_project(self, project_spec, **kwargs):
         """create_project
 
         Create project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   
@@ -1287,11 +1453,11 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_project(async_req=True)
+        >>> thread = api.create_project(project_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param ProjectSpec project_spec:
+        :param ProjectSpec project_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1304,20 +1470,20 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_project_with_http_info(**kwargs)  # noqa: E501
+        return self.create_project_with_http_info(project_spec, **kwargs)  # noqa: E501
 
-    def create_project_with_http_info(self, **kwargs):  # noqa: E501
+    def create_project_with_http_info(self, project_spec, **kwargs):  # noqa: E501
         """
         Create project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_project_with_http_info(async_req=True)
+        >>> thread = api.create_project_with_http_info(project_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param ProjectSpec project_spec:
+        :param ProjectSpec project_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1354,6 +1520,10 @@ class TatorApi(object):
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
+        # verify the required parameter 'project_spec' is set
+        if self.api_client.client_side_validation and ('project_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project_spec` when calling `create_project`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1396,7 +1566,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_state_list(self, project, **kwargs):
+    def create_state_list(self, project, state_spec, **kwargs):
         """create_state_list
 
         Create state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `StateSpec` objects. A  maximum of 500 states may be created in one request. 
@@ -1404,12 +1574,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_state_list(project, async_req=True)
+        >>> thread = api.create_state_list(project, state_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[StateSpec] state_spec:
+        :param list[StateSpec] state_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1422,21 +1592,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_state_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_state_list_with_http_info(project, state_spec, **kwargs)  # noqa: E501
 
-    def create_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_state_list_with_http_info(self, project, state_spec, **kwargs):  # noqa: E501
         """
         Create state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk create on a list of `StateSpec` objects. A  maximum of 500 states may be created in one request.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_state_list_with_http_info(project, async_req=True)
+        >>> thread = api.create_state_list_with_http_info(project, state_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[StateSpec] state_spec:
+        :param list[StateSpec] state_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1478,6 +1648,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_state_list`")  # noqa: E501
+        # verify the required parameter 'state_spec' is set
+        if self.api_client.client_side_validation and ('state_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['state_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `state_spec` when calling `create_state_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1522,7 +1696,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_state_type(self, project, **kwargs):
+    def create_state_type(self, project, state_type_spec, **kwargs):
         """create_state_type
 
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it. 
@@ -1530,12 +1704,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_state_type(project, async_req=True)
+        >>> thread = api.create_state_type(project, state_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param StateTypeSpec state_type_spec:
+        :param StateTypeSpec state_type_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1548,21 +1722,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_state_type_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_state_type_with_http_info(project, state_type_spec, **kwargs)  # noqa: E501
 
-    def create_state_type_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_state_type_with_http_info(self, project, state_type_spec, **kwargs):  # noqa: E501
         """
         Create state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_state_type_with_http_info(project, async_req=True)
+        >>> thread = api.create_state_type_with_http_info(project, state_type_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param StateTypeSpec state_type_spec:
+        :param StateTypeSpec state_type_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1604,6 +1778,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_state_type`")  # noqa: E501
+        # verify the required parameter 'state_type_spec' is set
+        if self.api_client.client_side_validation and ('state_type_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['state_type_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `state_type_spec` when calling `create_state_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1648,7 +1826,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_temporary_file(self, project, **kwargs):
+    def create_temporary_file(self, project, temporary_file_spec, **kwargs):
         """create_temporary_file
 
         Create temporary file.  Temporary files are files stored server side for a defined duration.   The file must first be uploaded via tus, and can subsequently be saved using this endpoint.
@@ -1656,12 +1834,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_temporary_file(project, async_req=True)
+        >>> thread = api.create_temporary_file(project, temporary_file_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param TemporaryFileSpec temporary_file_spec:
+        :param TemporaryFileSpec temporary_file_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1674,21 +1852,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_temporary_file_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_temporary_file_with_http_info(project, temporary_file_spec, **kwargs)  # noqa: E501
 
-    def create_temporary_file_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_temporary_file_with_http_info(self, project, temporary_file_spec, **kwargs):  # noqa: E501
         """
         Create temporary file.  Temporary files are files stored server side for a defined duration.   The file must first be uploaded via tus, and can subsequently be saved using this endpoint.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_temporary_file_with_http_info(project, async_req=True)
+        >>> thread = api.create_temporary_file_with_http_info(project, temporary_file_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param TemporaryFileSpec temporary_file_spec:
+        :param TemporaryFileSpec temporary_file_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1730,6 +1908,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_temporary_file`")  # noqa: E501
+        # verify the required parameter 'temporary_file_spec' is set
+        if self.api_client.client_side_validation and ('temporary_file_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['temporary_file_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `temporary_file_spec` when calling `create_temporary_file`")  # noqa: E501
 
         collection_formats = {}
 
@@ -1774,7 +1956,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def create_version(self, project, **kwargs):
+    def create_version(self, project, version_spec, **kwargs):
         """create_version
 
         Create version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating. 
@@ -1782,12 +1964,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_version(project, async_req=True)
+        >>> thread = api.create_version(project, version_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param VersionSpec version_spec:
+        :param VersionSpec version_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -1800,21 +1982,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.create_version_with_http_info(project, **kwargs)  # noqa: E501
+        return self.create_version_with_http_info(project, version_spec, **kwargs)  # noqa: E501
 
-    def create_version_with_http_info(self, project, **kwargs):  # noqa: E501
+    def create_version_with_http_info(self, project, version_spec, **kwargs):  # noqa: E501
         """
         Create version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_version_with_http_info(project, async_req=True)
+        >>> thread = api.create_version_with_http_info(project, version_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param VersionSpec version_spec:
+        :param VersionSpec version_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -1856,6 +2038,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `create_version`")  # noqa: E501
+        # verify the required parameter 'version_spec' is set
+        if self.api_client.client_side_validation and ('version_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['version_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `version_spec` when calling `create_version`")  # noqa: E501
 
         collection_formats = {}
 
@@ -5672,11 +5858,10 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization. (required)
-        :param str mode: Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create
-        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100 
-        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create. 
-        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
-        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Example: 100x100 
+        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) 
+        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if use_default_margins is false. 
+        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if use_default_margins is false. 
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -5703,11 +5888,10 @@ class TatorApi(object):
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization. (required)
-        :param str mode: Set to 'existing' to use existing thumbnail or 'create' to generate a new thumbnail. If using existing thumbnail and it does not exist, a 400 error will be reported. Default is create
-        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Valid only if mode = create. Example: 100x100 
-        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) Valid only if mode = create. 
-        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
-        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if mode = create. Valid only if use_default_margins is false. 
+        :param str force_scale: Size of final image to return. This forces scaling the image. Default is the localization size and margins define the image size. Example: 100x100 
+        :param bool use_default_margins: Use default margins for localization types.  Default margins (x,y pixels) - dot: (10,10) line:  (10,10) box: (0,0) 
+        :param int margin_x: Pixel margin to apply to the height of the localization when generating the image. Valid only if use_default_margins is false. 
+        :param int margin_y: Pixel margin to apply to the width of the localization when generating the image. Valid only if use_default_margins is false. 
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -5726,7 +5910,6 @@ class TatorApi(object):
 
         all_params = [
             'id',
-            'mode',
             'force_scale',
             'use_default_margins',
             'margin_x',
@@ -5761,8 +5944,6 @@ class TatorApi(object):
             path_params['id'] = local_var_params['id']  # noqa: E501
 
         query_params = []
-        if 'mode' in local_var_params and local_var_params['mode'] is not None:  # noqa: E501
-            query_params.append(('mode', local_var_params['mode']))  # noqa: E501
         if 'force_scale' in local_var_params and local_var_params['force_scale'] is not None:  # noqa: E501
             query_params.append(('force_scale', local_var_params['force_scale']))  # noqa: E501
         if 'use_default_margins' in local_var_params and local_var_params['use_default_margins'] is not None:  # noqa: E501
@@ -9514,7 +9695,133 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def notify(self, **kwargs):
+    def move_video(self, id, **kwargs):
+        """move_video
+
+        Moves a video file.  This endpoint creates an Argo workflow that moves an uploaded video file into the appropriate project directory. When the move is complete, the workflow will make a PATCH request to the Media endpoint for the given media ID using the given  `media_files` definitions.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The module `tator.transcode` in the tator pip package provides local transcode capability using this endpoint. 
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.move_video(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a media. (required)
+        :param MoveVideoSpec move_video_spec:
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.CreateResponse`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.move_video_with_http_info(id, **kwargs)  # noqa: E501
+
+    def move_video_with_http_info(self, id, **kwargs):  # noqa: E501
+        """
+        Moves a video file.  This endpoint creates an Argo workflow that moves an uploaded video file into the appropriate project directory. When the move is complete, the workflow will make a PATCH request to the Media endpoint for the given media ID using the given  `media_files` definitions.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. The module `tator.transcode` in the tator pip package provides local transcode capability using this endpoint.   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.move_video_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a media. (required)
+        :param MoveVideoSpec move_video_spec:
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.CreateResponse`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id',
+            'move_video_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method move_video" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `move_video`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'move_video_spec' in local_var_params:
+            body_params = local_var_params['move_video_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/MoveVideo/{id}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='CreateResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def notify(self, notify_spec, **kwargs):
         """notify
 
         Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings. 
@@ -9522,11 +9829,11 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.notify(async_req=True)
+        >>> thread = api.notify(notify_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param NotifySpec notify_spec:
+        :param NotifySpec notify_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -9539,20 +9846,20 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.notify_with_http_info(**kwargs)  # noqa: E501
+        return self.notify_with_http_info(notify_spec, **kwargs)  # noqa: E501
 
-    def notify_with_http_info(self, **kwargs):  # noqa: E501
+    def notify_with_http_info(self, notify_spec, **kwargs):  # noqa: E501
         """
         Send a notification to administrators.  Uses the Slack API to send a notification to system administrators. This endpoint can only be used by system administrators and must be configured in a Tator deployment's settings.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.notify_with_http_info(async_req=True)
+        >>> thread = api.notify_with_http_info(notify_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
-        :param NotifySpec notify_spec:
+        :param NotifySpec notify_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -9589,6 +9896,10 @@ class TatorApi(object):
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
+        # verify the required parameter 'notify_spec' is set
+        if self.api_client.client_side_validation and ('notify_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['notify_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `notify_spec` when calling `notify`")  # noqa: E501
 
         collection_formats = {}
 
@@ -9631,7 +9942,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def progress(self, project, **kwargs):
+    def progress(self, project, progress_spec, **kwargs):
         """progress
 
         Broadcast progress update.  Progress messages are sent in the web UI via WebSocket, and are displayed as progress bars associated with individual media files and as a summary in the webpage header. All members of a project can see progress bars from uploads and background jobs initiated by other users within the project. This endpoint accepts an array of messages, allowing for progress messages to be batched into a single request. 
@@ -9639,12 +9950,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.progress(project, async_req=True)
+        >>> thread = api.progress(project, progress_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[ProgressSpec] progress_spec:
+        :param list[ProgressSpec] progress_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -9657,21 +9968,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.progress_with_http_info(project, **kwargs)  # noqa: E501
+        return self.progress_with_http_info(project, progress_spec, **kwargs)  # noqa: E501
 
-    def progress_with_http_info(self, project, **kwargs):  # noqa: E501
+    def progress_with_http_info(self, project, progress_spec, **kwargs):  # noqa: E501
         """
         Broadcast progress update.  Progress messages are sent in the web UI via WebSocket, and are displayed as progress bars associated with individual media files and as a summary in the webpage header. All members of a project can see progress bars from uploads and background jobs initiated by other users within the project. This endpoint accepts an array of messages, allowing for progress messages to be batched into a single request.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.progress_with_http_info(project, async_req=True)
+        >>> thread = api.progress_with_http_info(project, progress_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param list[ProgressSpec] progress_spec:
+        :param list[ProgressSpec] progress_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -9713,6 +10024,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `progress`")  # noqa: E501
+        # verify the required parameter 'progress_spec' is set
+        if self.api_client.client_side_validation and ('progress_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['progress_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `progress_spec` when calling `progress`")  # noqa: E501
 
         collection_formats = {}
 
@@ -9757,259 +10072,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def save_image(self, project, **kwargs):
-        """save_image
-
-        Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint. 
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.save_image(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param ImageSpec image_spec:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: :class:`tator.models.CreateResponse`
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.save_image_with_http_info(project, **kwargs)  # noqa: E501
-
-    def save_image_with_http_info(self, project, **kwargs):  # noqa: E501
-        """
-        Saves an uploaded image.  Media is uploaded via tus, a separate mechanism from the REST API. Once an image upload is complete, the image must be saved to the database using this endpoint.   # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.save_image_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param ImageSpec image_spec:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(:class:`tator.models.CreateResponse`, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'image_spec'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method save_image" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `save_image`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'image_spec' in local_var_params:
-            body_params = local_var_params['image_spec']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/SaveImage/{project}', 'POST',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='CreateResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def save_video(self, project, **kwargs):
-        """save_video
-
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.save_video(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param VideoSpec video_spec:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: :class:`tator.models.CreateResponse`
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.save_video_with_http_info(project, **kwargs)  # noqa: E501
-
-    def save_video_with_http_info(self, project, **kwargs):  # noqa: E501
-        """
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.save_video_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param VideoSpec video_spec:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: tuple(:class:`tator.models.CreateResponse`, status_code(int), headers(HTTPHeaderDict))
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'video_spec'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method save_video" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `save_video`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'video_spec' in local_var_params:
-            body_params = local_var_params['video_spec']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/SaveVideo/{project}', 'POST',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type='CreateResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def transcode(self, project, **kwargs):
+    def transcode(self, project, transcode_spec, **kwargs):
         """transcode
 
         Start a transcode.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. This endpoint launches a transcode on raw uploaded video by creating an Argo workflow. The workflow will download the uploaded raw video, transcode it to the proper format, upload the transcoded video, and save the video using the  `SaveVideo` endpoint.  Note that the raw video must be uploaded first via tus, which is a separate mechanism  from the REST API. This endpoint requires a group and run UUID associated with this  upload. If no progress messages were generated during upload, then the group and run  UUIDs can be newly generated.  Transcodes may be cancelled via the `Job` or `JobGroup` endpoints. 
@@ -10017,12 +10080,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.transcode(project, async_req=True)
+        >>> thread = api.transcode(project, transcode_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param TranscodeSpec transcode_spec:
+        :param TranscodeSpec transcode_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10035,21 +10098,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.transcode_with_http_info(project, **kwargs)  # noqa: E501
+        return self.transcode_with_http_info(project, transcode_spec, **kwargs)  # noqa: E501
 
-    def transcode_with_http_info(self, project, **kwargs):  # noqa: E501
+    def transcode_with_http_info(self, project, transcode_spec, **kwargs):  # noqa: E501
         """
         Start a transcode.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. This endpoint launches a transcode on raw uploaded video by creating an Argo workflow. The workflow will download the uploaded raw video, transcode it to the proper format, upload the transcoded video, and save the video using the  `SaveVideo` endpoint.  Note that the raw video must be uploaded first via tus, which is a separate mechanism  from the REST API. This endpoint requires a group and run UUID associated with this  upload. If no progress messages were generated during upload, then the group and run  UUIDs can be newly generated.  Transcodes may be cancelled via the `Job` or `JobGroup` endpoints.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.transcode_with_http_info(project, async_req=True)
+        >>> thread = api.transcode_with_http_info(project, transcode_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
-        :param TranscodeSpec transcode_spec:
+        :param TranscodeSpec transcode_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10091,6 +10154,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `transcode`")  # noqa: E501
+        # verify the required parameter 'transcode_spec' is set
+        if self.api_client.client_side_validation and ('transcode_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['transcode_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `transcode_spec` when calling `transcode`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10135,7 +10202,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_leaf(self, id, **kwargs):
+    def update_leaf(self, id, leaf_update, **kwargs):
         """update_leaf
 
         Update leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes. 
@@ -10143,12 +10210,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf(id, async_req=True)
+        >>> thread = api.update_leaf(id, leaf_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a leaf. (required)
-        :param LeafUpdate leaf_update:
+        :param LeafUpdate leaf_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10161,21 +10228,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_leaf_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_leaf_with_http_info(id, leaf_update, **kwargs)  # noqa: E501
 
-    def update_leaf_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_leaf_with_http_info(self, id, leaf_update, **kwargs):  # noqa: E501
         """
         Update leaf.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf_with_http_info(id, async_req=True)
+        >>> thread = api.update_leaf_with_http_info(id, leaf_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a leaf. (required)
-        :param LeafUpdate leaf_update:
+        :param LeafUpdate leaf_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10217,6 +10284,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_leaf`")  # noqa: E501
+        # verify the required parameter 'leaf_update' is set
+        if self.api_client.client_side_validation and ('leaf_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['leaf_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `leaf_update` when calling `update_leaf`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10261,7 +10332,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_leaf_list(self, project, **kwargs):
+    def update_leaf_list(self, project, attribute_bulk_update, **kwargs):
         """update_leaf_list
 
         Update leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk update on all leaves matching a query. Only  user-defined attributes may be bulk updated. 
@@ -10269,11 +10340,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf_list(project, async_req=True)
+        >>> thread = api.update_leaf_list(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a leaf type.
         :param str name: Name of the leaf element.
@@ -10288,7 +10360,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10301,20 +10372,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_leaf_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.update_leaf_list_with_http_info(project, attribute_bulk_update, **kwargs)  # noqa: E501
 
-    def update_leaf_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def update_leaf_list_with_http_info(self, project, attribute_bulk_update, **kwargs):  # noqa: E501
         """
         Update leaf list.  Leaves are used to define label hierarchies that can be used for autocompletion of string attribute types. Leaves are a type of entity in Tator, meaning they can be described by user-defined attributes.   This method does a bulk update on all leaves matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf_list_with_http_info(project, async_req=True)
+        >>> thread = api.update_leaf_list_with_http_info(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str ancestor: Get descendents of a leaf element (inclusive), by path (i.e. ITIS.Animalia).
         :param int type: Unique integer identifying a leaf type.
         :param str name: Name of the leaf element.
@@ -10329,7 +10401,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10348,6 +10419,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
+            'attribute_bulk_update',
             'ancestor',
             'type',
             'name',
@@ -10361,8 +10433,7 @@ class TatorApi(object):
             'attribute_null',
             'operation',
             'start',
-            'stop',
-            'attribute_bulk_update'
+            'stop'
         ]
         all_params.extend(
             [
@@ -10385,6 +10456,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `update_leaf_list`")  # noqa: E501
+        # verify the required parameter 'attribute_bulk_update' is set
+        if self.api_client.client_side_validation and ('attribute_bulk_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attribute_bulk_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `attribute_bulk_update` when calling `update_leaf_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10457,7 +10532,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_leaf_type(self, id, **kwargs):
+    def update_leaf_type(self, id, leaf_type_update, **kwargs):
         """update_leaf_type
 
         Update leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it. 
@@ -10465,12 +10540,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf_type(id, async_req=True)
+        >>> thread = api.update_leaf_type(id, leaf_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an leaf type. (required)
-        :param LeafTypeUpdate leaf_type_update:
+        :param LeafTypeUpdate leaf_type_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10483,21 +10558,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_leaf_type_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_leaf_type_with_http_info(id, leaf_type_update, **kwargs)  # noqa: E501
 
-    def update_leaf_type_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_leaf_type_with_http_info(self, id, leaf_type_update, **kwargs):  # noqa: E501
         """
         Update leaf type.  A leaf type is the metadata definition object for a leaf. It includes name, description, and may have any number of user-defined attribute types associated with it.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_leaf_type_with_http_info(id, async_req=True)
+        >>> thread = api.update_leaf_type_with_http_info(id, leaf_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an leaf type. (required)
-        :param LeafTypeUpdate leaf_type_update:
+        :param LeafTypeUpdate leaf_type_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10539,6 +10614,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_leaf_type`")  # noqa: E501
+        # verify the required parameter 'leaf_type_update' is set
+        if self.api_client.client_side_validation and ('leaf_type_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['leaf_type_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `leaf_type_update` when calling `update_leaf_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10583,7 +10662,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_localization(self, id, **kwargs):
+    def update_localization(self, id, localization_update, **kwargs):
         """update_localization
 
         Update localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes. 
@@ -10591,12 +10670,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization(id, async_req=True)
+        >>> thread = api.update_localization(id, localization_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization. (required)
-        :param LocalizationUpdate localization_update:
+        :param LocalizationUpdate localization_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10609,21 +10688,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_localization_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_localization_with_http_info(id, localization_update, **kwargs)  # noqa: E501
 
-    def update_localization_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_localization_with_http_info(self, id, localization_update, **kwargs):  # noqa: E501
         """
         Update localization.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization_with_http_info(id, async_req=True)
+        >>> thread = api.update_localization_with_http_info(id, localization_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization. (required)
-        :param LocalizationUpdate localization_update:
+        :param LocalizationUpdate localization_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10665,6 +10744,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_localization`")  # noqa: E501
+        # verify the required parameter 'localization_update' is set
+        if self.api_client.client_side_validation and ('localization_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['localization_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `localization_update` when calling `update_localization`")  # noqa: E501
 
         collection_formats = {}
 
@@ -10709,7 +10792,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_localization_list(self, project, **kwargs):
+    def update_localization_list(self, project, attribute_bulk_update, **kwargs):
         """update_localization_list
 
         Update localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all localizations matching a query. Only  user-defined attributes may be bulk updated. 
@@ -10717,11 +10800,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization_list(project, async_req=True)
+        >>> thread = api.update_localization_list(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -10742,7 +10826,6 @@ class TatorApi(object):
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
         :param int frame: Frame number of this localization if it is in a video.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10755,20 +10838,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_localization_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.update_localization_list_with_http_info(project, attribute_bulk_update, **kwargs)  # noqa: E501
 
-    def update_localization_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def update_localization_list_with_http_info(self, project, attribute_bulk_update, **kwargs):  # noqa: E501
         """
         Update localiazation list.  Localizations are shape annotations drawn on a video or image. Available shapes (`dtype`) are  box, line, or dot. Each shape is parameterized by a different subset of data members: - `box` uses `x`, `y`, `width`, `height`. - `line` uses `x`, `y`, `u`, `v`. - `dot` uses `x` and `y`.  Geometry members may be left null when creating a localization, in which case the shapes may be  drawn later using the redraw capability in the web UI. Localizations are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all localizations matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization_list_with_http_info(project, async_req=True)
+        >>> thread = api.update_localization_list_with_http_info(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -10789,7 +10873,6 @@ class TatorApi(object):
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
         :param int exclude_parents: If a clone is present, do not send parent. (0 or 1)
         :param int frame: Frame number of this localization if it is in a video.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -10808,6 +10891,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
+            'attribute_bulk_update',
             'media_query',
             'media_id',
             'type',
@@ -10827,8 +10911,7 @@ class TatorApi(object):
             'start',
             'stop',
             'exclude_parents',
-            'frame',
-            'attribute_bulk_update'
+            'frame'
         ]
         all_params.extend(
             [
@@ -10851,6 +10934,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `update_localization_list`")  # noqa: E501
+        # verify the required parameter 'attribute_bulk_update' is set
+        if self.api_client.client_side_validation and ('attribute_bulk_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attribute_bulk_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `attribute_bulk_update` when calling `update_localization_list`")  # noqa: E501
 
         if self.api_client.client_side_validation and 'exclude_parents' in local_var_params and local_var_params['exclude_parents'] > 1:  # noqa: E501
             raise ApiValueError("Invalid value for parameter `exclude_parents` when calling `update_localization_list`, must be a value less than or equal to `1`")  # noqa: E501
@@ -10943,7 +11030,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_localization_type(self, id, **kwargs):
+    def update_localization_type(self, id, localization_type_update, **kwargs):
         """update_localization_type
 
         Update localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.   
@@ -10951,12 +11038,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization_type(id, async_req=True)
+        >>> thread = api.update_localization_type(id, localization_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an localization type. (required)
-        :param LocalizationTypeUpdate localization_type_update:
+        :param LocalizationTypeUpdate localization_type_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -10969,21 +11056,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_localization_type_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_localization_type_with_http_info(id, localization_type_update, **kwargs)  # noqa: E501
 
-    def update_localization_type_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_localization_type_with_http_info(self, id, localization_type_update, **kwargs):  # noqa: E501
         """
         Update localization type.  A localization type is the metadata definition object for a localization. It includes shape, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_localization_type_with_http_info(id, async_req=True)
+        >>> thread = api.update_localization_type_with_http_info(id, localization_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an localization type. (required)
-        :param LocalizationTypeUpdate localization_type_update:
+        :param LocalizationTypeUpdate localization_type_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11025,6 +11112,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_localization_type`")  # noqa: E501
+        # verify the required parameter 'localization_type_update' is set
+        if self.api_client.client_side_validation and ('localization_type_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['localization_type_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `localization_type_update` when calling `update_localization_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11069,7 +11160,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_media(self, id, **kwargs):
+    def update_media(self, id, media_update, **kwargs):
         """update_media
 
         Update media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   
@@ -11077,12 +11168,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media(id, async_req=True)
+        >>> thread = api.update_media(id, media_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a media. (required)
-        :param MediaUpdate media_update:
+        :param MediaUpdate media_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11095,21 +11186,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_media_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_media_with_http_info(id, media_update, **kwargs)  # noqa: E501
 
-    def update_media_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_media_with_http_info(self, id, media_update, **kwargs):  # noqa: E501
         """
         Update media.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media_with_http_info(id, async_req=True)
+        >>> thread = api.update_media_with_http_info(id, media_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a media. (required)
-        :param MediaUpdate media_update:
+        :param MediaUpdate media_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11151,6 +11242,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_media`")  # noqa: E501
+        # verify the required parameter 'media_update' is set
+        if self.api_client.client_side_validation and ('media_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['media_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `media_update` when calling `update_media`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11195,7 +11290,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_media_list(self, project, **kwargs):
+    def update_media_list(self, project, attribute_bulk_update, **kwargs):
         """update_media_list
 
         Update media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all media matching a query. Only  user-defined attributes may be bulk updated. 
@@ -11203,11 +11298,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media_list(project, async_req=True)
+        >>> thread = api.update_media_list(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param list[int] media_id: List of integers identifying media.
         :param int type: Unique integer identifying media type.
         :param str name: Name of the media to filter on.
@@ -11225,7 +11321,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11238,20 +11333,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_media_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.update_media_list_with_http_info(project, attribute_bulk_update, **kwargs)  # noqa: E501
 
-    def update_media_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def update_media_list_with_http_info(self, project, attribute_bulk_update, **kwargs):  # noqa: E501
         """
         Update media list.  A media may be an image or a video. Media are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all media matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media_list_with_http_info(project, async_req=True)
+        >>> thread = api.update_media_list_with_http_info(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param list[int] media_id: List of integers identifying media.
         :param int type: Unique integer identifying media type.
         :param str name: Name of the media to filter on.
@@ -11269,7 +11365,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11288,6 +11383,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
+            'attribute_bulk_update',
             'media_id',
             'type',
             'name',
@@ -11304,8 +11400,7 @@ class TatorApi(object):
             'attribute_null',
             'operation',
             'start',
-            'stop',
-            'attribute_bulk_update'
+            'stop'
         ]
         all_params.extend(
             [
@@ -11328,6 +11423,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `update_media_list`")  # noqa: E501
+        # verify the required parameter 'attribute_bulk_update' is set
+        if self.api_client.client_side_validation and ('attribute_bulk_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attribute_bulk_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `attribute_bulk_update` when calling `update_media_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11407,7 +11506,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_media_type(self, id, **kwargs):
+    def update_media_type(self, id, media_type_update, **kwargs):
         """update_media_type
 
         Update media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.   
@@ -11415,12 +11514,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media_type(id, async_req=True)
+        >>> thread = api.update_media_type(id, media_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an media type. (required)
-        :param MediaTypeUpdate media_type_update:
+        :param MediaTypeUpdate media_type_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11433,21 +11532,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_media_type_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_media_type_with_http_info(id, media_type_update, **kwargs)  # noqa: E501
 
-    def update_media_type_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_media_type_with_http_info(self, id, media_type_update, **kwargs):  # noqa: E501
         """
         Update media type.  A media type is the metadata definition object for media. It includes file format, name, description, and may have any number of user defined attribute types associated with it.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_media_type_with_http_info(id, async_req=True)
+        >>> thread = api.update_media_type_with_http_info(id, media_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying an media type. (required)
-        :param MediaTypeUpdate media_type_update:
+        :param MediaTypeUpdate media_type_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11489,6 +11588,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_media_type`")  # noqa: E501
+        # verify the required parameter 'media_type_update' is set
+        if self.api_client.client_side_validation and ('media_type_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['media_type_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `media_type_update` when calling `update_media_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11533,7 +11636,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_membership(self, id, **kwargs):
+    def update_membership(self, id, membership_update, **kwargs):
         """update_membership
 
         Update membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema. 
@@ -11541,12 +11644,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_membership(id, async_req=True)
+        >>> thread = api.update_membership(id, membership_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a membership. (required)
-        :param MembershipUpdate membership_update:
+        :param MembershipUpdate membership_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11559,21 +11662,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_membership_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_membership_with_http_info(id, membership_update, **kwargs)  # noqa: E501
 
-    def update_membership_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_membership_with_http_info(self, id, membership_update, **kwargs):  # noqa: E501
         """
         Update membership.  Memberships specify a permission level of a user to a project. There are currently five cumulative permission levels: - `View Only` can only view a project and not change any data. - `Can Edit` can create, modify, and delete annotations. - `Can Transfer` can upload and download media. - `Can Execute` can launch algorithm workflows. - `Full Control` can change project settings, including inviting new members, project name, and    project metadata schema.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_membership_with_http_info(id, async_req=True)
+        >>> thread = api.update_membership_with_http_info(id, membership_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a membership. (required)
-        :param MembershipUpdate membership_update:
+        :param MembershipUpdate membership_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11615,6 +11718,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_membership`")  # noqa: E501
+        # verify the required parameter 'membership_update' is set
+        if self.api_client.client_side_validation and ('membership_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['membership_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `membership_update` when calling `update_membership`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11659,7 +11766,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_project(self, id, **kwargs):
+    def update_project(self, id, project_spec, **kwargs):
         """update_project
 
         Update project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.   
@@ -11667,12 +11774,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_project(id, async_req=True)
+        >>> thread = api.update_project(id, project_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a project. (required)
-        :param ProjectSpec project_spec:
+        :param ProjectSpec project_spec: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11685,21 +11792,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_project_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_project_with_http_info(id, project_spec, **kwargs)  # noqa: E501
 
-    def update_project_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_project_with_http_info(self, id, project_spec, **kwargs):  # noqa: E501
         """
         Update project.  Projects are the object under which all data in Tator is grouped, including user access, metadata definitions, media, and annotations. Data does not cross boundaries between projects.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_project_with_http_info(id, async_req=True)
+        >>> thread = api.update_project_with_http_info(id, project_spec, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a project. (required)
-        :param ProjectSpec project_spec:
+        :param ProjectSpec project_spec: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11741,6 +11848,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_project`")  # noqa: E501
+        # verify the required parameter 'project_spec' is set
+        if self.api_client.client_side_validation and ('project_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project_spec` when calling `update_project`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11785,7 +11896,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_state(self, id, **kwargs):
+    def update_state(self, id, state_update, **kwargs):
         """update_state
 
         Update state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes. 
@@ -11793,12 +11904,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state(id, async_req=True)
+        >>> thread = api.update_state(id, state_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state. (required)
-        :param StateUpdate state_update:
+        :param StateUpdate state_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11811,21 +11922,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_state_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_state_with_http_info(id, state_update, **kwargs)  # noqa: E501
 
-    def update_state_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_state_with_http_info(self, id, state_update, **kwargs):  # noqa: E501
         """
         Update state.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state_with_http_info(id, async_req=True)
+        >>> thread = api.update_state_with_http_info(id, state_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state. (required)
-        :param StateUpdate state_update:
+        :param StateUpdate state_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -11867,6 +11978,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_state`")  # noqa: E501
+        # verify the required parameter 'state_update' is set
+        if self.api_client.client_side_validation and ('state_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['state_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `state_update` when calling `update_state`")  # noqa: E501
 
         collection_formats = {}
 
@@ -11911,7 +12026,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_state_list(self, project, **kwargs):
+    def update_state_list(self, project, attribute_bulk_update, **kwargs):
         """update_state_list
 
         Update state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all states matching a query. Only  user-defined attributes may be bulk updated. 
@@ -11919,11 +12034,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state_list(project, async_req=True)
+        >>> thread = api.update_state_list(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -11942,7 +12058,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -11955,20 +12070,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_state_list_with_http_info(project, **kwargs)  # noqa: E501
+        return self.update_state_list_with_http_info(project, attribute_bulk_update, **kwargs)  # noqa: E501
 
-    def update_state_list_with_http_info(self, project, **kwargs):  # noqa: E501
+    def update_state_list_with_http_info(self, project, attribute_bulk_update, **kwargs):  # noqa: E501
         """
         Update state list.  A state is a description of a collection of other objects. The objects a state describes could be media (image or video), video frames, or localizations. A state referring to a collection of localizations is often referred to as a track. States are a type of entity in Tator, meaning they can be described by user defined attributes.   This method does a bulk update on all states matching a query. Only  user-defined attributes may be bulk updated.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state_list_with_http_info(project, async_req=True)
+        >>> thread = api.update_state_list_with_http_info(project, attribute_bulk_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int project: A unique integer identifying a project. (required)
+        :param AttributeBulkUpdate attribute_bulk_update: (required)
         :param str media_query: Query string used to filter media IDs. If supplied, media_id will be ignored.
         :param list[int] media_id: Comma-separated list of media IDs.
         :param int type: Unique integer identifying a annotation type.
@@ -11987,7 +12103,6 @@ class TatorApi(object):
         :param str operation: Set to \"count\" to return a count of objects instead of the objects.
         :param int start: Pagination start index. Index of the first item in a larger list to return.
         :param int stop: Pagination start index. Non-inclusive ndex of the last item in a larger list to return.
-        :param AttributeBulkUpdate attribute_bulk_update:
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12006,6 +12121,7 @@ class TatorApi(object):
 
         all_params = [
             'project',
+            'attribute_bulk_update',
             'media_query',
             'media_id',
             'type',
@@ -12023,8 +12139,7 @@ class TatorApi(object):
             'attribute_null',
             'operation',
             'start',
-            'stop',
-            'attribute_bulk_update'
+            'stop'
         ]
         all_params.extend(
             [
@@ -12047,6 +12162,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
                                                         local_var_params['project'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `project` when calling `update_state_list`")  # noqa: E501
+        # verify the required parameter 'attribute_bulk_update' is set
+        if self.api_client.client_side_validation and ('attribute_bulk_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['attribute_bulk_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `attribute_bulk_update` when calling `update_state_list`")  # noqa: E501
 
         collection_formats = {}
 
@@ -12129,7 +12248,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_state_type(self, id, **kwargs):
+    def update_state_type(self, id, state_type_update, **kwargs):
         """update_state_type
 
         Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.   
@@ -12137,12 +12256,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state_type(id, async_req=True)
+        >>> thread = api.update_state_type(id, state_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state type. (required)
-        :param StateTypeUpdate state_type_update:
+        :param StateTypeUpdate state_type_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12155,21 +12274,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_state_type_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_state_type_with_http_info(id, state_type_update, **kwargs)  # noqa: E501
 
-    def update_state_type_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_state_type_with_http_info(self, id, state_type_update, **kwargs):  # noqa: E501
         """
         Update state type.  A state type is the metadata definition object for a state. It includes association type, name, description, and may have any number of user-defined attribute types associated with it.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_state_type_with_http_info(id, async_req=True)
+        >>> thread = api.update_state_type_with_http_info(id, state_type_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a state type. (required)
-        :param StateTypeUpdate state_type_update:
+        :param StateTypeUpdate state_type_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12211,6 +12330,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_state_type`")  # noqa: E501
+        # verify the required parameter 'state_type_update' is set
+        if self.api_client.client_side_validation and ('state_type_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['state_type_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `state_type_update` when calling `update_state_type`")  # noqa: E501
 
         collection_formats = {}
 
@@ -12255,7 +12378,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_user(self, id, **kwargs):
+    def update_user(self, id, user_update, **kwargs):
         """update_user
 
         Update user.
@@ -12263,12 +12386,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_user(id, async_req=True)
+        >>> thread = api.update_user(id, user_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization association. (required)
-        :param UserUpdate user_update:
+        :param UserUpdate user_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12281,21 +12404,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_user_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_user_with_http_info(id, user_update, **kwargs)  # noqa: E501
 
-    def update_user_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_user_with_http_info(self, id, user_update, **kwargs):  # noqa: E501
         """
         Update user.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_user_with_http_info(id, async_req=True)
+        >>> thread = api.update_user_with_http_info(id, user_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a localization association. (required)
-        :param UserUpdate user_update:
+        :param UserUpdate user_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12337,6 +12460,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_user`")  # noqa: E501
+        # verify the required parameter 'user_update' is set
+        if self.api_client.client_side_validation and ('user_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['user_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `user_update` when calling `update_user`")  # noqa: E501
 
         collection_formats = {}
 
@@ -12381,7 +12508,7 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_version(self, id, **kwargs):
+    def update_version(self, id, version_update, **kwargs):
         """update_version
 
         Update version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.   
@@ -12389,12 +12516,12 @@ class TatorApi(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_version(id, async_req=True)
+        >>> thread = api.update_version(id, version_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param VersionUpdate version_update:
+        :param VersionUpdate version_update: (required)
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
                                  data. Default is True.
@@ -12407,21 +12534,21 @@ class TatorApi(object):
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
-        return self.update_version_with_http_info(id, **kwargs)  # noqa: E501
+        return self.update_version_with_http_info(id, version_update, **kwargs)  # noqa: E501
 
-    def update_version_with_http_info(self, id, **kwargs):  # noqa: E501
+    def update_version_with_http_info(self, id, version_update, **kwargs):  # noqa: E501
         """
         Update version.  Versions allow for multiple \"layers\" of annotations on the same media. Versions are created at the project level, but are only displayed for a given media if that media contains annotations in that version. The version of an annotation can be set by providing it in a POST operation. Currently only localizations and states can have versions.  Versions are used in conjunction with the `modified` flag to determine whether an annotation should be displayed for a given media while annotating.     # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.update_version_with_http_info(id, async_req=True)
+        >>> thread = api.update_version_with_http_info(id, version_update, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool: execute request asynchronously
         :param int id: A unique integer identifying a version. (required)
-        :param VersionUpdate version_update:
+        :param VersionUpdate version_update: (required)
         :param _return_http_data_only: response data without head status code
                                        and headers
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -12463,6 +12590,10 @@ class TatorApi(object):
         if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
                                                         local_var_params['id'] is None):  # noqa: E501
             raise ApiValueError("Missing the required parameter `id` when calling `update_version`")  # noqa: E501
+        # verify the required parameter 'version_update' is set
+        if self.api_client.client_side_validation and ('version_update' not in local_var_params or  # noqa: E501
+                                                        local_var_params['version_update'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `version_update` when calling `update_version`")  # noqa: E501
 
         collection_formats = {}
 
@@ -12500,132 +12631,6 @@ class TatorApi(object):
             post_params=form_params,
             files=local_var_files,
             response_type='MessageResponse',  # noqa: E501
-            auth_settings=auth_settings,
-            async_req=local_var_params.get('async_req'),
-            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=local_var_params.get('_preload_content', True),
-            _request_timeout=local_var_params.get('_request_timeout'),
-            collection_formats=collection_formats)
-
-    def update_video(self, project, **kwargs):
-        """update_video
-
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that. 
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_video(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param VideoUpdate video_update:
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        return self.update_video_with_http_info(project, **kwargs)  # noqa: E501
-
-    def update_video_with_http_info(self, project, **kwargs):  # noqa: E501
-        """
-        Saves a transcoded video.  Videos in Tator must be transcoded to a multi-resolution streaming format before they can be viewed or annotated. To launch a transcode on raw uploaded video, use the `Transcode` endpoint, which will create an Argo workflow to perform the transcode and save the video using this endpoint; no further REST calls are required. However, if you would like to perform transcodes locally, this endpoint enables that.   # noqa: E501
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_video_with_http_info(project, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool: execute request asynchronously
-        :param int project: A unique integer identifying a project. (required)
-        :param VideoUpdate video_update:
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :return: None
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        local_var_params = locals()
-
-        all_params = [
-            'project',
-            'video_update'
-        ]
-        all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout'
-            ]
-        )
-
-        for key, val in six.iteritems(local_var_params['kwargs']):
-            if key not in all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_video" % key
-                )
-            local_var_params[key] = val
-        del local_var_params['kwargs']
-        # verify the required parameter 'project' is set
-        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
-                                                        local_var_params['project'] is None):  # noqa: E501
-            raise ApiValueError("Missing the required parameter `project` when calling `update_video`")  # noqa: E501
-
-        collection_formats = {}
-
-        path_params = {}
-        if 'project' in local_var_params:
-            path_params['project'] = local_var_params['project']  # noqa: E501
-
-        query_params = []
-
-        header_params = {}
-
-        form_params = []
-        local_var_files = {}
-
-        body_params = None
-        if 'video_update' in local_var_params:
-            body_params = local_var_params['video_update']
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
-
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
-
-        # Authentication setting
-        auth_settings = ['TokenAuth']  # noqa: E501
-
-        return self.api_client.call_api(
-            '/rest/SaveVideo/{project}', 'PATCH',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
-            response_type=None,  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
