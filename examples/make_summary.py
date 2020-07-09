@@ -9,7 +9,6 @@ import pandas as pd
 import progressbar
 
 import tator
-import tator_openapi
 
 logging.basicConfig(
     filename='make_summary.logs',
@@ -70,11 +69,11 @@ def getAttributeTypeData(localization_types_df: pd.DataFrame) -> dict:
 
 def processLocalization(
         host: str,
-        tator_api: tator_openapi.api.tator_api.TatorApi,
+        tator_api: tator.api,
         project_id: int,
         section_name: str,
-        media: tator_openapi.models.media.Media,
-        localization: tator_openapi.models.localization.Localization,
+        media: tator.models.Media,
+        localization: tator.models.Localization,
         localization_types_df: pd.DataFrame,
         attribute_types_info: dict,
         image_folder: str,
@@ -252,7 +251,7 @@ def processLocalization(
 
 def processSection(
         host: str,
-        tator_api: tator_openapi.api.tator_api.TatorApi,
+        tator_api: tator.api,
         project_id: int,
         section_name: str,
         medias: list,

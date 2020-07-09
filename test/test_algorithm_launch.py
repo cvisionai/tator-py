@@ -166,7 +166,7 @@ def algorithm_name(request, project: int) -> str:
     _ = tator_api.delete_algorithm(id=response.id)
 
 def _assert_algorithm_workflow_results(
-    tator_api: tator.tator_openapi.api.tator_api.TatorApi,
+    tator_api: tator.api,
     project: int,
     expected_analysis_count: int) -> None:
     """ Polls the tator database waiting for the argo workflow to complete its database inserts

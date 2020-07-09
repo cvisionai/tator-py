@@ -11,4 +11,4 @@ from tator.util.upload_temporary_file import upload_temporary_file
 from tator.util.md5sum import md5sum
 from tator.util.get_images import get_images
 from tator.util.to_dataframe import to_dataframe
-from tator.util.upload_file import upload_file
+from tator.util.register_algorithm import register_algorithm

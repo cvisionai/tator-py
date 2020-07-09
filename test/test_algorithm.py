@@ -12,7 +12,7 @@ from tator.transcode.upload import upload_file
 
 logger = logging.getLogger(__name__)
 
-def _create_valid_yaml_file_str() -> str:
+def _create_yaml_file_str() -> str:
     """ Creates a argo manifest file used by the unit tests in this file
     """
 
@@ -137,20 +137,24 @@ def _upload_test_algorithm_manifest(
     tator_api = tator.get_api(host=host, token=token)
 
     # Create the temporary manifest file
-    local_yaml_file = 'test.yaml'
-    with open(local_yaml_file, 'w') as file_handle:
-        file_handle.write(_create_valid_yaml_file_str())
+    fd, local_yaml_file = tempfile.mkstemp()
+    try:
+        with os.fdopen(fd, 'w') as file_handle:
+            file_handle.write(_create_yaml_file_str())
 
-        if break_yaml_file:
-            file_handle.write('RANDOM_TEXT!!!!!')
+            if break_yaml_file:
+                file_handle.write('RANDOM_TEXT!!!!!')
 
-    # Upload the manifest file with tus first
-    logger.info(f"Created temporary manifest file: {local_yaml_file}")
-    url = upload_file(path=local_yaml_file, host=host)
+        # Upload the manifest file with tus first
+        logger.info(f"Created temporary manifest file: {local_yaml_file}")
+        url = upload_file(path=local_yaml_file, host=host)
 
-    # Save the uploaded file using the save algorithm manifest endpoint
-    spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
-    response = tator_api.save_algorithm_manifest(project=project, algorithm_manifest_spec=spec)
+        # Save the uploaded file using the save algorithm manifest endpoint
+        spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
+        response = tator_api.save_algorithm_manifest(project=project, algorithm_manifest_spec=spec)
+
+    finally:
+        os.remove(local_yaml_file)
 
     return response
 
