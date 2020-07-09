@@ -30,6 +30,7 @@ class MediaTypeSpec(object):
                             and the value is json key in definition.
     """
     openapi_types = {
+        'archive_config': 'list[ArchiveConfig]',
         'attribute_types': 'list[AttributeType]',
         'default_volume': 'int',
         'description': 'str',
@@ -40,6 +41,7 @@ class MediaTypeSpec(object):
     }
 
     attribute_map = {
+        'archive_config': 'archive_config',
         'attribute_types': 'attribute_types',
         'default_volume': 'default_volume',
         'description': 'description',
@@ -49,12 +51,13 @@ class MediaTypeSpec(object):
         'name': 'name'
     }
 
-    def __init__(self, attribute_types=None, default_volume=None, description='', dtype=None, file_format=None, keep_original=True, name=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, archive_config=None, attribute_types=None, default_volume=None, description='', dtype=None, file_format=None, keep_original=True, name=None, local_vars_configuration=None):  # noqa: E501
         """MediaTypeSpec - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
 
+        self._archive_config = None
         self._attribute_types = None
         self._default_volume = None
         self._description = None
@@ -64,6 +67,8 @@ class MediaTypeSpec(object):
         self._name = None
         self.discriminator = None
 
+        if archive_config is not None:
+            self.archive_config = archive_config
         if attribute_types is not None:
             self.attribute_types = attribute_types
         if default_volume is not None:
@@ -76,6 +81,27 @@ class MediaTypeSpec(object):
         if keep_original is not None:
             self.keep_original = keep_original
         self.name = name
+
+    @property
+    def archive_config(self):
+        """
+        Archive config definitions. If null, the raw file will be uploaded to Tator.
+
+        :return: The archive_config of this MediaTypeSpec. 
+        :rtype: list[ArchiveConfig]
+        """
+        return self._archive_config
+
+    @archive_config.setter
+    def archive_config(self, archive_config):
+        """
+        Archive config definitions. If null, the raw file will be uploaded to Tator.
+
+        :param archive_config: The archive_config of this MediaTypeSpec.
+        :type: list[ArchiveConfig]
+        """
+
+        self._archive_config = archive_config
 
     @property
     def attribute_types(self):
