@@ -4,6 +4,7 @@ Media type.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**archive_config** | [**list[ArchiveConfig]**](ArchiveConfig.md) | Archive config definitions. If null, the raw file will be uploaded to Tator. | [optional] 
 **attribute_types** | [**list[AttributeType]**](AttributeType.md) | Attribute type definitions. | [optional] 
 **default_volume** | **int** | Default audio volume for this media type. | [optional] 
 **description** | **str** | Description of the media type. | [optional] [default to '']
