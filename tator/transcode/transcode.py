@@ -117,14 +117,11 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         response = api.move_video(media, move_video_spec=spec)
         assert isinstance(response, CreateResponse)
 
-def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
-    os.makedirs(outpath, exist_ok=True)
-    # TODO Check for media type's archive config and transcode if necessary.
+def default_archival_upload(api, host, media, path):
     # Default action if no archive config is upload raw video.
     url = upload_file(path, host)
    
     # Move video file with the api.
-    api = get_api(host, token)
     response = api.move_video(media, move_video_spec={
         'media_files': {'archival': [{
             **make_video_definition(path),
@@ -132,6 +129,48 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
         }]},
     })
     assert isinstance(response, CreateResponse)
+
+def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
+    # Retrieve this media's type to inspect archive config.
+    api = get_api(host, token)
+    media_obj = api.get_media(media)
+    media_type = api.get_media_type(media_obj.meta)
+
+    if media_type.archive_config is None:
+        default_archival_upload(api, host, media, path)
+    else:
+        for idx, archive_config in enumerate(media_type.archive_config):
+            if archive_config.encode is None: 
+                # If no encode, just use the original file.
+                output_file = path
+            else:
+                # Encode the media to archival format.
+                os.makedirs(outpath, exist_ok=True)
+                output_file = os.path.join(outpath, f"archival_{idx}.mp4")
+                cmd = [
+                    "ffmpeg", "-y",
+                    "-i", path,
+                    "-vcodec", media_type.archive_config.encode.vcodec,
+                    "-crf", media_type.archive_config.encode.crf,
+                    "-preset", media_type.archive_config.encode.preset,
+                    "-tune", media_type.archive_config.encode.tune,
+                    "-pix_fmt", "yuv420p",
+                    output_file
+                ]
+                
+            if archive_config.s3_storage is None:
+                default_archival_upload(api, host, media, output_file)
+            else:
+                import boto3
+                # Get credentials from config object.
+                aws_access_key = archive_config.s3_storage.aws_access_key
+                aws_secret_access_key = archive_config.s3_storage.aws_secret_access_key
+                bucket_name = archive_config.s3_storage.bucket_name
+
+                # Upload the video to S3.
+                client = boto3.client('s3', aws_access_key_id=aws_access_key,
+                                      aws_secret_access_key=aws_secret_access_key)
+                client.upload_file(output_file, bucket_name, os.path.basename(output_file))
 
 def make_audio_definition(disk_file):
     cmd = [
