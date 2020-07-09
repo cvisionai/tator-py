@@ -2,26 +2,31 @@ import logging
 import os
 import shutil
 import tempfile
+import uuid
 from textwrap import dedent
 
 from tusclient.client import TusClient
 
 import tator
+from tator.transcode.upload import upload_file
 
 logger = logging.getLogger(__name__)
 
 def _create_valid_yaml_file_str() -> str:
-    """ Returns a string that can be written out to a .yaml file that is valid syntax
+    """ Creates a argo manifest file used by the unit tests in this file
     """
 
     return dedent("""\
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: find-edges-
+  generateName: test-algorithm-launcher-
 spec:
   entrypoint: pipeline
-  ttlSecondsAfterFinished: 30
+  ttlStrategy:
+    secondsAfterCompletion: 300 # Time to live after workflow is completed, replaces ttlSecondsAfterFinished
+    secondsAfterSuccess: 300 # Time to live after workflow is successful
+    secondsAfterFailure: 600 # Time to live after workflow fails
   volumeClaimTemplates:
   - metadata:
       name: workdir
@@ -34,71 +39,11 @@ spec:
   templates:
   - name: pipeline
     steps:
-    - - name: setup
-        template: setup
-    - - name: find-edges
-        template: find-edges
-    - - name: teardown
-        template: teardown
-  - name: setup
+    - - name: test
+        template: test
+  - name: test
     script:
-      image: localhost:5000/tator_algo_marshal
-      resources:
-        limits:
-          cpu: 250m
-          memory: 100Mi
-      env:
-      - name: TATOR_MEDIA_IDS
-        value: "{{workflow.parameters.media_ids}}"
-      - name: TATOR_API_SERVICE
-        value: "{{workflow.parameters.rest_url}}"
-      - name: TATOR_AUTH_TOKEN
-        value: "{{workflow.parameters.rest_token}}"
-      - name: TATOR_PROJECT_ID
-        value: "{{workflow.parameters.project_id}}"
-      volumeMounts:
-      - name: workdir
-        mountPath: /work
-      command: [python]
-      source: |
-        #!/usr/bin/env python
-
-        import os
-        import logging
-        import pytator
-        import time
-
-        log = logging.getLogger(__name__)
-
-        if __name__ == '__main__':
-
-            # Grab necessary environment variables.
-            media_ids = os.getenv('TATOR_MEDIA_IDS')
-            rest_svc = os.getenv('TATOR_API_SERVICE')
-            token = os.getenv('TATOR_AUTH_TOKEN')
-            project = os.getenv('TATOR_PROJECT_ID')
-            work_dir = '/work'
-
-            # Iterate through media IDs.
-            tator = pytator.Tator(rest_svc, token, project)
-            medias = tator.Media
-            for media_id in media_ids.split(','):
-
-                # Get the media objects.
-                media = medias.byId(media_id)
-                print(f"media = {media}, media_id = {media_id}")
-                time.sleep(2)
-                # Download media to working directory.
-                fname = media['file'].split('/')[-1]
-                out_path = os.path.join(work_dir, fname)
-                medias.downloadFile(media, out_path)
-  - name: find-edges
-    script:
-      image: localhost:5000/find_edges
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 500Mi
+      image: cvisionai/tator_transcoder #localhost:5000/tator_transcoder
       env:
       - name: TATOR_MEDIA_IDS
         value: "{{workflow.parameters.media_ids}}"
@@ -109,62 +54,40 @@ spec:
       - name: TATOR_PROJECT_ID
         value: "{{workflow.parameters.project_id}}"
       - name: TATOR_WORK_DIR
-        value: /work
-      volumeMounts:
-      - name: workdir
-        mountPath: /work
-      command: [python]
-      args: [/find_edges.py]
-  - name: teardown
-    script:
-      image: localhost:5000/tator_algo_marshal
+        value: "/work"
       resources:
         limits:
-          cpu: 250m
-          memory: 100Mi
-      env:
-      - name: TATOR_MEDIA_IDS
-        value: "{{workflow.parameters.media_ids}}"
-      - name: TATOR_API_SERVICE
-        value: "{{workflow.parameters.rest_url}}"
-      - name: TATOR_AUTH_TOKEN
-        value: "{{workflow.parameters.rest_token}}"
-      - name: TATOR_PROJECT_ID
-        value: "{{workflow.parameters.project_id}}"
-      - name: TATOR_TUS_SERVICE
-        value: "{{workflow.parameters.tus_url}}"
+          cpu: 1000m
+          memory: 500Mi
       volumeMounts:
       - name: workdir
         mountPath: /work
-      command: [python]
+      command: [python3]
       source: |
-        #!/usr/bin/env python
+        #!/usr/bin/env python3
 
         import os
-        import subprocess
+        import tator
+
+        def main():
+            host = os.path.dirname(os.getenv('TATOR_API_SERVICE'))
+            token = os.getenv('TATOR_AUTH_TOKEN')
+            project = int(os.getenv('TATOR_PROJECT_ID'))
+            media_ids = os.getenv('TATOR_MEDIA_IDS')
+            media_ids = [int(m) for m in media_ids.split(',')]
+
+            tator_api = tator.get_api(host=host, token=token)
+
+            print(f'{host} {token} {project} {media_ids}')
+
+            for media in media_ids:
+                name = f'test_media_{media}'
+                dq = f'test_media_id:{media}'
+                spec = tator.models.AnalysisSpec(name=name, data_query=dq)
+                _ = tator_api.create_analysis(project=project, analysis_spec=spec)
 
         if __name__ == '__main__':
-
-            # Grab necessary environment variables.
-            tus_svc = os.getenv('TATOR_TUS_SERVICE')
-            rest_svc = os.getenv('TATOR_API_SERVICE')
-            token = os.getenv('TATOR_AUTH_TOKEN')
-            project_id = os.getenv('TATOR_PROJECT_ID')
-            work_dir = '/work'
-
-            # Use ingestor to upload files.
-            obj = subprocess.Popen([
-                "python",
-                "ingestor.py",
-                "media",
-                "--directory", work_dir,
-                "--typeId", "59",
-                "--url", rest_svc,
-                "--token", token,
-                "--project", project_id,
-                "--extension", "jpg",
-            ], cwd='/')
-            obj.wait()
+            main()
         """)
 
 def _missing_upload_file(
@@ -195,16 +118,19 @@ def _upload_test_algorithm_manifest(
         token: str,
         project: int,
         manifest_name: str='test_manifest.yaml',
-        break_yaml_file: bool=False):
+        break_yaml_file: bool=False) -> tator.models.AlgorithmManfiest:
     """ Uploads the provided manifest file
 
     Args:
         host: Project URL
         token: User token used for connecting to the host
         project: Unique identifier of test project
+        manifest_name: Local argo workflow manifest file to be uploaded and saved
+        break_yaml_file: True if a syntax error is added to the given yaml.
+            False leaves the yaml file untouched.
 
     Returns:
-        Response
+        Response from the save algorithm manifest endpoint
     """
 
     # Setup the interface to tator
@@ -220,15 +146,13 @@ def _upload_test_algorithm_manifest(
 
     # Upload the manifest file with tus first
     logger.info(f"Created temporary manifest file: {local_yaml_file}")
-    for progress, url in tator.util.upload_file(api=tator_api, project=project, path=local_yaml_file):
-        logger.info(f'Manifest file upload progress: {progress}')
+    url = upload_file(path=local_yaml_file, host=host)
 
     # Save the uploaded file using the save algorithm manifest endpoint
     spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
     response = tator_api.save_algorithm_manifest(project=project, algorithm_manifest_spec=spec)
 
     return response
-
 
 def test_save_algorithm_manifest(
         host: str,
@@ -244,7 +168,6 @@ def test_save_algorithm_manifest(
         host: Project URL
         token: User token used for connecting to the host
         project: Unique identifier of test project
-
     """
 
     _missing_upload_file(host=host, token=token, project=project)
@@ -264,7 +187,6 @@ def test_register_algorithm(
     """ Unit test for the ReigsterAlgorithm endpoint
 
     Unit testing of the algortihm registration endpoint involves the following:
-    - Create a request body that has missing pieces
     - Create a request body that's fine, but has bad syntax for the .yaml file
     - Create a request body for a .yaml file that doesn't exist
     - Normal request body
@@ -273,15 +195,15 @@ def test_register_algorithm(
         host: Project URL
         token: User token used for connecting to the host
         project: Unique identifier of test project
-
     """
+
+    # Create a randomized unique algorithm name (that we'll end up deleting later anyway)
+    ALGO_NAME = str(uuid.uuid1())
 
     # Get the user ID
     tator_api = tator.get_api(host=host, token=token)
     user = tator_api.whoami()
     user_id = user.id
-
-    # Create a request body that has missing pieces
 
     # Create a request body that's fine but has bad syntax for the .yaml file
     caught_exception = False
@@ -290,7 +212,7 @@ def test_register_algorithm(
             host=host, token=token, project=project, manifest_name='test.yaml', break_yaml_file=True)
 
         spec = tator.models.Algorithm(
-            name='test_algo',
+            name=ALGO_NAME,
             project=project,
             user=user_id,
             description='test_description',
@@ -309,7 +231,7 @@ def test_register_algorithm(
     caught_exception = False
     try:
         spec = tator.models.Algorithm(
-            name='test_algo',
+            name=ALGO_NAME,
             project=project,
             user=user_id,
             description='test_description',
@@ -329,7 +251,7 @@ def test_register_algorithm(
         host=host, token=token, project=project, manifest_name='test.yaml')
 
     spec = tator.models.Algorithm(
-        name='test_algo',
+        name=ALGO_NAME,
         project=project,
         user=user_id,
         description='test_description',
@@ -346,10 +268,18 @@ def test_register_algorithm_with_missing_fields(
         host: str,
         token: str,
         project: int) -> None:
-    """
+    """ Unit test for the ReigsterAlgorithm endpoint focused on missing request body fields
+
+    Request bodies are created with missing required fields and a workflow tries
+    to be registered with these incorrect request bodies.
+
+    Args:
+        host: Project URL
+        token: User token used for connecting to the host
+        project: Unique identifier of test project
     """
 
-    NAME = 'test_algorithm_workflow'
+    NAME = str(uuid.uuid1())
     DESCRIPTION = 'description'
     CLUSTER = 1
     FILES_PER_JOB = 1
