@@ -150,13 +150,15 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                 cmd = [
                     "ffmpeg", "-y",
                     "-i", path,
-                    "-vcodec", media_type.archive_config.encode.vcodec,
-                    "-crf", media_type.archive_config.encode.crf,
-                    "-preset", media_type.archive_config.encode.preset,
-                    "-tune", media_type.archive_config.encode.tune,
+                    "-vcodec", archive_config.encode.vcodec,
+                    "-crf", str(archive_config.encode.crf),
+                    "-preset", archive_config.encode.preset,
+                    "-tune", archive_config.encode.tune,
                     "-pix_fmt", "yuv420p",
                     output_file
                 ]
+                logger.info('ffmpeg cmd = {}'.format(cmd))
+                subprocess.run(cmd, check=True)
                 
             if archive_config.s3_storage is None:
                 default_archival_upload(api, host, media, output_file)
@@ -166,6 +168,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                 aws_access_key = archive_config.s3_storage.aws_access_key
                 aws_secret_access_key = archive_config.s3_storage.aws_secret_access_key
                 bucket_name = archive_config.s3_storage.bucket_name
+                logger.info(f"Uploading {output_file} to S3 bucket {bucket_name}...")
 
                 # Upload the video to S3.
                 client = boto3.client('s3', aws_access_key_id=aws_access_key,
