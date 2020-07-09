@@ -7,7 +7,6 @@ import sys
 
 import tator
 from tator.transcode.upload import upload_file
-import tator_openapi
 
 logger = logging.getLogger(__name__)
 
