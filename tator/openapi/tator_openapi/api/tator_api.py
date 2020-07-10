@@ -2086,6 +2086,123 @@ class TatorApi(object):
             _request_timeout=local_var_params.get('_request_timeout'),
             collection_formats=collection_formats)
 
+    def delete_algorithm(self, id, **kwargs):
+        """delete_algorithm
+
+        Delete registered algorithm workflow
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.delete_algorithm(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a registered algorithm workflow. (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.MessageResponse`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.delete_algorithm_with_http_info(id, **kwargs)  # noqa: E501
+
+    def delete_algorithm_with_http_info(self, id, **kwargs):  # noqa: E501
+        """
+        Delete registered algorithm workflow  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.delete_algorithm_with_http_info(id, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int id: A unique integer identifying a registered algorithm workflow. (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.MessageResponse`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'id'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method delete_algorithm" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'id' is set
+        if self.api_client.client_side_validation and ('id' not in local_var_params or  # noqa: E501
+                                                        local_var_params['id'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `id` when calling `delete_algorithm`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'id' in local_var_params:
+            path_params['id'] = local_var_params['id']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Algorithm/{id}', 'DELETE',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='MessageResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def delete_job(self, run_uid, **kwargs):
         """delete_job
 
@@ -4673,7 +4790,7 @@ class TatorApi(object):
     def get_algorithm_list(self, project, **kwargs):
         """get_algorithm_list
 
-        Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms> 
+        Get registered algorithms. 
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -4699,7 +4816,7 @@ class TatorApi(object):
 
     def get_algorithm_list_with_http_info(self, project, **kwargs):  # noqa: E501
         """
-        Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms>   # noqa: E501
+        Get registered algorithms.   # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -10065,6 +10182,266 @@ class TatorApi(object):
             post_params=form_params,
             files=local_var_files,
             response_type='MessageResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def register_algorithm(self, project, algorithm_spec, **kwargs):
+        """register_algorithm
+
+        Register an algorithm argo workflow.  This endpoint replicates the algorithm registration through the admin portal. The provided manifest file must have been uploaded and saved by the SaveAlgorithmManifest endpoint. This endpoint will respond with an error if one of the following conditions occur:  - Provided workflow name is not unique (across projects) - Not all the required fields are present - There are syntax errors with the given manifest file 
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.register_algorithm(project, algorithm_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param AlgorithmSpec algorithm_spec: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.CreateResponse`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.register_algorithm_with_http_info(project, algorithm_spec, **kwargs)  # noqa: E501
+
+    def register_algorithm_with_http_info(self, project, algorithm_spec, **kwargs):  # noqa: E501
+        """
+        Register an algorithm argo workflow.  This endpoint replicates the algorithm registration through the admin portal. The provided manifest file must have been uploaded and saved by the SaveAlgorithmManifest endpoint. This endpoint will respond with an error if one of the following conditions occur:  - Provided workflow name is not unique (across projects) - Not all the required fields are present - There are syntax errors with the given manifest file   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.register_algorithm_with_http_info(project, algorithm_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project. (required)
+        :param AlgorithmSpec algorithm_spec: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.CreateResponse`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'algorithm_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method register_algorithm" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `register_algorithm`")  # noqa: E501
+        # verify the required parameter 'algorithm_spec' is set
+        if self.api_client.client_side_validation and ('algorithm_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['algorithm_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `algorithm_spec` when calling `register_algorithm`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'algorithm_spec' in local_var_params:
+            body_params = local_var_params['algorithm_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/Algorithms/{project}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='CreateResponse',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def save_algorithm_manifest(self, project, algorithm_manifest_spec, **kwargs):
+        """save_algorithm_manifest
+
+        Saves an uploaded algorithm manifest to the desired project. It is expected this manifest corresponds with an algorithm workflow to be registered by another endpoint.  Manifest is uploaded via tus, a separate mechanism from the REST API. Once a manifest upload is complete (a .yaml file), the file must be saved to the database using this endpoint. 
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.save_algorithm_manifest(project, algorithm_manifest_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project (required)
+        :param AlgorithmManifestSpec algorithm_manifest_spec: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: :class:`tator.models.AlgorithmManfiest`
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.save_algorithm_manifest_with_http_info(project, algorithm_manifest_spec, **kwargs)  # noqa: E501
+
+    def save_algorithm_manifest_with_http_info(self, project, algorithm_manifest_spec, **kwargs):  # noqa: E501
+        """
+        Saves an uploaded algorithm manifest to the desired project. It is expected this manifest corresponds with an algorithm workflow to be registered by another endpoint.  Manifest is uploaded via tus, a separate mechanism from the REST API. Once a manifest upload is complete (a .yaml file), the file must be saved to the database using this endpoint.   # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.save_algorithm_manifest_with_http_info(project, algorithm_manifest_spec, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param int project: A unique integer identifying a project (required)
+        :param AlgorithmManifestSpec algorithm_manifest_spec: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: tuple(:class:`tator.models.AlgorithmManfiest`, status_code(int), headers(HTTPHeaderDict))
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = [
+            'project',
+            'algorithm_manifest_spec'
+        ]
+        all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout'
+            ]
+        )
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method save_algorithm_manifest" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'project' is set
+        if self.api_client.client_side_validation and ('project' not in local_var_params or  # noqa: E501
+                                                        local_var_params['project'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `project` when calling `save_algorithm_manifest`")  # noqa: E501
+        # verify the required parameter 'algorithm_manifest_spec' is set
+        if self.api_client.client_side_validation and ('algorithm_manifest_spec' not in local_var_params or  # noqa: E501
+                                                        local_var_params['algorithm_manifest_spec'] is None):  # noqa: E501
+            raise ApiValueError("Missing the required parameter `algorithm_manifest_spec` when calling `save_algorithm_manifest`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'project' in local_var_params:
+            path_params['project'] = local_var_params['project']  # noqa: E501
+
+        query_params = []
+
+        header_params = {}
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'algorithm_manifest_spec' in local_var_params:
+            body_params = local_var_params['algorithm_manifest_spec']
+        # HTTP header `Accept`
+        header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['TokenAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/rest/SaveAlgorithmManifest/{project}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type='AlgorithmManfiest',  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

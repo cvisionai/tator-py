@@ -20,6 +20,7 @@ Method | HTTP request | Description
 [**create_state_type**](TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
 [**create_temporary_file**](TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
 [**create_version**](TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
+[**delete_algorithm**](TatorApi.md#delete_algorithm) | **DELETE** /rest/Algorithm/{id} | 
 [**delete_job**](TatorApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
 [**delete_job_group**](TatorApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
 [**delete_leaf**](TatorApi.md#delete_leaf) | **DELETE** /rest/Leaf/{id} | 
@@ -78,6 +79,8 @@ Method | HTTP request | Description
 [**move_video**](TatorApi.md#move_video) | **POST** /rest/MoveVideo/{id} | 
 [**notify**](TatorApi.md#notify) | **POST** /rest/Notify | 
 [**progress**](TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
+[**register_algorithm**](TatorApi.md#register_algorithm) | **POST** /rest/Algorithms/{project} | 
+[**save_algorithm_manifest**](TatorApi.md#save_algorithm_manifest) | **POST** /rest/SaveAlgorithmManifest/{project} | 
 [**transcode**](TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
 [**update_leaf**](TatorApi.md#update_leaf) | **PATCH** /rest/Leaf/{id} | 
 [**update_leaf_list**](TatorApi.md#update_leaf_list) | **PATCH** /rest/Leaves/{project} | 
@@ -1366,6 +1369,84 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Successful creation of version. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_algorithm**
+> MessageResponse delete_algorithm(id)
+
+
+
+Delete registered algorithm workflow
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    id = 56 # int | A unique integer identifying a registered algorithm workflow.
+
+    try:
+        api_response = api_instance.delete_algorithm(id)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->delete_algorithm: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| A unique integer identifying a registered algorithm workflow. | 
+
+### Return type
+
+[**MessageResponse**](MessageResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful deletion of registered algorithm. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 
@@ -2995,7 +3076,7 @@ Name | Type | Description  | Notes
 
 
 
-Get algorithms.  Algorithms must be registered to a project as an argo workflow. For  instructions on how to register an algorithm, see the documentation:   <https://github.com/cvisionai/tator/tree/master/examples/algorithms> 
+Get registered algorithms. 
 
 ### Example
 
@@ -6339,6 +6420,166 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful creation of progress message. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **register_algorithm**
+> CreateResponse register_algorithm(project, algorithm_spec)
+
+
+
+Register an algorithm argo workflow.  This endpoint replicates the algorithm registration through the admin portal. The provided manifest file must have been uploaded and saved by the SaveAlgorithmManifest endpoint. This endpoint will respond with an error if one of the following conditions occur:  - Provided workflow name is not unique (across projects) - Not all the required fields are present - There are syntax errors with the given manifest file 
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project.
+algorithm_spec = tator_openapi.AlgorithmSpec() # AlgorithmSpec | 
+
+    try:
+        api_response = api_instance.register_algorithm(project, algorithm_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->register_algorithm: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project. | 
+ **algorithm_spec** | [**AlgorithmSpec**](AlgorithmSpec.md)|  | 
+
+### Return type
+
+[**CreateResponse**](CreateResponse.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful creation of registered algorithm. |  -  |
+**400** | Bad request. |  -  |
+**404** | Not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **save_algorithm_manifest**
+> AlgorithmManfiest save_algorithm_manifest(project, algorithm_manifest_spec)
+
+
+
+Saves an uploaded algorithm manifest to the desired project. It is expected this manifest corresponds with an algorithm workflow to be registered by another endpoint.  Manifest is uploaded via tus, a separate mechanism from the REST API. Once a manifest upload is complete (a .yaml file), the file must be saved to the database using this endpoint. 
+
+### Example
+
+* Api Key Authentication (TokenAuth):
+```python
+from __future__ import print_function
+import time
+import tator_openapi
+from tator_openapi.rest import ApiException
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = tator_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: TokenAuth
+configuration = tator_openapi.Configuration(
+    host = "http://localhost",
+    api_key = {
+        'Authorization': 'YOUR_API_KEY'
+    }
+)
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with tator_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = tator_openapi.TatorApi(api_client)
+    project = 56 # int | A unique integer identifying a project
+algorithm_manifest_spec = tator_openapi.AlgorithmManifestSpec() # AlgorithmManifestSpec | 
+
+    try:
+        api_response = api_instance.save_algorithm_manifest(project, algorithm_manifest_spec)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when calling TatorApi->save_algorithm_manifest: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project** | **int**| A unique integer identifying a project | 
+ **algorithm_manifest_spec** | [**AlgorithmManifestSpec**](AlgorithmManifestSpec.md)|  | 
+
+### Return type
+
+[**AlgorithmManfiest**](AlgorithmManfiest.md)
+
+### Authorization
+
+[TokenAuth](../README.md#TokenAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successful save of algortihm manifest. |  -  |
 **400** | Bad request. |  -  |
 **404** | Not found. |  -  |
 

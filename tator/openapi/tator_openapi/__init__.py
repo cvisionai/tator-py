@@ -31,6 +31,9 @@ from tator_openapi.exceptions import ApiException
 from tator_openapi.models.algorithm import Algorithm
 from tator_openapi.models.algorithm_launch import AlgorithmLaunch
 from tator_openapi.models.algorithm_launch_spec import AlgorithmLaunchSpec
+from tator_openapi.models.algorithm_manfiest import AlgorithmManfiest
+from tator_openapi.models.algorithm_manifest_spec import AlgorithmManifestSpec
+from tator_openapi.models.algorithm_spec import AlgorithmSpec
 from tator_openapi.models.analysis import Analysis
 from tator_openapi.models.analysis_spec import AnalysisSpec
 from tator_openapi.models.archive_config import ArchiveConfig

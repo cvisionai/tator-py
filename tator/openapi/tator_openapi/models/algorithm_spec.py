@@ -18,7 +18,7 @@ import six
 from tator_openapi.configuration import Configuration
 
 
-class Algorithm(object):
+class AlgorithmSpec(object):
     """
     """
 
@@ -33,10 +33,8 @@ class Algorithm(object):
         'cluster': 'int',
         'description': 'str',
         'files_per_job': 'int',
-        'id': 'int',
         'manifest': 'str',
         'name': 'str',
-        'project': 'int',
         'user': 'int'
     }
 
@@ -44,15 +42,13 @@ class Algorithm(object):
         'cluster': 'cluster',
         'description': 'description',
         'files_per_job': 'files_per_job',
-        'id': 'id',
         'manifest': 'manifest',
         'name': 'name',
-        'project': 'project',
         'user': 'user'
     }
 
-    def __init__(self, cluster=None, description=None, files_per_job=None, id=None, manifest=None, name=None, project=None, user=None, local_vars_configuration=None):  # noqa: E501
-        """Algorithm - a model defined in OpenAPI"""
+    def __init__(self, cluster=None, description=None, files_per_job=None, manifest=None, name=None, user=None, local_vars_configuration=None):  # noqa: E501
+        """AlgorithmSpec - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
         self.local_vars_configuration = local_vars_configuration
@@ -60,10 +56,8 @@ class Algorithm(object):
         self._cluster = None
         self._description = None
         self._files_per_job = None
-        self._id = None
         self._manifest = None
         self._name = None
-        self._project = None
         self._user = None
         self.discriminator = None
 
@@ -71,25 +65,17 @@ class Algorithm(object):
             self.cluster = cluster
         if description is not None:
             self.description = description
-        if files_per_job is not None:
-            self.files_per_job = files_per_job
-        if id is not None:
-            self.id = id
-        if manifest is not None:
-            self.manifest = manifest
-        if name is not None:
-            self.name = name
-        if project is not None:
-            self.project = project
-        if user is not None:
-            self.user = user
+        self.files_per_job = files_per_job
+        self.manifest = manifest
+        self.name = name
+        self.user = user
 
     @property
     def cluster(self):
         """
         Unique integer identifying the job cluster.
 
-        :return: The cluster of this Algorithm. 
+        :return: The cluster of this AlgorithmSpec. 
         :rtype: int
         """
         return self._cluster
@@ -99,7 +85,7 @@ class Algorithm(object):
         """
         Unique integer identifying the job cluster.
 
-        :param cluster: The cluster of this Algorithm.
+        :param cluster: The cluster of this AlgorithmSpec.
         :type: int
         """
 
@@ -110,7 +96,7 @@ class Algorithm(object):
         """
         Description of the algorithm.
 
-        :return: The description of this Algorithm. 
+        :return: The description of this AlgorithmSpec. 
         :rtype: str
         """
         return self._description
@@ -120,7 +106,7 @@ class Algorithm(object):
         """
         Description of the algorithm.
 
-        :param description: The description of this Algorithm.
+        :param description: The description of this AlgorithmSpec.
         :type: str
         """
 
@@ -131,7 +117,7 @@ class Algorithm(object):
         """
         Number of media files to be submitted to each workflow.
 
-        :return: The files_per_job of this Algorithm. 
+        :return: The files_per_job of this AlgorithmSpec. 
         :rtype: int
         """
         return self._files_per_job
@@ -141,39 +127,20 @@ class Algorithm(object):
         """
         Number of media files to be submitted to each workflow.
 
-        :param files_per_job: The files_per_job of this Algorithm.
+        :param files_per_job: The files_per_job of this AlgorithmSpec.
         :type: int
         """
+        if self.local_vars_configuration.client_side_validation and files_per_job is None:  # noqa: E501
+            raise ValueError("Invalid value for `files_per_job`, must not be `None`")  # noqa: E501
 
         self._files_per_job = files_per_job
-
-    @property
-    def id(self):
-        """
-        Unique integer identifying the registered algorithm.
-
-        :return: The id of this Algorithm. 
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Unique integer identifying the registered algorithm.
-
-        :param id: The id of this Algorithm.
-        :type: int
-        """
-
-        self._id = id
 
     @property
     def manifest(self):
         """
         Server URL to argo manifest file (.yaml)
 
-        :return: The manifest of this Algorithm. 
+        :return: The manifest of this AlgorithmSpec. 
         :rtype: str
         """
         return self._manifest
@@ -183,9 +150,11 @@ class Algorithm(object):
         """
         Server URL to argo manifest file (.yaml)
 
-        :param manifest: The manifest of this Algorithm.
+        :param manifest: The manifest of this AlgorithmSpec.
         :type: str
         """
+        if self.local_vars_configuration.client_side_validation and manifest is None:  # noqa: E501
+            raise ValueError("Invalid value for `manifest`, must not be `None`")  # noqa: E501
 
         self._manifest = manifest
 
@@ -194,7 +163,7 @@ class Algorithm(object):
         """
         Unique name of the algorithm workflow.
 
-        :return: The name of this Algorithm. 
+        :return: The name of this AlgorithmSpec. 
         :rtype: str
         """
         return self._name
@@ -204,39 +173,20 @@ class Algorithm(object):
         """
         Unique name of the algorithm workflow.
 
-        :param name: The name of this Algorithm.
+        :param name: The name of this AlgorithmSpec.
         :type: str
         """
+        if self.local_vars_configuration.client_side_validation and name is None:  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
-
-    @property
-    def project(self):
-        """
-        Unique integer identifying the project associated with the algorithm.
-
-        :return: The project of this Algorithm. 
-        :rtype: int
-        """
-        return self._project
-
-    @project.setter
-    def project(self, project):
-        """
-        Unique integer identifying the project associated with the algorithm.
-
-        :param project: The project of this Algorithm.
-        :type: int
-        """
-
-        self._project = project
 
     @property
     def user(self):
         """
         Unique integer identifying the user registering the algorithm.
 
-        :return: The user of this Algorithm. 
+        :return: The user of this AlgorithmSpec. 
         :rtype: int
         """
         return self._user
@@ -246,9 +196,11 @@ class Algorithm(object):
         """
         Unique integer identifying the user registering the algorithm.
 
-        :param user: The user of this Algorithm.
+        :param user: The user of this AlgorithmSpec.
         :type: int
         """
+        if self.local_vars_configuration.client_side_validation and user is None:  # noqa: E501
+            raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
 
         self._user = user
 
@@ -286,14 +238,14 @@ class Algorithm(object):
 
     def __eq__(self, other):
         """Returns true if both objects are equal"""
-        if not isinstance(other, Algorithm):
+        if not isinstance(other, AlgorithmSpec):
             return False
 
         return self.to_dict() == other.to_dict()
 
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
-        if not isinstance(other, Algorithm):
+        if not isinstance(other, AlgorithmSpec):
             return True
 
         return self.to_dict() != other.to_dict()

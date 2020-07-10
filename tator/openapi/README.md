@@ -111,6 +111,7 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**create_state_type**](docs/TatorApi.md#create_state_type) | **POST** /rest/StateTypes/{project} | 
 *TatorApi* | [**create_temporary_file**](docs/TatorApi.md#create_temporary_file) | **POST** /rest/TemporaryFiles/{project} | 
 *TatorApi* | [**create_version**](docs/TatorApi.md#create_version) | **POST** /rest/Versions/{project} | 
+*TatorApi* | [**delete_algorithm**](docs/TatorApi.md#delete_algorithm) | **DELETE** /rest/Algorithm/{id} | 
 *TatorApi* | [**delete_job**](docs/TatorApi.md#delete_job) | **DELETE** /rest/Job/{run_uid} | 
 *TatorApi* | [**delete_job_group**](docs/TatorApi.md#delete_job_group) | **DELETE** /rest/JobGroup/{group_id} | 
 *TatorApi* | [**delete_leaf**](docs/TatorApi.md#delete_leaf) | **DELETE** /rest/Leaf/{id} | 
@@ -169,6 +170,8 @@ Class | Method | HTTP request | Description
 *TatorApi* | [**move_video**](docs/TatorApi.md#move_video) | **POST** /rest/MoveVideo/{id} | 
 *TatorApi* | [**notify**](docs/TatorApi.md#notify) | **POST** /rest/Notify | 
 *TatorApi* | [**progress**](docs/TatorApi.md#progress) | **POST** /rest/Progress/{project} | 
+*TatorApi* | [**register_algorithm**](docs/TatorApi.md#register_algorithm) | **POST** /rest/Algorithms/{project} | 
+*TatorApi* | [**save_algorithm_manifest**](docs/TatorApi.md#save_algorithm_manifest) | **POST** /rest/SaveAlgorithmManifest/{project} | 
 *TatorApi* | [**transcode**](docs/TatorApi.md#transcode) | **POST** /rest/Transcode/{project} | 
 *TatorApi* | [**update_leaf**](docs/TatorApi.md#update_leaf) | **PATCH** /rest/Leaf/{id} | 
 *TatorApi* | [**update_leaf_list**](docs/TatorApi.md#update_leaf_list) | **PATCH** /rest/Leaves/{project} | 
@@ -194,6 +197,9 @@ Class | Method | HTTP request | Description
  - [Algorithm](docs/Algorithm.md)
  - [AlgorithmLaunch](docs/AlgorithmLaunch.md)
  - [AlgorithmLaunchSpec](docs/AlgorithmLaunchSpec.md)
+ - [AlgorithmManfiest](docs/AlgorithmManfiest.md)
+ - [AlgorithmManifestSpec](docs/AlgorithmManifestSpec.md)
+ - [AlgorithmSpec](docs/AlgorithmSpec.md)
  - [Analysis](docs/Analysis.md)
  - [AnalysisSpec](docs/AnalysisSpec.md)
  - [ArchiveConfig](docs/ArchiveConfig.md)
