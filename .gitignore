@@ -1,5 +1,6 @@
 build/
 dist/
 openapi/
+schema.yaml
 **/__pycache__/
 tator.egg-info/
