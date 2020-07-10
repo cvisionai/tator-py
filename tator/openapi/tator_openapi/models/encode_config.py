@@ -43,7 +43,7 @@ class EncodeConfig(object):
         'vcodec': 'vcodec'
     }
 
-    def __init__(self, crf=23, preset='fast', tune='film', vcodec='libx265', local_vars_configuration=None):  # noqa: E501
+    def __init__(self, crf=23, preset='fast', tune='fastdecode', vcodec='libx265', local_vars_configuration=None):  # noqa: E501
         """EncodeConfig - a model defined in OpenAPI"""
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -136,7 +136,7 @@ class EncodeConfig(object):
         :param tune: The tune of this EncodeConfig.
         :type: str
         """
-        allowed_values = ["film", "animation", "grain", "stillimage", "fastdecode", "zerolatency"]  # noqa: E501
+        allowed_values = ["film", "animation", "grain", "stillimage", "fastdecode", "zerolatency", "psnr", "ssim"]  # noqa: E501
         if self.local_vars_configuration.client_side_validation and tune not in allowed_values:  # noqa: E501
             raise ValueError(
                 "Invalid value for `tune` ({0}), must be one of {1}"  # noqa: E501
