@@ -85,6 +85,8 @@ class CustomBuildCommand(build_py):
             if os.path.isfile(src):
                 shutil.copy(src, dst)
             else:
+                if os.path.exists(dst):
+                    shutil.rmtree(dst)
                 shutil.copytree(src, dst) 
 
         # Call the normal setup.
