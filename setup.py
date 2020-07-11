@@ -4,7 +4,7 @@ import shutil
 
 from distutils.cmd import Command
 from setuptools import setup, find_packages  # noqa: H301
-from setuptools.command.bdist_egg import bdist_egg
+from setuptools.command.dist_info import dist_info
 import requests
 import yaml
 import json
@@ -35,77 +35,62 @@ class NoAliasDumper(yaml.Dumper):
     def ignore_aliases(self, data):
         return True
 
-class CodegenCommand(Command):
+def codegen():
     """ Fetches a schema from tatorapp.com if one does not exist, then 
         use openapi-generator to generate openapi code from it.
     """
-    description = ("Fetch schema from tatorapp.com if one does not exist, "
-                   "then use openapi-generator to generate openapi code from it.")
-    def initialize_options(self):
-        pass
+    # Retrieve schema if it does not exist.
+    if not os.path.exists(SCHEMA_FILENAME):
+        response = requests.get("https://takahashi.tator.dev/schema")
+        assert response.status_code == 200
+        with open(SCHEMA_FILENAME, 'wb') as f:
+            f.write(response.content)
 
-    def finalize_options(self):
-        pass
+    # Remove any oneOf entries from the schema, as they are not handled
+    # well by openapi generator.
+    with open(SCHEMA_FILENAME, 'r') as f:
+        schema = yaml.load(f)
+    schema = remove_oneof(schema)
+    with open(SCHEMA_FILENAME, 'w') as f:
+        yaml.dump(schema, f, Dumper=NoAliasDumper)
 
-    def run(self):
-        # Retrieve schema if it does not exist.
-        if not os.path.exists(SCHEMA_FILENAME):
-            response = requests.get("https://takahashi.tator.dev/schema")
-            assert response.status_code == 200
-            with open(SCHEMA_FILENAME, 'wb') as f:
-                f.write(response.content)
+    # Get the git SHA ID.
+    cmd = ['git', 'rev-parse', 'HEAD']
+    git_rev = subprocess.check_output(cmd).strip().decode('utf-8')
 
-        # Remove any oneOf entries from the schema, as they are not handled
-        # well by openapi generator.
-        with open(SCHEMA_FILENAME, 'r') as f:
-            schema = yaml.load(f)
-        schema = remove_oneof(schema)
-        with open(SCHEMA_FILENAME, 'w') as f:
-            yaml.dump(schema, f, Dumper=NoAliasDumper)
+    # Generate code using openapi generator docker image.
+    pwd = os.path.dirname(os.path.abspath(__file__))
+    cmd = [
+        'docker', 'run', '-it', '--rm',
+        '-v', f"{pwd}:/pwd",
+        '-v', "/tmp:/out",
+        'openapitools/openapi-generator-cli:v4.3.1', 'generate',
+        '-c', f'/pwd/{CONFIG_FILENAME}',
+        '-i', f'/pwd/{SCHEMA_FILENAME}',
+        '-g', 'python',
+        '-o', f'/out/tator-py-{git_rev}',
+        '-t', '/pwd/templates',
+    ]
+    subprocess.run(cmd, check=True)
 
-        # Get the git SHA ID.
-        cmd = ['git', 'rev-parse', 'HEAD']
-        git_rev = subprocess.check_output(cmd).strip().decode('utf-8')
+    # Remove the schema.
+    os.remove(SCHEMA_FILENAME)
 
-        # Generate code using openapi generator docker image.
-        pwd = os.path.dirname(os.path.abspath(__file__))
-        cmd = [
-            'docker', 'run', '-it', '--rm',
-            '-v', f"{pwd}:/pwd",
-            '-v', "/tmp:/out",
-            'openapitools/openapi-generator-cli:v4.3.1', 'generate',
-            '-c', f'/pwd/{CONFIG_FILENAME}',
-            '-i', f'/pwd/{SCHEMA_FILENAME}',
-            '-g', 'python',
-            '-o', f'/out/tator-py-{git_rev}',
-            '-t', '/pwd/templates',
-        ]
-        subprocess.run(cmd, check=True)
+    # Copy relevant directories into openapi.
+    out_dir = os.path.join(pwd, 'tator/openapi')
+    os.makedirs(out_dir, exist_ok=True)
+    for subpath in ['README.md', 'tator_openapi', 'docs']:
+        src = f'/tmp/tator-py-{git_rev}/{subpath}'
+        dst = os.path.join(out_dir, f'{subpath}')
+        if os.path.isfile(src):
+            shutil.copy(src, dst)
+        else:
+            if os.path.exists(dst):
+                shutil.rmtree(dst)
+            shutil.copytree(src, dst) 
 
-        # Remove the schema.
-        os.remove(SCHEMA_FILENAME)
-
-        # Copy relevant directories into openapi.
-        out_dir = os.path.join(pwd, 'tator/openapi')
-        os.makedirs(out_dir, exist_ok=True)
-        for subpath in ['README.md', 'tator_openapi', 'docs']:
-            src = f'/tmp/tator-py-{git_rev}/{subpath}'
-            dst = os.path.join(out_dir, f'{subpath}')
-            if os.path.isfile(src):
-                shutil.copy(src, dst)
-            else:
-                if os.path.exists(dst):
-                    shutil.rmtree(dst)
-                shutil.copytree(src, dst) 
-
-class CustomBuildCommand(bdist_egg):
-    def run(self):
-        self.run_command('codegen')
-        super().run()
-
+codegen()
 setup(
-    cmdclass={'codegen': CodegenCommand,
-              'bdist_egg': CustomBuildCommand},
     name="tator",
     version=get_version(),
     description="Python client for Tator",
