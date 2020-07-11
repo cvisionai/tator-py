@@ -77,7 +77,7 @@ class CustomBuildCommand(build_py):
         os.remove(SCHEMA_FILENAME)
 
         # Copy relevant directories into openapi.
-        out_dir = os.path.join(pwd, 'openapi')
+        out_dir = os.path.join(pwd, 'tator/openapi')
         os.makedirs(out_dir, exist_ok=True)
         for subpath in ['README.md', 'tator_openapi', 'docs']:
             src = f'/tmp/tator-py-{git_rev}/{subpath}'
