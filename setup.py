@@ -41,7 +41,7 @@ def codegen():
     """
     # Retrieve schema if it does not exist.
     if not os.path.exists(SCHEMA_FILENAME):
-        response = requests.get("https://takahashi.tator.dev/schema")
+        response = requests.get("https://www.tatorapp.com/schema")
         assert response.status_code == 200
         with open(SCHEMA_FILENAME, 'wb') as f:
             f.write(response.content)
