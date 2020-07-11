@@ -2,8 +2,9 @@ import os
 import subprocess
 import shutil
 
+from distutils.cmd import Command
 from setuptools import setup, find_packages  # noqa: H301
-from setuptools.command.build_py import build_py
+from setuptools.command.bdist_egg import bdist_egg
 import requests
 import yaml
 import json
@@ -34,10 +35,18 @@ class NoAliasDumper(yaml.Dumper):
     def ignore_aliases(self, data):
         return True
 
-class CustomBuildCommand(build_py):
-    """ Fetches a schema from tatorapp.com if one does not exist before 
-        building the package.
+class CodegenCommand(Command):
+    """ Fetches a schema from tatorapp.com if one does not exist, then 
+        use openapi-generator to generate openapi code from it.
     """
+    description = ("Fetch schema from tatorapp.com if one does not exist, "
+                   "then use openapi-generator to generate openapi code from it.")
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
     def run(self):
         # Retrieve schema if it does not exist.
         if not os.path.exists(SCHEMA_FILENAME):
@@ -89,11 +98,14 @@ class CustomBuildCommand(build_py):
                     shutil.rmtree(dst)
                 shutil.copytree(src, dst) 
 
-        # Call the normal setup.
+class CustomBuildCommand(bdist_egg):
+    def run(self):
+        self.run_command('codegen')
         super().run()
 
 setup(
-    cmdclass={'build_py': CustomBuildCommand},
+    cmdclass={'codegen': CodegenCommand,
+              'bdist_egg': CustomBuildCommand},
     name="tator",
     version=get_version(),
     description="Python client for Tator",
