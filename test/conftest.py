@@ -72,7 +72,7 @@ def project(request):
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_project(project_spec={
         'name': f'test_project_{dt_str}',
-        'summary': f'Test project created by pytator unit tests on {current_dt}',
+        'summary': f'Test project created by tator-py unit tests on {current_dt}',
     })
     project_id = response.id
     yield project_id

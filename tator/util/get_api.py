@@ -1,5 +1,5 @@
 import os
-from ..openapi import tator_openapi as pytator
+from ..openapi import tator_openapi
 
 def get_api(host='https://www.tatorapp.com', token=os.getenv('TATOR_TOKEN')):
     """ Retrieves a :class:`tator.api` instance using the given host and token.
@@ -8,9 +8,9 @@ def get_api(host='https://www.tatorapp.com', token=os.getenv('TATOR_TOKEN')):
     :param token: API token.
     :returns: :class:`tator.api` object.
     """
-    config = pytator.Configuration()
+    config = tator_openapi.Configuration()
     config.host = host
     if token:
         config.api_key['Authorization'] = token
         config.api_key_prefix['Authorization'] = 'Token'
-    return pytator.TatorApi(pytator.ApiClient(config))
+    return tator_openapi.TatorApi(tator_openapi.ApiClient(config))
