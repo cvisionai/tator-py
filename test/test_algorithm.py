@@ -118,7 +118,7 @@ def _upload_test_algorithm_manifest(
         token: str,
         project: int,
         manifest_name: str='test_manifest.yaml',
-        break_yaml_file: bool=False) -> tator.models.AlgorithmManfiest:
+        break_yaml_file: bool=False) -> tator.models.AlgorithmManifest:
     """ Uploads the provided manifest file
 
     Args:
