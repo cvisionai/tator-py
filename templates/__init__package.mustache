@@ -1,0 +1,24 @@
+# coding: utf-8
+
+# flake8: noqa
+
+{{>partial_header}}
+
+from __future__ import absolute_import
+
+__version__ = "{{packageVersion}}"
+
+# import apis into sdk package
+{{#apiInfo}}{{#apis}}from tator.openapi.{{apiPackage}}.{{classVarName}} import {{classname}}
+{{/apis}}{{/apiInfo}}
+# import ApiClient
+from tator.openapi.{{packageName}}.api_client import ApiClient
+from tator.openapi.{{packageName}}.configuration import Configuration
+from tator.openapi.{{packageName}}.exceptions import OpenApiException
+from tator.openapi.{{packageName}}.exceptions import ApiTypeError
+from tator.openapi.{{packageName}}.exceptions import ApiValueError
+from tator.openapi.{{packageName}}.exceptions import ApiKeyError
+from tator.openapi.{{packageName}}.exceptions import ApiException
+# import models into sdk package
+{{#models}}{{#model}}from tator.openapi.{{modelPackage}}.{{classFilename}} import {{classname}}
+{{/model}}{{/models}}

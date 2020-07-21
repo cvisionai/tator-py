@@ -6,3 +6,7 @@ tator/openapi/README.md
 schema.yaml
 **/__pycache__/
 tator.egg-info/
+
+# Temporary files
+*~
+*#
