@@ -63,7 +63,7 @@ def codegen():
     cmd = [
         'docker', 'run', '-it', '--rm',
         '-v', f"{pwd}:/pwd",
-        '-v', "/tmp:/out",
+        '-v', f"{pwd}/out:/out",
         'openapitools/openapi-generator-cli:v4.3.1', 'generate',
         '-c', f'/pwd/{CONFIG_FILENAME}',
         '-i', f'/pwd/{SCHEMA_FILENAME}',
@@ -80,14 +80,15 @@ def codegen():
     out_dir = os.path.join(pwd, 'tator/openapi')
     os.makedirs(out_dir, exist_ok=True)
     for subpath in ['README.md', 'tator_openapi', 'docs']:
-        src = f'/tmp/tator-py-{git_rev}/{subpath}'
+        src = f'{pwd}/out/tator-py-{git_rev}/{subpath}'
         dst = os.path.join(out_dir, f'{subpath}')
         if os.path.isfile(src):
             shutil.copy(src, dst)
         else:
             if os.path.exists(dst):
                 shutil.rmtree(dst)
-            shutil.copytree(src, dst) 
+            shutil.copytree(src, dst)
+    shutil.rmtree(f'{pwd}/out')
 
 codegen()
 setup(

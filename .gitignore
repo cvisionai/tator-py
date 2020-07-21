@@ -10,3 +10,4 @@ tator.egg-info/
 # Temporary files
 *~
 *#
+out/
