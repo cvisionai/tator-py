@@ -35,5 +35,5 @@ Documentation for all API functions and models can be found in the [OpenAPI docu
 
 ## Authors
 
-Tator and tator-py are developed by [CVision AI](www.cvisionai.com).
+Tator and tator-py are developed by [CVision AI](https://www.cvisionai.com).
 
