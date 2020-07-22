@@ -88,7 +88,17 @@ def codegen():
             if os.path.exists(dst):
                 shutil.rmtree(dst)
             shutil.copytree(src, dst)
-    shutil.rmtree(f'{pwd}/out')
+    pwd = os.path.dirname(os.path.abspath(__file__))
+
+    # need to delete from within docker
+    cmd = [
+        'docker', 'run', '-it', '--rm',
+        '-v', f"{pwd}/out:/out",
+         'openapitools/openapi-generator-cli:v4.3.1',
+        'rm', '-fr',
+        '/out/*'
+    ]
+    subprocess.run(cmd, check=True)
 
 codegen()
 setup(
