@@ -155,6 +155,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     "-preset", archive_config.encode.preset,
                     "-tune", archive_config.encode.tune,
                     "-pix_fmt", "yuv420p",
+                    "-tag:v", "hvc1",
                     output_file
                 ]
                 logger.info('ffmpeg cmd = {}'.format(cmd))
