@@ -317,8 +317,13 @@ def test_register_algorithm(
         assert found_match
 
     # Finally delete all the algorithms
+    current_number_of_algs = len(algorithm_ids)
     for alg_id in algorithm_ids:
         _ = tator_api.delete_algorithm(id=alg_id)
+        algorithm_list = tator_api.get_algorithm_list(project=project)
+
+        current_number_of_algs -= 1
+        assert len(algorithm_list) == current_number_of_algs
 
 def test_register_algorithm_with_missing_fields(
         host: str,
