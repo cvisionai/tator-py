@@ -18,16 +18,17 @@ def test_analysis(
 
     # Create the analysis records
     name = "TestAnalysis"
-    number_of_analyses = 10
+    num_of_analyses = 10
+    existing_num_of_analyses = len(tator_api.get_analysis_list(project=project))
 
-    for count in range(number_of_analyses):
+    for count in range(num_of_analyses):
         data_query = f'random_query:{count}'
         spec = tator.models.AnalysisSpec(name=name, data_query=data_query)
         _ = tator_api.create_analysis(project=project, analysis_spec=spec)
         
     # Retrieve the analyses and verify the count matches
     analyses = tator_api.get_analysis_list(project=project)
-    assert len(analyses) == number_of_analyses
+    assert len(analyses) == existing_num_of_analyses + num_of_analyses
 
     # Update the analysis object
     obj = analyses[1]
@@ -48,4 +49,4 @@ def test_analysis(
             break 
 
     assert analysis_is_gone
-    assert len(analyses) == number_of_analyses - 1
+    assert len(analyses) == existing_num_of_analyses + num_of_analyses - 1
