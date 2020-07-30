@@ -225,7 +225,7 @@ def test_register_algorithm(
             files_per_job=1)
 
         response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-            
+
     except:
         caught_exception = True
 
@@ -244,29 +244,86 @@ def test_register_algorithm(
             files_per_job=1)
 
         response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-            
+
     except:
         caught_exception = True
 
     assert caught_exception
 
-    # Create a normal registration
+    # Create a normal algorithm workflow
     response = _upload_test_algorithm_manifest(
         host=host, token=token, project=project, manifest_name='test.yaml')
+
+    manifest_url = response.url
 
     spec = tator.models.Algorithm(
         name=ALGO_NAME,
         project=project,
         user=user_id,
         description='test_description',
-        manifest=response.url,
+        manifest=manifest_url,
         cluster=None,
         files_per_job=1)
 
     response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
-    # Then attempt to delete it
-    _ = tator_api.delete_algorithm(id=response.id)
+    # Get the algorithm info
+    algorithm_id = response.id
+    algorithm_info = tator_api.get_algorithm(id=algorithm_id)
+    spec.id = algorithm_id
+    assert algorithm_info == spec
+
+    # Attempt to patch the algorithm info and make sure it has been updated
+    # Note: the cluster field is ignored in the patch operation
+    spec = tator.models.Algorithm(
+        name=str(uuid.uuid1()),
+        project=project,
+        user=2,
+        description='new_test_description',
+        manifest='coolfile.yaml',
+        files_per_job=2)
+    response = tator_api.update_algorithm(id=algorithm_id, algorithm_spec=spec)
+    algorithm_info = tator_api.get_algorithm(id=algorithm_id)
+    spec.id = algorithm_id
+    assert algorithm_info == spec
+
+    # Create another algorithm workflow and verify retrieving both algorithm objects
+    # using the get list method
+    algorithm_ids = [algorithm_id]
+
+    new_spec = tator.models.Algorithm(
+        name=str(uuid.uuid1()),
+        project=project,
+        user=user_id,
+        description='test_description',
+        manifest=manifest_url,
+        cluster=None,
+        files_per_job=1)
+
+    response = tator_api.register_algorithm(project=project, algorithm_spec=new_spec)
+
+    new_spec.id = response.id
+    algorithm_ids.append(new_spec.id)
+    spec_list = [spec, new_spec]
+    algorithm_list = tator_api.get_algorithm_list(project=project)
+
+    for alg in algorithm_list:
+        found_match = False
+        for spec in spec_list:
+            if spec == alg:
+                found_match = True
+                break
+
+        assert found_match
+
+    # Finally delete all the algorithms
+    current_number_of_algs = len(algorithm_ids)
+    for alg_id in algorithm_ids:
+        _ = tator_api.delete_algorithm(id=alg_id)
+        algorithm_list = tator_api.get_algorithm_list(project=project)
+
+        current_number_of_algs -= 1
+        assert len(algorithm_list) == current_number_of_algs
 
 def test_register_algorithm_with_missing_fields(
         host: str,
@@ -287,7 +344,7 @@ def test_register_algorithm_with_missing_fields(
     DESCRIPTION = 'description'
     CLUSTER = 1
     FILES_PER_JOB = 1
-    
+
     # Setup the interface to tator and get the user ID
     tator_api = tator.get_api(host=host, token=token)
     user = tator_api.whoami()
