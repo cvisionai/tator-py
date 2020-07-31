@@ -79,6 +79,12 @@ def project(request):
     status = tator_api.delete_project(project_id)
 
 @pytest.fixture(scope='session')
+def section(request):
+    import tator
+    section_name = 'test_section'
+    yield section_name
+
+@pytest.fixture(scope='session')
 def image_type(request, project):
     import tator
     host = request.config.option.host
@@ -108,12 +114,12 @@ def image_file(request):
     os.remove(out_path)
 
 @pytest.fixture(scope='session')
-def image(request, project, image_type, image_file):
+def image(request, project, image_type, image_file, section):
     import tator
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    for progress, response in tator.util.upload_media(tator_api, image_type, image_file):
+    for progress, response in tator.util.upload_media(tator_api, image_type, image_file, section=section):
         print(f"Upload image progress: {progress}%")
     print(response.message)
 
@@ -188,12 +194,12 @@ def video_file(request):
     os.remove(out_path)
 
 @pytest.fixture(scope='session')
-def video(request, project, video_type, video_file):
+def video(request, project, video_type, video_file, section):
     import tator
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    for progress, response in tator.util.upload_media(tator_api, video_type, video_file):
+    for progress, response in tator.util.upload_media(tator_api, video_type, video_file, section=section):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
