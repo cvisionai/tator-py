@@ -12,15 +12,11 @@ import tator
 
 logging.basicConfig(
     filename='make_summary.logs',
-    filemode='a',
+    filemode='w',
     format='%(asctime)s %(levelname)s:%(message)s',
     datefmt='%m/%d/%Y %I:%M:%S %p',
-    level=logging.DEBUG)
+    level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# TODO This probably should be based on the OS, but this number is a conservative one
-#      that should work in all cases.
-MAX_FILENAME_LEN = 200
 
 def sanitizeString(string: str) -> str:
     """ Sanitize a string to be safe for filenames
@@ -190,54 +186,7 @@ def processLocalization(
                     margin_y=1)
 
         # The thumbnail created is a temporary file. Move it using a specific filename/path.
-        # The filename of the thumbnail will have the following format:
-        # - primary attribute (if available, order == 0)
-        # - media name
-        # - frame number
-        # - localization id
-        # - all other attributes
-        # - .png
-        target_filename = ''
-        main_basename = f'{sanitizeString(media.name)}_Frame_{localization.frame}_Id_{localization.id}'
-        extension = '.png'
-        set_main_basename = False
-        if len(attribute_types_info[localization.meta]) > 0:
-            # Since we have a sorted attribute type dataframe, if the first entry doesn't
-            # have a 'primary attribute flag' (i.e. order == 0), we can just iterate over
-            # the entries.
-            for idx, row in attribute_types_info[localization.meta].iterrows():
-
-                # Not all of the attributes available for a localization will always be used
-                # If it doesn't exist, skip over it
-                attr_name = row['name']
-                if attr_name in localization.attributes:
-                    attr_val = str(localization.attributes[attr_name])
-                else:
-                    continue
-
-                if row['order'] == 0:
-                    target_filename += f"{sanitizeString(attr_val)}_"
-
-                else:
-                    target_filename += f"{sanitizeString(row['name'])}_{sanitizeString(attr_val)}_"
-
-                if not set_main_basename:
-                    target_filename += main_basename
-                    set_main_basename = True
-
-        else:
-            # In the case where there are no attributes associated with the localizaiton, just use
-            # the base string defined earlier.
-            target_filename = main_basename
-
-        # Move the thumbnail using the new filename and save it to the outgoing datum
-        if len(target_filename) > MAX_FILENAME_LEN:
-            new_target_filename = target_filename[:MAX_FILENAME_LEN]
-            log_msg = f"Trimming image filename: {target_filename} to {new_target_filename}"
-            logging.warning(log_msg)
-            target_filename = new_target_filename
-
-        target_filename += '.png'
+        target_filename = f'{localization.id}.png'
         target_path = os.path.join(image_folder, target_filename)
         os.makedirs(image_folder, exist_ok=True)
         shutil.move(image_path, target_path)
@@ -467,6 +416,8 @@ def main():
     parser.add_argument('--disable-thumbnails', action='store_true',
         help='Ignore thumbnail creation, no thumbnails reported.')
     args = parser.parse_args()
+
+    logger.info(args)
 
     # Create the report(s) and thumbnail(s)
     processProject(
