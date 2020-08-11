@@ -3,7 +3,7 @@ import tempfile
 
 import tator
 
-def test_download_temporary_file(host, token, project, video_file):
+def test_download_temporary_file(host, token, project):
     tator_api = tator.get_api(host, token)
 
     with tempfile.NamedTemporaryFile(mode='w',suffix=".txt") as temp:
