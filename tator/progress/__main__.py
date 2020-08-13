@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import argparse
+import logging
 
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
-from ..openapi.tator_openapi.models import CreateResponse
+from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
-
 
 def parse_args():
     parser = get_parser()
@@ -34,7 +34,7 @@ def send_progress(args):
     if args.media_ids:
         aux['media_ids'] = args.media_ids
     
-    response = api.progress(args.project, progress_spec={
+    response = api.progress(args.project, progress_spec=[{
         'job_type': args.job_type,
         'gid': args.gid,
         'uid': args.uid,
@@ -43,8 +43,8 @@ def send_progress(args):
         'progress': args.progress,
         'name': args.name,
         **aux,
-    })
-    assert isinstance(response, CreateResponse)
+    }])
+    assert isinstance(response, MessageResponse)
 
 if __name__ == '__main__':
     args = parse_args()
