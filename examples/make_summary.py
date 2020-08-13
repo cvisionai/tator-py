@@ -187,6 +187,9 @@ def processLocalization(
                     margin_x=1,
                     margin_y=1)
 
+        # We will strip off the extension from the media name
+        media_name_str = os.path.splitext(sanitizeString(media.name))[0]
+
         # The thumbnail created is a temporary file. Move it using a specific filename/path.
         if thumbnail_filename_pattern is None:
             target_filename = f'{localization.id}'
@@ -200,7 +203,7 @@ def processLocalization(
             # - all other attributes
             # - .png
             target_filename = ''
-            main_basename = f'{sanitizeString(media.name)}_Frame_{localization.frame}_Id_{localization.id}_'
+            main_basename = f'{media_name_str}_Frame_{localization.frame}_Id_{localization.id}_'
             set_main_basename = False
             if len(attribute_types_info[localization.meta]) > 0:
                 # Since we have a sorted attribute type dataframe, if the first entry doesn't
@@ -236,8 +239,8 @@ def processLocalization(
             target_filename = ''
             tokens = thumbnail_filename_pattern.split(':')
             for index, token in enumerate(tokens):
-                if token == 'media_id':
-                    target_filename += f'{sanitizeString(media.name)}'
+                if token == 'media_name':
+                    target_filename += f'{media_name_str}'
                 elif token == 'frame_number':
                     target_filename += f'Frame_{localization.frame}'
                 elif token == 'localization_id':
@@ -507,13 +510,14 @@ def main():
     parser.add_argument('--disable-thumbnails', action='store_true',
         help='Ignore thumbnail creation, no thumbnails reported.')
     parser.add_argument('--thumbnail-filename-pattern', type=str, required=False,
-        help='Default thumbnail filename is just the localization id. Use this string to specify otherwise.\n' +
-             'Use all string to use media-id_frame-num_localization-id_all-attributes\n' +
-             'Specify a specific set with: "media_id:frame_number:localization_id:Attribute Name 1:Attribute Name 2"\n' +
-             'media_id, frame_number, localization_id are parameters that can be used\n' +
-             'split up the set with the colon\n' +
-             'Entire string needs to be encapsulated in double quotes\n' +
-             'This argument is ignored if disable-thumbnails is true')
+        help='Default thumbnail filename is just the localization id. Use this string to specify otherwise. \n' +
+             'Use <all> to use "media-name_frame-num_localization-id_all-attributes.png" \n' +
+             'Specify a specific set with: "media_name:frame_number:localization_id:Attribute Name 1:Attribute Name 2" \n' +
+             'Note: media_name, frame_number, localization_id are the only parameters that can be used (outside of attributes). \n' +
+             'Split up the set with the colon\n' +
+             'Extension of media_name is not included. \n' +
+             'Entire string needs to be encapsulated in double quotes. \n' +
+             'This argument is ignored if disable-thumbnails is true. ')
     args = parser.parse_args()
 
     logger.info(args)
