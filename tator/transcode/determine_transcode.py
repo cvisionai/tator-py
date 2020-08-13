@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 def parse_args():
     parser = get_parser()
     parser.add_argument('path', help='Path to original file.')
+    parser.add_argument('--project', type=int, help='Unique integer identifying a project. This is '
+                                                    'only needed if media_type is -1.')
     parser.add_argument('--media_type', type=int, help='Unique integer identifying a media type.')
     parser.add_argument('--output', help='Path to output json file.')
     return parser.parse_args()
@@ -74,7 +76,13 @@ def determine_transcode(host, token, media_type, path, group_to=480):
 
     # Get media type object.
     api = get_api(host, token)
-    media_type_obj = api.get_media_type(media_type)
+    if media_type == -1:
+        media_types = api.get_media_type_list(args.project)
+        for media_type_obj in media_types:
+            if media_type_obj.dtype == 'video':
+                break
+    else:
+        media_type_obj = api.get_media_type(media_type)
     assert isinstance(media_type_obj, MediaType)
 
     # Streaming workloads (low res)
