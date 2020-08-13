@@ -25,7 +25,7 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
 
     :param api: :class:`tator.TatorApi` object.
     :param project: Unique integer identifying a project.
-    :param paths: List of paths to the media files.
+    :param paths: Path to a media archive or list of paths to media files.
     :param section: [Optional] Media section to upload to.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
     :returns: Generator that yields tuple containing progress (0-100) and a
@@ -34,16 +34,21 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
     """
     upload_uid = str(uuid1())
     upload_gid = str(uuid1())
-    in_mem_buf = io.BytesIO()
     host = api.api_client.configuration.host
     tusURL = urljoin(host, "files/")
     tus = TusClient(tusURL)
-    in_mem_tar = tarfile.TarFile(mode='w', fileobj=in_mem_buf)
-    for idx,fp in enumerate(paths):
-        in_mem_tar.add(fp, os.path.basename(fp))
+    if isinstance(paths, list):
+        in_mem_buf = io.BytesIO()
+        in_mem_tar = tarfile.TarFile(mode='w', fileobj=in_mem_buf)
+        for idx,fp in enumerate(paths):
+            in_mem_tar.add(fp, os.path.basename(fp))
 
-    uploader = tus.uploader(file_stream=in_mem_buf, chunk_size=chunk_size,
-                            retries=10, retry_delay=15)
+        uploader = tus.uploader(file_stream=in_mem_buf, chunk_size=chunk_size,
+                                retries=10, retry_delay=15)
+    else:
+        file_buf = open(paths, 'rb')
+        uploader = tus.uploader(file_stream=file_buf, chunk_size=chunk_size,
+                                retries=10, retry_delay=15)
     last_progress = 0
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
     yield (last_progress, None)
