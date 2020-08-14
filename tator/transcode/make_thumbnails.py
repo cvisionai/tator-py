@@ -25,8 +25,8 @@ def parse_args():
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--media', type=int, help='Unique integer identifying a media.')
     parser.add_argument('input', type=str, help='Path to input file.')
-    parser.add_argument("-o", "--output", type=str, help='Path to output thumbnail.');
-    parser.add_argument("-g", "--gif", type=str, help='Path to output thumbnail gif.');
+    parser.add_argument("-o", "--output", type=str, help='Path to output thumbnail.')
+    parser.add_argument("-g", "--gif", type=str, help='Path to output thumbnail gif.')
     return parser.parse_args()
 
 def get_metadata(path):
@@ -43,7 +43,7 @@ def get_metadata(path):
     logger.info("Got info = {}".format(output))
     video_info = json.loads(output)
     stream = video_info["streams"][0]
-    seconds = float(stream["duration"]);
+    seconds = float(stream["duration"])
 
     # Fill in object information based on probe
     codec = stream["codec_name"]
@@ -107,7 +107,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
             stream_idx=idx
             break
     stream=video_info["streams"][stream_idx]
-    seconds = float(stream["duration"]);
+    seconds = float(stream["duration"])
 
     # Compute evenly spaced intervals and filenames.
     interval = float(seconds) / 12.0

@@ -56,7 +56,7 @@ def determine_transcode(host, token, media_type, path, group_to=480):
     else:
         fps_fractional = stream["avg_frame_rate"].split("/")
         fps = float(fps_fractional[0]) / float(fps_fractional[1])
-        seconds = float(stream["duration"]);
+        seconds = float(stream["duration"])
         num_frames = float(fps * seconds)
 
     # Handle up to but not exceeding FHD
