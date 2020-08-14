@@ -63,7 +63,7 @@ def get_metadata(path):
     logger.info("Got info = {}".format(output))
     video_info = json.loads(output)
     stream = video_info["streams"][0]
-    seconds = float(stream["duration"]);
+    seconds = float(stream["duration"])
 
     # Fill in object information based on probe
     codec = stream["codec_name"]
