@@ -51,13 +51,6 @@ def determine_transcode(host, token, media_type, path, group_to=480):
             logger.info("Found Audio Track")
             audio=True
     stream = video_info["streams"][stream_idx]
-    if "nb_frames" in stream:
-        num_frames = float(stream["nb_frames"])
-    else:
-        fps_fractional = stream["avg_frame_rate"].split("/")
-        fps = float(fps_fractional[0]) / float(fps_fractional[1])
-        seconds = float(stream["duration"])
-        num_frames = float(fps * seconds)
 
     # Handle up to but not exceeding FHD
     height = int(stream["height"])
@@ -68,9 +61,6 @@ def determine_transcode(host, token, media_type, path, group_to=480):
     resolutions=[resolution for resolution in STREAMING_RESOLUTIONS if resolution < height]
     if height <= MAX_RESOLUTION:
         resolutions.append(height)
-
-    # Generate output path
-    base, ext = os.path.splitext(path)
 
     # Get media type object.
     api = get_api(host, token)
