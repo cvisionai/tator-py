@@ -10,7 +10,8 @@ def get_images(file_path, media_or_state, num_images=None, width=None, height=No
     :param file_path: Path to image file.
     :param media_or_state: :class:`tator.Media` or :class:`tator.State` object.
     :param num_images: [Optional] The number of images to unwrap if this
-        is an image saved by :meth:`tator.TatorApi.get_frame`.
+        is an image saved by :meth:`tator.TatorApi.get_frame`, or if the `offset`
+        or `length` parameters were used in :meth:`tator.TatorApi.get_state_graphic`.
     :param width: [Optional] Width of ROI if this is an image saved by
         :meth:`tator.TatorApi.get_frame`.
     :param height: [Optional] Height of ROI if this is an image saved by
@@ -25,7 +26,10 @@ def get_images(file_path, media_or_state, num_images=None, width=None, height=No
 
     # Get tile width/height.
     if isinstance(media_or_state, tator.models.State):
-        num_localizations = len(media_or_state.localizations)
+        if num_images:
+            num_localizations = num_images
+        else:
+            num_localizations = len(media_or_state.localizations)
         width = int(img.width / num_localizations)
         height = img.height
     elif isinstance(media_or_state, tator.models.Media):
