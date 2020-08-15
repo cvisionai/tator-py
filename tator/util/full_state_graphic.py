@@ -24,5 +24,6 @@ def full_state_graphic(api, state_id, force_scale=''):
         if force_scale:
             kwargs['force_scale'] = force_scale
         path = api.get_state_graphic(state_id, **kwargs)
-        graphics.append(tator.util.get_images(path, state))
-    return list(itertools.chain(graphics))
+        num_images = len(state.localizations[offset:offset+BATCH_SIZE])
+        graphics.append(tator.util.get_images(path, state, num_images))
+    return list(itertools.chain.from_iterable(graphics))
