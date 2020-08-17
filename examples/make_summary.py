@@ -209,7 +209,7 @@ def processLocalization(
                 # Since we have a sorted attribute type dataframe, if the first entry doesn't
                 # have a 'primary attribute flag' (i.e. order == 0), we can just iterate over
                 # the entries.
-                for idx, row in attribute_types_info[localization.meta].iterrows():
+                for _, row in attribute_types_info[localization.meta].iterrows():
 
                     # Not all of the attributes available for a localization will always be used
                     # If it doesn't exist, skip over it
@@ -383,7 +383,7 @@ def processProject(
         summary_filename: str=None,
         disable_thumbnails: bool=False,
         thumbnail_filename_pattern: str=None) -> None:
-    """ Creates the sumamry report and thumbnail image for the given project/section
+    """ Creates the summary report and thumbnail image for the given project/section
 
     Args:
         host: Host URL
@@ -449,7 +449,7 @@ def processProject(
     #     If not, then complain back to the user.
     # If no section name was provided, process all of the sections.
     sections = tator_api.get_media_sections(project=project_id)
-    ignore_sumamry_filename = True
+    ignore_summary_filename = True
 
     if section_name is not None:
         # Section name specified
@@ -469,7 +469,7 @@ def processProject(
         if summary_filename:
             log_msg = f'Ignoring provided summary file name: ({summary_filename}) Processing all sections.'
             logging.warning(log_msg)
-            ignore_sumamry_filename = True
+            ignore_summary_filename = True
 
     # Loop over the selected sections and create the report(s) and thumbnail(s)
     for section_name in sections:
@@ -481,7 +481,7 @@ def processProject(
         # Ready to rock and roll
         log_msg = f"Processing section: {section_name}"
         logging.info(log_msg)
-        section_sumamry_filename = None if ignore_sumamry_filename else summary_filename
+        section_summary_filename = None if ignore_summary_filename else summary_filename
         processSection(
             host=host,
             tator_api=tator_api,
@@ -491,7 +491,7 @@ def processProject(
             column_names=column_names,
             localization_types_df=localization_types_df,
             attribute_types_info=attribute_types_info,
-            summary_filename=section_sumamry_filename,
+            summary_filename=section_summary_filename,
             disable_thumbnails=disable_thumbnails,
             thumbnail_filename_pattern=thumbnail_filename_pattern)
 
