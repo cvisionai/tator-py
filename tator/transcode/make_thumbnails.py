@@ -1,16 +1,9 @@
 #!/usr/bin/env python
 
 import argparse
-import time
 import subprocess
 import json
 import logging
-import os
-import sys
-from uuid import uuid1
-
-import imageio
-from PIL import Image
 
 from ..util import get_api
 
