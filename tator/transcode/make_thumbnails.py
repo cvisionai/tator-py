@@ -58,71 +58,23 @@ def get_metadata(path):
 
     return (codec, fps, num_frames, width, height)
 
-def video_thumb(offset, name, new_path):
-    """Creates a video thumbnail.
-    """
-    cmd = [
-        "ffmpeg",
-        "-y",
-        "-ss",
-        time.strftime('%H:%M:%S', time.gmtime(offset)),
-        "-i",
-        "{}".format(new_path),
-        "-vframes",
-        "1",
-        name,
-    ]
-    proc = subprocess.run(cmd, check=True)
-    elapsed = 0
-    while not os.path.exists(name):
-        time.sleep(0.2)
-        elapsed += 0.2
-        if elapsed > 5:
-            sys.exit(-1)
-    time.sleep(1.0)
-    image = Image.open(name)
-    image.thumbnail((256, 256), Image.ANTIALIAS)
-    image.save(name)
-    image.close()
-
 def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path):
     """ Makes thumbnails and gets metadata for original file.
     """
-    # Get the video information using ffprobe
-    cmd = [
-        "ffprobe",
-        "-v","error",
-        "-show_entries", "stream",
-        "-print_format", "json",
-        "-select_streams", "v",
-        "{}".format(video_path),
-    ]
-    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
-
-    logger.info("Got info = {}".format(output))
-    video_info = json.loads(output)
-    stream_idx=0
-    for idx, stream in enumerate(video_info["streams"]):
-        if stream["codec_type"] == "video":
-            stream_idx=idx
-            break
-    stream=video_info["streams"][stream_idx]
-    seconds = float(stream["duration"])
-
-    # Compute evenly spaced intervals and filenames.
-    interval = float(seconds) / 12.0
-    offsets = [interval * k for k in range(1, 11)]
-    names = [os.path.join("/tmp", str(uuid1()) + '.jpg') for _ in range(9)]
-    names = [thumb_path,] + names
-
-    # Create thumbnail images for each offset.
-    for offset, name in zip(offsets, names):
-        video_thumb(offset, name, video_path)
-    images = [imageio.imread(name) for name in names]
-    imageio.mimsave(thumb_gif_path, images, duration=0.5)
-
     # Get metadata for original file.
     codec, fps, num_frames, width, height = get_metadata(video_path)
+
+    # Create thumbnail.
+    cmd = ["ffmpeg", "-y", "-i", video_path, "-vf", "scale=256:-1", "-vframes", "1", thumb_path]
+    subprocess.run(cmd, check=True)
+
+    # Create gif thumbnail.
+    cmd = [
+        "ffmpeg", "-y", "-r", f"{num_frames / 3}", "-i", video_path, "-vf",
+        'fps=3,scale=256:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse',
+        "-loop", "0", thumb_gif_path,
+    ]
+    subprocess.run(cmd, check=True)
 
     # Upload thumbnail and thumbnail gif.
     thumbnail_url = upload_file(thumb_path, host)
