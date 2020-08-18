@@ -330,39 +330,49 @@ def processSection(
     # it in a dictionary. This dictionary will then be stored in a list to be written out to file.
     report_data = []
 
-    errors_detected = 0
     for media in bar(medias):
 
         # Loop through each of the localizations associated with this media
         # Process the localization and get the report data
-        localizations = tator_api.get_localization_list(project=project_id, media_id=[media.id])
-        for localization in localizations:
-            try:
-                datum = processLocalization(
-                    host=host,
-                    project_id=project_id,
-                    tator_api=tator_api,
-                    section_name=section_name,
-                    media=media,
-                    localization=localization,
-                    localization_types_df=localization_types_df,
-                    attribute_types_info=attribute_types_info,
-                    image_folder=image_folder,
-                    disable_thumbnails=disable_thumbnails,
-                    thumbnail_filename_pattern=thumbnail_filename_pattern)
-                report_data.append(datum)
+        try:
+            errors_detected = 0
+            localizations = tator_api.get_localization_list(project=project_id, media_id=[media.id])
+            for localization in localizations:
+                try:
+                    datum = processLocalization(
+                        host=host,
+                        project_id=project_id,
+                        tator_api=tator_api,
+                        section_name=section_name,
+                        media=media,
+                        localization=localization,
+                        localization_types_df=localization_types_df,
+                        attribute_types_info=attribute_types_info,
+                        image_folder=image_folder,
+                        disable_thumbnails=disable_thumbnails,
+                        thumbnail_filename_pattern=thumbnail_filename_pattern)
+                    report_data.append(datum)
 
-            except Exception:
-                error_msg = f'Error encountered processing localization {localization.id}'
-                logging.error(error_msg)
+                except Exception:
+                    error_msg = f'Error encountered processing localization {localization.id}'
+                    logging.error(error_msg)
 
-                error_msg = traceback.format_exc()
-                logging.error(error_msg)
+                    error_msg = traceback.format_exc()
+                    logging.error(error_msg)
 
-                errors_detected += 1
+                    errors_detected += 1
 
-    if errors_detected > 0:
-        print(f"ERROR: {errors_detected} localizations had errors and was not included in the report. Review the .log file for more info.")
+            if errors_detected > 0:
+                print(f"ERROR: {errors_detected} localizations (from media: {media.id}) had errors and was not included in the report. Review the .log file for more info.")
+
+        except Exception:
+            error_msg = f'Error encountered processing localization list from media {media.id}'
+            logging.error(error_msg)
+
+            error_msg = traceback.format_exc()
+            logging.error(error_msg)
+
+            print(f"ERROR: Problem retrieving localizations from media {media.id}. Review the .log file for more info.")
 
     # Create the final .csv report
     output_name = f'{section_name}_summary.csv'
