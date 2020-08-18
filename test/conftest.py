@@ -10,6 +10,7 @@ import requests
 def pytest_addoption(parser):
     parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
     parser.addoption('--token', help='API token', default='')
+    parser.addoption('--keep', help='Do not delete project when done', action='store_true')
 
 def pytest_generate_tests(metafunc):
     if 'host' in metafunc.fixturenames:
@@ -67,6 +68,7 @@ def project(request):
     import tator
     host = request.config.option.host
     token = request.config.option.token
+    keep = request.config.option.keep
     tator_api = tator.get_api(host, token)
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
@@ -76,7 +78,8 @@ def project(request):
     })
     project_id = response.id
     yield project_id
-    status = tator_api.delete_project(project_id)
+    if not keep:
+        status = tator_api.delete_project(project_id)
 
 @pytest.fixture(scope='session')
 def image_type(request, project):

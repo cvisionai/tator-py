@@ -340,7 +340,7 @@ def _perform_random_sizes_test(
                 image_path = tator_api.get_localization_graphic(localization_id)
             else:
                 image_size_str = f'{image_size[0]}x{image_size[1]}'
-                iamge_path = tator_api.get_localization_graphic(localization_id, force_scale=image_size_str)
+                image_path = tator_api.get_localization_graphic(localization_id, force_scale=image_size_str)
         else:
             if image_size is None:
                 image_path = tator_api.get_localization_graphic(

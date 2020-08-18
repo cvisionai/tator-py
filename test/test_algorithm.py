@@ -278,7 +278,7 @@ def test_register_algorithm(
     spec = tator.models.Algorithm(
         name=str(uuid.uuid1()),
         project=project,
-        user=2,
+        user=user_id,
         description='new_test_description',
         manifest='coolfile.yaml',
         files_per_job=2)

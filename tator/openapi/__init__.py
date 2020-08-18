@@ -1,3 +1,3 @@
 import sys
 import os
-import tator.openapi.tator_openapi as tator_openapi
+from tator.openapi import tator_openapi

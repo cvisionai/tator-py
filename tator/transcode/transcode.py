@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument('--gid', type=str, help='Group ID for this upload for sending progress.')
     parser.add_argument('--uid', type=str, help='Unique ID for this upload for sending progress.')
     parser.add_argument('--input', type=str, help='Path to raw video.')
-    parser.add_argument("-o", "--output");
+    parser.add_argument("-o", "--output")
     return parser.parse_args()
 
 def make_video_definition(disk_file):

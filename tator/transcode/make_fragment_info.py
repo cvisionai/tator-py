@@ -9,8 +9,8 @@ FRAGMENT_VERSION=2
 
 def parse_args():
     parser=argparse.ArgumentParser()
-    parser.add_argument("input", help="MP4 File", type=str);
-    parser.add_argument("-o", "--output");
+    parser.add_argument("input", help="MP4 File", type=str)
+    parser.add_argument("-o", "--output")
     return parser.parse_args()
 
 def make_fragment_info(video_file, output):
