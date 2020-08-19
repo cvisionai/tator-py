@@ -47,5 +47,5 @@ def test_stategraphic(host, token, project, video, box_type, track_type):
     assert(len(stategraphic) == TRACK_LENGTH)
     for frame_data in stategraphic:
         size = (frame_data.height, frame_data.width, len(frame_data.mode))
-        assert_vector_equal(size, (720,1280,3))
+        assert_vector_equal(size, (224,224,3))
 
