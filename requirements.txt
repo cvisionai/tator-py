@@ -6,3 +6,5 @@ setuptools >= 21.0.0
 urllib3 >= 1.15.1
 tator-tuspy >= 0.2.5
 requests >= 2.23.0
+pyyaml >= 5.3.1
+progressbar2 >= 3.51.4
