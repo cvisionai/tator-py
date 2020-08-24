@@ -89,11 +89,7 @@ if __name__ == '__main__':
     logger.info(f"Created {len(state_ids)} tracks!")
 
     # The "state graphic", a series of localization images associated with the
-    # track, can be retrieved. Below this is done for the first track. The 
-    # path to a local tiled image on disk is returned.
-    image_path = tator_api.get_state_graphic(state_ids[0], mode='tile')
+    # track, can be retrieved. Below this is done for the first track. Using the
+    # full_state_graphic utility, a list of PIL images is returned.
+    images = tator.util.full_state_graphic(tator_api, state_ids[0])
 
-    # Tiled images can be detiled using the get_images utility. It returns
-    # a list of PIL.Image objects.
-    track = tator_api.get_state(state_ids[0])
-    images = tator.util.get_images(image_path, track)
