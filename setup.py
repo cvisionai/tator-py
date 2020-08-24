@@ -10,7 +10,7 @@ import yaml
 import json
 
 REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil",
-            "requests", "tator-tuspy"]
+            "requests", "tator-tuspy", "pyyaml", "progressbar2"]
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
