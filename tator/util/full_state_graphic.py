@@ -9,7 +9,7 @@ def full_state_graphic(api, state_id, force_scale=None):
 
     .. code-block:: python
 
-        state_graphic = full_state_graphic(state_id)
+        state_graphic = full_state_graphic(api, state_id)
 
     :param api: :class:`tator.TatorApi` object.
     :param state_id: Unique integer identifying a localization-associated state.
