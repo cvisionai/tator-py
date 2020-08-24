@@ -103,8 +103,6 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
 
     tar_buf.flush()
 
-    import shutil
-    shutil.copyfile(tar_buf.name, '/home/jon/test_tar.tar')
     # Upload the archive.
     for progress, response in tator.util.upload_media_archive(tator_api, project, tar_buf.name):
         print(f"Archive upload progress: {progress}%")
