@@ -64,15 +64,13 @@ def get_metadata(path):
     video_info = json.loads(output)
     stream = video_info["streams"][0]
     seconds = float(stream["duration"])
+    start_time = float(stream["start_time"])
 
     # Fill in object information based on probe
     codec = stream["codec_name"]
     fps_fractional = stream["avg_frame_rate"].split("/")
     fps = float(fps_fractional[0]) / float(fps_fractional[1])
-    if "nb_frames" in stream:
-        num_frames = int(stream["nb_frames"])
-    else:
-        num_frames = round(fps * seconds)
+    num_frames = round(fps * (seconds-start_time))
     width = stream["width"]
     height = stream["height"]
 

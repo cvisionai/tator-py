@@ -56,13 +56,12 @@ def determine_transcode(host, token, media_type, path, group_to):
             logger.info("Found Audio Track")
             audio=True
     stream = video_info["streams"][stream_idx]
-    if "nb_frames" in stream:
-        num_frames = float(stream["nb_frames"])
-    else:
-        fps_fractional = stream["avg_frame_rate"].split("/")
-        fps = float(fps_fractional[0]) / float(fps_fractional[1])
-        seconds = float(stream["duration"])
-        num_frames = float(fps * seconds)
+
+    fps_fractional = stream["avg_frame_rate"].split("/")
+    fps = float(fps_fractional[0]) / float(fps_fractional[1])
+    seconds = float(stream["duration"])
+    start_time = float(stream["start_time"])
+    num_frames = float(fps * (seconds-start_time))
 
     # Handle up to but not exceeding FHD
     height = int(stream["height"])
