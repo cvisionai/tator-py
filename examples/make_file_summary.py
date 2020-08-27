@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Script that gathers counts of localizations and states (e.g. detections and tracks)
 for each file in a particular section. Also gathers the last edit session duration for
@@ -30,8 +31,9 @@ def parse_args() -> argparse.Namespace:
     Returns parsed arguments in a namespace object.
 
     """
-
-    parser = tator.get_parser()
+    parser = argparse.ArgumentParser(
+        description="Creates a file (media) summary for the provided project/section. Localization counts, state counts, and last session duration are recorded.")
+    parser = tator.get_parser(parser=parser)
     parser.add_argument('--project', type=int, required=True, help='Unique project id')
     parser.add_argument('--section', type=str, required=True, help='Name of section to process')
 
@@ -70,7 +72,6 @@ def process_section(
     # Get the localization types associated with the project and gather
     # the names of the visible ones
     localization_types = tator_api.get_localization_type_list(project=project_id)
-
 
     localization_type_names = []
     localization_type_id_name_map = {}
