@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Script that gathers the localization information of a particular section.
+Thumbnails can of each localization can also be generated.
+"""
+import argparse
 import logging
 import os
 import shutil
@@ -18,7 +23,7 @@ logging.basicConfig(
     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def sanitizeString(string: str) -> str:
+def sanitize_string(string: str) -> str:
     """ Sanitize a string to be safe for filenames
 
     Args:
@@ -37,7 +42,7 @@ def sanitizeString(string: str) -> str:
         replace(">","").\
         replace("|","-")
 
-def getAttributeTypeData(localization_types_df: pd.DataFrame) -> dict:
+def get_attribute_type_data(localization_types_df: pd.DataFrame) -> dict:
     """ Gets a dictionary of ordered attribute type information per localization type id
 
     Args:
@@ -63,7 +68,7 @@ def getAttributeTypeData(localization_types_df: pd.DataFrame) -> dict:
 
     return attribute_data
 
-def processLocalization(
+def process_localization(
         host: str,
         tator_api: tator.api,
         project_id: int,
@@ -85,7 +90,7 @@ def processLocalization(
         media: Media associated with the localization
         localization: Localization to process
         localization_types_df: DataFrame of localization types associated with the localization
-        attribute_types_info: Output of getAttributeTypeData
+        attribute_types_info: Output of get_attribute_type_data
         image_folder: Folder that will contain the thumbnail image
         disable_thumbnails: Don't create thumbnails if true
         thumbnail_filename_pattern: Refer to the help description
@@ -188,7 +193,7 @@ def processLocalization(
                     margin_y=1)
 
         # We will strip off the extension from the media name
-        media_name_str = os.path.splitext(sanitizeString(media.name))[0]
+        media_name_str = os.path.splitext(sanitize_string(media.name))[0]
 
         # The thumbnail created is a temporary file. Move it using a specific filename/path.
         if thumbnail_filename_pattern is None:
@@ -220,10 +225,10 @@ def processLocalization(
                         continue
 
                     if row['order'] == 0:
-                        target_filename += f"{sanitizeString(attr_val)}_"
+                        target_filename += f"{sanitize_string(attr_val)}_"
 
                     else:
-                        target_filename += f"{sanitizeString(row['name'])}_{sanitizeString(attr_val)}_"
+                        target_filename += f"{sanitize_string(row['name'])}_{sanitize_string(attr_val)}_"
 
                     if not set_main_basename:
                         target_filename += main_basename
@@ -248,7 +253,7 @@ def processLocalization(
                 else:
                     if token in localization.attributes:
                         attr_val = str(localization.attributes[token])
-                        target_filename += f'{sanitizeString(attr_val)}'
+                        target_filename += f'{sanitize_string(attr_val)}'
                     else:
                         raise ValueError(f"Invalid thumbnail_filename_pattern token provided: {token}")
 
@@ -289,7 +294,7 @@ def processLocalization(
 
     return datum
 
-def processSection(
+def process_section(
         host: str,
         tator_api: tator.api,
         project_id: int,
@@ -311,7 +316,7 @@ def processSection(
         section_name: Name of the section to be processed
         medias: List of media associated with the given section
         localization_types_df: DataFrame of localization types associated with the localization
-        attribute_types_info: Output of getAttributeTypeData
+        attribute_types_info: Output of get_attribute_type_data
         column_names: Columns to output in the section report
         summary_filename: File name to use for the summary report
             If None, then section_name_summary.csv is used
@@ -339,7 +344,7 @@ def processSection(
             localizations = tator_api.get_localization_list(project=project_id, media_id=[media.id])
             for localization in localizations:
                 try:
-                    datum = processLocalization(
+                    datum = process_localization(
                         host=host,
                         project_id=project_id,
                         tator_api=tator_api,
@@ -385,7 +390,7 @@ def processSection(
     df = pd.DataFrame(data=report_data, columns=column_names)
     df.to_csv(output_name, index=False)
 
-def processProject(
+def process_project(
         host: str,
         token: str,
         project_id: int,
@@ -453,7 +458,7 @@ def processProject(
     localization_types_df = tator.util.to_dataframe(localization_types)
 
     # Get the ordered attribute information per localization dtype.
-    attribute_types_info = getAttributeTypeData(localization_types_df=localization_types_df)
+    attribute_types_info = get_attribute_type_data(localization_types_df=localization_types_df)
 
     # If a section name was provided, then verify the corresponding section exists
     #     If not, then complain back to the user.
@@ -492,7 +497,7 @@ def processProject(
         log_msg = f"Processing section: {section_name}"
         logging.info(log_msg)
         section_summary_filename = None if ignore_summary_filename else summary_filename
-        processSection(
+        process_section(
             host=host,
             tator_api=tator_api,
             project_id=project_id,
@@ -510,7 +515,9 @@ def main():
     """
 
     # Create the argument list and extract them
-    parser = tator.get_parser()
+    parser = argparse.ArgumentParser(
+        description="Create localizations report and thumbnails for the section(s) in the given project.")
+    parser = tator.get_parser(parser=parser)
     parser.add_argument('--project', type=int, required=True,
         help='Unique project id')
     parser.add_argument('--section', type=str, required=False,
@@ -533,7 +540,7 @@ def main():
     logger.info(args)
 
     # Create the report(s) and thumbnail(s)
-    processProject(
+    process_project(
         host=args.host,
         token=args.token,
         project_id=args.project,
