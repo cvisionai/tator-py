@@ -21,10 +21,13 @@ def parse_args():
     parser.add_argument('--project', type=int, help='Unique integer identifying a project. This is '
                                                     'only needed if media_type is -1.')
     parser.add_argument('--media_type', type=int, help='Unique integer identifying a media type.')
+    parser.add_argument('--group_to', type=int, default=480, 
+                         help='Vertical resolutions below this will be transcoded with '
+                              'multi-headed ffmpeg.')
     parser.add_argument('--output', help='Path to output json file.')
     return parser.parse_args()
 
-def determine_transcode(host, token, media_type, path, group_to=480):
+def determine_transcode(host, token, media_type, path, group_to):
     """ Determine transcode workloads to be performed.
 
     :param host: URL of host.
@@ -127,7 +130,8 @@ def determine_transcode(host, token, media_type, path, group_to=480):
 
 if __name__ == '__main__':
     args = parse_args()
-    workloads = determine_transcode(args.host, args.token, args.media_type, args.path)
+    workloads = determine_transcode(args.host, args.token, args.media_type, args.path,
+                                    args.group_to)
     for workload in workloads:
         workload['resolutions'] = ','.join(workload['resolutions'])
     with open(args.output, 'w') as f:
