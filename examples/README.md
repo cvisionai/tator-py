@@ -12,4 +12,13 @@
 | [Download temporary files](download_temporary_files.py) | Download temporary files. |
 | [Get video clips](video_clips.py) | Retrieve video clips from a video. |
 | [Get video frames](video_frames.py) | Get video frames from a video. |
+| [Get localization information and thumbnails from sections](make_summary.py) | Create a summary report of localizations in a section(s). |
+| [Get localization and state counts from a section of media](make_file_summary.py) | Create a summary report of localization and state counts for media residing in a particular section. Last user session duration is also obtained in this example. |
+| [Work with distance media filter](location_query.py) | Gather a specific set of media using the distance attribute filter. |
+
+# Jupyter Notebook Examples
+
+| Jupyter Notebook Examples | Description |
+| ------------------------- | ----------- |
+| [Gather track and detection information](./jupyter/make_tracks_summaries.ipynb) | Make .csv reports and thumbnail images of tracks and its detections |
 
