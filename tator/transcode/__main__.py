@@ -14,6 +14,7 @@ from .determine_transcode import determine_transcode
 from .transcode import convert_streaming
 from .transcode import convert_archival
 from .transcode import convert_audio
+from .delete_media import delete_media
 from .make_thumbnails import make_thumbnails
 from .upload_transcoded_video import upload_transcoded_video
 
@@ -56,30 +57,34 @@ def transcode_single(path, args, gid):
     # Create the media object.
     media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5)
 
-    # Make thumbnails.
-    make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
-                    paths['thumbnail_gif'])
+    try:
+        # Make thumbnails.
+        make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
+                        paths['thumbnail_gif'])
 
-    # Determine transcodes that need to be done.
-    workloads = determine_transcode(args.host, args.token, args.type, path, group_to=1080)
+        # Determine transcodes that need to be done.
+        workloads = determine_transcode(args.host, args.token, args.type, path, group_to=1080)
 
-    # Transcode the video file.
-    for workload in workloads:
-        category = workload['category']
-        del workload['category']
-        if category == 'streaming':
-            convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                              outpath=paths['transcoded'], gid=gid, uid=str(uuid1()))
-        elif category == 'archival':
-            del workload['resolutions']
-            convert_archival(**workload, host=args.host, token=args.token, media=media_id,
-                             outpath=paths['transcoded'])
-        elif category == 'audio':
-            del workload['resolutions']
-            del workload['raw_width']
-            del workload['raw_height']
-            convert_audio(**workload, host=args.host, token=args.token, media=media_id,
-                          outpath=paths['transcoded'])
+        # Transcode the video file.
+        for workload in workloads:
+            category = workload['category']
+            del workload['category']
+            if category == 'streaming':
+                convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
+                                  outpath=paths['transcoded'], gid=gid, uid=str(uuid1()))
+            elif category == 'archival':
+                del workload['resolutions']
+                convert_archival(**workload, host=args.host, token=args.token, media=media_id,
+                                 outpath=paths['transcoded'])
+            elif category == 'audio':
+                del workload['resolutions']
+                del workload['raw_width']
+                del workload['raw_height']
+                convert_audio(**workload, host=args.host, token=args.token, media=media_id,
+                              outpath=paths['transcoded'])
+    except:
+        logging.exception('')
+        delete_media(args.host, args.token, media_id)
     
 if __name__ == '__main__':
     args = parse_args()
