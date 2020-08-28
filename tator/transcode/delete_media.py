@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = get_parser()
-    parser.add_argument('--input', type=int, help="Path to file containing media ID.")
+    parser.add_argument('--input', type=str, help="Path to file containing media ID.")
     return parser.parse_args()
 
 def delete_media(host, token, media_id):
