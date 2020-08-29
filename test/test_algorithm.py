@@ -107,7 +107,7 @@ def _missing_upload_file(
     try:
         caught_exception = False
         spec = tator.models.AlgorithmManifestSpec(name='test.yaml', upload_url='not_there')
-        response = tator_api.save_algorithm_manifest(name=basename, algorithm_manifest_spec=spec)
+        tator_api.save_algorithm_manifest(project = project, algorithm_manifest_spec=spec)
     except:
         caught_exception = True
 
@@ -162,7 +162,7 @@ def test_save_algorithm_manifest(
         host: str,
         token: str,
         project: int) -> None:
-    """ Unit test for the SaveAlgorithManifest endpoint
+    """ Unit test for the SaveAlgorithmManifest endpoint
 
     Unit testing of the save algorithm endpoint involvest the following:
     - Provide something where the upload file doesn't exist
@@ -188,9 +188,9 @@ def test_register_algorithm(
         host: str,
         token: str,
         project: int) -> None:
-    """ Unit test for the ReigsterAlgorithm endpoint
+    """ Unit test for the RegisterAlgorithm endpoint
 
-    Unit testing of the algortihm registration endpoint involves the following:
+    Unit testing of the algorithm registration endpoint involves the following:
     - Create a request body that's fine, but has bad syntax for the .yaml file
     - Create a request body for a .yaml file that doesn't exist
     - Normal request body
@@ -329,7 +329,7 @@ def test_register_algorithm_with_missing_fields(
         host: str,
         token: str,
         project: int) -> None:
-    """ Unit test for the ReigsterAlgorithm endpoint focused on missing request body fields
+    """ Unit test for the RegisterAlgorithm endpoint focused on missing request body fields
 
     Request bodies are created with missing required fields and a workflow tries
     to be registered with these incorrect request bodies.
