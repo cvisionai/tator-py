@@ -6,7 +6,7 @@ def test_analysis(
         project: int) -> None:
     """
     Create a set of analyses objects using the POST operation
-    Retreive the set of analyses objects
+    Retrieve the set of analyses objects
     Update the analysis object
     Get the object and make sure it was updated
     Delete the object
