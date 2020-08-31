@@ -1,5 +1,7 @@
-import tator
+import time
 import subprocess
+
+import tator
 
 def test_local_transcode(host, token, project, video_type, video_file):
     cmd = [
@@ -22,6 +24,7 @@ def test_bad_file(host, token, project, video_type, image_file):
         '--section', 'Bad transcodes',
     ]
     subprocess.run(cmd, check=True)
+    time.sleep(2)
     # Make sure media file is gone.
     api = tator.get_api(host, token)
     medias = api.get_media_list(project, attribute='tator_user_sections::Bad transcodes')
