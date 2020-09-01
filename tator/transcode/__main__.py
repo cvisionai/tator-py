@@ -30,10 +30,11 @@ def parse_args():
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
     parser.add_argument('--section', type=str, help='Media section name.')
+    parser.add_argument('--work_dir', type=str, help='Path to working directory. If not given, '
+                                                     'the path containing videos will be used.')
     return parser.parse_args()
 
-def get_file_paths(path):
-    base, _ = os.path.splitext(path)
+def get_file_paths(path, base):
     paths = {
         'original': path,
         'transcoded': base + '_transcoded',
@@ -46,7 +47,12 @@ def get_file_paths(path):
 def transcode_single(path, args, gid):
     """Transcodes a single file.
     """
-    paths = get_file_paths(path)
+    # Get file paths.
+    if args.work_dir:
+        base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
+    else:
+        base, _ = os.path.splitext(path)
+    paths = get_file_paths(path, base)
 
     # Get md5 for the file.
     md5 = md5sum(paths['original'])
