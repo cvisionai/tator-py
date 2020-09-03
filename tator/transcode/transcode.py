@@ -81,7 +81,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         cmd.extend([*per_res,
                     "-filter_complex",
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                    f"[0:v:0]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
+                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
                     "-map", f"[outv{ridx}]",
                     output_file])
         
@@ -151,6 +151,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     "ffmpeg", "-y",
                     "-i", path,
                     "-vcodec", archive_config.encode.vcodec,
+                    "-vf", "yadif",
                     "-crf", str(archive_config.encode.crf),
                     "-preset", archive_config.encode.preset,
                     "-tune", archive_config.encode.tune,
