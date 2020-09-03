@@ -227,6 +227,26 @@ def convert_audio(host, token, media, path, outpath):
     })
     assert isinstance(response, CreateResponse)
 
+def get_length_info(stream):
+    """ Given a json dump of the stream return the length of the video """
+    fps_fractional = stream["avg_frame_rate"].split("/")
+    fps = float(fps_fractional[0]) / float(fps_fractional[1])
+
+    start_time = float(stream["start_time"])
+    if 'duration' in stream:
+        seconds = float(stream["duration"])
+    elif 'tags' in stream:
+        if 'DURATION' in stream['tags']:
+            length = stream['tags']['DURATION'].split(':')
+            seconds = float(length[0])*3600
+            seconds += float(length[1])*60
+            seconds += float(length[2])
+    else:
+        raise Exception('No way to determine file length!')
+
+    num_frames = float(fps * (seconds-start_time))
+    return fps,num_frames
+
 if __name__ == '__main__':
     args = parse_args()
     try:
@@ -247,3 +267,6 @@ if __name__ == '__main__':
     finally:
         # Always return with 0 so argo continues on
         sys.exit(0)
+
+
+    
