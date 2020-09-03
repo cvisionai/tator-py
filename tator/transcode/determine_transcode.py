@@ -66,6 +66,13 @@ def determine_transcode(host, token, media_type, path, group_to):
     # Handle up to but not exceeding FHD
     height = int(stream["height"])
     width = int(stream["width"])
+
+    # Handle rotated videos
+    if "tags" in stream:
+        if "rotate" in stream["tags"]:
+            if stream["tags"]["rotate"] == "90":
+                height = int(stream["width"])
+                width = int(stream["height"])
     print(f"Height of video is : {height}")
 
     # Make a list of resolutions needed
