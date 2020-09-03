@@ -8,6 +8,7 @@ import logging
 from ..util import get_api
 
 from .upload import upload_file
+from .transcode import get_length_info
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -36,14 +37,10 @@ def get_metadata(path):
     logger.info("Got info = {}".format(output))
     video_info = json.loads(output)
     stream = video_info["streams"][0]
-    seconds = float(stream["duration"])
-    start_time = float(stream["start_time"])
 
+    fps, num_frames = get_length_info(stream)
     # Fill in object information based on probe
     codec = stream["codec_name"]
-    fps_fractional = stream["avg_frame_rate"].split("/")
-    fps = float(fps_fractional[0]) / float(fps_fractional[1])
-    num_frames = round(fps * (seconds-start_time))
     width = stream["width"]
     height = stream["height"]
 

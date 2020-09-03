@@ -9,6 +9,7 @@ import os
 from ..openapi.tator_openapi.models import MediaType
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
+from .transcode import get_length_info
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
 MAX_RESOLUTION=max(STREAMING_RESOLUTIONS)
@@ -21,7 +22,7 @@ def parse_args():
     parser.add_argument('--project', type=int, help='Unique integer identifying a project. This is '
                                                     'only needed if media_type is -1.')
     parser.add_argument('--media_type', type=int, help='Unique integer identifying a media type.')
-    parser.add_argument('--group_to', type=int, default=480, 
+    parser.add_argument('--group_to', type=int, default=480,
                          help='Vertical resolutions below this will be transcoded with '
                               'multi-headed ffmpeg.')
     parser.add_argument('--output', help='Path to output json file.')
@@ -56,12 +57,7 @@ def determine_transcode(host, token, media_type, path, group_to):
             logger.info("Found Audio Track")
             audio=True
     stream = video_info["streams"][stream_idx]
-
-    fps_fractional = stream["avg_frame_rate"].split("/")
-    fps = float(fps_fractional[0]) / float(fps_fractional[1])
-    seconds = float(stream["duration"])
-    start_time = float(stream["start_time"])
-    num_frames = float(fps * (seconds-start_time))
+    fps, num_frames = get_length_info(stream)
 
     # Handle up to but not exceeding FHD
     height = int(stream["height"])
@@ -131,7 +127,7 @@ def determine_transcode(host, token, media_type, path, group_to):
             'raw_width': width,
             'resolutions': [],
         }]
-    
+
     return workloads
 
 if __name__ == '__main__':
@@ -142,4 +138,3 @@ if __name__ == '__main__':
         workload['resolutions'] = ','.join(workload['resolutions'])
     with open(args.output, 'w') as f:
         json.dump(workloads, f)
-
