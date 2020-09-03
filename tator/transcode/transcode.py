@@ -5,6 +5,7 @@ import logging
 import subprocess
 import json
 import os
+import sys
 
 from ..util.get_api import get_api
 from ..openapi.tator_openapi.models import CreateResponse
@@ -228,15 +229,21 @@ def convert_audio(host, token, media, path, outpath):
 
 if __name__ == '__main__':
     args = parse_args()
-    if args.category == 'streaming':
-        if args.resolutions == '':
-            resolutions = []
-        else:
-            resolutions = [int(res) for res in args.resolutions.split(',')]
-        convert_streaming(args.host, args.token, args.media, args.input, args.output,
-                          args.raw_width, args.raw_height, resolutions, args.gid, args.uid)
-    elif args.category == 'archival':
-        convert_archival(args.host, args.token, args.media, args.input, args.output,
-                         args.raw_width, args.raw_height)
-    elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, args.input, args.output)
+    try:
+        if args.category == 'streaming':
+            if args.resolutions == '':
+                resolutions = []
+            else:
+                resolutions = [int(res) for res in args.resolutions.split(',')]
+            convert_streaming(args.host, args.token, args.media, args.input, args.output,
+                              args.raw_width, args.raw_height, resolutions, args.gid, args.uid)
+        elif args.category == 'archival':
+            convert_archival(args.host, args.token, args.media, args.input, args.output,
+                             args.raw_width, args.raw_height)
+        elif args.category == 'audio':
+            convert_audio(args.host, args.token, args.media, args.input, args.output)
+    except Exception as e:
+        print(f"Exception: {e}")
+    finally:
+        # Always return with 0 so argo continues on
+        sys.exit(0)
