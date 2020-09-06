@@ -81,7 +81,7 @@ def transcode_single(path, args, gid):
             del workload['category']
             if category == 'streaming':
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                                  outpath=paths['transcoded'], gid=gid, uid=uid)
+                                  outpath=paths['transcoded'])
             elif category == 'archival':
                 del workload['resolutions']
                 convert_archival(**workload, host=args.host, token=args.token, media=media_id,

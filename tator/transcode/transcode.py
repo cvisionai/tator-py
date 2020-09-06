@@ -24,8 +24,6 @@ def parse_args():
     parser.add_argument('--raw_width', type=int, help='Pixel width of original video.')
     parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
     parser.add_argument('--resolutions', type=str, help='Comma separated list of output resolutions.')
-    parser.add_argument('--gid', type=str, help='Group ID for this upload for sending progress.')
-    parser.add_argument('--uid', type=str, help='Unique ID for this upload for sending progress.')
     parser.add_argument('--input', type=str, help='Path to raw video.')
     parser.add_argument("-o", "--output")
     return parser.parse_args()
@@ -54,7 +52,7 @@ def make_video_definition(disk_file):
                  "bit_rate": int(stream["bit_rate"])}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions, gid, uid):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions):
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -109,9 +107,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                 'segments_url': segments_url,
             }]}
         }
-        if gid is not None and uid is not None:
-            spec['gid'] = gid
-            spec['uid'] = uid
 
         # Move video file with the api.
         api = get_api(host, token)
@@ -255,7 +250,7 @@ if __name__ == '__main__':
         else:
             resolutions = [int(res) for res in args.resolutions.split(',')]
         convert_streaming(args.host, args.token, args.media, args.input, args.output,
-                          args.raw_width, args.raw_height, resolutions, args.gid, args.uid)
+                          args.raw_width, args.raw_height, resolutions)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.input, args.output,
                          args.raw_width, args.raw_height)
