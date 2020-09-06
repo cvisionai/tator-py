@@ -60,8 +60,12 @@ def transcode_single(path, args, gid):
     # Get base filename.
     name = os.path.basename(paths['original'])
 
+    # Generate a UID for this file.
+    uid = str(uuid1())
+
     # Create the media object.
-    media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5)
+    media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5,
+                            gid, uid)
 
     try:
         # Make thumbnails.
@@ -77,7 +81,7 @@ def transcode_single(path, args, gid):
             del workload['category']
             if category == 'streaming':
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                                  outpath=paths['transcoded'], gid=gid, uid=str(uuid1()))
+                                  outpath=paths['transcoded'], gid=gid, uid=uid)
             elif category == 'archival':
                 del workload['resolutions']
                 convert_archival(**workload, host=args.host, token=args.token, media=media_id,
