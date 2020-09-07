@@ -16,7 +16,6 @@ from .transcode import convert_archival
 from .transcode import convert_audio
 from .delete_media import delete_media
 from .make_thumbnails import make_thumbnails
-from .upload_transcoded_video import upload_transcoded_video
 
 logger = logging.getLogger(__name__)
 
