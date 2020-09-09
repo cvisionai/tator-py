@@ -67,7 +67,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     # Upload thumbnail and thumbnail gif.
     api = get_api(host, token)
     thumbnail_url = upload_file(thumb_path, api)
-    thumbnail_gif_url = upload_file(thumb_gif_path, host)
+    thumbnail_gif_url = upload_file(thumb_gif_path, api)
 
     # Update the media object.
     response = api.update_media(media_id, media_update={
