@@ -126,7 +126,7 @@ def default_archival_upload(api, host, media, path, encoded):
     # Move video file with the api.
     response = api.move_video(media, move_video_spec={
         'media_files': {'archival': [{
-            **make_video_definition(path),
+            **video_def,
             'url': url,
         }]},
     })
