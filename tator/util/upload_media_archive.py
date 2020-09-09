@@ -35,8 +35,11 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
     upload_uid = str(uuid1())
     upload_gid = str(uuid1())
     host = api.api_client.configuration.host
+    token = api.api_client.configuration.api_key['Authorization']
+    prefix = api.api_client.configuration.api_key_prefix['Authorization']
     tusURL = urljoin(host, "files/")
-    tus = TusClient(tusURL)
+    tus = TusClient(tusURL, headers={'Authorization': f'{prefix} {token}',
+                                     'Upload-Uid': f'{upload_uid}'})
     if isinstance(paths, list):
         in_mem_buf = io.BytesIO()
         in_mem_tar = tarfile.TarFile(mode='w', fileobj=in_mem_buf)
@@ -61,7 +64,7 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
 
     # Initiate transcode.
     spec = {
-        'type': -1, #Tar-based inport
+        'type': -1, #Tar-based import
         'uid': upload_uid,
         'gid': upload_gid,
         'url': uploader.url,
