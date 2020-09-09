@@ -113,9 +113,15 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         response = api.move_video(media, move_video_spec=spec)
         assert isinstance(response, CreateResponse)
 
-def default_archival_upload(api, host, media, path):
+def default_archival_upload(api, host, media, path, encoded):
     # Default action if no archive config is upload raw video.
     url = upload_file(path, host)
+    video_def = make_video_definition(path)
+
+    # If video was encoded, set codec_mime to video/mp4; otherwise do
+    # not set codec_mime.
+    if encoded:
+        video_def['codec_mime'] = 'video/mp4'
    
     # Move video file with the api.
     response = api.move_video(media, move_video_spec={
@@ -133,7 +139,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
     media_type = api.get_media_type(media_obj.meta)
 
     if media_type.archive_config is None:
-        default_archival_upload(api, host, media, path)
+        default_archival_upload(api, host, media, path, False)
     else:
         for idx, archive_config in enumerate(media_type.archive_config):
             if archive_config.encode is None: 
@@ -159,7 +165,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                 subprocess.run(cmd, check=True)
                 
             if archive_config.s3_storage is None:
-                default_archival_upload(api, host, media, output_file)
+                default_archival_upload(api, host, media, output_file, True)
             else:
                 import boto3
                 # Get credentials from config object.
