@@ -65,11 +65,11 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     subprocess.run(cmd, check=True)
 
     # Upload thumbnail and thumbnail gif.
-    thumbnail_url = upload_file(thumb_path, host)
+    api = get_api(host, token)
+    thumbnail_url = upload_file(thumb_path, api)
     thumbnail_gif_url = upload_file(thumb_gif_path, host)
 
     # Update the media object.
-    api = get_api(host, token)
     response = api.update_media(media_id, media_update={
         'thumbnail_url': thumbnail_url,
         'thumbnail_gif_url': thumbnail_gif_url,
