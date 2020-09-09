@@ -3,6 +3,7 @@ import math
 from uuid import uuid1
 
 from tusclient.client import TusClient
+from urllib.parse import urljoin
 from progressbar import progressbar
 
 logger = logging.getLogger(__name__)

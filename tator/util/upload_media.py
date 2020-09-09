@@ -5,7 +5,6 @@ import math
 
 from tusclient.client import TusClient
 from urllib.parse import urljoin
-from urllib.parse import urlsplit
 
 from .md5sum import md5sum
 
