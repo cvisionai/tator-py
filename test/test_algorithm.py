@@ -147,7 +147,7 @@ def _upload_test_algorithm_manifest(
 
         # Upload the manifest file with tus first
         logger.info(f"Created temporary manifest file: {local_yaml_file}")
-        url = upload_file(path=local_yaml_file, host=host)
+        url = upload_file(path=local_yaml_file, api=tator_api)
 
         # Save the uploaded file using the save algorithm manifest endpoint
         spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
