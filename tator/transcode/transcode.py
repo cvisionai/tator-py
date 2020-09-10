@@ -246,7 +246,9 @@ def get_length_info(stream):
         raise Exception('No way to determine file length!')
 
     num_frames = float(fps * (seconds-start_time))
-    return round(fps,2),int(num_frames)
+    if num_frames <= 0:
+        num_frames = float(fps * seconds)
+    return fps,int(num_frames)
 
 if __name__ == '__main__':
     args = parse_args()
