@@ -56,6 +56,20 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
+
+    # Need to get avg_framerate
+    cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream",
+        "-print_format", "json",
+        "-select_streams", "v",
+        path,
+    ]
+    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    video_info = json.loads(output)
+    avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
+
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
@@ -80,10 +94,10 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         cmd.extend([*per_res,
                     "-filter_complex",
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}]",
+                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}[outv{ridx}]",
                     "-map", f"[outv{ridx}]",
                     output_file])
-        
+
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
 
@@ -95,7 +109,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
         logger.info("Uploading transcoded file...")
         url = upload_file(output_file, host)
-       
+
         logger.info("Uploading segments file...")
         segments_url = upload_file(segments_file, host)
 
@@ -122,7 +136,7 @@ def default_archival_upload(api, host, media, path, encoded):
     # not set codec_mime.
     if encoded:
         video_def['codec_mime'] = 'video/mp4'
-   
+
     # Move video file with the api.
     response = api.move_video(media, move_video_spec={
         'media_files': {'archival': [{
@@ -142,7 +156,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
         default_archival_upload(api, host, media, path, False)
     else:
         for idx, archive_config in enumerate(media_type.archive_config):
-            if archive_config.encode is None: 
+            if archive_config.encode is None:
                 # If no encode, just use the original file.
                 output_file = path
             else:
@@ -163,7 +177,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                 ]
                 logger.info('ffmpeg cmd = {}'.format(cmd))
                 subprocess.run(cmd, check=True)
-                
+
             if archive_config.s3_storage is None:
                 default_archival_upload(api, host, media, output_file, True)
             else:
@@ -214,10 +228,10 @@ def convert_audio(host, token, media, path, outpath):
                       output_file]
     subprocess.run(audio_extraction, check=True)
     logger.info("Finished extracting audio!")
-  
-    # Upload audio. 
+
+    # Upload audio.
     url = upload_file(output_file, host)
-   
+
     # Move video file with the api.
     api = get_api(host, token)
     response = api.move_video(media, move_video_spec={
@@ -264,6 +278,3 @@ if __name__ == '__main__':
                          args.raw_width, args.raw_height)
     elif args.category == 'audio':
         convert_audio(args.host, args.token, args.media, args.input, args.output)
-
-
-    
