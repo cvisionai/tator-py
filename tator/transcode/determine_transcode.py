@@ -71,11 +71,6 @@ def determine_transcode(host, token, media_type, path, group_to):
                 width = int(stream["height"])
     print(f"Height of video is : {height}")
 
-    # Make a list of resolutions needed
-    resolutions=[resolution for resolution in STREAMING_RESOLUTIONS if resolution < height]
-    if height <= MAX_RESOLUTION:
-        resolutions.append(height)
-
     # Generate output path
     base, ext = os.path.splitext(path)
 
@@ -89,6 +84,21 @@ def determine_transcode(host, token, media_type, path, group_to):
     else:
         media_type_obj = api.get_media_type(media_type)
     assert isinstance(media_type_obj, MediaType)
+
+    available_resolutions=STREAMING_RESOLUTIONS
+    try:
+        if media_type_obj.streaming_config:
+            available_resolutions=[x.resolution for x in media_type_obj.streaming_config]
+    except Exception as e:
+        # Likely an old version of the server
+        # TODO: Remove me someday
+        print(e)
+        print("Defaulting to STREAMING_RESOLUTIONS")
+    print(f"Selected Resolutions {available_resolutions}")
+    # Make a list of resolutions needed
+    resolutions=[resolution for resolution in available_resolutions if resolution < height]
+    if height <= MAX_RESOLUTION:
+        resolutions.append(height)
 
     # Streaming workloads (low res)
     workloads = [{
