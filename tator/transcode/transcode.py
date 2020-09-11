@@ -158,9 +158,13 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     "-preset", archive_config.encode.preset,
                     "-tune", archive_config.encode.tune,
                     "-pix_fmt", "yuv420p",
-                    "-tag:v", "hvc1",
-                    output_file
                 ]
+                if archive_config.encode.vcodec == 'libx265':
+                    cmd += ["-tag:v", "hvc1"]
+                if archive_config.encode.vcodec == 'libx264':
+                    cmd += ["-tag:v", "avc1"]
+                cmd.append(output_file)
+                    
                 logger.info('ffmpeg cmd = {}'.format(cmd))
                 subprocess.run(cmd, check=True)
                 
