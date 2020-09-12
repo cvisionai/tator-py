@@ -113,7 +113,7 @@ def _create_workflow_manifest(
         with os.fdopen(fd, 'w') as file_handle:
             file_handle.write(_create_yaml_file_str())
 
-        url = upload_file(path=local_yaml_file, host=host)
+        url = upload_file(path=local_yaml_file, api=tator_api)
 
         # Save the uploaded file using the save algorithm manifest endpoint
         spec = tator.models.AlgorithmManifestSpec(name='workflow.yaml', upload_url=url)

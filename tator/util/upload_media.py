@@ -5,7 +5,6 @@ import math
 
 from tusclient.client import TusClient
 from urllib.parse import urljoin
-from urllib.parse import urlsplit
 
 from .md5sum import md5sum
 
@@ -48,8 +47,11 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         section="New Files"
 
     host = api.api_client.configuration.host
+    token = api.api_client.configuration.api_key['Authorization']
+    prefix = api.api_client.configuration.api_key_prefix['Authorization']
     tusURL = urljoin(host, "files/")
-    tus = TusClient(tusURL)
+    tus = TusClient(tusURL, headers={'Authorization': f'{prefix} {token}',
+                                     'Upload-Uid': f'{upload_uid}'})
     uploader = tus.uploader(path, chunk_size=chunk_size,
                             retries=10, retry_delay=15)
     num_chunks=math.ceil(uploader.get_file_size()/chunk_size)

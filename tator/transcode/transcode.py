@@ -100,6 +100,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
+    api = get_api(host, token)
 
     for resolution in resolutions:
         output_file = os.path.join(outpath, f"{resolution}.mp4")
@@ -108,10 +109,10 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         make_fragment_info(output_file, segments_file)
 
         logger.info("Uploading transcoded file...")
-        url = upload_file(output_file, host)
+        url = upload_file(output_file, api)
 
         logger.info("Uploading segments file...")
-        segments_url = upload_file(segments_file, host)
+        segments_url = upload_file(segments_file, api)
 
         # Construct move video spec.
         spec = {
@@ -123,13 +124,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         }
 
         # Move video file with the api.
-        api = get_api(host, token)
         response = api.move_video(media, move_video_spec=spec)
         assert isinstance(response, CreateResponse)
 
 def default_archival_upload(api, host, media, path, encoded):
     # Default action if no archive config is upload raw video.
-    url = upload_file(path, host)
+    url = upload_file(path, api)
     video_def = make_video_definition(path)
 
     # If video was encoded, set codec_mime to video/mp4; otherwise do
@@ -172,9 +172,13 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     "-preset", archive_config.encode.preset,
                     "-tune", archive_config.encode.tune,
                     "-pix_fmt", "yuv420p",
-                    "-tag:v", "hvc1",
-                    output_file
                 ]
+                if archive_config.encode.vcodec in ['libx265', 'svt_hevc', 'nvenc_hevc']:
+                    cmd += ["-tag:v", "hvc1"]
+                elif archive_config.encode.vcodec == 'libx264':
+                    cmd += ["-tag:v", "avc1"]
+                cmd.append(output_file)
+                    
                 logger.info('ffmpeg cmd = {}'.format(cmd))
                 subprocess.run(cmd, check=True)
 
@@ -228,12 +232,12 @@ def convert_audio(host, token, media, path, outpath):
                       output_file]
     subprocess.run(audio_extraction, check=True)
     logger.info("Finished extracting audio!")
-
-    # Upload audio.
-    url = upload_file(output_file, host)
-
-    # Move video file with the api.
+  
+    # Upload audio. 
     api = get_api(host, token)
+    url = upload_file(output_file, api)
+   
+    # Move video file with the api.
     response = api.move_video(media, move_video_spec={
         'media_files': {'audio': [{
             **make_audio_definition(output_file),

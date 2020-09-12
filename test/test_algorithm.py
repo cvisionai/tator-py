@@ -147,7 +147,7 @@ def _upload_test_algorithm_manifest(
 
         # Upload the manifest file with tus first
         logger.info(f"Created temporary manifest file: {local_yaml_file}")
-        url = upload_file(path=local_yaml_file, host=host)
+        url = upload_file(path=local_yaml_file, api=tator_api)
 
         # Save the uploaded file using the save algorithm manifest endpoint
         spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
@@ -177,12 +177,12 @@ def test_save_algorithm_manifest(
     _missing_upload_file(host=host, token=token, project=project)
 
     response_1 = _upload_test_algorithm_manifest(
-        host=host, token=token, project=project, manifest_name='test.yaml')
-    assert os.path.basename(response_1.url) == 'test.yaml'
+        host=host, token=token, project=project, manifest_name='test_nodupe.yaml')
+    assert os.path.basename(response_1.url) == 'test_nodupe.yaml'
 
     response_2 = _upload_test_algorithm_manifest(
-        host=host, token=token, project=project, manifest_name='test.yaml')
-    assert os.path.basename(response_2.url) == 'test_0.yaml'
+        host=host, token=token, project=project, manifest_name='test_nodupe.yaml')
+    assert os.path.basename(response_2.url) == 'test_nodupe_0.yaml'
 
 def test_register_algorithm(
         host: str,
