@@ -12,7 +12,6 @@ from ..util.get_parser import get_parser
 from .transcode import get_length_info
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
-MAX_RESOLUTION=max(STREAMING_RESOLUTIONS)
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +96,7 @@ def determine_transcode(host, token, media_type, path, group_to):
     print(f"Selected Resolutions {available_resolutions}")
     # Make a list of resolutions needed
     resolutions=[resolution for resolution in available_resolutions if resolution < height]
-    if height <= MAX_RESOLUTION:
+    if height <= max(available_resolutions) and not height in resolutions:
         resolutions.append(height)
 
     # Streaming workloads (low res)
