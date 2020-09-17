@@ -10,6 +10,7 @@ from ..openapi.tator_openapi.models import MediaType
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
 from .transcode import get_length_info
+from collections import defaultdict
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
 
@@ -85,9 +86,15 @@ def determine_transcode(host, token, media_type, path, group_to):
     assert isinstance(media_type_obj, MediaType)
 
     available_resolutions=STREAMING_RESOLUTIONS
+    crf_map=defaultdict(lambda: 23)
+    codec_map=defaultdict(lambda: 'libx264')
     try:
         if media_type_obj.streaming_config:
-            available_resolutions=[x.resolution for x in media_type_obj.streaming_config]
+            available_resolutions=[]
+            for config in media_type_obj.streaming_config:
+                available_resolutions.append(config.resolution)
+                crf_map[config.resolution] = config.crf
+                codec_map[config.resolution] = config.vcodec
     except Exception as e:
         # Likely an old version of the server
         # TODO: Remove me someday
@@ -105,7 +112,8 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'resolutions': [str(resolution) for resolution in resolutions if resolution <= group_to],
+        'resolutions': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}" for resolution in resolutions
+                        if resolution <= group_to],
     }]
 
     # Streaming workloads (higher res)
@@ -114,7 +122,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'resolutions': [str(resolution)],
+        'resolutions': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"],
     } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads

@@ -52,7 +52,7 @@ def make_video_definition(disk_file):
                  "bit_rate": int(stream["bit_rate"])}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions,crfs,codecs):
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -79,7 +79,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     per_res = ["-an",
         "-metadata:s", "handler_name=tator",
-        "-vcodec", "libx264",
         "-g", "25",
         "-preset", "fast",
         "-pix_fmt", "yuv420p",
@@ -92,6 +91,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         logger.info(f"Generating resolution @ {resolution}")
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         cmd.extend([*per_res,
+                    "-vcodec", codecs[ridx],
+                    "-crf", crfs[ridx],
                     "-filter_complex",
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
                     f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}[outv{ridx}]",
@@ -271,10 +272,14 @@ if __name__ == '__main__':
     if args.category == 'streaming':
         if args.resolutions == '':
             resolutions = []
+            crfs = []
+            codecs =[]
         else:
-            resolutions = [int(res) for res in args.resolutions.split(',')]
+            resolutions = [int(config.split(':')[0]) for config in args.resolutions.split(',')]
+            crfs = [config.split(':')[1] for config in args.resolutions.split(',')]
+            codecs = [config.split(':')[2] for config in args.resolutions.split(',')]
         convert_streaming(args.host, args.token, args.media, args.input, args.output,
-                          args.raw_width, args.raw_height, resolutions)
+                          args.raw_width, args.raw_height, resolutions,crfs,codecs)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.input, args.output,
                          args.raw_width, args.raw_height)
