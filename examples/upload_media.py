@@ -5,6 +5,7 @@
 
 import logging
 import sys
+import time
 
 import tator
 
@@ -27,4 +28,13 @@ if __name__ == '__main__':
     for progress, response in tator.util.upload_media(tator_api, args.type_id, args.media_path):
         logger.info(f"Upload progress: {progress}%")
     logger.info(response.message)
+
+    # Take a look at transcode progress, wait until complete.
+    while True:
+        job = tator_api.get_job(response.run_uid)
+        if job.status == 'Succeeded':
+            break
+        elif job.status == 'Failed':
+            raise ValueError("Upload failed!")
+        time.sleep(1)
     

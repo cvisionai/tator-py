@@ -32,7 +32,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
-        is the response object from :meth:`tator.TatorApi.save_video` or 
+        is the response object from :meth:`tator.TatorApi.create_media` or 
         :meth:`tator.TatorApi.transcode`.
     """
     if md5==None:
