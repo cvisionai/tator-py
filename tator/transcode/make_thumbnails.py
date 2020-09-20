@@ -2,8 +2,10 @@
 
 import argparse
 import subprocess
+import os
 import json
 import logging
+import tempfile
 
 from ..util import get_api
 
@@ -56,13 +58,21 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     cmd = ["ffmpeg", "-y", "-i", video_path, "-vf", "scale=256:-1", "-vframes", "1", thumb_path]
     subprocess.run(cmd, check=True)
 
-    # Create gif thumbnail.
-    cmd = [
-        "ffmpeg", "-y", "-r", f"{num_frames / 3}", "-i", video_path, "-vf",
-        'fps=3,scale=256:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse',
-        "-loop", "0", thumb_gif_path,
-    ]
-    subprocess.run(cmd, check=True)
+    with tempfile.TemporaryDirectory() as dirname:
+        # Create gif thumbnail.
+        cmd = [
+            "ffmpeg", "-y", "-skip_frame", "nokey", "-i", video_path, "-vf",
+            "scale=256:-1:flags=lanczos",
+            os.path.join(dirname, "%d.jpg")
+        ]
+        subprocess.run(cmd, check=True)
+        cmd = [
+            "ffmpeg", "-y", "-i", os.path.join(dirname, '%d.jpg'), "-vf",
+            "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
+            "-r", "3",
+            thumb_gif_path
+        ]
+        subprocess.run(cmd, check=True)
 
     # Upload thumbnail and thumbnail gif.
     api = get_api(host, token)
