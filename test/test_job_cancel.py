@@ -90,7 +90,7 @@ spec:
 
     # Cancel all jobs in project.
     jobs = tator_api.get_job_list(project)
-    assert len(jobs) == 8
+    assert len(jobs) >= 8
     print("Cancelling all jobs in project...")
     tator_api.delete_job_list(project)
     """
