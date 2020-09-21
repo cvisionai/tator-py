@@ -74,6 +74,17 @@ def launch_algorithm(
     logger.info('Algorithm launch response')
     logger.info(response)
 
+    # Monitor progress, wait until complete.
+    while True:
+        jobs = tator_api.get_job(response.gid)
+        all_done = True
+        for job in jobs:
+            if job.status != 'Succeeded':
+                all_done = False
+            if job.status == 'Failed':
+                raise ValueError("Algorithm job failed!")
+        time.sleep(10)
+
 def main() -> None:
     """ Main routine of this script
     """

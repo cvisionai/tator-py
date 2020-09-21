@@ -31,10 +31,10 @@ if __name__ == '__main__':
 
     # Take a look at transcode progress, wait until complete.
     while True:
-        job = tator_api.get_job(response.run_uid)
+        job = tator_api.get_job(response.uid)
         if job.status == 'Succeeded':
             break
         elif job.status == 'Failed':
             raise ValueError("Upload failed!")
-        time.sleep(1)
+        time.sleep(10)
     
