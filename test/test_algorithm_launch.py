@@ -223,7 +223,7 @@ def test_algorithm_launch(
       and check to see if the number of entries match in a given amount of processing time.
     - Provide a specific media list, launch the workflow, 
       and perform the analysis entry counting as above
-    - Provide a blank media list and ensure no workflow was launched (using the run_uid)
+    - Provide a blank media list and ensure no workflow was launched (using the uid)
     - Provide a media query, launch the workflow,
       and perform the analysis entry counting as above 
 
@@ -270,7 +270,7 @@ def test_algorithm_launch(
     # Now, launch the algorithm using all the media in the project
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name)
     response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
-    assert len(response.run_uids) == 1
+    assert len(response.uid) == 1
 
     # The algorithm workflow doesn't do much but saves an analysis object for each media ID
     # that was passed along to it in the data query field. So we assume the workflow
@@ -288,7 +288,7 @@ def test_algorithm_launch(
     expected_analysis_count += len(media_ids)
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_ids=media_ids)
     response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
-    assert len(response.run_uids) == 1
+    assert len(response.uid) == 1
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
         project=project,
@@ -300,7 +300,7 @@ def test_algorithm_launch(
     expected_analysis_count += len(media_ids)
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_ids=media_ids)
     response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
-    assert len(response.run_uids) == 0
+    assert len(response.uid) == 0
 
     # Use the media query to get media of a specific name
     target_name = os.path.basename(paths[0])
@@ -309,7 +309,7 @@ def test_algorithm_launch(
 
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_query=f"?name={target_name}")
     response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
-    assert len(response.run_uids) == 1
+    assert len(response.uid) == 1
     expected_analysis_count += len(medias)
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
