@@ -14,9 +14,10 @@ def parse_args():
     parser.add_argument('--gid', type=str, help="Upload group ID.")
     parser.add_argument('--uid', type=str, help="Upload unique ID.")
     parser.add_argument('--output', type=str, help="Where to dump media ID.")
+    parser.add_argument('--attributes', type=str, help="Attributes for media")
     return parser.parse_args()
 
-def create_media(host, token, project, media_type, section, name, md5, gid, uid):
+def create_media(host, token, project, media_type, section, name, md5, gid, uid, attributes):
     """ Creates a media object and returns the ID.
 
     :param host: Host URL.
@@ -30,14 +31,18 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid)
     :param uid: Upload unique ID.
     """
     api = get_api(host, token)
-    response = api.create_media(project, media_spec={
+    spec ={
         'type': media_type,
         'section': section,
         'name': name,
         'md5': md5,
         'gid': gid,
-        'uid': uid,
-    })
+        'uid': uid
+    }
+    if attributes:
+        spec.update({'attributes': json.loads(attributes)})
+    response = api.create_media(project, media_spec=spec)
+
     assert isinstance(response, CreateResponse)
     media_id = response.id
 
@@ -46,6 +51,6 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid)
 if __name__ == '__main__':
     args = parse_args()
     media_id = create_media(args.host, args.token, args.project, args.media_type,
-                            args.section, args.name, args.md5, args.gid, args.uid)
+                            args.section, args.name, args.md5, args.gid, args.uid, args.attributes)
     with open(args.output, 'w') as f:
         f.write(str(media_id))
