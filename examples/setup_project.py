@@ -13,12 +13,14 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    args = tator.get_parser().parse_args()
+    parser = tator.get_parser()
+    parser.add_argument('--name', type=str,required=True)
+    args = parser.parse_args()
     tator_api = tator.get_api(args.host, args.token)
 
     # Create the project.
     result = tator_api.create_project(project_spec={
-        'name': 'Test Project', 'summary': 'A test project.',
+        'name': args.name, 'summary': 'A test project.',
     })
     project = result.id
     logger.info(result.message)
