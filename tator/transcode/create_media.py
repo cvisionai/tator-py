@@ -17,7 +17,7 @@ def parse_args():
     parser.add_argument('--attributes', type=str, help="Attributes for media")
     return parser.parse_args()
 
-def create_media(host, token, project, media_type, section, name, md5, gid, uid, attributes):
+def create_media(host, token, project, media_type, section, name, md5, gid, uid, attributes=None):
     """ Creates a media object and returns the ID.
 
     :param host: Host URL.
