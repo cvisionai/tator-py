@@ -4,9 +4,10 @@ import tempfile
 from textwrap import dedent
 
 import tator
+import uuid
 
 def test_algorithm_cancel(host, token, project, image):
-    ALGORITHM_NAME = 'Sleepy time'
+    ALGORITHM_NAME = f'Sleepy time {uuid.uuid1()}'
 
     # Register an algorithm that sleeps.
     workflow_spec = dedent("""\
