@@ -53,10 +53,15 @@ def make_video_definition(disk_file):
                  "bit_rate": int(stream["bit_rate"])}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, resolutions,crfs,codecs):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs):
     print(f"Transcoding {path} to {outpath}...")
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
+
+    # Convert settings into resolution/crf/codec.
+    resolutions = [int(config.split(':')[0]) for config in configs]
+    crfs = [config.split(':')[1] for config in configs]
+    codecs = [config.split(':')[2] for config in configs]
 
     # Need to get avg_framerate
     cmd = [
@@ -271,16 +276,12 @@ def get_length_info(stream):
 if __name__ == '__main__':
     args = parse_args()
     if args.category == 'streaming':
-        if args.resolutions == '':
-            resolutions = []
-            crfs = []
-            codecs =[]
+        if args.configs == '':
+            configs = []
         else:
-            resolutions = [int(config.split(':')[0]) for config in args.resolutions.split(',')]
-            crfs = [config.split(':')[1] for config in args.resolutions.split(',')]
-            codecs = [config.split(':')[2] for config in args.resolutions.split(',')]
+            configs = [res for res in args.configs.split(',')]
         convert_streaming(args.host, args.token, args.media, args.input, args.output,
-                          args.raw_width, args.raw_height, resolutions,crfs,codecs)
+                          args.raw_width, args.raw_height, configs)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.input, args.output,
                          args.raw_width, args.raw_height)
