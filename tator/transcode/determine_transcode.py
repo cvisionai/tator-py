@@ -85,12 +85,12 @@ def determine_transcode(host, token, media_type, path, group_to):
         media_type_obj = api.get_media_type(media_type)
     assert isinstance(media_type_obj, MediaType)
 
-    available_resolutions=STREAMING_RESOLUTIONS
-    crf_map=defaultdict(lambda: 23)
-    codec_map=defaultdict(lambda: 'libx264')
+    available_resolutions = STREAMING_RESOLUTIONS
+    crf_map = defaultdict(lambda: 23)
+    codec_map = defaultdict(lambda: 'libx264')
     try:
         if media_type_obj.streaming_config:
-            available_resolutions=[]
+            available_resolutions = []
             for config in media_type_obj.streaming_config:
                 available_resolutions.append(config.resolution)
                 crf_map[config.resolution] = config.crf
@@ -102,7 +102,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         print("Defaulting to STREAMING_RESOLUTIONS")
     print(f"Selected Resolutions {available_resolutions}")
     # Make a list of resolutions needed
-    resolutions=[resolution for resolution in available_resolutions if resolution < height]
+    resolutions = [resolution for resolution in available_resolutions if resolution < height]
     if height <= max(available_resolutions) and not height in resolutions:
         resolutions.append(height)
 
@@ -112,8 +112,8 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'resolutions': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}" for resolution in resolutions
-                        if resolution <= group_to],
+        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"
+                    for resolution in resolutions if resolution <= group_to],
     }]
 
     # Streaming workloads (higher res)
@@ -122,7 +122,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'resolutions': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"],
+        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"],
     } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads
@@ -132,7 +132,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'resolutions': [],
+        'configs': [],
     }]
 
     # Audio workloads
@@ -142,7 +142,7 @@ def determine_transcode(host, token, media_type, path, group_to):
             'path': path,
             'raw_height': height,
             'raw_width': width,
-            'resolutions': [],
+            'configs': [],
         }]
 
     return workloads
@@ -152,6 +152,6 @@ if __name__ == '__main__':
     workloads = determine_transcode(args.host, args.token, args.media_type, args.path,
                                     args.group_to)
     for workload in workloads:
-        workload['resolutions'] = ','.join(workload['resolutions'])
+        workload['configs'] = ','.join(workload['configs'])
     with open(args.output, 'w') as f:
         json.dump(workloads, f)

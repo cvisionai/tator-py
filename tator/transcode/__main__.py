@@ -82,11 +82,11 @@ def transcode_single(path, args, gid):
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
                                   outpath=paths['transcoded'])
             elif category == 'archival':
-                del workload['resolutions']
+                del workload['configs']
                 convert_archival(**workload, host=args.host, token=args.token, media=media_id,
                                  outpath=paths['transcoded'])
             elif category == 'audio':
-                del workload['resolutions']
+                del workload['configs']
                 del workload['raw_width']
                 del workload['raw_height']
                 convert_audio(**workload, host=args.host, token=args.token, media=media_id,

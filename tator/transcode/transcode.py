@@ -23,7 +23,8 @@ def parse_args():
     parser.add_argument('--category', required=True, help='One of streaming, archival, or audio.')
     parser.add_argument('--raw_width', type=int, help='Pixel width of original video.')
     parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
-    parser.add_argument('--resolutions', type=str, help='Comma separated list of output resolutions.')
+    parser.add_argument('--configs', type=str, help='Comma separated list of output configs, '
+                                                    'format is resolution:crf:codec.')
     parser.add_argument('--input', type=str, help='Path to raw video.')
     parser.add_argument("-o", "--output")
     return parser.parse_args()
