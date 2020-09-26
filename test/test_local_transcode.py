@@ -15,15 +15,20 @@ def test_local_transcode(host, token, project, video_type, video_file):
     subprocess.run(cmd, check=True)
 
 def test_bad_file(host, token, project, video_type, image_file):
-    cmd = [
-        'python3', '-m', 'tator.transcode', image_file,
-        '--host', host,
-        '--token', token,
-        '--project', str(project),
-        '--type', str(video_type),
-        '--section', 'Bad transcodes',
-    ]
-    subprocess.run(cmd, check=True)
+    failed = False
+    try:
+        cmd = [
+            'python3', '-m', 'tator.transcode', image_file,
+            '--host', host,
+            '--token', token,
+            '--project', str(project),
+            '--type', str(video_type),
+            '--section', 'Bad transcodes',
+        ]
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as cpe:
+        failed = True
+    assert(failed)
     time.sleep(2)
     # Make sure media file is gone.
     api = tator.get_api(host, token)
