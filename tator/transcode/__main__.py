@@ -94,6 +94,7 @@ def transcode_single(path, args, gid):
     except:
         logging.exception('')
         delete_media(args.host, args.token, media_id)
+        raise RuntimeError(f"Transcode of file {path} failed!")
     
 if __name__ == '__main__':
     args = parse_args()
