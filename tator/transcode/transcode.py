@@ -16,22 +16,25 @@ from .make_fragment_info import make_fragment_info
 logger = logging.getLogger(__name__)
 
 # If HW is available, use this as lookup swap
-codec_swap=None
+encoder_lookup=None
 
-def substitute_codec(input_codec):
-    global codec_swap
-    if codec_swap is None:
-        codec_swap={}
+def find_best_encoder(codec):
+    """ Find the best encoder based on what is available on the system """
+    global encoder_lookup
+    if encoder_lookup is None:
+        # Default codecs
+        encoder_lookup={"hevc": "libsvt_hevc",
+                        "h264": "libx264"}
         cmd = [
             "ffmpeg",
             "-encoders" ]
         output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
         if output.find("hevc_qsv") >= 0:
-            codec_swap["libx265"] = "hevc_qsv"
+            encoder_lookup["hevc"] = "hevc_qsv"
         if output.find("h264_qsv") >= 0:
-            codec_swap["libx264"] = "h264_qsv"
-        print(f"Codec swap = {codec_swap}")
-    return codec_swap.get(input_codec,input_codec)
+            encoder_lookup["h264"] = "h264_qsv"
+        print(f"encoder_lookup = {encoder_lookup}")
+    return encoder_lookup.get(codec,codec)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
@@ -113,7 +116,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     for ridx, resolution in enumerate(resolutions):
         logger.info(f"Generating resolution @ {resolution}")
         output_file = os.path.join(outpath, f"{resolution}.mp4")
-        codec = substitute_codec(codecs[ridx])
+        codec = find_best_encoder(codecs[ridx])
         quality_flag = "-crf"
         pixel_format = "yuv420p"
         if codec.find("qsv") >= 0:
@@ -194,21 +197,27 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                 # Encode the media to archival format.
                 os.makedirs(outpath, exist_ok=True)
                 output_file = os.path.join(outpath, f"archival_{idx}.mp4")
-                codec = substitute_codec(archive_config.encode.vcodec)
+                codec = find_best_encoder(archive_config.encode.vcodec)
                 quality_flag = "-crf"
                 pixel_format = "yuv420p"
+                tune_settings = ["-preset", archive_config.encode.preset,
+                                 "-tune", archive_config.encode.tune]
                 if codec.find("qsv") >= 0:
                     quality_flag = "-global_quality"
                     pixel_format = "nv12"
+                    tune_settings=[] #QSV doesn't do tuning
+                elif codec == "libsvt_hevc":
+                    # SVT for HEVC does not do tuning or CRF
+                    tune_settings=[]
+                    quality_flag = "-global_quality"
                 cmd = [
                     "ffmpeg", "-y",
                     "-i", path,
                     "-vcodec", codec,
                     "-vf", "yadif",
                     quality_flag, str(archive_config.encode.crf),
-                    "-preset", archive_config.encode.preset,
-                    "-tune", archive_config.encode.tune,
                     "-pix_fmt", pixel_format,
+                    *tune_settings
                 ]
                 if archive_config.encode.vcodec in ['libx265', 'svt_hevc', 'nvenc_hevc']:
                     cmd += ["-tag:v", "hvc1"]
