@@ -219,9 +219,9 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     "-pix_fmt", pixel_format,
                     *tune_settings
                 ]
-                if archive_config.encode.vcodec in ['libx265', 'svt_hevc', 'nvenc_hevc']:
+                if archive_config.encode.vcodec == 'hevc':
                     cmd += ["-tag:v", "hvc1"]
-                elif archive_config.encode.vcodec == 'libx264':
+                elif archive_config.encode.vcodec == 'h264':
                     cmd += ["-tag:v", "avc1"]
                 cmd.append(output_file)
                     
