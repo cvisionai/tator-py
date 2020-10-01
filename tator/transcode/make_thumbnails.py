@@ -59,15 +59,20 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     subprocess.run(cmd, check=True)
 
     with tempfile.TemporaryDirectory() as dirname:
+        pts_scale = (fps / 3) * (10 / num_frames)
+
         # Create gif thumbnail.
-        cmd = [
-            "ffmpeg", "-y", "-skip_frame", "nokey", "-i", video_path, "-vf",
-            "scale=256:-1:flags=lanczos",
-            os.path.join(dirname, "%d.jpg")
-        ]
+        cmd1 = ["ffmpeg", "-y"]
+        if num_frames > 10000:
+            cmd2 = ["-skip_frame", "nokey"]
+        else:
+            cmd2 = []
+        cmd3 = ["-i", video_path, "-vf", f"scale=256:-1:flags=lanczos,setpts={pts_scale}*PTS",
+                "-r", "3", os.path.join(dirname, "%09d.jpg")]
+        cmd = cmd1 + cmd2 + cmd3
         subprocess.run(cmd, check=True)
         cmd = [
-            "ffmpeg", "-y", "-i", os.path.join(dirname, '%d.jpg'), "-vf",
+            "ffmpeg", "-y", "-r", "3", "-i", os.path.join(dirname, '%09d.jpg'), "-vf",
             "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
             "-r", "3",
             thumb_gif_path
