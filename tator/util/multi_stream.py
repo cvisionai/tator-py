@@ -40,6 +40,9 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
     token = config.api_key['Authorization']
     prefix = config.api_key_prefix['Authorization']
 
+    # use a multi extension
+    name += ".multi"
+
     # Fetch the media type
     multi_stream_type = api.get_media_type(type_id)
     project = multi_stream_type.project
