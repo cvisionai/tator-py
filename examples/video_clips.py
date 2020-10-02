@@ -26,7 +26,8 @@ if __name__ == '__main__':
     tator_api = tator.get_api(args.host, args.token)
 
     # Get the video clip.
-    temporary_file = tator_api.get_clip(args.video_id, frame_ranges=['0:30', '50:90'])
+    clip_info = tator_api.get_clip(args.video_id, frame_ranges=['0:30', '50:90'])
+    temporary_file = clip_info.file
 
     # Download the file.
     for progress in tator.util.download_temporary_file(tator_api,
