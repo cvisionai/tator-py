@@ -80,7 +80,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
         cmd = ["ffmpeg",
                "-y",
                "-i", "thumb_%09d.jpg",
-               "-vf",f"tile={layout[0]}x{layout[1]},scale=256:-1",
+               "-vf",f"tile={layout[1]}x{layout[0]},scale=256:-1",
                os.path.join(d,"tiled_thumb.jpg")]
         subprocess.run(cmd,cwd=d,check=True)
 
@@ -93,10 +93,14 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
             for col in range(cols):
                 filter_graph += f"[{idx}:v]"
                 idx+=1
-            filter_graph += f"hstack=inputs={cols}[r{row}];"
+                if cols > 1:
+                    filter_graph += f"hstack=inputs={cols}[r{row}];"
         for row in range(rows):
-            filter_graph += f"[r{row}]"
-        filter_graph+=f'vstack=inputs={rows}[tiled_gif];[tiled_gif]scale=256:-1[raw];[raw]split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse[final]'
+            if cols > 1:
+                filter_graph += f"[r{row}]"
+        if rows > 1:
+            filter_graph+=f'vstack=inputs={rows}[tiled_gif];[tiled_gif]'
+        filter_graph+=f'scale=256:-1[raw];[raw]split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse[final]'
         print(filter_graph)
         for pos,_ in enumerate(media_ids):
             input_files.extend(['-i', f'gif_{pos:09d}.gif'])
