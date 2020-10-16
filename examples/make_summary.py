@@ -129,8 +129,8 @@ def process_localization(
         'media_id': media.id,
         'media': media.name,
         'dtype': dtype,
-        'x': localization.x * width,
-        'y': localization.y * height,
+        'x': localization.x * width if localization.x else None,
+        'y': localization.y * height if localization.y else None,
         'frame': localization.frame,
         'id': localization.id,
         'user_id': localization.user,
@@ -139,14 +139,14 @@ def process_localization(
     # Apply the width/height attributes based on the localization dtype
     if dtype == 'box':
         datum.update({
-            'width': localization.width * width,
-            'height': localization.height * height
+            'width': localization.width * width if localization.width else None,
+            'height': localization.height * height if localization.height else None
         })
 
     elif dtype == 'line':
         datum.update({
-            'width': localization.u * width,
-            'height': localization.v * height
+            'width': localization.u * width if localization.u else None,
+            'height': localization.v * height if localization.v else None
         })
 
     elif dtype == 'dot':
