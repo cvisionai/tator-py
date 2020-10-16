@@ -463,19 +463,19 @@ def process_project(
     # If a section name was provided, then verify the corresponding section exists
     #     If not, then complain back to the user.
     # If no section name was provided, process all of the sections.
-    sections = tator_api.get_media_sections(project=project_id)
+    sections = tator_api.get_section_list(project=project_id)
     ignore_summary_filename = True
 
     if section_name is not None:
         # Section name specified
-        if section_name not in sections:
+        if section_name not in [section.name for section in sections]:
             error_msg = f"Invalid section name provided: {section_name}"
             logging.error(error_msg)
             logging.error("Section names: ")
             logging.error(sections.keys())
             raise ValueError(error_msg)
 
-        sections = [section_name]
+        sections = [section for section in sections if section.name == section_name]
 
     else:
         # No section name specified, process all sections
@@ -487,21 +487,20 @@ def process_project(
             ignore_summary_filename = True
 
     # Loop over the selected sections and create the report(s) and thumbnail(s)
-    for section_name in sections:
+    for section in sections:
 
         # First grab all the medias associated with this section
-        attribute_filter = f'tator_user_sections::{section_name}'
-        medias = tator_api.get_media_list(project=project_id, attribute_contains=attribute_filter)
+        medias = tator_api.get_media_list(project=project_id, section=section.id)
 
         # Ready to rock and roll
-        log_msg = f"Processing section: {section_name}"
+        log_msg = f"Processing section: {section.name}"
         logging.info(log_msg)
         section_summary_filename = None if ignore_summary_filename else summary_filename
         process_section(
             host=host,
             tator_api=tator_api,
             project_id=project_id,
-            section_name=section_name,
+            section_name=section.name,
             medias=medias,
             column_names=column_names,
             localization_types_df=localization_types_df,
