@@ -123,6 +123,10 @@ def process_localization(
     # Grab the URL associated with this localization
     url = f"{host.rstrip('/')}/{project_id}/annotation/{media.id}?frame={localization.frame}"
 
+    # Get user name
+    user = tator_api.get_user(id=localization.user)
+    user_name = f'{user.first_name} {user.last_name}'
+
     # Create the datum that will capture the localization info to be stored in the summary
     datum={
         'section': section_name,
@@ -133,6 +137,7 @@ def process_localization(
         'y': localization.y * height if localization.y is not None else None,
         'frame': localization.frame,
         'id': localization.id,
+        'user': user_name,
         'user_id': localization.user,
         'url': url}
 
@@ -441,7 +446,7 @@ def process_project(
     # Report column names will always have the following.
     # Additional column names will be added based on the project
     column_names=[
-        'section','media_id','media','thumbnail','id',
+        'section','media_id','media','thumbnail','id', 'user',
         'user_id','frame','dtype','x','y','width','height','url']
 
     # Get the attributes associated with the localizations in this project
