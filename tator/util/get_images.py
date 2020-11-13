@@ -33,10 +33,24 @@ def get_images(file_path, media_or_state, num_images=None, width=None, height=No
         width = int(img.width / num_localizations)
         height = img.height
     elif isinstance(media_or_state, tator.models.Media):
+        streaming = None
+        if media_or_state.media_files:
+            media_defs = media_or_state.media_files.streaming
+            for media_def in media_defs:
+                if streaming is None:
+                    streaming = media_def
+                elif media_def.resolution[0] > streaming.resolution[0]:
+                    streaming = media_def
         if width is None:
-            width = media_or_state.width
+            if streaming:
+                width = streaming.resolution[1]
+            else:
+                width = media_or_state.width
         if height is None:
-            height = media_or_state.height
+            if streaming:
+                height = streaming.resolution[0]
+            else:
+                height = media_or_state.height
 
     # Make list of crops.
     images = []
