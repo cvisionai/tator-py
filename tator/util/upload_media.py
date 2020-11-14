@@ -10,7 +10,7 @@ from .md5sum import md5sum
 
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
-                 attributes=None):
+                 attributes=None, media_id=None):
     """ Uploads a single media file.
 
     Example:
@@ -31,7 +31,8 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
-    :param attributes: [Optional] Attributes to apply to media object
+    :param attributes: [Optional] Attributes to apply to media object.
+    :param media_id: [Optional] Unique ID of existing media object.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
         is the response object from :meth:`tator.TatorApi.create_media` or 
@@ -79,7 +80,8 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         'name': fname,
         'section': section,
         'md5': md5,
-        'attributes': attributes
+        'attributes': attributes,
+        'media_id': media_id,
     }
     # Initiate transcode or save image.
     if mime.find('video') >= 0:
