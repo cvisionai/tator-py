@@ -126,7 +126,9 @@ def determine_transcode(host, token, media_type, path, group_to):
     } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads
-    # TODO: Make this configurable with codec, resolution, storage location in media type object.
+    # This will force all transcodes to run `convert_archival` on the raw video,
+    # which will fetch the media type and take action based on the returned 
+    # archive config.
     workloads += [{
         'category': 'archival',
         'path': path,
