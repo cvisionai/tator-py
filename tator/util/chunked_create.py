@@ -6,7 +6,8 @@ def chunked_create(func, project, **kwargs):
     .. code-block:: python
 
         created_ids = []
-        for response in tator.util.chunked_create(api.create_localization_list,1, localization_spec=my_long_list):
+        for response in tator.util.chunked_create(api.create_localization_list, 1,
+                                                  localization_spec=my_long_list):
             created_ids += response.id
 
     :param func: Function to call on each chunk.
