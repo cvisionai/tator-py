@@ -1,8 +1,10 @@
 import os
+import math
 import tempfile
 from uuid import uuid1
 from collections import defaultdict
 
+from tusclient.client import TusClient
 from urllib.parse import urljoin
 
 from .md5sum import md5sum
@@ -39,21 +41,23 @@ class HostTransfer:
         :param src_url: Relative URL of source file to download.
         :returns: URL of destination file.
         """
+        CHUNK_SIZE = 5*1024*1024
         url = urljoin(self.src_host, src_url)
         upload_uid = str(uuid1())
         tus_headers = {'Authorization': f'{self.dest_prefix} {self.dest_token}',
                        'Upload-Uid': f'{upload_uid}'}
         tus = TusClient(self.tus_url, headers=tus_headers)
         with tempfile.NamedTemporaryFile() as temp:
-            _download_file(url, self.src_headers, temp.name)
-            uploader = tus.uploader(temp.name, chunk_size=chunk_size,
+            for _ in _download_file(url, self.src_headers, temp.name):
+                pass
+            uploader = tus.uploader(temp.name, chunk_size=CHUNK_SIZE,
                                     retries=10, retry_delay=15)
-            num_chunks = math.ceil(uploader.get_file_size()/chunk_size)
+            num_chunks = math.ceil(uploader.get_file_size()/CHUNK_SIZE)
             for chunk_count in range(num_chunks):
                 uploader.upload_chunk()
         return uploader.url
 
-def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, dest_section='', 
+def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_section='', 
                      dest_api=None):
     """ Clone media list.
 
@@ -71,11 +75,11 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
         dest_api = tator.get_api(other_host, other_token)
         query_params = {'project': 1, 'media_id': [1]}
         dest_project = 1
-        dest_media_type = -1
+        dest_type = -1
         dest_section = 'My cloned media'
         created_ids = []
         for num_created, num_total, response in clone_media_list(src_api, query_params,
-                                                                 dest_project, dest_media_type,
+                                                                 dest_project, dest_type,
                                                                  dest_section, dest_api):
             print(f"Created {num_created} of {num_total} files...")
             created_ids.append(response.id)
@@ -99,7 +103,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
         host if this is a clone on same host.
     :param query_params: Dictionary containing query parameters for source media list.
     :param dest_project: Unique integer identifying destination project.
-    :param dest_media_type: Unique integer identifying destination media type. If set to
+    :param dest_type: Unique integer identifying destination media type. If set to
         -1, the media type is set to the first media type in the project found with
         the proper dtype for the files.
     :param dest_section: Name of destination section.
@@ -107,8 +111,9 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
     :returns: Generator containing number of files created, number of files total, and
         most recent response from media creation operation.
     """
-    # Start by getting total number of files to be cloned.
-    total_files = src_api.media_count(**query_params)
+    # Make sure query has a project.
+    if 'project' not in query_params:
+        raise Exception("Query parameters must include a project!")
 
     # Check for no pagination parameters.
     has_pagination = 'after' in query_params or 'start' in query_params or 'stop' in query_params
@@ -116,19 +121,18 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
         raise Exception("This utility does pagination internally and does not accept pagination "
                         "parameters as inputs!")
 
-    # Make sure query has a project.
-    if 'project' not in query_params:
-        raise Exception("Query parameters must include a project!")
-
     # Guess the media type if it was not given.
-    if dest_media_type == -1:
-        mime,_ = mimetypes.guess_type(fname)
+    if dest_type == -1:
         if dest_api is None:
+            media_types = src_api.get_media_type_list(dest_project)
+        else:
             media_types = dest_api.get_media_type_list(dest_project)
-            for media_type in media_types:
-                response = api.get_media_type(type_id)
-                project_id = response.project
-                
+        if len(media_types) == 0:
+            raise Exception('Specified project does not have any media types!')
+        dest_type = media_types[0]
+
+    # Start by getting total number of files to be cloned.
+    total_files = src_api.get_media_count(**query_params)
 
     # Clone the media.
     created_ids = []
@@ -145,10 +149,11 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
         if dest_api is None:
             # Clone media locally.
             media_ids = [media.id for media in medias]
-            response = src_api.clone_media_list(media_id=media_ids, clone_spec={
+            response = src_api.clone_media_list(query_params['project'],
+                                                media_id=media_ids, clone_media_spec={
                 'dest_project': dest_project,
                 'dest_section': dest_section,
-                'dest_media_type': dest_media_type,
+                'dest_type': dest_type,
             })
             created_ids += response.id
             yield (len(created_ids), total_files, response)
@@ -158,13 +163,21 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
             for media in medias:
 
                 # Set up media spec.
+                attributes = media.attributes
+                if 'tator_user_sections' in attributes:
+                    attributes.pop('tator_user_sections', None)
                 media_spec = {
-                    'type': media_type,
+                    'type': dest_type,
                     'name': media.name,
                     'gid': media.gid,
                     'uid': media.uid,
                     'md5': media.md5,
-                    'attributes': media.attributes,
+                    'fps': media.fps,
+                    'num_frames': media.num_frames,
+                    'codec': media.codec,
+                    'width': media.width,
+                    'height': media.height,
+                    'attributes': attributes,
                     'section': dest_section if dest_section else media.section,
                 }
                 # Transfer thumbnails and image.
@@ -174,7 +187,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
                     media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}')
 
                 if media.file:
-                    media_spec['file'] = transfer(f'/media/{media.file}')
+                    media_spec['url'] = transfer(f'/media/{media.file}')
 
                 # Create the media object.
                 response = dest_api.create_media(dest_project, media_spec=media_spec)
@@ -183,21 +196,31 @@ def clone_media_list(src_api, query_params, dest_project, dest_media_type=-1, de
                 if media.media_files:
                     if media.media_files.archival:
                         for archival in media.media_files.archival:
-                            media_def = archival.to_dict()
+                            media_def = {k: v for k, v in archival.to_dict().items()
+                                         if v is not None}
                             media_def.pop('path', None)
                             media_def['url'] = transfer(archival.path)
-                            dest_api.move_video(media.id, {'archival': [media_def]})
+                            dest_api.move_video(response.id, move_video_spec={
+                                'media_files': {'archival': [media_def]}
+                            })
                     if media.media_files.streaming:
                         for streaming in media.media_files.streaming:
-                            media_def = streaming.to_dict()
+                            media_def = {k: v for k, v in streaming.to_dict().items()
+                                         if v is not None}
                             media_def.pop('path', None)
                             media_def['url'] = transfer(streaming.path)
                             media_def['segments_url'] = transfer(streaming.segment_info)
-                            dest_api.move_video(media.id, {'streaming': [media_def]})
+                            dest_api.move_video(response.id, move_video_spec={
+                                'media_files': {'streaming': [media_def]}
+                            })
                     if media.media_files.audio:
                         for audio in media.media_files.audio:
-                            media_def = audio.to_dict()
+                            media_def = {k: v for k, v in audio.to_dict().items()
+                                         if v is not None}
                             media_def.pop('path', None)
                             media_def['url'] = transfer(audio.path)
-                            dest_api.move_video(media.id, {'audio': [media_def]})
-
+                            dest_api.move_video(response.id, move_video_spec={
+                                'media_files': {'audio': [media_def]}
+                            })
+            created_ids.append(response.id)
+            yield (len(created_ids), total_files, response)
