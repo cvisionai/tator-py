@@ -19,7 +19,8 @@ def upload_file(path, api):
                                      'Upload-Uid': f'{upload_uid}'})
     logger.info(f"Uploading file {path}...")
     chunk_size = 10*1024*1024 # 10 Mb
-    uploader = tus.uploader(path, chunk_size=chunk_size)
+    uploader = tus.uploader(path, chunk_size=chunk_size,
+                            retries=10, retry_delay=15)
     num_chunks = math.ceil(uploader.get_file_size()/chunk_size)
 
     for _ in progressbar(range(num_chunks)):
