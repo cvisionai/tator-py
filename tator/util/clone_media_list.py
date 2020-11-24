@@ -128,7 +128,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
             media_types = dest_api.get_media_type_list(dest_project)
         if len(media_types) == 0:
             raise Exception('Specified project does not have any media types!')
-        dest_type = media_types[0]
+        dest_type = media_types[0].id
 
     # Start by getting total number of files to be cloned.
     total_files = src_api.get_media_count(**query_params)
@@ -143,8 +143,6 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         medias = src_api.get_media_list(**query_params)
         # Set after parameter for next iteration.
         query_params['after'] = medias[-1].name
-        if 'start' in query_params:
-            query_params.pop('start', None)
         if dest_api is None:
             # Clone media locally.
             media_ids = [media.id for media in medias]
