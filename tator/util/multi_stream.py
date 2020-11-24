@@ -93,12 +93,12 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
             for col in range(cols):
                 filter_graph += f"[{idx}:v]"
                 idx+=1
-                if cols > 1:
+                if cols > 1 and col + 1 == cols:
                     filter_graph += f"hstack=inputs={cols}[r{row}];"
         for row in range(rows):
             if cols > 1:
                 filter_graph += f"[r{row}]"
-        if rows > 1:
+        if rows > 1 and row + 1 == rows:
             filter_graph+=f'vstack=inputs={rows}[tiled_gif];[tiled_gif]'
         filter_graph+=f'scale=256:-1[raw];[raw]split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse[final]'
         print(filter_graph)
