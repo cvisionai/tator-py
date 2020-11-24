@@ -104,8 +104,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
     :param query_params: Dictionary containing query parameters for source media list.
     :param dest_project: Unique integer identifying destination project.
     :param dest_type: Unique integer identifying destination media type. If set to
-        -1, the media type is set to the first media type in the project found with
-        the proper dtype for the files.
+        -1, the media type is set to the first media type in the project.
     :param dest_section: Name of destination section.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of files created, number of files total, and
