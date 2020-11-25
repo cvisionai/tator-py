@@ -1,4 +1,3 @@
-
 def _convert_for_post(loc, dest_type, dest_version, media_mapping):
     # Check for media mapping.
     media_id = loc.media
@@ -78,12 +77,6 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
     # Make sure query has a project.
     if 'project' not in query_params:
         raise Exception("Query parameters must include a project!")
-
-    # Check for no pagination parameters.
-    has_pagination = 'after' in query_params or 'start' in query_params or 'stop' in query_params
-    if has_pagination:
-        raise Exception("This utility does pagination internally and does not accept pagination "
-                        "parameters as inputs!")
 
     # Set the dest_api if not given.
     if dest_api is None:
