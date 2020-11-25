@@ -16,4 +16,5 @@ from tator.util.to_dataframe import to_dataframe
 from tator.util.register_algorithm import register_algorithm
 from tator.util.clone_media_list import clone_media_list
 from tator.util.clone_localization_list import clone_localization_list
+from tator.util.clone_state_list import clone_state_list
 
