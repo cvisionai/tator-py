@@ -57,9 +57,11 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
         query_params = {'media_id': [1]}
         dest_project = 1
         media_mapping = {1: 10}
+        localization_mapping = {}
         created_ids = []
         for num_created, num_total, response in clone_state_list(src_api, query_params,
-                                                                        dest_project, media_mapping):
+                                                                 dest_project, media_mapping,
+                                                                 localization_mapping):
             print(f"Created {num_created} of {num_total} states...")
             created_ids += response.id
         print(f"Finished creating {num_created} states!")
@@ -69,8 +71,11 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
     :param query_params: Dictionary containing query parameters for source state list.
     :param dest_project: Unique integer identifying destination project.
     :param media_mapping: Dictionary mapping source media IDs to destination media IDs. If the
-        source media list contains a media ID for which a destination media is not supplied, 
+        source state list contains a media ID for which a destination media is not supplied, 
         an exception is raised.
+    :param localization_mapping: Dictionary mapping source localization IDs to destination 
+        localization IDs. If the source state list contains a localization ID for which a
+        destination localization ID is not supplied, an exception is raised.
     :param dest_type: Unique integer identifying destination state type. If set to
         -1, the state type is set to the first state type in the project.
     :param dest_version: Unique integer identifying destination version. If set to

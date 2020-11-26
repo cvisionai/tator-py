@@ -64,7 +64,7 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
     :param query_params: Dictionary containing query parameters for source localization list.
     :param dest_project: Unique integer identifying destination project.
     :param media_mapping: Dictionary mapping source media IDs to destination media IDs. If the
-        source media list contains a media ID for which a destination media is not supplied, 
+        source localization list contains a media ID for which a destination media is not supplied, 
         an exception is raised.
     :param dest_type: Unique integer identifying destination localization type. If set to
         -1, the localization type is set to the first localization type in the project.
