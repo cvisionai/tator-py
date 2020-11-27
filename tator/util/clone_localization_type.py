@@ -43,6 +43,7 @@ def clone_localization_type(src_api, src_type_id, dest_project, media_type_mappi
             'grouping_default': type_obj.grouping_default,
             'color_map': type_obj.color_map,
             'line_width': type_obj.line_width,
+            'visible': type_obj.visible,
             'attribute_types': type_obj.attribute_types}
     dest_media_types = []
     for src_media_type in type_obj.media:
