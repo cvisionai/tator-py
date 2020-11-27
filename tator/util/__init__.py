@@ -21,4 +21,5 @@ from tator.util.clone_leaf_list import clone_leaf_list
 from tator.util.clone_media_type import clone_media_type
 from tator.util.clone_localization_type import clone_localization_type
 from tator.util.clone_state_type import clone_state_type
+from tator.util.clone_leaf_type import clone_leaf_type
 
