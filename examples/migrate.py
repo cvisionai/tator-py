@@ -211,10 +211,29 @@ def find_states(args, src_api, media):
         media_ids = [m.id for m in media[idx:idx+500]]
         count += src_api.get_state_count(args.project, media_id=media_ids)
     logger.info(f"{count} states will be created.")
+
+def create_project(args, src_api, dest_api, dest_project):
+    if dest_project is None:
+        src_project = src_api.get_project(args.project)
+        spec = {'name': src_project.name}
+        if src_project.summary:
+            spec['summary'] = src_project.summary
+        response = dest_api.create_project(project_spec=spec)
+        logger.info(f"Created new project with ID {response.id}")
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
+    # Find which resources need to be migrated.
     dest_project = find_dest_project(args, src_api, dest_api)
     sections = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
     media = find_media(args, src_api, dest_api, dest_project)
+    find_localizations(args, src_api, media)
+    find_states(args, src_api, media)
+    proceed = input("Continue with migration [y/N]?  ")
+    if proceed == 'y':
+        create_project(args, src_api, dest_api, dest_project)
+    else:
+        logger.info("Migration cancelled by user.")
+    
