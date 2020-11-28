@@ -194,6 +194,23 @@ def find_media(args, src_api, dest_api, dest_project):
                          "already exist).")
     return media
 
+def find_localizations(args, src_api, media):
+    """ Counts localizations in media that will be created.
+    """
+    count = 0
+    for idx in range(0, len(media), 500):
+        media_ids = [m.id for m in media[idx:idx+500]]
+        count += src_api.get_localization_count(args.project, media_id=media_ids)
+    logger.info(f"{count} localizations will be created.")
+
+def find_states(args, src_api, media):
+    """ Counts states in media that will be created.
+    """
+    count = 0
+    for idx in range(0, len(media), 500):
+        media_ids = [m.id for m in media[idx:idx+500]]
+        count += src_api.get_state_count(args.project, media_id=media_ids)
+    logger.info(f"{count} states will be created.")
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
