@@ -120,7 +120,7 @@ def find_dest_project(args, src_api, dest_api):
 
 def find_sections(args, src_api, dest_api, dest_project):
     """ Finds existing sections in destination project. Returns sections in source project
-        that need to be created.
+        that need to be created and sections for which media should be migrated.
     """
     sections = []
     if args.skip_sections:
@@ -157,10 +157,47 @@ def find_versions(args, src_api, dest_api, dest_project):
                      "already exist).")
     return versions, version_mapping
 
+def find_media(args, src_api, dest_api, dest_project):
+    """ Finds existing media in destination project. Returns media that need to be created.
+    """
+    media = []
+    if args.skip_media:
+        logger.info(f"Skipping media due to --skip_media.")
+    else:
+        if args.sections:
+            sections = src_api.get_section_list(args.project)
+            sections = [section for section in sections if section.name in args.sections]
+            for section in sections:
+                section_media = src_api.get_media_list(args.project, section=section.id)
+                num_src_media = len(section_media)
+                if dest_project is not None:
+                    existing_section = dest_api.get_section_list(dest_project.id, name=section.name)
+                    if existing_section:
+                        existing = dest_api.get_media_list(dest_project.id,
+                                                           section=existing_section.id)
+                        existing_names = [m.name for m in existing]
+                        section_media = [m for m in section_media if m.name not in existing_names]
+                logger.info(f"{len(section_media)} media from section {section.name} will be "
+                            f"created ({num_src_media - len(section_media)} already exist).")
+                media += section_media
+        else:
+            media = src_api.get_media_list(args.project)
+            num_src_media = len(media)
+            if dest_project is not None:
+                existing = dest_api.get_media_list(dest_project.id)
+                existing_name_section = [(m.name, m.attributes.get('tator_user_sections', None))
+                                         for m in existing]
+                media = [m for m in media
+                         if (m.name, m.attributes.get('tator_user_sections', None))
+                         not in existing_name_section]
+            logger.info(f"{len(media)} media will be created ({num_src_media - len(media)} "
+                         "already exist).")
+    return media
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
     dest_project = find_dest_project(args, src_api, dest_api)
     sections = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
-    
+    media = find_media(args, src_api, dest_api, dest_project)
