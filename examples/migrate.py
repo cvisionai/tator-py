@@ -28,6 +28,10 @@ def parse_args():
     already exist:
     - Sections (idempotent, based on section name)
     - Versions (idempotent, based on version name)
+    - Media types (idempotent, based on media type name)
+    - Localization types (idempotent, based on localization type name)
+    - State types (idempotent, based on state type name)
+    - Leaf types (idempotent, based on leaf type name)
     - Media (idempotent, based on section name and media name)
     - Localizations (only migrated if parent media is migrated)
     - States (only migrated if parent media is migrated)
@@ -67,6 +71,15 @@ def parse_args():
     parser.add_argument('--skip_sections', help='If given, section objects will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_versions', help='If given, version objects will not be migrated.',
+                        action='store_true')
+    parser.add_argument('--skip_media_types', help='If given, media types will not be migrated.',
+                        action='store_true')
+    parser.add_argument('--skip_localization_types', help='If given, localization types will not '
+                                                          'be migrated.',
+                        action='store_true')
+    parser.add_argument('--skip_state_types', help='If given, state types will not be migrated.',
+                        action='store_true')
+    parser.add_argument('--skip_leaf_types', help='If given, leaf types will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_media', help='If given, media will not be migrated. Use this to '
                                              'only migrate a project configuration.',
@@ -157,6 +170,92 @@ def find_versions(args, src_api, dest_api, dest_project):
                      "already exist).")
     return versions, version_mapping
 
+def find_media_types(args, src_api, dest_api, dest_project):
+    """ Finds existing media types in destination project. Returns ID mapping between source
+        and destination media types and media types that need to be created.
+    """
+    media_types = []
+    media_type_mapping = {}
+    if args.skip_media_types:
+        logger.info(f"Skipping media types due to --skip_media_types.")
+    else:
+        media_types = src_api.get_media_type_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_media_type_list(dest_project.id)
+            existing_names = [media_type.name for media_type in existing]
+            for media_type in media_types:
+                if media_type.name in existing_names:
+                    media_type_mapping[media_type.id] = existing[existing_names.index(media_type.name)].id
+            media_types = [media_type for media_type in media_types if media_type.name not in existing_names]
+        logger.info(f"{len(media_types)} media types will be created ({len(media_type_mapping.values())} "
+                     "already exist).")
+    return media_types, media_type_mapping
+
+def find_localization_types(args, src_api, dest_api, dest_project):
+    """ Finds existing localization types in destination project. Returns ID mapping between source
+        and destination localization types and localization types that need to be created.
+    """
+    localization_types = []
+    localization_type_mapping = {}
+    if args.skip_localization_types:
+        logger.info(f"Skipping localization types due to --skip_localization_types.")
+    else:
+        localization_types = src_api.get_localization_type_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_localization_type_list(dest_project.id)
+            existing_names = [localization_type.name for localization_type in existing]
+            for localization_type in localization_types:
+                if localization_type.name in existing_names:
+                    existing_id = existing[existing_names.index(localization_type.name)].id
+                    localization_type_mapping[localization_type.id] = existing_id
+            localization_types = [localization_type for localization_type in localization_types
+                                  if localization_type.name not in existing_names]
+        logger.info(f"{len(localization_types)} localization types will be created "
+                    f"({len(localization_type_mapping.values())} already exist).")
+    return localization_types, localization_type_mapping
+
+def find_state_types(args, src_api, dest_api, dest_project):
+    """ Finds existing state types in destination project. Returns ID mapping between source
+        and destination state types and state types that need to be created.
+    """
+    state_types = []
+    state_type_mapping = {}
+    if args.skip_state_types:
+        logger.info(f"Skipping state types due to --skip_state_types.")
+    else:
+        state_types = src_api.get_state_type_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_state_type_list(dest_project.id)
+            existing_names = [state_type.name for state_type in existing]
+            for state_type in state_types:
+                if state_type.name in existing_names:
+                    state_type_mapping[state_type.id] = existing[existing_names.index(state_type.name)].id
+            state_types = [state_type for state_type in state_types if state_type.name not in existing_names]
+        logger.info(f"{len(state_types)} state types will be created ({len(state_type_mapping.values())} "
+                     "already exist).")
+    return state_types, state_type_mapping
+
+def find_leaf_types(args, src_api, dest_api, dest_project):
+    """ Finds existing leaf types in destination project. Returns ID mapping between source
+        and destination leaf types and leaf types that need to be created.
+    """
+    leaf_types = []
+    leaf_type_mapping = {}
+    if args.skip_leaf_types:
+        logger.info(f"Skipping leaf types due to --skip_leaf_types.")
+    else:
+        leaf_types = src_api.get_leaf_type_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_leaf_type_list(dest_project.id)
+            existing_names = [leaf_type.name for leaf_type in existing]
+            for leaf_type in leaf_types:
+                if leaf_type.name in existing_names:
+                    leaf_type_mapping[leaf_type.id] = existing[existing_names.index(leaf_type.name)].id
+            leaf_types = [leaf_type for leaf_type in leaf_types if leaf_type.name not in existing_names]
+        logger.info(f"{len(leaf_types)} leaf types will be created ({len(leaf_type_mapping.values())} "
+                     "already exist).")
+    return leaf_types, leaf_type_mapping
+
 def find_media(args, src_api, dest_api, dest_project):
     """ Finds existing media in destination project. Returns media that need to be created.
     """
@@ -197,20 +296,26 @@ def find_media(args, src_api, dest_api, dest_project):
 def find_localizations(args, src_api, media):
     """ Counts localizations in media that will be created.
     """
-    count = 0
-    for idx in range(0, len(media), 500):
-        media_ids = [m.id for m in media[idx:idx+500]]
-        count += src_api.get_localization_count(args.project, media_id=media_ids)
-    logger.info(f"{count} localizations will be created.")
+    if args.skip_localizations:
+        logger.info("Skipping localizations due to --skip_localizations")
+    else:
+        count = 0
+        for idx in range(0, len(media), 500):
+            media_ids = [m.id for m in media[idx:idx+500]]
+            count += src_api.get_localization_count(args.project, media_id=media_ids)
+        logger.info(f"{count} localizations will be created.")
 
 def find_states(args, src_api, media):
     """ Counts states in media that will be created.
     """
-    count = 0
-    for idx in range(0, len(media), 500):
-        media_ids = [m.id for m in media[idx:idx+500]]
-        count += src_api.get_state_count(args.project, media_id=media_ids)
-    logger.info(f"{count} states will be created.")
+    if args.skip_states:
+        logger.info("Skipping localizations due to --skip_localizations")
+    else:
+        count = 0
+        for idx in range(0, len(media), 500):
+            media_ids = [m.id for m in media[idx:idx+500]]
+            count += src_api.get_state_count(args.project, media_id=media_ids)
+        logger.info(f"{count} states will be created.")
 
 def create_project(args, src_api, dest_api, dest_project):
     if dest_project is None:
@@ -228,6 +333,11 @@ if __name__ == '__main__':
     dest_project = find_dest_project(args, src_api, dest_api)
     sections = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
+    media_types, media_type_mapping = find_media_types(args, src_api, dest_api, dest_project)
+    localization_types, localization_type_mapping = find_localization_types(args, src_api, dest_api,
+                                                                            dest_project)
+    state_types, state_type_mapping = find_state_types(args, src_api, dest_api, dest_project)
+    leaf_types, leaf_type_mapping = find_leaf_types(args, src_api, dest_api, dest_project)
     media = find_media(args, src_api, dest_api, dest_project)
     find_localizations(args, src_api, media)
     find_states(args, src_api, media)
