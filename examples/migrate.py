@@ -17,6 +17,7 @@ logging.basicConfig(
     datefmt='%m/%d/%Y %I:%M:%S %p',
     level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 
 def parse_args():
     parser = argparse.ArgumentParser(description=dedent('''\
@@ -91,25 +92,30 @@ def setup_apis(args):
     src_api = tator.get_api(host=args.host, token=args.token)
     if (args.dest_host is not None) and (args.dest_token is not None):
         dest_api = tator.get_api(host=args.dest_host, token=args.dest_token)
-        logger.info(f"Migrating to same host ({args.host}).")
+        logger.info(f"Migrating to different host ({args.dest_host}).")
     else:
         dest_api = src_api
-        logger.info(f"Migrating to different host ({args.dest_host}).")
+        logger.info(f"Migrating to same host ({args.host}).")
     return src_api, dest_api
 
 def find_dest_project(args, src_api, dest_api):
     """ Finds destination project if it exists.
     """
-    src_project = src_api.get_project(args.project)
-    dest_projects = dest_api.get_project_list()
-    dest_project = None
-    for project_obj in dest_projects:
-        if project_obj.name == src_project.name:
-            dest_project = project_obj
-            logger.info(f"Migrating to existing project with ID {project_obj.id}.")
-            break
-    if dest_project is None:
-        logger.info(f"New project with name {src_project.name} will be created.")
+    if args.dest_project:
+        dest_project = dest_api.get_project(args.dest_project)
+        logger.info(f"Migrating to existing project {dest_project.name} specified by "
+                     "--dest_project.")
+    else:
+        src_project = src_api.get_project(args.project)
+        dest_projects = dest_api.get_project_list()
+        dest_project = None
+        for project_obj in dest_projects:
+            if project_obj.name == src_project.name:
+                dest_project = project_obj
+                logger.info(f"Migrating to existing project with ID {project_obj.id}.")
+                break
+        if dest_project is None:
+            logger.info(f"New project with name {src_project.name} will be created.")
     return dest_project
 
 def find_sections(args, src_api, dest_api, dest_project):
@@ -130,8 +136,31 @@ def find_sections(args, src_api, dest_api, dest_project):
         logger.info(f"{len(sections)} sections will be created.")
     return sections
 
+def find_versions(args, src_api, dest_api, dest_project):
+    """ Finds existing versions in destination project. Returns ID mapping between source 
+        and destination versions and versions that need to be created.
+    """
+    versions = []
+    version_mapping = {}
+    if args.skip_versions:
+        logger.info(f"Skipping versions due to --skip_versions.")
+    else:
+        versions = src_api.get_version_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_version_list(dest_project.id)
+            existing_names = [version.name for version in existing]
+            for version in versions:
+                if version.name in existing_names:
+                    version_mapping[version.id] = existing[existing_names.index(version.name)].id
+            versions = [version for version in versions if version.name not in existing_names]
+        logger.info(f"{len(versions)} versions will be created ({len(version_mapping.values())} "
+                     "already exist).")
+    return versions, version_mapping
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
     dest_project = find_dest_project(args, src_api, dest_api)
     sections = find_sections(args, src_api, dest_api, dest_project)
+    versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
+    
