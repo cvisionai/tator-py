@@ -318,6 +318,8 @@ def find_states(args, src_api, media):
         logger.info(f"{count} states will be created.")
 
 def create_project(args, src_api, dest_api, dest_project):
+    """ Creates a project if necessary. Returns the destination project ID.
+    """
     if dest_project is None:
         src_project = src_api.get_project(args.project)
         spec = {'name': src_project.name}
@@ -325,6 +327,10 @@ def create_project(args, src_api, dest_api, dest_project):
             spec['summary'] = src_project.summary
         response = dest_api.create_project(project_spec=spec)
         logger.info(f"Created new project with ID {response.id}")
+        dest_project = response.id
+    else:
+        dest_project = dest_project.id
+    return dest_project
 
 if __name__ == '__main__':
     args = parse_args()
@@ -343,7 +349,7 @@ if __name__ == '__main__':
     find_states(args, src_api, media)
     proceed = input("Continue with migration [y/N]?  ")
     if proceed == 'y':
-        create_project(args, src_api, dest_api, dest_project)
+        dest_project = create_project(args, src_api, dest_api, dest_project)
     else:
         logger.info("Migration cancelled by user.")
     
