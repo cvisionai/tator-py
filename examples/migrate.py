@@ -305,6 +305,7 @@ def find_localizations(args, src_api, media):
             media_ids = [m.id for m in media[idx:idx+500]]
             count += src_api.get_localization_count(args.project, media_id=media_ids)
         logger.info(f"{count} localizations will be created.")
+    return count
 
 def find_states(args, src_api, media):
     """ Counts states in media that will be created.
@@ -317,6 +318,7 @@ def find_states(args, src_api, media):
             media_ids = [m.id for m in media[idx:idx+500]]
             count += src_api.get_state_count(args.project, media_id=media_ids)
         logger.info(f"{count} states will be created.")
+    return count
 
 def create_project(args, src_api, dest_api, dest_project):
     """ Creates a project if necessary. Returns the destination project ID.
@@ -446,8 +448,8 @@ if __name__ == '__main__':
     state_types, state_type_mapping = find_state_types(args, src_api, dest_api, dest_project)
     leaf_types, leaf_type_mapping = find_leaf_types(args, src_api, dest_api, dest_project)
     media = find_media(args, src_api, dest_api, dest_project)
-    find_localizations(args, src_api, media)
-    find_states(args, src_api, media)
+    localization_count = find_localizations(args, src_api, media)
+    state_count = find_states(args, src_api, media)
 
     # Confirm migration with user.
     proceed = input("Continue with migration [y/N]? ")
