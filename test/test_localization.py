@@ -102,7 +102,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     generator = tator.util.clone_localization_list(tator_api, {**params, 'project': project},
                                                    project, {video:video}, version_mapping,
                                                    box_type, tator_api)
-    for num_created, num_total, response in generator:
+    for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} localizations...")
     print(f"Finished creating {num_created} localizations!")
     time.sleep(5)

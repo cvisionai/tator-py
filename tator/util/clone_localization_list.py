@@ -83,7 +83,8 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         -1, the version is set to the lowest number version in the project.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of localizations created, number of localizations total,
-        and most recent response from localization creation operation.
+        most recent response from localization creation operation, and mapping between original IDs
+        and created IDs.
     """
     # Make sure query has a project.
     if 'project' not in query_params:
@@ -113,5 +114,6 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         response = dest_api.create_localization_list(dest_project,
                                                      localization_spec=spec[idx:idx+500])
         created_ids += response.id
-        yield (len(created_ids), total_localizations, response)
+        id_map = {src.id: dest_id for src, dest_id in zip(locs[idx:idx+500], response.id)}
+        yield (len(created_ids), total_localizations, response, id_map)
 
