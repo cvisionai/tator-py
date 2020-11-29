@@ -423,17 +423,38 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
             query_params = {'project': args.project,
                             'media_id': media_ids[key][idx:idx+100]}
             created_ids = []
-            for num_created, _, response in tator.util.clone_media_list(src_api, query_params,
-                                                                        dest_project, dest_type,
-                                                                        dest_section,
-                                                                        use_dest_api):
+            generator = tator.util.clone_media_list(src_api, query_params, dest_project, dest_type,
+                                                    dest_section, use_dest_api)
+            for num_created, _, response, id_map in generator:
                 total_created += num_created
                 logger.info(f"Created {total_created} of {num_total} files...")
                 created_ids.append(response.id)
-            for src_id, dest_id in zip(media_ids[key], created_ids):
-                media_mapping[src_id] = dest_id
+                media_mapping = {**media_mapping, **id_map}
     logger.info(f"Created {num_total} media.")
     return media_mapping
+
+def create_localizations(args, src_api, dest_api, dest_project, media, localization_count,
+                         localization_type_mapping, media_mapping, version_mapping):
+    """ Creates localizations. Returns localization mapping.
+    """
+    media_ids = [m.id for m in media]
+    # Iterate through media and create localization.
+    localization_mapping = {}
+    total_created = 0
+    for idx in range(0, len(media_ids), 100): # Do batching here to manage ID query size.
+        query_params = {'project': args.project,
+                        'media_id': media_ids[idx:idx+100]}
+        created_ids = []
+        generator = tator.util.clone_localization_list(src_api, query_params, dest_project,
+                                                       media_mapping, version_mapping, dest_type,
+                                                       dest_api)
+        for num_created, _, response, id_map in generator:
+            total_created += num_created
+            logger.info(f"Created {total_created} of {localization_count} files...")
+            created_ids.append(response.id)
+            localization_mapping = {**localization_mapping, **id_map}
+    logger.info(f"Created {num_total} localization.")
+    return localization_mapping
 
 if __name__ == '__main__':
     args = parse_args()
@@ -471,6 +492,9 @@ if __name__ == '__main__':
                                               leaf_type_mapping)
         media_mapping = create_media(args, src_api, dest_api, dest_project, media,
                                      media_type_mapping)
+        localization_mapping = create_localizations(args, src_api, dest_api, dest_project, media,
+                                                    localization_count, localization_type_mapping,
+                                                    media_mapping, version_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
