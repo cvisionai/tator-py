@@ -45,7 +45,7 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         created_ids = []
         generator = clone_localization_list(src_api, query_params, dest_project, media_mapping,
                                             version_mapping, dest_type, dest_api)
-        for num_created, num_total, response in generator:
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids.append(response.id)
         print(f"Finished creating {num_created} localizations!")
@@ -60,9 +60,9 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         media_mapping = {1: 10}
         version_mapping = {1: 10}
         created_ids = []
-        for num_created, num_total, response in clone_localization_list(src_api, query_params,
-                                                                        dest_project, media_mapping,
-                                                                        version_mapping):
+        generator = clone_localization_list(src_api, query_params, dest_project, media_mapping,
+                                            version_mapping)
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids += response.id
         print(f"Finished creating {num_created} localizations!")

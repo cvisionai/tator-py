@@ -32,7 +32,7 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         parent_mapping = {1: 10} # Mapping of parent leaf IDs
         generator = clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
                                     dest_type, dest_api)
-        for num_created, num_total, response in generator:
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids.append(response.id)
         print(f"Finished creating {num_created} leafs!")
@@ -46,8 +46,8 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         dest_project = 1
         parent_mapping = {1: 10}
         created_ids = []
-        for num_created, num_total, response in clone_leaf_list(api, query_params,
-                                                                dest_project, parent_mapping):
+        generator = clone_leaf_list(api, query_params, dest_project, parent_mapping)
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids += response.id
         print(f"Finished creating {num_created} leafs!")
@@ -63,7 +63,8 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         -1, the leaf type is set to the first leaf type in the project.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of leafs created, number of leafs total,
-        and most recent response from leaf creation operation.
+        most recent response from leaf creation operation, and mapping between
+        original IDs and created IDs.
     """
     # Make sure query has a project.
     if 'project' not in query_params:
@@ -94,5 +95,6 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         response = dest_api.create_leaf_list(dest_project,
                                               leaf_spec=spec[idx:idx+500])
         created_ids += response.id
-        yield (len(created_ids), total_leafs, response)
+        id_map = {src.id: dest_id for src, dest_id in zip(leafs[idx:idx+500], response.id)}
+        yield (len(created_ids), total_leafs, response, id_map)
 

@@ -44,7 +44,7 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
         created_ids = []
         generator = clone_state_list(src_api, query_params, dest_project, media_mapping,
                                      localization_mapping, dest_type, dest_version, dest_api)
-        for num_created, num_total, response in generator:
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} states...")
             created_ids.append(response.id)
         print(f"Finished creating {num_created} states!")
@@ -59,9 +59,9 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
         media_mapping = {1: 10}
         localization_mapping = {}
         created_ids = []
-        for num_created, num_total, response in clone_state_list(src_api, query_params,
-                                                                 dest_project, media_mapping,
-                                                                 localization_mapping):
+        generator = clone_state_list(src_api, query_params, dest_project, media_mapping,
+                                     localization_mapping)
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} states...")
             created_ids += response.id
         print(f"Finished creating {num_created} states!")
@@ -82,7 +82,8 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
         -1, the version is set to the lowest number version in the project.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of states created, number of states total,
-        and most recent response from state creation operation.
+        most recent response from state creation operation, and mapping between
+        original IDs and created IDs.
     """
     # Make sure query has a project.
     if 'project' not in query_params:
@@ -121,5 +122,6 @@ def clone_state_list(src_api, query_params, dest_project, media_mapping, localiz
         response = dest_api.create_state_list(dest_project,
                                               state_spec=spec[idx:idx+500])
         created_ids += response.id
-        yield (len(created_ids), total_states, response)
+        id_map = {src.id: dest_id for src, dest_id in zip(states[idx:idx+500], response.id)}
+        yield (len(created_ids), total_states, response, id_map)
 

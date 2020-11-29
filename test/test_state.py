@@ -93,7 +93,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     # Clone states to same media.
     generator = tator.util.clone_state_list(tator_api, {**params, 'project': project},
                                             project, {video:video}, {}, state_type, -1, tator_api)
-    for num_created, num_total, response in generator:
+    for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} states...")
     print(f"Finished creating {num_created} states!")
     time.sleep(5)

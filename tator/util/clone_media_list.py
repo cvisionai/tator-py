@@ -78,9 +78,9 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         dest_type = -1
         dest_section = 'My cloned media'
         created_ids = []
-        for num_created, num_total, response in clone_media_list(src_api, query_params,
-                                                                 dest_project, dest_type,
-                                                                 dest_section, dest_api):
+        generator = clone_media_list(src_api, query_params, dest_project, dest_type,
+                                     dest_section, dest_api)
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
             created_ids.append(response.id)
         print(f"Finished creating {num_created} files!")
@@ -93,8 +93,8 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         query_params = {'media_id': [1]}
         dest_project = 1
         created_ids = []
-        for num_created, num_total, response in clone_media_list(src_api, query_params,
-                                                                 dest_project):
+        generator = clone_media_list(src_api, query_params, dest_project)
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
             created_ids += response.id # This response is from the CloneMedia endpoint.
         print(f"Finished creating {num_created} files!")
@@ -107,8 +107,9 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         -1, the media type is set to the first media type in the project.
     :param dest_section: Name of destination section.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
-    :returns: Generator containing number of files created, number of files total, and
-        most recent response from media creation operation.
+    :returns: Generator containing number of files created, number of files total,
+        most recent response from media creation operation, and mapping between original IDs
+        and created IDs.
     """
     # Make sure query has a project.
     if 'project' not in query_params:
@@ -153,7 +154,8 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
                 'dest_type': dest_type,
             })
             created_ids += response.id
-            yield (len(created_ids), total_files, response)
+            id_map = {src_id: dest_id for src_id, dest_id in zip(media_ids, response.id)}
+            yield (len(created_ids), total_files, response, id_map)
         else:
             # Clone media to another host.
             transfer = HostTransfer(src_api, dest_api)
@@ -188,6 +190,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
 
                 # Create the media object.
                 response = dest_api.create_media(dest_project, media_spec=media_spec)
+                id_map = {media.id: response.id}
 
                 # Transfer videos.
                 if media.media_files:
@@ -220,4 +223,4 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
                                 'media_files': {'audio': [media_def]}
                             })
             created_ids.append(response.id)
-            yield (len(created_ids), total_files, response)
+            yield (len(created_ids), total_files, response, id_map)

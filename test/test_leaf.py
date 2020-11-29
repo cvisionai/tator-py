@@ -63,7 +63,7 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
         generator = tator.util.clone_leaf_list(tator_api, {'project': project, 'depth': depth},
                                                clone_project, parent_mapping)
         created_ids = []
-        for num_created, num_total, response in generator:
+        for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids += response.id
         parent_mapping = {**parent_mapping,
