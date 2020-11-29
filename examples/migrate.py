@@ -7,6 +7,7 @@ import shutil
 import sys
 import traceback
 from textwrap import dedent
+from collections import defaultdict
 
 import tator
 
@@ -394,6 +395,44 @@ def create_leaf_types(src_api, dest_api, dest_project, leaf_types, leaf_type_map
     logger.info(f"Created {len(leaf_types)} leaf types.")
     return leaf_type_mapping
 
+def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping):
+    """ Creates media. Returns media mapping.
+    """
+    num_total = len(media)
+    # Look up sections in destination project, create a dict between tator_user_sections and 
+    # section name.
+    sections = src_api.get_section_list(args.project)
+    if args.sections:
+        sections = [section for section in sections if section.name in args.sections]
+    section_mapping = {s.tator_user_sections: s.name for s in sections}
+    # Construct dictionary between destination type/destination section and media IDs.
+    media_ids = defaultdict(list)
+    for single in media:
+        key = (media_type_mapping[single.meta],
+               section_mapping[single.attributes.get('tator_user_sections', None)])
+        media_ids[key].append(single.id)
+    # Iterate through type/sections and create media.
+    media_mapping = {}
+    use_dest_api = None if src_api is dest_api else dest_api
+    total_created = 0
+    for key in media_ids:
+        dest_type, dest_section = key
+        for idx in range(0, len(media_ids[key]), 100): # Do batching here to manage ID query size.
+            query_params = {'project': args.project,
+                            'media_id': media_ids[key][idx:idx+100]}
+            created_ids = []
+            for num_created, _, response in tator.util.clone_media_list(src_api, query_params,
+                                                                        dest_project, dest_type,
+                                                                        dest_section,
+                                                                        use_dest_api):
+                total_created += num_created
+                logger.info(f"Created {total_created} of {num_total} files...")
+                created_ids.append(response.id)
+            for src_id, dest_id in zip(media_ids[key], created_ids):
+                media_mapping[src_id] = dest_id
+    logger.info(f"Created {num_total} media.")
+    return media_mapping
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
@@ -428,6 +467,8 @@ if __name__ == '__main__':
                                                 state_type_mapping, media_type_mapping)
         leaf_type_mapping = create_leaf_types(src_api, dest_api, dest_project, leaf_types,
                                               leaf_type_mapping)
+        media_mapping = create_media(args, src_api, dest_api, dest_project, media,
+                                     media_type_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
