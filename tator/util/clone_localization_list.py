@@ -1,13 +1,19 @@
-def _convert_for_post(loc, dest_type, dest_version, media_mapping):
+def _convert_for_post(loc, dest_type, media_mapping, version_mapping):
     # Check for media mapping.
     media_id = loc.media
     if media_id in media_mapping:
         media_id = media_mapping[media_id]
     else:
         raise ValueError(f"Source media ID {media_id} missing from media_mapping!")
+    # Check for version mapping.
+    version_id = loc.version
+    if version_id in version_mapping:
+        version_id = version_mapping[version_id]
+    else:
+        raise ValueError(f"Source version ID {version_id} missing from version_mapping!")
     # Fill in required fields for post.
     return {'type': dest_type,
-            'version': dest_version,
+            'version': version_id,
             'media_id': media_id,
             'x': loc.x,
             'y': loc.y,
@@ -18,8 +24,8 @@ def _convert_for_post(loc, dest_type, dest_version, media_mapping):
             'frame': loc.frame,
             **loc.attributes}
 
-def clone_localization_list(src_api, query_params, dest_project, media_mapping, dest_type=-1, 
-                            dest_version=-1, dest_api=None):
+def clone_localization_list(src_api, query_params, dest_project, media_mapping, version_mapping,
+                            dest_type=-1, dest_api=None):
     """ Clone localization list.
 
     This can be used to clone localizations from one project to another or from one
@@ -33,12 +39,12 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         dest_api = tator.get_api(other_host, other_token)
         query_params = {'project': 1, 'media_id': [1]}
         media_mapping = {1: 10} # Source media ID -> Dest media ID
+        version_mapping = {1: 10} # Source version ID -> Dest version ID
         dest_project = 1
         dest_type = -1
-        dest_version = -1
         created_ids = []
         generator = clone_localization_list(src_api, query_params, dest_project, media_mapping,
-                                            dest_type, dest_version, dest_api)
+                                            version_mapping, dest_type, dest_api)
         for num_created, num_total, response in generator:
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids.append(response.id)
@@ -52,9 +58,11 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         query_params = {'media_id': [1]}
         dest_project = 1
         media_mapping = {1: 10}
+        version_mapping = {1: 10}
         created_ids = []
         for num_created, num_total, response in clone_localization_list(src_api, query_params,
-                                                                        dest_project, media_mapping):
+                                                                        dest_project, media_mapping,
+                                                                        version_mapping):
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids += response.id
         print(f"Finished creating {num_created} localizations!")
@@ -65,6 +73,9 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
     :param dest_project: Unique integer identifying destination project.
     :param media_mapping: Dictionary mapping source media IDs to destination media IDs. If the
         source localization list contains a media ID for which a destination media is not supplied, 
+        an exception is raised.
+    :param version_mapping: Dictionary mapping source version IDs to destination version IDs. If the
+        source localization list contains a version ID for which a destination version is not supplied, 
         an exception is raised.
     :param dest_type: Unique integer identifying destination localization type. If set to
         -1, the localization type is set to the first localization type in the project.
@@ -89,19 +100,11 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
             raise Exception('Specified project does not have any localization types!')
         dest_type = loc_types[0].id
 
-    # Guess the version if it was not given.
-    if dest_version == -1:
-        versions = dest_api.get_version_list(dest_project)
-        if len(versions) == 0:
-            raise Exception('Specified project does not have any versions!')
-        version = min(versions, key=lambda v: v.number)
-        dest_version = version.id
-
     # Start by getting list of localizations to be cloned.
     locs = src_api.get_localization_list(**query_params)
 
     # Convert to new spec.
-    spec = [_convert_for_post(loc, dest_type, dest_version, media_mapping) for loc in locs]
+    spec = [_convert_for_post(loc, dest_type, media_mapping, version_mapping) for loc in locs]
 
     # Create the localizations.
     created_ids = []
