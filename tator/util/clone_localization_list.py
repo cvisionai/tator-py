@@ -1,16 +1,16 @@
-def _convert_for_post(loc, dest_type, media_mapping, version_mapping):
-    # Check for media mapping.
-    media_id = loc.media
-    if media_id in media_mapping:
-        media_id = media_mapping[media_id]
-    else:
-        raise ValueError(f"Source media ID {media_id} missing from media_mapping!")
+def _convert_for_post(loc, dest_type, version_mapping, media_mapping):
     # Check for version mapping.
     version_id = loc.version
     if version_id in version_mapping:
         version_id = version_mapping[version_id]
     else:
         raise ValueError(f"Source version ID {version_id} missing from version_mapping!")
+    # Check for media mapping.
+    media_id = loc.media
+    if media_id in media_mapping:
+        media_id = media_mapping[media_id]
+    else:
+        raise ValueError(f"Source media ID {media_id} missing from media_mapping!")
     # Fill in required fields for post.
     return {'type': dest_type,
             'version': version_id,
@@ -24,7 +24,7 @@ def _convert_for_post(loc, dest_type, media_mapping, version_mapping):
             'frame': loc.frame,
             **loc.attributes}
 
-def clone_localization_list(src_api, query_params, dest_project, media_mapping, version_mapping,
+def clone_localization_list(src_api, query_params, dest_project, version_mapping, media_mapping,
                             dest_type=-1, dest_api=None):
     """ Clone localization list.
 
@@ -38,13 +38,13 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         src_api = tator.get_api(host, token)
         dest_api = tator.get_api(other_host, other_token)
         query_params = {'project': 1, 'media_id': [1]}
-        media_mapping = {1: 10} # Source media ID -> Dest media ID
         version_mapping = {1: 10} # Source version ID -> Dest version ID
+        media_mapping = {1: 10} # Source media ID -> Dest media ID
         dest_project = 1
         dest_type = -1
         created_ids = []
-        generator = clone_localization_list(src_api, query_params, dest_project, media_mapping,
-                                            version_mapping, dest_type, dest_api)
+        generator = clone_localization_list(src_api, query_params, dest_project, version_mapping,
+                                            media_mapping, dest_type, dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids.append(response.id)
@@ -57,11 +57,11 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         api = tator.get_api(host, token)
         query_params = {'media_id': [1]}
         dest_project = 1
-        media_mapping = {1: 10}
         version_mapping = {1: 10}
+        media_mapping = {1: 10}
         created_ids = []
-        generator = clone_localization_list(src_api, query_params, dest_project, media_mapping,
-                                            version_mapping)
+        generator = clone_localization_list(src_api, query_params, dest_project, version_mapping,
+                                            media_mapping)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} localizations...")
             created_ids += response.id
@@ -71,11 +71,11 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
         host if this is a clone on same host.
     :param query_params: Dictionary containing query parameters for source localization list.
     :param dest_project: Unique integer identifying destination project.
-    :param media_mapping: Dictionary mapping source media IDs to destination media IDs. If the
-        source localization list contains a media ID for which a destination media is not supplied, 
-        an exception is raised.
     :param version_mapping: Dictionary mapping source version IDs to destination version IDs. If the
         source localization list contains a version ID for which a destination version is not supplied, 
+        an exception is raised.
+    :param media_mapping: Dictionary mapping source media IDs to destination media IDs. If the
+        source localization list contains a media ID for which a destination media is not supplied, 
         an exception is raised.
     :param dest_type: Unique integer identifying destination localization type. If set to
         -1, the localization type is set to the first localization type in the project.
@@ -105,7 +105,7 @@ def clone_localization_list(src_api, query_params, dest_project, media_mapping, 
     locs = src_api.get_localization_list(**query_params)
 
     # Convert to new spec.
-    spec = [_convert_for_post(loc, dest_type, media_mapping, version_mapping) for loc in locs]
+    spec = [_convert_for_post(loc, dest_type, version_mapping, media_mapping) for loc in locs]
 
     # Create the localizations.
     created_ids = []
