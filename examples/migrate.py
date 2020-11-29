@@ -332,6 +332,15 @@ def create_project(args, src_api, dest_api, dest_project):
         dest_project = dest_project.id
     return dest_project
 
+def create_media_types(src_api, dest_api, dest_project, media_types, media_type_mapping):
+    """ Creates media types. Returns updated media type mapping.
+    """
+    for media_type in media_types:
+        response = tator.util.clone_media_type(src_api, media_type.id, dest_project, dest_api)
+        media_type_mapping[media_type.id] = response.id
+        print(response.message)
+    return media_type_mapping
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
@@ -350,6 +359,8 @@ if __name__ == '__main__':
     proceed = input("Continue with migration [y/N]?  ")
     if proceed == 'y':
         dest_project = create_project(args, src_api, dest_api, dest_project)
+        media_type_mapping = create_media_types(src_api, dest_api, dest_project, media_types,
+                                                media_type_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
