@@ -332,6 +332,15 @@ def create_project(args, src_api, dest_api, dest_project):
         dest_project = dest_project.id
     return dest_project
 
+def create_sections(src_api, dest_api, dest_project, sections):
+    """ Creates sections.
+    """
+    for section in sections:
+        response = tator.util.clone_section(src_api, section.id, dest_project, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
+    logger.info(f"Created {len(sections)} sections.")
+
+def create_versions(src_api, dest_api, dest_project, versions, version_mapping):
 def create_media_types(src_api, dest_api, dest_project, media_types, media_type_mapping):
     """ Creates media types. Returns updated media type mapping.
     """
@@ -391,9 +400,13 @@ if __name__ == '__main__':
     media = find_media(args, src_api, dest_api, dest_project)
     find_localizations(args, src_api, media)
     find_states(args, src_api, media)
-    proceed = input("Continue with migration [y/N]?  ")
+
+    # Confirm migration with user.
+    proceed = input("Continue with migration [y/N]? ")
     if proceed == 'y':
+        # Perform migration.
         dest_project = create_project(args, src_api, dest_api, dest_project)
+        create_sections(src_api, dest_api, dest_project, sections)
         media_type_mapping = create_media_types(src_api, dest_api, dest_project, media_types,
                                                 media_type_mapping)
         localization_type_mapping = create_localization_types(src_api, dest_api, dest_project,
