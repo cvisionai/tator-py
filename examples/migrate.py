@@ -337,20 +337,44 @@ def create_media_types(src_api, dest_api, dest_project, media_types, media_type_
     """
     for media_type in media_types:
         response = tator.util.clone_media_type(src_api, media_type.id, dest_project, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
         media_type_mapping[media_type.id] = response.id
-        print(response.message)
+    logger.info(f"Created {len(media_types)} media types.")
     return media_type_mapping
 
 def create_localization_types(src_api, dest_api, dest_project, localization_types,
-                              localization_type_mapping):
+                              localization_type_mapping, media_type_mapping):
     """ Creates localization types. Returns updated localization type mapping.
     """
     for localization_type in localization_types:
         response = tator.util.clone_localization_type(src_api, localization_type.id, dest_project,
-                                                      dest_api)
+                                                      media_type_mapping, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
         localization_type_mapping[localization_type.id] = response.id
-        print(response.message)
+    logger.info(f"Created {len(localization_types)} localization types.")
     return localization_type_mapping
+
+def create_state_types(src_api, dest_api, dest_project, state_types,
+                       state_type_mapping, media_type_mapping):
+    """ Creates state types. Returns updated state type mapping.
+    """
+    for state_type in state_types:
+        response = tator.util.clone_state_type(src_api, state_type.id, dest_project,
+                                               media_type_mapping, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
+        state_type_mapping[state_type.id] = response.id
+    logger.info(f"Created {len(state_types)} state types.")
+    return state_type_mapping
+
+def create_leaf_types(src_api, dest_api, dest_project, leaf_types, leaf_type_mapping):
+    """ Creates leaf types. Returns updated leaf type mapping.
+    """
+    for leaf_type in leaf_types:
+        response = tator.util.clone_leaf_type(src_api, leaf_type.id, dest_project, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
+        leaf_type_mapping[leaf_type.id] = response.id
+    logger.info(f"Created {len(leaf_types)} leaf types.")
+    return leaf_type_mapping
 
 if __name__ == '__main__':
     args = parse_args()
@@ -374,7 +398,12 @@ if __name__ == '__main__':
                                                 media_type_mapping)
         localization_type_mapping = create_localization_types(src_api, dest_api, dest_project,
                                                               localization_types,
-                                                              localization_type_mapping)
+                                                              localization_type_mapping,
+                                                              media_type_mapping)
+        state_type_mapping = create_state_types(src_api, dest_api, dest_project, state_types,
+                                                state_type_mapping, media_type_mapping)
+        leaf_type_mapping = create_leaf_types(src_api, dest_api, dest_project, leaf_types,
+                                              leaf_type_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
