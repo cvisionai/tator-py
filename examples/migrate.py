@@ -341,6 +341,17 @@ def create_media_types(src_api, dest_api, dest_project, media_types, media_type_
         print(response.message)
     return media_type_mapping
 
+def create_localization_types(src_api, dest_api, dest_project, localization_types,
+                              localization_type_mapping):
+    """ Creates localization types. Returns updated localization type mapping.
+    """
+    for localization_type in localization_types:
+        response = tator.util.clone_localization_type(src_api, localization_type.id, dest_project,
+                                                      dest_api)
+        localization_type_mapping[localization_type.id] = response.id
+        print(response.message)
+    return localization_type_mapping
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
@@ -361,6 +372,9 @@ if __name__ == '__main__':
         dest_project = create_project(args, src_api, dest_api, dest_project)
         media_type_mapping = create_media_types(src_api, dest_api, dest_project, media_types,
                                                 media_type_mapping)
+        localization_type_mapping = create_localization_types(src_api, dest_api, dest_project,
+                                                              localization_types,
+                                                              localization_type_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
