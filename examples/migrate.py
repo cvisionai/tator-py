@@ -297,10 +297,10 @@ def find_media(args, src_api, dest_api, dest_project):
 def find_localizations(args, src_api, media):
     """ Counts localizations in media that will be created.
     """
+    count = 0
     if args.skip_localizations:
         logger.info("Skipping localizations due to --skip_localizations")
     else:
-        count = 0
         for idx in range(0, len(media), 100):
             media_ids = [m.id for m in media[idx:idx+100]]
             count += src_api.get_localization_count(args.project, media_id=media_ids)
@@ -310,14 +310,23 @@ def find_localizations(args, src_api, media):
 def find_states(args, src_api, media):
     """ Counts states in media that will be created.
     """
+    count = 0
     if args.skip_states:
-        logger.info("Skipping localizations due to --skip_localizations")
+        logger.info("Skipping states due to --skip_states")
     else:
-        count = 0
         for idx in range(0, len(media), 100):
             media_ids = [m.id for m in media[idx:idx+100]]
             count += src_api.get_state_count(args.project, media_id=media_ids)
         logger.info(f"{count} states will be created.")
+    return count
+
+def find_leaves(args, src_api):
+    """ Counts leaves that will be created.
+    """
+    count = 0
+    if args.include_leaves:
+        count = src_api.get_leaf_count(args.project)
+        logger.info(f"{count} leaves will be created.")
     return count
 
 def create_project(args, src_api, dest_api, dest_project):
@@ -488,6 +497,7 @@ if __name__ == '__main__':
     media = find_media(args, src_api, dest_api, dest_project)
     localization_count = find_localizations(args, src_api, media)
     state_count = find_states(args, src_api, media)
+    leaf_count = find_leaves(args, src_api)
 
     # Confirm migration with user.
     proceed = input("Continue with migration [y/N]? ")
