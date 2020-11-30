@@ -301,8 +301,8 @@ def find_localizations(args, src_api, media):
         logger.info("Skipping localizations due to --skip_localizations")
     else:
         count = 0
-        for idx in range(0, len(media), 500):
-            media_ids = [m.id for m in media[idx:idx+500]]
+        for idx in range(0, len(media), 100):
+            media_ids = [m.id for m in media[idx:idx+100]]
             count += src_api.get_localization_count(args.project, media_id=media_ids)
         logger.info(f"{count} localizations will be created.")
     return count
@@ -314,8 +314,8 @@ def find_states(args, src_api, media):
         logger.info("Skipping localizations due to --skip_localizations")
     else:
         count = 0
-        for idx in range(0, len(media), 500):
-            media_ids = [m.id for m in media[idx:idx+500]]
+        for idx in range(0, len(media), 100):
+            media_ids = [m.id for m in media[idx:idx+100]]
             count += src_api.get_state_count(args.project, media_id=media_ids)
         logger.info(f"{count} states will be created.")
     return count
@@ -422,13 +422,11 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
         for idx in range(0, len(media_ids[key]), 100): # Do batching here to manage ID query size.
             query_params = {'project': args.project,
                             'media_id': media_ids[key][idx:idx+100]}
-            created_ids = []
             generator = tator.util.clone_media_list(src_api, query_params, dest_project, dest_type,
                                                     dest_section, use_dest_api)
             for num_created, _, response, id_map in generator:
                 total_created += num_created
                 logger.info(f"Created {total_created} of {num_total} files...")
-                created_ids.append(response.id)
                 media_mapping = {**media_mapping, **id_map}
     logger.info(f"Created {num_total} media.")
     return media_mapping
@@ -444,16 +442,14 @@ def create_localizations(args, src_api, dest_api, dest_project, media, localizat
     for idx in range(0, len(media_ids), 100): # Do batching here to manage ID query size.
         query_params = {'project': args.project,
                         'media_id': media_ids[idx:idx+100]}
-        created_ids = []
         generator = tator.util.clone_localization_list(src_api, query_params, dest_project,
-                                                       media_mapping, version_mapping, dest_type,
-                                                       dest_api)
-        for num_created, _, response, id_map in generator:
-            total_created += num_created
-            logger.info(f"Created {total_created} of {localization_count} files...")
-            created_ids.append(response.id)
+                                                       version_mapping, media_mapping,
+                                                       localization_type_mapping, dest_api)
+        for _, _, response, id_map in generator:
+            total_created += len(response.id)
+            logger.info(f"Created {total_created} of {localization_count} localizations...")
             localization_mapping = {**localization_mapping, **id_map}
-    logger.info(f"Created {num_total} localization.")
+    logger.info(f"Created {localization_count} localizations.")
     return localization_mapping
 
 if __name__ == '__main__':
