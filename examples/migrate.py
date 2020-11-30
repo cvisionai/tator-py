@@ -452,6 +452,27 @@ def create_localizations(args, src_api, dest_api, dest_project, media, localizat
     logger.info(f"Created {localization_count} localizations.")
     return localization_mapping
 
+def create_states(args, src_api, dest_api, dest_project, media, state_count,
+                  state_type_mapping, media_mapping, version_mapping, localization_mapping):
+    """ Creates states.
+    """
+    media_ids = [m.id for m in media]
+    # Iterate through media and create state.
+    state_mapping = {}
+    total_created = 0
+    for idx in range(0, len(media_ids), 100): # Do batching here to manage ID query size.
+        query_params = {'project': args.project,
+                        'media_id': media_ids[idx:idx+100]}
+        generator = tator.util.clone_state_list(src_api, query_params, dest_project,
+                                                version_mapping, media_mapping,
+                                                localization_mapping, state_type_mapping, dest_api)
+        for _, _, response, id_map in generator:
+            total_created += len(response.id)
+            logger.info(f"Created {total_created} of {state_count} states...")
+            state_mapping = {**state_mapping, **id_map}
+    logger.info(f"Created {state_count} states.")
+    return state_mapping
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
@@ -491,6 +512,9 @@ if __name__ == '__main__':
         localization_mapping = create_localizations(args, src_api, dest_api, dest_project, media,
                                                     localization_count, localization_type_mapping,
                                                     media_mapping, version_mapping)
+        create_states(args, src_api, dest_api, dest_project, media,
+                      state_count, state_type_mapping,
+                      media_mapping, version_mapping, localization_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
