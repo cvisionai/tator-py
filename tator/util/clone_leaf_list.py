@@ -1,4 +1,4 @@
-def _convert_for_post(leaf, dest_type, parent_mapping):
+def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
     # Swap parent IDs.
     parent_id = leaf.parent
     if parent_id:
@@ -6,14 +6,21 @@ def _convert_for_post(leaf, dest_type, parent_mapping):
              parent_id = parent_mapping[parent_id]
         else:
             raise ValueError(f"Source parent ID {parent_id} missing from parent_mapping!")
+    # Swap leaf type IDs.
+    leaf_type_id = leaf.meta
+    if leaf_type_id in leaf_type_mapping:
+        leaf_type_id = leaf_type_mapping[leaf_type_id]
+    else:
+        raise ValueError(f"Source leaf_type ID {leaf_type_id} missing from "
+                          "leaf_type_mapping!")
     # Fill in required fields for post.
     return {'name': leaf.name,
-            'type': dest_type,
+            'type': leaf_type_id,
             'parent': parent_id,
             **leaf.attributes}
 
 def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
-                     dest_type=-1, dest_api=None):
+                    leaf_type_mapping, dest_api=None):
     """ Clone leaf list.
 
     This can be used to clone leaves from one project to another or from one
@@ -27,11 +34,11 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         dest_api = tator.get_api(other_host, other_token)
         query_params = {'project': 1, 'depth': 1}
         dest_project = 1
-        dest_type = -1
         created_ids = []
         parent_mapping = {1: 10} # Mapping of parent leaf IDs
+        leaf_type_mapping = {1: 10} # Source leaf type ID -> Dest leaf type ID
         generator = clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
-                                    dest_type, dest_api)
+                                    leaf_type_mapping, dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids.append(response.id)
@@ -45,6 +52,7 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
         query_params = {'project': 1, 'depth': 1}
         dest_project = 1
         parent_mapping = {1: 10}
+        leaf_type_mapping = {1: 10} # Source leaf type ID -> Dest leaf type ID
         created_ids = []
         generator = clone_leaf_list(api, query_params, dest_project, parent_mapping)
         for num_created, num_total, response, id_map in generator:
@@ -59,8 +67,9 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
     :param parent_mapping: Dictionary mapping source parent leaf IDs to destination parent leaf
         IDs. If the source leaf list contains a parent ID for which a destination parent ID is
         not supplied, an exception is raised.
-    :param dest_type: Unique integer identifying destination leaf type. If set to
-        -1, the leaf type is set to the first leaf type in the project.
+    :param leaf_type_mapping: Dictionary mapping source leaf type IDs to destination 
+        leaf_type IDs. If the source leaf list contains a leaf type ID for which a
+        destination leaf type ID is not supplied, an exception is raised.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of leafs created, number of leafs total,
         most recent response from leaf creation operation, and mapping between
@@ -74,18 +83,11 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
     if dest_api is None:
         dest_api = src_api
 
-    # Guess the leaf type if it was not given.
-    if dest_type == -1:
-        leaf_types = dest_api.get_leaf_type_list(dest_project)
-        if len(leaf_types) == 0:
-            raise Exception('Specified project does not have any leaf types!')
-        dest_type = leaf_types[0].id
-
     # Start by getting list of leafs to be cloned.
     leafs = src_api.get_leaf_list(**query_params)
 
     # Convert to new spec.
-    spec = [_convert_for_post(leaf, dest_type, parent_mapping)
+    spec = [_convert_for_post(leaf, leaf_type_mapping, parent_mapping)
             for leaf in leafs]
 
     # Create the leafs.

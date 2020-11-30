@@ -1,6 +1,7 @@
-def _convert_for_post(state, dest_type, version_mapping, media_mapping, localization_mapping):
+def _convert_for_post(state, version_mapping, media_mapping, localization_mapping,
+                      state_type_mapping):
     # Swap version IDs.
-    version_id = loc.version
+    version_id = state.version
     if version_id in version_mapping:
         version_id = version_mapping[version_id]
     else:
@@ -20,8 +21,15 @@ def _convert_for_post(state, dest_type, version_mapping, media_mapping, localiza
         else:
             raise ValueError(f"Source localization ID {localization_id} missing from "
                               "localization_mapping!")
+    # Swap state type IDs.
+    state_type_id = state.meta
+    if state_type_id in state_type_mapping:
+        state_type_id = state_type_mapping[state_type_id]
+    else:
+        raise ValueError(f"Source state_type ID {state_type_id} missing from "
+                          "state_type_mapping!")
     # Fill in required fields for post.
-    return {'type': dest_type,
+    return {'type': state_type_id,
             'version': version_id,
             'media_ids': media_ids,
             'localization_ids': localization_ids,
@@ -29,7 +37,7 @@ def _convert_for_post(state, dest_type, version_mapping, media_mapping, localiza
             **state.attributes}
 
 def clone_state_list(src_api, query_params, dest_project, version_mapping, media_mapping,
-                     localization_mapping, dest_type=-1, dest_api=None):
+                     localization_mapping, state_type_mapping, dest_api=None):
     """ Clone state list.
 
     This can be used to clone states from one project to another or from one
@@ -45,12 +53,13 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
         version_mapping = {1: 10} # Source version ID -> Dest version ID
         media_mapping = {1: 10} # Source media ID -> dest media ID
         localization_mapping = {} # For tracks, source localization ID -> dest localization ID
+        state_type_mapping = {1: 10} # Source state type ID -> Dest state type ID
         dest_project = 1
-        dest_type = -1
         dest_version = -1
         created_ids = []
         generator = clone_state_list(src_api, query_params, dest_project, version_mapping,
-                                     media_mapping, localization_mapping, dest_type, dest_api)
+                                     media_mapping, localization_mapping, state_type_mapping,
+                                     dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} states...")
             created_ids.append(response.id)
@@ -66,9 +75,10 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
         version_mapping = {1: 10} # Source version ID -> Dest version ID
         media_mapping = {1: 10}
         localization_mapping = {}
+        state_type_mapping = {1: 10} # Source state type ID -> Dest state type ID
         created_ids = []
         generator = clone_state_list(src_api, query_params, dest_project, version_mapping,
-                                     media_mapping, localization_mapping)
+                                     media_mapping, localization_mapping, state_type_mapping)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} states...")
             created_ids += response.id
@@ -87,10 +97,9 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
     :param localization_mapping: Dictionary mapping source localization IDs to destination 
         localization IDs. If the source state list contains a localization ID for which a
         destination localization ID is not supplied, an exception is raised.
-    :param dest_type: Unique integer identifying destination state type. If set to
-        -1, the state type is set to the first state type in the project.
-    :param dest_version: Unique integer identifying destination version. If set to
-        -1, the version is set to the lowest number version in the project.
+    :param state_type_mapping: Dictionary mapping source state type IDs to destination 
+        state_type IDs. If the source state list contains a state type ID for which a
+        destination state type ID is not supplied, an exception is raised.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
     :returns: Generator containing number of states created, number of states total,
         most recent response from state creation operation, and mapping between
@@ -104,19 +113,12 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
     if dest_api is None:
         dest_api = src_api
 
-    # Guess the state type if it was not given.
-    if dest_type == -1:
-        state_types = dest_api.get_state_type_list(dest_project)
-        if len(state_types) == 0:
-            raise Exception('Specified project does not have any state types!')
-        dest_type = state_types[0].id
-
     # Start by getting list of states to be cloned.
     states = src_api.get_state_list(**query_params)
 
     # Convert to new spec.
-    spec = [_convert_for_post(state, dest_type, version_mapping, media_mapping,
-                              localization_mapping) for state in states]
+    spec = [_convert_for_post(state, version_mapping, media_mapping, localization_mapping,
+                              state_type_mapping) for state in states]
 
     # Create the states.
     created_ids = []
