@@ -29,12 +29,14 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
         raise ValueError(f"Source state_type ID {state_type_id} missing from "
                           "state_type_mapping!")
     # Fill in required fields for post.
-    return {'type': state_type_id,
+    spec = {'type': state_type_id,
             'version': version_id,
             'media_ids': media_ids,
             'localization_ids': localization_ids,
-            'frame': state.frame,
             **state.attributes}
+    if state.frame is not None:
+        spec['frame'] = state.frame
+    return spec
 
 def clone_state_list(src_api, query_params, dest_project, version_mapping, media_mapping,
                      localization_mapping, state_type_mapping, dest_api=None):
