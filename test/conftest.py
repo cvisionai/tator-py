@@ -239,6 +239,7 @@ def multi(request, project, multi_type, video):
     response = tator.util.make_multi_stream(tator_api, multi_type, [1, 1], 
                                             'Test multi', [video], 'Multi Videos')
     multi_id = response.id
+    time.sleep(1)
     yield multi_id
 
 @pytest.fixture(scope='session')
