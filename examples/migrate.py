@@ -518,8 +518,13 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
                             'media_id': media_ids[key][idx:idx+100]}
             generator = tator.util.clone_media_list(src_api, query_params, dest_project, dest_type,
                                                     dest_section, use_dest_api)
-            for num_created, _, response, id_map in generator:
-                total_created += num_created
+            for _, _, response, id_map in generator:
+                if isinstance(response, tator.models.CreateResponse):
+                    total_created += 1
+                elif isinstance(response, tator.models.CreateListResponse):
+                    total_created += len(response.id)
+                else:
+                    raise ValueError("Error cloning media!")
                 logger.info(f"Created {total_created} of {num_total} files...")
                 media_mapping = {**media_mapping, **id_map}
     logger.info(f"Created {num_total} media.")
