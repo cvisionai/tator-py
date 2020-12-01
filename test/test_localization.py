@@ -95,6 +95,17 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert(len(boxes)==len(dataframe))
     for box in boxes:
         assert_close_enough(bulk_patch, box, exclude)
+
+    # Clone boxes to same media.
+    version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
+    generator = tator.util.clone_localization_list(tator_api, {**params, 'project': project},
+                                                   project, version_mapping, {video:video},
+                                                   {box_type: box_type}, tator_api)
+    for num_created, num_total, response, id_map in generator:
+        print(f"Created {num_created} of {num_total} localizations...")
+    print(f"Finished creating {num_created} localizations!")
+    time.sleep(5)
+    assert(tator_api.get_localization_count(project, **params) == 2 * len(boxes))
     
     # Delete all boxes.
     response = tator_api.delete_localization_list(project, **params)

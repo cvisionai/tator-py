@@ -298,3 +298,50 @@ def track_type(request, project, video_type):
     })
     state_type_id = response.id
     yield state_type_id
+
+@pytest.fixture(scope='session')
+def leaf_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_leaf_type(project, leaf_type_spec={
+        'name': 'leaf_type',
+        'description': 'Test leaf type',
+        'attribute_types': make_attribute_types(),
+    })
+    leaf_type_id = response.id
+    yield leaf_type_id
+
+@pytest.fixture(scope='session')
+def clone_project(request):
+    """ Project ID for a created project. """
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    keep = request.config.option.keep
+    tator_api = tator.get_api(host, token)
+    current_dt = datetime.datetime.now()
+    dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
+    response = tator_api.create_project(project_spec={
+        'name': f'test_clone_project_{dt_str}',
+        'summary': f'Test clone project created by tator-py unit tests on {current_dt}',
+    })
+    project_id = response.id
+    yield project_id
+    if not keep:
+        status = tator_api.delete_project(project_id)
+
+@pytest.fixture(scope='session')
+def clone_leaf_type(request, clone_project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_leaf_type(clone_project, leaf_type_spec={
+        'name': 'leaf_type',
+        'description': 'Test leaf type',
+        'attribute_types': make_attribute_types(),
+    })
+    leaf_type_id = response.id
+    yield leaf_type_id

@@ -90,8 +90,19 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     for state in states:
         assert_close_enough(bulk_patch, state, exclude)
     
-    # Delete all state.
-    status = tator_api.delete_state_list(project, **params)
+    # Clone states to same media.
+    version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
+    generator = tator.util.clone_state_list(tator_api, {**params, 'project': project},
+                                            project, version_mapping, {video:video}, {},
+                                            {state_type:state_type}, tator_api)
+    for num_created, num_total, response, id_map in generator:
+        print(f"Created {num_created} of {num_total} states...")
+    print(f"Finished creating {num_created} states!")
+    time.sleep(5)
+    assert(tator_api.get_state_count(project, **params) == 2 * len(states))
+    
+    # Delete all states.
+    response = tator_api.delete_state_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)
     time.sleep(1)
 
