@@ -3,6 +3,7 @@ import os
 import shutil
 import time
 import tarfile
+from uuid import uuid1
 
 import pytest
 import requests
@@ -177,6 +178,21 @@ def video_type(request, project):
     yield video_type_id
 
 @pytest.fixture(scope='session')
+def multi_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'multi_type',
+        'description': 'Test multi type',
+        'project': project,
+        'dtype': 'multi',
+    })
+    multi_type_id = response.id
+    yield multi_type_id
+
+@pytest.fixture(scope='session')
 def video_file(request):
     out_path = '/tmp/ForBiggerEscapes.mp4'
     if not os.path.exists(out_path):
@@ -213,6 +229,17 @@ def video(request, project, video_type, video_file):
             video_id = response[0].id
             break
     yield video_id
+
+@pytest.fixture(scope='session')
+def multi(request, project, multi_type, video):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator.util.make_multi_stream(tator_api, multi_type, [1, 1], 
+                                            'Test multi', [video], 'Multi Videos')
+    multi_id = response.id
+    yield multi_id
 
 @pytest.fixture(scope='session')
 def dot_type(request, project, video_type, image_type):
