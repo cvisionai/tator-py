@@ -57,8 +57,8 @@ class HostTransfer:
                 uploader.upload_chunk()
         return uploader.url
 
-def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_section='', 
-                     dest_api=None):
+def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest_type=-1,
+                     dest_section='', dest_api=None):
     """ Clone media list.
 
     This can be used to clone media from one project to another or from one
@@ -74,12 +74,13 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         src_api = tator.get_api(host, token)
         dest_api = tator.get_api(other_host, other_token)
         query_params = {'project': 1, 'media_id': [1]}
+        media_mapping = {} # Only required if query contains multi media types
         dest_project = 1
         dest_type = -1
         dest_section = 'My cloned media'
         created_ids = []
-        generator = clone_media_list(src_api, query_params, dest_project, dest_type,
-                                     dest_section, dest_api)
+        generator = clone_media_list(src_api, query_params, dest_project, media_mapping,
+                                     dest_type, dest_section, dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
             created_ids.append(response.id)
@@ -103,6 +104,9 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
         host if this is a clone on same host.
     :param query_params: Dictionary containing query parameters for source media list.
     :param dest_project: Unique integer identifying destination project.
+    :param media_mapping: Mapping between source and destination media IDs. Only used
+        if the media list contains multi media types and the clone is being done for
+        different hosts.
     :param dest_type: Unique integer identifying destination media type. If set to
         -1, the media type is set to the first media type in the project.
     :param dest_section: Name of destination section.
@@ -210,5 +214,22 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
                         dest_api.move_video(response.id, move_video_spec={
                             'media_files': {'audio': [media_def]}
                         })
+                if media.media_files.ids:
+                    dest_ids = []
+                    for id_ in media.media_files.ids:
+                        if id_ in media_mapping:
+                            dest_ids.append(media_mapping[id_])
+                        else:
+                            raise Exception(f"Source media ID {id_} does not exist in media "
+                                             "mapping! Individual videos should be migrated "
+                                             "before multi videos.")
+                    update = {'media_files': {'ids': dest_ids}}
+                    response = dest_api.update_media(response.id, media_update=update)
+                if media.media_files.layout:
+                    update = {'media_files': {'layout': media.media_files.layout}}
+                    response = dest_api.update_media(response.id, media_update=update)
+                if media.media_files.quality:
+                    update = {'media_files': {'quality': media.media_files.quality}}
+                    response = dest_api.update_media(response.id, media_update=update)
             created_ids.append(response.id)
             yield (len(created_ids), total_files, response, id_map)
