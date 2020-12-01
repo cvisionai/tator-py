@@ -35,8 +35,8 @@ def parse_args():
     - State types (idempotent, based on state type name)
     - Leaf types (idempotent, based on leaf type name)
     - Media (idempotent, based on section name and media name)
-    - Localizations (only migrated if parent media is migrated)
-    - States (only migrated if parent media is migrated)
+    - Localizations (only migrated if destination media has no localizations)
+    - States (only migrated if destination media has no states)
     - Leaves (idempotent, based on path)
 
     If the --dest_project is not specified, a new project will be created with the name
@@ -289,9 +289,11 @@ def find_leaf_types(args, src_api, dest_api, dest_project):
     return leaf_types, leaf_type_mapping
 
 def find_media(args, src_api, dest_api, dest_project):
-    """ Finds existing media in destination project. Returns media that need to be created.
+    """ Finds existing media in destination project. Returns media that need to be created and ID
+        mapping between source and destination medias.
     """
     media = []
+    media_mapping = {}
     if args.skip_media:
         logger.info(f"Skipping media due to --skip_media.")
     else:
@@ -307,6 +309,9 @@ def find_media(args, src_api, dest_api, dest_project):
                         existing = dest_api.get_media_list(dest_project.id,
                                                            section=existing_section[0].id)
                         existing_names = [m.name for m in existing]
+                        for m in media:
+                            if m.name in existing_names:
+                                media_mapping[media.id] = existing[existing_names.index(m.name)].id
                         section_media = [m for m in section_media if m.name not in existing_names]
                 logger.info(f"{len(section_media)} media from section {section.name} will be "
                             f"created ({num_src_media - len(section_media)} already exist).")
@@ -326,38 +331,68 @@ def find_media(args, src_api, dest_api, dest_project):
                     (m.name, dest_section_names[m.attributes.get('tator_user_sections', None)])
                     for m in existing
                 ]
+                for m in media:
+                    key = (m.name, src_section_names[m.attributes.get('tator_user_sections', None)])
+                    if key in existing_name_section:
+                        media_mapping[m.id] = existing[existing_name_section.index(key)].id
                 media = [m for m in media
                          if (m.name, src_section_names[m.attributes.get('tator_user_sections', None)])
                          not in existing_name_section]
             logger.info(f"{len(media)} media will be created ({num_src_media - len(media)} "
                          "already exist).")
-    return media
+    return media, media_mapping
 
-def find_localizations(args, src_api, media):
-    """ Counts localizations in media that will be created.
+def find_localizations(args, dest_api, media, media_mapping):
+    """ Counts localizations in media for which destination contains no localizations.
     """
     count = 0
+    localization_media_ids = []
     if args.skip_localizations:
         logger.info("Skipping localizations due to --skip_localizations")
     else:
-        for idx in range(0, len(media), 100):
-            media_ids = [m.id for m in media[idx:idx+100]]
-            count += src_api.get_localization_count(args.project, media_id=media_ids)
+        # Get media IDs of existing media with no localizations.
+        dest_media_ids = list(media_mapping.values())
+        existing_loc = []
+        for idx in range(0, len(dest_media_ids), 100):
+            existing_loc += dest_api.get_localization_list(args.project,
+                                                           media_id=dest_media_ids[idx:idx+100])
+        medias_with_locs = set([loc.media for loc in existing_loc])
+        localization_media_ids += [key for key in media_mapping
+                                   if media_mapping[key] not in medias_with_locs]
+        # Get media IDs of media that needs to be created.
+        localization_media_ids += [m.id for m in media]
+        # Count localizations to be created.
+        for idx in range(0, len(localization_media_ids), 100):
+            count += src_api.get_localization_count(args.project,
+                                                    media_id=localization_media_ids[idx:idx+100])
         logger.info(f"{count} localizations will be created.")
-    return count
+    return count, localization_media_ids
 
-def find_states(args, src_api, media):
-    """ Counts states in media that will be created.
+def find_states(args, dest_api, media, media_mapping):
+    """ Counts states in media for which destination contains no states.
     """
     count = 0
+    state_media_ids = []
     if args.skip_states:
         logger.info("Skipping states due to --skip_states")
     else:
-        for idx in range(0, len(media), 100):
-            media_ids = [m.id for m in media[idx:idx+100]]
-            count += src_api.get_state_count(args.project, media_id=media_ids)
+        # Get media IDs of existing media with no states.
+        dest_media_ids = list(media_mapping.values())
+        existing_states = []
+        for idx in range(0, len(dest_media_ids), 100):
+            existing_states += dest_api.get_state_list(args.project,
+                                                       media_id=dest_media_ids[idx:idx+100])
+        medias_with_states = set([loc.media for loc in existing_states])
+        state_media_ids += [key for key in media_mapping
+                            if media_mapping[key] not in medias_with_states]
+        # Get media IDs of media that needs to be created.
+        state_media_ids += [m.id for m in media]
+        # Count states to be created.
+        for idx in range(0, len(state_media_ids), 100):
+            count += src_api.get_state_count(args.project,
+                                             media_id=state_media_ids[idx:idx+100])
         logger.info(f"{count} states will be created.")
-    return count
+    return count, state_media_ids
 
 def find_leaves(args, src_api, dest_api, dest_project):
     """ Finds existing leaves in destination project. Returns leaves that need to be created, 
@@ -491,7 +526,7 @@ def create_leaf_types(src_api, dest_api, dest_project, leaf_types, leaf_type_map
     logger.info(f"Created {len(leaf_types)} leaf types.")
     return leaf_type_mapping
 
-def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping):
+def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping, media_mapping):
     """ Creates media. Returns media mapping.
     """
     num_total = len(media)
@@ -508,7 +543,6 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
                section_mapping[single.attributes.get('tator_user_sections', None)])
         media_ids[key].append(single.id)
     # Iterate through type/sections and create media.
-    media_mapping = {}
     use_dest_api = None if src_api is dest_api else dest_api
     total_created = 0
     for key in media_ids:
@@ -530,11 +564,10 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
     logger.info(f"Created {num_total} media.")
     return media_mapping
 
-def create_localizations(args, src_api, dest_api, dest_project, media, localization_count,
+def create_localizations(args, src_api, dest_api, dest_project, media_ids, localization_count,
                          localization_type_mapping, media_mapping, version_mapping):
     """ Creates localizations. Returns localization mapping.
     """
-    media_ids = [m.id for m in media]
     # Iterate through media and create localization.
     localization_mapping = {}
     total_created = 0
@@ -551,11 +584,10 @@ def create_localizations(args, src_api, dest_api, dest_project, media, localizat
     logger.info(f"Created {localization_count} localizations.")
     return localization_mapping
 
-def create_states(args, src_api, dest_api, dest_project, media, state_count,
+def create_states(args, src_api, dest_api, dest_project, media_ids, state_count,
                   state_type_mapping, media_mapping, version_mapping, localization_mapping):
     """ Creates states.
     """
-    media_ids = [m.id for m in media]
     # Iterate through media and create state.
     state_mapping = {}
     total_created = 0
@@ -603,9 +635,10 @@ if __name__ == '__main__':
                                                                             dest_project)
     state_types, state_type_mapping = find_state_types(args, src_api, dest_api, dest_project)
     leaf_types, leaf_type_mapping = find_leaf_types(args, src_api, dest_api, dest_project)
-    media = find_media(args, src_api, dest_api, dest_project)
-    localization_count = find_localizations(args, src_api, media)
-    state_count = find_states(args, src_api, media)
+    media, media_mapping = find_media(args, src_api, dest_api, dest_project)
+    localization_count, localization_media_ids = find_localizations(args, src_api, media,
+                                                                    media_mapping)
+    state_count, state_media_ids = find_states(args, src_api, media, media_mapping)
     leaves, leaf_mapping = find_leaves(args, src_api, dest_api, dest_project)
 
     # Confirm migration with user.
@@ -628,11 +661,12 @@ if __name__ == '__main__':
         leaf_type_mapping = create_leaf_types(src_api, dest_api, dest_project, leaf_types,
                                               leaf_type_mapping)
         media_mapping = create_media(args, src_api, dest_api, dest_project, media,
-                                     media_type_mapping)
-        localization_mapping = create_localizations(args, src_api, dest_api, dest_project, media,
+                                     media_type_mapping, media_mapping)
+        localization_mapping = create_localizations(args, src_api, dest_api, dest_project,
+                                                    localization_media_ids,
                                                     localization_count, localization_type_mapping,
                                                     media_mapping, version_mapping)
-        create_states(args, src_api, dest_api, dest_project, media,
+        create_states(args, src_api, dest_api, dest_project, state_media_ids,
                       state_count, state_type_mapping,
                       media_mapping, version_mapping, localization_mapping)
         create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mapping,
