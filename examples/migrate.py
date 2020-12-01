@@ -407,7 +407,7 @@ def create_memberships(src_api, dest_api, dest_project, memberships, users):
     for membership, user in zip(memberships, users):
         # Look up user by username.
         dest_users = dest_api.get_user_list(username=user.username)
-        if len(dest_user) == 0:
+        if len(dest_users) == 0:
             num_skipped += 1
         else:
             dest_user = dest_users[0]
@@ -432,7 +432,8 @@ def create_versions(src_api, dest_api, dest_project, versions, version_mapping):
     """ Creates versions. Returns updated version mapping.
     """
     for version in versions:
-        response = tator.util.clone_version(src_api, version.id, dest_project, dest_api)
+        response = tator.util.clone_version(src_api, version.id, dest_project, version_mapping,
+                                            dest_api)
         assert(isinstance(response, tator.models.CreateResponse))
         version_mapping[version.id] = response.id
     logger.info(f"Created {len(versions)} versions.")
