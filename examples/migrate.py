@@ -140,8 +140,8 @@ def find_dest_project(args, src_api, dest_api):
     return dest_project
 
 def find_memberships(args, src_api, dest_api, dest_project):
-    """ Finds existing memberships in destination project. Returns users corresponding to
-        memberships in source project that need to be created.
+    """ Finds existing memberships in destination project. Returns users and memberships
+        corresponding to memberships in source project that need to be created.
     """
     memberships = []
     if args.skip_memberships:
@@ -154,10 +154,12 @@ def find_memberships(args, src_api, dest_api, dest_project):
             existing = dest_api.get_membership_list(dest_project.id)
             existing_users = [dest_api.get_user(membership.user) for membership in existing]
             existing_usernames = [user.username for user in existing_users]
+            memberships = [membership for user, membership in zip(users, memberships)
+                           if user.username not in existing_usernames]
             users = [user for user in users if user.username not in existing_usernames]
         logger.info(f"{len(users)} memberships will be created ({num_src - len(users)} "
                      "already exist).")
-    return memberships
+    return memberships, users
 
 def find_sections(args, src_api, dest_api, dest_project):
     """ Finds existing sections in destination project. Returns sections in source project
@@ -397,6 +399,27 @@ def create_project(args, src_api, dest_api, dest_project):
         dest_project = dest_project.id
     return dest_project
 
+def create_memberships(src_api, dest_api, dest_project, memberships, users):
+    """ Creates memberships.
+    """
+    num_skipped = 0
+    num_created = 0
+    for membership, user in zip(memberships, users):
+        # Look up user by username.
+        dest_users = dest_api.get_user_list(username=user.username)
+        if len(dest_user) == 0:
+            num_skipped += 1
+        else:
+            dest_user = dest_users[0]
+            response = dest_api.create_membership({'user': dest_user.id,
+                                                   'permission': membership.permission})
+            assert(isinstance(response, tator.models.CreateResponse))
+            num_created += 1
+    msg = f"Created {num_created} memberships."
+    if num_skipped > 0:
+        msg += f" Skipped {num_skipped} (no matching user)."
+    logger.info(msg)
+
 def create_sections(src_api, dest_api, dest_project, sections):
     """ Creates sections.
     """
@@ -558,7 +581,7 @@ if __name__ == '__main__':
     src_api, dest_api = setup_apis(args)
     # Find which resources need to be migrated.
     dest_project = find_dest_project(args, src_api, dest_api)
-    users = find_memberships(args, src_api, dest_api, dest_project)
+    memberships, users = find_memberships(args, src_api, dest_api, dest_project)
     sections = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
     media_types, media_type_mapping = find_media_types(args, src_api, dest_api, dest_project)
@@ -576,6 +599,7 @@ if __name__ == '__main__':
     if proceed == 'y':
         # Perform migration.
         dest_project = create_project(args, src_api, dest_api, dest_project)
+        create_memberships(src_api, dest_api, dest_project, memberships, users)
         create_sections(src_api, dest_api, dest_project, sections)
         version_mapping = create_versions(src_api, dest_api, dest_project, versions,
                                           version_mapping)
