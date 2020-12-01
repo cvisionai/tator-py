@@ -129,13 +129,13 @@ def find_dest_project(args, src_api, dest_api):
         src_project = src_api.get_project(args.project)
         dest_projects = dest_api.get_project_list()
         dest_project = None
+        name = args.new_project_name if args.new_project_name else src_project.name
         for project_obj in dest_projects:
-            if project_obj.name == src_project.name:
+            if project_obj.name == name:
                 dest_project = project_obj
                 logger.info(f"Migrating to existing project with ID {project_obj.id}.")
                 break
         if dest_project is None:
-            name = args.new_project_name if args.new_project_name else src_project.name
             logger.info(f"New project with name {name} will be created.")
     return dest_project
 
@@ -411,14 +411,17 @@ def find_leaves(args, src_api, dest_api, dest_project):
             src_leaves = src_api.get_leaf_list(args.project, depth=depth)
             if len(src_leaves) == 0:
                 break
-            dest_leaves = dest_api.get_leaf_list(dest_project.id, depth=depth)
-            dest_paths = [leaf.path.split('.', 1)[1] for leaf in dest_leaves]
-            for leaf in src_leaves:
-                path = leaf.path.split('.', 1)[1]
-                if path in dest_paths:
-                    leaf_mapping[leaf.id] = dest_leaves[dest_paths.index(path)].id
-            leaves[depth] = [leaf for leaf in src_leaves
-                             if leaf.path.split('.', 1)[1] not in dest_paths]
+            if dest_project:
+                dest_leaves = dest_api.get_leaf_list(dest_project.id, depth=depth)
+                dest_paths = [leaf.path.split('.', 1)[1] for leaf in dest_leaves]
+                for leaf in src_leaves:
+                    path = leaf.path.split('.', 1)[1]
+                    if path in dest_paths:
+                        leaf_mapping[leaf.id] = dest_leaves[dest_paths.index(path)].id
+                leaves[depth] = [leaf for leaf in src_leaves
+                                 if leaf.path.split('.', 1)[1] not in dest_paths]
+            else:
+                leaves[depth] = list(src_leaves)
             num_leaves += len(leaves[depth])
             num_skipped += len(src_leaves) - len(leaves[depth])
             depth += 1
