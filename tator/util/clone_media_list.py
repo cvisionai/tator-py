@@ -115,12 +115,6 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
     if 'project' not in query_params:
         raise Exception("Query parameters must include a project!")
 
-    # Check for no pagination parameters.
-    has_pagination = 'after' in query_params or 'start' in query_params or 'stop' in query_params
-    if has_pagination:
-        raise Exception("This utility does pagination internally and does not accept pagination "
-                        "parameters as inputs!")
-
     # Guess the media type if it was not given.
     if dest_type == -1:
         if dest_api is None:
@@ -131,96 +125,90 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
             raise Exception('Specified project does not have any media types!')
         dest_type = media_types[0].id
 
-    # Start by getting total number of files to be cloned.
-    total_files = src_api.get_media_count(**query_params)
+    # Get medias.
+    medias = src_api.get_media_list(**query_params)
+    total_files = len(medias)
 
     # Clone the media.
     created_ids = []
-    after = None
-    query_params['stop'] = 500
-    query_params['start'] = 0
-    while len(created_ids) < total_files:
-        # Get paginated medias.
-        medias = src_api.get_media_list(**query_params)
-        # Set after parameter for next iteration.
-        query_params['after'] = medias[-1].name
-        if dest_api is None:
+    if dest_api is None:
+        for idx in range(0, len(medias), 100): # Go in batches of 100
             # Clone media locally.
-            media_ids = [media.id for media in medias]
+            media_ids = [media.id for media in medias[idx:idx+100]]
             response = src_api.clone_media_list(query_params['project'],
-                                                media_id=media_ids, clone_media_spec={
-                'dest_project': dest_project,
-                'dest_section': dest_section,
-                'dest_type': dest_type,
-            })
+                                                media_id=media_ids,
+                                                clone_media_spec={
+                                                    'dest_project': dest_project,
+                                                    'dest_section': dest_section,
+                                                    'dest_type': dest_type,
+                                                })
             created_ids += response.id
             id_map = {src_id: dest_id for src_id, dest_id in zip(media_ids, response.id)}
             yield (len(created_ids), total_files, response, id_map)
-        else:
-            # Clone media to another host.
-            transfer = HostTransfer(src_api, dest_api)
-            for media in medias:
+    else:
+        # Clone media to another host.
+        transfer = HostTransfer(src_api, dest_api)
+        for media in medias:
+            # Set up media spec.
+            attributes = media.attributes
+            if 'tator_user_sections' in attributes:
+                attributes.pop('tator_user_sections', None)
+            media_spec = {
+                'type': dest_type,
+                'name': media.name,
+                'gid': media.gid,
+                'uid': media.uid,
+                'md5': media.md5,
+                'fps': media.fps,
+                'num_frames': media.num_frames,
+                'codec': media.codec,
+                'width': media.width,
+                'height': media.height,
+                'attributes': attributes,
+                'section': dest_section if dest_section else media.section,
+            }
+            # Transfer thumbnails and image.
+            media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}')
 
-                # Set up media spec.
-                attributes = media.attributes
-                if 'tator_user_sections' in attributes:
-                    attributes.pop('tator_user_sections', None)
-                media_spec = {
-                    'type': dest_type,
-                    'name': media.name,
-                    'gid': media.gid,
-                    'uid': media.uid,
-                    'md5': media.md5,
-                    'fps': media.fps,
-                    'num_frames': media.num_frames,
-                    'codec': media.codec,
-                    'width': media.width,
-                    'height': media.height,
-                    'attributes': attributes,
-                    'section': dest_section if dest_section else media.section,
-                }
-                # Transfer thumbnails and image.
-                media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}')
+            if media.thumbnail_gif:
+                media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}')
 
-                if media.thumbnail_gif:
-                    media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}')
+            if media.file:
+                media_spec['url'] = transfer(f'/media/{media.file}')
 
-                if media.file:
-                    media_spec['url'] = transfer(f'/media/{media.file}')
+            # Create the media object.
+            response = dest_api.create_media(dest_project, media_spec=media_spec)
+            id_map = {media.id: response.id}
 
-                # Create the media object.
-                response = dest_api.create_media(dest_project, media_spec=media_spec)
-                id_map = {media.id: response.id}
-
-                # Transfer videos.
-                if media.media_files:
-                    if media.media_files.archival:
-                        for archival in media.media_files.archival:
-                            media_def = {k: v for k, v in archival.to_dict().items()
-                                         if v is not None}
-                            media_def.pop('path', None)
-                            media_def['url'] = transfer(archival.path)
-                            dest_api.move_video(response.id, move_video_spec={
-                                'media_files': {'archival': [media_def]}
-                            })
-                    if media.media_files.streaming:
-                        for streaming in media.media_files.streaming:
-                            media_def = {k: v for k, v in streaming.to_dict().items()
-                                         if v is not None}
-                            media_def.pop('path', None)
-                            media_def['url'] = transfer(streaming.path)
-                            media_def['segments_url'] = transfer(streaming.segment_info)
-                            dest_api.move_video(response.id, move_video_spec={
-                                'media_files': {'streaming': [media_def]}
-                            })
-                    if media.media_files.audio:
-                        for audio in media.media_files.audio:
-                            media_def = {k: v for k, v in audio.to_dict().items()
-                                         if v is not None}
-                            media_def.pop('path', None)
-                            media_def['url'] = transfer(audio.path)
-                            dest_api.move_video(response.id, move_video_spec={
-                                'media_files': {'audio': [media_def]}
-                            })
-            created_ids.append(response.id)
-            yield (len(created_ids), total_files, response, id_map)
+            # Transfer videos.
+            if media.media_files:
+                if media.media_files.archival:
+                    for archival in media.media_files.archival:
+                        media_def = {k: v for k, v in archival.to_dict().items()
+                                     if v is not None}
+                        media_def.pop('path', None)
+                        media_def['url'] = transfer(archival.path)
+                        dest_api.move_video(response.id, move_video_spec={
+                            'media_files': {'archival': [media_def]}
+                        })
+                if media.media_files.streaming:
+                    for streaming in media.media_files.streaming:
+                        media_def = {k: v for k, v in streaming.to_dict().items()
+                                     if v is not None}
+                        media_def.pop('path', None)
+                        media_def['url'] = transfer(streaming.path)
+                        media_def['segments_url'] = transfer(streaming.segment_info)
+                        dest_api.move_video(response.id, move_video_spec={
+                            'media_files': {'streaming': [media_def]}
+                        })
+                if media.media_files.audio:
+                    for audio in media.media_files.audio:
+                        media_def = {k: v for k, v in audio.to_dict().items()
+                                     if v is not None}
+                        media_def.pop('path', None)
+                        media_def['url'] = transfer(audio.path)
+                        dest_api.move_video(response.id, move_video_spec={
+                            'media_files': {'audio': [media_def]}
+                        })
+        created_ids.append(response.id)
+        yield (len(created_ids), total_files, response, id_map)
