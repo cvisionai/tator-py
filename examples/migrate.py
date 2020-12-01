@@ -36,10 +36,10 @@ def parse_args():
     - Media (idempotent, based on section name and media name)
     - Localizations (only migrated if parent media is migrated)
     - States (only migrated if parent media is migrated)
+    - Leaves (idempotent, based on path)
     The following objects must be explicitly included in the migration:
     - Projects (idempotent, based on project name)
     - Memberships (idempotent, based on matching username)
-    - Leaves (NOT idempotent)
 
     Examples:
     Migrate project settings on same host
@@ -89,13 +89,13 @@ def parse_args():
                         action='store_true')
     parser.add_argument('--skip_states', help='If given, states will not be migrated.',
                         action='store_true')
+    parser.add_argument('--skip_leaves', help='If given, leaves will not be migrated.',
+                        action='store_true')
     parser.add_argument('--include_project', help='If given, a new project will be created if an '
                                                   'existing project with matching name does not '
                                                   'already exist.',
                         action='store_true')
     parser.add_argument('--include_memberships', help='If given, memberships will be migrated.',
-                        action='store_true')
-    parser.add_argument('--include_leaves', help='If given, leaves will be migrated.',
                         action='store_true')
     return parser.parse_args()
 
@@ -320,14 +320,37 @@ def find_states(args, src_api, media):
         logger.info(f"{count} states will be created.")
     return count
 
-def find_leaves(args, src_api):
-    """ Counts leaves that will be created.
+def find_leaves(args, src_api, dest_api, dest_project):
+    """ Finds existing leaves in destination project. Returns leaves that need to be created, 
+        grouped in a dictionary by depth and mapping of src and dest leaves for existing 
+        leaves.
     """
-    count = 0
-    if args.include_leaves:
-        count = src_api.get_leaf_count(args.project)
-        logger.info(f"{count} leaves will be created.")
-    return count
+    leaves = {}
+    leaf_mapping = {}
+    num_leaves = 0
+    num_skipped = 0
+    if args.skip_leaves:
+        logger.info("Skipping leaves due to --skip_leaves")
+    else:
+        depth = 0
+        while True:
+            src_leaves = src_api.get_leaf_list(args.project, depth=depth)
+            if len(src_leaves) == 0:
+                break
+            dest_leaves = dest_api.get_leaf_list(dest_project.id, depth=depth)
+            dest_paths = [leaf.path.split('.', 1)[1] for leaf in dest_leaves]
+            for leaf in src_leaves:
+                path = leaf.path.split('.', 1)[1]
+                if path in dest_paths:
+                    leaf_mapping[leaf.id] = dest_leaves[dest_paths.index(path)].id
+            leaves[depth] = [leaf for leaf in src_leaves
+                             if leaf.path.split('.', 1)[1] not in dest_paths]
+            num_leaves += len(leaves[depth])
+            num_skipped += len(src_leaves) - len(leaves[depth])
+            depth += 1
+        logger.info(f"{num_leaves} leaves will be created ({num_skipped} "
+                     "already exist).")
+    return leaves, leaf_mapping
 
 def create_project(args, src_api, dest_api, dest_project):
     """ Creates a project if necessary. Returns the destination project ID.
@@ -482,6 +505,24 @@ def create_states(args, src_api, dest_api, dest_project, media, state_count,
     logger.info(f"Created {state_count} states.")
     return state_mapping
 
+def create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mapping, leaf_mapping):
+    """ Creates leaves. Returns leaf mapping.
+    """
+    total_created = 0
+    leaf_count = sum([len(leaf_list) for leaf_list in leaves.values()])
+    for depth in leaves:
+        for idx in range(0, len(leaves[depth]), 100):
+            leaf_ids = [leaf.id for leaf in leaves[depth][idx:idx+100]]
+            query_params = {'project': args.project,
+                            'leaf_id': leaf_ids}
+            generator = tator.util.clone_leaf_list(src_api, query_params, dest_project,
+                                                   leaf_mapping, leaf_type_mapping, dest_api)
+            for _, _, response, id_map in generator:
+                total_created += len(response.id)
+                logger.info(f"Created {total_created} of {leaf_count}")
+                leaf_mapping = {**leaf_mapping, **id_map}
+    logger.info(f"Created {leaf_count} leaves.")
+
 if __name__ == '__main__':
     args = parse_args()
     src_api, dest_api = setup_apis(args)
@@ -497,7 +538,7 @@ if __name__ == '__main__':
     media = find_media(args, src_api, dest_api, dest_project)
     localization_count = find_localizations(args, src_api, media)
     state_count = find_states(args, src_api, media)
-    leaf_count = find_leaves(args, src_api)
+    leaves, leaf_mapping = find_leaves(args, src_api, dest_api, dest_project)
 
     # Confirm migration with user.
     proceed = input("Continue with migration [y/N]? ")
@@ -525,6 +566,8 @@ if __name__ == '__main__':
         create_states(args, src_api, dest_api, dest_project, media,
                       state_count, state_type_mapping,
                       media_mapping, version_mapping, localization_mapping)
+        create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mapping,
+                      leaf_mapping)
     else:
         logger.info("Migration cancelled by user.")
     
