@@ -32,9 +32,9 @@ def download_media(api, media, out_path):
     if media.media_files is not None:
         archival = media.media_files.archival
         streaming = media.media_files.streaming
-        if len(archival) > 0:
+        if archival and len(archival) > 0:
             url = urljoin(host, archival[0].path)
-        elif len(streaming) > 0:
+        elif streaming and len(streaming) > 0:
             url = urljoin(host, streaming[0].path)
     else:
         # Legacy way of using streaming prior to streaming
