@@ -305,7 +305,7 @@ def find_media(args, src_api, dest_api, dest_project):
                     existing_section = dest_api.get_section_list(dest_project.id, name=section.name)
                     if existing_section:
                         existing = dest_api.get_media_list(dest_project.id,
-                                                           section=existing_section.id)
+                                                           section=existing_section[0].id)
                         existing_names = [m.name for m in existing]
                         section_media = [m for m in section_media if m.name not in existing_names]
                 logger.info(f"{len(section_media)} media from section {section.name} will be "
@@ -315,11 +315,19 @@ def find_media(args, src_api, dest_api, dest_project):
             media = src_api.get_media_list(args.project)
             num_src_media = len(media)
             if dest_project is not None:
+                src_sections = src_api.get_section_list(args.project)
+                dest_sections = dest_api.get_section_list(dest_project.id)
+                src_section_names = {s.tator_user_sections: s.name for s in src_sections}
+                dest_section_names = {s.tator_user_sections: s.name for s in dest_sections}
+                src_section_names[None] = None
+                dest_section_names[None] = None
                 existing = dest_api.get_media_list(dest_project.id)
-                existing_name_section = [(m.name, m.attributes.get('tator_user_sections', None))
-                                         for m in existing]
+                existing_name_section = [
+                    (m.name, dest_section_names[m.attributes.get('tator_user_sections', None)])
+                    for m in existing
+                ]
                 media = [m for m in media
-                         if (m.name, m.attributes.get('tator_user_sections', None))
+                         if (m.name, src_section_names[m.attributes.get('tator_user_sections', None)])
                          not in existing_name_section]
             logger.info(f"{len(media)} media will be created ({num_src_media - len(media)} "
                          "already exist).")
@@ -411,8 +419,8 @@ def create_memberships(src_api, dest_api, dest_project, memberships, users):
             num_skipped += 1
         else:
             dest_user = dest_users[0]
-            response = dest_api.create_membership({'user': dest_user.id,
-                                                   'permission': membership.permission})
+            spec = {'user': dest_user.id, 'permission': membership.permission}
+            response = dest_api.create_membership(dest_project, membership_spec=spec)
             assert(isinstance(response, tator.models.CreateResponse))
             num_created += 1
     msg = f"Created {num_created} memberships."
