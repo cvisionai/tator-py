@@ -3,6 +3,7 @@ import os
 import requests
 import subprocess
 import tempfile
+from uuid import uuid1
 
 from tator.transcode.upload import upload_file
 import tator
@@ -21,17 +22,17 @@ def _download_file(headers, url, out_path):
                     chunk_count += 1
                     f.write(chunk)
 
-def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=None):
+def make_multi_stream(api, type_id, layout,name, media_ids,section,quality=None):
     """ Uploads a single media file.
 
     :param api: :class:`tator.TatorApi` object.
     :param type_id: Unique integer identifying a multi-stream media type.
-    :param layout: Path to the media file.
+    :param layout: 2 element list of integers defining layout as [rows, cols].
     :param name: Name of the file to use
     :param media_ids: List of media_ids to multi-stream
+    :param section: Section name. If this section does not exist it will be created.
     :param quality: [Optional] Media section to upload to.
-    :param section [Optional]: Section attribute to apply to media element (tator_user_sections value, typically a UUID).
-    :returns: Boolean representing success (True means success)
+    :returns: Response from media object creation.
     """
 
     # Fetch the stuff we need to download files
@@ -46,6 +47,15 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
     # Fetch the media type
     multi_stream_type = api.get_media_type(type_id)
     project = multi_stream_type.project
+   
+    # Fetch the section. If it does not exist, create it. 
+    sections = api.get_section_list(project, name=section)
+    if len(sections) == 0:
+        section_spec = {'name': section, 'tator_user_sections': str(uuid1())}
+        response = api.create_section(project, section_spec=section_spec)
+        section_obj = api.get_section_list(project, name=section)[0]
+    else:
+        section_obj = sections[0]
 
     assert(len(media_ids) == layout[0]*layout[1])
 
@@ -58,7 +68,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
 
     attributes={}
     if section:
-        attributes.update({"tator_user_sections": section})
+        attributes.update({"tator_user_sections": section_obj.tator_user_sections})
 
     headers = {
         'Authorization': f'{prefix} {token}',
@@ -121,19 +131,11 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
 
         md5=tator.util.md5sum(os.path.join(d,'tiled_gif.gif'))
 
-        section_name = None
-        if section:
-            sections = api.get_section_list(project)
-            for this_section in sections:
-                if this_section.tator_user_sections == section:
-                    section_name = this_section.name
-                    break
-
         media_spec = {'attributes':attributes,
                       'name':name,
                       'thumbnail_url':thumbnail_url,
                       'md5': md5,
-                      'section':section_name,
+                      'section':section_obj.name,
                       'type':type_id}
 
         resp = api.create_media(project,media_spec)
@@ -147,6 +149,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
                          {"thumbnail_gif_url": thumbnail_gif_url,
                           "thumbnail_url": thumbnail_url,
                           "media_files": media_files})
+        return resp
 
 
 
