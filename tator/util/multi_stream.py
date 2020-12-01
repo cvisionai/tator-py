@@ -20,7 +20,7 @@ def _download_file(headers, url, out_path):
                 if chunk:
                     chunk_count += 1
                     f.write(chunk)
-                    
+
 def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=None):
     """ Uploads a single media file.
 
@@ -30,7 +30,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
     :param name: Name of the file to use
     :param media_ids: List of media_ids to multi-stream
     :param quality: [Optional] Media section to upload to.
-    :param section [Optional]: Section attribute to apply to media element
+    :param section [Optional]: Section attribute to apply to media element (tator_user_sections value, typically a UUID).
     :returns: Boolean representing success (True means success)
     """
 
@@ -48,7 +48,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
     project = multi_stream_type.project
 
     assert(len(media_ids) == layout[0]*layout[1])
-    
+
     media_objects = api.get_media_list(project,media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
@@ -65,7 +65,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
         'Content-Type': f'application/json',
         'Accept-Encoding': 'gzip',
     }
-    
+
     # Download the thumbnails into a temporary
     with tempfile.TemporaryDirectory() as d:
         for pos,media_id in enumerate(media_ids):
@@ -121,13 +121,21 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
 
         md5=tator.util.md5sum(os.path.join(d,'tiled_gif.gif'))
 
+        section_name = None
+        if section:
+            sections = api.get_section_list(project)
+            for this_section in sections:
+                if this_section.tator_user_sections == section:
+                    section_name = this_section.name
+                    break
+
         media_spec = {'attributes':attributes,
                       'name':name,
                       'thumbnail_url':thumbnail_url,
                       'md5': md5,
-                      'section':section,
+                      'section':section_name,
                       'type':type_id}
-        
+
         resp = api.create_media(project,media_spec)
 
         print(f"Created {resp.id}")
@@ -139,17 +147,17 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section=None,quality=
                          {"thumbnail_gif_url": thumbnail_gif_url,
                           "thumbnail_url": thumbnail_url,
                           "media_files": media_files})
-        
-        
-        
-                                   
 
-            
-            
-                           
-    
 
-        
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
