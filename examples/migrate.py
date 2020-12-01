@@ -27,6 +27,7 @@ def parse_args():
     Destination project may be on a different host. Migrations are additive; this script cannot
     delete data. The following objects will be migrated unless explicitly skipped or if the objects
     already exist:
+    - Memberships (idempotent, based on matching username)
     - Sections (idempotent, based on section name)
     - Versions (idempotent, based on version name)
     - Media types (idempotent, based on media type name)
@@ -37,14 +38,18 @@ def parse_args():
     - Localizations (only migrated if parent media is migrated)
     - States (only migrated if parent media is migrated)
     - Leaves (idempotent, based on path)
-    The following objects must be explicitly included in the migration:
-    - Projects (idempotent, based on project name)
-    - Memberships (idempotent, based on matching username)
+
+    If the --dest_project is not specified, a new project will be created with the name
+    specified by --new_project_name or with the same name if neither are given.
 
     Examples:
+    Duplicate a project on same host
+    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --new_project_name
+    'My Cloned Project'
+
     Migrate project settings on same host
-    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --skip_sections
-    --skip_media
+    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --dest_project 2
+    --skip_sections --skip_media
 
     Migrate media only to existing project
     python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --dest_project 2
@@ -65,10 +70,15 @@ def parse_args():
                                              'not given the destination project is assumed to be '
                                              'on the same host as the source.')
     parser.add_argument('--dest_project', help='Destination project, if it already exists. '
-                                               'Alternatively, use --include_project to create a '
-                                               'new project.', type=int)
+                                               'If omitted, a new project will be created using '
+                                               'either the same name or the name specified by '
+                                               '--new_project_name.', type=int)
+    parser.add_argument('--new_project_name', help='Name to user for new project if --dest_project '
+                                                   'is omitted.', type=str)
     parser.add_argument('--sections', help='Specific sections to migrate. If not given, all media '
                                            'in the source project will be migrated.', nargs='+')
+    parser.add_argument('--skip_memberships', help='If given, membership objects will not be migrated.',
+                        action='store_true')
     parser.add_argument('--skip_sections', help='If given, section objects will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_versions', help='If given, version objects will not be migrated.',
@@ -90,10 +100,6 @@ def parse_args():
     parser.add_argument('--skip_states', help='If given, states will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_leaves', help='If given, leaves will not be migrated.',
-                        action='store_true')
-    parser.add_argument('--include_project', help='If given, a new project will be created if an '
-                                                  'existing project with matching name does not '
-                                                  'already exist.',
                         action='store_true')
     parser.add_argument('--include_memberships', help='If given, memberships will be migrated.',
                         action='store_true')
@@ -129,7 +135,8 @@ def find_dest_project(args, src_api, dest_api):
                 logger.info(f"Migrating to existing project with ID {project_obj.id}.")
                 break
         if dest_project is None:
-            logger.info(f"New project with name {src_project.name} will be created.")
+            name = args.new_project_name if args.new_project_name else src_project.name
+            logger.info(f"New project with name {name} will be created.")
     return dest_project
 
 def find_sections(args, src_api, dest_api, dest_project):
@@ -357,7 +364,8 @@ def create_project(args, src_api, dest_api, dest_project):
     """
     if dest_project is None:
         src_project = src_api.get_project(args.project)
-        spec = {'name': src_project.name}
+        name = args.new_project_name if args.new_project_name else src_project.name
+        spec = {'name': name}
         if src_project.summary:
             spec['summary'] = src_project.summary
         response = dest_api.create_project(project_spec=spec)
