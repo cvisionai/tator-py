@@ -6,6 +6,17 @@ import tator
 
 from._common import assert_vector_equal
 
+def test_clone_multi(host, token, project, multi_type, multi):
+    tator_api = tator.get_api(host, token)
+    multi_obj = tator_api.get_media(multi)
+    response = tator_api.clone_media_list(project=project,
+                                          media_id=[multi],
+                                          clone_media_spec={'dest_project': project,
+                                                            'dest_section': 'Cloned multi',
+                                                            'dest_type': multi_type})
+    assert isinstance(response, tator.models.CreateListResponse)
+    assert len(response.id) == 1
+
 def test_clone_videos(host, token, project, video_type, video):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
@@ -13,7 +24,7 @@ def test_clone_videos(host, token, project, video_type, video):
     response = tator_api.clone_media_list(project=project,
                                           media_id=[video],
                                           clone_media_spec={'dest_project': project,
-                                                            'dest_section': 'Cloned media',
+                                                            'dest_section': 'Cloned video',
                                                             'dest_type': video_type})
     assert isinstance(response, tator.models.CreateListResponse)
     assert len(response.id) == 1
@@ -33,7 +44,7 @@ def test_clone_images(host, token, project, image_type, image):
     response = tator_api.clone_media_list(project=project,
                                           media_id=[image],
                                           clone_media_spec={'dest_project': project,
-                                                            'dest_section': 'Cloned media',
+                                                            'dest_section': 'Cloned image',
                                                             'dest_type': image_type})
     assert isinstance(response, tator.models.CreateListResponse)
     assert len(response.id) == 1
