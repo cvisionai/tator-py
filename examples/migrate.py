@@ -139,6 +139,26 @@ def find_dest_project(args, src_api, dest_api):
             logger.info(f"New project with name {name} will be created.")
     return dest_project
 
+def find_memberships(args, src_api, dest_api, dest_project):
+    """ Finds existing memberships in destination project. Returns users corresponding to
+        memberships in source project that need to be created.
+    """
+    memberships = []
+    if args.skip_memberships:
+        logger.info(f"Skipping memberships due to --skip_memberships.")
+    else:
+        memberships = src_api.get_membership_list(args.project)
+        users = [src_api.get_user(membership.user) for membership in memberships]
+        num_src = len(memberships)
+        if dest_project is not None:
+            existing = dest_api.get_membership_list(dest_project.id)
+            existing_users = [dest_api.get_user(membership.user) for membership in existing]
+            existing_usernames = [user.username for user in existing_users]
+            users = [user for user in users if user.username not in existing_usernames]
+        logger.info(f"{len(users)} memberships will be created ({num_src - len(users)} "
+                     "already exist).")
+    return memberships
+
 def find_sections(args, src_api, dest_api, dest_project):
     """ Finds existing sections in destination project. Returns sections in source project
         that need to be created and sections for which media should be migrated.
@@ -148,13 +168,15 @@ def find_sections(args, src_api, dest_api, dest_project):
         logger.info(f"Skipping sections due to --skip_sections.")
     else:
         sections = src_api.get_section_list(args.project)
+        num_src = len(sections)
         if args.sections:
             sections = [section for section in sections if section.name in args.sections]
         if dest_project is not None:
             existing = dest_api.get_section_list(dest_project.id)
             existing_names = [section.name for section in existing]
             sections = [section for section in sections if section.name not in existing_names]
-        logger.info(f"{len(sections)} sections will be created.")
+        logger.info(f"{len(sections)} sections will be created ({num_src - len(sections)} "
+                     "already exist).")
     return sections
 
 def find_versions(args, src_api, dest_api, dest_project):
@@ -536,6 +558,7 @@ if __name__ == '__main__':
     src_api, dest_api = setup_apis(args)
     # Find which resources need to be migrated.
     dest_project = find_dest_project(args, src_api, dest_api)
+    users = find_memberships(args, src_api, dest_api, dest_project)
     sections = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
     media_types, media_type_mapping = find_media_types(args, src_api, dest_api, dest_project)
