@@ -112,7 +112,7 @@ def setup_apis(args):
     src_api = tator.get_api(host=args.host, token=args.token)
     if (args.dest_host is not None) and (args.dest_token is not None):
         dest_api = tator.get_api(host=args.dest_host, token=args.dest_token)
-        logger.info(f"Migrating to different host ({args.dest_host}).")
+        logger.info(f"Migrating to different host (to {args.dest_host} from {args.host}).")
     else:
         dest_api = src_api
         logger.info(f"Migrating to same host ({args.host}).")
