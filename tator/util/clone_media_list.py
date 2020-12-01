@@ -131,7 +131,7 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
 
     # Clone the media.
     created_ids = []
-    if dest_api is None:
+    if (dest_api is None) or (dest_api is src_api):
         for idx in range(0, len(medias), 100): # Go in batches of 100
             # Clone media locally.
             media_ids = [media.id for media in medias[idx:idx+100]]
@@ -210,5 +210,5 @@ def clone_media_list(src_api, query_params, dest_project, dest_type=-1, dest_sec
                         dest_api.move_video(response.id, move_video_spec={
                             'media_files': {'audio': [media_def]}
                         })
-        created_ids.append(response.id)
-        yield (len(created_ids), total_files, response, id_map)
+            created_ids.append(response.id)
+            yield (len(created_ids), total_files, response, id_map)
