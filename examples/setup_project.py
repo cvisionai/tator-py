@@ -1,9 +1,28 @@
 #!/usr/bin/env python
 
-""" This example demonstrates how to create a project and configure media
-    and metadata type definitions.
+""" Setup Tator Test Project
+
+This example demonstrates how to create a project and configure media
+and metadata type definitions.
+
+There are a few options available in this script:
+
+- Default behavior is to:
+    1. create the image/video/multi media types
+    2. create a test version based off the baseline
+    3. create the box/line/dot localization types
+    4. does not create any state types
+
+- Options are available to add the following state types:
+    1. create a state type that utilizes the latest interpolation and frame association attributes
+       with bool states
+    2. create a few state types that utilize the attr_style_range interpolation and frame
+       association attributes
+    3. create a state type that utilizes no interpolation and localization association attributes
+
 """
 
+import argparse
 import logging
 import sys
 
@@ -12,18 +31,158 @@ import tator
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-if __name__ == '__main__':
-    parser = tator.get_parser()
-    parser.add_argument('--name', type=str,required=True)
-    args = parser.parse_args()
-    tator_api = tator.get_api(args.host, args.token)
+def create_latest_state_types(
+        tator_api,
+        project,
+        video_type_id,
+        multi_type_id):
+    """ Create a state type using latest interpolation and frame association
+    """
 
-    # Create the project.
-    result = tator_api.create_project(project_spec={
-        'name': args.name, 'summary': 'A test project.',
-    })
-    project = result.id
-    logger.info(result.message)
+    spec = {
+        "name": "Test State",
+        "description": "Test latest/frame state",
+        "dtype": "state",
+        "interpolation": "latest",
+        "association": "Frame",
+        "visible": True,
+        "grouping_default": True,
+        "media_types": [video_type_id, multi_type_id],
+        "attribute_types": [
+            {
+                "name": "Activity 1",
+                "dtype": "bool",
+                "default": False,
+                "order": 0,
+            },
+            {
+                "name": "Activity 2",
+                "dtype": "bool",
+                "default": False,
+                "order": 1,
+            },
+        ]
+    }
+
+    response = tator_api.create_state_type(project=project, state_type_spec=spec)
+    logger.info(response.message)
+
+    return response.id
+
+def create_attr_style_range_state_types(
+        tator_api,
+        project,
+        video_type_id):
+    """ Create a few state types using attr_style_range interpolation and frame association
+    """
+
+    type_ids = []
+
+    for index in range(5):
+        spec = {
+            "name": f"Test Event {index}",
+            "description": f"Test event {index} information",
+            "dtype": "state",
+            "interpolation": "attr_style_range",
+            "association": "Frame",
+            "visible": True,
+            "grouping_default": False,
+            "media_types": [video_type_id],
+            "attribute_types": [
+                {
+                    "name": "Start Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "start_frame",
+                },
+                {
+                    "name": "End Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "end_frame",
+                },
+                {
+                    "name": "Starts In This Video",
+                    "dtype": "bool",
+                    "default": True,
+                    "style": "start_frame_check"
+                },
+                {
+                    "name": "Ends In This Video",
+                    "dtype": "bool",
+                    "default": True,
+                    "style": "end_frame_check"
+                },
+                {
+                    "name": "Notes Area",
+                    "dtype": "string",
+                    "default": "",
+                    "style": "long_string",
+                },
+                {
+                    "name": "Disabled Notes Area",
+                    "dtype": "string",
+                    "default": "Not verified",
+                    "style": "disabled long_string"
+                },
+                {
+                    "name": "Disabled Field 1",
+                    "dtype": "int",
+                    "style": "disabled",
+                },
+                {
+                    "name": "Disabled Field 2",
+                    "dtype": "string",
+                    "style": "disabled",
+                },
+            ]
+        }
+
+        response = tator_api.create_state_type(project=project, state_type_spec=spec)
+        logger.info(response.message)
+        type_ids.append(response.id)
+
+    return type_ids
+
+def create_track_type(
+        tator_api,
+        project,
+        video_type_id):
+    """ Create a state type using no interpolation and localization association
+    """
+
+    spec = {
+      "name": "Test Track",
+      "description": f"Test track using localizations as detections",
+      "interpolation": "none",
+      "association": "Localization",
+      "visible": True,
+      "grouping_default": True,
+      "media_types": [video_type_id],
+      "attribute_types": [
+        {
+          "name": "Label",
+          "dtype": "string",
+          "order": 0,
+          "default": "",
+        },
+        {
+          "name": "Confidence",
+          "dtype": "float",
+          "order": 1,
+          "default": 0.0,
+        },
+      ]
+    }
+
+    response = tator_api.create_state_type(project=project, state_type_spec=spec)
+    logger.info(response.message)
+
+def create_media_types(tator_api, project):
+    """
+    """
 
     # Create image type.
     result = tator_api.create_media_type(project, media_type_spec={
@@ -142,18 +301,33 @@ if __name__ == '__main__':
     video_type = result.id
     logger.info(result.message)
 
-    # Get baseline version.
-    baseline_version = tator_api.get_version_list(project)[0].id
-
-    # Create additional version.
-    result = tator_api.create_version(project, version_spec={
-        "name": "Test Version",
-        "description": "A test version.",
-        "show_empty": True,
-        "bases": [baseline_version],
+    # Create multi type
+    result = tator_api.create_media_type(project, media_type_spec={
+        "name": "Test Multi Video",
+        "description": "A test multi video type.",
+        "dtype": "multi",
+        "attribute_types": [
+            {
+              "name": "Test String",
+              "dtype": "string",
+              "style": "long_string",
+              "order": 0
+            },
+        ]
     })
-    version = result.id
+    multi_type = result.id
     logger.info(result.message)
+
+    return image_type, video_type, multi_type
+
+def create_localization_types(
+        tator_api,
+        project,
+        image_type,
+        video_type,
+        version_color_map):
+    """
+    """
 
     # Create box type.
     result = tator_api.create_localization_type(project, localization_type_spec={
@@ -289,10 +463,7 @@ if __name__ == '__main__':
         "media_types": [image_type, video_type],
         "colorMap": {
           "default": [255, 0, 0],
-          "version": {
-              baseline_version: [0, 255, 0],
-              version: [0, 0, 255]
-          }
+          "version": version_color_map
         },
         "attribute_types": [
             {
@@ -346,4 +517,89 @@ if __name__ == '__main__':
     })
     dot_type = result.id
     logger.info(result.message)
+
+    return box_type, line_type, dot_type
+
+def parse_args() -> argparse.Namespace:
+    """ Process arguments
+    """
+    parser = tator.get_parser()
+    parser.add_argument("--name", type=str, required=True, help="New project's name")
+    parser.add_argument("--create-state-latest-type", action="store_true", help="Create a state type with latest interpolation/frame association attributes")
+    parser.add_argument("--create-state-range-type", action="store_true", help="Create state types with attr_style_range interpolation/frame association")
+    parser.add_argument("--create-track-type", action="store_true", help="Create a state type with localization association")
+    args = parser.parse_args()
+
+    return args
+
+def main() -> None:
+    """
+    """
+
+    args = parse_args()
+
+    tator_api = tator.get_api(args.host, args.token)
+
+    # Create the test project
+    result = tator_api.create_project(project_spec={
+        'name': args.name,
+        'summary': 'A test project.',
+    })
+    project = result.id
+    logger.info(result.message)
+
+    # Create the media types
+    image_type, video_type, multi_type = create_media_types(tator_api=tator_api, project=project)
+
+    # Get the baseline version
+    baseline_version = tator_api.get_version_list(project)[0].id
+
+    # Create another version that is based off the baseline
+    result = tator_api.create_version(project, version_spec={
+        "name": "Test Version",
+        "description": "A test version.",
+        "show_empty": True,
+        "bases": [baseline_version],
+    })
+    version = result.id
+    logger.info(result.message)
+
+    version_color_map = {
+        baseline_version: [0, 255, 0],
+        version: [0, 0, 255]
+    }
+
+    # Create the localization types
+    box_type, line_type, dot_type = create_localization_types(
+        tator_api=tator_api,
+        project=project,
+        image_type=image_type,
+        video_type=video_type,
+        version_color_map=version_color_map)
+
+    # Create the state types if asked
+    if args.create_state_latest_type:
+        create_latest_state_types(
+            tator_api=tator_api,
+            project=project,
+            video_type_id=video_type,
+            multi_type_id=multi_type)
+
+    if args.create_state_range_type:
+        create_attr_style_range_state_types(
+            tator_api=tator_api,
+            project=project,
+            video_type_id=video_type)
+
+    if args.create_track_type:
+        create_track_type(
+            tator_api=tator_api,
+            project=project,
+            video_type_id=video_type)
+
+    # fin.
     logger.info("Test project setup complete!")
+
+if __name__ == '__main__':
+
+    main()
