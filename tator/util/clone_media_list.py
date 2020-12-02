@@ -160,8 +160,6 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             media_spec = {
                 'type': dest_type,
                 'name': media.name,
-                'gid': media.gid,
-                'uid': media.uid,
                 'md5': media.md5,
                 'fps': media.fps,
                 'num_frames': media.num_frames,
@@ -171,6 +169,10 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                 'attributes': attributes,
                 'section': dest_section if dest_section else media.section,
             }
+            if media.gid:
+                media_spec['gid'] = media.gid
+            if media.uid:
+                media_spec['uid'] = media.uid
             # Transfer thumbnails and image.
             media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}')
 
