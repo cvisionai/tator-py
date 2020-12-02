@@ -545,16 +545,20 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
         key = (media_type_mapping[single.meta],
                section_mapping[single.attributes.get('tator_user_sections', None)])
         media_ids[key].append(single.id)
+    # Sort keys so that multi are created after images/videos.
+    sorter = lambda mtype: 1 if dest_api.get_media_type(mtype[0]).dtype == 'multi' else 0
+    keys = list(media_ids.keys())
+    keys.sort(key=sorter)
     # Iterate through type/sections and create media.
     use_dest_api = None if src_api is dest_api else dest_api
     total_created = 0
-    for key in media_ids:
+    for key in keys:
         dest_type, dest_section = key
         for idx in range(0, len(media_ids[key]), 100): # Do batching here to manage ID query size.
             query_params = {'project': args.project,
                             'media_id': media_ids[key][idx:idx+100]}
-            generator = tator.util.clone_media_list(src_api, query_params, dest_project, dest_type,
-                                                    dest_section, use_dest_api)
+            generator = tator.util.clone_media_list(src_api, query_params, dest_project, media_mapping,
+                                                    dest_type, dest_section, use_dest_api)
             for _, _, response, id_map in generator:
                 if isinstance(response, tator.models.CreateResponse):
                     total_created += 1
