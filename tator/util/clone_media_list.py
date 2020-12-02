@@ -226,12 +226,10 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                                              "mapping! Individual videos should be migrated "
                                              "before multi videos.")
                     update = {'media_files': {'ids': dest_ids}}
-                    response = dest_api.update_media(response.id, media_update=update)
-                if media.media_files.layout:
-                    update = {'media_files': {'layout': media.media_files.layout}}
-                    response = dest_api.update_media(response.id, media_update=update)
-                if media.media_files.quality:
-                    update = {'media_files': {'quality': media.media_files.quality}}
-                    response = dest_api.update_media(response.id, media_update=update)
+                    if media.media_files.layout:
+                        update['media_files']['layout'] = media.media_files.layout
+                    if media.media_files.quality:
+                        update['media_files']['quality'] = media.media_files.quality
+                    dest_api.update_media(response.id, media_update=update)
             created_ids.append(response.id)
             yield (len(created_ids), total_files, response, id_map)
