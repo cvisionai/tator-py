@@ -93,6 +93,7 @@ def image_type(request, project):
         'description': 'Test image type',
         'project': project,
         'dtype': 'image',
+        'attribute_types': make_attribute_types(),
     })
     image_type_id = response.id
     yield image_type_id
@@ -173,6 +174,7 @@ def video_type(request, project):
         'description': 'Test video type',
         'project': project,
         'dtype': 'video',
+        'attribute_types': make_attribute_types(),
     })
     video_type_id = response.id
     yield video_type_id
@@ -188,6 +190,7 @@ def multi_type(request, project):
         'description': 'Test multi type',
         'project': project,
         'dtype': 'multi',
+        'attribute_types': make_attribute_types(),
     })
     multi_type_id = response.id
     yield multi_type_id
