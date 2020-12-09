@@ -78,9 +78,63 @@ def create_attr_style_range_state_types(
 
     type_ids = []
 
-    for index in range(5):
+    for index in range(1):
         spec = {
-            "name": f"Test Event {index}",
+            "name": f"Single Range {index}",
+            "description": f"Test event {index} information",
+            "dtype": "state",
+            "interpolation": "attr_style_range",
+            "association": "Frame",
+            "visible": True,
+            "grouping_default": False,
+            "media_types": [video_type_id],
+            "attribute_types": [
+                {
+                    "name": "Start Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "start_frame",
+                },
+                {
+                    "name": "End Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "end_frame",
+                },
+                {
+                    "name": "Notes Area",
+                    "dtype": "string",
+                    "default": "",
+                    "style": "long_string",
+                },
+                {
+                    "name": "Disabled Notes Area",
+                    "dtype": "string",
+                    "default": "Not verified",
+                    "style": "disabled long_string"
+                },
+                {
+                    "name": "Disabled Field 1",
+                    "dtype": "int",
+                    "style": "disabled",
+                },
+                {
+                    "name": "Disabled Field 2",
+                    "dtype": "string",
+                    "style": "disabled",
+                },
+            ]
+        }
+
+        response = tator_api.create_state_type(project=project, state_type_spec=spec)
+        logger.info(response.message)
+        type_ids.append(response.id)
+
+    for index in range(1):
+        spec = {
+            "name": f"Single Range (Endchecks) {index}",
             "description": f"Test event {index} information",
             "dtype": "state",
             "interpolation": "attr_style_range",
@@ -143,6 +197,128 @@ def create_attr_style_range_state_types(
         response = tator_api.create_state_type(project=project, state_type_spec=spec)
         logger.info(response.message)
         type_ids.append(response.id)
+
+    for index in range(1):
+        spec = {
+            "name": f"Test Multirange {index}",
+            "description": f"Test event {index} information",
+            "dtype": "state",
+            "interpolation": "attr_style_range",
+            "association": "Frame",
+            "visible": True,
+            "grouping_default": False,
+            "media_types": [video_type_id],
+            "attribute_types": [
+                {
+                    "name": "Range2",
+                    "default": "Range2 Start Frame|Range2 End Frame|Range2 In Video",
+                    "dtype": "string",
+                    "style": "range_set",
+                    "order": -2,
+                },
+                {
+                    "name": "Range 3",
+                    "default": "Range3 Start Frame|Range3 End Frame|Range3 In Video",
+                    "dtype": "string",
+                    "style": "range_set",
+                    "order": -3,
+                },
+                {
+                    "name": "Range 1",
+                    "default": "Range1 Start Frame|Range1 End Frame|Range1 In Video",
+                    "dtype": "string",
+                    "style": "range_set",
+                    "order": -1,
+                },
+                {
+                    "name": "Range1 In Video",
+                    "dtype": "bool",
+                    "default": False,
+                    "style": "in_video_check",
+                },
+                {
+                    "name": "Range1 Start Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "start_frame",
+                },
+                {
+                    "name": "Range1 End Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "end_frame",
+                },
+                {
+                    "name": "Range2 In Video",
+                    "dtype": "bool",
+                    "default": False,
+                    "style": "in_video_check",
+                },
+                {
+                    "name": "Range2 Start Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "start_frame",
+                },
+                {
+                    "name": "Range2 End Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "end_frame",
+                },
+                {
+                    "name": "Range3 In Video",
+                    "dtype": "bool",
+                    "default": False,
+                    "style": "in_video_check",
+                },
+                {
+                    "name": "Range3 Start Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "start_frame",
+                },
+                {
+                    "name": "Range3 End Frame",
+                    "dtype": "int",
+                    "default": -1,
+                    "minimum": -1,
+                    "style": "end_frame",
+                },
+                {
+                    "name": "Notes Area",
+                    "dtype": "string",
+                    "default": "",
+                    "style": "long_string",
+                },
+                {
+                    "name": "Disabled Notes Area",
+                    "dtype": "string",
+                    "default": "Not verified",
+                    "style": "disabled long_string"
+                },
+                {
+                    "name": "Disabled Field 1",
+                    "dtype": "int",
+                    "style": "disabled",
+                },
+                {
+                    "name": "Disabled Field 2",
+                    "dtype": "string",
+                    "style": "disabled",
+                },
+            ]
+        }
+
+        response = tator_api.create_state_type(project=project, state_type_spec=spec)
+        logger.info(response.message)
+        type_ids.append(response.id)
+
 
     return type_ids
 
