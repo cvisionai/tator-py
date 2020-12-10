@@ -4,8 +4,11 @@ Script that gathers the localization information of a particular section.
 Thumbnails can of each localization can also be generated.
 """
 import argparse
+import datetime
+import glob
 import logging
 import os
+import pathlib
 import shutil
 import sys
 import traceback
@@ -79,7 +82,8 @@ def process_localization(
         attribute_types_info: dict,
         image_folder: str,
         disable_thumbnails: bool,
-        thumbnail_filename_pattern: str) -> dict:
+        thumbnail_filename_pattern: str,
+        print_timing_info: bool) -> dict:
     """ Returns a dictionary of localization properties and generates a thumbnail image
 
     Args:
@@ -94,6 +98,7 @@ def process_localization(
         image_folder: Folder that will contain the thumbnail image
         disable_thumbnails: Don't create thumbnails if true
         thumbnail_filename_pattern: Refer to the help description
+        print_timing_info: True if timing info should be printed to console / logger
 
     Returns:
         Dictionary of localization data. Keys are localization properties.
@@ -180,6 +185,33 @@ def process_localization(
                 margin_y=50)
 
         else:
+
+            try:
+                start = datetime.datetime.now()
+
+                if print_timing_info:
+                    msg = f"...Getting graphic of {localization.id}"
+                    print(msg)
+                    logging.info(msg)
+
+                timeout_sec = 10
+                image_path = tator_api.get_localization_graphic(localization.id, _request_timeout=timeout_sec)
+                end = datetime.datetime.now()
+
+                if print_timing_info:
+                    msg = f"...done. ({(end - start).total_seconds()} seconds)"
+                    print(msg)
+                    logging.info(msg)
+
+            except Exception:
+                log_msg = f"ERROR: Problem with get_localization_graphic({localization.id})"
+                logging.error(log_msg)
+
+                error_msg = traceback.format_exc()
+                logging.error(error_msg)
+
+                raise ValueError(log_msg)
+            """
             try:
                 image_path = tator_api.get_localization_graphic(localization.id)
             except:
@@ -196,7 +228,7 @@ def process_localization(
                     use_default_margins=False,
                     margin_x=1,
                     margin_y=1)
-
+            """
         # We will strip off the extension from the media name
         media_name_str = os.path.splitext(sanitize_string(media.name))[0]
 
@@ -311,7 +343,8 @@ def process_section(
         summary_filename: str=None,
         image_folder: str='images',
         disable_thumbnails: bool=False,
-        thumbnail_filename_pattern: str=None) -> None:
+        thumbnail_filename_pattern: str=None,
+        print_timing_info: bool=False) -> None:
     """ Creates the report for the given project section
 
     Args:
@@ -328,6 +361,7 @@ def process_section(
         image_folder: Folder that will contain the thumbnail image
         disable_thumbnails: Don't create thumbnails if true
         thumbnail_filename_pattern: Refer to the help description
+        print_timing_info: True if timing info should be printed to console / logger
 
     Postconditions:
         Images of the localizations created in the image folder
@@ -340,40 +374,71 @@ def process_section(
     # it in a dictionary. This dictionary will then be stored in a list to be written out to file.
     report_data = []
 
-    for media in bar(medias):
+    print("-------------------------------------------------------------------------------")
+    print(f"Processing section: {section_name}")
+    print("-------------------------------------------------------------------------------")
+    logging.info(f"Processing section: {section_name}")
+
+    for media_index, media in enumerate(medias):
+
+        msg = f"Processing localizations of media (ID={media.id}) {media_index+1}/{len(medias)}"
+        print(msg)
+        logging.info(msg)
 
         # Loop through each of the localizations associated with this media
         # Process the localization and get the report data
         try:
             errors_detected = 0
             localizations = tator_api.get_localization_list(project=project_id, media_id=[media.id])
-            for localization in localizations:
-                try:
-                    datum = process_localization(
-                        host=host,
-                        project_id=project_id,
-                        tator_api=tator_api,
-                        section_name=section_name,
-                        media=media,
-                        localization=localization,
-                        localization_types_df=localization_types_df,
-                        attribute_types_info=attribute_types_info,
-                        image_folder=image_folder,
-                        disable_thumbnails=disable_thumbnails,
-                        thumbnail_filename_pattern=thumbnail_filename_pattern)
-                    report_data.append(datum)
+            processed_localization_count = 0
 
-                except Exception:
-                    error_msg = f'Error encountered processing localization {localization.id}'
-                    logging.error(error_msg)
+            log_msg = f'Number of localizations: {len(localizations)}'
+            logging.info(log_msg)
 
-                    error_msg = traceback.format_exc()
-                    logging.error(error_msg)
+            bar = progressbar.ProgressBar()
+            for localization in bar(localizations):
 
-                    errors_detected += 1
+                try_count = 1
+                max_retries = 10
+
+                while try_count < max_retries:
+                    try:
+                        datum = process_localization(
+                            host=host,
+                            project_id=project_id,
+                            tator_api=tator_api,
+                            section_name=section_name,
+                            media=media,
+                            localization=localization,
+                            localization_types_df=localization_types_df,
+                            attribute_types_info=attribute_types_info,
+                            image_folder=image_folder,
+                            disable_thumbnails=disable_thumbnails,
+                            thumbnail_filename_pattern=thumbnail_filename_pattern,
+                            print_timing_info=print_timing_info)
+                        report_data.append(datum)
+
+                        processed_localization_count += 1
+                        break
+
+                    except Exception:
+                        error_msg = f'Error encountered processing localization {localization.id}. Retrying ({try_count + 1} of {max_retries})'
+                        logging.error(error_msg)
+
+                        error_msg = traceback.format_exc()
+                        logging.error(error_msg)
+
+                        errors_detected += 1
+
+                    try_count += 1
 
             if errors_detected > 0:
-                print(f"ERROR: {errors_detected} localizations (from media: {media.id}) had errors and was not included in the report. Review the .log file for more info.")
+                print(f"WARNING: Retries occurred while processing data. Review the .log file for more info.")
+
+            if len(localizations) != processed_localization_count:
+                error_msg = f'ERROR - not all localizations processed in media: {media.id} ({processed_localization_count} out of {len(localizations)})'
+                print(error_msg)
+                logging.error(error_msg)
 
         except Exception:
             error_msg = f'Error encountered processing localization list from media {media.id}'
@@ -402,7 +467,9 @@ def process_project(
         section_name: str=None,
         summary_filename: str=None,
         disable_thumbnails: bool=False,
-        thumbnail_filename_pattern: str=None) -> None:
+        thumbnail_filename_pattern: str=None,
+        rerun_project: bool=False,
+        print_timing_info: bool=False) -> None:
     """ Creates the summary report and thumbnail image for the given project/section
 
     Args:
@@ -416,6 +483,9 @@ def process_project(
             Only valid if section_name is not None
         disable_thumbnails: Don't create thumbnails if true
         thumbnail_filename_pattern: Refer to the help description
+        rerun_project: Reruns the project starting with the last section processed, using
+                       the list of .csv filenames. Cannot be combined with section_name.
+        print_timing_info: True if timing info should be printed to console / logger
 
     Postconditions:
         Images of localizations created in images/
@@ -471,6 +541,46 @@ def process_project(
     sections = tator_api.get_section_list(project=project_id)
     ignore_summary_filename = True
 
+    if rerun_project:
+        if section_name is not None:
+            error_msg = f"Invalid argument combination - cannot rerun project with a section name"
+            logging.error(error_msg)
+            raise ValueError(error_msg)
+
+        # User is attempting to re-run the project starting with the last section processed.
+        # Grab the _summary.csv filenames in the current directory
+        summary_files = glob.glob('*_summary.csv')
+
+        last_section_file_time = 0
+        last_section = None
+        processed_sections = []
+
+        for filename in summary_files:
+
+            section = filename.split('_summary.csv')[0]
+
+            file_info = pathlib.Path(filename)
+            if last_section_file_time < file_info.stat().st_ctime:
+                last_section = section
+                last_section_file_time = file_info.stat().st_ctime
+
+            processed_sections.append(section)
+
+        filtered_sections = []
+        for section in sections:
+            if section.name not in processed_sections or section.name == last_section:
+                filtered_sections.append(section)
+
+            else:
+                log_msg = f"Skipping section: {section.name}"
+                logging.info(log_msg)
+
+        sections = filtered_sections.copy()
+
+        log_msg = f"Sections to process: {[section.name for section in sections]}"
+        logging.info(log_msg)
+        print(log_msg)
+
     if section_name is not None:
         # Section name specified
         if section_name not in [section.name for section in sections]:
@@ -512,7 +622,8 @@ def process_project(
             attribute_types_info=attribute_types_info,
             summary_filename=section_summary_filename,
             disable_thumbnails=disable_thumbnails,
-            thumbnail_filename_pattern=thumbnail_filename_pattern)
+            thumbnail_filename_pattern=thumbnail_filename_pattern,
+            print_timing_info=print_timing_info)
 
 def main():
     """ Main routine of this script
@@ -539,6 +650,10 @@ def main():
              'Extension of media_name is not included. \n' +
              'Entire string needs to be encapsulated in double quotes. \n' +
              'This argument is ignored if disable-thumbnails is true. ')
+    parser.add_argument('--rerun-project', action='store_true',
+        help='Script will start at the last section it processed (using the current directory of csv filenames)). Do not combine with section option.')
+    parser.add_argument('--print-timing-info', action='store_true',
+        help='Print timing')
     args = parser.parse_args()
 
     logger.info(args)
@@ -551,7 +666,9 @@ def main():
         section_name=args.section,
         summary_filename=args.output,
         disable_thumbnails=args.disable_thumbnails,
-        thumbnail_filename_pattern=args.thumbnail_filename_pattern)
+        thumbnail_filename_pattern=args.thumbnail_filename_pattern,
+        rerun_project=args.rerun_project,
+        print_timing_info=args.print_timing_info)
 
 if __name__=="__main__":
 
