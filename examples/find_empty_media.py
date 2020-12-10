@@ -25,6 +25,21 @@ def parse_args():
                         type=int)
     return parser.parse_args()
 
+def _delete_media(api, project, medias):
+    BATCH_SIZE = 100
+    num_deleted = 0
+    media_ids = [media.id for media in medias]
+    choice = input(f"This will delete {len(media_ids)} media. Continue [y/N]?  ")
+    if choice == 'y':
+        for idx in range(0, len(media_ids), BATCH_SIZE):
+            response = api.delete_media_list(project, media_id=media_ids[idx:idx+BATCH_SIZE])
+            assert(isinstance(response, tator.models.MessageResponse))
+            num_deleted += BATCH_SIZE
+            logger.info(f"Deleted {num_deleted} media...")
+        logger.info(f"Deleted {len(media_ids)} media!")
+    else:
+        logger.info(f"Delete aborted!")
+
 if __name__ == '__main__':
     args = parse_args()
     api = tator.get_api(host=args.host, token=args.token)
@@ -64,4 +79,15 @@ if __name__ == '__main__':
     logger.info(f"{len(no_streaming)} media have no streaming files.")
     logger.info(f"{len(no_archival)} media have no archival files.")
     logger.info(f"{len(neither)} media have neither streaming or archival files.")
-
+    choice = input("Delete empty media? \n  0: Do nothing.\n  1: Delete files with no streaming.\n  "
+                   "2: Delete files with no archival.\n  3: Delete files with no streaming or "
+                   "archival.\n  Selection [0/1/2/3]?  ")
+    if choice == '1':
+        _delete_media(api, args.project, no_streaming)
+    elif choice == '2':
+        _delete_media(api, args.project, no_archival)
+    elif choice == '3':
+        _delete_media(api, args.project, neither)
+    else:
+        logger.info("No action taken!")
+        
