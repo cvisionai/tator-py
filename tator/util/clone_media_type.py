@@ -36,7 +36,6 @@ def clone_media_type(src_api, src_type_id, dest_project, dest_api=None):
     spec = {'name': type_obj.name,
             'description': type_obj.description,
             'dtype': type_obj.dtype,
-            'keep_original': type_obj.keep_original,
             'default_volume': type_obj.default_volume,
             'attribute_types': type_obj.attribute_types}
     if type_obj.file_format:
