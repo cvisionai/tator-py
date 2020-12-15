@@ -101,8 +101,6 @@ def parse_args():
                         action='store_true')
     parser.add_argument('--skip_leaves', help='If given, leaves will not be migrated.',
                         action='store_true')
-    parser.add_argument('--include_memberships', help='If given, memberships will be migrated.',
-                        action='store_true')
     return parser.parse_args()
 
 def setup_apis(args):
