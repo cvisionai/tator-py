@@ -72,12 +72,13 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     print(response.message)
 
     # ES can be slow at indexing so wait for a bit.
-    time.sleep(5)
+    time.sleep(2)
+    params = {'media_id': [video], 'type': state_type}
+    assert(tator_api.get_state_count(project, **params) == len(states))
 
     # Bulk update state attributes.
     bulk_patch = random_state(project, state_type, video_obj)
     bulk_patch = {'attributes': bulk_patch['attributes']}
-    params = {'media_id': [video], 'type': state_type}
     response = tator_api.update_state_list(project, **params,
                                            attribute_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
@@ -98,13 +99,13 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} states...")
     print(f"Finished creating {num_created} states!")
-    time.sleep(5)
+    time.sleep(2)
     assert(tator_api.get_state_count(project, **params) == 2 * len(states))
     
     # Delete all states.
     response = tator_api.delete_state_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)
-    time.sleep(1)
+    time.sleep(2)
 
     # Verify all states are gone.
     states = tator_api.get_state_list(project, **params)

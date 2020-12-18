@@ -78,12 +78,13 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     print(response.message)
 
     # ES can be slow at indexing so wait for a bit.
-    time.sleep(5)
+    time.sleep(2)
+    params = {'media_id': [video], 'type': box_type}
+    assert(tator_api.get_localization_count(project, **params) == len(boxes))
 
     # Bulk update box attributes.
     bulk_patch = random_localization(project, box_type, video_obj)
     bulk_patch = {'attributes': bulk_patch['attributes']}
-    params = {'media_id': [video], 'type': box_type}
     response = tator_api.update_localization_list(project, **params,
                                                   attribute_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
@@ -104,13 +105,13 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} localizations...")
     print(f"Finished creating {num_created} localizations!")
-    time.sleep(5)
+    time.sleep(2)
     assert(tator_api.get_localization_count(project, **params) == 2 * len(boxes))
     
     # Delete all boxes.
     response = tator_api.delete_localization_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)
-    time.sleep(1)
+    time.sleep(2)
 
     # Verify all boxes are gone.
     boxes = tator_api.get_localization_list(project, **params)
