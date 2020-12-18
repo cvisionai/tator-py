@@ -6,6 +6,7 @@ import tempfile
 import logging
 
 import requests
+from urllib.parse import urlsplit
 
 from .md5sum import md5sum
 
@@ -78,7 +79,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     if upload_gid is None:
         upload_gid = str(uuid1())
     if fname is None:
-        fname=os.path.basename(url)
+        fname = os.path.basename(urlsplit(url).path)
     if section is None:
         section="Imported Files"
 
