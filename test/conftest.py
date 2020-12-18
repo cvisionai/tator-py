@@ -197,9 +197,9 @@ def multi_type(request, project):
 
 @pytest.fixture(scope='session')
 def video_file(request):
-    out_path = '/tmp/ForBiggerEscapes.mp4'
+    out_path = '/tmp/AudioVideoSyncTest_BallastMedia.mp4'
     if not os.path.exists(out_path):
-        url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
+        url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
@@ -219,7 +219,7 @@ def video(request, project, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
-        response = tator_api.get_media_list(project, name='ForBiggerEscapes.mp4')
+        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4')
         print("Waiting for transcode...")
         time.sleep(2.5)
         if len(response) == 0:

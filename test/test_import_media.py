@@ -4,7 +4,7 @@ import time
 def test_import_media(host, token, project, video_type):
     api = tator.get_api(host, token)
 
-    url = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
+    url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
     response = tator.util.import_media(api, video_type, url)
     print(response.message)
     while True:
