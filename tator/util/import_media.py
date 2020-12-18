@@ -100,8 +100,8 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         'media_id': media_id,
     }
     # Initiate transcode.
-    if mime.find('video') >= 0:
-        response = api.transcode(project_id, transcode_spec=spec)
-    else:
-        raise NotImplementedError("Media import not supported for images.")
+    if mime is not None:
+        if not (mime.find('video') >= 0):
+            raise NotImplementedError("Media import only supported for video.")
+    response = api.transcode(project_id, transcode_spec=spec)
     return response
