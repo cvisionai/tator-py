@@ -142,19 +142,10 @@ def process_file(api,
                 l['track'] = entry.id
             if found:
                 grouped_by_frame[l['frame']].append(l)
-
-
-    elif mode == "localization_keyframe":
-        for entry in metadata:
-            frame = entry['frame']
-            grouped_by_frame[frame].append(entry)
     else:
         for entry in metadata:
-            if entry['thumbnail_image']:
-                print("Skipping entry with valid thumbnail")
-                continue
-            frame = entry['frame']
-            grouped_by_frame[frame].append(entry)
+            frame = entry.frame
+            grouped_by_frame[frame].append(entry.to_dict())
 
     vid = cv2.VideoCapture(media_file)
     if cv2.__version__ >= "3.2.0":
