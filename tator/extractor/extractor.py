@@ -119,14 +119,7 @@ def process_file(api,
     :param upload_gid: str representation of a unique task id (optional)
     """
     grouped_by_frame = defaultdict(lambda: [])
-    if mode == "state":
-        for entry in metadata:
-            frame = entry['association']['frame']
-            if frame in grouped_by_frame:
-                grouped_by_frame[frame].append(entry)
-            else:
-                grouped_by_frame[frame] = [entry]
-    elif mode == "track_thumbnail":
+    if mode == "track_thumbnail":
 
         # First get the localization_type id
         random_local = api.get_localization(metadata[0].localizations[0])
@@ -172,7 +165,7 @@ def process_file(api,
             if frame_num in grouped_by_frame:
                 print(f"Extracting metadata from {media_file}:{frame_num} of {max_frame}")
                 if mode == 'state' or mode == 'localization_keyframe':
-                    output_name = media_element.name
+                    output_name = media_el.name
                     output_name += f"_{frame_num}.png"
                     output_fp = os.path.join(output_dir, output_name)
                     cv2.imwrite(output_fp, image)
