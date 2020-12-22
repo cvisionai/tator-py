@@ -29,7 +29,7 @@ import shutil
 if __name__=="__main__":
     media_ids = os.getenv('TATOR_MEDIA_IDS').split(',')
     cmd = ["python3",
-           "/extractor.py",
+           "-m", "tator.extractor",
            '--host', os.getenv("TATOR_API_SERVICE").replace('/rest',''),
            "--token",
            os.getenv("TATOR_AUTH_TOKEN"),
