@@ -38,6 +38,8 @@ if __name__=="__main__":
            "--project", os.getenv("TATOR_PROJECT_ID"),
            "--output-tator-section", os.getenv("OUTPUT_SECTION"),
            "--output-type-id", os.getenv("OUTPUT_TYPE_ID"),
+           # Assume PVC is located at work
+           "--work-dir", "/work",
            *media_ids]
 
     p=subprocess.Popen(cmd)
