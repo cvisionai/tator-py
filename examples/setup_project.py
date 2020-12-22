@@ -716,9 +716,9 @@ def main() -> None:
 
     tator_api = tator.get_api(args.host, args.token)
 
-    # Create test organization
+    # Create test organization (reuse project name)
     result = tator_api.create_organization(organization_spec={
-        'name': 'My Organization',
+        'name': args.name,
     })
 
     # Create the test project
