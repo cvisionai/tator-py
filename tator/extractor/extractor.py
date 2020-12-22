@@ -231,6 +231,7 @@ def process_file(api,
                     print(f"Unable to update '_extracted' attribute")
     else:
         if tator_section_output and output_type_id:
+            ep = api.create_state_list if mode == 'state' else api.create_localization_list
             for root, _, files in os.walk(output_dir):
                 for fp in files:
                     full_path = os.path.join(root, fp)
@@ -241,7 +242,31 @@ def process_file(api,
                             section=tator_section_output,
                             upload_gid=upload_gid):
                         pass
-             #TODO: Handle keyframe extraction logic (duping state or localization)
+                    # Now duplicate state or localization(s) that caused the extraction
+                    # into new media
+                    media_id = resp.id
+                    frame_str = os.path.splitext(fp.split('_')[-1])[0]
+                    frame = int(frame_str)
+                    new_meta=[]
+                    for metadata in grouped_by_frame[frame]:
+                        new_obj = {
+                            'frame': 0,
+                            'type': metadata['meta'],
+                            **metadata['attributes']
+                        }
+                        if mode == 'state':
+                            new_obj.update({'media_ids':[media_id]})
+                        else:
+                            new_obj.update({'media_id':media_id,
+                                            'x': metadata['x'],
+                                            'y': metadata['y'],
+                                            'width': metadata['width'],
+                                            'height': metadata['height']})
+                        new_meta.append(new_obj)
+                        print(f"{frame} {new_meta}")
+                    ep(project, new_meta)
+
+
 
 def _extract_thumbnails(image, localizations, outputDir):
     for localization in localizations:
