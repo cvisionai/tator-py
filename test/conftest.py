@@ -64,7 +64,21 @@ def make_attribute_types():
     ]
 
 @pytest.fixture(scope='session')
-def project(request):
+def organization(request):
+    """ Organization ID for a created organization. """
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_organization(organization_spec={
+        'name': f'test_organization',
+    })
+    organization_id = response.id
+    yield organization_id
+    status = tator_api.delete_organization(organization_id)
+
+@pytest.fixture(scope='session')
+def project(request, organization):
     """ Project ID for a created project. """
     import tator
     host = request.config.option.host
@@ -76,6 +90,7 @@ def project(request):
     response = tator_api.create_project(project_spec={
         'name': f'test_project_{dt_str}',
         'summary': f'Test project created by tator-py unit tests on {current_dt}',
+        'organization': organization,
     })
     project_id = response.id
     yield project_id
@@ -369,7 +384,7 @@ def leaf_type(request, project):
     yield leaf_type_id
 
 @pytest.fixture(scope='session')
-def clone_project(request):
+def clone_project(request, organization):
     """ Project ID for a created project. """
     import tator
     host = request.config.option.host
@@ -381,6 +396,7 @@ def clone_project(request):
     response = tator_api.create_project(project_spec={
         'name': f'test_clone_project_{dt_str}',
         'summary': f'Test clone project created by tator-py unit tests on {current_dt}',
+        'organization': organization,
     })
     project_id = response.id
     yield project_id
