@@ -3,7 +3,7 @@ import os
 
 import tator
 
-def test_upload_media_archive(host, token, project, image_set):
+def test_upload_media_archive(host, token, project, image_set, image_type):
 
     # Run the example.
     cmd = [
