@@ -9,7 +9,7 @@ from ._upload_file import _upload_file
 from .md5sum import md5sum
 
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
-                 upload_gid=None, upload_uid=None,chunk_size=10*1024*1024,
+                 upload_gid=None, upload_uid=None, chunk_size=10*1024*1024,
                  attributes=None, media_id=None):
     """ Uploads a single media file.
 
