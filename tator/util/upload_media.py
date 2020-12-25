@@ -60,11 +60,13 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     for progress, upload_info in _upload_file(api, project_id, path, chunk_size):
         yield (progress, None)
 
+    url = api.get_download_info(project_id, download_info_spec={'keys': [upload_info.key]})[0].url
+
     spec = {
         'type': type_id,
         'uid': upload_uid,
         'gid': upload_gid,
-        'url': upload_info.key,
+        'url': url,
         'name': fname,
         'section': section,
         'md5': md5,
