@@ -5,7 +5,7 @@ import subprocess
 import tempfile
 from uuid import uuid1
 
-from tator.transcode.upload import upload_file
+from ._upload_file import _upload_file
 import tator
 
 def _download_file(headers, url, out_path):

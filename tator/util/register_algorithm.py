@@ -4,7 +4,7 @@ import os
 import sys
 
 import tator
-from tator.transcode.upload import upload_file
+from ._upload_file import _upload_file
 
 logger = logging.getLogger(__name__)
 
