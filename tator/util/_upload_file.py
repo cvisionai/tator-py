@@ -29,9 +29,9 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     # Get upload info.
     upload_kwargs = {'num_parts': num_chunks}
     if media_id is not None:
-        upload_kwargs = {'media_id': media_id}
+        upload_kwargs['media_id'] = media_id
     if filename is not None:
-        upload_kwargs = {'filename': filename}
+        upload_kwargs['filename'] = filename
     upload_info = api.get_upload_info(project, **upload_kwargs)
 
     if num_chunks > 1:
