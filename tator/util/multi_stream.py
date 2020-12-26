@@ -22,7 +22,7 @@ def _download_file(headers, url, out_path):
                     chunk_count += 1
                     f.write(chunk)
 
-def make_multi_stream(api, type_id, layout,name, media_ids,section,quality=None):
+def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=None):
     """ Uploads a single media file.
 
     :param api: :class:`tator.TatorApi` object.
@@ -59,7 +59,7 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section,quality=None)
 
     assert(len(media_ids) == layout[0]*layout[1])
 
-    media_objects = api.get_media_list(project,media_id=media_ids)
+    media_objects = api.get_media_list(project, media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
     media_lookup={}
@@ -122,45 +122,36 @@ def make_multi_stream(api, type_id, layout,name, media_ids,section,quality=None)
                "-shortest",
                "tiled_gif.gif"]
 
-        subprocess.run(cmd,cwd=d,check=True)
-
-        thumbnail_url = upload_file(os.path.join(d,'tiled_thumb.jpg'),
-                                    api)
-        thumbnail_gif_url = upload_file(os.path.join(d,'tiled_gif.gif'),
-                                        api)
+        subprocess.run(cmd, cwd=d, check=True)
 
         md5=tator.util.md5sum(os.path.join(d,'tiled_gif.gif'))
 
-        media_spec = {'attributes':attributes,
-                      'name':name,
-                      'thumbnail_url':thumbnail_url,
+        media_spec = {'attributes': attributes,
+                      'name': name,
                       'md5': md5,
-                      'section':section_obj.name,
-                      'type':type_id}
-
-        resp = api.create_media(project,media_spec)
-
+                      'section': section_obj.name,
+                      'type': type_id}
         print(f"Created {resp.id}")
+
+        resp = api.create_media(project, media_spec)
+
+        for progress, thumbnail_info in _upload_file(api, project, 'media', resp.id, 
+                                                     os.path.join(d,'tiled_thumb.jpg')):
+            logger.info(f"Thumbnail upload progress: {progress}%")
+        for progress, thumbnail_gif_info in _upload_file(api, project, 'media', resp.id, 
+                                                         os.path.join(d,'tiled_gif.gif')):
+            logger.info(f"Thumbnail gif upload progress: {progress}%")
+        download_info = api.get_download_info(project, [thumbnail_info.key,
+                                                        thumbnail_gif_info.key])
+        download_info = {info.key:info.url for info in download_info}
+
         media_files={"layout": layout,
                      "ids": media_ids}
         if quality:
             media_files.update({"quality": quality})
         api.update_media(resp.id,
-                         {"thumbnail_gif_url": thumbnail_gif_url,
-                          "thumbnail_url": thumbnail_url,
+                         {"thumbnail_gif_url": download_info[thumbnail_gif_info.key],
+                          "thumbnail_url": download_info[thumbnail_info.key],
                           "media_files": media_files})
         return resp
-
-
-
-
-
-
-
-
-
-
-
-
-
 
