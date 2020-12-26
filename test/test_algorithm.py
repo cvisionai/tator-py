@@ -5,10 +5,8 @@ import tempfile
 import uuid
 from textwrap import dedent
 
-from tusclient.client import TusClient
-
 import tator
-from tator.transcode.upload import upload_file
+from ..util._upload_file import _upload_file
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +145,9 @@ def _upload_test_algorithm_manifest(
 
         # Upload the manifest file with tus first
         logger.info(f"Created temporary manifest file: {local_yaml_file}")
-        url = upload_file(path=local_yaml_file, api=tator_api)
+        for progress, upload_info in _upload_file(tator_api, project, local_yaml_file):
+            logger.info(f"Upload progress: {progress}%")
+        url = api.get_download_info(project, {'keys': [upload_info.key]})[0].url
 
         # Save the uploaded file using the save algorithm manifest endpoint
         spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
