@@ -9,7 +9,7 @@ import sys
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
-from ..openapi.tator_openapi.models import CreateResponse
+from ..openapi.tator_openapi.models import MessageResponse
 
 from .make_fragment_info import make_fragment_info
 
@@ -149,7 +149,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             logger.info(f"Progress: {progress}%")
 
         logger.info("Uploading segments file...")
-        for progress, upload_info in _upload_file(api, media_obj.project, segments_file,
+        for progress, segment_info in _upload_file(api, media_obj.project, segments_file,
                                                   media_id=media, filename=os.path.basename(segments_file)):
             logger.info(f"Progress: {progress}%")
 
@@ -164,7 +164,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
         # Patch in video file with the api.
         response = api.update_media(media, media_update=spec)
-        assert isinstance(response, CreateResponse)
+        assert isinstance(response, MessageResponse)
 
 def default_archival_upload(api, host, media, path, encoded):
     # Default action if no archive config is upload raw video.
@@ -187,7 +187,7 @@ def default_archival_upload(api, host, media, path, encoded):
             'path': upload_info.key,
         }]},
     })
-    assert isinstance(response, CreateResponse)
+    assert isinstance(response, MessageResponse)
 
 def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
     # Retrieve this media's type to inspect archive config.
@@ -302,7 +302,7 @@ def convert_audio(host, token, media, path, outpath):
             'path': upload_info.key,
         }]},
     })
-    assert isinstance(response, CreateResponse)
+    assert isinstance(response, MessageResponse)
 
 def get_length_info(stream):
     """ Given a json dump of the stream return the length of the video """
