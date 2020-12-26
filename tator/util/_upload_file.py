@@ -5,8 +5,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def _upload_file(api, project, path, chunk_size=1024*1024*10):
+def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10):
     """ Uploads a file.
+
+    :param api: `tator.TatorApi` object.
+    :param project: Unique integer identifying a project.
+    :param path: Path to file on disk.
+    :param media_id: [Optional] Media ID if this is an upload for existing media.
+    :param filename: [Optional] Filename (only used if media ID is given).
+    :param chunk_size: [Optional] Upload chunk size in bytes.
     """
     MAX_RETRIES = 10 # Maximum retries on a given chunk.
 
@@ -20,7 +27,12 @@ def _upload_file(api, project, path, chunk_size=1024*1024*10):
         num_chunks = math.ceil(file_size / chunk_size)
     
     # Get upload info.
-    upload_info = api.get_upload_info(project, num_parts=num_chunks)
+    upload_kwargs = {'num_parts': num_chunks}
+    if media_id is not None:
+        upload_kwargs = {'media_id': media_id}
+    if filename is not None:
+        upload_kwargs = {'filename': filename}
+    upload_info = api.get_upload_info(project, **upload_kwargs)
 
     if num_chunks > 1:
         # Upload parts.
