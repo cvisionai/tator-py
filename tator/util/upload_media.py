@@ -57,7 +57,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     response = api.get_media_type(type_id)
     project_id = response.project
 
-    for progress, upload_info in _upload_file(api, project_id, path, chunk_size):
+    for progress, upload_info in _upload_file(api, project_id, path, chunk_size=chunk_size):
         yield (progress, None)
 
     url = api.get_download_info(project_id, download_info_spec={'keys': [upload_info.key]})[0].url

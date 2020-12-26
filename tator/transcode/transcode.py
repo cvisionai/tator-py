@@ -8,9 +8,9 @@ import os
 import sys
 
 from ..util.get_api import get_api
+from ..util._upload_file import _upload_file
 from ..openapi.tator_openapi.models import CreateResponse
 
-from .upload import upload_file
 from .make_fragment_info import make_fragment_info
 
 logger = logging.getLogger(__name__)
@@ -135,6 +135,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
     api = get_api(host, token)
+    media_obj = api.get_media(media)
 
     for resolution in resolutions:
         output_file = os.path.join(outpath, f"{resolution}.mp4")
@@ -143,27 +144,35 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         make_fragment_info(output_file, segments_file)
 
         logger.info("Uploading transcoded file...")
-        url = upload_file(output_file, api)
+        for progress, upload_info in _upload_file(api, media_obj.project, output_file,
+                                                  media_id=media, filename=os.path.basename(output_file)):
+            logger.info(f"Progress: {progress}%")
 
         logger.info("Uploading segments file...")
-        segments_url = upload_file(segments_file, api)
+        for progress, upload_info in _upload_file(api, media_obj.project, segments_file,
+                                                  media_id=media, filename=os.path.basename(segments_file)):
+            logger.info(f"Progress: {progress}%")
 
         # Construct move video spec.
         spec = {
             'media_files': {'streaming': [{
                 **make_video_definition(output_file),
-                'url': url,
-                'segments_url': segments_url,
+                'path': upload_info.key,
+                'segment_info': segment_info.key,
             }]}
         }
 
-        # Move video file with the api.
-        response = api.move_video(media, move_video_spec=spec)
+        # Patch in video file with the api.
+        response = api.update_media(media, media_update=spec)
         assert isinstance(response, CreateResponse)
 
 def default_archival_upload(api, host, media, path, encoded):
     # Default action if no archive config is upload raw video.
-    url = upload_file(path, api)
+    media_obj = api.get_media(media)
+    logger.info(f"Uploading original file as archival...")
+    for progress, upload_info in _upload_file(api, media_obj.project, path,
+                                              media_id=media, filename=os.path.basename(path)):
+        logger.info(f"Progress: {progress}%")
     video_def = make_video_definition(path)
 
     # If video was encoded, set codec_mime to video/mp4; otherwise do
@@ -171,11 +180,11 @@ def default_archival_upload(api, host, media, path, encoded):
     if encoded:
         video_def['codec_mime'] = 'video/mp4'
 
-    # Move video file with the api.
-    response = api.move_video(media, move_video_spec={
+    # Patch in video file with the api.
+    response = api.update_media(media, media_update={
         'media_files': {'archival': [{
             **video_def,
-            'url': url,
+            'path': upload_info.key,
         }]},
     })
     assert isinstance(response, CreateResponse)
@@ -281,13 +290,16 @@ def convert_audio(host, token, media, path, outpath):
   
     # Upload audio. 
     api = get_api(host, token)
-    url = upload_file(output_file, api)
+    media_obj = api.get_media(media)
+    for progress, upload_info in _upload_file(api, media_obj.project, output_file,
+                                              media_id=media, filename=os.path.basename(output_file)):
+        logger.info(f"Progress: {progress}%")
    
-    # Move video file with the api.
-    response = api.move_video(media, move_video_spec={
+    # Patch in audio file with the api.
+    response = api.update_media(media, media_update={
         'media_files': {'audio': [{
             **make_audio_definition(output_file),
-            'url': url,
+            'path': upload_info.key,
         }]},
     })
     assert isinstance(response, CreateResponse)
