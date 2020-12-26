@@ -8,8 +8,8 @@ import logging
 import tempfile
 
 from ..util import get_api
+from ..util._upload_file import _upload_file
 
-from .upload import upload_file
 from .transcode import get_length_info
 
 logger = logging.getLogger(__name__)
@@ -81,13 +81,23 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
 
     # Upload thumbnail and thumbnail gif.
     api = get_api(host, token)
-    thumbnail_url = upload_file(thumb_path, api)
-    thumbnail_gif_url = upload_file(thumb_gif_path, api)
+    media_obj = api.get_media(media_id)
+    for progress, thumbnail_info in _upload_file(api, media_obj.project, thumb_path,
+                                                 media_id=media_id,
+                                                 filename=os.path.basename(thumb_path)):
+        pass
+    for progress, thumbnail_gif_info in _upload_file(api, media_obj.project, thumb_gif_path,
+                                                     media_id=media_id,
+                                                     filename=os.path.basename(thumb_gif_path)):
+        pass
+    download_info = api.get_download_info(media_obj.project, {'keys': [thumbnail_info.key,
+                                                                       thumbnail_gif_info.key]})
+    download_info = {info.key:info.url for info in download_info}
 
     # Update the media object.
     response = api.update_media(media_id, media_update={
-        'thumbnail_url': thumbnail_url,
-        'thumbnail_gif_url': thumbnail_gif_url,
+        'thumbnail_url': download_info[thumbnail_info.key],
+        'thumbnail_gif_url': download_info[thumbnail_gif_info.key],
         'num_frames': num_frames,
         'fps': fps,
         'codec': codec,
