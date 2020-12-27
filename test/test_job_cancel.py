@@ -1,4 +1,5 @@
 import os
+import time
 import tempfile
 from textwrap import dedent
 
@@ -59,6 +60,8 @@ spec:
     assert isinstance(job, tator.models.Job)
     print(f"Cancelling job with uid {uid}...")
     response = tator_api.delete_job(uid)
+    print("Cancel done, waiting 1 sec...")
+    time.sleep(1)
     try:
         found = True
         response = tator_api.get_job(uid)
@@ -73,6 +76,8 @@ spec:
     assert isinstance(jobs[0], tator.models.Job)
     print(f"Cancelling job with gid {gid}...")
     tator_api.delete_job_list(project, gid=gid)
+    print("Cancel done, waiting 1 sec...")
+    time.sleep(1)
     jobs = tator_api.get_job_list(project, gid=gid)
     assert len(jobs) == 0
 
@@ -81,6 +86,8 @@ spec:
     assert len(jobs) >= 8
     print("Cancelling all jobs in project...")
     tator_api.delete_job_list(project)
+    print("Cancel done, waiting 1 sec...")
+    time.sleep(1)
     jobs = tator_api.get_job_list(project)
     assert len(jobs) == 0
 
