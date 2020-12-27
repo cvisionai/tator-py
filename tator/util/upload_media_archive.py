@@ -4,10 +4,12 @@ import os
 import math
 import io
 import tarfile
+import tempfile
 
 from urllib.parse import urljoin
 from urllib.parse import urlsplit
 
+from ._upload_file import _upload_file
 from .md5sum import md5sum
 
 def upload_media_archive(api, project, paths, section="Test Section", chunk_size=2*1024*1024):
