@@ -3,10 +3,13 @@ import os
 import requests
 import subprocess
 import tempfile
+import logging
 from uuid import uuid1
 
 from ._upload_file import _upload_file
 import tator
+
+logger = logging.getLogger(__name__)
 
 def _download_file(headers, url, out_path):
     CHUNK_SIZE=2*1024*1024
@@ -131,18 +134,16 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                       'md5': md5,
                       'section': section_obj.name,
                       'type': type_id}
-        print(f"Created {resp.id}")
 
         resp = api.create_media(project, media_spec)
+        print(f"Created {resp.id}")
 
-        for progress, thumbnail_info in _upload_file(api, project, 'media', resp.id, 
-                                                     os.path.join(d,'tiled_thumb.jpg')):
+        for progress, thumbnail_info in _upload_file(api, project, os.path.join(d,'tiled_thumb.jpg')):
             logger.info(f"Thumbnail upload progress: {progress}%")
-        for progress, thumbnail_gif_info in _upload_file(api, project, 'media', resp.id, 
-                                                         os.path.join(d,'tiled_gif.gif')):
+        for progress, thumbnail_gif_info in _upload_file(api, project, os.path.join(d,'tiled_gif.gif')):
             logger.info(f"Thumbnail gif upload progress: {progress}%")
-        download_info = api.get_download_info(project, [thumbnail_info.key,
-                                                        thumbnail_gif_info.key])
+        download_info = api.get_download_info(project, {'keys': [thumbnail_info.key,
+                                                                 thumbnail_gif_info.key]})
         download_info = {info.key:info.url for info in download_info}
 
         media_files={"layout": layout,

@@ -6,7 +6,7 @@ import uuid
 from textwrap import dedent
 
 import tator
-from ..util._upload_file import _upload_file
+from tator.util._upload_file import _upload_file
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +147,7 @@ def _upload_test_algorithm_manifest(
         logger.info(f"Created temporary manifest file: {local_yaml_file}")
         for progress, upload_info in _upload_file(tator_api, project, local_yaml_file):
             logger.info(f"Upload progress: {progress}%")
-        url = api.get_download_info(project, {'keys': [upload_info.key]})[0].url
+        url = tator_api.get_download_info(project, {'keys': [upload_info.key]})[0].url
 
         # Save the uploaded file using the save algorithm manifest endpoint
         spec = tator.models.AlgorithmManifestSpec(name=manifest_name, upload_url=url)
