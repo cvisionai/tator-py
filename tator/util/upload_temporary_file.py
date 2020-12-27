@@ -5,6 +5,7 @@ from uuid import uuid1
 from urllib.parse import urljoin
 from urllib.parse import urlsplit
 
+from ._upload_file import _upload_file
 from .md5sum import md5sum
 
 def upload_temporary_file(api, project, path, lookup=None, hours=24,
