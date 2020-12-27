@@ -10,23 +10,17 @@ from .md5sum import md5sum
 from ._download_file import _download_file
 
 class HostTransfer:
-    def __init__(self, src_api, dest_api, dest_project):
+    def __init__(self, src_api, src_project, dest_api, dest_project):
         """ Sets up authentication for transferring file.
 
         :param src_api: :class:`tator.TatorApi` object corresponding to source host.
+        :param src_project: Unique integer identifying the source project.
         :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
         :param dest_project: Unique integer identifying the destination project.
         """
-        # Set up source auth.
-        config = src_api.api_client.configuration
-        token = config.api_key['Authorization']
-        prefix = config.api_key_prefix['Authorization']
-        self.src_host = config.host
-        self.src_headers = {
-            'Authorization': f'{prefix} {token}',
-            'Content-Type': f'application/json',
-            'Accept-Encoding': 'gzip',
-        }
+        # Set up source.
+        self.src_api = src_api
+        self.src_project = src_project
 
         # Set up destination.
         self.dest_api = dest_api
@@ -40,11 +34,10 @@ class HostTransfer:
         :param return_url: Return download URL if true.
         :returns: URL or path of destination file.
         """
-        url = urljoin(self.src_host, src_url)
         parsed = urlparse(src_url)
         filename = os.path.basename(parsed.path)
         with tempfile.NamedTemporaryFile() as temp:
-            for _ in _download_file(url, self.src_headers, temp.name):
+            for _ in _download_file(self.src_api, self.src_project, src_url, temp.name):
                 pass
             for _, upload_info in _upload_file(self.dest_api, self.dest_project, temp.name,
                                                media_id=media_id, filename=filename):
