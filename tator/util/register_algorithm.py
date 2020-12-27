@@ -41,7 +41,9 @@ def register_algorithm(
     user_id = user.id
 
     # Upload the manifest file
-    manifest_upload_url = upload_file(path=manifest, api=tator_api)
+    for progress, upload_info in _upload_file(tator_api, project, path=manifest):
+        pass
+    manifest_upload_url = tator_api.get_download_info(project, {'keys': [upload_info.key]})[0].url
 
     # Save the uploaded file using the save algorithm manifest endpoint
     spec = tator.models.AlgorithmManifestSpec(
