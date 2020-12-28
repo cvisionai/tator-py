@@ -11,3 +11,7 @@ tator.egg-info/
 *~
 *#
 out/
+
+# Dev files
+tags
+tags.lock
