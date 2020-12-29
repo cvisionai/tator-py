@@ -3,6 +3,8 @@ import math
 import os
 import logging
 
+import tator
+
 logger = logging.getLogger(__name__)
 
 def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10):
@@ -64,7 +66,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
             'upload_id': upload_info.upload_id,
             'parts': parts,
         })
-        if response.status_code != 200:
+        if not isinstance(response, tator.models.MessageResponse):
             raise Exception(f"Upload completion failed!")
     else:
         # Upload in single request.
