@@ -61,7 +61,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         # Complete the upload.
         response = api.complete_upload(project, upload_completion_spec={
             'key': upload_info.key,
-            'upload_id': upload_info.upload_uid,
+            'upload_id': upload_info.upload_id,
             'parts': parts,
         })
         if response.status_code != 200:
