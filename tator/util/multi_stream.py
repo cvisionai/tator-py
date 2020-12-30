@@ -6,13 +6,15 @@ import tempfile
 import logging
 from uuid import uuid1
 
+from PIL import Image
+
 from ._upload_file import _upload_file
 import tator
 
 logger = logging.getLogger(__name__)
 
 def _download_file(headers, url, out_path):
-    CHUNK_SIZE=2*1024*1024
+    CHUNK_SIZE=10*1024*1024
     with requests.get(url, stream=True, headers=headers) as r:
         r.raise_for_status()
         total_size = r.headers['Content-Length']
@@ -62,7 +64,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
     assert(len(media_ids) == layout[0]*layout[1])
 
-    media_objects = api.get_media_list(project, media_id=media_ids)
+    media_objects = api.get_media_list(project, presigned=3600, media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
     media_lookup={}
@@ -83,8 +85,16 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
     with tempfile.TemporaryDirectory() as d:
         for pos,media_id in enumerate(media_ids):
             media = media_lookup[media_id]
-            thumb = host + "/media/" + media.thumbnail
-            thumb_gif = host + "/media/" + media.thumbnail_gif
+            thumbnails = media['media_files'].get('thumbnail', [])
+            if len(thumbnails) > 0:
+                thumb = thumbnails[0]['path']
+            else:
+                thumb = host + "/media/" + media.thumbnail
+            thumbnail_gifs = media['media_files'].get('thumbnail_gif', [])
+            if len(thumbnail_gifs) > 0:
+                thumb_gif = thumbnail_gifs[0]['path']
+            else:
+                thumb_gif = host + "/media/" + media.thumbnail_gif
             _download_file(headers, thumb, os.path.join(d,
                                                         f"thumb_{pos:09d}.jpg"))
             _download_file(headers, thumb_gif, os.path.join(d,
@@ -138,21 +148,40 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
         resp = api.create_media(project, media_spec)
         print(f"Created {resp.id}")
 
-        for progress, thumbnail_info in _upload_file(api, project, os.path.join(d,'tiled_thumb.jpg')):
+        thumb_path = os.path.join(d,'tiled_thumb.jpg')
+        thumb_gif_path = os.path.join(d,'tiled_gif.gif')
+        for progress, thumbnail_info in _upload_file(api, project, thumb_path,
+                                                     media_id=resp.id, filename='tiled_thumb.jpg'):
             logger.info(f"Thumbnail upload progress: {progress}%")
-        for progress, thumbnail_gif_info in _upload_file(api, project, os.path.join(d,'tiled_gif.gif')):
+        for progress, thumbnail_gif_info in _upload_file(api, project, thumb_gif_path,
+                                                         media_id=resp.id, filename='tiled_gif.gif'):
             logger.info(f"Thumbnail gif upload progress: {progress}%")
-        download_info = api.get_download_info(project, {'keys': [thumbnail_info.key,
-                                                                 thumbnail_gif_info.key]})
-        download_info = {info.key:info.url for info in download_info}
 
-        media_files={"layout": layout,
+        # Open images to get output resolution.
+        thumb_image = Image.open(thumb_path)
+        thumb_gif_image = Image.open(thumb_gif_path)
+
+        # Create image definitions for thumbnails.
+        thumb_def = {'path': thumbnail_info.key,
+                     'size': os.stat(thumb_path).st_size,
+                     'resolution': [thumb_image.height, thumb_image.width],
+                     'mime': f'image/{thumb_image.format.lower()}'
+        thumb_gif_def = {'path': thumbnail_gif_info.key,
+                         'size': os.stat(thumb_gif_path).st_size,
+                         'resolution': [thumb_gif_image.height, thumb_gif_image.width],
+                         'mime': f'image/{thumb_gif_image.format.lower()}'
+
+        response = api.create_image_file(media_id, role='thumbnail', image_definition=thumb_def)
+        assert isinstance(response, tator.models.MessageResponse)
+        response = api.create_image_file(media_id, role='thumbnail_gif', image_definition=thumb_gif_def)
+        assert isinstance(response, tator.models.MessageResponse)
+
+        # Add the multi definition.
+        multi_def = {"layout": layout,
                      "ids": media_ids}
         if quality:
-            media_files.update({"quality": quality})
-        api.update_media(resp.id,
-                         {"thumbnail_gif_url": download_info[thumbnail_gif_info.key],
-                          "thumbnail_url": download_info[thumbnail_info.key],
-                          "media_files": media_files})
+            media_def.update({"quality": quality})
+        api.update_media(resp.id, {"multi": multi_def})
+
         return resp
 

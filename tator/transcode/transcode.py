@@ -153,17 +153,15 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                                                   media_id=media, filename=os.path.basename(segments_file)):
             logger.info(f"Progress: {progress}%")
 
-        # Construct move video spec.
-        spec = {
-            'media_files': {'streaming': [{
-                **make_video_definition(output_file),
-                'path': upload_info.key,
-                'segment_info': segment_info.key,
-            }]}
+        # Construct video definition.
+        video_def = {
+            **make_video_definition(output_file),
+            'path': upload_info.key,
+            'segment_info': segment_info.key,
         }
 
         # Patch in video file with the api.
-        response = api.update_media(media, media_update=spec)
+        response = api.create_video_file(media, role='streaming', video_definition=video_def)
         assert isinstance(response, MessageResponse)
 
 def default_archival_upload(api, host, media, path, encoded):
@@ -181,12 +179,8 @@ def default_archival_upload(api, host, media, path, encoded):
         video_def['codec_mime'] = 'video/mp4'
 
     # Patch in video file with the api.
-    response = api.update_media(media, media_update={
-        'media_files': {'archival': [{
-            **video_def,
-            'path': upload_info.key,
-        }]},
-    })
+    video_def['path'] = upload_info.key
+    response = api.create_video_file(media, role='archival', video_definition=video_def)
     assert isinstance(response, MessageResponse)
 
 def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
@@ -296,12 +290,8 @@ def convert_audio(host, token, media, path, outpath):
         logger.info(f"Progress: {progress}%")
    
     # Patch in audio file with the api.
-    response = api.update_media(media, media_update={
-        'media_files': {'audio': [{
-            **make_audio_definition(output_file),
-            'path': upload_info.key,
-        }]},
-    })
+    audio_def['path'] = upload_info.key
+    response = api.create_audio_file(media, role='archival', audio_definition=audio_def)
     assert isinstance(response, MessageResponse)
 
 def get_length_info(stream):

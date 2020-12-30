@@ -185,9 +185,8 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                                      if v is not None}
                         media_def.pop('path', None)
                         media_def['path'] = transfer(archival.path, media_id=response.id)
-                        dest_api.update_media(response.id, media_update={
-                            'media_files': {'archival': [media_def]}
-                        })
+                        dest_api.create_video_file(response.id, role='archival',
+                                                   video_definition=media_def)
                 if media.media_files.streaming:
                     for streaming in media.media_files.streaming:
                         media_def = {k: v for k, v in streaming.to_dict().items()
@@ -195,18 +194,16 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                         media_def.pop('path', None)
                         media_def['path'] = transfer(streaming.path, media_id=response.id)
                         media_def['segment_info'] = transfer(streaming.segment_info, media_id=response.id)
-                        dest_api.update_media(response.id, media_update={
-                            'media_files': {'streaming': [media_def]}
-                        })
+                        dest_api.create_video_file(response.id, role='streaming',
+                                                   video_definition=media_def)
                 if media.media_files.audio:
                     for audio in media.media_files.audio:
                         media_def = {k: v for k, v in audio.to_dict().items()
                                      if v is not None}
                         media_def.pop('path', None)
                         media_def['url'] = transfer(audio.path, media_id=response.id)
-                        dest_api.update_media(response.id, media_update={
-                            'media_files': {'audio': [media_def]}
-                        })
+                        dest_api.create_audio_file(response.id, role='audio',
+                                                   audio_definition=media_def)
                 if media.media_files.ids:
                     dest_ids = []
                     for id_ in media.media_files.ids:
@@ -216,7 +213,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                             raise Exception(f"Source media ID {id_} does not exist in media "
                                              "mapping! Individual videos should be migrated "
                                              "before multi videos.")
-                    update = {'media_files': {'ids': dest_ids}}
+                    update = {'multi': {'ids': dest_ids}}
                     if media.media_files.layout:
                         update['media_files']['layout'] = media.media_files.layout
                     if media.media_files.quality:

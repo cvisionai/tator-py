@@ -7,6 +7,8 @@ import json
 import logging
 import tempfile
 
+from PIL import Image
+
 from ..util import get_api
 from ..util._upload_file import _upload_file
 
@@ -90,20 +92,35 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
                                                      media_id=media_id,
                                                      filename=os.path.basename(thumb_gif_path)):
         pass
-    download_info = api.get_download_info(media_obj.project, {'keys': [thumbnail_info.key,
-                                                                       thumbnail_gif_info.key]})
-    download_info = {info.key:info.url for info in download_info}
+
+    # Open images to get output resolution.
+    thumb_image = Image.open(thumb_path)
+    thumb_gif_image = Image.open(thumb_gif_path)
+
+    # Create image definitions for thumbnails.
+    thumb_def = {'path': thumbnail_info.key,
+                 'size': os.stat(thumb_path).st_size,
+                 'resolution': [thumb_image.height, thumb_image.width],
+                 'mime': f'image/{thumb_image.format.lower()}'
+    thumb_gif_def = {'path': thumbnail_gif_info.key,
+                     'size': os.stat(thumb_gif_path).st_size,
+                     'resolution': [thumb_gif_image.height, thumb_gif_image.width],
+                     'mime': f'image/{thumb_gif_image.format.lower()}'
+
+    response = api.create_image_file(media_id, role='thumbnail', image_definition=thumb_def)
+    assert isinstance(response, tator.models.MessageResponse)
+    response = api.create_image_file(media_id, role='thumbnail_gif', image_definition=thumb_gif_def)
+    assert isinstance(response, tator.models.MessageResponse)
 
     # Update the media object.
     response = api.update_media(media_id, media_update={
-        'thumbnail_url': download_info[thumbnail_info.key],
-        'thumbnail_gif_url': download_info[thumbnail_gif_info.key],
         'num_frames': num_frames,
         'fps': fps,
         'codec': codec,
         'width': width,
         'height': height,
     })
+    assert isinstance(response, tator.models.MessageResponse)
     logger.info(f'Thumbnail upload done! {response.message}')
 
 if __name__ == '__main__':
