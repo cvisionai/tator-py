@@ -10,23 +10,10 @@ from PIL import Image
 
 from .md5sum import md5sum
 from ._upload_file import _upload_file
+from ._download_file import _download_file
 from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
-
-def _download_file(headers, url, out_path):
-    CHUNK_SIZE=10*1024*1024
-    with requests.get(url, stream=True, headers=headers) as r:
-        r.raise_for_status()
-        total_size = r.headers['Content-Length']
-        total_chunks = math.ceil(int(total_size) / CHUNK_SIZE)
-        chunk_count = 0
-        last_progress = 0
-        with open(out_path, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=CHUNK_SIZE):
-                if chunk:
-                    chunk_count += 1
-                    f.write(chunk)
 
 def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=None):
     """ Uploads a single media file.
@@ -65,7 +52,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
     assert(len(media_ids) == layout[0]*layout[1])
 
-    media_objects = api.get_media_list(project, presigned=3600, media_id=media_ids)
+    media_objects = api.get_media_list(project, media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
     media_lookup={}
@@ -96,10 +83,12 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                 thumb_gif = thumbnail_gifs[0].path
             else:
                 thumb_gif = host + "/media/" + media.thumbnail_gif
-            _download_file(headers, thumb, os.path.join(d,
-                                                        f"thumb_{pos:09d}.jpg"))
-            _download_file(headers, thumb_gif, os.path.join(d,
-                                                        f"gif_{pos:09d}.gif"))
+            for _ in _download_file(api, media.project, thumb,
+                                    os.path.join(d, f"thumb_{pos:09d}.jpg")):
+                pass
+            for _ in _download_file(api, media.project, thumb_gif,
+                                    os.path.join(d, f"gif_{pos:09d}.gif")):
+                pass
 
         cmd = ["ffmpeg",
                "-y",
