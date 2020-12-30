@@ -22,6 +22,8 @@ def _download_file(api, project, url, out_path):
             'Content-Type': f'application/json',
             'Accept-Encoding': 'gzip',
         }
+    elif url.startswith('http'):
+        headers = {}
     # If this is a S3 object key, get a download url.
     else:
         url = api.get_download_info(project, {'keys': [url]})[0].url

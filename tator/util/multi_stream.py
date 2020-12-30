@@ -65,7 +65,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
     assert(len(media_ids) == layout[0]*layout[1])
 
-    media_objects = api.get_media_list(project, media_id=media_ids)
+    media_objects = api.get_media_list(project, presigned=3600, media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
     media_lookup={}
