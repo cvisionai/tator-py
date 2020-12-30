@@ -292,7 +292,7 @@ def convert_audio(host, token, media, path, outpath):
     # Patch in audio file with the api.
     audio_def = {**make_audio_definition(output_file),
                  'path': upload_info.key}
-    response = api.create_audio_file(media, role='archival', audio_definition=audio_def)
+    response = api.create_audio_file(media, role='audio', audio_definition=audio_def)
     assert isinstance(response, MessageResponse)
 
 def get_length_info(stream):
