@@ -290,7 +290,8 @@ def convert_audio(host, token, media, path, outpath):
         logger.info(f"Progress: {progress}%")
    
     # Patch in audio file with the api.
-    audio_def['path'] = upload_info.key
+    audio_def = {**make_audio_definition(output_file),
+                 'path': upload_info.key}
     response = api.create_audio_file(media, role='archival', audio_definition=audio_def)
     assert isinstance(response, MessageResponse)
 
