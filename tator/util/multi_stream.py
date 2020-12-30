@@ -8,8 +8,9 @@ from uuid import uuid1
 
 from PIL import Image
 
+from .md5sum import md5sum
 from ._upload_file import _upload_file
-import tator
+from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
 
@@ -137,7 +138,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
         subprocess.run(cmd, cwd=d, check=True)
 
-        md5=tator.util.md5sum(os.path.join(d,'tiled_gif.gif'))
+        md5=md5sum(os.path.join(d,'tiled_gif.gif'))
 
         media_spec = {'attributes': attributes,
                       'name': name,
@@ -165,16 +166,16 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
         thumb_def = {'path': thumbnail_info.key,
                      'size': os.stat(thumb_path).st_size,
                      'resolution': [thumb_image.height, thumb_image.width],
-                     'mime': f'image/{thumb_image.format.lower()}'
+                     'mime': f'image/{thumb_image.format.lower()}'}
         thumb_gif_def = {'path': thumbnail_gif_info.key,
                          'size': os.stat(thumb_gif_path).st_size,
                          'resolution': [thumb_gif_image.height, thumb_gif_image.width],
-                         'mime': f'image/{thumb_gif_image.format.lower()}'
+                         'mime': f'image/{thumb_gif_image.format.lower()}'}
 
         response = api.create_image_file(media_id, role='thumbnail', image_definition=thumb_def)
-        assert isinstance(response, tator.models.MessageResponse)
+        assert isinstance(response, MessageResponse)
         response = api.create_image_file(media_id, role='thumbnail_gif', image_definition=thumb_gif_def)
-        assert isinstance(response, tator.models.MessageResponse)
+        assert isinstance(response, MessageResponse)
 
         # Add the multi definition.
         multi_def = {"layout": layout,
