@@ -86,13 +86,13 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
     with tempfile.TemporaryDirectory() as d:
         for pos,media_id in enumerate(media_ids):
             media = media_lookup[media_id]
-            thumbnails = media['media_files'].get('thumbnail', [])
-            if len(thumbnails) > 0:
+            thumbnails = media.media_files.thumbnail
+            if thumbnails:
                 thumb = thumbnails[0]['path']
             else:
                 thumb = host + "/media/" + media.thumbnail
-            thumbnail_gifs = media['media_files'].get('thumbnail_gif', [])
-            if len(thumbnail_gifs) > 0:
+            thumbnail_gifs = media.media_files.thumbnail_gif
+            if thumbnail_gifs:
                 thumb_gif = thumbnail_gifs[0]['path']
             else:
                 thumb_gif = host + "/media/" + media.thumbnail_gif
