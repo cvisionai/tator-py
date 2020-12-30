@@ -65,7 +65,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
     assert(len(media_ids) == layout[0]*layout[1])
 
-    media_objects = api.get_media_list(project, presigned=3600, media_id=media_ids)
+    media_objects = api.get_media_list(project, media_id=media_ids)
     assert(len(media_objects) == len(media_ids))
 
     media_lookup={}
@@ -88,12 +88,12 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
             media = media_lookup[media_id]
             thumbnails = media.media_files.thumbnail
             if thumbnails:
-                thumb = thumbnails[0]['path']
+                thumb = thumbnails[0].path
             else:
                 thumb = host + "/media/" + media.thumbnail
             thumbnail_gifs = media.media_files.thumbnail_gif
             if thumbnail_gifs:
-                thumb_gif = thumbnail_gifs[0]['path']
+                thumb_gif = thumbnail_gifs[0].path
             else:
                 thumb_gif = host + "/media/" + media.thumbnail_gif
             _download_file(headers, thumb, os.path.join(d,
