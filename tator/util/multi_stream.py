@@ -71,7 +71,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
 
     # Download the thumbnails into a temporary
     with tempfile.TemporaryDirectory() as d:
-        for pos,media_id in enumerate(media_ids):
+        for pos, media_id in enumerate(media_ids):
             media = media_lookup[media_id]
             thumbnails = media.media_files.thumbnail
             if thumbnails:
@@ -161,9 +161,9 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                          'resolution': [thumb_gif_image.height, thumb_gif_image.width],
                          'mime': f'image/{thumb_gif_image.format.lower()}'}
 
-        response = api.create_image_file(media_id, role='thumbnail', image_definition=thumb_def)
+        response = api.create_image_file(resp.id, role='thumbnail', image_definition=thumb_def)
         assert isinstance(response, MessageResponse)
-        response = api.create_image_file(media_id, role='thumbnail_gif', image_definition=thumb_gif_def)
+        response = api.create_image_file(resp.id, role='thumbnail_gif', image_definition=thumb_gif_def)
         assert isinstance(response, MessageResponse)
 
         # Add the multi definition.
