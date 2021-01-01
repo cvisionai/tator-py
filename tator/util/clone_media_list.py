@@ -127,7 +127,11 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         dest_type = media_types[0].id
 
     # Get medias.
-    medias = src_api.get_media_list(**query_params)
+    try:
+        medias = src_api.get_media_list(**query_params, presigned=86400)
+    except:
+        # Support legacy api
+        medias = src_api.get_media_list(**query_params)
     total_files = len(medias)
 
     # Clone the media.
