@@ -49,8 +49,8 @@ class HostTransfer:
                 logger.info(f"Uploading {temp}: {progress}")
             out = upload_info.key
         if return_url:
-            out = self.src_api.get_download_info(self.src_project,
-                                                 {'keys': [upload_info.key]})[0].url
+            out = self.dest_api.get_download_info(self.dest_project,
+                                                  {'keys': [upload_info.key]})[0].url
         return out
 
 def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest_type=-1,
