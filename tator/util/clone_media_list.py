@@ -8,6 +8,7 @@ from urllib.parse import urlparse, urljoin
 
 from .md5sum import md5sum
 from ._download_file import _download_file
+from ._upload_file import _upload_file
 
 class HostTransfer:
     def __init__(self, src_api, src_project, dest_api, dest_project):
@@ -108,6 +109,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
     # Make sure query has a project.
     if 'project' not in query_params:
         raise Exception("Query parameters must include a project!")
+    src_project = query_params['project']
 
     # Guess the media type if it was not given.
     if dest_type == -1:
@@ -129,7 +131,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         for idx in range(0, len(medias), 100): # Go in batches of 100
             # Clone media locally.
             media_ids = [media.id for media in medias[idx:idx+100]]
-            response = src_api.clone_media_list(query_params['project'],
+            response = src_api.clone_media_list(src_project,
                                                 media_id=media_ids,
                                                 clone_media_spec={
                                                     'dest_project': dest_project,
@@ -141,7 +143,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             yield (len(created_ids), total_files, response, id_map)
     else:
         # Clone media to another host.
-        transfer = HostTransfer(src_api, dest_api, dest_project)
+        transfer = HostTransfer(src_api, src_project, dest_api, dest_project)
         for media in medias:
             # Set up media spec.
             attributes = media.attributes
