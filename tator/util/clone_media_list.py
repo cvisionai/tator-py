@@ -47,11 +47,13 @@ class HostTransfer:
             bar = progressbar.ProgressBar(max_value=100)
             for progress in _download_file(self.src_api, self.src_project, src_url, temp):
                 bar.update(progress)
+            bar.update(100)
             print(f"Uploading {filename}")
             bar = progressbar.ProgressBar(max_value=100)
             for progress, upload_info in _upload_file(self.dest_api, self.dest_project, temp,
                                                media_id=media_id, filename=filename):
                 bar.update(progress)
+            bar.update(100)
             out = upload_info.key
         if return_url:
             out = self.dest_api.get_download_info(self.dest_project,
