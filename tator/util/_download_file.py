@@ -11,7 +11,6 @@ def _download_file(api, project, url, out_path):
     MAX_RETRIES = 10
     # If this is a normal url, get headers.
     if url.startswith('/'):
-        logger.warning("DOWNLOAD WITH AUTHENTICATION")
         config = api.api_client.configuration
         host = config.host
         token = config.api_key['Authorization']
@@ -24,11 +23,9 @@ def _download_file(api, project, url, out_path):
             'Accept-Encoding': 'gzip',
         }
     elif url.startswith('http'):
-        logger.warning("NORMAL DOWNLOAD NO HEADERS")
         headers = {}
     # If this is a S3 object key, get a download url.
     else:
-        logger.warning("RETRIEVING S3 OBJECT")
         url = api.get_download_info(project, {'keys': [url]})[0].url
         headers = {}
     for attempt in range(MAX_RETRIES):
