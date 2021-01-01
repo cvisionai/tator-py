@@ -39,7 +39,8 @@ def _hosted_md5(url):
         except Exception as ex:
             print(ex)
             logger.info(f"Failed to download {url} on attempt {attempt}...")
-            pass
+            if attempt == MAX_RETRIES - 1:
+                raise RuntimeError(f"Reached maximum retries on media download!")
     return md5
 
 def import_media(api, type_id, url, md5=None, section=None, fname=None,
@@ -86,9 +87,8 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     host = api.api_client.configuration.host
     token = api.api_client.configuration.api_key['Authorization']
     prefix = api.api_client.configuration.api_key_prefix['Authorization']
-    mime,_ = mimetypes.guess_type(fname)
-    response = api.get_media_type(type_id)
-    project_id = response.project
+    media_type = api.get_media_type(type_id)
+    project_id = media_type.project
     spec = {
         'type': type_id,
         'uid': upload_uid,
@@ -100,9 +100,9 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         'attributes': attributes,
         'media_id': media_id,
     }
-    # Initiate transcode.
-    if mime is not None:
-        if not (mime.find('video') >= 0):
-            raise NotImplementedError("Media import only supported for video.")
-    response = api.transcode(project_id, transcode_spec=spec)
+    # Create video or image.
+    if media_type.dtype == 'video':
+        response = api.transcode(project_id, transcode_spec=spec)
+    else:
+        response = api.create_media(project_id, media_spec=spec)
     return response
