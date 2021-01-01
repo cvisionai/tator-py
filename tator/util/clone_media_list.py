@@ -1,6 +1,7 @@
 import os
 import math
 import tempfile
+import logging
 from uuid import uuid1
 from collections import defaultdict
 
@@ -9,6 +10,8 @@ from urllib.parse import urlparse, urljoin
 from .md5sum import md5sum
 from ._download_file import _download_file
 from ._upload_file import _upload_file
+
+logger = logging.getLogger(__name__)
 
 class HostTransfer:
     def __init__(self, src_api, src_project, dest_api, dest_project):
@@ -37,13 +40,14 @@ class HostTransfer:
         """
         parsed = urlparse(src_url)
         filename = os.path.basename(parsed.path)
-        with tempfile.NamedTemporaryFile() as temp:
-            for _ in _download_file(self.src_api, self.src_project, src_url, temp.name):
-                pass
-            for _, upload_info in _upload_file(self.dest_api, self.dest_project, temp.name,
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp = os.path.join(temp_dir, filename)
+            for progress in _download_file(self.src_api, self.src_project, src_url, temp):
+                logger.info(f"Downloading {src_url}: {progress}")
+            for progress, upload_info in _upload_file(self.dest_api, self.dest_project, temp,
                                                media_id=media_id, filename=filename):
-                pass
-        out = upload_info.key
+                logger.info(f"Uploading {temp}: {progress}")
+            out = upload_info.key
         if return_url:
             out = self.src_api.get_download_info(self.src_project,
                                                  {'keys': [upload_info.key]})[0].url
@@ -167,7 +171,8 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             if media.uid:
                 media_spec['uid'] = media.uid
             # Transfer thumbnails and image.
-            media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}', return_url=True)
+            if media.thumbnail:
+                media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}', return_url=True)
 
             if media.thumbnail_gif:
                 media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}',
@@ -182,31 +187,26 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
 
             # Transfer videos.
             if media.media_files:
-                if media.media_files.archival:
-                    for archival in media.media_files.archival:
-                        media_def = {k: v for k, v in archival.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['path'] = transfer(archival.path, media_id=response.id)
-                        dest_api.create_video_file(response.id, role='archival',
-                                                   video_definition=media_def)
-                if media.media_files.streaming:
-                    for streaming in media.media_files.streaming:
-                        media_def = {k: v for k, v in streaming.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['path'] = transfer(streaming.path, media_id=response.id)
-                        media_def['segment_info'] = transfer(streaming.segment_info, media_id=response.id)
-                        dest_api.create_video_file(response.id, role='streaming',
-                                                   video_definition=media_def)
-                if media.media_files.audio:
-                    for audio in media.media_files.audio:
-                        media_def = {k: v for k, v in audio.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['url'] = transfer(audio.path, media_id=response.id)
-                        dest_api.create_audio_file(response.id, role='audio',
-                                                   audio_definition=media_def)
+                media_files = media.media_files.to_dict()
+                for key in ['streaming', 'archival', 'audio', 'image', 'thumbnail', 'thumbnail_gif']:
+                    if media_files.get(key):
+                        for item in media_files[key]:
+                            media_def = {k: v for k, v in item.items()
+                                         if v is not None}
+                            src_path = media_def.pop('path', None)
+                            media_def['path'] = transfer(src_path, media_id=response.id)
+                            if key == 'streaming':
+                                src_segments = media_def.pop('segment_info', None)
+                                media_def['segment_info'] = transfer(src_segments, media_id=response.id)
+                            if key in ['streaming', 'archival']:
+                                dest_api.create_video_file(response.id, role=key,
+                                                           video_definition=media_def)
+                            elif key in ['image', 'thumbnail', 'thumbnail_gif']:
+                                dest_api.create_image_file(response.id, role=key,
+                                                           image_definition=media_def)
+                            elif key in ['audio']:
+                                dest_api.create_audio_file(response.id, role=key,
+                                                           audio_definition=media_def)
                 if media.media_files.ids:
                     dest_ids = []
                     for id_ in media.media_files.ids:
@@ -218,9 +218,9 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                                              "before multi videos.")
                     update = {'multi': {'ids': dest_ids}}
                     if media.media_files.layout:
-                        update['media_files']['layout'] = media.media_files.layout
+                        update['multi']['layout'] = media.media_files.layout
                     if media.media_files.quality:
-                        update['media_files']['quality'] = media.media_files.quality
+                        update['multi']['quality'] = media.media_files.quality
                     dest_api.update_media(response.id, media_update=update)
             created_ids.append(response.id)
             yield (len(created_ids), total_files, response, id_map)
