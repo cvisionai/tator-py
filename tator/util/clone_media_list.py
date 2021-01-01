@@ -4,8 +4,9 @@ import tempfile
 import logging
 from uuid import uuid1
 from collections import defaultdict
-
 from urllib.parse import urlparse, urljoin
+
+import progressbar
 
 from .md5sum import md5sum
 from ._download_file import _download_file
@@ -42,11 +43,15 @@ class HostTransfer:
         filename = os.path.basename(parsed.path)
         with tempfile.TemporaryDirectory() as temp_dir:
             temp = os.path.join(temp_dir, filename)
+            print(f"Downloading {filename}")
+            bar = progressbar.ProgressBar(max_value=100)
             for progress in _download_file(self.src_api, self.src_project, src_url, temp):
-                logger.info(f"Downloading {src_url}: {progress}")
+                bar.update(progress)
+            print(f"Uploading {filename}")
+            bar = progressbar.ProgressBar(max_value=100)
             for progress, upload_info in _upload_file(self.dest_api, self.dest_project, temp,
                                                media_id=media_id, filename=filename):
-                logger.info(f"Uploading {temp}: {progress}")
+                bar.update(progress)
             out = upload_info.key
         if return_url:
             out = self.dest_api.get_download_info(self.dest_project,
