@@ -96,11 +96,13 @@ def test_clone_images_util_same_host(host, token, project, image_type, image):
 
 def test_clone_multi_util_different_host(host, token, project, multi_type, multi, video):
     tator_api = tator.get_api(host, token)
+    dest_api = tator.get_api(host, token)
+    assert tator_api is not dest_api
     query_params = {'project': project, 'media_id': [multi]}
     section = 'Cloned media util different host'
     created_ids = []
     generator = tator.util.clone_media_list(tator_api, query_params, project, {video:video},
-                                            multi_type, section, tator_api)
+                                            multi_type, section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
         created_ids.append(response.id)
@@ -111,11 +113,13 @@ def test_clone_multi_util_different_host(host, token, project, multi_type, multi
 
 def test_clone_videos_util_different_host(host, token, project, video_type, video):
     tator_api = tator.get_api(host, token)
+    dest_api = tator.get_api(host, token)
+    assert tator_api is not dest_api
     query_params = {'project': project, 'media_id': [video]}
     section = 'Cloned media util different host'
     created_ids = []
     generator = tator.util.clone_media_list(tator_api, query_params, project, {}, video_type,
-                                            section, tator_api)
+                                            section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
         created_ids.append(response.id)
@@ -126,11 +130,13 @@ def test_clone_videos_util_different_host(host, token, project, video_type, vide
 
 def test_clone_images_util_different_host(host, token, project, image_type, image):
     tator_api = tator.get_api(host, token)
+    dest_api = tator.get_api(host, token)
+    assert tator_api is not dest_api
     query_params = {'project': project, 'media_id': [image]}
     section = 'Cloned media util different host'
     created_ids = []
     generator = tator.util.clone_media_list(tator_api, query_params, project, {}, image_type,
-                                            section, tator_api)
+                                            section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
         created_ids.append(response.id)

@@ -3,13 +3,13 @@ import mimetypes
 import os
 import math
 
-from tusclient.client import TusClient
 from urllib.parse import urljoin
 
+from ._upload_file import _upload_file
 from .md5sum import md5sum
 
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
-                 upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
+                 upload_gid=None, upload_uid=None, chunk_size=10*1024*1024,
                  attributes=None, media_id=None):
     """ Uploads a single media file.
 
@@ -52,31 +52,21 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     host = api.api_client.configuration.host
     token = api.api_client.configuration.api_key['Authorization']
     prefix = api.api_client.configuration.api_key_prefix['Authorization']
-    tusURL = urljoin(host, "files/")
-    tus = TusClient(tusURL, headers={'Authorization': f'{prefix} {token}',
-                                     'Upload-Uid': f'{upload_uid}'})
-    uploader = tus.uploader(path, chunk_size=chunk_size,
-                            retries=10, retry_delay=15)
-    num_chunks=math.ceil(uploader.get_file_size()/chunk_size)
-
-    last_progress = 0
-    yield (last_progress, None)
-
-    for chunk_count in range(num_chunks):
-        uploader.upload_chunk()
-        this_progress = round((chunk_count / num_chunks) *100,1)
-        if this_progress != last_progress:
-            yield (this_progress, None)
-            last_progress = this_progress
 
     mime,_ = mimetypes.guess_type(fname)
     response = api.get_media_type(type_id)
     project_id = response.project
+
+    for progress, upload_info in _upload_file(api, project_id, path, chunk_size=chunk_size):
+        yield (progress, None)
+
+    url = api.get_download_info(project_id, download_info_spec={'keys': [upload_info.key]})[0].url
+
     spec = {
         'type': type_id,
         'uid': upload_uid,
         'gid': upload_gid,
-        'url': uploader.url,
+        'url': url,
         'name': fname,
         'section': section,
         'md5': md5,

@@ -69,7 +69,7 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
 
     # Add images to tar file.
     paths = glob.glob(os.path.join(image_set, '**/*.jpg'), recursive=True)
-    paths = paths[:10] # Only upload the first 10 files.
+    paths = paths[:1000] # Only upload the first 10 files.
     tar_buf = tempfile.NamedTemporaryFile()
     tar_file = tarfile.TarFile(mode='w', fileobj=tar_buf)
     for idx,fp in enumerate(paths):

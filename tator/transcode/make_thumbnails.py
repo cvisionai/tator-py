@@ -7,10 +7,13 @@ import json
 import logging
 import tempfile
 
-from ..util import get_api
+from PIL import Image
 
-from .upload import upload_file
+from ..util import get_api
+from ..util._upload_file import _upload_file
+
 from .transcode import get_length_info
+from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -81,19 +84,44 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
 
     # Upload thumbnail and thumbnail gif.
     api = get_api(host, token)
-    thumbnail_url = upload_file(thumb_path, api)
-    thumbnail_gif_url = upload_file(thumb_gif_path, api)
+    media_obj = api.get_media(media_id)
+    for progress, thumbnail_info in _upload_file(api, media_obj.project, thumb_path,
+                                                 media_id=media_id,
+                                                 filename=os.path.basename(thumb_path)):
+        pass
+    for progress, thumbnail_gif_info in _upload_file(api, media_obj.project, thumb_gif_path,
+                                                     media_id=media_id,
+                                                     filename=os.path.basename(thumb_gif_path)):
+        pass
+
+    # Open images to get output resolution.
+    thumb_image = Image.open(thumb_path)
+    thumb_gif_image = Image.open(thumb_gif_path)
+
+    # Create image definitions for thumbnails.
+    thumb_def = {'path': thumbnail_info.key,
+                 'size': os.stat(thumb_path).st_size,
+                 'resolution': [thumb_image.height, thumb_image.width],
+                 'mime': f'image/{thumb_image.format.lower()}'}
+    thumb_gif_def = {'path': thumbnail_gif_info.key,
+                     'size': os.stat(thumb_gif_path).st_size,
+                     'resolution': [thumb_gif_image.height, thumb_gif_image.width],
+                     'mime': f'image/{thumb_gif_image.format.lower()}'}
+
+    response = api.create_image_file(media_id, role='thumbnail', image_definition=thumb_def)
+    assert isinstance(response, MessageResponse)
+    response = api.create_image_file(media_id, role='thumbnail_gif', image_definition=thumb_gif_def)
+    assert isinstance(response, MessageResponse)
 
     # Update the media object.
     response = api.update_media(media_id, media_update={
-        'thumbnail_url': thumbnail_url,
-        'thumbnail_gif_url': thumbnail_gif_url,
         'num_frames': num_frames,
         'fps': fps,
         'codec': codec,
         'width': width,
         'height': height,
     })
+    assert isinstance(response, MessageResponse)
     logger.info(f'Thumbnail upload done! {response.message}')
 
 if __name__ == '__main__':

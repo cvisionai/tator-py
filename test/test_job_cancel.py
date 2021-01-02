@@ -60,13 +60,6 @@ spec:
     assert isinstance(job, tator.models.Job)
     print(f"Cancelling job with uid {uid}...")
     response = tator_api.delete_job(uid)
-    # TODO: Job deletions are taking a really long time to go through,
-    # at least partially because the progress container is taking so long.
-    # When websockets are removed, switch cancel operation to delete
-    # rather than patching with stop (delete is almost instantaneous).
-    """
-    print("Cancel done, waiting 30 sec...")
-    #time.sleep(30)
     try:
         found = True
         response = tator_api.get_job(uid)
@@ -74,7 +67,6 @@ spec:
         found = False
         assert exc.status == 404
     assert found == False
-    """
 
     # Cancel by GID.
     gid = responses[1].gid
@@ -82,22 +74,14 @@ spec:
     assert isinstance(jobs[0], tator.models.Job)
     print(f"Cancelling job with gid {gid}...")
     tator_api.delete_job_list(project, gid=gid)
-    """
-    print("Cancel done, waiting 60 sec...")
-    time.sleep(60)
     jobs = tator_api.get_job_list(project, gid=gid)
     assert len(jobs) == 0
-    """
 
     # Cancel all jobs in project.
     jobs = tator_api.get_job_list(project)
     assert len(jobs) >= 8
     print("Cancelling all jobs in project...")
     tator_api.delete_job_list(project)
-    """
-    print("Cancel done, waiting 60 sec...")
-    time.sleep(60)
     jobs = tator_api.get_job_list(project)
     assert len(jobs) == 0
-    """
 

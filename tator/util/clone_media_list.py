@@ -1,61 +1,64 @@
 import os
 import math
 import tempfile
+import logging
 from uuid import uuid1
 from collections import defaultdict
+from urllib.parse import urlparse, urljoin
 
-from tusclient.client import TusClient
-from urllib.parse import urljoin
+import progressbar
 
 from .md5sum import md5sum
 from ._download_file import _download_file
+from ._upload_file import _upload_file
+
+logger = logging.getLogger(__name__)
 
 class HostTransfer:
-    def __init__(self, src_api, dest_api):
+    def __init__(self, src_api, src_project, dest_api, dest_project):
         """ Sets up authentication for transferring file.
 
         :param src_api: :class:`tator.TatorApi` object corresponding to source host.
+        :param src_project: Unique integer identifying the source project.
         :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
+        :param dest_project: Unique integer identifying the destination project.
         """
-        # Set up source auth.
-        config = src_api.api_client.configuration
-        token = config.api_key['Authorization']
-        prefix = config.api_key_prefix['Authorization']
-        self.src_host = config.host
-        self.src_headers = {
-            'Authorization': f'{prefix} {token}',
-            'Content-Type': f'application/json',
-            'Accept-Encoding': 'gzip',
-        }
+        # Set up source.
+        self.src_api = src_api
+        self.src_project = src_project
 
-        # Set up destination auth.
-        config = dest_api.api_client.configuration
-        self.dest_token = config.api_key['Authorization']
-        self.dest_prefix = config.api_key_prefix['Authorization']
-        self.dest_host = config.host
-        self.tus_url = urljoin(self.dest_host, 'files/')
+        # Set up destination.
+        self.dest_api = dest_api
+        self.dest_project = dest_project
 
-    def __call__(self, src_url):
+    def __call__(self, src_url, media_id=None, return_url=False):
         """ Downloads a file from one host and uploads it to another.
         
         :param src_url: Relative URL of source file to download.
-        :returns: URL of destination file.
+        :param media_id: Destination media ID.
+        :param return_url: Return download URL if true.
+        :returns: URL or path of destination file.
         """
-        CHUNK_SIZE = 5*1024*1024
-        url = urljoin(self.src_host, src_url)
-        upload_uid = str(uuid1())
-        tus_headers = {'Authorization': f'{self.dest_prefix} {self.dest_token}',
-                       'Upload-Uid': f'{upload_uid}'}
-        tus = TusClient(self.tus_url, headers=tus_headers)
-        with tempfile.NamedTemporaryFile() as temp:
-            for _ in _download_file(url, self.src_headers, temp.name):
-                pass
-            uploader = tus.uploader(temp.name, chunk_size=CHUNK_SIZE,
-                                    retries=10, retry_delay=15)
-            num_chunks = math.ceil(uploader.get_file_size()/CHUNK_SIZE)
-            for chunk_count in range(num_chunks):
-                uploader.upload_chunk()
-        return uploader.url
+        parsed = urlparse(src_url)
+        filename = os.path.basename(parsed.path)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp = os.path.join(temp_dir, filename)
+            print(f"Downloading {filename}")
+            bar = progressbar.ProgressBar(max_value=100)
+            for progress in _download_file(self.src_api, self.src_project, src_url, temp):
+                bar.update(progress)
+            bar.update(100)
+            print(f"Uploading {filename}")
+            bar = progressbar.ProgressBar(max_value=100)
+            for progress, upload_info in _upload_file(self.dest_api, self.dest_project, temp,
+                                               media_id=media_id, filename=filename):
+                bar.update(progress)
+            bar.update(100)
+            out = upload_info.key
+        if return_url:
+            out = self.dest_api.get_download_info(self.dest_project,
+                                                  {'keys': [upload_info.key]})[0].url
+        return out
 
 def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest_type=-1,
                      dest_section='', dest_api=None):
@@ -118,6 +121,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
     # Make sure query has a project.
     if 'project' not in query_params:
         raise Exception("Query parameters must include a project!")
+    src_project = query_params['project']
 
     # Guess the media type if it was not given.
     if dest_type == -1:
@@ -130,7 +134,11 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         dest_type = media_types[0].id
 
     # Get medias.
-    medias = src_api.get_media_list(**query_params)
+    try:
+        medias = src_api.get_media_list(**query_params, presigned=86400)
+    except:
+        # Support legacy api
+        medias = src_api.get_media_list(**query_params)
     total_files = len(medias)
 
     # Clone the media.
@@ -139,7 +147,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         for idx in range(0, len(medias), 100): # Go in batches of 100
             # Clone media locally.
             media_ids = [media.id for media in medias[idx:idx+100]]
-            response = src_api.clone_media_list(query_params['project'],
+            response = src_api.clone_media_list(src_project,
                                                 media_id=media_ids,
                                                 clone_media_spec={
                                                     'dest_project': dest_project,
@@ -151,7 +159,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             yield (len(created_ids), total_files, response, id_map)
     else:
         # Clone media to another host.
-        transfer = HostTransfer(src_api, dest_api)
+        transfer = HostTransfer(src_api, src_project, dest_api, dest_project)
         for media in medias:
             # Set up media spec.
             attributes = media.attributes
@@ -174,13 +182,15 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             if media.uid:
                 media_spec['uid'] = media.uid
             # Transfer thumbnails and image.
-            media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}')
+            if media.thumbnail:
+                media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}', return_url=True)
 
             if media.thumbnail_gif:
-                media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}')
+                media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}',
+                                                           return_url=True)
 
             if media.file:
-                media_spec['url'] = transfer(f'/media/{media.file}')
+                media_spec['url'] = transfer(f'/media/{media.file}', return_url=True)
 
             # Create the media object.
             response = dest_api.create_media(dest_project, media_spec=media_spec)
@@ -188,34 +198,26 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
 
             # Transfer videos.
             if media.media_files:
-                if media.media_files.archival:
-                    for archival in media.media_files.archival:
-                        media_def = {k: v for k, v in archival.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['url'] = transfer(archival.path)
-                        dest_api.move_video(response.id, move_video_spec={
-                            'media_files': {'archival': [media_def]}
-                        })
-                if media.media_files.streaming:
-                    for streaming in media.media_files.streaming:
-                        media_def = {k: v for k, v in streaming.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['url'] = transfer(streaming.path)
-                        media_def['segments_url'] = transfer(streaming.segment_info)
-                        dest_api.move_video(response.id, move_video_spec={
-                            'media_files': {'streaming': [media_def]}
-                        })
-                if media.media_files.audio:
-                    for audio in media.media_files.audio:
-                        media_def = {k: v for k, v in audio.to_dict().items()
-                                     if v is not None}
-                        media_def.pop('path', None)
-                        media_def['url'] = transfer(audio.path)
-                        dest_api.move_video(response.id, move_video_spec={
-                            'media_files': {'audio': [media_def]}
-                        })
+                media_files = media.media_files.to_dict()
+                for key in ['streaming', 'archival', 'audio', 'image', 'thumbnail', 'thumbnail_gif']:
+                    if media_files.get(key):
+                        for item in media_files[key]:
+                            media_def = {k: v for k, v in item.items()
+                                         if v is not None}
+                            src_path = media_def.pop('path', None)
+                            media_def['path'] = transfer(src_path, media_id=response.id)
+                            if key == 'streaming':
+                                src_segments = media_def.pop('segment_info', None)
+                                media_def['segment_info'] = transfer(src_segments, media_id=response.id)
+                            if key in ['streaming', 'archival']:
+                                dest_api.create_video_file(response.id, role=key,
+                                                           video_definition=media_def)
+                            elif key in ['image', 'thumbnail', 'thumbnail_gif']:
+                                dest_api.create_image_file(response.id, role=key,
+                                                           image_definition=media_def)
+                            elif key in ['audio']:
+                                dest_api.create_audio_file(response.id, role=key,
+                                                           audio_definition=media_def)
                 if media.media_files.ids:
                     dest_ids = []
                     for id_ in media.media_files.ids:
@@ -225,11 +227,11 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                             raise Exception(f"Source media ID {id_} does not exist in media "
                                              "mapping! Individual videos should be migrated "
                                              "before multi videos.")
-                    update = {'media_files': {'ids': dest_ids}}
+                    update = {'multi': {'ids': dest_ids}}
                     if media.media_files.layout:
-                        update['media_files']['layout'] = media.media_files.layout
+                        update['multi']['layout'] = media.media_files.layout
                     if media.media_files.quality:
-                        update['media_files']['quality'] = media.media_files.quality
+                        update['multi']['quality'] = media.media_files.quality
                     dest_api.update_media(response.id, media_update=update)
             created_ids.append(response.id)
             yield (len(created_ids), total_files, response, id_map)

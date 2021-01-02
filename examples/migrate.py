@@ -75,6 +75,8 @@ def parse_args():
                                                '--new_project_name.', type=int)
     parser.add_argument('--new_project_name', help='Name to user for new project if --dest_project '
                                                    'is omitted.', type=str)
+    parser.add_argument('--dest_organization', help='Destination organization. Required if using '
+                                                    '--new_project_name.', type=int)
     parser.add_argument('--sections', help='Specific sections to migrate. If not given, all media '
                                            'in the source project will be migrated.', nargs='+')
     parser.add_argument('--skip_memberships', help='If given, membership objects will not be migrated.',
@@ -433,7 +435,8 @@ def create_project(args, src_api, dest_api, dest_project):
     if dest_project is None:
         src_project = src_api.get_project(args.project)
         name = args.new_project_name if args.new_project_name else src_project.name
-        spec = {'name': name}
+        spec = {'name': name,
+                'organization': args.dest_organization}
         if src_project.summary:
             spec['summary'] = src_project.summary
         response = dest_api.create_project(project_spec=spec)

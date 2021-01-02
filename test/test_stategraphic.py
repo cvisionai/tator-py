@@ -16,7 +16,7 @@ def _make_box(project, box_type, video, frame):
     }
 
 def test_stategraphic(host, token, project, video, box_type, track_type):
-    TRACK_LENGTH=320
+    TRACK_LENGTH=200
 
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)

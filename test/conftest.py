@@ -69,13 +69,17 @@ def organization(request):
     import tator
     host = request.config.option.host
     token = request.config.option.token
+    keep = request.config.option.keep
     tator_api = tator.get_api(host, token)
+    current_dt = datetime.datetime.now()
+    dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_organization(organization_spec={
-        'name': f'test_organization',
+        'name': f'test_organization_{dt_str}',
     })
     organization_id = response.id
     yield organization_id
-    status = tator_api.delete_organization(organization_id)
+    if not keep:
+        status = tator_api.delete_organization(organization_id)
 
 @pytest.fixture(scope='session')
 def project(request, organization):
