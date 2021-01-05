@@ -29,7 +29,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         "entity_type": f"{type(entity_type).__name__}",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
-    tator_api.add_attribute(id=type_id, attribute_addition=addition)
+    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check attribute name before changing it
@@ -58,12 +58,12 @@ def mutation_helper(tator_api, type_getter, type_id, params):
     if dest_dtype in allowed_mutations[source_dtype]:
         expected_dtype = dest_dtype
         expected_name = dest_name
-        tator_api.rename_attribute(id=type_id, attribute_rename=mutation)
+        tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
     else:
         expected_dtype = source_dtype
         expected_name = source_name
         with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-            tator_api.rename_attribute(id=type_id, attribute_rename=mutation)
+            tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
 
     entity_type = type_getter(type_id)
 
@@ -202,7 +202,7 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "entity_type": f"MediaType",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
-    tator_api.add_attribute(id=video_type, attribute_addition=addition)
+    tator_api.add_attribute(id=video_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(video_type)
 
     # Check attribute name before changing it
@@ -214,7 +214,7 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "entity_type": f"MediaType",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
-    tator_api.add_attribute(id=image_type, attribute_addition=addition)
+    tator_api.add_attribute(id=image_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(image_type)
 
     # Check attribute name before changing it
@@ -228,7 +228,7 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "new_attribute_type": {"name": dest_name, "dtype": source_dtype},
     }
 
-    tator_api.rename_attribute(id=video_type, attribute_rename=mutation)
+    tator_api.rename_attribute(id=video_type, attribute_type_update=mutation)
 
     entity_type = tator_api.get_media_type(video_type)
 
