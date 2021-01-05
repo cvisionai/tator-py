@@ -49,6 +49,6 @@ def _download_file(api, project, url, out_path):
                 yield 100
             break
         except Exception as ex:
-            logger.info(f"Failed to download {url} on attempt {attempt}...")
+            logger.error(f"Failed to download {url} on attempt {attempt} {ex}...")
             pass
 
