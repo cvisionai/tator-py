@@ -102,32 +102,6 @@ def test_box_type_dtype_change(host, token, project, box_type, source_dtype, des
     mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
 
 
-@pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
-@pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_state_type_dtype_change(host, token, project, state_type, source_dtype, dest_dtype):
-    tator_api = tator.get_api(host, token)
-    params = {
-        "source_name": f"{source_dtype} attribute to modify",
-        "source_dtype": source_dtype,
-        "dest_dtype": dest_dtype,
-        "expected_asserts": 4,
-    }
-    mutation_helper(tator_api, tator_api.get_state_type, state_type, params)
-
-
-@pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
-@pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_video_type_dtype_change(host, token, project, video_type, source_dtype, dest_dtype):
-    tator_api = tator.get_api(host, token)
-    params = {
-        "source_name": f"{source_dtype} attribute to modify",
-        "source_dtype": source_dtype,
-        "dest_dtype": dest_dtype,
-        "expected_asserts": 4,
-    }
-    mutation_helper(tator_api, tator_api.get_media_type, video_type, params)
-
-
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
 def test_box_type_invalid_dtype_change(host, token, project, box_type, dtype):
     tator_api = tator.get_api(host, token)
@@ -203,46 +177,15 @@ def test_video_type_name_change(host, token, project, video_type, dtype):
 @pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
 @pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
 def test_box_type_full_mutation(host, token, project, box_type, source_dtype, dest_dtype):
-    uid = str(uuid4())
     params = {
         "source_name": f"{source_dtype} attribute to modify",
         "source_dtype": source_dtype,
-        "dest_name": f"renamed {source_dtype} -> {dest_dtype} attribute {uid}",
+        "dest_name": f"renamed {source_dtype} -> {dest_dtype} attribute",
         "dest_dtype": dest_dtype,
         "expected_asserts": 5 if dest_dtype in allowed_mutations[source_dtype] else 4,
     }
     tator_api = tator.get_api(host, token)
     mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
-
-
-@pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
-@pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_state_type_full_mutation(host, token, project, state_type, source_dtype, dest_dtype):
-    uid = str(uuid4())
-    params = {
-        "source_name": f"{source_dtype} attribute to modify",
-        "source_dtype": source_dtype,
-        "dest_name": f"renamed {source_dtype} -> {dest_dtype} attribute {uid}",
-        "dest_dtype": dest_dtype,
-        "expected_asserts": 5 if dest_dtype in allowed_mutations[source_dtype] else 4,
-    }
-    tator_api = tator.get_api(host, token)
-    mutation_helper(tator_api, tator_api.get_state_type, state_type, params)
-
-
-@pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
-@pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_video_type_full_mutation(host, token, project, video_type, source_dtype, dest_dtype):
-    uid = str(uuid4())
-    params = {
-        "source_name": f"{source_dtype} attribute to modify",
-        "source_dtype": source_dtype,
-        "dest_name": f"renamed {source_dtype} -> {dest_dtype} attribute {uid}",
-        "dest_dtype": dest_dtype,
-        "expected_asserts": 5 if dest_dtype in allowed_mutations[source_dtype] else 4,
-    }
-    tator_api = tator.get_api(host, token)
-    mutation_helper(tator_api, tator_api.get_media_type, video_type, params)
 
 
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())

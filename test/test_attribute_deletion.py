@@ -71,15 +71,3 @@ dtypes = ["int", "bool", "float", "string", "enum", "datetime", "geopos"]
 def test_box_type_delete_attribute(host, token, project, box_type, dtype):
     tator_api = tator.get_api(host, token)
     delete_attribute_helper(tator_api, tator_api.get_localization_type, box_type, dtype)
-
-
-@pytest.mark.parametrize("dtype", dtypes)
-def test_state_type_delete_attribute(host, token, project, state_type, dtype):
-    tator_api = tator.get_api(host, token)
-    delete_attribute_helper(tator_api, tator_api.get_state_type, state_type, dtype)
-
-
-@pytest.mark.parametrize("dtype", dtypes)
-def test_video_type_delete_attribute(host, token, project, video_type, dtype):
-    tator_api = tator.get_api(host, token)
-    delete_attribute_helper(tator_api, tator_api.get_media_type, video_type, dtype)
