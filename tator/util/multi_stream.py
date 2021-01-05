@@ -170,7 +170,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
         multi_def = {"layout": layout,
                      "ids": media_ids}
         if quality:
-            media_def.update({"quality": quality})
+            multi_def.update({"quality": quality})
         api.update_media(resp.id, {"multi": multi_def})
 
         return resp
