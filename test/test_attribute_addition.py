@@ -14,7 +14,7 @@ def add_attribute_helper(tator_api, type_getter, type_id, dtype):
         "entity_type": f"{type(entity_type).__name__}",
         "addition": {"name": new_attr_name, "dtype": dtype},
     }
-    tator_api.add_attribute(id=type_id, attribute_addition=addition)
+    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check for added attribute
@@ -34,7 +34,7 @@ def add_invalid_attribute_helper(tator_api, type_getter, type_id):
 
     # Adding an attribute with an invalid `dtype` should raise an exception
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.add_attribute(id=type_id, attribute_addition=addition)
+        tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
     assert (

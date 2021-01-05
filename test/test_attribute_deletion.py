@@ -12,7 +12,7 @@ def delete_attribute_helper(tator_api, type_getter, type_id, dtype):
         "entity_type": f"{type(entity_type).__name__}",
         "addition": {"name": new_attr_name, "dtype": dtype},
     }
-    tator_api.add_attribute(id=type_id, attribute_addition=addition)
+    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check for added attribute
@@ -23,7 +23,7 @@ def delete_attribute_helper(tator_api, type_getter, type_id, dtype):
         "entity_type": f"{type(entity_type).__name__}",
         "attribute_to_delete": new_attr_name,
     }
-    tator_api.delete_attribute(id=type_id, attribute_deletion=deletion)
+    tator_api.delete_attribute(id=type_id, attribute_type_delete=deletion)
     entity_type = type_getter(type_id)
 
     # Check that the attribute is gone
@@ -43,7 +43,7 @@ def delete_invalid_attribute_helper(tator_api, type_getter, type_id):
         "attribute_to_delete": new_attr_name,
     }
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.delete_attribute(id=type_id, attribute_deletion=deletion)
+        tator_api.delete_attribute(id=type_id, attribute_type_delete=deletion)
 
     # Check the exeption message for expected content
     assert "Could not find attribute name" in str(excinfo.value)
@@ -71,15 +71,3 @@ dtypes = ["int", "bool", "float", "string", "enum", "datetime", "geopos"]
 def test_box_type_delete_attribute(host, token, project, box_type, dtype):
     tator_api = tator.get_api(host, token)
     delete_attribute_helper(tator_api, tator_api.get_localization_type, box_type, dtype)
-
-
-@pytest.mark.parametrize("dtype", dtypes)
-def test_state_type_delete_attribute(host, token, project, state_type, dtype):
-    tator_api = tator.get_api(host, token)
-    delete_attribute_helper(tator_api, tator_api.get_state_type, state_type, dtype)
-
-
-@pytest.mark.parametrize("dtype", dtypes)
-def test_video_type_delete_attribute(host, token, project, video_type, dtype):
-    tator_api = tator.get_api(host, token)
-    delete_attribute_helper(tator_api, tator_api.get_media_type, video_type, dtype)
