@@ -29,6 +29,8 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         "entity_type": f"{type(entity_type).__name__}",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
+    if source_dtype == "enum":
+        addition["addition"]["choices"] = ["a", "b", "c"]
     tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
@@ -52,6 +54,8 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         "old_attribute_type_name": source_name,
         "new_attribute_type": {"name": dest_name, "dtype": dest_dtype},
     }
+    if dest_dtype == "enum":
+        mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
 
     # A type mutation not in the list of allowed mutations will raise an `ApiException` and the
     # expected `dtype` will be the same as `source_dtype`
@@ -202,6 +206,8 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "entity_type": f"MediaType",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
+    if source_dtype == "enum":
+        addition["addition"]["choices"] = ["a", "b", "c"]
     tator_api.add_attribute(id=video_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(video_type)
 
@@ -214,6 +220,8 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "entity_type": f"MediaType",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
+    if source_dtype == "enum":
+        addition["addition"]["choices"] = ["a", "b", "c"]
     tator_api.add_attribute(id=image_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(image_type)
 
@@ -227,6 +235,8 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
         "old_attribute_type_name": source_name,
         "new_attribute_type": {"name": dest_name, "dtype": source_dtype},
     }
+    if source_dtype == "enum":
+        mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
 
     tator_api.rename_attribute(id=video_type, attribute_type_update=mutation)
 

@@ -12,6 +12,8 @@ def delete_attribute_helper(tator_api, type_getter, type_id, dtype):
         "entity_type": f"{type(entity_type).__name__}",
         "addition": {"name": new_attr_name, "dtype": dtype},
     }
+    if dtype == "enum":
+        addition["addition"]["choices"] = ["a", "b", "c"]
     tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
