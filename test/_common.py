@@ -8,6 +8,10 @@ def is_number(x):
         return False
 
 def print_fail(a, b, key):
+    a.pop('created_datetime', None)
+    b.pop('created_datetime', None)
+    a.pop('modified_datetime', None)
+    b.pop('modified_datetime', None)
     print(f"Failed on key: {key}")
     print(f"a: {json.dumps(a, indent=4)}")
     print(f"b: {json.dumps(b, indent=4)}")
@@ -17,7 +21,7 @@ def assert_vector_equal(a,b):
     for idx,v in enumerate(a):
         assert(a[idx] == b[idx])
 
-def assert_close_enough(a, b, exclude):
+def assert_close_enough(a, b, exclude=[]):
     if not isinstance(a, dict):
         a = a.to_dict()
     if not isinstance(b, dict):
