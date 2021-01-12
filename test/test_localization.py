@@ -71,6 +71,10 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Get single box.
     updated_box = tator_api.get_localization(box_id)
     assert_close_enough(patch, updated_box, exclude)
+
+    # Get box by ID.
+    box_by_id = tator_api.get_localization_list_by_id(project, [box_id])[0]
+    assert_close_enough(updated_box, box_by_id, exclude)
     
     # Delete single box.
     response = tator_api.delete_localization(box_id)

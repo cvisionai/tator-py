@@ -65,6 +65,10 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     updated_state = tator_api.get_state(state_id)
     assert isinstance(updated_state, tator.models.State)
     assert_close_enough(patch, updated_state, exclude)
+
+    # Get state by ID.
+    state_by_id = tator_api.get_state_list_by_id(project, [state_id])[0]
+    assert_close_enough(updated_state, state_by_id, exclude)
     
     # Delete single state.
     response = tator_api.delete_state(state_id)

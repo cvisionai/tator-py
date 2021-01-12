@@ -23,3 +23,8 @@ def test_get_audio(host, token, project, video):
     assert len(audio) > 0
     assert audio[0].codec == 'aac'
 
+def test_get_by_id(host, token, project, video):
+    tator_api = tator.get_api(host, token)
+    video_obj = tator_api.get_media(video)
+    other_obj = tator_api.get_media_list_by_id(project, [video])[0]
+    assert video_obj.id == other_obj.id
