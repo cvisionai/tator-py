@@ -1,0 +1,59 @@
+name: GoT # The name of the hierarchy.
+children:
+- name: Targaryen
+  children:
+  - name: Maekar I
+    children:
+    - name: Maester Aemon
+    - name: Aegon V
+      children:
+      - name: Jaehaerys II
+        children:
+        - name: Aerys II (Mad King)
+          children:
+          - name: Daenerys
+          - name: Viserys
+          - name: Rhaegar
+            children:
+            - name: Aegon
+      - name: Rhaelle
+- name: Stark
+  children:
+  - name: Rickard
+    children:
+    - name: Brandon
+    - name: Eddard
+      children:
+      - name: Robb
+      - name: Sansa
+      - name: Arya
+      - name: Brandon
+      - name: Rickon
+    - name: Benjen
+    - name: Lyanna
+- name: Baratheon
+  children:
+  - name: Ormund
+    children:
+    - name: Steffon
+      children:
+      - name: Robert
+      - name: Stannis
+        children:
+        - name: Shireen
+      - name: Renly
+- name: Lannister
+  children:
+  - name: Tywin
+    children:
+    - name: Jaime
+    - name: Cersei
+      children:
+      - name: Joffrey
+      - name: Myrcella
+      - name: Tommen
+    - name: Tyrion
+
+# Example service URL: https://www.tatorapp.com/rest/Leaves/Suggestion/GoT/<project>
+# Just the Lannisters: https://www.tatorapp.com/rest/Leaves/Suggestion/GoT.Lannister/<project>
+
