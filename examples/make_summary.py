@@ -177,12 +177,66 @@ def process_localization(
         # Lastly, create the thumbnail of this localization and move it to the user defined location
         # If the localization is a dot, take a large enough image segment,
         # otherwise use the default marigins
+
+        timeout_sec = 10
+
         if dtype =='dot':
-            image_path = tator_api.get_localization_graphic(
-                localization.id,
-                use_default_margins=False,
-                margin_x=50,
-                margin_y=50)
+
+            minimum_margin = 10
+            margin_x = 50 #TODO Parameterize these constants
+            margin_y = 50
+            loc_x_pixels = int(localization.x * width)
+            loc_y_pixels = int(localization.y * height)
+
+            # Handle if the default margins will go outside the image bounds
+            if loc_x_pixels - margin_x < 0:
+                margin_x = loc_x_pixels
+
+            elif loc_x_pixels + margin_x > width:
+                margin_x = width - loc_x_pixels
+
+            if loc_y_pixels - margin_y < 0:
+                margin_y = loc_y_pixels
+
+            elif loc_y_pixels + margin_y > height:
+                margin_y = height - loc_y_pixels
+
+            if margin_x < minimum_margin or margin_y < minimum_margin:
+                msg = f"Dot graphic of {localization.id} not retrieved. Margins too small (x,y margins: {margin_x} {margin_y})"
+                logging.info(msg)
+                print(msg)
+                datum.update({'thumbnail': ''})
+                return datum
+
+            try:
+                start = datetime.datetime.now()
+
+                if print_timing_info:
+                    msg = f"...Getting graphic of {localization.id}"
+                    print(msg)
+                    logging.info(msg)
+
+                image_path = tator_api.get_localization_graphic(
+                    localization.id,
+                    use_default_margins=False,
+                    margin_x=margin_x,
+                    margin_y=margin_y,
+                    _request_timeout=timeout_sec)
+                end = datetime.datetime.now()
+
+                if print_timing_info:
+                    msg = f"...done. ({(end - start).total_seconds()} seconds)"
+                    print(msg)
+                    logging.info(msg)
+
+            except Exception:
+                log_msg = f"ERROR: Problem with get_localization_graphic({localization.id})"
+                logging.error(log_msg)
+
+                error_msg = traceback.format_exc()
+                logging.error(error_msg)
+
+                raise ValueError(log_msg)
 
         else:
 
@@ -194,7 +248,6 @@ def process_localization(
                     print(msg)
                     logging.info(msg)
 
-                timeout_sec = 10
                 image_path = tator_api.get_localization_graphic(localization.id, _request_timeout=timeout_sec)
                 end = datetime.datetime.now()
 
