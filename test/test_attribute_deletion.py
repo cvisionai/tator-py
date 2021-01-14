@@ -51,9 +51,9 @@ def delete_invalid_attribute_helper(tator_api, type_getter, type_id):
     assert "Could not find attribute name" in str(excinfo.value)
 
 
-def test_box_type_delete_invalid_attribute(host, token, project, box_type):
+def test_box_type_delete_invalid_attribute(host, token, project, attribute_box_type):
     tator_api = tator.get_api(host, token)
-    delete_invalid_attribute_helper(tator_api, tator_api.get_localization_type, box_type)
+    delete_invalid_attribute_helper(tator_api, tator_api.get_localization_type, attribute_box_type)
 
 
 def test_state_type_delete_invalid_attribute(host, token, project, state_type):
@@ -61,15 +61,15 @@ def test_state_type_delete_invalid_attribute(host, token, project, state_type):
     delete_invalid_attribute_helper(tator_api, tator_api.get_state_type, state_type)
 
 
-def test_video_type_delete_invalid_attribute(host, token, project, video_type):
+def test_video_type_delete_invalid_attribute(host, token, project, attribute_video_type):
     tator_api = tator.get_api(host, token)
-    delete_invalid_attribute_helper(tator_api, tator_api.get_media_type, video_type)
+    delete_invalid_attribute_helper(tator_api, tator_api.get_media_type, attribute_video_type)
 
 
 dtypes = ["int", "bool", "float", "string", "enum", "datetime", "geopos"]
 
 
 @pytest.mark.parametrize("dtype", dtypes)
-def test_box_type_delete_attribute(host, token, project, box_type, dtype):
+def test_box_type_delete_attribute(host, token, project, attribute_box_type, dtype):
     tator_api = tator.get_api(host, token)
-    delete_attribute_helper(tator_api, tator_api.get_localization_type, box_type, dtype)
+    delete_attribute_helper(tator_api, tator_api.get_localization_type, attribute_box_type, dtype)

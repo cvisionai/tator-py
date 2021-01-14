@@ -420,3 +420,95 @@ def clone_leaf_type(request, clone_project):
     })
     leaf_type_id = response.id
     yield leaf_type_id
+
+# Video fixtures for attribute tests
+@pytest.fixture(scope='session')
+def attribute_video_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'attribute_video_type',
+        'description': 'Test video type',
+        'project': project,
+        'dtype': 'video',
+        'attribute_types': make_attribute_types(),
+    })
+    video_type_id = response.id
+    yield video_type_id
+
+@pytest.fixture(scope="session")
+def attribute_video_file(request):
+    out_path = f"/tmp/AudioVideoSyncTest_BallastMedia_attribute.mp4"
+    if not os.path.exists(out_path):
+        url = "http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4"
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(out_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+    yield out_path
+    os.remove(out_path)
+
+
+@pytest.fixture(scope="session")
+def attribute_video(request, project, attribute_video_type, attribute_video_file):
+    import tator
+
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    for progress, response in tator.util.upload_media(tator_api, attribute_video_type, attribute_video_file):
+        print(f"Upload video progress: {progress}%")
+    print(response.message)
+    while True:
+        response = tator_api.get_media_list(
+            project, name="AudioVideoSyncTest_BallastMedia_attribute.mp4"
+        )
+        print("Waiting for transcode...")
+        time.sleep(2.5)
+        if len(response) == 0:
+            continue
+        if response[0].media_files is None:
+            continue
+        have_streaming = response[0].media_files.streaming is not None
+        have_archival = response[0].media_files.archival is not None
+        if have_streaming and have_archival:
+            video_id = response[0].id
+            break
+    yield video_id
+
+@pytest.fixture(scope='session')
+def attribute_image_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'attribute_image_type',
+        'description': 'Test image type',
+        'project': project,
+        'dtype': 'image',
+        'attribute_types': make_attribute_types(),
+    })
+    image_type_id = response.id
+    yield image_type_id
+
+@pytest.fixture(scope='session')
+def attribute_box_type(request, project, attribute_video_type, attribute_image_type):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_localization_type(project, localization_type_spec={
+        'name': 'box_type',
+        'description': 'Test box type',
+        'project': project,
+        'media_types': [attribute_video_type, attribute_image_type],
+        'dtype': 'box',
+        'attribute_types': make_attribute_types(),
+    })
+    box_type_id = response.id
+    yield box_type_id
