@@ -198,7 +198,7 @@ def test_add_same_attribute_with_different_dtypes(host, token, project, line_typ
 @pytest.mark.parametrize("dtype", ["string", "bool"])
 def test_box_type_attribute_addition_es(host, token, project, attribute_video, box_type, dtype):
     tator_api = tator.get_api(host, token)
-    video_obj = tator_api.get_media(function_video)
+    video_obj = tator_api.get_media(attribute_video)
 
     num_localizations = 2
     boxes = [
@@ -249,3 +249,7 @@ def test_box_type_attribute_addition_es(host, token, project, attribute_video, b
 
     for box in boxes:
         assert box.attributes[new_attr_name] == value
+
+    # Clean up
+    params = {'media_id': [attribute_video], 'type': box_type}
+    tator_api.delete_localization_list(project, **params)
