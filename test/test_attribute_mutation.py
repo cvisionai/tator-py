@@ -95,7 +95,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 
 @pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
 @pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_box_type_dtype_change(host, token, project, box_type, source_dtype, dest_dtype):
+def test_box_type_dtype_change(host, token, project, attribute_box_type, source_dtype, dest_dtype):
     tator_api = tator.get_api(host, token)
     params = {
         "source_name": f"{source_dtype} attribute to modify",
@@ -103,11 +103,11 @@ def test_box_type_dtype_change(host, token, project, box_type, source_dtype, des
         "dest_dtype": dest_dtype,
         "expected_asserts": 4,
     }
-    mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
+    mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
-def test_box_type_invalid_dtype_change(host, token, project, box_type, dtype):
+def test_box_type_invalid_dtype_change(host, token, project, attribute_box_type, dtype):
     tator_api = tator.get_api(host, token)
     params = {
         "source_name": f"{dtype} attribute to modify",
@@ -115,11 +115,11 @@ def test_box_type_invalid_dtype_change(host, token, project, box_type, dtype):
         "dest_dtype": "unknown",
         "expected_asserts": 4,
     }
-    mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
+    mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
-def test_box_type_name_change(host, token, project, box_type, dtype):
+def test_box_type_name_change(host, token, project, attribute_box_type, dtype):
     tator_api = tator.get_api(host, token)
     params = {
         "source_name": f"{dtype} attribute to rename",
@@ -127,12 +127,12 @@ def test_box_type_name_change(host, token, project, box_type, dtype):
         "dest_name": f"renamed {dtype} attribute",
         "expected_asserts": 5,
     }
-    mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
+    mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
 @pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
 @pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
-def test_box_type_full_mutation(host, token, project, box_type, source_dtype, dest_dtype):
+def test_box_type_full_mutation(host, token, project, attribute_box_type, source_dtype, dest_dtype):
     params = {
         "source_name": f"{source_dtype} attribute to modify",
         "source_dtype": source_dtype,
@@ -141,27 +141,27 @@ def test_box_type_full_mutation(host, token, project, box_type, source_dtype, de
         "expected_asserts": 5 if dest_dtype in allowed_mutations[source_dtype] else 4,
     }
     tator_api = tator.get_api(host, token)
-    mutation_helper(tator_api, tator_api.get_localization_type, box_type, params)
+    mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
-def test_video_and_image_type_name_change(host, token, project, video_type, image_type, dtype):
+def test_video_and_image_type_name_change(host, token, project, attribute_video_type, image_type, dtype):
     uid = f"{uuid4()}"
     source_name = f"{dtype} attribute to rename {uid}"
     dest_name = f"renamed {dtype} attribute {uid}"
     source_dtype = dtype
     tator_api = tator.get_api(host, token)
 
-    # Add attribute to video_type
-    entity_type = tator_api.get_media_type(video_type)
+    # Add attribute to attribute_video_type
+    entity_type = tator_api.get_media_type(attribute_video_type)
     addition = {
         "entity_type": "MediaType",
         "addition": {"name": source_name, "dtype": source_dtype},
     }
     if source_dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
-    tator_api.add_attribute(id=video_type, attribute_type_spec=addition)
-    entity_type = tator_api.get_media_type(video_type)
+    tator_api.add_attribute(id=attribute_video_type, attribute_type_spec=addition)
+    entity_type = tator_api.get_media_type(attribute_video_type)
 
     # Check attribute name before changing it
     assert any(attr.name == source_name for attr in entity_type.attribute_types)
@@ -180,7 +180,7 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
     # Check attribute name before changing it
     assert any(attr.name == source_name for attr in entity_type.attribute_types)
 
-    # Mutate attribute on video_type
+    # Mutate attribute on attribute_video_type
     mutation = {
         "global": "true",
         "entity_type": "MediaType",
@@ -190,9 +190,9 @@ def test_video_and_image_type_name_change(host, token, project, video_type, imag
     if source_dtype == "enum":
         mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
 
-    tator_api.rename_attribute(id=video_type, attribute_type_update=mutation)
+    tator_api.rename_attribute(id=attribute_video_type, attribute_type_update=mutation)
 
-    entity_type = tator_api.get_media_type(video_type)
+    entity_type = tator_api.get_media_type(attribute_video_type)
 
     # Check new attribute name
     assert any(attr.name == dest_name for attr in entity_type.attribute_types)
