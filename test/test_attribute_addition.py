@@ -194,12 +194,13 @@ def test_add_same_attribute_with_different_dtypes(host, token, project, line_typ
     )
 
 
+# @pytest.mark.skip(reason="Disabled")
 @pytest.mark.parametrize("dtype", ["string", "bool"])
-def test_box_type_attribute_addition_es(host, token, project, video, box_type, dtype):
+def test_box_type_attribute_addition_es(host, token, project, attribute_video, box_type, dtype):
     tator_api = tator.get_api(host, token)
-    video_obj = tator_api.get_media(video)
+    video_obj = tator_api.get_media(function_video)
 
-    num_localizations = 42
+    num_localizations = 2
     boxes = [
         random_localization(project, box_type, video_obj, post=True)
         for _ in range(num_localizations)
