@@ -2,7 +2,6 @@ import datetime
 import random
 import string
 import uuid
-import time
 
 import tator
 from ._common import assert_close_enough
@@ -40,8 +39,6 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
     assert(isinstance(response, tator.models.CreateListResponse))
     prev_ids = response.id
 
-    time.sleep(5)
-
     # Create three additional layers.
     for _ in range(3):
         new_ids = []
@@ -53,8 +50,6 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
             assert(isinstance(response, tator.models.CreateListResponse))
             new_ids += response.id
         prev_ids = list(new_ids)
-
-    time.sleep(1)
 
     # Clone the layers.
     parent_mapping = {}
