@@ -58,11 +58,11 @@ def main() -> None:
     tator_api = tator.get_api(host=args.host, token=args.token)
 
     # Create the filter that will get all the media in the provided section
-    attribute_contains_filter = f'tator_user_sections::{args.section}'
+    attribute_contains_filter = [f'tator_user_sections::{args.section}']
 
     # Create the distance filter
     attribute_distance_filter = \
-        f'{args.location_field}::{args.radius}::{args.longitude}::{args.latitude}'
+        [f'{args.location_field}::{args.radius}::{args.longitude}::{args.latitude}']
 
     # Get the media using the section and distance filter
     medias = tator_api.get_media_list(

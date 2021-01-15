@@ -242,7 +242,7 @@ def test_box_type_attribute_addition_es(host, token, project, attribute_video, a
     sleep(2)
 
     # Check for default value on existing instances
-    params = {"type": attribute_box_type, "attribute": f"{new_attr_name}::{str(value).lower()}"}
+    params = {"type": attribute_box_type, "attribute": [f"{new_attr_name}::{str(value).lower()}"]}
     boxes = tator_api.get_localization_list(project, **params)
 
     assert len(box_ids) == len(boxes)

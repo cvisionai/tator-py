@@ -91,7 +91,7 @@ def process_section(
         state_type_id_name_map[state_type.id] = name
 
     # Grab all the media in this section
-    attribute_filter = f'tator_user_sections::{section_name}'
+    attribute_filter = [f'tator_user_sections::{section_name}']
     medias = tator_api.get_media_list(project=project_id, attribute_contains=attribute_filter)
 
     # Set the column names
