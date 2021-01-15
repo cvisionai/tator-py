@@ -44,11 +44,11 @@ def comparison_query(tator_api, project, exclude):
     float_lower = random.uniform(-1000.0, 0.0)
     float_upper = random.uniform(0.0, 1000.0)
     enum_value = random.choice(['a', 'b', 'c'])
-    attribute_filter = f"test_bool::{bool_value},test_enum::{enum_value}"
-    attribute_lte_filter = f"test_int::{int_upper}"
-    attribute_gte_filter = f"test_int::{int_lower}"
-    attribute_lt_filter = f"test_float::{float_upper}"
-    attribute_gt_filter = f"test_float::{float_lower}"
+    attribute_filter = [f"test_bool::{'true' if bool_value else 'false'}", f"test_enum::{enum_value}"]
+    attribute_lte_filter = [f"test_int::{int_upper}"]
+    attribute_gte_filter = [f"test_int::{int_lower}"]
+    attribute_lt_filter = [f"test_float::{float_upper}"]
+    attribute_gt_filter = [f"test_float::{float_lower}"]
     t0 = datetime.datetime.now()
     from_psql = tator_api.get_localization_list(project,
                                                 attribute=attribute_filter,
@@ -68,12 +68,12 @@ def comparison_query(tator_api, project, exclude):
     es_time = datetime.datetime.now() - t0
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
-        assert(psql.attributes['bool_test'] == bool_value)
-        assert(psql.attributes['int_test'] <= int_upper)
-        assert(psql.attributes['int_test'] >= int_lower)
-        assert(psql.attributes['float_test'] < float_upper)
-        assert(psql.attributes['float_test'] > float_lower)
-        assert(psql.attributes['enum_test'] == enum_test)
+        assert(psql.attributes['test_bool'] == bool_value)
+        assert(psql.attributes['test_int'] <= int_upper)
+        assert(psql.attributes['test_int'] >= int_lower)
+        assert(psql.attributes['test_float'] < float_upper)
+        assert(psql.attributes['test_float'] > float_lower)
+        assert(psql.attributes['test_enum'] == enum_value)
     return psql_time, es_time
 
 def test_localization_crud(host, token, project, video_type, video, box_type):
@@ -147,9 +147,9 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
         psql, es = comparison_query(tator_api, project, exclude)
         psql_time += psql
         es_time += es
-    logger.info(f"Over {NUM_QUERIES}:")
-    logger.info(f"  Avg PSQL time: {psql_time}")
-    logger.info(f"  Avg ES time: {es_time}")
+    print(f"Over {NUM_QUERIES} random attribute queries:")
+    print(f"  Avg PSQL time: {psql_time / NUM_QUERIES}")
+    print(f"  Avg ES time: {es_time / NUM_QUERIES}")
 
     # Clone boxes to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
