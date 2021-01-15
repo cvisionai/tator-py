@@ -1,7 +1,6 @@
 import datetime
 import random
 import uuid
-import time
 
 import tator
 from ._common import assert_close_enough
@@ -81,8 +80,6 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
-    # ES can be slow at indexing so wait for a bit.
-    time.sleep(2)
     params = {'media_id': [video], 'type': box_type}
     assert(tator_api.get_localization_count(project, **params) == len(boxes))
 
@@ -109,13 +106,11 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} localizations...")
     print(f"Finished creating {num_created} localizations!")
-    time.sleep(2)
     assert(tator_api.get_localization_count(project, **params) == 2 * len(boxes))
     
     # Delete all boxes.
     response = tator_api.delete_localization_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)
-    time.sleep(2)
 
     # Verify all boxes are gone.
     boxes = tator_api.get_localization_list(project, **params)
