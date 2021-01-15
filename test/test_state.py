@@ -27,6 +27,47 @@ def random_state(project, state_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
+def comparison_query(tator_api, project, exclude):
+    """ Runs a random query and compares results with ES enabled and disabled.
+    """
+    bool_value = random.choice([True, False])
+    int_lower = random.randint(-1000, 0)
+    int_upper = random.randint(0, 1000)
+    float_lower = random.uniform(-1000.0, 0.0)
+    float_upper = random.uniform(0.0, 1000.0)
+    enum_value = random.choice(['a', 'b', 'c'])
+    attribute_filter = [f"test_bool::{'true' if bool_value else 'false'}", f"test_enum::{enum_value}"]
+    attribute_lte_filter = [f"test_int::{int_upper}"]
+    attribute_gte_filter = [f"test_int::{int_lower}"]
+    attribute_lt_filter = [f"test_float::{float_upper}"]
+    attribute_gt_filter = [f"test_float::{float_lower}"]
+    t0 = datetime.datetime.now()
+    from_psql = tator_api.get_state_list(project,
+                                         attribute=attribute_filter,
+                                         attribute_lte=attribute_lte_filter,
+                                         attribute_gte=attribute_gte_filter,
+                                         attribute_lt=attribute_lt_filter,
+                                         attribute_gt=attribute_gt_filter)
+    psql_time = datetime.datetime.now() - t0
+    t0 = datetime.datetime.now()
+    from_es = tator_api.get_state_list(project,
+                                       attribute=attribute_filter,
+                                       attribute_lte=attribute_lte_filter,
+                                       attribute_gte=attribute_gte_filter,
+                                       attribute_lt=attribute_lt_filter,
+                                       attribute_gt=attribute_gt_filter,
+                                       force_es=1)
+    es_time = datetime.datetime.now() - t0
+    for psql, es in zip(from_psql, from_es):
+        assert_close_enough(psql, es, exclude)
+        assert(psql.attributes['test_bool'] == bool_value)
+        assert(psql.attributes['test_int'] <= int_upper)
+        assert(psql.attributes['test_int'] >= int_lower)
+        assert(psql.attributes['test_float'] < float_upper)
+        assert(psql.attributes['test_float'] > float_lower)
+        assert(psql.attributes['test_enum'] == enum_value)
+    return psql_time, es_time
+
 def test_state_crud(host, token, project, video_type, video, state_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
@@ -84,6 +125,18 @@ def test_state_crud(host, token, project, video_type, video, state_type):
                                            attribute_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
+
+    # Do random queries using psql and elasticsearch and compare results.
+    es_time = datetime.timedelta(seconds=0)
+    psql_time = datetime.timedelta(seconds=0)
+    NUM_QUERIES = 10
+    for _ in range(NUM_QUERIES):
+        psql, es = comparison_query(tator_api, project, exclude)
+        psql_time += psql
+        es_time += es
+    print(f"Over {NUM_QUERIES} random attribute queries:")
+    print(f"  Avg PSQL time: {psql_time / NUM_QUERIES}")
+    print(f"  Avg ES time: {es_time / NUM_QUERIES}")
 
     # Verify all states have been updated.
     states = tator_api.get_state_list(project, **params)
