@@ -38,6 +38,8 @@ def find_best_encoder(codec):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
+    parser.add_argument('--url', type=str, help='URL where original file is hosted.')
+    parser.add_argument('--work_dir', type=str, help='Directory where info should be saved.')
     parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--media', type=int, help='Unique integer identifying a media.')
@@ -46,8 +48,6 @@ def parse_args():
     parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
     parser.add_argument('--configs', type=str, help='Comma separated list of output configs, '
                                                     'format is resolution:crf:codec.')
-    parser.add_argument('--input', type=str, help='Path to raw video.')
-    parser.add_argument("-o", "--output")
     return parser.parse_args()
 
 def make_video_definition(disk_file):
@@ -316,16 +316,25 @@ def get_length_info(stream):
     return fps,int(num_frames)
 
 if __name__ == '__main__':
+    # Parse arguments.
     args = parse_args()
+
+    # Get path to save file.
+    fname = os.path.basename(args.url)
+    path = os.path.join(args.work_dir, fname)
+
+    # Download the file.
+    subprocess.run(['wget', '-O', path, args.url])
+
     if args.category == 'streaming':
         if args.configs == '':
             configs = []
         else:
             configs = [res for res in args.configs.split(',')]
-        convert_streaming(args.host, args.token, args.media, args.input, args.output,
+        convert_streaming(args.host, args.token, args.media, path, args.work_dir,
                           args.raw_width, args.raw_height, configs)
     elif args.category == 'archival':
-        convert_archival(args.host, args.token, args.media, args.input, args.output,
+        convert_archival(args.host, args.token, args.media, path, args.work_dir,
                          args.raw_width, args.raw_height)
     elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, args.input, args.output)
+        convert_audio(args.host, args.token, args.media, path, args.work_dir)
