@@ -163,7 +163,9 @@ def test_add_same_attribute_twice(host, token, project, line_type):
     assert "but one with that name already exists" in str(excinfo.value)
 
 
-def test_add_same_attribute_with_different_dtypes(host, token, project, line_type, attribute_box_type):
+def test_add_same_attribute_with_different_dtypes(
+    host, token, project, line_type, attribute_box_type
+):
     tator_api = tator.get_api(host, token)
     new_attr_name = f"New attribute {uuid4()}"
 
@@ -196,7 +198,9 @@ def test_add_same_attribute_with_different_dtypes(host, token, project, line_typ
 
 # @pytest.mark.skip(reason="Disabled")
 @pytest.mark.parametrize("dtype", ["string", "bool"])
-def test_box_type_attribute_addition_es(host, token, project, attribute_video, attribute_box_type, dtype):
+def test_box_type_attribute_addition_es(
+    host, token, project, attribute_video, attribute_box_type, dtype
+):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(attribute_video)
 
@@ -242,7 +246,11 @@ def test_box_type_attribute_addition_es(host, token, project, attribute_video, a
     sleep(2)
 
     # Check for default value on existing instances
-    params = {"type": attribute_box_type, "attribute": [f"{new_attr_name}::{str(value).lower()}"]}
+    params = {
+        "type": attribute_box_type,
+        "attribute": [f"{new_attr_name}::{str(value).lower()}"],
+        "force_es": 1,
+    }
     boxes = tator_api.get_localization_list(project, **params)
 
     assert len(box_ids) == len(boxes)
@@ -251,5 +259,5 @@ def test_box_type_attribute_addition_es(host, token, project, attribute_video, a
         assert box.attributes[new_attr_name] == value
 
     # Clean up
-    params = {'media_id': [attribute_video], 'type': attribute_box_type}
+    params = {"media_id": [attribute_video], "type": attribute_box_type}
     tator_api.delete_localization_list(project, **params)
