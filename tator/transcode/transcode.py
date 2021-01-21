@@ -6,6 +6,7 @@ import subprocess
 import json
 import os
 import sys
+from urllib.parse import urlparse
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
@@ -320,7 +321,7 @@ if __name__ == '__main__':
     args = parse_args()
 
     # Get path to save file.
-    fname = os.path.basename(args.url)
+    fname = os.path.basename(urlparse(args.url).path)
     path = os.path.join(args.work_dir, fname)
 
     # Download the file.
