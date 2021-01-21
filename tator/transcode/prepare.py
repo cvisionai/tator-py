@@ -4,8 +4,10 @@
 
 import argparse
 import os
+import json
 import subprocess
 import logging
+from urllib.parse import urlparse
 
 from progressbar import progressbar
 
@@ -31,16 +33,19 @@ def parse_args():
                         default=-1)
     parser.add_argument('--gid', type=str, help="Upload group ID.")
     parser.add_argument('--uid', type=str, help="Upload unique ID.")
+    parser.add_argument('--group_to', type=int, default=480,
+                         help='Vertical resolutions below this will be transcoded with '
+                              'multi-headed ffmpeg.')
     return parser.parse_args()
 
 def get_file_paths(url, work_dir):
-    name = os.path.basename(url)
+    name = os.path.basename(urlparse(url).path)
     paths = {
         'original': os.path.join(work_dir, name),
-        'thumbnail': os.path.join(work_dir, 'thumbnail.jpg')
-        'thumbnail_gif': os.path.join(work_dir, 'thumbnail_gif.gif')
-        'media_id': os.path.join(work_dir, 'media_id.txt')
-        'workloads': os.path.join(work_dir, 'workloads.json')
+        'thumbnail': os.path.join(work_dir, 'thumbnail.jpg'),
+        'thumbnail_gif': os.path.join(work_dir, 'thumbnail_gif.gif'),
+        'media_id': os.path.join(work_dir, 'media_id.txt'),
+        'workloads': os.path.join(work_dir, 'workloads.json'),
     }
     return paths
 
@@ -75,9 +80,10 @@ if __name__ == '__main__':
                     paths['thumbnail_gif'])
 
     # Determine transcodes that need to be done.
-    workloads = determine_transcode(args.host, args.token, args.type, path, args.group_to)
+    workloads = determine_transcode(args.host, args.token, args.type, paths['original'],
+                                    args.group_to)
 
     for workload in workloads:
         workload['configs'] = ','.join(workload['configs'])
-    with open(args.output, 'w') as f:
+    with open(paths['workloads'], 'w') as f:
         json.dump(workloads, f)
