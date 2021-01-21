@@ -27,6 +27,7 @@ def parse_args():
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
+    parser.add_argument('--name', type=str, help='Name of the media.')
     parser.add_argument('--section', type=str, help='Media section name.')
     parser.add_argument('--attributes', type=str, help="Attributes for media")
     parser.add_argument('--media_id', type=int, help="Existing media ID, if applicable",
@@ -63,7 +64,10 @@ if __name__ == '__main__':
     md5 = md5sum(paths['original'])
 
     # Get base filename.
-    name = os.path.basename(paths['original'])
+    if args.name:
+        name = args.name
+    else:
+        name = os.path.basename(paths['original'])
 
     # Create the media object.
     if args.media_id == -1:
