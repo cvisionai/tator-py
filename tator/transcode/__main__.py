@@ -78,6 +78,7 @@ def transcode_single(path, args, gid):
         for workload in workloads:
             category = workload['category']
             del workload['category']
+            del workload['id']
             if category == 'streaming':
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
                                   outpath=paths['transcoded'])
