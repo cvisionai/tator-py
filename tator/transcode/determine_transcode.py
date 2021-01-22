@@ -147,6 +147,10 @@ def determine_transcode(host, token, media_type, path, group_to):
             'configs': [],
         }]
 
+    # Assign a sequential numerical ID to each workload.
+    for idx in range(len(workloads)):
+        workloads[idx]['id'] = idx
+
     return workloads
 
 if __name__ == '__main__':
