@@ -234,7 +234,8 @@ def video(request, project, video_type, video_file):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    for progress, response in tator.util.upload_media(tator_api, video_type, video_file):
+    attributes = {"test_string": str(uuid1())}
+    for progress, response in tator.util.upload_media(tator_api, video_type, video_file, attributes=attributes):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
@@ -250,6 +251,10 @@ def video(request, project, video_type, video_file):
         if have_streaming and have_archival:
             video_id = response[0].id
             break
+    # Check for proper attribute setting via upload_file
+    assert response[0].attributes.get("test_string") == attributes.get("test_string")
+
+    # If all is kosher return the video_id
     yield video_id
 
 @pytest.fixture(scope='function')
