@@ -96,6 +96,10 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert len(box_ids) == len(boxes)
     print(f"Created {len(box_ids)} boxes!")
 
+    # Verify list is the right length
+    response = tator_api.get_localization_list(project,type=box_type)
+    assert len(response) == num_localizations
+
     # Test single create.
     box = random_localization(project, box_type, video_obj, post=True)
     response = tator_api.create_localization_list(project, localization_spec=[box])
@@ -115,7 +119,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Get box by ID.
     box_by_id = tator_api.get_localization_list_by_id(project, [box_id])[0]
     assert_close_enough(updated_box, box_by_id, exclude)
-    
+
     # Delete single box.
     response = tator_api.delete_localization(box_id)
     assert isinstance(response, tator.models.MessageResponse)
@@ -160,7 +164,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
         print(f"Created {num_created} of {num_total} localizations...")
     print(f"Finished creating {num_created} localizations!")
     assert(tator_api.get_localization_count(project, **params) == 2 * len(boxes))
-    
+
     # Delete all boxes.
     response = tator_api.delete_localization_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)

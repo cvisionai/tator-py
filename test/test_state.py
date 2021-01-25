@@ -88,12 +88,18 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")
 
+    # Verify list contains the number of entities created
+    response = tator_api.get_state_list(project, type=state_type)
+    assert len(response) == num_states
+
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
     response = tator_api.create_state_list(project, state_spec=[state])
     assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]
+
+
 
     # Patch single state.
     patch = random_state(project, state_type, video_obj)
@@ -109,7 +115,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     # Get state by ID.
     state_by_id = tator_api.get_state_list_by_id(project, [state_id])[0]
     assert_close_enough(updated_state, state_by_id, exclude)
-    
+
     # Delete single state.
     response = tator_api.delete_state(state_id)
     assert isinstance(response, tator.models.MessageResponse)
@@ -144,7 +150,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     assert(len(states)==len(dataframe))
     for state in states:
         assert_close_enough(bulk_patch, state, exclude)
-    
+
     # Clone states to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
     generator = tator.util.clone_state_list(tator_api, {**params, 'project': project},
@@ -154,7 +160,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
         print(f"Created {num_created} of {num_total} states...")
     print(f"Finished creating {num_created} states!")
     assert(tator_api.get_state_count(project, **params) == 2 * len(states))
-    
+
     # Delete all states.
     response = tator_api.delete_state_list(project, **params)
     assert isinstance(response, tator.models.MessageResponse)
