@@ -36,6 +36,7 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
             **state.attributes}
     if state.frame is not None:
         spec['frame'] = state.frame
+    spec = {key:spec[key] if spec[key] is not None for key in spec}
     return spec
 
 def clone_state_list(src_api, query_params, dest_project, version_mapping, media_mapping,

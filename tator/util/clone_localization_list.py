@@ -19,7 +19,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
         raise ValueError(f"Source localization_type ID {localization_type_id} missing from "
                           "localization_type_mapping!")
     # Fill in required fields for post.
-    return {'type': localization_type_id,
+    spec = {'type': localization_type_id,
             'version': version_id,
             'media_id': media_id,
             'x': loc.x,
@@ -30,6 +30,8 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
             'v': loc.v,
             'frame': loc.frame,
             **loc.attributes}
+    spec = {key:spec[key] if spec[key] is not None for key in spec}
+    return spec
 
 def clone_localization_list(src_api, query_params, dest_project, version_mapping, media_mapping,
                             localization_type_mapping, dest_api=None):

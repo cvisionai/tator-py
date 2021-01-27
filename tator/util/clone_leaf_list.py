@@ -14,10 +14,12 @@ def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
         raise ValueError(f"Source leaf_type ID {leaf_type_id} missing from "
                           "leaf_type_mapping!")
     # Fill in required fields for post.
-    return {'name': leaf.name,
+    spec = {'name': leaf.name,
             'type': leaf_type_id,
             'parent': parent_id,
             **leaf.attributes}
+    spec = {key:spec[key] if spec[key] is not None for key in spec}
+    return spec
 
 def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
                     leaf_type_mapping, dest_api=None):

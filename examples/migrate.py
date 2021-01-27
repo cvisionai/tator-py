@@ -150,6 +150,7 @@ def find_memberships(args, src_api, dest_api, dest_project):
         corresponding to memberships in source project that need to be created.
     """
     memberships = []
+    users = []
     if args.skip_memberships:
         logger.info(f"Skipping memberships due to --skip_memberships.")
     else:
