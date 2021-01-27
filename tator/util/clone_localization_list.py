@@ -30,7 +30,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
             'v': loc.v,
             'frame': loc.frame,
             **loc.attributes}
-    spec = {key:spec[key] if spec[key] is not None for key in spec}
+    spec = {key:spec[key] for key in spec if spec[key] is not None}
     return spec
 
 def clone_localization_list(src_api, query_params, dest_project, version_mapping, media_mapping,
