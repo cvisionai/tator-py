@@ -12,6 +12,7 @@ from typing import List
 from pprint import pformat
 from math import floor
 from itertools import cycle
+from collections import Counter
 
 import tator
 
@@ -125,11 +126,19 @@ class StateFilterer:
                 elif frame > last["frame"]:
                     last = localization
 
-            # If either the first or last localization is within the ROI, use this state, but if
-            # neither or both are, do not use it
-            if self._localization_in_roi(first, roi, state) != self._localization_in_roi(
-                last, roi, state
-            ):
+            started_in_roi = self._localization_in_roi(first, roi, state)
+            ended_in_roi = self._localization_in_roi(last, roi, state)
+            if  started_in_roi or ended_in_roi:
+                if started_in_roi and ended_in_roi:
+                    endpoint_in_roi = "both"
+                elif started_in_roi:
+                    endpoint_in_roi = "start"
+                elif ended_in_roi:
+                    endpoint_in_roi = "end"
+                else:
+                    raise RuntimeError(f"Somehow `started_in_roi` or `ended_in_roi` changed values")
+
+                state["endpoint_in_roi"] = endpoint_in_roi
                 filtered_states.append(state)
 
             _print_progress(floor((idx + 1) / n_states * 100))
@@ -282,22 +291,29 @@ def main(
             logger.info(f"Values stored!")
             filtered_states.pop(0)
 
+    n_localizations_total = 0
+    endpoint_counter = Counter()
+    for state in filtered_states:
+        n_localizations_total += len(state["localizations"])
+        endpoint_counter[state["endpoint_in_roi"]] += 1
+
     logger.info(f"Filtered number of states: {len(filtered_states)}")
+    logger.info(f"Endpoints in ROI: {pformat(dict(endpoint_counter))}")
 
     if filter_states:
         return
 
     logger.info(f"Retrieving localization graphics from server...")
-    n_localizations_total = sum(len(state["localizations"]) for state in filtered_states)
     current_localization = 0
     for state in filtered_states:
-        state_folder = os.path.join(out_folder, str(state["id"]))
+        endpoint_in_roi = state["endpoint_in_roi"]
+        state_folder = os.path.join(out_folder, str(state['id']))
         if not os.path.exists(state_folder):
             os.makedirs(state_folder)
 
         for localization_id in state["localizations"]:
             current_localization += 1
-            img_dest = os.path.join(state_folder, str(localization_id) + ".png")
+            img_dest = os.path.join(state_folder, f"{localization_id}_{endpoint_in_roi}.png")
 
             if os.path.exists(img_dest):
                 logger.warn(f"Localization graphic {img_dest} exists, skipping fetch.")
