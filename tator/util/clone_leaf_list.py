@@ -18,7 +18,7 @@ def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
             'type': leaf_type_id,
             'parent': parent_id,
             **leaf.attributes}
-    spec = {key:spec[key] for key in specd if spec[key] is not None}
+    spec = {key:spec[key] for key in spec if spec[key] is not None}
     return spec
 
 def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
