@@ -125,8 +125,9 @@ class StateFilterer:
                 elif frame > last["frame"]:
                     last = localization
 
-            # If the first or last localization is within the ROI, use this state
-            if self._localization_in_roi(first, roi, state) or self._localization_in_roi(
+            # If either the first or last localization is within the ROI, use this state, but if
+            # neither or both are, do not use it
+            if self._localization_in_roi(first, roi, state) != self._localization_in_roi(
                 last, roi, state
             ):
                 filtered_states.append(state)
