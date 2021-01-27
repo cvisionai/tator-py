@@ -105,6 +105,12 @@ def parse_args():
                         action='store_true')
     return parser.parse_args()
 
+def get_tator_user_sections(media):
+    tator_user_sections = None
+    if media.attributes:
+        tator_user_sections = media.attributes.get('tator_user_sections', None)
+    return tator_user_sections
+
 def setup_apis(args):
     """ Sets up API objects.
     """
@@ -328,15 +334,15 @@ def find_media(args, src_api, dest_api, dest_project):
                 dest_section_names[None] = None
                 existing = dest_api.get_media_list(dest_project.id)
                 existing_name_section = [
-                    (m.name, dest_section_names[m.attributes.get('tator_user_sections', None)])
+                    (m.name, dest_section_names[get_tator_user_sections(m)])
                     for m in existing
                 ]
                 for m in media:
-                    key = (m.name, src_section_names[m.attributes.get('tator_user_sections', None)])
+                    key = (m.name, src_section_names[get_tator_user_sections(m)])
                     if key in existing_name_section:
                         media_mapping[m.id] = existing[existing_name_section.index(key)].id
                 media = [m for m in media
-                         if (m.name, src_section_names[m.attributes.get('tator_user_sections', None)])
+                         if (m.name, src_section_names[get_tator_user_sections(m)])
                          not in existing_name_section]
             logger.info(f"{len(media)} media will be created ({num_src_media - len(media)} "
                          "already exist).")
@@ -413,13 +419,13 @@ def find_leaves(args, src_api, dest_api, dest_project):
                 break
             if dest_project:
                 dest_leaves = dest_api.get_leaf_list(dest_project.id, depth=depth)
-                dest_paths = [leaf.path.split('.', 1)[1] for leaf in dest_leaves]
+                dest_paths = [leaf.path[1] for leaf in dest_leaves]
                 for leaf in src_leaves:
-                    path = leaf.path.split('.', 1)[1]
+                    path = leaf.path[1]
                     if path in dest_paths:
                         leaf_mapping[leaf.id] = dest_leaves[dest_paths.index(path)].id
                 leaves[depth] = [leaf for leaf in src_leaves
-                                 if leaf.path.split('.', 1)[1] not in dest_paths]
+                                 if leaf.path[1] not in dest_paths]
             else:
                 leaves[depth] = list(src_leaves)
             num_leaves += len(leaves[depth])
@@ -540,11 +546,12 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
     if args.sections:
         sections = [section for section in sections if section.name in args.sections]
     section_mapping = {s.tator_user_sections: s.name for s in sections}
+    section_mapping[None] = None
     # Construct dictionary between destination type/destination section and media IDs.
     media_ids = defaultdict(list)
     for single in media:
         key = (media_type_mapping[single.meta],
-               section_mapping[single.attributes.get('tator_user_sections', None)])
+               section_mapping[get_tator_user_sections(single)])
         media_ids[key].append(single.id)
     # Sort keys so that multi are created after images/videos.
     sorter = lambda mtype: 1 if dest_api.get_media_type(mtype[0]).dtype == 'multi' else 0
