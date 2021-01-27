@@ -5,31 +5,30 @@ their intersection with a given region of interest, and downloads the associated
 graphics of the filtered states.
 
 
-## Usage
+## Example Usage
 
 ```
-usage: extract_tracks_of_interest.py [-h] [--host HOST] [--token TOKEN] [--project PROJECT]
-                                     [--state-type STATE_TYPE] [--state-file STATE_FILE]
-                                     [--tracks-file TRACKS_FILE] [--out-folder OUT_FOLDER] [--roi ROI]
-                                     [--get-states | --filter-states]
-
-Add attribute to existing type
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --host HOST
-  --token TOKEN         Your API token.
-  --project PROJECT     Unique project id
-  --state-type STATE_TYPE
-                        The type of state to consider
-  --state-file STATE_FILE
-                        The text file where the intermediate list of states will be stored or read from
-  --tracks-file TRACKS_FILE
-                        The text file where the intermediate list of filtered states will be stored or
-                        read from
-  --out-folder OUT_FOLDER
-                        The folder where the localization graphics will be downloaded
-  --roi ROI             The id of the localization that defines the region of interest
-  --get-states          Stop processing after all states are retrieved
-  --filter-states       Stop processing after states are filtered
+$ python3 extract_tracks_of_interest.py \
+    --host https://www.tatorapp.com \
+    --token <token> \
+    --project 23 \
+    --state-type 44 \
+    --versions 80
+01/27/2021 02:16:21 PM INFO:Found file state_list.txt, loading values
+01/27/2021 02:16:21 PM INFO:Stored values not retrieved with the same parameters
+01/27/2021 02:16:21 PM INFO:Retrieving values from server
+01/27/2021 02:16:22 PM INFO:Values retireved!
+01/27/2021 02:16:22 PM INFO:Storing retrieved values in state_list.txt
+01/27/2021 02:16:22 PM INFO:Values stored!
+01/27/2021 02:16:22 PM INFO:Total number of states: 996
+01/27/2021 02:16:22 PM INFO:File track_list.txt not found or contains stale data
+01/27/2021 02:16:22 PM INFO:Filtering values
+100% [****************************************************************************************************]
+01/27/2021 02:17:21 PM INFO:Values filtered!
+01/27/2021 02:17:21 PM INFO:Storing calculated values in track_list.txt
+01/27/2021 02:17:21 PM INFO:Values stored!
+01/27/2021 02:17:21 PM INFO:Filtered number of states: 113
+01/27/2021 02:17:21 PM INFO:Retrieving localization graphics from server...
+100% [****************************************************************************************************]
+01/27/2021 02:22:56 PM INFO:Localization graphics retrieved!
 ```

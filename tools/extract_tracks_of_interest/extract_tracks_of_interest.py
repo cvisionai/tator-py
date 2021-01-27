@@ -144,13 +144,18 @@ def parse_args() -> argparse.Namespace:
     """
     parser = argparse.ArgumentParser(description="Add attribute to existing type")
     parser = tator.get_parser(parser=parser)
-    parser.add_argument("--project", type=int, help="Unique project id")
-    parser.add_argument("--state-type", type=int, help="The type of state to consider")
+    parser.add_argument("--project", type=int, required=True, help="Unique project id")
+    parser.add_argument(
+        "--state-type", type=int, required=True, help="The type of state to consider"
+    )
     parser.add_argument(
         "--state-file",
         type=str,
         help="The text file where the intermediate list of states will be stored or read from",
         default="state_list.txt",
+    )
+    parser.add_argument(
+        "--versions", nargs="*", type=int, help="The list of layers to retrieve states from"
     )
     parser.add_argument(
         "--tracks-file",
@@ -183,11 +188,19 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
+def _state_to_dict(state):
+    state_dict = state.to_dict()
+    state_dict.pop("created_datetime", None)
+    state_dict.pop("modified_datetime", None)
+    return state_dict
+
+
 def main(
     host: str,
     token: str,
     project: int,
     state_type: int,
+    versions: List[int],
     state_file: str,
     tracks_file: str,
     roi: int,
@@ -200,54 +213,73 @@ def main(
     # Get the interface to Tator
     tator_api = tator.get_api(host=host, token=token)
 
+    get_state_list_params = {"project": project, "type": state_type}
+    if versions:
+        get_state_list_params["versions"] = versions
+
+    values_loaded = False
     if os.path.exists(state_file):
         logger.info(f"Found file {state_file}, loading values")
         with open(state_file, "r") as fp:
             serializable_state_list = json.load(fp)
-        logger.info(f"Values loaded!")
+        stored_state_list_params = serializable_state_list.pop(0)
+        if stored_state_list_params == get_state_list_params:
+            values_loaded = True
+            logger.info(f"Values loaded!")
+        else:
+            logger.info("Stored values not retrieved with the same parameters")
     else:
-        logger.info(f"File {state_file} not found, retrieving values from server")
-        state_list = tator_api.get_state_list(project, type=state_type)
-        logger.info(f"Values retireved!")
-        serializable_state_list = []
-        for state in state_list:
-            state_dict = state.to_dict()
-            state_dict.pop("created_datetime", None)
-            state_dict.pop("modified_datetime", None)
-            serializable_state_list.append(state_dict)
+        logger.info(f"File {state_file} not found")
+
+    if not values_loaded:
+        logger.info("Retrieving values from server")
+        state_list = tator_api.get_state_list(project, type=state_type, version=versions)
+        serializable_state_list = [_state_to_dict(state) for state in state_list]
         del state_list
+        logger.info(f"Values retireved!")
 
         if state_file:
             logger.info(f"Storing retrieved values in {state_file}")
+            serializable_state_list.insert(0, get_state_list_params)
             with open(state_file, "w") as fp:
                 json.dump(serializable_state_list, fp)
             logger.info(f"Values stored!")
+            serializable_state_list.pop(0)
 
     logger.info(f"Total number of states: {len(serializable_state_list)}")
 
     if get_states:
         return
 
-    if os.path.exists(tracks_file):
+    if os.path.exists(tracks_file) and values_loaded:
         # Load from disk
         logger.info(f"Found file {tracks_file}, loading values")
         with open(tracks_file, "r") as fp:
             filtered_states = json.load(fp)
-        logger.info(f"Values loaded!")
+        stored_roi = filtered_states.pop(0)
+        if stored_roi == roi:
+            logger.info(f"Values loaded!")
+        else:
+            logger.info("Stored values not filtered with the same parameters")
+            values_loaded = False
     else:
-        logger.info(f"File {tracks_file} not found, retrieving values from server")
+        values_loaded = False
+        logger.info(f"File {tracks_file} not found or contains stale data")
+
+    if not values_loaded:
+        logger.info(f"Filtering values")
         localization_roi = tator_api.get_localization(id=roi).to_dict()
-        logger.info(f"Values retireved!")
-        logger.info(f"Filtering values...")
         sf = StateFilterer(tator_api, project, serializable_state_list, localization_roi)
         filtered_states = sf.get_filtered_states()
         logger.info(f"Values filtered!")
 
         if state_file:
             logger.info(f"Storing calculated values in {tracks_file}")
+            filtered_states.insert(0, roi)
             with open(tracks_file, "w") as fp:
                 json.dump(filtered_states, fp)
             logger.info(f"Values stored!")
+            filtered_states.pop(0)
 
     logger.info(f"Filtered number of states: {len(filtered_states)}")
 
