@@ -165,7 +165,7 @@ def parse_args() -> argparse.Namespace:
         default="state_list.txt",
     )
     parser.add_argument(
-        "--versions", nargs="*", type=int, help="The list of layers to retrieve states from"
+        "--version", nargs="*", type=int, help="The list of layers to retrieve states from"
     )
     parser.add_argument(
         "--tracks-file",
@@ -204,7 +204,7 @@ def main(
     token: str,
     project: int,
     state_type: int,
-    versions: List[int],
+    version: List[int],
     state_file: str,
     tracks_file: str,
     roi: int,
@@ -217,8 +217,8 @@ def main(
     tator_api = tator.get_api(host=host, token=token)
 
     get_state_list_params = {"project": project, "type": state_type}
-    if versions:
-        get_state_list_params["versions"] = versions
+    if version:
+        get_state_list_params["version"] = version
 
     values_loaded = False
     if os.path.exists(state_file):
@@ -236,7 +236,7 @@ def main(
 
     if not values_loaded:
         logger.info("Retrieving values from server")
-        state_list = tator_api.get_state_list(project, type=state_type, version=versions)
+        state_list = tator_api.get_state_list(**get_state_list_params)
         serializable_state_list = [_state_to_dict(state) for state in state_list]
         del state_list
         logger.info(f"Values retireved!")
@@ -299,8 +299,8 @@ def main(
     logger.info(f"Retrieving localization graphics from server...")
     current_localization = 0
     out_folder = f"tracks_of_interest_prj_{project}_type_{state_type}"
-    if versions:
-        out_folder += f"_ver_{'_'.join(str(v) for v in versions)}"
+    if version:
+        out_folder += f"_ver_{'_'.join(str(v) for v in version)}"
     for state in filtered_states:
         endpoint_in_roi = state["endpoint_in_roi"]
         state_folder = os.path.join(out_folder, str(state['id']))
