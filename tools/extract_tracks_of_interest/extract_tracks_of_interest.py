@@ -174,12 +174,6 @@ def parse_args() -> argparse.Namespace:
         default="track_list.txt",
     )
     parser.add_argument(
-        "--out-folder",
-        type=str,
-        help="The folder where the localization graphics will be downloaded",
-        default="tracks_of_interest",
-    )
-    parser.add_argument(
         "--roi",
         type=int,
         help="The id of the localization that defines the region of interest",
@@ -214,7 +208,6 @@ def main(
     state_file: str,
     tracks_file: str,
     roi: int,
-    out_folder: str,
     get_states: bool,
     filter_states: bool,
 ) -> None:
@@ -305,6 +298,9 @@ def main(
 
     logger.info(f"Retrieving localization graphics from server...")
     current_localization = 0
+    out_folder = f"tracks_of_interest_prj_{project}_type_{state_type}"
+    if versions:
+        out_folder += f"_ver_{'_'.join(str(v) for v in versions)}"
     for state in filtered_states:
         endpoint_in_roi = state["endpoint_in_roi"]
         state_folder = os.path.join(out_folder, str(state['id']))
