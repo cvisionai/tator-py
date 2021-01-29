@@ -58,7 +58,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     codec, fps, num_frames, width, height = get_metadata(video_path)
 
     # Create thumbnail.
-    cmd = ["ffmpeg", "-y", "-i", video_path, "-vf", "scale=256:-1", "-vframes", "1", thumb_path]
+    cmd = ["ffmpeg", "-y", "-seekable", "0", "-i", video_path, "-vf", "scale=256:-1", "-vframes", "1", thumb_path]
     subprocess.run(cmd, check=True)
 
     with tempfile.TemporaryDirectory() as dirname:
@@ -70,7 +70,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
             cmd2 = ["-skip_frame", "nokey"]
         else:
             cmd2 = []
-        cmd3 = ["-i", video_path, "-vf", f"scale=256:-1:flags=lanczos,setpts={pts_scale}*PTS",
+        cmd3 = ["-seekable", "0", "-i", video_path, "-vf", f"scale=256:-1:flags=lanczos,setpts={pts_scale}*PTS",
                 "-r", "3", os.path.join(dirname, "%09d.jpg")]
         cmd = cmd1 + cmd2 + cmd3
         subprocess.run(cmd, check=True)
