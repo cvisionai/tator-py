@@ -52,18 +52,21 @@ def parse_args():
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     return parser.parse_args()
 
-def make_video_definition(disk_file):
+def make_video_definition(path, size=None):
     cmd = [
         "ffprobe",
+        "-seekable", "0",
         "-v","error",
         "-show_entries", "stream",
         "-print_format", "json",
         "-select_streams", "v",
-        disk_file,
+        path,
     ]
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     stream_idx=0
+    if size is None:
+        size = os.stat(path).st_size
     for idx, stream in enumerate(video_info["streams"]):
         if stream["codec_type"] == "video":
             stream_idx=idx
@@ -72,7 +75,7 @@ def make_video_definition(disk_file):
     video_def = {"resolution": (stream["height"], stream["width"]),
                  "codec": stream["codec_name"],
                  "codec_description": stream["codec_long_name"],
-                 "size": os.stat(disk_file).st_size,
+                 "size": size,
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
@@ -167,14 +170,14 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         response = api.create_video_file(media, role='streaming', video_definition=video_def)
         assert isinstance(response, MessageResponse)
 
-def default_archival_upload(api, host, media, path, encoded, size=None):
+def default_archival_upload(api, host, media, path, encoded, size):
     # Default action if no archive config is upload raw video.
     media_obj = api.get_media(media)
     logger.info(f"Uploading original file as archival...")
     for progress, upload_info in _upload_file(api, media_obj.project, path,
                                               media_id=media, filename=os.path.basename(path),file_size=size):
         logger.info(f"Progress: {progress}%")
-    video_def = make_video_definition(path)
+    video_def = make_video_definition(path, size)
 
     # If video was encoded, set codec_mime to video/mp4; otherwise do
     # not set codec_mime.
