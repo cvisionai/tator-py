@@ -45,7 +45,7 @@ def _hosted_md5(url):
 
 def import_media(api, type_id, url, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
-                 attributes=None, media_id=None):
+                 attributes=None, media_id=None, size=None):
     """ Imports a hosted media file.
 
     Example:
@@ -67,6 +67,8 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
     :param attributes: [Optional] Attributes to apply to media object.
     :param media_id: [Optional] Unique ID of existing media object.
+    :param size: [Optional] Size of the file in bytes. Required if the
+        given URL does not accept HEAD requests.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
         is the response object from :meth:`tator.TatorApi.create_media` or 
@@ -100,6 +102,8 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         'attributes': attributes,
         'media_id': media_id,
     }
+    if upload_size is not None:
+        spec['size'] = size
     # Create video or image.
     if media_type.dtype == 'video':
         response = api.transcode(project_id, transcode_spec=spec)
