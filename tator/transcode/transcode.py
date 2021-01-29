@@ -101,6 +101,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
+        "-seekable", "0",
         "-i", path,
         "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
@@ -216,6 +217,7 @@ def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
                     quality_flag = "-global_quality"
                 cmd = [
                     "ffmpeg", "-y",
+                    "-seekable", "0",
                     "-i", path,
                     "-vcodec", codec,
                     "-vf", "yadif",
@@ -251,6 +253,7 @@ def make_audio_definition(disk_file):
     cmd = [
         "ffprobe",
         "-v","error",
+        "-seekable", "0",
         "-show_entries", "stream",
         "-print_format", "json",
         "-select_streams", "a",
@@ -275,6 +278,7 @@ def convert_audio(host, token, media, path, outpath):
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
     audio_extraction=["ffmpeg", "-y",
+                      "-seekable", "0",
                       "-i", path,
                       "-vn", # Strip video
                       "-c:a", "aac",
@@ -322,20 +326,16 @@ if __name__ == '__main__':
 
     # Get path to save file.
     fname = os.path.basename(urlparse(args.url).path)
-    path = os.path.join(args.work_dir, fname)
-
-    # Download the file.
-    subprocess.run(['wget', '-O', path, args.url])
 
     if args.category == 'streaming':
         if args.configs == '':
             configs = []
         else:
             configs = [res for res in args.configs.split(',')]
-        convert_streaming(args.host, args.token, args.media, path, args.work_dir,
+        convert_streaming(args.host, args.token, args.media, args.url, args.work_dir,
                           args.raw_width, args.raw_height, configs)
     elif args.category == 'archival':
-        convert_archival(args.host, args.token, args.media, path, args.work_dir,
+        convert_archival(args.host, args.token, args.media, args.url, args.work_dir,
                          args.raw_width, args.raw_height)
     elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, path, args.work_dir)
+        convert_audio(args.host, args.token, args.media, args.url, args.work_dir)
