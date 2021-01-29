@@ -49,6 +49,7 @@ def parse_args():
     parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
     parser.add_argument('--configs', type=str, help='Comma separated list of output configs, '
                                                     'format is resolution:crf:codec.')
+    parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     return parser.parse_args()
 
 def make_video_definition(disk_file):
@@ -166,12 +167,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         response = api.create_video_file(media, role='streaming', video_definition=video_def)
         assert isinstance(response, MessageResponse)
 
-def default_archival_upload(api, host, media, path, encoded):
+def default_archival_upload(api, host, media, path, encoded, size=None):
     # Default action if no archive config is upload raw video.
     media_obj = api.get_media(media)
     logger.info(f"Uploading original file as archival...")
     for progress, upload_info in _upload_file(api, media_obj.project, path,
-                                              media_id=media, filename=os.path.basename(path)):
+                                              media_id=media, filename=os.path.basename(path),file_size=size):
         logger.info(f"Progress: {progress}%")
     video_def = make_video_definition(path)
 
@@ -185,14 +186,21 @@ def default_archival_upload(api, host, media, path, encoded):
     response = api.create_video_file(media, role='archival', video_definition=video_def)
     assert isinstance(response, MessageResponse)
 
-def convert_archival(host, token, media, path, outpath, raw_width, raw_height):
+def convert_archival(host,
+                     token,
+                     media,
+                     path,
+                     outpath,
+                     raw_width,
+                     raw_height,
+                     size=None):
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
     media_obj = api.get_media(media)
     media_type = api.get_media_type(media_obj.meta)
 
     if media_type.archive_config is None:
-        default_archival_upload(api, host, media, path, False)
+        default_archival_upload(api, host, media, path, False, size)
     else:
         for idx, archive_config in enumerate(media_type.archive_config):
             if archive_config.encode is None:
@@ -336,6 +344,6 @@ if __name__ == '__main__':
                           args.raw_width, args.raw_height, configs)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.url, args.work_dir,
-                         args.raw_width, args.raw_height)
+                         args.raw_width, args.raw_height, args.size)
     elif args.category == 'audio':
         convert_audio(args.host, args.token, args.media, args.url, args.work_dir)
