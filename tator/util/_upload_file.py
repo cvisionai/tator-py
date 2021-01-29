@@ -58,8 +58,8 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                         etag = response.headers['ETag']
                         parts.append({'ETag': etag, 'PartNumber': chunk_count + 1})
                         break
-                    except:
-                        logger.warning(f"Upload of {path} chunk {chunk_count} failed! Attempt "
+                    except Exception as e:
+                        logger.warning(f"Upload of {path} chunk {chunk_count} failed ({e})! Attempt "
                                        f"{attempt + 1}/{MAX_RETRIES}")
                         if attempt == MAX_RETRIES - 1:
                             raise Exception(f"Upload of {path} failed!")
@@ -85,7 +85,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 if response.status_code == 200:
                     break
                 else:
-                    logger.warning(f"Upload of {path} failed! Attempt "
+                    logger.warning(f"Upload of {path} failed ({response.text}) size={len(data)}! Attempt "
                                    f"{attempt + 1}/{MAX_RETRIES}")
                     if attempt == MAX_RETRIES - 1:
                         raise Exception(f"Upload of {path} failed!")
