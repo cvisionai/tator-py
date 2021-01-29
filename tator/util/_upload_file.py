@@ -8,7 +8,7 @@ import tator
 
 logger = logging.getLogger(__name__)
 
-def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10):
+def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None):
     """ Uploads a file.
 
     :param api: `tator.TatorApi` object.
@@ -21,7 +21,8 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     MAX_RETRIES = 10 # Maximum retries on a given chunk.
 
     # Get number of chunks.
-    file_size = os.stat(path).st_size
+    if file_size is None:
+        file_size = os.stat(path).st_size
     num_chunks = math.ceil(file_size / chunk_size)
     if num_chunks > 10000:
         chunk_size = math.ceil(file_size / 9000)
