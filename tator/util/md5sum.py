@@ -26,7 +26,9 @@ def md5sum(fname, size=None):
         # if it doesn't work
         try:
             r = requests.head(fname)
-            size = int(r.headers['content-length'])
+            proposed_size = int(r.headers.get('content-length',0))
+            if proposed_size:
+                size = proposed_size
         except:
             if size is None:
                 raise Exception("Must supply size if HTTP server doesn't support HEAD requests for size.")
