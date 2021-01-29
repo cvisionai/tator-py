@@ -16,7 +16,7 @@ from collections import Counter
 
 import tator
 
-log_filename = "tracks_of_interest.log"
+log_filename = "sorted_graphics.log"
 
 logging.basicConfig(
     handlers=[logging.FileHandler(log_filename, mode="w"), logging.StreamHandler()],
@@ -35,115 +35,6 @@ def _print_progress(progress: int) -> None:
         f"{progress}% [{'*' * progress}{next(P_CYCLE) if not_done else ''}{' ' * (99 - progress)}]",
         end="\r" if not_done else "\n",
     )
-
-
-class StateFilterer:
-    def __init__(self, tator_api, project, states, roi):
-        self._tator_api = tator_api
-        self._project = project
-        self._state_list = states
-        self._roi = roi
-        self._filtered_states = None
-
-    @property
-    def roi(self) -> dict:
-        return self._roi
-
-    @roi.setter
-    def roi(self, roi: dict):
-        required_keys = ["x", "y", "width", "height"]
-        if type(roi) == dict and all(key in roi for key in required_keys):
-            self._roi = roi
-
-            # Clear the currently filtered states on an ROI change
-            self._filtered_states = None
-        else:
-            raise ValueError(f"roi value should be a dict containing the keys {required_keys}")
-
-    def get_filtered_states(self, force_refilter: bool = False) -> List[dict]:
-        if force_refilter or self._filtered_states is None:
-            self._filtered_states = self._filter_states()
-
-        return self._filtered_states
-
-    @staticmethod
-    def _localization_in_roi(localization, roi, state, overlap=0.9):
-
-        # Localization extents
-        l_x = [localization["x"], localization["width"] + localization["x"]]
-        l_y = [localization["y"], localization["height"] + localization["y"]]
-
-        # ROI extents
-        r_x, r_y = roi
-
-        # Intersection extents
-        i_x = [max(l_x[0], r_x[0]), min(l_x[1], r_x[1])]
-        i_y = [max(l_y[0], r_y[0]), min(l_y[1], r_y[1])]
-
-        # If the max x/y intersection value is less than min x/y, this means there is zero overlap
-        if i_x[1] < i_x[0] or i_y[1] < i_y[0]:
-            return False
-
-        # Return True if the overlap is at least the desired ratio of the localization area
-        overlap_area = (i_x[1] - i_x[0]) * (i_y[1] - i_y[0])
-        localization_area = localization["width"] * localization["height"]
-        return overlap_area / localization_area >= overlap
-
-    def _filter_states(self):
-        id_set = set()
-        filtered_states = []
-        # ROI extents
-        roi = (
-            [self.roi["x"], self.roi["width"] + self.roi["x"]],
-            [self.roi["y"], self.roi["height"] + self.roi["y"]],
-        )
-
-        n_states = len(self._state_list)
-        for idx, state in enumerate(self._state_list):
-            state_id = state["id"]
-
-            # Only consider unique states
-            if state_id in id_set:
-                continue
-
-            id_set.add(state_id)
-
-            # Get list of localizations comprising the state
-            localization_list = [
-                localization.to_dict()
-                for localization in self._tator_api.get_localization_list_by_id(
-                    self._project, state["localizations"]
-                )
-            ]
-
-            # Determine first and last localization
-            first = localization_list[0]
-            last = localization_list[0]
-            for localization in localization_list:
-                frame = localization["frame"]
-                if frame < first["frame"]:
-                    first = localization
-                elif frame > last["frame"]:
-                    last = localization
-
-            started_in_roi = self._localization_in_roi(first, roi, state)
-            ended_in_roi = self._localization_in_roi(last, roi, state)
-            if started_in_roi or ended_in_roi:
-                if started_in_roi and ended_in_roi:
-                    endpoint_in_roi = "both"
-                elif started_in_roi:
-                    endpoint_in_roi = "start"
-                elif ended_in_roi:
-                    endpoint_in_roi = "end"
-                else:
-                    raise RuntimeError(f"Somehow `started_in_roi` or `ended_in_roi` changed values")
-
-                state["endpoint_in_roi"] = endpoint_in_roi
-                filtered_states.append(state)
-
-            _print_progress(floor((idx + 1) / n_states * 100))
-
-        return filtered_states
 
 
 def parse_args() -> argparse.Namespace:
