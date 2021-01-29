@@ -2,6 +2,7 @@ import requests
 import math
 import os
 import logging
+import requests
 
 import tator
 
@@ -36,12 +37,18 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         upload_kwargs['filename'] = filename
     upload_info = api.get_upload_info(project, **upload_kwargs)
 
+    # Functor to wrap around file versus URL
+    def get_data(path):
+        if path.startswith('https://') or path.startswith('http://'):
+            return requests.get(path, stream=True).raw
+        else:
+            return open(path, 'rb')
     if num_chunks > 1:
         # Upload parts.
         parts = []
         last_progress = 0
         yield (last_progress, None)
-        with open(path, 'rb') as f:
+        with get_data(path) as f:
             for chunk_count, url in enumerate(upload_info.urls):
                 file_part = f.read(chunk_size)
                 for attempt in range(MAX_RETRIES):
@@ -70,7 +77,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
             raise Exception(f"Upload completion failed!")
     else:
         # Upload in single request.
-        with open(path, 'rb') as f:
+        with get_data(path) as f:
             data = f.read()
             for attempt in range(MAX_RETRIES):
                 response = requests.put(upload_info.urls[0], data=data)
