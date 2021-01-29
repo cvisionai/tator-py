@@ -102,7 +102,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         'attributes': attributes,
         'media_id': media_id,
     }
-    if upload_size is not None:
+    if size is not None:
         spec['size'] = size
     # Create video or image.
     if media_type.dtype == 'video':
