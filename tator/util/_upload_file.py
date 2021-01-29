@@ -29,7 +29,9 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         logger.warning(f"Number of chunks {num_chunks} exceeds maximum of 10,000. Increasing "
                         "chunk size to {chunk_size}.")
         num_chunks = math.ceil(file_size / chunk_size)
-    
+
+    if path.startswith('https://') or path.startswith('http://') and filename:
+        filename = filename.split('?')[0]
     # Get upload info.
     upload_kwargs = {'num_parts': num_chunks}
     if media_id is not None:
