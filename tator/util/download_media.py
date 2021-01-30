@@ -23,21 +23,14 @@ def download_media(api, media, out_path):
     :param path-like out_path: Path to where to download.
     :returns: Generator the yields progress (0-100).
     """
-    if media.media_files is not None:
-        archival = media.media_files.archival
-        streaming = media.media_files.streaming
-        image = media.media_files.image
-        if archival and len(archival) > 0:
-            url = archival[0].path
-        elif streaming and len(streaming) > 0:
-            url = streaming[0].path
-        elif image:
-            url = image[0].path
-    else:
-        # Legacy way of using streaming prior to streaming
-        # and images
-        url = f"/media/{media.file}"
-        if media.original:
-            url = f"/data/raw/{media.original}"
+    archival = media.media_files.archival
+    streaming = media.media_files.streaming
+    image = media.media_files.image
+    if archival and len(archival) > 0:
+        url = archival[0].path
+    elif streaming and len(streaming) > 0:
+        url = streaming[0].path
+    elif image:
+        url = image[0].path
 
     return _download_file(api, media.project, url, out_path)
