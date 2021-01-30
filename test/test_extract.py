@@ -19,8 +19,10 @@ def test_extract(host, token, project, video_temp, box_type,
                   'frame': 0}
     state={'frame': 1, 'media_ids':[video], 'type': state_type}
     api = tator.get_api(host,token)
-    api.create_localization_list(project, [localization])
-    api.create_state_list(project, [state])
+    response = api.create_localization_list(project, [localization])
+    localization_id = response.id[0]
+    response = api.create_state_list(project, [state])
+    state_id = response.id[0]
 
     with tempfile.TemporaryDirectory() as td:
         out = os.path.join(td, "temp.mp4")
@@ -59,4 +61,8 @@ def test_extract(host, token, project, video_temp, box_type,
 
 
         assert image_cnt == 3
+
+    # Clean up.
+    api.delete_localization(localization_id)
+    api.delete_state(state_id)
 
