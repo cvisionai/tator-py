@@ -43,6 +43,7 @@ def parse_args():
 def get_file_paths(url, work_dir):
     name = os.path.basename(urlparse(url).path)
     paths = {
+        'original': os.path.join(work_dir, name),
         'thumbnail': os.path.join(work_dir, 'thumbnail.jpg'),
         'thumbnail_gif': os.path.join(work_dir, 'thumbnail_gif.gif'),
         'media_id': os.path.join(work_dir, 'media_id.txt'),
@@ -57,6 +58,9 @@ if __name__ == '__main__':
     # Get file paths.
     paths = get_file_paths(args.url, args.work_dir)
 
+    # Download the file.
+    subprocess.run(['wget', '-O', paths['original'], args.url])
+
     # Get md5 for the file.
     md5 = md5sum(args.url, args.size)
 
@@ -67,7 +71,7 @@ if __name__ == '__main__':
         name = os.path.basename(paths['original'])
 
     # Determine transcodes that need to be done.
-    workloads = determine_transcode(args.host, args.token, args.type, args.url,
+    workloads = determine_transcode(args.host, args.token, args.type, paths['original'],
                                     args.group_to)
     for workload in workloads:
         workload['configs'] = ','.join(workload['configs'])
@@ -85,6 +89,6 @@ if __name__ == '__main__':
         f.write(str(media_id))
 
     # Make thumbnails.
-    make_thumbnails(args.host, args.token, media_id, args.url, paths['thumbnail'],
+    make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
                     paths['thumbnail_gif'])
 
