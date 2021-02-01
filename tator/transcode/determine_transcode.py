@@ -40,7 +40,6 @@ def determine_transcode(host, token, media_type, path, group_to):
     cmd = [
         "ffprobe",
         "-v","error",
-        "-seekable", "0",
         "-show_entries", "stream",
         "-print_format", "json",
         "-count_frames",
