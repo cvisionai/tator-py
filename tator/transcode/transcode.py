@@ -332,21 +332,16 @@ if __name__ == '__main__':
 
     # Get path to save file.
     fname = os.path.basename(urlparse(args.url).path)
-    path = os.path.join(args.work_dir, fname)
-
-    # Download the file.
-    subprocess.run(['wget', '-O', path, args.url])
 
     if args.category == 'streaming':
         if args.configs == '':
             configs = []
         else:
             configs = [res for res in args.configs.split(',')]
-        convert_streaming(args.host, args.token, args.media, path, args.work_dir,
+        convert_streaming(args.host, args.token, args.media, args.url, args.work_dir,
                           args.raw_width, args.raw_height, configs)
     elif args.category == 'archival':
-        convert_archival(args.host, args.token, args.media, path, args.work_dir,
+        convert_archival(args.host, args.token, args.media, args.url, args.work_dir,
                          args.raw_width, args.raw_height, args.size)
     elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, path, args.work_dir)
-
+        convert_audio(args.host, args.token, args.media, args.url, args.work_dir)
