@@ -45,7 +45,7 @@ def _hosted_md5(url):
 
 def import_media(api, type_id, url, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
-                 attributes=None, media_id=None, size=None):
+                 attributes=None, media_id=None, size=None, _request_timeout=10):
     """ Imports a hosted media file.
 
     Example:
@@ -69,6 +69,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     :param media_id: [Optional] Unique ID of existing media object.
     :param size: [Optional] Size of the file in bytes. Required if the
         given URL does not accept HEAD requests.
+    :param _request_timeout: [Optional] Timeout setting for API requests in seconds.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
         is the response object from :meth:`tator.TatorApi.create_media` or 
@@ -89,7 +90,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     host = api.api_client.configuration.host
     token = api.api_client.configuration.api_key['Authorization']
     prefix = api.api_client.configuration.api_key_prefix['Authorization']
-    media_type = api.get_media_type(type_id)
+    media_type = api.get_media_type(type_id, _request_timeout=_request_timeout)
     project_id = media_type.project
     spec = {
         'type': type_id,
@@ -106,7 +107,9 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         spec['size'] = size
     # Create video or image.
     if media_type.dtype == 'video':
-        response = api.transcode(project_id, transcode_spec=spec)
+        response = api.transcode(project_id, transcode_spec=spec,
+                                 _request_timeout=_request_timeout)
     else:
-        response = api.create_media(project_id, media_spec=spec)
+        response = api.create_media(project_id, media_spec=spec,
+                                    _request_timeout=_request_timeout)
     return response
