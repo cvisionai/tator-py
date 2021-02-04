@@ -21,7 +21,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
     source_name += uid
     dest_name += uid
     source_dtype = params["source_dtype"]
-    dest_dtype = params.get("dest_dtype", source_dtype)
+    dest_dtype = params.get("dest_dtype")
     assert_cnt = 0
 
     entity_type = type_getter(type_id)
@@ -52,15 +52,18 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         "global": "false",
         "entity_type": addition["entity_type"],
         "old_attribute_type_name": source_name,
-        "new_attribute_type": {"name": dest_name, "dtype": dest_dtype},
+        "new_attribute_type": {"name": dest_name},
     }
-    if dest_dtype == "enum":
-        mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
+    if dest_dtype:
+        addition["addition"]["dtype"] = dest_dtype
+
+        if dest_dtype == "enum":
+            mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
 
     # A type mutation not in the list of allowed mutations will raise an `ApiException` and the
     # expected `dtype` will be the same as `source_dtype`
-    if dest_dtype in allowed_mutations[source_dtype]:
-        expected_dtype = dest_dtype
+    if dest_dtype is None or dest_dtype in allowed_mutations[source_dtype]:
+        expected_dtype = dest_dtype if dest_dtype else source_dtype
         expected_name = dest_name
         tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
     else:
