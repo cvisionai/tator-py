@@ -1,4 +1,5 @@
-def _convert_for_post(loc, localization_type_mapping, version_mapping, media_mapping):
+def _convert_for_post(loc, localization_type_mapping, version_mapping, media_mapping,
+                      parent_mapping={}):
     # Check for version mapping.
     version_id = loc.version
     if version_id in version_mapping:
@@ -18,6 +19,13 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
     else:
         raise ValueError(f"Source localization_type ID {localization_type_id} missing from "
                           "localization_type_mapping!")
+    # Check for parent mapping.
+    parent_id = loc.parent
+    if parent_id:
+        if parent_id in parent_mapping:
+            parent_id = parent_mapping[parent_id]
+        else:
+            raise ValueError(f"Source parent ID {parent_id} missing from parent_mapping!")
     # Fill in required fields for post.
     spec = {'type': localization_type_id,
             'version': version_id,
@@ -30,6 +38,8 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
             'v': loc.v,
             'frame': loc.frame,
             **loc.attributes}
+    if parent_id:
+        spec['parent'] = parent_id
     spec = {key:spec[key] for key in spec if spec[key] is not None}
     return spec
 
@@ -106,16 +116,37 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
     # Start by getting list of localizations to be cloned.
     locs = src_api.get_localization_list(**query_params)
 
-    # Convert to new spec.
-    spec = [_convert_for_post(loc, localization_type_mapping, version_mapping, media_mapping)
-            for loc in locs]
+    # Find parent localizations.
+    parent_ids = [loc.parent for loc in locs if loc.parent]
+    parent_locs = [loc for loc in locs if loc.id in parent_ids]
+    child_locs = [loc for loc in locs if loc.id not in parent_ids]
+
+    # Create spec for parent localizations.
+    parent_spec = [_convert_for_post(loc, localization_type_mapping, version_mapping,
+                                     media_mapping)
+                   for loc in parent_locs]
+
+    # Create parent localizations first.
+    created_ids = []
+    total_localizations = len(locs)
+    parent_mapping = {}
+    for idx in range(0, len(parent_locs), 500):
+        response = dest_api.create_localization_list(dest_project,
+                                                     localization_spec=parent_spec[idx:idx+500])
+        created_ids += response.id
+        id_map = {src.id: dest_id for src, dest_id in zip(parent_locs[idx:idx+500], response.id)}
+        parent_mapping = {**parent_mapping, **id_map}
+        yield (len(created_ids), total_localizations, response, id_map)
+
+    # Convert spec for child localizations.
+    child_spec = [_convert_for_post(loc, localization_type_mapping, version_mapping,
+                                    media_mapping, parent_mapping)
+                  for loc in child_locs]
 
     # Create the localizations.
-    created_ids = []
-    total_localizations = len(spec)
-    for idx in range(0, total_localizations, 500):
+    for idx in range(0, len(child_locs), 500):
         response = dest_api.create_localization_list(dest_project,
-                                                     localization_spec=spec[idx:idx+500])
+                                                     localization_spec=child_spec[idx:idx+500])
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(locs[idx:idx+500], response.id)}
         yield (len(created_ids), total_localizations, response, id_map)
