@@ -1,6 +1,5 @@
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def _convert_for_post(loc, localization_type_mapping, version_mapping, media_mapping,
