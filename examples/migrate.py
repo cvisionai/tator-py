@@ -316,9 +316,9 @@ def find_media(args, src_api, dest_api, dest_project):
                         existing = dest_api.get_media_list(dest_project.id,
                                                            section=existing_section[0].id)
                         existing_names = [m.name for m in existing]
-                        for m in media:
+                        for m in section_media:
                             if m.name in existing_names:
-                                media_mapping[media.id] = existing[existing_names.index(m.name)].id
+                                media_mapping[m.id] = existing[existing_names.index(m.name)].id
                         section_media = [m for m in section_media if m.name not in existing_names]
                 logger.info(f"{len(section_media)} media from section {section.name} will be "
                             f"created ({num_src_media - len(section_media)} already exist).")
