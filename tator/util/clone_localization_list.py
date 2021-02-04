@@ -1,3 +1,8 @@
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 def _convert_for_post(loc, localization_type_mapping, version_mapping, media_mapping,
                       parent_mapping={}):
     # Check for version mapping.
@@ -22,10 +27,13 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
     # Check for parent mapping.
     parent_id = loc.parent
     if parent_id:
+        parent_id = int(parent_id)
         if parent_id in parent_mapping:
             parent_id = parent_mapping[parent_id]
         else:
-            raise ValueError(f"Source parent ID {parent_id} missing from parent_mapping!")
+            logger.warning(f"Source parent ID {parent_id} missing from parent_mapping! Not "
+                           f"setting parent for source localization {loc.id}...")
+            parent_id = None
     # Fill in required fields for post.
     spec = {'type': localization_type_id,
             'version': version_id,
@@ -117,7 +125,7 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
     locs = src_api.get_localization_list(**query_params)
 
     # Find parent localizations.
-    parent_ids = [loc.parent for loc in locs if loc.parent]
+    parent_ids = [int(loc.parent) for loc in locs if loc.parent]
     parent_locs = [loc for loc in locs if loc.id in parent_ids]
     child_locs = [loc for loc in locs if loc.id not in parent_ids]
 
