@@ -76,13 +76,9 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
             thumbnails = media.media_files.thumbnail
             if thumbnails:
                 thumb = thumbnails[0].path
-            else:
-                thumb = "/media/" + media.thumbnail
             thumbnail_gifs = media.media_files.thumbnail_gif
             if thumbnail_gifs:
                 thumb_gif = thumbnail_gifs[0].path
-            else:
-                thumb_gif = "/media/" + media.thumbnail_gif
             for _ in _download_file(api, media.project, thumb,
                                     os.path.join(d, f"thumb_{pos:09d}.jpg")):
                 pass
