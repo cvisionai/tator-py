@@ -55,7 +55,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         "new_attribute_type": {"name": dest_name},
     }
     if dest_dtype:
-        addition["addition"]["dtype"] = dest_dtype
+        mutation["new_attribute_type"]["dtype"] = dest_dtype
 
         if dest_dtype == "enum":
             mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
