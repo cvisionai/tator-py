@@ -181,16 +181,6 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                 media_spec['gid'] = media.gid
             if media.uid:
                 media_spec['uid'] = media.uid
-            # Transfer thumbnails and image.
-            if media.thumbnail:
-                media_spec['thumbnail_url'] = transfer(f'/media/{media.thumbnail}', return_url=True)
-
-            if media.thumbnail_gif:
-                media_spec['thumbnail_gif_url'] = transfer(f'/media/{media.thumbnail_gif}',
-                                                           return_url=True)
-
-            if media.file:
-                media_spec['url'] = transfer(f'/media/{media.file}', return_url=True)
 
             # Create the media object.
             response = dest_api.create_media(dest_project, media_spec=media_spec)
