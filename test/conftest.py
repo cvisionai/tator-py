@@ -246,9 +246,9 @@ def video(request, project, video_type, video_file):
             continue
         if response[0].media_files is None:
             continue
-        have_streaming = response[0].media_files.streaming is not None
+        streaming = response[0].media_files.streaming
         have_archival = response[0].media_files.archival is not None
-        if have_streaming and have_archival:
+        if streaming and have_archival and len(streaming) == 4:
             video_id = response[0].id
             break
     # Check for proper attribute setting via upload_file
