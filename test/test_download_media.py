@@ -3,6 +3,42 @@ import tempfile
 
 import tator
 
+def test_download_image(host, token, image):
+    tator_api = tator.get_api(host, token)
+    image_obj = tator_api.get_media(image)
+
+    image_files = image_obj.media_files.image
+    assert len(image_files) > 0, "Must have at least 1 image file!"
+
+    available = [x.resolution[0] for x in image_files]
+    best = max(available)
+    best_idx = available.index(best)
+
+    with tempfile.TemporaryDirectory() as td:
+        image_path = os.path.join(td, image_obj.name)
+        for progress in tator.download_media(
+                tator_api,
+                image_obj,
+                image_path,
+                quality=None,
+                media_type=None):
+            print(f"Media download progress: {progress}%")
+        assert os.path.exists(image_path)
+        assert os.stat(image_path).st_size == image_files[best_idx].size
+
+    for image_file in image_files:
+        with tempfile.TemporaryDirectory() as td:
+            image_path = os.path.join(td, image_obj.name)
+            for progress in tator.download_media(
+                    tator_api,
+                    image_obj,
+                    image_path,
+                    quality=image_file.resolution[0],
+                    media_type=None):
+                print(f"Media download progress: {progress}%")
+            assert os.path.exists(image_path)
+            assert os.stat(image_path).st_size == image_file.size
+
 def test_download_video(host, token, video):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
