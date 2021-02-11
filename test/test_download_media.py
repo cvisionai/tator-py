@@ -8,6 +8,8 @@ def test_download_image(host, token, image):
     image_obj = tator_api.get_media(image)
 
     image_files = image_obj.media_files.image
+    thumbnail = image_obj.media_files.thumbnail
+
     assert len(image_files) > 0, "Must have at least 1 image file!"
 
     available = [x.resolution[0] for x in image_files]
@@ -25,6 +27,22 @@ def test_download_image(host, token, image):
             print(f"Media download progress: {progress}%")
         assert os.path.exists(image_path)
         assert os.stat(image_path).st_size == image_files[best_idx].size
+
+    available = [x.resolution[0] for x in thumbnail]
+    best = max(available)
+    best_idx = available.index(best)
+    with tempfile.TemporaryDirectory() as td:
+        image_path = os.path.join(td, image_obj.name)
+        for progress in tator.download_media(
+                tator_api,
+                image_obj,
+                image_path,
+                quality=None,
+                media_type='thumbnail'):
+            print(f"Media download progress: {progress}%")
+        assert os.path.exists(image_path)
+        assert os.stat(image_path).st_size == thumbnail[best_idx].size
+
 
     for image_file in image_files:
         with tempfile.TemporaryDirectory() as td:
@@ -45,6 +63,8 @@ def test_download_video(host, token, video):
 
     archival = video_obj.media_files.archival
     streaming = video_obj.media_files.streaming
+    thumbnail = video_obj.media_files.thumbnail
+    thumbnail_gif = video_obj.media_files.thumbnail_gif
 
     available = [x.resolution[0] for x in archival]
     best = max(available)
@@ -110,3 +130,34 @@ def test_download_video(host, token, video):
                 print(f"Media download progress: {progress}%")
             assert os.path.exists(video_path)
             assert os.stat(video_path).st_size == video_file.size
+
+
+    available = [x.resolution[0] for x in thumbnail]
+    best = max(available)
+    best_idx = available.index(best)
+    with tempfile.TemporaryDirectory() as td:
+        image_path = os.path.join(td, video_obj.name)
+        for progress in tator.download_media(
+                tator_api,
+                video_obj,
+                image_path,
+                quality=None,
+                media_type='thumbnail'):
+            print(f"Media download progress: {progress}%")
+        assert os.path.exists(image_path)
+        assert os.stat(image_path).st_size == thumbnail[best_idx].size
+
+    available = [x.resolution[0] for x in thumbnail_gif]
+    best = max(available)
+    best_idx = available.index(best)
+    with tempfile.TemporaryDirectory() as td:
+        image_path = os.path.join(td, video_obj.name)
+        for progress in tator.download_media(
+                tator_api,
+                video_obj,
+                image_path,
+                quality=None,
+                media_type='thumbnail_gif'):
+            print(f"Media download progress: {progress}%")
+        assert os.path.exists(image_path)
+        assert os.stat(image_path).st_size == thumbnail_gif[best_idx].size

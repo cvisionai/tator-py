@@ -59,10 +59,17 @@ def download_media(api, media, out_path, quality=None,media_type=None):
     :param media: :class:`tator.Media` object.
     :param path-like out_path: Path to where to download.
     :param int quality: Attempts to fetch this resolution (defaults to best)
-    :param str media_type: Either archival or streaming (defaults to best)
+    :param str media_type: The desired item to download (archival, streaming,
+                           image, thumbnail, or thumbnail_gif). Not all types
+                           are valid for all media.
     :returns: Generator the yields progress (0-100).
     """
-    assert media_type in [None, 'streaming', 'archival']
+    assert media_type in [None,
+                          'streaming',
+                          'archival',
+                          'image',
+                          'thumbnail',
+                          'thumbnail_gif']
 
     if media.media_files is not None:
         archival = media.media_files.archival
@@ -70,12 +77,19 @@ def download_media(api, media, out_path, quality=None,media_type=None):
         streaming = media.media_files.streaming
         streaming = streaming if streaming else []
         image = media.media_files.image
+        thumbnail = media.media_files.thumbnail
+        thumbnail_gif = media.media_files.thumbnail_gif
+
         if _is_none_or_eq(media_type,"archival") and len(archival) > 0:
             url = archival[_find_best_match(archival,quality)].path
         elif _is_none_or_eq(media_type,"streaming") and len(streaming) > 0:
             url = streaming[_find_best_match(streaming,quality)].path
-        elif image:
+        elif _is_none_or_eq(media_type,"image") and image:
             url = image[_find_best_match(image,quality)].path
+        elif media_type == "thumbnail":
+            url = thumbnail[_find_best_match(thumbnail,quality)].path
+        elif media_type == "thumbnail_gif":
+            url = thumbnail_gif[_find_best_match(thumbnail_gif,quality)].path
         else:
             assert False, f"Unable to deduce download file media={media.id}"
     else:
