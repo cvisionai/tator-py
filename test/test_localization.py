@@ -100,6 +100,14 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     response = tator_api.get_localization_list(project,type=box_type)
     assert len(response) == num_localizations
 
+    # Test media retrieval by localization ID.
+    response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids})
+    assert len(response) == 1
+    assert response[0].id == video
+    response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids}, force_es=1)
+    assert len(response) == 1
+    assert response[0].id == video
+
     # Test single create.
     box = random_localization(project, box_type, video_obj, post=True)
     response = tator_api.create_localization_list(project, localization_spec=[box])

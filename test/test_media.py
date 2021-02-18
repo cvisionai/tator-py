@@ -26,5 +26,7 @@ def test_get_audio(host, token, project, video):
 def test_get_by_id(host, token, project, video):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
-    other_obj = tator_api.get_media_list_by_id(project, [video])[0]
+    other_obj = tator_api.get_media_list_by_id(project, {'media_ids': [video]})[0]
+    assert video_obj.id == other_obj.id
+    other_obj = tator_api.get_media_list_by_id(project, {'media_ids': [video]}, force_es=1)[0]
     assert video_obj.id == other_obj.id

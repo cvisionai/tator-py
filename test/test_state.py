@@ -92,14 +92,20 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     response = tator_api.get_state_list(project, type=state_type)
     assert len(response) == num_states
 
+    # Test media retrieval by state ID.
+    response = tator_api.get_media_list_by_id(project, {'state_ids': state_ids})
+    assert len(response) == 1
+    assert response[0].id == video
+    response = tator_api.get_media_list_by_id(project, {'state_ids': state_ids}, force_es=1)
+    assert len(response) == 1
+    assert response[0].id == video
+
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
     response = tator_api.create_state_list(project, state_spec=[state])
     assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]
-
-
 
     # Patch single state.
     patch = random_state(project, state_type, video_obj)
