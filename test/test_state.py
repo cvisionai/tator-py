@@ -100,6 +100,12 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     assert len(response) == 1
     assert response[0].id == video
 
+    # Test state retrival by media ID.
+    response = tator_api.get_state_list_by_id(project, {'media_ids': [video]})
+    assert(len(response) == len(state_ids))
+    response = tator_api.get_state_list_by_id(project, {'media_ids': [video]}, force_es=1)
+    assert(len(response) == len(state_ids))
+
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
     response = tator_api.create_state_list(project, state_spec=[state])
@@ -119,7 +125,11 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     assert_close_enough(patch, updated_state, exclude)
 
     # Get state by ID.
-    state_by_id = tator_api.get_state_list_by_id(project, [state_id])[0]
+    state_by_id = tator_api.get_state_list_by_id(project, {'state_ids': [state_id]})
+    assert(len(state_by_id) == 1)
+    state_by_id = tator_api.get_state_list_by_id(project, {'state_ids': [state_id]}, force_es=1)
+    assert(len(state_by_id) == 1)
+    state_by_id = state_by_id[0]
     assert_close_enough(updated_state, state_by_id, exclude)
 
     # Delete single state.

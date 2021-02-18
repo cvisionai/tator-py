@@ -108,6 +108,12 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert len(response) == 1
     assert response[0].id == video
 
+    # Test box retrieval by media ID.
+    response = tator_api.get_localization_list_by_id(project, {'media_ids': [video]})
+    assert(len(response) == len(box_ids))
+    response = tator_api.get_localization_list_by_id(project, {'media_ids': [video]}, force_es=1)
+    assert(len(response) == len(box_ids))
+
     # Test single create.
     box = random_localization(project, box_type, video_obj, post=True)
     response = tator_api.create_localization_list(project, localization_spec=[box])
@@ -125,7 +131,12 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert_close_enough(patch, updated_box, exclude)
 
     # Get box by ID.
-    box_by_id = tator_api.get_localization_list_by_id(project, [box_id])[0]
+    box_by_id = tator_api.get_localization_list_by_id(project, {'localization_ids': [box_id]})
+    assert(len(box_by_id) == 1)
+    box_by_id = tator_api.get_localization_list_by_id(project, {'localization_ids': [box_id]},
+                                                      force_es=1)
+    assert(len(box_by_id) == 1)
+    box_by_id = box_by_id[0]
     assert_close_enough(updated_box, box_by_id, exclude)
 
     # Delete single box.
