@@ -88,6 +88,16 @@ if __name__ == '__main__':
         state_ids += response.id
     logger.info(f"Created {len(state_ids)} tracks!")
 
+    # Retrieve tracks associated to localizations.
+    states = tator_api.get_state_list_by_id(video_type.project,
+                                            {'localization_ids': localization_ids})
+    assert(len(states) == len(state_ids))
+
+    # Retrieve localizations associated to tracks.
+    localizations = tator_api.get_localization_list_by_id(video_type.project,
+                                                          {'state_ids': state_ids})
+    assert(len(localizations) == len(localization_ids))
+
     # The "state graphic", a series of localization images associated with the
     # track, can be retrieved. Below this is done for the first track. Using the
     # full_state_graphic utility, a list of PIL images is returned.
