@@ -127,8 +127,6 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     # Get state by ID.
     state_by_id = tator_api.get_state_list_by_id(project, {'state_ids': [state_id]})
     assert(len(state_by_id) == 1)
-    state_by_id = tator_api.get_state_list_by_id(project, {'state_ids': [state_id]}, force_es=1)
-    assert(len(state_by_id) == 1)
     state_by_id = state_by_id[0]
     assert_close_enough(updated_state, state_by_id, exclude)
 

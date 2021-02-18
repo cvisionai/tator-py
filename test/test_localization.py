@@ -133,9 +133,6 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Get box by ID.
     box_by_id = tator_api.get_localization_list_by_id(project, {'localization_ids': [box_id]})
     assert(len(box_by_id) == 1)
-    box_by_id = tator_api.get_localization_list_by_id(project, {'localization_ids': [box_id]},
-                                                      force_es=1)
-    assert(len(box_by_id) == 1)
     box_by_id = box_by_id[0]
     assert_close_enough(updated_box, box_by_id, exclude)
 

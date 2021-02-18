@@ -59,9 +59,6 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
         leaves_by_id = tator_api.get_leaf_list_by_id(project, {'leaf_ids': [leaf.id for leaf in leaves]})
         for leaf, leaf_by_id in zip(leaves, leaves_by_id):
             assert_close_enough(leaf, leaf_by_id)
-        leaves_by_id = tator_api.get_leaf_list_by_id(project, {'leaf_ids': [leaf.id for leaf in leaves]}, force_es=1)
-        for leaf, leaf_by_id in zip(leaves, leaves_by_id):
-            assert_close_enough(leaf, leaf_by_id)
         generator = tator.util.clone_leaf_list(tator_api, {'project': project, 'depth': depth},
                                                clone_project, parent_mapping,
                                                {leaf_type: leaf_type})
