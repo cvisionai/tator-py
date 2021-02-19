@@ -73,7 +73,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_ids', 'id', 'meta', 'user', 'frame']
+    exclude = ['project', 'type', 'media_ids', 'id', 'meta', 'user', 'frame', 'ids']
 
     # Test bulk create.
     num_states = random.randint(2000, 10000)
@@ -146,6 +146,25 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
+    # Bulk update specified states by ID.
+    id_bulk_patch = random_state(project, state_type, video_obj)
+    update_ids = random.choices(state_ids, k=100)
+    id_bulk_patch = {'attributes': id_bulk_patch['attributes'], 'ids': update_ids}
+    response = tator_api.update_state_list(project, **params,
+                                           attribute_bulk_update=id_bulk_patch)
+    assert isinstance(response, tator.models.MessageResponse)
+    print(response.message)
+
+    # Verify all states have been updated.
+    states = tator_api.get_state_list(project, **params)
+    dataframe = tator.util.to_dataframe(states)
+    assert(len(states)==len(dataframe))
+    for state in states:
+        if state.id in update_ids:
+            assert_close_enough(id_bulk_patch, state, exclude)
+        else:
+            assert_close_enough(bulk_patch, state, exclude)
+
     # Do random queries using psql and elasticsearch and compare results.
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
@@ -157,13 +176,6 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     print(f"Over {NUM_QUERIES} random attribute queries:")
     print(f"  Avg PSQL time: {psql_time / NUM_QUERIES}")
     print(f"  Avg ES time: {es_time / NUM_QUERIES}")
-
-    # Verify all states have been updated.
-    states = tator_api.get_state_list(project, **params)
-    dataframe = tator.util.to_dataframe(states)
-    assert(len(states)==len(dataframe))
-    for state in states:
-        assert_close_enough(bulk_patch, state, exclude)
 
     # Clone states to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}

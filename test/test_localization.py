@@ -81,7 +81,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user']
+    exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
 
     # Test bulk create.
     num_localizations = random.randint(2000, 10000)
@@ -152,12 +152,24 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
+    # Bulk update specified boxes by ID.
+    id_bulk_patch = random_localization(project, box_type, video_obj)
+    update_ids = random.choices(box_ids, k=100)
+    id_bulk_patch = {'attributes': id_bulk_patch['attributes'], 'ids': update_ids}
+    response = tator_api.update_localization_list(project, **params,
+                                                  attribute_bulk_update=id_bulk_patch)
+    assert isinstance(response, tator.models.MessageResponse)
+    print(response.message)
+
     # Verify all boxes have been updated.
     boxes = tator_api.get_localization_list(project, **params)
     dataframe = tator.util.to_dataframe(boxes)
     assert(len(boxes)==len(dataframe))
     for box in boxes:
-        assert_close_enough(bulk_patch, box, exclude)
+        if box.id in update_ids:
+            assert_close_enough(id_bulk_patch, box, exclude)
+        else:
+            assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
     es_time = datetime.timedelta(seconds=0)
