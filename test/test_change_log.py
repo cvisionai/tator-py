@@ -1,7 +1,8 @@
-import uuid
-import random
 from datetime import datetime
 import pytest
+import random
+import string
+import uuid
 
 import tator
 
@@ -53,6 +54,31 @@ def random_localization(project, box_type, video_obj, post=False):
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
     }
+    if post:
+        out = {**out, **attributes}
+    else:
+        out["attributes"] = attributes
+    return out
+
+
+def random_leaf(project, leaf_type, parent_obj=None, post=False):
+    attributes = {
+        "test_bool": random.choice([False, True]),
+        "test_int": random.randint(-1000, 1000),
+        "test_float": random.uniform(-1000.0, 1000.0),
+        "test_enum": random.choice(["a", "b", "c"]),
+        "test_string": str(uuid.uuid1()),
+        "test_datetime": datetime.now().isoformat(),
+        "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+    }
+    name = "".join(random.choice(string.ascii_letters) for _ in range(10))
+    out = {
+        "project": project,
+        "type": leaf_type,
+        "name": name,
+    }
+    if parent_obj:
+        out["parent"] = parent_obj.id
     if post:
         out = {**out, **attributes}
     else:
@@ -312,7 +338,6 @@ def test_media_change_log(host, token, project, video_type):
         if change.name == "_id":
             assert change.value == media_id
         elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
-            print(f"{change.name} {change.value}")
             assert change.value == media_spec[change.name.replace("_", "")]
 
     media_update = {"name": f"{uuid.uuid4()}_{fname}"}
@@ -339,7 +364,6 @@ def test_media_change_log(host, token, project, video_type):
         if change.name == "_id":
             assert change.value == media_id
         elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
-            print(f"{change.name} {change.value}")
             assert change.value == media_spec[change.name.replace("_", "")]
 
     tator_api.delete_media(media_id)
@@ -350,10 +374,7 @@ def test_media_change_log(host, token, project, video_type):
     # Assert three changes returned
     assert len(changes) == 3
     for new_change_log in changes:
-        if (
-            new_change_log.id != patch_changes.id
-            and new_change_log.id != create_changes.id
-        ):
+        if new_change_log.id != patch_changes.id and new_change_log.id != create_changes.id:
             break
     else:
         assert False, "No deletion change log detected"
@@ -364,3 +385,94 @@ def test_media_change_log(host, token, project, video_type):
     # Assert all new values are None for deletion
     for change in new_change_log.description_of_change.new:
         assert change.value == None
+
+
+def test_leaf_type_change_log(host, token, project, leaf_type):
+    tator_api = tator.get_api(host, token)
+
+    num_leaves = 2
+    leaf_specs = [random_leaf(project, leaf_type, None, True) for _ in range(num_leaves)]
+    response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_specs)
+    leaf_ids = response.id
+
+    assert len(leaf_ids) == len(leaf_specs)
+
+    # Creation tests
+    create_changes = []
+    for leaf_id, leaf_spec in zip(leaf_ids, leaf_specs):
+        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
+
+        # Assert one change returned
+        assert len(changes) == 1
+        changes = changes[0]
+
+        # Assert all old values are None for creation
+        for change in changes.description_of_change.old:
+            assert change.value == None
+
+        # Assert all new values match initial creation values
+        for change in changes.description_of_change.new:
+            if change.name == "_id":
+                assert change.value == leaf_id
+            elif change.name in ["_project", "_name", "_type"]:
+                assert change.value == leaf_spec[change.name.replace("_", "")]
+            elif change.name.startswith("test_"):
+                assert change.value == leaf_spec[change.name]
+        create_changes.append(changes)
+
+    patch_leaves = [random_leaf(project, leaf_type) for _ in range(num_leaves)]
+    for leaf_id, patch_leaf in zip(leaf_ids, patch_leaves):
+        tator_api.update_leaf(leaf_id, leaf_update=patch_leaf)
+
+    # Update tests
+    patch_changes = []
+    for leaf_id, leaf, old_change_log in zip(leaf_ids, patch_leaves, create_changes):
+        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
+
+        # Assert two changes returned
+        assert len(changes) == 2
+        for new_change_log in changes:
+            if new_change_log.id != old_change_log.id:
+                break
+        else:
+            assert False, "No new change log detected"
+
+        # Assert all old values are from creation
+        compare_change_logs(new_change_log, old_change_log)
+
+        # Assert all new values match initial creation values
+        for change in new_change_log.description_of_change.new:
+            if change.name == "_id":
+                assert change.value == leaf_id
+            elif change.name in ["_project", "_name", "_type"]:
+                assert change.value == leaf[change.name.replace("_", "")]
+            elif change.name.startswith("test_"):
+                assert change.value == leaf["attributes"][change.name]
+        patch_changes.append(new_change_log)
+
+    # Clean up
+    tator_api.delete_leaf_list(project, leaf_id=leaf_ids)
+
+    # Deletion tests
+    for leaf_id, patch_change_log, create_change_log in zip(
+        leaf_ids, patch_changes, create_changes
+    ):
+        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
+
+        # Assert three changes returned
+        assert len(changes) == 3
+        for new_change_log in changes:
+            if (
+                new_change_log.id != patch_change_log.id
+                and new_change_log.id != create_change_log.id
+            ):
+                break
+        else:
+            assert False, "No deletion change log detected"
+
+        # Assert all old values are from update
+        compare_change_logs(new_change_log, patch_change_log)
+
+        # Assert all new values are None for deletion
+        for change in new_change_log.description_of_change.new:
+            assert change.value == None
