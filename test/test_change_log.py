@@ -1,4 +1,5 @@
 from datetime import datetime
+from functools import partial
 import pytest
 import random
 import string
@@ -87,40 +88,33 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
 
 
 def compare_change_logs(new, old):
-    for old_attr in new.description_of_change.old:
-        for new_attr in old.description_of_change.new:
-            if new_attr.name == old_attr.name:
-                if type(new_attr.value) == float or type(old_attr.value) == float:
-                    is_equal = new_attr.value == pytest.approx(old_attr.value)
+    for old_in_new in new.description_of_change.old:
+        for new_in_old in old.description_of_change.new:
+            if new_in_old.name == old_in_new.name:
+                if type(new_in_old.value) == float or type(old_in_new.value) == float:
+                    is_equal = new_in_old.value == pytest.approx(old_in_new.value)
                 else:
-                    is_equal = new_attr.value == old_attr.value
+                    is_equal = new_in_old.value == old_in_new.value
 
-                assert is_equal, "FAILED '{new_attr.name}': {new_attr.value} != {old_attr.value}"
+                assert (
+                    is_equal
+                ), f"FAILED '{new_in_old.name}': {new_in_old.value} != {old_in_new.value}"
 
 
-def test_box_type_change_log(host, token, project, attribute_video, attribute_box_type):
-    tator_api = tator.get_api(host, token)
-    video_obj = tator_api.get_media(attribute_video)
+def change_log_helper(
+    tator_api, random_entity, project, create_list, update_one, update_list, delete_one, delete_list
+):
+    num_entities = 2
+    entities = [random_entity(post=True) for _ in range(num_entities)]
+    response = create_list(project, entities)
+    entity_ids = response.id
 
-    num_localizations = 2
-    boxes = [
-        random_localization(project, attribute_box_type, video_obj, post=True)
-        for _ in range(num_localizations)
-    ]
-    box_ids = [
-        box_id
-        for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, localization_spec=boxes
-        )
-        for box_id in response.id
-    ]
-
-    assert len(box_ids) == len(boxes)
+    assert len(entity_ids) == len(entities)
 
     # Creation tests
     create_changes = []
-    for box_id, box in zip(box_ids, boxes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=box_id)
+    for entity_id, box in zip(entity_ids, entities):
+        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id)
 
         # Assert one change returned
         assert len(changes) == 1
@@ -131,26 +125,26 @@ def test_box_type_change_log(host, token, project, attribute_video, attribute_bo
             assert change.value == None
 
         # Assert all new values match initial creation values
+        print("NAMES")
         for change in changes.description_of_change.new:
+            print(change.name)
             if change.name == "_id":
-                assert change.value == box_id
+                assert change.value == entity_id
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
                 assert change.value == box[change.name]
+        print("NAMES")
         create_changes.append(changes)
 
-    patch_boxes = [
-        random_localization(project, attribute_box_type, video_obj)
-        for _ in range(num_localizations)
-    ]
-    for box_id, patch_box in zip(box_ids, patch_boxes):
-        tator_api.update_localization(box_id, localization_update=patch_box)
+    patch_entities = [random_entity() for _ in range(num_entities)]
+    for entity_id, patch_entity in zip(entity_ids, patch_entities):
+        update_one(entity_id, patch_entity)
 
     # Update tests
     patch_changes = []
-    for box_id, box, old_change_log in zip(box_ids, patch_boxes, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=box_id)
+    for entity_id, box, old_change_log in zip(entity_ids, patch_entities, create_changes):
+        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id)
 
         # Assert two changes returned
         assert len(changes) == 2
@@ -166,22 +160,25 @@ def test_box_type_change_log(host, token, project, attribute_video, attribute_bo
         # Assert all new values match initial creation values
         for change in new_change_log.description_of_change.new:
             if change.name == "_id":
-                assert change.value == box_id
+                assert change.value == entity_id
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
                 assert change.value == box["attributes"][change.name]
         patch_changes.append(new_change_log)
 
-    # Clean up
-    params = {"media_id": [attribute_video], "type": attribute_box_type}
-    tator_api.delete_localization_list(project, **params)
+    bulk_patch_entity = random_entity()
+    bulk_patch_entity = {"attributes": bulk_patch_entity["attributes"]}
+    update_list(bulk_patch_entity)
 
-    # Deletion tests
-    for box_id, patch_change_log, create_change_log in zip(box_ids, patch_changes, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=box_id)
+    # Bulk update tests
+    bulk_patch_changes = []
+    for entity_id, create_change_log, patch_change_log in zip(
+        entity_ids, create_changes, patch_changes
+    ):
+        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id)
 
-        # Assert three changes returned
+        # Assert two changes returned
         assert len(changes) == 3
         for new_change_log in changes:
             if (
@@ -190,36 +187,121 @@ def test_box_type_change_log(host, token, project, attribute_video, attribute_bo
             ):
                 break
         else:
+            assert False, "No new change log detected"
+
+        # Assert all new values match bulk update values
+        for change in new_change_log.description_of_change.new:
+            if change.name == "_id":
+                assert change.value == entity_id
+            elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
+                assert change.value == bulk_patch_entity[change.name.replace("_", "")]
+            elif change.name.startswith("test_"):
+                assert change.value == bulk_patch_entity["attributes"][change.name]
+        bulk_patch_changes.append(new_change_log)
+
+    # Clean up
+    delete_one(entity_ids[0])
+    delete_list()
+
+    # Deletion tests
+    for entity_id, create_change_log, patch_change_log, bulk_change_log in zip(
+        entity_ids, create_changes, patch_changes, bulk_patch_changes
+    ):
+        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id)
+
+        # Assert three changes returned
+        assert len(changes) == 4
+        for new_change_log in changes:
+            if (
+                new_change_log.id != patch_change_log.id
+                and new_change_log.id != create_change_log.id
+                and new_change_log.id != bulk_change_log.id
+            ):
+                break
+        else:
             assert False, "No deletion change log detected"
 
         # Assert all old values are from update
-        compare_change_logs(new_change_log, patch_change_log)
+        compare_change_logs(new_change_log, bulk_change_log)
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
             assert change.value == None
 
 
+def test_attribute_box_type_change_log(host, token, project, attribute_video, attribute_box_type):
+    tator_api = tator.get_api(host, token)
+    video_obj = tator_api.get_media(attribute_video)
+    random_entity = partial(random_localization, project, attribute_box_type, video_obj)
+    create_list = tator_api.create_localization_list
+    update_one = tator_api.update_localization
+    update_list = partial(tator_api.update_localization_list, project, media_id=[attribute_video])
+    params = {"media_id": [attribute_video], "type": attribute_box_type}
+    delete_one = tator_api.delete_localization
+    delete_list = partial(tator_api.delete_localization_list, project, **params)
+    change_log_helper(
+        tator_api,
+        random_entity,
+        project,
+        create_list,
+        update_one,
+        update_list,
+        delete_one,
+        delete_list,
+    )
+
+
 def test_state_type_change_log(host, token, project, attribute_video, state_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(attribute_video)
+    random_entity = partial(random_state, project, state_type, video_obj)
+    create_list = tator_api.create_state_list
+    update_one = tator_api.update_state
+    update_list = partial(tator_api.update_state_list, project, media_id=[attribute_video])
+    params = {"media_id": [attribute_video], "type": state_type}
+    delete_one = tator_api.delete_state
+    delete_list = partial(tator_api.delete_state_list, project, **params)
+    change_log_helper(
+        tator_api,
+        random_entity,
+        project,
+        create_list,
+        update_one,
+        update_list,
+        delete_one,
+        delete_list,
+    )
 
-    num_states = 2
-    states = [random_state(project, state_type, video_obj, post=True) for _ in range(num_states)]
-    state_ids = [
-        state_id
-        for response in tator.util.chunked_create(
-            tator_api.create_state_list, project, state_spec=states
-        )
-        for state_id in response.id
+
+def test_media_change_log(host, token, project, attribute_video_type):
+    tator_api = tator.get_api(host, token)
+
+    # Define media spec.
+    num_media = 3
+    fname = "MediaChangeLogTest.mp4"
+    media_specs = [
+        {
+            "type": attribute_video_type,
+            "uid": str(uuid.uuid1()),
+            "gid": str(uuid.uuid1()),
+            "name": fname,
+            "md5": str(uuid.uuid1())[:32],
+            "section": "Test media change log",
+            "attributes": {"test_int": random.randint(0, 100)},
+        }
+        for _ in range(num_media)
     ]
 
-    assert len(state_ids) == len(states)
+    # Create the media.
+    media_ids = [
+        tator_api.create_media(project=project, media_spec=media_spec).id
+        for media_spec in media_specs
+    ]
 
     # Creation tests
     create_changes = []
-    for state_id, state in zip(state_ids, states):
-        changes = tator_api.get_change_log_list(project=project, entity_id=state_id)
+    for media_id, media_spec in zip(media_ids, media_specs):
+        changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
 
         # Assert one change returned
         assert len(changes) == 1
@@ -232,165 +314,109 @@ def test_state_type_change_log(host, token, project, attribute_video, state_type
         # Assert all new values match initial creation values
         for change in changes.description_of_change.new:
             if change.name == "_id":
-                assert change.value == state_id
-            elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
-                assert change.value == state[change.name.replace("_", "")]
-            elif change.name.startswith("test_"):
-                assert change.value == state[change.name]
+                assert change.value == media_id
+            elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
+                assert change.value == media_spec[change.name.replace("_", "")]
+
         create_changes.append(changes)
 
-    patch_states = [random_state(project, state_type, video_obj) for _ in range(num_states)]
-    for state_id, patch_state in zip(state_ids, patch_states):
-        tator_api.update_state(state_id, state_update=patch_state)
+    media_updates = [{"attributes": {"test_int": random.randint(0, 100)}} for _ in range(num_media)]
+    for media_id, media_spec, media_update in zip(media_ids, media_specs, media_updates):
+        media_spec["attributes"]["test_int"] = media_update["attributes"]["test_int"]
+        tator_api.update_media(media_id, media_update)
+    # tator_api.update_media_list(project, media_updates[1])
 
     # Update tests
     patch_changes = []
-    for state_id, state, old_change_log in zip(state_ids, patch_states, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=state_id)
+    for media_id, media_spec, create_change in zip(media_ids, media_specs, create_changes):
+        changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
 
         # Assert two changes returned
         assert len(changes) == 2
         for new_change_log in changes:
-            if new_change_log.id != old_change_log.id:
+            if new_change_log.id != create_change.id:
                 break
         else:
             assert False, "No new change log detected"
 
         # Assert all old values are from creation
-        compare_change_logs(new_change_log, old_change_log)
+        compare_change_logs(new_change_log, create_change)
 
         # Assert all new values match initial creation values
         for change in new_change_log.description_of_change.new:
             if change.name == "_id":
-                assert change.value == state_id
-            elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
-                assert change.value == state[change.name.replace("_", "")]
+                assert change.value == media_id
+            elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
+                assert change.value == media_spec[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == state["attributes"][change.name]
+                assert change.value == media_spec["attributes"][change.name]
+
         patch_changes.append(new_change_log)
 
-    # Clean up
-    params = {"media_id": [attribute_video], "type": state_type}
-    tator_api.delete_state_list(project, **params)
+    media_update = {"attributes": {"test_int": random.randint(0, 100)}}
+    for media_spec in media_specs:
+        media_spec["attributes"]["test_int"] = media_update["attributes"]["test_int"]
+    tator_api.update_media_list(project, media_update)
 
-    # Deletion tests
-    for state_id, patch_change_log, create_change_log in zip(
-        state_ids, patch_changes, create_changes
+    # Bulk update tests
+    bulk_patch_changes = []
+    for media_id, media_spec, create_change, patch_change in zip(
+        media_ids, media_specs, create_changes, patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=state_id)
+        changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
 
-        # Assert three changes returned
+        # Assert two changes returned
         assert len(changes) == 3
         for new_change_log in changes:
+            if new_change_log.id != create_change.id and new_change_log.id != patch_change.id:
+                break
+        else:
+            assert False, "No new change log detected"
+
+        # Assert all new values match initial creation values
+        for change in new_change_log.description_of_change.new:
+            if change.name == "_id":
+                assert change.value == media_id
+            elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
+                assert change.value == media_spec[change.name.replace("_", "")]
+            elif change.name.startswith("test_"):
+                assert change.value == media_spec["attributes"][change.name]
+
+        bulk_patch_changes.append(new_change_log)
+
+    tator_api.delete_media(media_ids[0])
+    tator_api.delete_media_list(project, media_id=media_ids[1:])
+
+    # Deletion tests
+    for media_id, media_spec, create_change, patch_change, bulk_change in zip(
+        media_ids, media_specs, create_changes, patch_changes, bulk_patch_changes
+    ):
+        changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
+
+        # Assert three changes returned
+        assert len(changes) == 4
+        for new_change_log in changes:
             if (
-                new_change_log.id != patch_change_log.id
-                and new_change_log.id != create_change_log.id
+                new_change_log.id != create_change.id
+                and new_change_log.id != patch_change.id
+                and new_change_log.id != bulk_change.id
             ):
                 break
         else:
             assert False, "No deletion change log detected"
 
         # Assert all old values are from update
-        compare_change_logs(new_change_log, patch_change_log)
+        compare_change_logs(new_change_log, bulk_change)
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
             assert change.value == None
 
 
-def test_media_change_log(host, token, project, video_type):
-    tator_api = tator.get_api(host, token)
-
-    # Compute parameters needed to create media.
-    md5 = str(uuid.uuid1())[:32]
-    upload_uid = str(uuid.uuid1())
-    upload_gid = str(uuid.uuid1())
-    fname = "MediaChangeLogTest.mp4"
-
-    # Define media spec.
-    media_spec = {
-        "type": video_type,
-        "uid": upload_uid,
-        "gid": upload_gid,
-        "name": fname,
-        "md5": md5,
-        "section": "Test media change log",
-    }
-
-    # Create the media.
-    response = tator_api.create_media(project=project, media_spec=media_spec)
-    media_id = response.id
-
-    # Creation tests
-    create_changes = []
-    changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
-
-    # Assert one change returned
-    assert len(changes) == 1
-    create_changes = changes[0]
-
-    # Assert all old values are None for creation
-    for change in create_changes.description_of_change.old:
-        assert change.value == None
-
-    # Assert all new values match initial creation values
-    for change in create_changes.description_of_change.new:
-        if change.name == "_id":
-            assert change.value == media_id
-        elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
-            assert change.value == media_spec[change.name.replace("_", "")]
-
-    media_update = {"name": f"{uuid.uuid4()}_{fname}"}
-    media_spec["name"] = media_update["name"]
-    tator_api.update_media(media_id, media_update)
-
-    # Update tests
-    changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
-
-    # Assert two changes returned
-    assert len(changes) == 2
-    for new_change_log in changes:
-        if new_change_log.id != create_changes.id:
-            patch_changes = new_change_log
-            break
-    else:
-        assert False, "No new change log detected"
-
-    # Assert all old values are from creation
-    compare_change_logs(patch_changes, create_changes)
-
-    # Assert all new values match initial creation values
-    for change in patch_changes.description_of_change.new:
-        if change.name == "_id":
-            assert change.value == media_id
-        elif change.name in ["_type", "_uid", "_gid", "_name", "_md5", "_section"]:
-            assert change.value == media_spec[change.name.replace("_", "")]
-
-    tator_api.delete_media(media_id)
-
-    # Deletion tests
-    changes = tator_api.get_change_log_list(project=project, entity_id=media_id)
-
-    # Assert three changes returned
-    assert len(changes) == 3
-    for new_change_log in changes:
-        if new_change_log.id != patch_changes.id and new_change_log.id != create_changes.id:
-            break
-    else:
-        assert False, "No deletion change log detected"
-
-    # Assert all old values are from update
-    compare_change_logs(new_change_log, patch_changes)
-
-    # Assert all new values are None for deletion
-    for change in new_change_log.description_of_change.new:
-        assert change.value == None
-
-
 def test_leaf_type_change_log(host, token, project, leaf_type):
     tator_api = tator.get_api(host, token)
 
-    num_leaves = 2
+    num_leaves = 3
     leaf_specs = [random_leaf(project, leaf_type, None, True) for _ in range(num_leaves)]
     response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_specs)
     leaf_ids = response.id
@@ -450,28 +476,58 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
                 assert change.value == leaf["attributes"][change.name]
         patch_changes.append(new_change_log)
 
+    bulk_patch = {"attributes": random_leaf(project, leaf_type)["attributes"]}
+    tator_api.update_leaf_list(project, bulk_patch)
+
+    # Update tests
+    bulk_changes = []
+    for leaf_id, leaf, create_change, patch_change in zip(
+        leaf_ids, patch_leaves, create_changes, patch_changes
+    ):
+        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
+
+        # Assert two changes returned
+        assert len(changes) == 3
+        for new_change_log in changes:
+            if new_change_log.id != old_change_log.id:
+                break
+        else:
+            assert False, "No new change log detected"
+
+        # Assert all new values match initial creation values
+        for change in new_change_log.description_of_change.new:
+            if change.name == "_id":
+                assert change.value == leaf_id
+            elif change.name in ["_project", "_name", "_type"]:
+                assert change.value == bulk_patch[change.name.replace("_", "")]
+            elif change.name.startswith("test_"):
+                assert change.value == bulk_patch["attributes"][change.name]
+        bulk_changes.append(new_change_log)
+
     # Clean up
-    tator_api.delete_leaf_list(project, leaf_id=leaf_ids)
+    tator_api.delete_leaf(leaf_ids[0])
+    tator_api.delete_leaf_list(project, leaf_id=leaf_ids[1:])
 
     # Deletion tests
-    for leaf_id, patch_change_log, create_change_log in zip(
-        leaf_ids, patch_changes, create_changes
+    for leaf_id, bulk_change, patch_change_log, create_change_log in zip(
+        leaf_ids, bulk_changes, patch_changes, create_changes
     ):
         changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
 
         # Assert three changes returned
-        assert len(changes) == 3
+        assert len(changes) == 4
         for new_change_log in changes:
             if (
                 new_change_log.id != patch_change_log.id
                 and new_change_log.id != create_change_log.id
+                and new_change_log.id != bulk_change.id
             ):
                 break
         else:
             assert False, "No deletion change log detected"
 
         # Assert all old values are from update
-        compare_change_logs(new_change_log, patch_change_log)
+        compare_change_logs(new_change_log, bulk_change)
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
