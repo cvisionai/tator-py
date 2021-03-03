@@ -71,13 +71,22 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                     last_progress = this_progress
 
         # Complete the upload.
-        response = api.complete_upload(project, upload_completion_spec={
-            'key': upload_info.key,
-            'upload_id': upload_info.upload_id,
-            'parts': parts,
-        })
-        if not isinstance(response, tator.models.MessageResponse):
-            raise Exception(f"Upload completion failed!")
+        completed = False
+        count = 0
+        while completed is False and count < 5:
+            try:
+                count += 1
+                response = api.complete_upload(project, upload_completion_spec={
+                    'key': upload_info.key,
+                    'upload_id': upload_info.upload_id,
+                    'parts': parts,
+                })
+                if not isinstance(response, tator.models.MessageResponse):
+                    raise Exception(f"Upload completion failed!")
+                completed=True
+            except Exception as e:
+                print(e)
+                completed = False
     else:
         # Upload in single request.
         with get_data(path) as f:
