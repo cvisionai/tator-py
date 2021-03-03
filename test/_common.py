@@ -7,14 +7,12 @@ def is_number(x):
     except:
         return False
 
-def print_fail(a, b, key):
+def fail_str(a, b, key):
     a.pop('created_datetime', None)
     b.pop('created_datetime', None)
     a.pop('modified_datetime', None)
     b.pop('modified_datetime', None)
-    print(f"Failed on key: {key}")
-    print(f"a: {json.dumps(a, indent=4)}")
-    print(f"b: {json.dumps(b, indent=4)}")
+    return f"Failed on key: {key}\na: {json.dumps(a, indent=4)}\nb: {json.dumps(b, indent=4)}"
 
 def assert_vector_equal(a,b):
     assert(len(a)==len(b))
@@ -29,16 +27,10 @@ def assert_close_enough(a, b, exclude=[]):
     for key in a:
         if key in exclude:
             continue
-        if key not in b:
-            print_fail(a, b, key)
-        assert key in b
+        assert key in b, fail_str(a, b, key)
         if is_number(a[key]):
             diff = abs(a[key] - b[key])
-            if diff > 0.0001:
-                print_fail(a, b, key)
-            assert diff < 0.0001
+            assert diff < 0.0001, fail_str(a, b, key)
         else:
-            if a[key] != b[key]:
-                print_fail(a, b, key)
-            assert a[key] == b[key]
+            assert a[key] == b[key], fail_str(a, b, key)
 

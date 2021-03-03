@@ -252,6 +252,14 @@ def test_video_and_image_type_name_change(
     assert any(attr.name == dest_name for attr in entity_type.attribute_types)
     assert all(attr.name != source_name for attr in entity_type.attribute_types)
 
+    # Delete the attribute to keep clean for other tests
+    attribute_delete = {
+        "entity_type": "MediaType",
+        "attribute_to_delete": dest_name,
+    }
+    tator_api.delete_attribute(id=attribute_video_type, attribute_type_delete=attribute_delete)
+    tator_api.delete_attribute(id=image_type, attribute_type_delete=attribute_delete)
+
 
 def test_box_type_attribute_mutation_es(host, token, project, attribute_video, attribute_box_type):
     tator_api = tator.get_api(host, token)
@@ -344,3 +352,10 @@ def test_box_type_attribute_mutation_es(host, token, project, attribute_video, a
     # Clean up
     params = {"media_id": [attribute_video], "type": attribute_box_type}
     tator_api.delete_localization_list(project, **params)
+
+    # Delete the attribute to keep clean for other tests
+    attribute_delete = {
+        "entity_type": "LocalizationType",
+        "attribute_to_delete": newer_attr_name,
+    }
+    tator_api.delete_attribute(id=attribute_box_type, attribute_type_delete=attribute_delete)
