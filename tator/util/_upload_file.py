@@ -3,6 +3,7 @@ import math
 import os
 import logging
 import requests
+import time
 
 import tator
 
@@ -86,6 +87,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 completed=True
             except Exception as e:
                 print(e)
+                time.sleep(2)
                 completed = False
     else:
         # Upload in single request.
