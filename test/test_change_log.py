@@ -476,8 +476,9 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
                 assert change.value == leaf["attributes"][change.name]
         patch_changes.append(new_change_log)
 
-    bulk_patch = {"attributes": random_leaf(project, leaf_type)["attributes"]}
-    tator_api.update_leaf_list(project, bulk_patch)
+    bulk_patch = random_leaf(project, leaf_type)
+    bulk_patch_spec = {"attributes": bulk_patch["attributes"]}
+    tator_api.update_leaf_list(project, bulk_patch_spec)
 
     # Update tests
     bulk_changes = []
