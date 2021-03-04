@@ -102,6 +102,26 @@ def project(request, organization):
         status = tator_api.delete_project(project_id)
 
 @pytest.fixture(scope='session')
+def algo_project(request, organization):
+    """ Project ID for a created project. """
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    keep = request.config.option.keep
+    tator_api = tator.get_api(host, token)
+    current_dt = datetime.datetime.now()
+    dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
+    response = tator_api.create_project(project_spec={
+        'name': f'algo_test_project_{dt_str}',
+        'summary': f'Algo test project created by tator-py unit tests on {current_dt}',
+        'organization': organization,
+    })
+    project_id = response.id
+    yield project_id
+    if not keep:
+        status = tator_api.delete_project(project_id)
+
+@pytest.fixture(scope='session')
 def image_type(request, project):
     import tator
     host = request.config.option.host

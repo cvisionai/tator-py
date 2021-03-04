@@ -5,6 +5,7 @@ import tempfile
 import uuid
 from textwrap import dedent
 
+import pytest
 import tator
 from tator.util._upload_file import _upload_file
 
@@ -101,15 +102,9 @@ def _missing_upload_file(
     """
 
     tator_api = tator.get_api(host=host, token=token)
-
-    try:
-        caught_exception = False
-        spec = tator.models.AlgorithmManifestSpec(name='test.yaml', upload_url='not_there')
+    spec = tator.models.AlgorithmManifestSpec(name='test.yaml', upload_url='not_there')
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
         tator_api.save_algorithm_manifest(project = project, algorithm_manifest_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
 
 def _upload_test_algorithm_manifest(
         host: str,
@@ -184,10 +179,7 @@ def test_save_algorithm_manifest(
         host=host, token=token, project=project, manifest_name='test_nodupe.yaml')
     assert os.path.basename(response_2.url) == 'test_nodupe_0.yaml'
 
-def test_register_algorithm(
-        host: str,
-        token: str,
-        project: int) -> None:
+def test_register_algorithm(host: str, token: str, project: int, algo_project: int) -> None:
     """ Unit test for the RegisterAlgorithm endpoint
 
     Unit testing of the algorithm registration endpoint involves the following:
@@ -210,45 +202,33 @@ def test_register_algorithm(
     user_id = user.id
 
     # Create a request body that's fine but has bad syntax for the .yaml file
-    caught_exception = False
-    try:
-        response = _upload_test_algorithm_manifest(
-            host=host, token=token, project=project, manifest_name='test.yaml', break_yaml_file=True)
+    response = _upload_test_algorithm_manifest(
+        host=host, token=token, project=project, manifest_name='test.yaml', break_yaml_file=True)
 
-        spec = tator.models.Algorithm(
-            name=ALGO_NAME,
-            project=project,
-            user=user_id,
-            description='test_description',
-            manifest=response.url,
-            cluster=None,
-            files_per_job=1)
+    spec = tator.models.Algorithm(
+        name=ALGO_NAME,
+        project=project,
+        user=user_id,
+        description='test_description',
+        manifest=response.url,
+        cluster=None,
+        files_per_job=1)
 
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
         response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-
-    except:
-        caught_exception = True
-
-    assert caught_exception
 
     # Create a request body for a .yaml file that doesn't exist
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            name=ALGO_NAME,
-            project=project,
-            user=user_id,
-            description='test_description',
-            manifest='ghost',
-            cluster=None,
-            files_per_job=1)
+    spec = tator.models.Algorithm(
+        name=ALGO_NAME,
+        project=project,
+        user=user_id,
+        description='test_description',
+        manifest='ghost',
+        cluster=None,
+        files_per_job=1)
 
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
         response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-
-    except:
-        caught_exception = True
-
-    assert caught_exception
 
     # Create a normal algorithm workflow
     response = _upload_test_algorithm_manifest(
@@ -272,6 +252,10 @@ def test_register_algorithm(
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
     assert algorithm_info == spec
+
+    # Try to register a second algorithm with the same name
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
     # Attempt to patch the algorithm info and make sure it has been updated
     # Note: the cluster field is ignored in the patch operation
@@ -316,7 +300,28 @@ def test_register_algorithm(
 
         assert found_match
 
+    # Register algorithm with the same name for a different project
+    response = _upload_test_algorithm_manifest(
+        host=host, token=token, project=algo_project, manifest_name='test.yaml')
+
+    manifest_url = response.url
+
+    spec = tator.models.Algorithm(
+        name=ALGO_NAME,
+        project=algo_project,
+        user=user_id,
+        description='test_description',
+        manifest=manifest_url,
+        cluster=None,
+        files_per_job=1)
+
+    response = tator_api.register_algorithm(project=algo_project, algorithm_spec=spec)
+
     # Finally delete all the algorithms
+    tator_api.delete_algorithm(response.id)
+    algorithm_list = tator_api.get_algorithm_list(project=algo_project)
+    assert len(algorithm_list) == 0
+
     current_number_of_algs = len(algorithm_ids)
     for alg_id in algorithm_ids:
         _ = tator_api.delete_algorithm(id=alg_id)
@@ -324,6 +329,7 @@ def test_register_algorithm(
 
         current_number_of_algs -= 1
         assert len(algorithm_list) == current_number_of_algs
+
 
 def test_register_algorithm_with_missing_fields(
         host: str,
@@ -356,87 +362,62 @@ def test_register_algorithm_with_missing_fields(
     manifest_url = response.url
 
     # Missing name field
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            project=project,
-            user=user_id,
-            description=DESCRIPTION,
-            manifest=manifest_url,
-            cluster=CLUSTER,
-            files_per_job=FILES_PER_JOB)
+    spec = tator.models.Algorithm(
+        project=project,
+        user=user_id,
+        description=DESCRIPTION,
+        manifest=manifest_url,
+        cluster=CLUSTER,
+        files_per_job=FILES_PER_JOB)
 
-        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
     # Missing user field
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            name=NAME,
-            project=project,
-            description=DESCRIPTION,
-            manifest=manifest_url,
-            cluster=CLUSTER,
-            files_per_job=FILES_PER_JOB)
+    spec = tator.models.Algorithm(
+        name=NAME,
+        project=project,
+        description=DESCRIPTION,
+        manifest=manifest_url,
+        cluster=CLUSTER,
+        files_per_job=FILES_PER_JOB)
 
-        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
     # Missing description field
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            name=NAME,
-            project=project,
-            user=user_id,
-            description=DESCRIPTION,
-            manifest=manifest_url,
-            cluster=CLUSTER,
-            files_per_job=FILES_PER_JOB)
+    spec = tator.models.Algorithm(
+        name=NAME,
+        project=project,
+        user=user_id,
+        description=DESCRIPTION,
+        manifest=manifest_url,
+        cluster=CLUSTER,
+        files_per_job=FILES_PER_JOB)
 
-        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
     # Missing manifest
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            name=NAME,
-            project=project,
-            user=user_id,
-            description=DESCRIPTION,
-            cluster=CLUSTER,
-            files_per_job=FILES_PER_JOB)
+    spec = tator.models.Algorithm(
+        name=NAME,
+        project=project,
+        user=user_id,
+        description=DESCRIPTION,
+        cluster=CLUSTER,
+        files_per_job=FILES_PER_JOB)
 
-        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
     # Missing fields per job
-    caught_exception = False
-    try:
-        spec = tator.models.Algorithm(
-            name=NAME,
-            project=project,
-            user=user_id,
-            description=DESCRIPTION,
-            manifest=manifest_url,
-            cluster=CLUSTER)
+    spec = tator.models.Algorithm(
+        name=NAME,
+        project=project,
+        user=user_id,
+        description=DESCRIPTION,
+        manifest=manifest_url,
+        cluster=CLUSTER)
 
-        response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
-    except:
-        caught_exception = True
-
-    assert caught_exception
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        tator_api.register_algorithm(project=project, algorithm_spec=spec)
