@@ -3,6 +3,7 @@ import os
 import shutil
 import time
 import tarfile
+import yaml
 from uuid import uuid1
 
 import pytest
