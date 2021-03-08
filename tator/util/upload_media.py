@@ -73,6 +73,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         'md5': md5,
         'attributes': attributes,
         'media_id': media_id,
+        'size': os.stat(path).st_size,
     }
     # Initiate transcode or save image.
     if mime.find('video') >= 0:
