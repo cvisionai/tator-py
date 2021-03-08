@@ -243,7 +243,7 @@ def convert_archival(host,
                 subprocess.run(cmd, check=True)
 
             if archive_config.s3_storage is None:
-                default_archival_upload(api, host, media, output_file, True)
+                default_archival_upload(api, host, media, output_file, True,size)
             else:
                 import boto3
                 # Get credentials from config object.
