@@ -1,5 +1,6 @@
 import datetime
 import random
+from time import sleep
 import uuid
 
 import tator
@@ -58,6 +59,7 @@ def comparison_query(tator_api, project, exclude):
                                        attribute_gt=attribute_gt_filter,
                                        force_es=1)
     es_time = datetime.datetime.now() - t0
+    assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
         assert(psql.attributes['test_bool'] == bool_value)
@@ -142,7 +144,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     bulk_patch = random_state(project, state_type, video_obj)
     bulk_patch = {'attributes': bulk_patch['attributes']}
     response = tator_api.update_state_list(project, **params,
-                                           attribute_bulk_update=bulk_patch)
+                                           state_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
@@ -151,7 +153,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     update_ids = random.choices(state_ids, k=100)
     id_bulk_patch = {'attributes': id_bulk_patch['attributes'], 'ids': update_ids}
     response = tator_api.update_state_list(project, **params,
-                                           attribute_bulk_update=id_bulk_patch)
+                                           state_bulk_update=id_bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
@@ -166,6 +168,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
             assert_close_enough(bulk_patch, state, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
+    sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     NUM_QUERIES = 10
