@@ -3,6 +3,7 @@ import os
 import shutil
 import time
 import tarfile
+import yaml
 from uuid import uuid1
 
 import pytest
@@ -11,6 +12,8 @@ import requests
 def pytest_addoption(parser):
     parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
     parser.addoption('--token', help='API token', default='')
+    parser.addoption('--bucket', help='Optional path to yaml file containing bucket spec. If '
+                                      'given, the project will use this bucket.')
     parser.addoption('--keep', help='Do not delete project when done', action='store_true')
 
 def pytest_generate_tests(metafunc):
@@ -87,15 +90,25 @@ def project(request, organization):
     import tator
     host = request.config.option.host
     token = request.config.option.token
+    bucket = request.config.option.bucket
     keep = request.config.option.keep
     tator_api = tator.get_api(host, token)
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
-    response = tator_api.create_project(project_spec={
+    project_spec = {
         'name': f'test_project_{dt_str}',
         'summary': f'Test project created by tator-py unit tests on {current_dt}',
         'organization': organization,
-    })
+    }
+
+    # Create bucket object if bucket spec is given.
+    if bucket is not None:
+        with open(bucket, 'r') as f:
+            bucket_spec = yaml.safe_load(f)
+        response = tator_api.create_bucket(organization, bucket_spec=bucket_spec)
+        project_spec['bucket'] = response.id
+
+    response = tator_api.create_project(project_spec=project_spec)
     project_id = response.id
     yield project_id
     if not keep:

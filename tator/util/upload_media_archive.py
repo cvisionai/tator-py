@@ -57,6 +57,7 @@ def upload_media_archive(api, project, paths, section="Test Section", chunk_size
         'name': "archive.tar",
         'section': section,
         'md5': "N/A",
+        'size': os.stat(path).st_size,
     }
     response = api.transcode(project, transcode_spec=spec)
     yield (100, response)
