@@ -1,5 +1,6 @@
 import datetime
 import random
+from time import sleep
 import uuid
 
 import tator
@@ -66,6 +67,7 @@ def comparison_query(tator_api, project, exclude):
                                               attribute_gt=attribute_gt_filter,
                                               force_es=1)
     es_time = datetime.datetime.now() - t0
+    assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
         assert(psql.attributes['test_bool'] == bool_value)
@@ -184,6 +186,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
+    sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     NUM_QUERIES = 10
