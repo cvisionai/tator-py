@@ -1,5 +1,6 @@
 import datetime
 import random
+from time import sleep
 import uuid
 
 import tator
@@ -66,6 +67,7 @@ def comparison_query(tator_api, project, exclude):
                                               attribute_gt=attribute_gt_filter,
                                               force_es=1)
     es_time = datetime.datetime.now() - t0
+    assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
         assert(psql.attributes['test_bool'] == bool_value)
@@ -145,19 +147,31 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert(tator_api.get_localization_count(project, **params) == len(boxes))
 
     # Bulk update box attributes.
+    response = tator_api.create_version(
+        project,
+        version_spec={
+            "name": "Test Version",
+            "description": "A version for testing",
+        },
+    )
+    new_version = response.id
     bulk_patch = random_localization(project, box_type, video_obj)
-    bulk_patch = {'attributes': bulk_patch['attributes']}
+    bulk_patch = {"attributes": bulk_patch["attributes"], "version": new_version}
     response = tator_api.update_localization_list(project, **params,
-                                                  attribute_bulk_update=bulk_patch)
+                                                  localization_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
     # Bulk update specified boxes by ID.
     id_bulk_patch = random_localization(project, box_type, video_obj)
     update_ids = random.choices(box_ids, k=100)
-    id_bulk_patch = {'attributes': id_bulk_patch['attributes'], 'ids': update_ids}
+    id_bulk_patch = {
+        "attributes": id_bulk_patch["attributes"],
+        "ids": update_ids,
+        "version": new_version,
+    }
     response = tator_api.update_localization_list(project, **params,
-                                                  attribute_bulk_update=id_bulk_patch)
+                                                  localization_bulk_update=id_bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
@@ -172,6 +186,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
+    sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     NUM_QUERIES = 10
@@ -200,3 +215,6 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Verify all boxes are gone.
     boxes = tator_api.get_localization_list(project, **params)
     assert boxes == []
+
+    # Clean up test version
+    tator_api.delete_version(new_version)
