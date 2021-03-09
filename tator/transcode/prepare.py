@@ -17,6 +17,7 @@ from .create_media import create_media
 from .determine_transcode import determine_transcode
 from .make_thumbnails import make_thumbnails
 
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def parse_args():

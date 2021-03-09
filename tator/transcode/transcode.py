@@ -14,6 +14,7 @@ from ..openapi.tator_openapi.models import MessageResponse
 
 from .make_fragment_info import make_fragment_info
 
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # If HW is available, use this as lookup swap
