@@ -1,3 +1,4 @@
+from pprint import pformat
 import datetime
 import random
 from time import sleep
@@ -28,7 +29,7 @@ def random_state(project, state_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
-def comparison_query(tator_api, project, exclude):
+def comparison_query(tator_api, project, state_ids, exclude):
     """ Runs a random query and compares results with ES enabled and disabled.
     """
     bool_value = random.choice([True, False])
@@ -37,28 +38,53 @@ def comparison_query(tator_api, project, exclude):
     float_lower = random.uniform(-1000.0, 0.0)
     float_upper = random.uniform(0.0, 1000.0)
     enum_value = random.choice(['a', 'b', 'c'])
+    state_id_query = {"ids": state_ids}
     attribute_filter = [f"test_bool::{'true' if bool_value else 'false'}", f"test_enum::{enum_value}"]
     attribute_lte_filter = [f"test_int::{int_upper}"]
     attribute_gte_filter = [f"test_int::{int_lower}"]
     attribute_lt_filter = [f"test_float::{float_upper}"]
     attribute_gt_filter = [f"test_float::{float_lower}"]
     t0 = datetime.datetime.now()
-    from_psql = tator_api.get_state_list(project,
-                                         attribute=attribute_filter,
-                                         attribute_lte=attribute_lte_filter,
-                                         attribute_gte=attribute_gte_filter,
-                                         attribute_lt=attribute_lt_filter,
-                                         attribute_gt=attribute_gt_filter)
-    psql_time = datetime.datetime.now() - t0
-    t0 = datetime.datetime.now()
-    from_es = tator_api.get_state_list(project,
-                                       attribute=attribute_filter,
-                                       attribute_lte=attribute_lte_filter,
-                                       attribute_gte=attribute_gte_filter,
-                                       attribute_lt=attribute_lt_filter,
-                                       attribute_gt=attribute_gt_filter,
-                                       force_es=1)
-    es_time = datetime.datetime.now() - t0
+    for idx in range(10):
+        from_psql = tator_api.get_state_list_by_id(
+            project,
+            localization_id_query=state_id_query,
+            attribute=attribute_filter,
+            attribute_lte=attribute_lte_filter,
+            attribute_gte=attribute_gte_filter,
+            attribute_lt=attribute_lt_filter,
+            attribute_gt=attribute_gt_filter,
+        )
+        psql_time = datetime.datetime.now() - t0
+        t0 = datetime.datetime.now()
+        from_es = tator_api.get_state_list_by_id(
+            project,
+            localization_id_query=state_id_query,
+            attribute=attribute_filter,
+            attribute_lte=attribute_lte_filter,
+            attribute_gte=attribute_gte_filter,
+            attribute_lt=attribute_lt_filter,
+            attribute_gt=attribute_gt_filter,
+            force_es=1,
+        )
+        es_time = datetime.datetime.now() - t0
+        if len(from_psql) == len(from_es):
+            print(f"PSQL and ES results equal in count after {idx + 1} queries")
+            break
+        print(f"PSQL and ES results NOT equal in count after {idx + 1} queries")
+        sleep(1.0)
+    if len(from_psql) != len(from_es):
+        for psql_ele in from_psql:
+            if psql_ele in from_es:
+                from_es.remove(psql_ele)
+            else:
+                print(f"State {psql_ele.id} found in PSQL results, but not ES results")
+                print(f"{pformat(psql_ele.to_dict())}")
+
+        for es_ele in from_es:
+            print(f"State {es_ele.id} found in ES results, but not PSQL results")
+            print(f"{pformat(es_ele.to_dict())}")
+
     assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
@@ -168,12 +194,12 @@ def test_state_crud(host, token, project, video_type, video, state_type):
             assert_close_enough(bulk_patch, state, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
-    sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
+    state_ids = [state.id for state in states]
     NUM_QUERIES = 10
     for _ in range(NUM_QUERIES):
-        psql, es = comparison_query(tator_api, project, exclude)
+        psql, es = comparison_query(tator_api, project, state_ids, exclude)
         psql_time += psql
         es_time += es
     print(f"Over {NUM_QUERIES} random attribute queries:")
