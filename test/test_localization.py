@@ -1,3 +1,4 @@
+from pprint import pformat
 import datetime
 import random
 from time import sleep
@@ -36,7 +37,7 @@ def random_localization(project, box_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
-def comparison_query(tator_api, project, exclude):
+def comparison_query(tator_api, project, box_ids, exclude):
     """ Runs a random query and compares results with ES enabled and disabled.
     """
     bool_value = random.choice([True, False])
@@ -45,28 +46,41 @@ def comparison_query(tator_api, project, exclude):
     float_lower = random.uniform(-1000.0, 0.0)
     float_upper = random.uniform(0.0, 1000.0)
     enum_value = random.choice(['a', 'b', 'c'])
+    localization_id_query = {"ids": box_ids}
     attribute_filter = [f"test_bool::{'true' if bool_value else 'false'}", f"test_enum::{enum_value}"]
     attribute_lte_filter = [f"test_int::{int_upper}"]
     attribute_gte_filter = [f"test_int::{int_lower}"]
     attribute_lt_filter = [f"test_float::{float_upper}"]
     attribute_gt_filter = [f"test_float::{float_lower}"]
     t0 = datetime.datetime.now()
-    from_psql = tator_api.get_localization_list(project,
-                                                attribute=attribute_filter,
-                                                attribute_lte=attribute_lte_filter,
-                                                attribute_gte=attribute_gte_filter,
-                                                attribute_lt=attribute_lt_filter,
-                                                attribute_gt=attribute_gt_filter)
+    from_psql = tator_api.get_localization_list_by_id(
+        project,
+        localization_id_query=localization_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+    )
     psql_time = datetime.datetime.now() - t0
     t0 = datetime.datetime.now()
-    from_es = tator_api.get_localization_list(project,
-                                              attribute=attribute_filter,
-                                              attribute_lte=attribute_lte_filter,
-                                              attribute_gte=attribute_gte_filter,
-                                              attribute_lt=attribute_lt_filter,
-                                              attribute_gt=attribute_gt_filter,
-                                              force_es=1)
+    from_es = tator_api.get_localization_list_by_id(
+        project,
+        localization_id_query=localization_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+        force_es=1,
+    )
     es_time = datetime.datetime.now() - t0
+
+    not_in_es = [psql_ele.id for psql_ele in from_psql if psql_ele not in from_es]
+    not_in_psql = [es_ele.id for es_ele in from_es if es_ele not in from_psql]
+    print(f"Found {len(not_in_es)} results in PSQL that were not in ES\n{pformat(not_in_es)}")
+    print(f"Found {len(not_in_psql)} results in ES that were not in PSQL\n{pformat(not_in_psql)}")
+
     assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
@@ -189,9 +203,10 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
+    localization_ids = [box.id for box in boxes]
     NUM_QUERIES = 10
     for _ in range(NUM_QUERIES):
-        psql, es = comparison_query(tator_api, project, exclude)
+        psql, es = comparison_query(tator_api, project, localization_ids, exclude)
         psql_time += psql
         es_time += es
     print(f"Over {NUM_QUERIES} random attribute queries:")

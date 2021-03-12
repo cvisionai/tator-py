@@ -125,16 +125,13 @@ def change_log_helper(
             assert change.value == None
 
         # Assert all new values match initial creation values
-        print("NAMES")
         for change in changes.description_of_change.new:
-            print(change.name)
             if change.name == "_id":
                 assert change.value == entity_id
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
                 assert change.value == box[change.name]
-        print("NAMES")
         create_changes.append(changes)
 
     patch_entities = [random_entity() for _ in range(num_entities)]
