@@ -1,4 +1,5 @@
 import tempfile
+from time import sleep
 import os
 
 import tator
@@ -28,6 +29,7 @@ def test_get_by_id(host, token, project, video):
     assert video_obj.id == other_obj.id
     other_obj = tator_api.get_media_list_by_id(project, {'ids': [video]}, force_es=1)[0]
     assert video_obj.id == other_obj.id
+
 
 def test_archive(host, token, project, video):
     tator_api = tator.get_api(host, token)
@@ -60,6 +62,9 @@ def test_archive(host, token, project, video):
     bulk_update = {"archived": True, "ids": [video]}
     tator_api.update_media_list(project, bulk_update)
 
+    # Wait for update to propagate to ES
+    sleep(2)
+
     # Test default `get_media_list` filters on `archived == False`
     response = tator_api.get_media_list(project, media_id=[video])
     assert len(response) == 0
@@ -69,12 +74,28 @@ def test_archive(host, token, project, video):
     assert len(response) == 1
     assert response[0].archived == True
 
+    # Test with force_es
+    response = tator_api.get_media_list(
+        project, media_id=[video], archive_state="archived", force_es=1
+    )
+    assert len(response) == 1
+    assert response[0].archived == True
+
     # Test returning subset of media that is live
     response = tator_api.get_media_list(project, media_id=[video], archive_state="live")
     assert len(response) == 0
 
+    # Test with force_es
+    response = tator_api.get_media_list(project, media_id=[video], archive_state="live", force_es=1)
+    assert len(response) == 0
+
     # Test returning subset of media that has any `archived` state
     response = tator_api.get_media_list(project, media_id=[video], archive_state="all")
+    assert len(response) == 1
+    assert response[0].archived == True
+
+    # Test with force_es
+    response = tator_api.get_media_list(project, media_id=[video], archive_state="all", force_es=1)
     assert len(response) == 1
     assert response[0].archived == True
 
