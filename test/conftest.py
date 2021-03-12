@@ -162,7 +162,6 @@ def image_file(request):
                     if chunk:
                         f.write(chunk)
     yield out_path
-    os.remove(out_path)
 
 @pytest.fixture(scope='session')
 def image(request, project, image_type, image_file):
@@ -259,7 +258,6 @@ def video_file(request):
                     if chunk:
                         f.write(chunk)
     yield out_path
-    # os.remove(out_path)
 
 @pytest.fixture(scope='session')
 def video(request, project, video_type, video_file):
@@ -487,7 +485,6 @@ def attribute_video_file(request):
                     if chunk:
                         f.write(chunk)
     yield out_path
-    os.remove(out_path)
 
 
 @pytest.fixture(scope="session")

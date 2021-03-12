@@ -53,45 +53,33 @@ def comparison_query(tator_api, project, box_ids, exclude):
     attribute_lt_filter = [f"test_float::{float_upper}"]
     attribute_gt_filter = [f"test_float::{float_lower}"]
     t0 = datetime.datetime.now()
-    for idx in range(10):
-        from_psql = tator_api.get_localization_list_by_id(
-            project,
-            localization_id_query=localization_id_query,
-            attribute=attribute_filter,
-            attribute_lte=attribute_lte_filter,
-            attribute_gte=attribute_gte_filter,
-            attribute_lt=attribute_lt_filter,
-            attribute_gt=attribute_gt_filter,
-        )
-        psql_time = datetime.datetime.now() - t0
-        t0 = datetime.datetime.now()
-        from_es = tator_api.get_localization_list_by_id(
-            project,
-            localization_id_query=localization_id_query,
-            attribute=attribute_filter,
-            attribute_lte=attribute_lte_filter,
-            attribute_gte=attribute_gte_filter,
-            attribute_lt=attribute_lt_filter,
-            attribute_gt=attribute_gt_filter,
-            force_es=1,
-        )
-        es_time = datetime.datetime.now() - t0
-        if len(from_psql) == len(from_es):
-            print(f"PSQL and ES results equal in count after {idx + 1} queries")
-            break
-        print(f"PSQL and ES results NOT equal in count after {idx + 1} queries")
-        sleep(1.0)
-    if len(from_psql) != len(from_es):
-        for psql_ele in from_psql:
-            if psql_ele in from_es:
-                from_es.remove(psql_ele)
-            else:
-                print(f"State {psql_ele.id} found in PSQL results, but not ES results")
-                print(f"{pformat(psql_ele.to_dict())}")
+    from_psql = tator_api.get_localization_list_by_id(
+        project,
+        localization_id_query=localization_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+    )
+    psql_time = datetime.datetime.now() - t0
+    t0 = datetime.datetime.now()
+    from_es = tator_api.get_localization_list_by_id(
+        project,
+        localization_id_query=localization_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+        force_es=1,
+    )
+    es_time = datetime.datetime.now() - t0
 
-        for es_ele in from_es:
-            print(f"State {es_ele.id} found in ES results, but not PSQL results")
-            print(f"{pformat(es_ele.to_dict())}")
+    not_in_es = [psql_ele.id for psql_ele in from_psql if psql_ele not in from_es]
+    not_in_psql = [es_ele.id for es_ele in from_es if es_ele not in from_psql]
+    print(f"Found {len(not_in_es)} results in PSQL that were not in ES\n{pformat(not_in_es)}")
+    print(f"Found {len(not_in_psql)} results in ES that were not in PSQL\n{pformat(not_in_psql)}")
 
     assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
@@ -212,6 +200,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
+    sleep(5.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     localization_ids = [box.id for box in boxes]
