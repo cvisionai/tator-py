@@ -45,13 +45,13 @@ def clone_localization_type(src_api, src_type_id, dest_project, media_type_mappi
             'line_width': type_obj.line_width,
             'visible': type_obj.visible,
             'attribute_types': type_obj.attribute_types}
-    dest_media_types = []
+    dest_media_types = set()
     for src_media_type in type_obj.media:
         if src_media_type in media_type_mapping:
-            dest_media_types.append(media_type_mapping[src_media_type])
+            dest_media_types.add(media_type_mapping[src_media_type])
         else:
             raise ValueError(f"Media type mapping does not contain source media ID {src_media_type}!")
-    spec['media_types'] = dest_media_types
+    spec['media_types'] = list(dest_media_types)
     if dest_api is None:
         dest_api = src_api
     return dest_api.create_localization_type(dest_project, localization_type_spec=spec)
