@@ -18,7 +18,6 @@ from .create_media import create_media
 from .determine_transcode import determine_transcode
 from .make_thumbnails import make_thumbnails
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def parse_args():
@@ -54,6 +53,8 @@ def get_file_paths(url, work_dir):
     return paths
 
 if __name__ == '__main__':
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
     # Parse arguments.
     args = parse_args()
 

@@ -14,7 +14,6 @@ from ..openapi.tator_openapi.models import MessageResponse
 
 from .make_fragment_info import make_fragment_info
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # If HW is available, use this as lookup swap
@@ -328,6 +327,8 @@ def get_length_info(stream):
     return fps,int(num_frames)
 
 if __name__ == '__main__':
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
     # Parse arguments.
     args = parse_args()
 
