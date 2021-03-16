@@ -36,12 +36,12 @@ def test_archive(host, token, project, video):
     video_obj = tator_api.get_media(video)
 
     # Test default value of `archived` is False
-    assert video_obj.archived == False
+    assert video_obj.archive_state == "live"
 
     # Test default `get_media_list` filters on `archived == False`
     response = tator_api.get_media_list(project, media_id=[video])
     assert len(response) == 1
-    assert response[0].archived == False
+    assert response[0].archive_state == "live"
 
     # Test `get_media_list` with `archive_state="archived"` returns only `archived == True`
     # objects
@@ -51,15 +51,15 @@ def test_archive(host, token, project, video):
     # Test returning subset of media that is live
     response = tator_api.get_media_list(project, media_id=[video], archive_state="live")
     assert len(response) == 1
-    assert response[0].archived == False
+    assert response[0].archive_state == "live"
 
     # Test returning subset of media that has any `archived` state
     response = tator_api.get_media_list(project, media_id=[video], archive_state="all")
     assert len(response) == 1
-    assert response[0].archived == False
+    assert response[0].archive_state == "live"
 
     # Archive the video
-    bulk_update = {"archived": True, "ids": [video]}
+    bulk_update = {"archive_state": "to_archive", "ids": [video]}
     tator_api.update_media_list(project, bulk_update)
 
     # Wait for update to propagate to ES
@@ -72,14 +72,14 @@ def test_archive(host, token, project, video):
     # Test `get_media_list` with `archive_state="archived"` returns only `archived == True` objects
     response = tator_api.get_media_list(project, media_id=[video], archive_state="archived")
     assert len(response) == 1
-    assert response[0].archived == True
+    assert response[0].archive_state == "to_archive"
 
     # Test with force_es
     response = tator_api.get_media_list(
         project, media_id=[video], archive_state="archived", force_es=1
     )
     assert len(response) == 1
-    assert response[0].archived == True
+    assert response[0].archive_state == "to_archive"
 
     # Test returning subset of media that is live
     response = tator_api.get_media_list(project, media_id=[video], archive_state="live")
@@ -92,15 +92,15 @@ def test_archive(host, token, project, video):
     # Test returning subset of media that has any `archived` state
     response = tator_api.get_media_list(project, media_id=[video], archive_state="all")
     assert len(response) == 1
-    assert response[0].archived == True
+    assert response[0].archive_state == "to_archive"
 
     # Test with force_es
     response = tator_api.get_media_list(project, media_id=[video], archive_state="all", force_es=1)
     assert len(response) == 1
-    assert response[0].archived == True
+    assert response[0].archive_state == "to_archive"
 
     # Clean up
-    single_update = {"archived": False}
+    single_update = {"archive_state": "to_live"}
     tator_api.update_media(video, single_update)
     video_obj = tator_api.get_media(video)
-    assert video_obj.archived == False
+    assert video_obj.archive_state == "live"
