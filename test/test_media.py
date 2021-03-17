@@ -58,8 +58,7 @@ def test_archive(host, token, project, video):
     assert response[0].archive_state == "live"
 
     # Mark the video to archive
-    bulk_update = {"archive_state": "to_archive", "ids": [video]}
-    tator_api.update_media_list(project, bulk_update)
+    tator_api.update_media_list(project, {"archive_state": "to_archive", "ids": [video]})
 
     # Wait for update to propagate to ES
     sleep(2)
@@ -98,8 +97,13 @@ def test_archive(host, token, project, video):
     assert len(response) == 1
     assert response[0].archive_state == "to_archive"
 
-    # Clean up
-    single_update = {"archive_state": "to_live"}
-    tator_api.update_media(video, single_update)
+    # Additional attempts to set the state to `to_archive` will not change anything
+    tator_api.update_media(video, {"archive_state": "to_archive"})
+    video_obj = tator_api.get_media(video)
+    assert video_obj.archive_state == "to_archive"
+
+    # Setting the `archive_state` to `to_live` when a media is in the state `to_archive` should
+    # result in the media's state changing to `live`
+    tator_api.update_media(video, {"archive_state": "to_live"})
     video_obj = tator_api.get_media(video)
     assert video_obj.archive_state == "live"
