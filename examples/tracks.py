@@ -20,12 +20,12 @@ def random_box(video, type_id, frame):
     :param type_id: Localization type ID.
     :returns: Random localization spec.
     """
-    x = random.uniform(0.0, 1.0)
-    y = random.uniform(0.0, 1.0)
+    x = random.uniform(0.0, 0.95)
+    y = random.uniform(0.0, 0.95)
     return dict(
         x=x, y=y,
-        width=random.uniform(0.0, 1.0 - x),
-        height=random.uniform(0.0, 1.0 - y),
+        width=random.uniform(0.05, 1.0 - x),
+        height=random.uniform(0.05, 1.0 - y),
         frame=frame,
         media_id=video.id,
         type=type_id,
