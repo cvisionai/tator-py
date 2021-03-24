@@ -7,6 +7,36 @@ import uuid
 import tator
 from ._common import assert_close_enough
 
+
+def wait_for_parity(tator_api, project, patch, expected_ids):
+    attribute_filter = [f"test_string::{patch['attributes']['test_string']}"]
+    localization_id_query = {"ids": expected_ids}
+    total_timeout = 60.0 # seconds
+    wait_time = 2.0 # seconds
+
+    print(f"Using attribute filter:\n{pformat(attribute_filter)}")
+    from_psql = tator_api.get_localization_list_by_id(
+        project,
+        localization_id_query=localization_id_query,
+        attribute=attribute_filter,
+    )
+    for idx in range(int(total_timeout / wait_time) + 1):
+        from_es = tator_api.get_localization_list_by_id(
+            project,
+            localization_id_query=localization_id_query,
+            attribute=attribute_filter,
+            force_es=1,
+        )
+
+        if len(from_es) == len(from_psql):
+            print(f"Found expected number of results after {idx * wait_time} seconds")
+            return True
+
+        sleep(wait_time)
+
+    print(f"Did not find expected number of results after {idx * wait_time} seconds")
+    return False
+
 def random_localization(project, box_type, video_obj, post=False):
     x = random.uniform(0.0, 1.0)
     y = random.uniform(0.0, 1.0)
@@ -200,7 +230,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
-    sleep(10.0)
+    assert wait_for_parity(tator_api, project, id_bulk_patch, update_ids)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     localization_ids = [box.id for box in boxes]
