@@ -200,7 +200,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(bulk_patch, box, exclude)
 
     # Do random queries using psql and elasticsearch and compare results.
-    sleep(5.0)
+    sleep(10.0)
     es_time = datetime.timedelta(seconds=0)
     psql_time = datetime.timedelta(seconds=0)
     localization_ids = [box.id for box in boxes]
