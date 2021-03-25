@@ -178,10 +178,7 @@ def change_log_helper(
         # Assert two changes returned
         assert len(changes) == 3
         for new_change_log in changes:
-            if (
-                new_change_log.id != patch_change_log.id
-                and new_change_log.id != create_change_log.id
-            ):
+            if new_change_log.id not in [patch_change_log.id, create_change_log.id]:
                 break
         else:
             assert False, "No new change log detected"
@@ -209,11 +206,11 @@ def change_log_helper(
         # Assert three changes returned
         assert len(changes) == 4
         for new_change_log in changes:
-            if (
-                new_change_log.id != patch_change_log.id
-                and new_change_log.id != create_change_log.id
-                and new_change_log.id != bulk_change_log.id
-            ):
+            if new_change_log.id not in [
+                patch_change_log.id,
+                create_change_log.id,
+                bulk_change_log.id,
+            ]:
                 break
         else:
             assert False, "No deletion change log detected"
@@ -365,7 +362,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
         # Assert two changes returned
         assert len(changes) == 3
         for new_change_log in changes:
-            if new_change_log.id != create_change.id and new_change_log.id != patch_change.id:
+            if new_change_log.id not in [patch_change.id, create_change.id]:
                 break
         else:
             assert False, "No new change log detected"
@@ -393,11 +390,11 @@ def test_media_change_log(host, token, project, attribute_video_type):
         # Assert three changes returned
         assert len(changes) == 4
         for new_change_log in changes:
-            if (
-                new_change_log.id != create_change.id
-                and new_change_log.id != patch_change.id
-                and new_change_log.id != bulk_change.id
-            ):
+            if new_change_log.id not in [
+                patch_change.id,
+                create_change.id,
+                bulk_change.id,
+            ]:
                 break
         else:
             assert False, "No deletion change log detected"
@@ -487,7 +484,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
         # Assert two changes returned
         assert len(changes) == 3
         for new_change_log in changes:
-            if new_change_log.id != old_change_log.id:
+            if new_change_log.id not in [patch_change.id, create_change.id]:
                 break
         else:
             assert False, "No new change log detected"
@@ -507,7 +504,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
     tator_api.delete_leaf_list(project, leaf_id=leaf_ids[1:])
 
     # Deletion tests
-    for leaf_id, bulk_change, patch_change_log, create_change_log in zip(
+    for leaf_id, bulk_change, patch_change, create_change in zip(
         leaf_ids, bulk_changes, patch_changes, create_changes
     ):
         changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id)
@@ -515,11 +512,11 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
         # Assert three changes returned
         assert len(changes) == 4
         for new_change_log in changes:
-            if (
-                new_change_log.id != patch_change_log.id
-                and new_change_log.id != create_change_log.id
-                and new_change_log.id != bulk_change.id
-            ):
+            if new_change_log.id not in [
+                patch_change.id,
+                create_change.id,
+                bulk_change.id,
+            ]:
                 break
         else:
             assert False, "No deletion change log detected"
