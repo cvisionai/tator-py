@@ -5,6 +5,7 @@ Launches a registered algorithm on the given set of media
 
 import argparse
 import logging
+import time
 
 import tator
 
@@ -65,6 +66,9 @@ def launch_algorithm(
         algorithm_name=algorithm_name,
         media_ids=media_ids)
 
+    logger.info("Algorithm Spec")
+    logger.info(f"{spec}")
+
     response = tator_api.algorithm_launch(
         project=project,
         algorithm_launch_spec=spec)
@@ -76,7 +80,7 @@ def launch_algorithm(
 
     # Monitor progress, wait until complete.
     while True:
-        jobs = tator_api.get_job(response.gid)
+        jobs = tator_api.get_job_list(project, gid=response.gid)
         all_done = True
         for job in jobs:
             if job.status != 'Succeeded':
