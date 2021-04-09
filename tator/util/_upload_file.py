@@ -20,20 +20,28 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     :param chunk_size: [Optional] Upload chunk size in bytes.
     """
     MAX_RETRIES = 10 # Maximum retries on a given chunk.
+    GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
 
     # Get number of chunks.
     if file_size is None:
         file_size = os.stat(path).st_size
-    num_chunks = math.ceil(file_size / chunk_size)
-    if num_chunks > 10000:
+
+    if math.ceil(file_size / chunk_size) > 10000:
         chunk_size = math.ceil(file_size / 9000)
-        logger.warning(f"Number of chunks {num_chunks} exceeds maximum of 10,000. Increasing "
-                        "chunk size to {chunk_size}.")
-        num_chunks = math.ceil(file_size / chunk_size)
+        logger.warning(
+            f"Number of chunks exceeds maximum of 10,000. Increasing chunk size to {chunk_size}."
+        )
+
+    if chunk_size % GCP_CHUNK_MOD:
+        logger.warning(
+            f"Chunk size must be a multiple of 256KB for Google Cloud Storage compatibility"
+        )
+        chunk_size = math.ceil(chunk_size / GCP_CHUNK_MOD) * GCP_CHUNK_MOD
 
     if path.startswith('https://') or path.startswith('http://') and filename:
         filename = filename.split('?')[0]
     # Get upload info.
+    num_chunks = math.ceil(file_size / chunk_size)
     upload_kwargs = {'num_parts': num_chunks}
     if media_id is not None:
         upload_kwargs['media_id'] = media_id
@@ -52,14 +60,27 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         parts = []
         last_progress = 0
         yield (last_progress, None)
+        gcp_upload = upload_info.upload_id == upload_info.urls[0]
         with get_data(path) as f:
             for chunk_count, url in enumerate(upload_info.urls):
                 file_part = f.read(chunk_size)
                 for attempt in range(MAX_RETRIES):
                     try:
-                        response = requests.put(url, data=file_part)
-                        etag = response.headers['ETag']
-                        parts.append({'ETag': etag, 'PartNumber': chunk_count + 1})
+                        kwargs = {"data": file_part}
+                        if gcp_upload:
+                            first_byte = chunk_count * chunk_size
+                            last_byte = min(first_byte + chunk_size, file_size) - 1
+                            kwargs["headers"] = {
+                                "Content-Length": str(last_byte - first_byte),
+                                "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
+                            }
+                        response = requests.put(url, **kwargs)
+                        parts.append(
+                            {
+                                "ETag": response.headers.get("ETag", str(chunk_count)),
+                                "PartNumber": chunk_count + 1,
+                            }
+                        )
                         break
                     except Exception as e:
                         logger.warning(f"Upload of {path} chunk {chunk_count} failed ({e})! Attempt "
@@ -105,4 +126,3 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
 
     # Return the parts and upload info.
     yield (100, upload_info)
-
