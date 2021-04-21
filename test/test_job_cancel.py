@@ -78,6 +78,7 @@ spec:
     assert len(jobs) == 0
 
     # Cancel all jobs in project.
+    time.sleep(5.0)
     jobs = tator_api.get_job_list(project)
     assert len(jobs) >= 8
     print("Cancelling all jobs in project...")
