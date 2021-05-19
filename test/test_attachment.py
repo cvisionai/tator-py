@@ -9,9 +9,9 @@ def test_attachment(host, token, project, video):
     with tempfile.NamedTemporaryFile(mode='w',suffix=".txt") as temp:
         temp.write("foo")
         temp.flush()
-        for progress, response in tator.util.upload_attachment(tator_api, media, temp.name):
+        for progress, response in tator.util.upload_attachment(tator_api, video, temp.name):
             print(f"Attachment upload progress: {progress}%")
-        assert isinstance(response, tator.models.CreateResponse)
+        assert isinstance(response, tator.models.MessageResponse)
         print(f"Message: {response.message}")
 
     with tempfile.TemporaryDirectory() as temp_dir:
