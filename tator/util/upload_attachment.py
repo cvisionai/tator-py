@@ -29,11 +29,13 @@ def upload_attachment(api, media, path, name=None, chunk_size=100*1024*1024):
     if name is None:
         name = os.path.basename(path)
 
-    for progress, upload_info in _upload_file(api, media_obj.project, path):
+    for progress, upload_info in _upload_file(api, media_obj.project, path, media_id=media,
+                                              filename=name):
         yield (progress, None)
 
     file_def = {'size': os.stat(path).st_size,
-                'path': upload_info.key}
+                'path': upload_info.key,
+                'name': name}
 
     response = api.create_file(media, role='attachment', file_definition=file_def)
     yield (100, response)
