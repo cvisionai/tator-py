@@ -100,7 +100,7 @@ class RESTClientObject(object):
 
     def request(self, method, url, query_params=None, headers=None,
                 body=None, post_params=None, _preload_content=True,
-                _request_timeout=None):
+                _request_timeout=300):
         """Perform requests.
 
         :param method: http request method
@@ -117,7 +117,7 @@ class RESTClientObject(object):
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+                                 (connection, read) timeouts. Default is 300.
         """
         method = method.upper()
         assert method in ['GET', 'HEAD', 'DELETE', 'POST', 'PUT',
@@ -218,7 +218,7 @@ class RESTClientObject(object):
         return r
 
     def GET(self, url, headers=None, query_params=None, _preload_content=True,
-            _request_timeout=None):
+            _request_timeout=300):
         return self.request("GET", url,
                             headers=headers,
                             _preload_content=_preload_content,
@@ -226,7 +226,7 @@ class RESTClientObject(object):
                             query_params=query_params)
 
     def HEAD(self, url, headers=None, query_params=None, _preload_content=True,
-             _request_timeout=None):
+             _request_timeout=300):
         return self.request("HEAD", url,
                             headers=headers,
                             _preload_content=_preload_content,
@@ -234,7 +234,7 @@ class RESTClientObject(object):
                             query_params=query_params)
 
     def OPTIONS(self, url, headers=None, query_params=None, post_params=None,
-                body=None, _preload_content=True, _request_timeout=None):
+                body=None, _preload_content=True, _request_timeout=300):
         return self.request("OPTIONS", url,
                             headers=headers,
                             query_params=query_params,
@@ -244,7 +244,7 @@ class RESTClientObject(object):
                             body=body)
 
     def DELETE(self, url, headers=None, query_params=None, body=None,
-               _preload_content=True, _request_timeout=None):
+               _preload_content=True, _request_timeout=300):
         return self.request("DELETE", url,
                             headers=headers,
                             query_params=query_params,
@@ -253,7 +253,7 @@ class RESTClientObject(object):
                             body=body)
 
     def POST(self, url, headers=None, query_params=None, post_params=None,
-             body=None, _preload_content=True, _request_timeout=None):
+             body=None, _preload_content=True, _request_timeout=300):
         return self.request("POST", url,
                             headers=headers,
                             query_params=query_params,
@@ -263,7 +263,7 @@ class RESTClientObject(object):
                             body=body)
 
     def PUT(self, url, headers=None, query_params=None, post_params=None,
-            body=None, _preload_content=True, _request_timeout=None):
+            body=None, _preload_content=True, _request_timeout=300):
         return self.request("PUT", url,
                             headers=headers,
                             query_params=query_params,
@@ -273,7 +273,7 @@ class RESTClientObject(object):
                             body=body)
 
     def PATCH(self, url, headers=None, query_params=None, post_params=None,
-              body=None, _preload_content=True, _request_timeout=None):
+              body=None, _preload_content=True, _request_timeout=300):
         return self.request("PATCH", url,
                             headers=headers,
                             query_params=query_params,

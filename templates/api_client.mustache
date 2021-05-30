@@ -133,7 +133,7 @@ class ApiClient(object):
             query_params=None, header_params=None, body=None, post_params=None,
             files=None, response_type=None, auth_settings=None,
             _return_http_data_only=None, collection_formats=None,
-            _preload_content=True, _request_timeout=None, _host=None):
+            _preload_content=True, _request_timeout=300, _host=None):
 
         config = self.configuration
 
@@ -348,7 +348,7 @@ class ApiClient(object):
                  body=None, post_params=None, files=None,
                  response_type=None, auth_settings=None, async_req=None,
                  _return_http_data_only=None, collection_formats=None,
-                 _preload_content=True, _request_timeout=None, _host=None):
+                 _preload_content=True, _request_timeout=300, _host=None):
         """Makes the HTTP request (synchronous) and returns deserialized data.
 
         To make an async_req request, set the async_req parameter.
@@ -377,7 +377,7 @@ class ApiClient(object):
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+                                 (connection, read) timeouts. Default is 300.
         :return:
             If async_req parameter is True,
             the request will be called asynchronously.
@@ -408,7 +408,7 @@ class ApiClient(object):
 
     def request(self, method, url, query_params=None, headers=None,
                 post_params=None, body=None, _preload_content=True,
-                _request_timeout=None):
+                _request_timeout=300):
         """Makes the HTTP request using RESTClient."""
         if method == "GET":
             return self.rest_client.GET(url,

@@ -52,7 +52,7 @@ class {{classname}}(object):
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+                                 (connection, read) timeouts. Default is 300.
         :return: {{#returnType}}:class:`tator.models.{{returnType}}`{{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
                  returns the request thread.
@@ -89,7 +89,7 @@ class {{classname}}(object):
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
+                                 (connection, read) timeouts. Default is 300.
         :return: {{#returnType}}tuple(:class:`tator.models.{{returnType}}`, status_code(int), headers(HTTPHeaderDict)){{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
                  returns the request thread.
