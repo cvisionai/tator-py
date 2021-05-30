@@ -61,6 +61,26 @@ class RESTClientObject(object):
             # if not set certificate file, use Mozilla's root certificates.
             ca_certs = certifi.where()
 
+        # Retries (see https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html#urllib3.util.Retry)
+        retries = urllib3.util.Retry(total=None,
+                                     connect=5,
+                                     read=3,
+                                     redirect=10,
+                                     status=0,
+                                     other=3,
+                                     allowed_methods=frozenset({'HEAD',
+                                                                'GET',
+                                                                'POST',
+                                                                'PATCH',
+                                                                'PUT',
+                                                                'DELETE',
+                                                                'OPTIONS',
+                                                                'TRACE'}),
+                                     backoff_factor=10,
+                                     raise_on_redirect=False,
+                                     raise_on_status=False,
+                                     remove_headers_on_redirect=[])
+
         addition_pool_args = {}
         if configuration.assert_hostname is not None:
             addition_pool_args['assert_hostname'] = configuration.assert_hostname  # noqa: E501
@@ -85,6 +105,7 @@ class RESTClientObject(object):
                 key_file=configuration.key_file,
                 proxy_url=configuration.proxy,
                 proxy_headers=configuration.proxy_headers,
+                retries=retries,
                 **addition_pool_args
             )
         else:
@@ -95,6 +116,7 @@ class RESTClientObject(object):
                 ca_certs=ca_certs,
                 cert_file=configuration.cert_file,
                 key_file=configuration.key_file,
+                retries=retries,
                 **addition_pool_args
             )
 
