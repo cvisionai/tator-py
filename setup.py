@@ -9,8 +9,8 @@ import requests
 import yaml
 import json
 
-REQUIRES = ["urllib3 >= 1.15", "six >= 1.10", "certifi", "python-dateutil",
-            "requests", "pyyaml", "progressbar2", "pillow"]
+REQUIRES = ["urllib3 >= 1.26", "six >= 1.10", "certifi", "python-dateutil",
+            "requests >= 2.25", "pyyaml", "progressbar2", "pillow"]
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
