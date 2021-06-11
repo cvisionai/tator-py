@@ -15,6 +15,7 @@ def register_algorithm(
     manifest: str,
     algorithm_name: str,
     files_per_job: int,
+    categories: list=[],
     description: str='',
     cluster_id: int=None) -> None:
     """ Registers an algorithm argo workflow using the provided parameters
@@ -59,7 +60,8 @@ def register_algorithm(
         description=description,
         manifest=response.url,
         cluster=cluster_id,
-        files_per_job=files_per_job)
+        files_per_job=files_per_job,
+        categories=categories)
 
     response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
