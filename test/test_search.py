@@ -50,8 +50,7 @@ def random_media(api, project, paths, image_type):
     for progress, response in tator.util.upload_media(api, image_type, path,
                                                       attributes=attributes,
                                                       section=section):
-        print(f"Upload progress: {progress}%")
-    print(response.message)
+        pass
     return response.id, attributes, section
 
 def random_search():
@@ -95,25 +94,61 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (box['test_float'] > values['float_lower'])
                       and (box['test_float'] < values['float_upper'])
                       and (box['test_enum'] == values['enum_value'])]
+    box_ids = [box['id'] for box in expected_boxes]
     assert(len(expected_boxes) == len(results))
+    for result in results:
+        assert(result.id in box_ids)
+
+def check_media_result(results, values, annotation_values, box_specs, medias):
+    """ Checks search results against values cached locally.
+    """
+    expected_boxes = [box for box in box_specs
+                      if (box['test_bool'] == annotation_values['bool_value'])
+                      and (box['test_int'] > annotation_values['int_lower'])
+                      and (box['test_int'] < annotation_values['int_upper'])
+                      and (box['test_float'] > annotation_values['float_lower'])
+                      and (box['test_float'] < annotation_values['float_upper'])
+                      and (box['test_enum'] == annotation_values['enum_value'])]
+    parent_media = [box['media_id'] for box in expected_boxes]
+    expected_media = [media_id for media_id, attributes, section in medias
+                      if (media_id in parent_media)
+                      and (attributes['test_bool'] == values['bool_value'])
+                      and (attributes['test_int'] > values['int_lower'])
+                      and (attributes['test_int'] < values['int_upper'])
+                      and (attributes['test_float'] > values['float_lower'])
+                      and (attributes['test_float'] < values['float_upper'])
+                      and (attributes['test_enum'] == values['enum_value'])]
+    assert(len(expected_media) == len(results))
+    for result in results:
+        assert(result.id in expected_media)
 
 def test_search(host, token, project, image_type, image_set, box_type):
     api = tator.get_api(host, token)
     paths = os.listdir(image_set)
     paths = glob.glob(os.path.join(image_set, '**/*.jpg'), recursive=True)
     # Create some random media.
-    medias = [random_media(api, project, paths, image_type) for _ in range(10)]
+    print("Uploading 20 images...")
+    medias = [random_media(api, project, paths, image_type) for _ in range(20)]
     media_ids = [media[0] for media in medias]
     # Create some random boxes.
-    box_specs = [random_localization(project, box_type, media_ids) for _ in range(100)]
+    print("Creating 500 boxes...")
+    box_specs = [random_localization(project, box_type, media_ids) for _ in range(500)]
     response = api.create_localization_list(project, box_specs)
-    loc_ids = response.id
+    for idx, box_id in enumerate(response.id):
+        box_specs[idx]['id'] = box_id
     # Sleep for a bit to make sure localizations are indexed.
     time.sleep(10)
     # Test search on localizations.
+    print("Performing 100 random searches on localizations...")
     for _ in range(100):
         search, values = random_search()
         media_search, media_values = random_search()
         response = api.get_localization_list(project, search=search, media_search=media_search)
         check_box_result(response, values, media_values, box_specs, medias)
-    
+    # Test search on media.
+    print("Performing 100 random searches on media...")
+    for _ in range(100):
+        search, values = random_search()
+        annotation_search, annotation_values = random_search()
+        response = api.get_media_list(project, search=search, annotation_search=annotation_search)
+        check_media_result(response, values, annotation_values, box_specs, medias)
