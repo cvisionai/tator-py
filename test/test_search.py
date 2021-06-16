@@ -53,7 +53,7 @@ def random_media(api, project, paths, image_type):
         pass
     return response.id, attributes, section
 
-def random_search():
+def random_search(sections=None):
     """ Runs a random query and compares results with ES enabled and disabled.
     """
     bool_value = random.choice([True, False])
@@ -74,6 +74,10 @@ def random_search():
               'float_lower': float_lower,
               'float_upper': float_upper,
               'enum_value': enum_value}
+    if sections:
+        section = random.choice(sections)
+        search += f" AND tator_user_sections:{section.tator_user_sections}"
+        values['section'] = section
     return search, values
 
 def check_box_result(results, values, media_values, box_specs, medias):
@@ -85,7 +89,8 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (attributes['test_int'] < media_values['int_upper'])
                       and (attributes['test_float'] > media_values['float_lower'])
                       and (attributes['test_float'] < media_values['float_upper'])
-                      and (attributes['test_enum'] == media_values['enum_value'])]
+                      and (attributes['test_enum'] == media_values['enum_value'])
+                      and (section == media_values['section'].name)]
     expected_boxes = [box for box in box_specs
                       if (box['media_id'] in expected_media)
                       and (box['test_bool'] == values['bool_value'])
@@ -117,7 +122,8 @@ def check_media_result(results, values, annotation_values, box_specs, medias):
                       and (attributes['test_int'] < values['int_upper'])
                       and (attributes['test_float'] > values['float_lower'])
                       and (attributes['test_float'] < values['float_upper'])
-                      and (attributes['test_enum'] == values['enum_value'])]
+                      and (attributes['test_enum'] == values['enum_value'])
+                      and (section == values['section'].name)]
     assert(len(expected_media) == len(results))
     for result in results:
         assert(result.id in expected_media)
@@ -136,19 +142,22 @@ def test_search(host, token, project, image_type, image_set, box_type):
     response = api.create_localization_list(project, box_specs)
     for idx, box_id in enumerate(response.id):
         box_specs[idx]['id'] = box_id
+    # Retrieve sections.
+    sections = [api.get_section_list(project, name='Search Section A')[0],
+                api.get_section_list(project, name='Search Section B')[0]]
     # Sleep for a bit to make sure localizations are indexed.
     time.sleep(10)
     # Test search on localizations.
     print("Performing 100 random searches on localizations...")
     for _ in range(100):
         search, values = random_search()
-        media_search, media_values = random_search()
+        media_search, media_values = random_search(sections)
         response = api.get_localization_list(project, search=search, media_search=media_search)
         check_box_result(response, values, media_values, box_specs, medias)
     # Test search on media.
     print("Performing 100 random searches on media...")
     for _ in range(100):
-        search, values = random_search()
+        search, values = random_search(sections)
         annotation_search, annotation_values = random_search()
         response = api.get_media_list(project, search=search, annotation_search=annotation_search)
         check_media_result(response, values, annotation_values, box_specs, medias)
