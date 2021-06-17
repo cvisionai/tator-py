@@ -141,17 +141,20 @@ def update_medias_and_sections(
         section_ids.append(response.id)
 
     sections = tator_api.get_section_list(project=project)
-    tator_user_section_choices = [section.tator_user_sections for section in sections]
+    tator_user_sections = {}
+    for section in sections:
+        tator_user_sections[section.name] = section.tator_user_sections
     logger.info(f"Created {len(sections)} sections")
 
     # Loop through all the media, move them into a random section and randomize the attributes
     medias = tator_api.get_media_list(project=project)
     for media in medias:
+        trip_id = random.choice(trip_id_choices)
         update = {
             "attributes": {
-                "Trip ID": random.choice(trip_id_choices),
+                "Trip ID": trip_id,
                 "Media Reviewed": random.choice(reviewed_choices),
-                "tator_user_sections": random.choice(tator_user_section_choices)
+                "tator_user_sections": tator_user_sections[trip_id]
             }
         }
         tator_api.update_media(id=media.id, media_update=update)
