@@ -409,6 +409,23 @@ def track_type(request, project, video_type):
     yield state_type_id
 
 @pytest.fixture(scope='session')
+def collection_type(request, project, video_type):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_state_type(project, state_type_spec={
+        'name': 'collection_type',
+        'description': 'Test collection type',
+        'project': project,
+        'media_types': [video_type],
+        'association': 'Media',
+        'attribute_types': make_attribute_types(),
+    })
+    state_type_id = response.id
+    yield state_type_id
+
+@pytest.fixture(scope='session')
 def leaf_type(request, project):
     import tator
     host = request.config.option.host
