@@ -4,6 +4,7 @@ import datetime
 import uuid
 import glob
 import time
+import collections
 
 import tator
 
@@ -63,9 +64,13 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
         state_specs[idx]['id'] = state_id
     # Do a search on all states.
     expected_states = [spec for spec in state_specs if spec['test_bool'] == False]
-    states = api.get_state_list(project, type=collection_type, search='test_bool:false')
-    assert(len(states) == len(expected_states))
+    all_states = api.get_state_list(project, type=collection_type, search='test_bool:false')
+    assert(len(all_states) == len(expected_states))
     # Do a search on paginated states.
-    states = api.get_state_list(project, type=collection_type, search='test_bool:false',
-                                start=0, stop=100)
-    assert(len(states) == min(100, len(expected_states)))
+    states = []
+    for start in [0, 100, 200, 300, 400]:
+        states += api.get_state_list(project, type=collection_type, search='test_bool:false',
+                                     start=start, stop=start+100)
+    assert(len(states) == len(expected_states))
+    assert(collections.Counter([state.id for state in states]) == \
+           collections.Counter([state.id for state in all_states]))
