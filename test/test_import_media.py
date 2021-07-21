@@ -3,7 +3,7 @@ import time
 
 def test_import_image(host, token, project, image_type):
     api = tator.get_api(host, token)
-    url = 'https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png'
+    url = 'https://homepages.cae.wisc.edu/~ece533/images/lena.png'
     response = tator.util.import_media(api, image_type, url)
     assert(isinstance(response, tator.models.CreateResponse))
 
