@@ -115,6 +115,9 @@ def change_log_helper(
     create_changes = []
     for entity_id, box in zip(entity_ids, entities):
         changes = tator_api.get_change_log_list(project=project, entity_id=entity_id)
+        import json
+        print(f"ENTITY_ID: {entity_id}")
+        print(f"CHANGE LOG LIST: {json.dumps([change.to_dict() for change in changes], indent=4)}")
 
         # Assert one change returned
         assert len(changes) == 1
