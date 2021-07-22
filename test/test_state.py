@@ -74,6 +74,7 @@ def comparison_query(tator_api, project, state_ids, exclude):
     attribute_gte_filter = [f"test_int::{int_lower}"]
     attribute_lt_filter = [f"test_float::{float_upper}"]
     attribute_gt_filter = [f"test_float::{float_lower}"]
+    print("Starting PSQL query...")
     t0 = datetime.datetime.now()
     from_psql = tator_api.get_state_list_by_id(
         project,
@@ -85,6 +86,7 @@ def comparison_query(tator_api, project, state_ids, exclude):
         attribute_gt=attribute_gt_filter,
     )
     psql_time = datetime.datetime.now() - t0
+    print("Starting ES query...")
     t0 = datetime.datetime.now()
     from_es = tator_api.get_state_list_by_id(
         project,
@@ -98,11 +100,13 @@ def comparison_query(tator_api, project, state_ids, exclude):
     )
     es_time = datetime.datetime.now() - t0
 
+    print("Checking PSQL and ES ids...")
     not_in_es = [psql_ele.id for psql_ele in from_psql if psql_ele not in from_es]
     not_in_psql = [es_ele.id for es_ele in from_es if es_ele not in from_psql]
     print(f"Found {len(not_in_es)} results in PSQL that were not in ES\n{pformat(not_in_es)}")
     print(f"Found {len(not_in_psql)} results in ES that were not in PSQL\n{pformat(not_in_psql)}")
 
+    print("Checking PSQL and ES values...")
     assert len(from_psql) == len(from_es)
     for psql, es in zip(from_psql, from_es):
         assert_close_enough(psql, es, exclude)
