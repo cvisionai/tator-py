@@ -3,6 +3,7 @@ import datetime
 import random
 from time import sleep
 import uuid
+from collections import Counter
 
 import tator
 from ._common import assert_close_enough
@@ -101,10 +102,9 @@ def comparison_query(tator_api, project, state_ids, exclude):
     es_time = datetime.datetime.now() - t0
 
     print("Checking PSQL and ES ids...")
-    not_in_es = [psql_ele.id for psql_ele in from_psql if psql_ele not in from_es]
-    not_in_psql = [es_ele.id for es_ele in from_es if es_ele not in from_psql]
-    print(f"Found {len(not_in_es)} results in PSQL that were not in ES\n{pformat(not_in_es)}")
-    print(f"Found {len(not_in_psql)} results in ES that were not in PSQL\n{pformat(not_in_psql)}")
+    psql_ids = [ele.id for ele in from_psql]
+    es_ids = [ele.id for ele in from_es]
+    assert(Counter(psql_ids) == Counter(es_ids))
 
     print("Checking PSQL and ES values...")
     assert len(from_psql) == len(from_es)
