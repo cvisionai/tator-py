@@ -154,6 +154,13 @@ def test_search(host, token, project, image_type, image_set, box_type):
         media_search, media_values = random_search(sections)
         response = api.get_localization_list(project, search=search, media_search=media_search)
         check_box_result(response, values, media_values, box_specs, medias)
+        # Test search with section parameter
+        media_search, media_values = random_search()
+        section = random.choice(sections)
+        response = api.get_localization_list(project, search=search, media_search=media_search,
+                                             section=section.id)
+        media_values['section'] = section
+        check_box_result(response, values, media_values, box_specs, medias)
     # Test search on media.
     print("Performing 100 random searches on media...")
     for _ in range(100):
@@ -161,3 +168,11 @@ def test_search(host, token, project, image_type, image_set, box_type):
         annotation_search, annotation_values = random_search()
         response = api.get_media_list(project, search=search, annotation_search=annotation_search)
         check_media_result(response, values, annotation_values, box_specs, medias)
+        # Test search with section parameter
+        search, values = random_search()
+        section = random.choice(sections)
+        response = api.get_media_list(project, search=search, annotation_search=annotation_search,
+                                      section=section.id)
+        values['section'] = section
+        check_media_result(response, values, annotation_values, box_specs, medias)
+
