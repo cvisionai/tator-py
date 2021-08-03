@@ -1,10 +1,12 @@
 from collections import defaultdict
+import os
 
 import tator
 
 def parse_args():
     parser = tator.get_parser()
     parser.add_argument('--organization', help="Organization ID.", type=int)
+    parser.add_argument('--out_dir', help="Where summary CSV files will be dumped.", type=str)
     args = parser.parse_args()
     return args   
 
@@ -51,12 +53,18 @@ def find_clones(s3_keys):
                     clone_ids.add(media.id)
     return clone_ids
 
-def sum_hours(projects, medias, clone_ids):
+def sum_hours(projects, medias, clone_ids, out_dir):
     hours = {}
+    project_totals = defaultdict(float)
     for project in projects:
+        log = open(os.path.join(out_dir, f'project_{project.id}_{project.name}.log'), 'w')
+        csv = open(os.path.join(out_dir, f'project_{project.id}_{project.name}.csv'), 'w')
         sections = api.get_section_list(project.id)
         print(f"-----------------------------------------------------------")
+        csv.write(f"section_id,section_name,num_files,hours\n")
         print(f"Project {project.id} ({project.name})")
+        log.write(f"Project {project.id} ({project.name})\n")
+        project_totals[project.id] = 0
         for section in sections:
             seconds = 0.0
             for media in medias[project.id][section.id]:
@@ -66,9 +74,20 @@ def sum_hours(projects, medias, clone_ids):
                             seconds += media.num_frames / media.fps
                         else:
                             print(f"WARNING: Media {media.id} has fps=0")
+                            log.write(f"WARNING: Media {media.id} has fps=0\n")
                     else:
                         print(f"WARNING: Media {media.id} has num_frames=None or fps=None!")
+                        log.write(f"WARNING: Media {media.id} has num_frames=None or fps=None!\n")
+            project_totals[project.id] += seconds
             print(f"- Section {section.id} ({section.name}): {seconds/3600.0:0.2f} hours")
+            log.write(f"- Section {section.id} ({section.name}): {seconds/3600.0:0.2f} hours\n")
+            csv.write(f"{section.id},{section.name},{len(medias)},{seconds/3600.0:0.2f}\n")
+        log.close()
+        csv.close()
+    total_csv = open(os.path.join(out_dir, 'project_totals.csv'), 'w')
+    total_csv.write('project_id,project_name,hours\n')
+    for project in projects:
+        total_csv.write(f'{project.id},{project.name},{project_totals[project.id]/3600.0:0.2f}\n')
 
 if __name__ == '__main__':
     args = parse_args()
@@ -76,4 +95,4 @@ if __name__ == '__main__':
     projects = api.get_project_list(organization=args.organization)
     medias, s3_keys = get_media(projects)
     clone_ids = find_clones(s3_keys)
-    sum_hours(projects, medias, clone_ids)
+    sum_hours(projects, medias, clone_ids, args.out_dir)
