@@ -97,11 +97,12 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
         rows=layout[0]
         cols=layout[1]
         filter_graph=""
-        idx = 0
         for row in range(rows):
+            # Resize each input to a square prior to grid
             for col in range(cols):
-                filter_graph += f"[{idx}:v]"
-                idx+=1
+                filter_graph += f"[{col}:v]scale=256:256[resize{col}];"
+            for col in range(cols):
+                filter_graph += f"[resize{col}]"
                 if cols > 1 and col + 1 == cols:
                     filter_graph += f"hstack=inputs={cols}[r{row}];"
         for row in range(rows):
