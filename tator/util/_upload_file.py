@@ -87,6 +87,9 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                                        f"{attempt + 1}/{MAX_RETRIES}")
                         if attempt == MAX_RETRIES - 1:
                             raise Exception(f"Upload of {path} failed!")
+                        else:
+                            time.sleep(10 * attempt)
+                            logger.warning(f"Backing off for {10 * attempt} seconds...")
                 this_progress = round((chunk_count / num_chunks) *100,1)
                 if this_progress != last_progress:
                     yield (this_progress, None)
@@ -95,7 +98,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         # Complete the upload.
         completed = False
         count = 0
-        while completed is False and count < 5:
+        while completed is False and count < MAX_RETRIES:
             try:
                 count += 1
                 response = api.complete_upload(project, upload_completion_spec={
@@ -107,8 +110,12 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                     raise Exception(f"Upload completion failed!")
                 completed=True
             except Exception as e:
-                print(e)
-                time.sleep(2)
+                logger.warning(e)
+                if count == MAX_RETRIES - 1:
+                    raise Exception(f"Upload of {path} failed!")
+                else:
+                    time.sleep(10 * count)
+                    logger.warning(f"Backing off for {10 * count} seconds...")
                 completed = False
     else:
         # Upload in single request.
@@ -123,6 +130,9 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                                    f"{attempt + 1}/{MAX_RETRIES}")
                     if attempt == MAX_RETRIES - 1:
                         raise Exception(f"Upload of {path} failed!")
+                    else:
+                        time.sleep(10 * attempt)
+                        logger.warning(f"Backing off for {10 * attempt} seconds...")
 
     # Return the parts and upload info.
     yield (100, upload_info)
