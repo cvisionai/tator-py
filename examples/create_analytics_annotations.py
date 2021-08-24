@@ -37,7 +37,7 @@ def create_random_localization(
         "media_id": media.id,
         "version": version.id,
         "Species": random.choice(["Herring, Atlantic", "Herring, Blueback", "Lobster", "Scallop"]),
-        "Confidence": random.uniform(0, 1),
+        "Algorithm Confidence": random.uniform(0, 1),
         "Count": random.randint(0, 5),
         "Valid": random.choice([True, False])
     }
@@ -254,17 +254,17 @@ def main(
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if loc["Count"] > 2 and loc["Confidence"] < 0.5 and loc_type_label[loc["type"]] == "line":
+            if loc["Count"] > 2 and loc["Algorithm Confidence"] < 0.5 and loc_type_label[loc["type"]] == "line":
                 loc_count += 1
-    logger.info(f"Count of localizations whose Count:>2 AND Confidence:<0.5 AND dtype:line -> {loc_count}")
+    logger.info(f"Count of localizations whose Count:>2 AND Algorithm Confidence:<0.5 AND dtype:line -> {loc_count}")
 
     # All species including Herring and confidence > 0.25
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if "Herring" in loc["Species"] and loc["Confidence"] > 0.25:
+            if "Herring" in loc["Species"] and loc["Algorithm Confidence"] > 0.25:
                 loc_count += 1
-    logger.info(f"Count of localizations whose Species:*Herring* AND Confidence:>0.25 -> {loc_count}")
+    logger.info(f"Count of localizations whose Species:*Herring* AND Algorithm Confidence:>0.25 -> {loc_count}")
 
     # Reviewed is true and confidence < 0.5
     loc_count = 0
@@ -273,9 +273,9 @@ def main(
         attrs = media.attributes
         if attrs["Media Reviewed"]:
             for loc in analytics_data[media_id]:
-                if loc["Confidence"] > 0.5:
+                if loc["Algorithm Confidence"] > 0.5:
                     loc_count += 1
-    logger.info(f"Count of localizations whose Confidence:>0.5 AND in media whose Media Reviewed:true -> {loc_count}")
+    logger.info(f"Count of localizations whose Algorithm Confidence:>0.5 AND in media whose Media Reviewed:true -> {loc_count}")
 
     # Trip ID including Atlantic and version "User Annotations"
     loc_count = 0

@@ -79,18 +79,22 @@ def create_localization_types(
               "name": "Species",
               "dtype": "enum",
               "choices": ["Herring, Atlantic", "Herring, Blueback", "Lobster", "Scallop"],
+              "order": 0,
           },
           {
-              "name": "Confidence",
+              "name": "Algorithm Confidence",
               "dtype": "float",
+              "order": 1,
           },
           {
               "name": "Count",
               "dtype": "int",
+              "order": 2,
           },
           {
               "name": "Valid",
-              "dtype": "bool"
+              "dtype": "bool",
+              "order": -1,
           }
       ]
     }
@@ -133,31 +137,60 @@ def create_versions(
 
 def main(
         tator_api: tator.api,
-        project_name: str) -> None:
+        project_name: str,
+        project_id: int,
+        create_organization_check: bool,
+        create_project_check: bool,
+        create_media_types_check: bool,
+        create_localization_types_check: bool,
+        create_versions_check: bool) -> None:
     """ Main function that creates all the types
     """
 
-    organization = create_organization(
-        tator_api=tator_api,
-        project_name=project_name)
+    if create_organization_check:
+        organization = create_organization(
+            tator_api=tator_api,
+            project_name=project_name)
+        print(f"Created organization")
+    else:
+        print(f"Skipping creating organization")
 
-    project = create_project(
-        tator_api=tator_api,
-        project_name=project_name,
-        organization=organization)
+    if create_project_check:
+        project = create_project(
+            tator_api=tator_api,
+            project_name=project_name,
+            organization=organization)
+        print(f"Created project")
+    else:
+        print(f"Skipping creating project. Using project ID {project_id}")
+        project = project_id
 
-    media_types = create_media_types(
-        tator_api=tator_api,
-        project=project)
+    if create_media_types_check:
+        media_types = create_media_types(
+            tator_api=tator_api,
+            project=project)
+        print(f"Created media types")
+    else:
+        print(f"Skipping creating media types. Querying media types")
+        media_types_list = tator_api.get_media_type_list(project=project)
+        media_types = [media_type.id for media_type in media_types_list]
 
-    localization_types = create_localization_types(
-        tator_api=tator_api,
-        project=project,
-        media_types=media_types)
+    if create_localization_types_check:
+        localization_types = create_localization_types(
+            tator_api=tator_api,
+            project=project,
+            media_types=media_types)
+        print(f"Created localization types")
+    else:
+        print(f"Skipping creating localization types")
 
-    versions = create_versions(
-        tator_api=tator_api,
-        project=project)
+    if create_versions_check:
+        versions = create_versions(
+            tator_api=tator_api,
+            project=project)
+        print(f"Created versions")
+    else:
+        print(f"Skipping creating versions")
 
 def parse_args() -> argparse.Namespace:
     """ Process script arguments
@@ -166,7 +199,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Uploads the classifier results to Tator")
     parser.add_argument("--host", type=str, required=True)
     parser.add_argument("--token", type=str, required=True)
-    parser.add_argument("--project-name", type=str, required=True)
+    parser.add_argument("--project-name", type=str, help="Required if creating the project")
+    parser.add_argument("--project", type=int, help="Required if not creating the project")
+    parser.add_argument("--create-all", action="store_true", help="Create organization, project, media types, localization types, and versions")
+    parser.add_argument("--create-organization", action="store_true")
+    parser.add_argument("--create-project", action="store_true")
+    parser.add_argument("--create-media-types", action="store_true")
+    parser.add_argument("--create-localization-types", action="store_true")
+    parser.add_argument("--create-versions", action="store_true")
     return parser.parse_args()
 
 def script_main() -> None:
@@ -175,7 +215,40 @@ def script_main() -> None:
 
     args = parse_args()
     tator_api = tator.get_api(host=args.host, token=args.token)
-    main(tator_api=tator_api, project_name=args.project_name)
+
+    create_organization_check = False
+    create_project_check = False
+    create_media_types_check = False
+    create_localization_types_check = False
+    create_versions_check = False
+
+    if args.create_all:
+        create_organization_check = True
+        create_project_check = True
+        create_media_types_check = True
+        create_localization_types_check = True
+        create_versions_check = True
+    else:
+        if args.create_organization:
+            create_organization_check = True
+        if args.create_project:
+            create_project_check = True
+        if args.create_media_types:
+            create_media_types_check = True
+        if args.create_localization_types:
+            create_localization_types_check = True
+        if args.create_versions:
+            create_versions_check = True
+
+    main(
+        tator_api=tator_api,
+        project_name=args.project_name,
+        project_id=args.project,
+        create_organization_check=create_organization_check,
+        create_project_check=create_project_check,
+        create_media_types_check=create_media_types_check,
+        create_localization_types_check=create_localization_types_check,
+        create_versions_check=create_versions_check)
 
 if __name__ == "__main__":
     script_main()
