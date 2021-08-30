@@ -38,7 +38,7 @@ def test_archive(host, token, project, video):
     # Test default value of `archived` is "live"
     assert video_obj.archive_state == "live"
 
-    # Test default `get_media_list` filters on `archive_lifecycle == "live"`
+    # Test default `get_media_list` filters on `archive_lifecycle == "all"`
     response = tator_api.get_media_list(project, media_id=[video])
     assert len(response) == 1
     assert response[0].archive_state == "live"
@@ -63,9 +63,10 @@ def test_archive(host, token, project, video):
     # Wait for update to propagate to ES
     sleep(2)
 
-    # Test default `get_media_list` filters on `archive_lifecycle == "live"`
+    # Test default `get_media_list` filters on `archive_lifecycle == "all"`
     response = tator_api.get_media_list(project, media_id=[video])
-    assert len(response) == 0
+    assert len(response) == 1
+    assert response[0].archive_state == "to_archive"
 
     # Test `get_media_list` with `archive_lifecycle="archived"` returns archived objects
     response = tator_api.get_media_list(project, media_id=[video], archive_lifecycle="archived")
