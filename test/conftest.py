@@ -375,6 +375,23 @@ def box_type(request, project, video_type, image_type):
     yield box_type_id
 
 @pytest.fixture(scope='session')
+def poly_type(request, project, video_type, image_type):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_localization_type(project, localization_type_spec={
+        'name': 'poly_type',
+        'description': 'Test poly type',
+        'project': project,
+        'media_types': [video_type, image_type],
+        'dtype': 'poly',
+        'attribute_types': make_attribute_types(),
+    })
+    poly_type_id = response.id
+    yield poly_type_id
+
+@pytest.fixture(scope='session')
 def state_type(request, project, video_type):
     import tator
     host = request.config.option.host
