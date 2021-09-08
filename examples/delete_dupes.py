@@ -6,6 +6,7 @@
 import argparse
 import logging
 import sys
+import re
 from textwrap import dedent
 from collections import defaultdict
 from datetime import datetime
@@ -41,6 +42,9 @@ def parse_args():
     parser.add_argument('--host', help='Tator host.', required=True)
     parser.add_argument('--token', help='Tator token.', required=True)
     parser.add_argument('--project', help='Project ID.', required=True)
+    parser.add_argument('--section', help='Optional section ID.', type=int)
+    parser.add_argument('--exclude', help='RegEx pattern for filenames that should not be considered '
+                                          'for deletion.', default='.*')
     parser.add_argument('--preserve_annotations', help='If given, will not delete any media that '
                                                        'contains a localization or state.',
                         action='store_true')
@@ -48,11 +52,16 @@ def parse_args():
 
 def find_dupes(args, api):
     logger.info("Finding duplicate media...")
-    medias = api.get_media_list(args.project)
+    if args.section:
+        medias = api.get_media_list(args.project, section=args.section)
+    else:
+        medias = api.get_media_list(args.project)
+    regex = re.compile(args.exclude)
     # Build dict of md5 -> media objects.
     md5_map = defaultdict(list)
     for media in medias:
-        md5_map[media.md5].append(media)
+        if not regex.match(media.name):
+            md5_map[media.md5].append(media)
     # Filter out unique md5s.
     md5_map = {md5:md5_map[md5] for md5 in md5_map if len(md5_map[md5]) > 1}
     # Sort lists by last edit date.
