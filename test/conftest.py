@@ -64,6 +64,12 @@ def make_attribute_types():
             dtype='geopos',
             default=[-179.0, -89.0],
         ),
+        dict(
+            name='test_float_array',
+            dtype='float_array',
+            default=[0.0, 0.0, 0.0],
+            size=3,
+        )
     ]
 
 @pytest.fixture(scope='session')
