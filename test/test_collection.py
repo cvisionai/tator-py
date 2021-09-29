@@ -17,6 +17,7 @@ def random_media(api, project, paths, image_type):
         'test_string': str(uuid.uuid1()),
         'test_datetime': datetime.datetime.now().isoformat(),
         'test_geopos': [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     section = 'Media State Test'
     path = random.choice(paths)
@@ -35,6 +36,7 @@ def random_state(project, collection_type, media_ids, post=False):
         'test_string': str(uuid.uuid1()),
         'test_datetime': datetime.datetime.now().isoformat(),
         'test_geopos': [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     out = {
         'project': project,

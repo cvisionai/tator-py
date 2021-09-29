@@ -21,6 +21,7 @@ def random_localization(project, box_type, media_ids):
         'test_string': str(uuid.uuid1()),
         'test_datetime': datetime.datetime.now().isoformat(),
         'test_geopos': [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     out = {
         'x': x,
@@ -44,6 +45,7 @@ def random_media(api, project, paths, image_type):
         'test_string': str(uuid.uuid1()),
         'test_datetime': datetime.datetime.now().isoformat(),
         'test_geopos': [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     section = random.choice(['Search Section A', 'Search Section B'])
     path = random.choice(paths)

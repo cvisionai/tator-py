@@ -20,6 +20,7 @@ def random_localization(project, box_type, video_obj, post=False):
         "test_string": str(uuid4()),
         "test_datetime": datetime.now().isoformat(),
         "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        "test_float_array": [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     out = {
         "x": x,
@@ -46,6 +47,7 @@ allowed_mutations = {
     "string": ["enum", "string"],
     "datetime": ["enum", "string", "datetime"],
     "geopos": ["enum", "string", "geopos"],
+    "float_array": ["float_array"],
 }
 
 
@@ -66,6 +68,8 @@ def mutation_helper(tator_api, type_getter, type_id, params):
     }
     if source_dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
+    if source_dtype == "float_array":
+        addition["addition"]["size"] = 3
     tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
@@ -94,6 +98,8 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 
         if dest_dtype == "enum":
             mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
+        if dest_dtype == "float_array":
+            mutation["new_attribute_type"]["size"] = 3
 
     # A type mutation not in the list of allowed mutations will raise an `ApiException` and the
     # expected `dtype` will be the same as `source_dtype`
@@ -207,6 +213,8 @@ def test_video_and_image_type_name_change(
     }
     if source_dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
+    if source_dtype == "float_array":
+        addition["addition"]["size"] = 3
     tator_api.add_attribute(id=attribute_video_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(attribute_video_type)
 
@@ -221,6 +229,8 @@ def test_video_and_image_type_name_change(
     }
     if source_dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
+    if source_dtype == "float_array":
+        addition["addition"]["size"] = 3
     tator_api.add_attribute(id=image_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(image_type)
 
@@ -236,6 +246,8 @@ def test_video_and_image_type_name_change(
     }
     if source_dtype == "enum":
         mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
+    if source_dtype == "float_array":
+        mutation["new_attribute_type"]["size"] = 3
 
     tator_api.rename_attribute(id=attribute_video_type, attribute_type_update=mutation)
 

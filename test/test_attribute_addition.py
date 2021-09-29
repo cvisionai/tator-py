@@ -20,6 +20,7 @@ def random_localization(project, box_type, video_obj, post=False):
         "test_string": str(uuid4()),
         "test_datetime": datetime.now().isoformat(),
         "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     out = {
         "x": x,
@@ -50,6 +51,8 @@ def add_attribute_helper(tator_api, type_getter, type_id, dtype):
     }
     if dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
+    if dtype == "float_array":
+        addition["addition"]["size"] = 3
     tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
@@ -74,7 +77,7 @@ def add_invalid_attribute_helper(tator_api, type_getter, type_id):
 
     # Check the exeption message for expected content
     assert (
-        "ValidationError: \\\"'unknown' is not one of ['bool', 'int', 'float', 'enum', 'string', 'datetime', 'geopos']\\\""
+        "ValidationError: \\\"'unknown' is not one of ['bool', 'int', 'float', 'enum', 'string', 'datetime', 'geopos', 'float_array']\\\""
         in str(excinfo.value)
     )
 
@@ -94,7 +97,7 @@ def test_video_type_add_invalid_attribute(host, token, project, attribute_video_
     add_invalid_attribute_helper(tator_api, tator_api.get_media_type, attribute_video_type)
 
 
-dtypes = ["int", "bool", "float", "string", "enum", "datetime", "geopos"]
+dtypes = ["int", "bool", "float", "string", "enum", "datetime", "geopos", "float_array"]
 
 
 @pytest.mark.parametrize("dtype", dtypes)
