@@ -96,3 +96,44 @@ def test_float_array(host, token, project, box_type, video):
         search = {'float_array': [search]}
         boxes = api.get_localization_list_by_id(project, localization_id_query=search)
         assert(len(boxes) == 8)
+
+    # Update localizations.
+    search = {
+        'name': 'test_float_array',
+        'center': [3.0, 0.0, 0.0],
+        'upper_bound': 3.1,
+    }
+    search = {'float_array': [search]}
+    update = {'attributes': {'test_float_array': [1000.0, 0.0, 0.0]}}
+    response = api.update_localization_list(project, 
+                                            localization_bulk_update={**search, **update})
+    assert(isinstance(response, tator.models.MessageResponse))
+
+    # Delete localizations.
+    search = {
+        'name': 'test_float_array',
+        'center': [1000.0, 0.0, 0.0],
+        'upper_bound': 1.0,
+    }
+    search = {'float_array': [search]}
+    response = api.delete_localization_list(project, localization_id_query=search)
+    assert(isinstance(response, tator.models.MessageResponse))
+
+    # Check we deleted the right boxes.
+    count = api.get_localization_count(project)
+    assert(count == 4)
+
+    # Delete remaining localizations.
+    search = {
+        'name': 'test_float_array',
+        'center': [-2.0, 0.0, 0.0],
+        'upper_bound': 2.1,
+    }
+    search = {'float_array': [search]}
+    response = api.delete_localization_list(project, localization_id_query=search)
+    assert(isinstance(response, tator.models.MessageResponse))
+
+    # Check localizations are gone.
+    count = api.get_localization_count(project)
+    assert(count == 0)
+

@@ -24,7 +24,7 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
     for idx in range(int(total_timeout / wait_time) + 1):
         from_es = tator_api.get_state_list_by_id(
             project,
-            localization_id_query=state_id_query,
+            state_id_query=state_id_query,
             attribute=attribute_filter,
             force_es=1,
         )
