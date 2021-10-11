@@ -18,7 +18,7 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
     print(f"Using attribute filter:\n{pformat(attribute_filter)}")
     from_psql = tator_api.get_state_list_by_id(
         project,
-        localization_id_query=state_id_query,
+        state_id_query=state_id_query,
         attribute=attribute_filter,
     )
     for idx in range(int(total_timeout / wait_time) + 1):
@@ -80,7 +80,7 @@ def comparison_query(tator_api, project, state_ids, exclude):
     t0 = datetime.datetime.now()
     from_psql = tator_api.get_state_list_by_id(
         project,
-        localization_id_query=state_id_query,
+        state_id_query=state_id_query,
         attribute=attribute_filter,
         attribute_lte=attribute_lte_filter,
         attribute_gte=attribute_gte_filter,
@@ -92,7 +92,7 @@ def comparison_query(tator_api, project, state_ids, exclude):
     t0 = datetime.datetime.now()
     from_es = tator_api.get_state_list_by_id(
         project,
-        localization_id_query=state_id_query,
+        state_id_query=state_id_query,
         attribute=attribute_filter,
         attribute_lte=attribute_lte_filter,
         attribute_gte=attribute_gte_filter,
