@@ -58,6 +58,8 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
         leaves = tator_api.get_leaf_list(project=project, depth=depth)
         # Check leaf retrieval by ID.
         leaves_by_id = tator_api.get_leaf_list_by_id(project, {'ids': [leaf.id for leaf in leaves]})
+        count = tator_api.get_leaf_count_by_id(project, {'ids': [leaf.id for leaf in leaves]})
+        assert(len(leaves_by_id) == count)
         assert len(leaves) == len(leaves_by_id)
         for leaf, leaf_by_id in zip(leaves, leaves_by_id):
             assert_close_enough(leaf, leaf_by_id)

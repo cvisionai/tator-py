@@ -21,6 +21,12 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
         state_id_query=state_id_query,
         attribute=attribute_filter,
     )
+    count = tator_api.get_state_count_by_id(
+        project,
+        state_id_query=state_id_query,
+        attribute=attribute_filter,
+    )
+    assert(len(from_psql) == count)
     for idx in range(int(total_timeout / wait_time) + 1):
         from_es = tator_api.get_state_list_by_id(
             project,
@@ -28,6 +34,13 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
             attribute=attribute_filter,
             force_es=1,
         )
+        count = tator_api.get_state_count_by_id(
+            project,
+            state_id_query=state_id_query,
+            attribute=attribute_filter,
+            force_es=1,
+        )
+        assert(len(from_es) == count)
 
         if len(from_es) == len(from_psql):
             print(f"Found expected number of results after {idx * wait_time} seconds")

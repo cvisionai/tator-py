@@ -27,9 +27,12 @@ def test_get_by_id(host, token, project, video):
     video_obj = tator_api.get_media(video)
     other_obj = tator_api.get_media_list_by_id(project, {'ids': [video]})[0]
     assert video_obj.id == other_obj.id
+    count = tator_api.get_media_count_by_id(project, {'ids': [video]})
+    assert(count == 1)
     other_obj = tator_api.get_media_list_by_id(project, {'ids': [video]}, force_es=1)[0]
     assert video_obj.id == other_obj.id
-
+    count = tator_api.get_media_count_by_id(project, {'ids': [video]}, force_es=1)
+    assert(count == 1)
 
 def test_archive(host, token, project, video):
     tator_api = tator.get_api(host, token)
