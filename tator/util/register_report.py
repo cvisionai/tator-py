@@ -29,10 +29,10 @@ def register_report(
     logger.info("Report file uploaded")
 
     # Save the uploaded file using the save report endpoint
-    spec = tator.models.ReportFileSpec(
+    spec = tator.models.HTMLFileSpec(
         name=os.path.basename(html_file),
         upload_url=upload_url)
-    response = tator_api.save_report_file(project=project, report_file_spec=spec)
+    response = tator_api.save_html_file(project=project, html_file_spec=spec)
     logger.info(response)
     logger.info("Report file saved to project location")
 
@@ -40,7 +40,6 @@ def register_report(
     spec = {
         "name": name,
         "project": project,
-        "user": user_id,
         "description": description,
         "html_file": response.url
     }
