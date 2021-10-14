@@ -9,33 +9,30 @@ from ._upload_file import _upload_file
 logger = logging.getLogger(__name__)
 
 def register_dashboard(
-    host: str,
-    token: str,
-    project: int,
-    html_file: str,
-    dashboard_name: str,
-    categories: list=[],
-    description: str='',) -> None:
+        host: str,
+        token: str,
+        project: int,
+        html_file: str,
+        dashboard_name: str,
+        categories: list=[],
+        description: str='') -> None:
     """ Registers a dashboard using the provided parameters
 
     This will upload the given html file, save it to tator, and the new
     server side URL will be used when registering the dashboard. This may change
     the filename of the uploaded file
 
-    Args:
-        host: Host URL
-        token: User token used for connecting to the host
-        project: Unique identifier of project associated with algorithm
-        html_file: Local path to dashboard html file
-        dashboard_name: Name of the dashboard
-        categories: Optional categories the dashboard belongs to
-        description: Optional description of dashboard
+    :param host: Host URL
+    :param token: User token used for connecting to the host
+    :param project: Unique identifier of project associated with algorithm
+    :param html_file: Local path to dashboard html file
+    :param dashboard_name: Name of the dashboard
+    :param categories: Optional categories the dashboard belongs to
+    :param description: Optional dashboard description
     """
 
     # Create the interface
     tator_api = tator.get_api(host=host, token=token)
-    user = tator_api.whoami()
-    user_id = user.id
 
     # Upload the file
     for progress, upload_info in _upload_file(tator_api, project, path=html_file):

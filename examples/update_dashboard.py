@@ -1,4 +1,4 @@
-""" This examples uploads a dashboard to the project
+""" This examples updates an existing project dashboard
 """
 import argparse
 
@@ -13,25 +13,22 @@ def main() -> None:
     parser.add_argument("--host", type=str, required=True)
     parser.add_argument("--token", type=str, required=True)
     parser.add_argument(
-        '--project',
-        help='Unique project ID associated with the dashboard file',
+        '--dashboard-id',
+        help='Unique dashboard ID',
         required=True,
         type=int)
     parser.add_argument(
         '--html-file',
         help='Path to the dashboard html file',
-        type=str,
-        required=True)
+        type=str)
     parser.add_argument(
         '--name',
         help='Name of dashboard',
-        type=str,
-        required=True)
+        type=str)
     parser.add_argument(
         '--description',
         help='Description of dashboard',
-        type=str,
-        required=True)
+        type=str)
     parser.add_argument(
         '--categories',
         help='Categories the dashboard belongs to',
@@ -39,10 +36,10 @@ def main() -> None:
         nargs="+")
     args = parser.parse_args()
 
-    tator.util.register_dashboard(
+    tator.util.update_dashboard(
         host=args.host,
         token=args.token,
-        project=args.project,
+        dashboard_id=args.dashboard_id,
         html_file=args.html_file,
         dashboard_name=args.name,
         categories=args.categories,
