@@ -63,7 +63,7 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
                 'examples/update_dashboard.py',
                 '--host', host,
                 '--token', token,
-                '--dashboard-id', str(dashboards[0].id),
+                '--dashboard-id', str(dashboards[-1].id),
                 '--html-file', local_file2,
                 '--name', new_name,
                 '--description', new_description,
