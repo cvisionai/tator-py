@@ -51,7 +51,7 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
         tator_api = tator.get_api(host=host, token=token)
         dashboards = tator_api.get_dashboard_list(project=project)
 
-        assert len(dashboards) == 1
+        assert dashboards[-1].name == "dashboard_test"
 
         new_name = "dashboard_test2"
         new_description = "test description2"
@@ -75,12 +75,11 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
         finally:
 
             dashboards = tator_api.get_dashboard_list(project=project)
-            assert len(dashboards) == 1
-            assert dashboards[0].name == new_name
-            assert dashboards[0].description == new_description
-            assert dashboards[0].categories == new_categories
+            assert dashboards[-1].name == new_name
+            assert dashboards[-1].description == new_description
+            assert dashboards[-1].categories == new_categories
 
-        tator_api.delete_dashboard(id=dashboards[0].id)
+        tator_api.delete_dashboard(id=dashboards[-1].id)
 
     os.remove(local_file)
     os.remove(local_file2)
