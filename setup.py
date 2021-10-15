@@ -49,7 +49,7 @@ def codegen():
     # Remove any oneOf entries from the schema, as they are not handled
     # well by openapi generator.
     with open(SCHEMA_FILENAME, 'r') as f:
-        schema = yaml.load(f)
+        schema = yaml.safe_load(f)
     schema = remove_oneof(schema)
     with open(SCHEMA_FILENAME, 'w') as f:
         yaml.dump(schema, f, Dumper=NoAliasDumper)
