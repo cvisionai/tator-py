@@ -33,7 +33,7 @@ class HostTransfer:
 
     def __call__(self, src_url, media_id=None, return_url=False):
         """ Downloads a file from one host and uploads it to another.
-        
+
         :param src_url: Relative URL of source file to download.
         :param media_id: Destination media ID.
         :param return_url: Return download URL if true.
@@ -61,7 +61,7 @@ class HostTransfer:
         return out
 
 def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest_type=-1,
-                     dest_section='', dest_api=None):
+                     dest_section='', dest_api=None, ignore_transfer=False):
     """ Clone media list.
 
     This can be used to clone media from one project to another or from one
@@ -114,6 +114,8 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         -1, the media type is set to the first media type in the project.
     :param dest_section: Name of destination section.
     :param dest_api: :class:`tator.TatorApi` object corresponding to destination host.
+    :param ignore_transfer: True if media files should not be transferred. Media object will still be created.
+        Paths in media_files will be invalid.
     :returns: Generator containing number of files created, number of files total,
         most recent response from media creation operation, and mapping between original IDs
         and created IDs.
@@ -159,7 +161,8 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             yield (len(created_ids), total_files, response, id_map)
     else:
         # Clone media to another host.
-        transfer = HostTransfer(src_api, src_project, dest_api, dest_project)
+        if not ignore_transfer:
+            transfer = HostTransfer(src_api, src_project, dest_api, dest_project)
         for media in medias:
             # Set up media spec.
             attributes = media.attributes
@@ -190,6 +193,8 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
             if media.media_files:
                 media_files = media.media_files.to_dict()
                 for key in ['streaming', 'archival', 'audio', 'image', 'thumbnail', 'thumbnail_gif']:
+                    if ignore_transfer:
+                        continue
                     if media_files.get(key):
                         for item in media_files[key]:
                             media_def = {k: v for k, v in item.items()

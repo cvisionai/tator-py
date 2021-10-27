@@ -103,6 +103,9 @@ def parse_args():
                         action='store_true')
     parser.add_argument('--skip_leaves', help='If given, leaves will not be migrated.',
                         action='store_true')
+    parser.add_argument('--ignore-media-transfer', help='If given, media will not be transferred but '
+                                                        'the media objects will still be created.',
+                        action='store_true')
     return parser.parse_args()
 
 def get_tator_user_sections(media):
@@ -189,7 +192,7 @@ def find_sections(args, src_api, dest_api, dest_project):
     return sections
 
 def find_versions(args, src_api, dest_api, dest_project):
-    """ Finds existing versions in destination project. Returns ID mapping between source 
+    """ Finds existing versions in destination project. Returns ID mapping between source
         and destination versions and versions that need to be created.
     """
     versions = []
@@ -402,8 +405,8 @@ def find_states(args, dest_api, media, media_mapping):
     return count, state_media_ids
 
 def find_leaves(args, src_api, dest_api, dest_project):
-    """ Finds existing leaves in destination project. Returns leaves that need to be created, 
-        grouped in a dictionary by depth and mapping of src and dest leaves for existing 
+    """ Finds existing leaves in destination project. Returns leaves that need to be created,
+        grouped in a dictionary by depth and mapping of src and dest leaves for existing
         leaves.
     """
     leaves = {}
@@ -537,11 +540,11 @@ def create_leaf_types(src_api, dest_api, dest_project, leaf_types, leaf_type_map
     logger.info(f"Created {len(leaf_types)} leaf types.")
     return leaf_type_mapping
 
-def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping, media_mapping):
+def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping, media_mapping, ignore_media_transfer):
     """ Creates media. Returns media mapping.
     """
     num_total = len(media)
-    # Look up sections in destination project, create a dict between tator_user_sections and 
+    # Look up sections in destination project, create a dict between tator_user_sections and
     # section name.
     sections = src_api.get_section_list(args.project)
     if args.sections:
@@ -567,7 +570,7 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
             query_params = {'project': args.project,
                             'media_id': media_ids[key][idx:idx+100]}
             generator = tator.util.clone_media_list(src_api, query_params, dest_project, media_mapping,
-                                                    dest_type, dest_section, use_dest_api)
+                                                    dest_type, dest_section, use_dest_api, ignore_media_transfer)
             for _, _, response, id_map in generator:
                 if isinstance(response, tator.models.CreateResponse):
                     total_created += 1
@@ -656,6 +659,9 @@ if __name__ == '__main__':
                                                                     media_mapping)
     state_count, state_media_ids = find_states(args, src_api, media, media_mapping)
     leaves, leaf_mapping = find_leaves(args, src_api, dest_api, dest_project)
+    ignore_media_transfer = True if args.ignore_media_transfer else False
+    if ignore_media_transfer:
+        logger.info("Will not transfer media_files")
 
     # Confirm migration with user.
     proceed = input("Continue with migration [y/N]? ")
@@ -677,7 +683,7 @@ if __name__ == '__main__':
         leaf_type_mapping = create_leaf_types(src_api, dest_api, dest_project, leaf_types,
                                               leaf_type_mapping)
         media_mapping = create_media(args, src_api, dest_api, dest_project, media,
-                                     media_type_mapping, media_mapping)
+                                     media_type_mapping, media_mapping, ignore_media_transfer)
         localization_mapping = create_localizations(args, src_api, dest_api, dest_project,
                                                     localization_media_ids,
                                                     localization_count, localization_type_mapping,
@@ -689,4 +695,4 @@ if __name__ == '__main__':
                       leaf_mapping)
     else:
         logger.info("Migration cancelled by user.")
-    
+
