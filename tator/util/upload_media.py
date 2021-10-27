@@ -26,7 +26,8 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param type_id: Unique integer identifying a media type.
     :param path: Path to the media file.
     :param md5: [Optional] md5 sum of the media.
-    :param section: [Optional] Media section to upload to.
+    :param section: [Optional] Section name. If a section with this name does
+        not exist it will be created.
     :param fname: [Optional] Filename to use for upload.
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
