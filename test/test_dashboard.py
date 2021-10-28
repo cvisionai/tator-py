@@ -30,7 +30,7 @@ def _missing_upload_file(
         host: str,
         token: str,
         project: int) -> None:
-    """ Test missing upload file for SaveHTMLFile endpoint
+    """ Test missing upload file for SaveGenericFile endpoint
 
     :param host: Project URL
     :param token: User token used for connecting to the host
@@ -38,9 +38,9 @@ def _missing_upload_file(
     """
 
     tator_api = tator.get_api(host=host, token=token)
-    spec = tator.models.HTMLFileSpec(name="test.html", upload_url="not_there")
+    spec = tator.models.GenericFileSpec(name="test.html", upload_url="not_there")
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
-        tator_api.save_html_file(project=project, html_file_spec=spec)
+        tator_api.save_generic_file(project=project, generic_file_spec=spec)
 
 def _upload_test_html_file(
         host: str,
@@ -72,8 +72,8 @@ def _upload_test_html_file(
         url = tator_api.get_download_info(project, {'keys': [upload_info.key]})[0].url
 
         # Save the uploaded file to the project using the save html endpoint
-        spec = tator.models.HTMLFileSpec(name=html_file, upload_url=url)
-        response = tator_api.save_html_file(project=project, html_file_spec=spec)
+        spec = tator.models.GenericFileSpec(name=html_file, upload_url=url)
+        response = tator_api.save_generic_file(project=project, generic_file_spec=spec)
 
     finally:
         os.remove(local_file)
@@ -84,9 +84,9 @@ def test_save_html_file(
         host: str,
         token: str,
         project: int) -> None:
-    """ Unit test for the SaveHTMLFile endpoint
+    """ Unit test for the SaveGenericFile endpoint
 
-    Unit testing of the save HTML endpoint involvest the following:
+    Unit testing of the save generic file endpoint involvest the following:
     - Provide something where the upload file doesn't exist
     - Upload two of the same files (have the same name, but will result in two separate files)
 

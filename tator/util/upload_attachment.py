@@ -21,7 +21,7 @@ def upload_attachment(api, media, path, name=None, chunk_size=100*1024*1024):
     :param chunk_size: [Optional] Chunk size in bytes. Default is 100MB.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
-        is the response object from :meth:`tator.util.TatorApi.create_file`.
+        is the response object from :meth:`tator.util.TatorApi.create_auxiliary_file`.
     """
     size = os.stat(path).st_size
     media_obj = api.get_media(media)
@@ -37,5 +37,5 @@ def upload_attachment(api, media, path, name=None, chunk_size=100*1024*1024):
                 'path': upload_info.key,
                 'name': name}
 
-    response = api.create_file(media, role='attachment', file_definition=file_def)
+    response = api.create_auxiliary_file(media, role='attachment', auxiliary_file_definition=file_def)
     yield (100, response)
