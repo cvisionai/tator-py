@@ -49,7 +49,7 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
     finally:
 
         tator_api = tator.get_api(host=host, token=token)
-        dashboards = tator_api.get_dashboard_list(project=project)
+        dashboards = tator_api.get_applet_list(project=project)
 
         assert dashboards[-1].name == "dashboard_test"
 
@@ -74,12 +74,12 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
 
         finally:
 
-            dashboards = tator_api.get_dashboard_list(project=project)
+            dashboards = tator_api.get_applet_list(project=project)
             assert dashboards[-1].name == new_name
             assert dashboards[-1].description == new_description
             assert dashboards[-1].categories == new_categories
 
-        tator_api.delete_dashboard(id=dashboards[-1].id)
+        tator_api.delete_applet(id=dashboards[-1].id)
 
     os.remove(local_file)
     os.remove(local_file2)

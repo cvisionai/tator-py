@@ -18,8 +18,8 @@ from tator.util.get_images import get_images
 from tator.util.full_state_graphic import full_state_graphic
 from tator.util.to_dataframe import to_dataframe
 from tator.util.register_algorithm import register_algorithm
-from tator.util.register_dashboard import register_dashboard
-from tator.util.update_dashboard import update_dashboard
+from tator.util.register_applet import register_applet
+from tator.util.update_applet import update_applet
 from tator.util.clone_media_list import clone_media_list
 from tator.util.clone_localization_list import clone_localization_list
 from tator.util.clone_state_list import clone_state_list

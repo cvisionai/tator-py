@@ -117,72 +117,72 @@ def test_dashboard_endpoint(host: str, token: str, project: int) -> None:
 
     # Test creating dashboards
     response = _upload_test_html_file(host=host, token=token, project=project)
-    spec = tator.models.Dashboard(
+    spec = tator.models.Applet(
         name="Test Dashboard 1",
         project=project,
         description="",
         html_file=response.url,
         categories=[])
 
-    response = tator_api.register_dashboard(project=project, dashboard_spec=spec)
-    dashboard = tator_api.get_dashboard(id=response.id)
+    response = tator_api.register_applet(project=project, applet_spec=spec)
+    dashboard = tator_api.get_applet(id=response.id)
     assert dashboard.name == spec.name
     assert dashboard.project == spec.project
     assert dashboard.description == spec.description
     assert dashboard.categories == spec.categories
 
     response = _upload_test_html_file(host=host, token=token, project=project)
-    spec = tator.models.Dashboard(
+    spec = tator.models.Applet(
         name="Test Dashboard 2",
         project=project,
         description="Test Dashboard 2",
         html_file=response.url,
         categories=["category"])
 
-    response = tator_api.register_dashboard(project=project, dashboard_spec=spec)
-    dashboard = tator_api.get_dashboard(id=response.id)
+    response = tator_api.register_applet(project=project, applet_spec=spec)
+    dashboard = tator_api.get_applet(id=response.id)
     assert dashboard.name == spec.name
     assert dashboard.project == spec.project
     assert dashboard.description == spec.description
     assert dashboard.categories == spec.categories
 
     response = _upload_test_html_file(host=host, token=token, project=project)
-    spec = tator.models.Dashboard(
+    spec = tator.models.Applet(
         name="Test Dashboard 3",
         project=project,
         description="Test Dashboard 3",
         html_file=response.url,
         categories=["test1", "test2"])
 
-    response = tator_api.register_dashboard(project=project, dashboard_spec=spec)
-    dashboard = tator_api.get_dashboard(id=response.id)
+    response = tator_api.register_applet(project=project, applet_spec=spec)
+    dashboard = tator_api.get_applet(id=response.id)
     assert dashboard.name == spec.name
     assert dashboard.project == spec.project
     assert dashboard.description == spec.description
     assert dashboard.categories == spec.categories
 
     # Test retrieving the dashboard list
-    dashboards = tator_api.get_dashboard_list(project=project)
+    dashboards = tator_api.get_applet_list(project=project)
     assert len(dashboards) == 3
 
     # Test patching a dashboard's fields
     response = _upload_test_html_file(host=host, token=token, project=project)
     html_url = response.url
     dashboard_id = dashboard.id
-    original = tator_api.get_dashboard(id=dashboard.id)
+    original = tator_api.get_applet(id=dashboard.id)
     update = {
       "name": "Another name",
       "description": "Another description",
       "categories": ["a","b","c","d"],
       "html_file": html_url}
-    tator_api.update_dashboard(id=dashboard_id, dashboard_spec=update)
-    dashboard = tator_api.get_dashboard(id=dashboard_id)
+    tator_api.update_applet(id=dashboard_id, applet_spec=update)
+    dashboard = tator_api.get_applet(id=dashboard_id)
     assert dashboard.name == update["name"]
     assert dashboard.description == update["description"]
     assert dashboard.categories == update["categories"]
     assert dashboard.html_file != original.html_file
 
     # Test deleting a dashboard
-    tator_api.delete_dashboard(id=dashboard.id)
-    dashboards = tator_api.get_dashboard_list(project=project)
+    tator_api.delete_applet(id=dashboard.id)
+    dashboards = tator_api.get_applet_list(project=project)
     assert len(dashboards) == 2

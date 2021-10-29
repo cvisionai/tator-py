@@ -1,4 +1,4 @@
-""" This examples uploads a dashboard to the project
+""" This examples updates an existing project dashboard
 """
 import argparse
 
@@ -9,42 +9,39 @@ def main() -> None:
     """
 
     # Set the arguments and grab them
-    parser = argparse.ArgumentParser(description="Registers a dashboard to a Tator project")
+    parser = argparse.ArgumentParser(description="Registers a applet to a Tator project")
     parser.add_argument("--host", type=str, required=True)
     parser.add_argument("--token", type=str, required=True)
     parser.add_argument(
-        '--project',
-        help='Unique project ID associated with the dashboard file',
+        '--applet-id',
+        help='Unique applet ID',
         required=True,
         type=int)
     parser.add_argument(
         '--html-file',
-        help='Path to the dashboard html file',
-        type=str,
-        required=True)
+        help='Path to the applet html file',
+        type=str)
     parser.add_argument(
         '--name',
-        help='Name of dashboard',
-        type=str,
-        required=True)
+        help='Name of applet',
+        type=str)
     parser.add_argument(
         '--description',
-        help='Description of dashboard',
-        type=str,
-        required=True)
+        help='Description of applet',
+        type=str)
     parser.add_argument(
         '--categories',
-        help='Categories the dashboard belongs to',
+        help='Categories the applet belongs to',
         type=str,
         nargs="+")
     args = parser.parse_args()
 
-    tator.util.register_dashboard(
+    tator.util.update_applet(
         host=args.host,
         token=args.token,
-        project=args.project,
+        applet_id=args.applet_id,
         html_file=args.html_file,
-        dashboard_name=args.name,
+        applet_name=args.name,
         categories=args.categories,
         description=args.description)
 
