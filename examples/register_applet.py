@@ -44,7 +44,7 @@ def main() -> None:
         token=args.token,
         project=args.project,
         html_file=args.html_file,
-        dashboard_name=args.name,
+        applet_name=args.name,
         categories=args.categories,
         description=args.description)
 

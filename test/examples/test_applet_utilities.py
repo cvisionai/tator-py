@@ -34,7 +34,7 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
     try:
         cmd = [
             'python3',
-            'examples/register_dashboard.py',
+            'examples/register_applet.py',
             '--host', host,
             '--token', token,
             '--project', str(project),
@@ -60,10 +60,10 @@ def test_register_and_update_dashboard(host: str, token: str, project: int):
         try:
             cmd = [
                 'python3',
-                'examples/update_dashboard.py',
+                'examples/update_applet.py',
                 '--host', host,
                 '--token', token,
-                '--dashboard-id', str(dashboards[-1].id),
+                '--applet-id', str(dashboards[-1].id),
                 '--html-file', local_file2,
                 '--name', new_name,
                 '--description', new_description,
