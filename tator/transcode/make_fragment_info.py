@@ -11,7 +11,7 @@ def parse_args():
     parser=argparse.ArgumentParser()
     parser.add_argument("input", help="MP4 File", type=str)
     parser.add_argument("-o", "--output")
-    return vars(parser.parse_args())
+    return parser.parse_args()
 
 def make_fragment_info(video_file, output):
     cmd=["mp4dump",
@@ -75,4 +75,4 @@ def make_fragment_info(video_file, output):
 
 if __name__=="__main__":
     args = parse_args()
-    make_fragment_info(args['input'], args['output'])
+    make_fragment_info(args.input, args.output)
