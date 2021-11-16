@@ -51,7 +51,7 @@ def get_metadata(path):
 
     return (codec, fps, num_frames, width, height)
 
-def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path):
+def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path, only_keyframes=False):
     """ Makes thumbnails and gets metadata for original file.
     """
     # Get metadata for original file.
@@ -66,7 +66,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
 
         # Create gif thumbnail.
         cmd1 = ["ffmpeg", "-y"]
-        if num_frames > 10000:
+        if only_keyframes or num_frames > 10000:
             cmd2 = ["-skip_frame", "nokey"]
         else:
             cmd2 = []
