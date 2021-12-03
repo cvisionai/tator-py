@@ -81,7 +81,7 @@ if __name__ == '__main__':
     # Create the media object.
     if args.media_id == -1:
         media_id = create_media(args.host, args.token, args.project, args.type, args.section,
-                                name, md5, args.gid, args.uid, args.attributes)
+                                name, md5, args.gid, args.uid, args.attributes, args.url)
     else:
         media_id = args.media_id
 

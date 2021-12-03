@@ -17,7 +17,8 @@ def parse_args():
     parser.add_argument('--attributes', type=str, help="Attributes for media")
     return parser.parse_args()
 
-def create_media(host, token, project, media_type, section, name, md5, gid, uid, attributes=None):
+def create_media(host, token, project, media_type, section, name, md5, gid, uid,
+                 attributes=None, url=None):
     """ Creates a media object and returns the ID.
 
     :param host: Host URL.
@@ -41,6 +42,8 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid,
     }
     if attributes:
         spec.update({'attributes': json.loads(attributes)})
+    if url:
+        spec.update({'url': url})
     response = api.create_media(project, media_spec=spec)
 
     assert isinstance(response, CreateResponse)
