@@ -200,9 +200,7 @@ def convert_archival(host,
     media_obj = api.get_media(media)
     media_type = api.get_media_type(media_obj.meta)
 
-    if media_type.archive_config is None:
-        default_archival_upload(api, host, media, path, False, size)
-    else:
+    if media_type.archive_config is not None:
         for idx, archive_config in enumerate(media_type.archive_config):
             if archive_config.encode is None:
                 # If no encode, just use the original file.
