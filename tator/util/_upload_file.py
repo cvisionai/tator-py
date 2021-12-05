@@ -23,7 +23,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
 
     # Get number of chunks.
-    if file_size is None:
+    if file_size is None or file_size < 0:
         file_size = os.stat(path).st_size
 
     if math.ceil(file_size / chunk_size) > 10000:

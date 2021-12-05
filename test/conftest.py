@@ -232,6 +232,7 @@ def video_type(request, project):
         'project': project,
         'dtype': 'video',
         'attribute_types': make_attribute_types(),
+        'archive_config': [{'encode': {'vcodec': 'hevc', 'crf': 30}}],
     })
     video_type_id = response.id
     yield video_type_id

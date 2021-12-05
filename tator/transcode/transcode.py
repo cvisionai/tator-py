@@ -173,7 +173,7 @@ def default_archival_upload(api, host, media, path, encoded, size):
     media_obj = api.get_media(media)
     logger.info(f"Uploading original file as archival...")
     for progress, upload_info in _upload_file(api, media_obj.project, path,
-                                              media_id=media, filename=os.path.basename(path),file_size=size):
+                                              media_id=media, filename=os.path.basename(path), file_size=size):
         logger.info(f"Progress: {progress}%")
     video_def = make_video_definition(path, size)
 
