@@ -30,7 +30,7 @@ def md5sum(fname, size=None):
             if proposed_size:
                 size = proposed_size
         except:
-            if size is None:
+            if size is None or size <= 0:
                 raise Exception("Must supply size if HTTP server doesn't support HEAD requests for size.")
     else:
         with open(fname, 'rb') as f:
@@ -39,7 +39,7 @@ def md5sum(fname, size=None):
                 break # Exit after one chunk
 
     # Compute file size if not given. (Already set for HTTP files)
-    if size is None:
+    if size is None or size <= 0:
         size = os.stat(fname).st_size
 
     # Salt in file size.

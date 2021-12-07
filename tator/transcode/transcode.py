@@ -64,7 +64,7 @@ def make_video_definition(path, size=None):
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     stream_idx=0
-    if size is None or size < 0:
+    if size is None or size <= 0:
         size = os.stat(path).st_size
     for idx, stream in enumerate(video_info["streams"]):
         if stream["codec_type"] == "video":
@@ -206,7 +206,10 @@ def convert_archival(host,
             output_file = os.path.join(outpath, f"archival_{idx}.mp4")
             if archive_config.encode.vcodec == 'copy':
                 # If no encode, just use the original file.
-                subprocess.run(['wget', '-O', output_file, path])
+                if os.path.exists(path):
+                    output_file = path
+                else:
+                    subprocess.run(['wget', '-O', output_file, path], check=True)
             else:
                 # Encode the media to archival format.
                 codec = find_best_encoder(archive_config.encode.vcodec)
