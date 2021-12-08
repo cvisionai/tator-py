@@ -206,10 +206,7 @@ def convert_archival(host,
             output_file = os.path.join(outpath, f"archival_{idx}.mp4")
             if archive_config.encode.vcodec == 'copy':
                 # If no encode, just use the original file.
-                if os.path.exists(path):
-                    output_file = path
-                else:
-                    subprocess.run(['wget', '-O', output_file, path], check=True)
+                output_file = path
             else:
                 # Encode the media to archival format.
                 codec = find_best_encoder(archive_config.encode.vcodec)
