@@ -39,8 +39,12 @@ def md5sum(fname, size=None):
                 break # Exit after one chunk
 
     # Compute file size if not given. (Already set for HTTP files)
-    if size is None or size <= 0:
+    if (size is None or size <= 0) and os.path.exists(fname):
         size = os.stat(fname).st_size
+
+    # If size still not computed, raise an exception.
+    if size is None or size <= 0:
+        raise Exception(f"Could not determine size of file {fname}!")
 
     # Salt in file size.
     out = hashlib.md5()
