@@ -501,6 +501,7 @@ def create_localization_types(
         project,
         image_type,
         video_type,
+        multi_type,
         version_color_map):
     """
     """
@@ -510,7 +511,7 @@ def create_localization_types(
         "name": "Test Boxes",
         "description": "A test box type.",
         "dtype": "box",
-        "media_types": [image_type, video_type],
+        "media_types": [image_type, video_type, multi_type],
         "colorMap": {
           "default": [255, 0, 0],
           "key": "Test Enum",
@@ -577,7 +578,7 @@ def create_localization_types(
         "name": "Test Lines",
         "description": "A test line type.",
         "dtype": "line",
-        "media_types": [image_type, video_type],
+        "media_types": [image_type, video_type, multi_type],
         "attribute_types": [
             {
               "name": "Test Bool",
@@ -636,7 +637,7 @@ def create_localization_types(
         "name": "Test Dots",
         "description": "A test dot type.",
         "dtype": "dot",
-        "media_types": [image_type, video_type],
+        "media_types": [image_type, video_type, multi_type],
         "colorMap": {
           "default": [255, 0, 0],
           "version": version_color_map
@@ -757,6 +758,7 @@ def main() -> None:
         project=project,
         image_type=image_type,
         video_type=video_type,
+        multi_type=multi_type,
         version_color_map=version_color_map)
 
     # Create the state types if asked
