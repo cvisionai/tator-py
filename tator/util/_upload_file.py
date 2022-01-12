@@ -75,9 +75,12 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                                 "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
                             }
                         response = requests.put(url, **kwargs)
+                        etag_str = response.headers.get("ETag", None)
+                        if etag_str == None:
+                            raise Exception("No ETag in response!")
                         parts.append(
                             {
-                                "ETag": response.headers.get("ETag", str(chunk_count)),
+                                "ETag": etag_str,
                                 "PartNumber": chunk_count + 1,
                             }
                         )
