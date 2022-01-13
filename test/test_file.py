@@ -29,14 +29,16 @@ def _upload_generic_file(
         host: str,
         token: str,
         project: int,
+        file_id: int,
         file_path: str="test.file"):
     """ Uploads the provided manifest file
 
     :param host: Project URL
     :param token: User token used for connecting to the host
     :param project: Unique identifier of test project
+    :param file_id: Unique identifier of associated file
     :param file_path: Local file to be uploaded and saved
-    :returns: Response from the save file endpoint
+    :returns: Associated key of uploaded file
     """
 
     # Setup the interface to tator
@@ -50,19 +52,13 @@ def _upload_generic_file(
 
         # Upload the file
         logger.info(f"Created temporary file: {local_file}")
-        for progress, upload_info in _upload_file(tator_api, project, local_file):
+        for progress, upload_info in _upload_file(api=tator_api, project=project, path=local_file, file_id=file_id):
             logger.info(f"Upload progress: {progress}%")
-        url = tator_api.get_download_info(project, {'keys': [upload_info.key]})[0].url
-
-        # Save the uploaded file to the project using the save generic file endpoint
-        spec = tator.models.GenericFileSpec(name=file_path, upload_url=url)
-        response = tator_api.save_generic_file(project=project, generic_file_spec=spec)
 
     finally:
         os.remove(local_file)
 
-    return response
-
+    return upload_info.key
 
 def _make_all_attribute_types() -> list:
     """ Taken from conftest.py
@@ -116,32 +112,6 @@ def _make_all_attribute_types() -> list:
             size=3,
         )
     ]
-
-def test_file_upload(
-        host: str,
-        token: str,
-        project: int) -> None:
-    """ Unit test for the SaveGenericFile endpoint
-
-    Unit testing of the save file endpoint involvest the following:
-    - Provide something where the upload file doesn't exist
-    - Upload two of the same files (have the same name, but will result in two separate files)
-
-    :param host: Project URL
-    :param token: User token used for connecting to the host
-    :param project: Unique identifier of test project
-    """
-
-    _missing_upload_file(host=host, token=token, project=project)
-
-    response_1 = _upload_generic_file(
-        host=host, token=token, project=project, file_path='test_nodupe.txt')
-    response_2 = _upload_generic_file(
-        host=host, token=token, project=project, file_path='test_nodupe.txt')
-
-    assert "test_nodupe" in response_1.url
-    assert "test_nodupe" in response_2.url
-    assert response_1.url != response_2.url
 
 def test_file_type_crud(
         host: str,
@@ -279,12 +249,8 @@ def test_file_crud(
     # Create the files of each type
     file_a_ids = []
     for idx in range(10):
-        response = _upload_generic_file(
-            host=host, token=token, project=project, file_path="test.data")
-        file_url = response.url
         response = tator_api.create_file(project=project, file_spec=dict(
             name=f"File_A_{idx}",
-            path=file_url,
             description="hey",
             meta=file_type_a_id,
             attributes=dict(
@@ -292,35 +258,46 @@ def test_file_crud(
                 LabelB="seeya"
             )
         ))
-        file_a_ids.append(response.id)
+        key = _upload_generic_file(
+            host=host, token=token, project=project, file_id=response.id, file_path="test.data")
+        tator_api.update_file(id=response.id, file_update={"path": key})
+        file_a_ids.append({
+            "file_id": response.id,
+            "key": key
+        })
 
     file_b_ids = []
     for idx in range(50):
-        response = _upload_generic_file(
-            host=host, token=token, project=project, file_path="test.data")
-        file_url = response.url
         response = tator_api.create_file(project=project, file_spec=dict(
             name=f"File_B_{idx}",
-            path=file_url,
             description="hey",
             meta=file_type_b_id,
             attributes=dict(
                 LabelB="bye"
             )
         ))
-        file_b_ids.append(response.id)
-    file_b_url = file_url
+        key = _upload_generic_file(
+            host=host, token=token, project=project, file_id=response.id, file_path="test.data")
+        tator_api.update_file(id=response.id, file_update={"path": key})
+        file_b_ids.append({
+            "file_id": response.id,
+            "key": key
+        })
 
     # Get all the files
     file_list = tator_api.get_file_list(project=project)
     file_a_count = 0
     file_b_count = 0
     for file_obj in file_list:
-        if file_obj.id in file_a_ids:
-            file_a_count += 1
+        for file_info in file_a_ids:
+            if file_obj.id == file_info["file_id"]:
+                file_a_count += 1
+                break
 
-        elif file_obj.id in file_b_ids:
-            file_b_count += 1
+        for file_info in file_b_ids:
+            if file_obj.id == file_info["file_id"]:
+                file_b_count += 1
+                break
 
     assert file_a_count == len(file_a_ids)
     assert file_b_count == len(file_b_ids)
@@ -341,14 +318,14 @@ def test_file_crud(
 
     files = tator_api.get_file_list(project=project, search="LabelB:seeya")
     assert len(files) == len(file_a_ids)
-    
+
     # Update a bunch of the entries and verify the updates are valid and
     # the search still works correctly
-    for current_id in file_a_ids:
+    for info in file_a_ids:
+        current_id = info["file_id"]
         tator_api.update_file(id=current_id, file_update={
             "name": "new_name",
             "description": "new_description",
-            "path": file_b_url,
             "attributes": {"LabelA": -100}
         })
     files = tator_api.get_file_list(project=project, meta=file_type_a_id)
@@ -356,7 +333,6 @@ def test_file_crud(
         update_check = \
             file_obj.name == "new_name" and \
             file_obj.description == "new_description" and \
-            file_b_url in file_obj.path and \
             file_obj.attributes["LabelA"] == -100 and \
             file_obj.attributes["LabelB"] == "seeya"
         if not update_check:
@@ -389,25 +365,26 @@ def test_file_crud(
 
     files = tator_api.get_file_list(project=project, meta=file_type_b_id, force_es=1)
     blah = [file.id for file in files]
-    print(blah)
-    print(all_files)
-    print(file_b_ids)
     assert len(all_files) == len(file_b_ids)
 
     # Delete 2 entries from each file group. Verify they were deleted.
-    tator_api.delete_file(id=file_a_ids[0])
-    tator_api.delete_file(id=file_a_ids[-1])
-    tator_api.delete_file(id=file_b_ids[0])
-    tator_api.delete_file(id=file_b_ids[-1])
+    tator_api.delete_file(id=file_a_ids[0]["file_id"])
+    tator_api.delete_file(id=file_a_ids[-1]["file_id"])
+    tator_api.delete_file(id=file_b_ids[0]["file_id"])
+    tator_api.delete_file(id=file_b_ids[-1]["file_id"])
     file_list = tator_api.get_file_list(project=project)
     file_a_count = 0
     file_b_count = 0
     for file_obj in file_list:
-        if file_obj.id in file_a_ids:
-            file_a_count += 1
+        for file_info in file_a_ids:
+            if file_obj.id == file_info["file_id"]:
+                file_a_count += 1
+                break
 
-        elif file_obj.id in file_b_ids:
-            file_b_count += 1
+        for file_info in file_b_ids:
+            if file_obj.id == file_info["file_id"]:
+                file_b_count += 1
+                break
 
     assert file_a_count == len(file_a_ids) - 2
     assert file_b_count == len(file_b_ids) - 2
