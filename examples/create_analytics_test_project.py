@@ -48,6 +48,10 @@ def create_media_types(
               "name": "Media Reviewed",
               "dtype": "bool",
               "default": False
+          },
+          {
+              "name": "Trip Date":,
+              "dtype": "datetime"
           }
       ]
     }
@@ -90,6 +94,11 @@ def create_localization_types(
               "name": "Count",
               "dtype": "int",
               "order": 2,
+          },
+          {
+              "name": "Sighting Date",
+              "dtype": "datetime",
+              "order": 3,
           },
           {
               "name": "Valid",

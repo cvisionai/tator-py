@@ -2,6 +2,8 @@
 """
 
 import argparse
+import datetime
+import dateutil
 import logging
 import random
 import sys
@@ -30,6 +32,11 @@ def create_random_localization(
     else:
         frame = random.randint(0, media.num_frames - 1)
 
+
+    start_date = datetime.datetime(2021, 2, 2)
+    end_date = datetime.datetime(2021, 10, 10)
+    sighting_date = random.random() * (end_date - start_date) + start_date
+
     spec = {
         "project": project,
         "type": selected_loc_type.id,
@@ -39,7 +46,8 @@ def create_random_localization(
         "Species": random.choice(["Herring, Atlantic", "Herring, Blueback", "Lobster", "Scallop"]),
         "Algorithm Confidence": random.uniform(0, 1),
         "Count": random.randint(0, 5),
-        "Valid": random.choice([True, False])
+        "Valid": random.choice([True, False]),
+        "Sighting Date": sighting_date
     }
 
     if selected_loc_type.dtype == "dot":
@@ -148,12 +156,16 @@ def update_medias_and_sections(
 
     # Loop through all the media, move them into a random section and randomize the attributes
     medias = tator_api.get_media_list(project=project)
+    start_date = datetime.datetime(2010, 5, 5)
+    end_date = datetime.datetime(2015, 10, 10)
     for media in medias:
         trip_id = random.choice(trip_id_choices)
+        trip_date = random.random() * (end_date - start_date) + start_date
         update = {
             "attributes": {
                 "Trip ID": trip_id,
                 "Media Reviewed": random.choice(reviewed_choices),
+                "Trip Date": trip_date.isoformat(),
                 "tator_user_sections": tator_user_sections[trip_id]
             }
         }
@@ -218,6 +230,9 @@ def main(
     # Reviewed is true and confidence > 0.5
     # Trip ID including Atlantic and version "User Annotations"
     # Media reviewed is true and species equaling "Scallop"
+    # Media whose Trip Date is between 2011-01-01 to 2013-01-01
+    # Media whose Trip Date is before 2012-05-05
+    # Media whose Trip Date is after 2013-04-04
 
     # All localization counts (no filter)
     loc_count = 0
@@ -298,6 +313,78 @@ def main(
                 if loc["Species"] == "Scallop":
                     loc_count += 1
     logger.info(f"Count of localizations whose Species:Scallop AND in media whose Media Reviewed:true -> {loc_count}")
+
+    # Media whose Trip Date is between 2011-01-01 to 2013-01-01
+    loc_count = 0
+    start_date = datetime.datetime(2011, 1, 1)
+    end_date = datetime.datetime(2013, 1, 1)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        attrs = media.attributes
+        trip_date = dateutil.parser.parse(attrs["Trip Date"])
+        if trip_date >= start_date and trip_date <= end_date:
+            for loc in analytics_data[media_id]:
+                loc_count += 1
+    logger.info(f"Count of localizations whose in media whose Trip Date:{{{start_date.isoformat()} TO {end_date.isoformat()}}} -> {loc_count}")
+
+    # Media whose Trip Date is before 2012-05-05
+    loc_count = 0
+    end_date = datetime.datetime(2012, 5, 5)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        attrs = media.attributes
+        trip_date = dateutil.parser.parse(attrs["Trip Date"])
+        if trip_date <= end_date:
+            for loc in analytics_data[media_id]:
+                loc_count += 1
+    logger.info(f"Count of localizations whose in media whose Trip Date:{{* TO {end_date.isoformat()}}} -> {loc_count}")
+
+    # Media whose Trip Date is after 2013-04-04
+    loc_count = 0
+    start_date = datetime.datetime(2013, 4, 4)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        attrs = media.attributes
+        trip_date = dateutil.parser.parse(attrs["Trip Date"])
+        if trip_date >= start_date:
+            for loc in analytics_data[media_id]:
+                loc_count += 1
+    logger.info(f"Count of localizations whose in media whose Trip Date:{{{start_date.isoformat()} TO *}} -> {loc_count}")
+
+    # Localization whose Sighting Date is before 2021-03-03 and after 2021-06-06
+    loc_count = 0
+    start_date = datetime.datetime(2021, 3, 3)
+    end_date = datetime.datetime(2021, 6, 6)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        for loc in analytics_data[media_id]:
+            sighting_date = loc["Sighting Date"]
+            if sighting_date >= start_date and sighting_date <= end_date:
+                loc_count += 1
+    logger.info(f"Count of localizations whose Sighting Date is:{{{start_date.isoformat()} TO {end_date.isoformat()}}} -> {loc_count}")
+
+    # Localization whose Sighting Date is before 2021-04-04
+    loc_count = 0
+    end_date = datetime.datetime(2021, 4, 4)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        for loc in analytics_data[media_id]:
+            sighting_date = loc["Sighting Date"]
+            if sighting_date <= end_date:
+                loc_count += 1
+    logger.info(f"Count of localizations whose Sighting Date is:{{* TO {end_date.isoformat()}}} -> {loc_count}")
+
+    # Localization whose Sighting Date is after 2021-06-06
+    loc_count = 0
+    start_date = datetime.datetime(2021, 6, 6)
+    for media_id in analytics_data:
+        media = media_id_map[media_id]
+        for loc in analytics_data[media_id]:
+            sighting_date = loc["Sighting Date"]
+            if sighting_date >= start_date:
+                loc_count += 1
+    logger.info(f"Count of localizations whose Sighting Date is:{{{start_date.isoformat()} TO *}} -> {loc_count}")
+
 
 def parse_args() -> argparse.Namespace:
     """ Process script arguments
