@@ -6,11 +6,13 @@ import tator
 def parse_args():
     parser = tator.get_parser()
     parser.add_argument('--organization', help="Organization ID.", type=int)
+    parser.add_argument('--archive_lifecycle', help="Archive lifecycle of queried media.",
+                        choices=['live', 'archived', 'all'], type=str)
     parser.add_argument('--out_dir', help="Where summary CSV files will be dumped.", type=str)
     args = parser.parse_args()
     return args   
 
-def get_media(projects):
+def get_media(args, projects):
     medias = defaultdict(lambda: defaultdict(list))
     s3_keys = defaultdict(list)
     for project in projects:
@@ -19,9 +21,11 @@ def get_media(projects):
         sections = api.get_section_list(project.id)
         for section in sections:
             print(f"Retrieving data for section {section.id} ({section.name})...")
-            medias[project.id][section.id] = api.get_media_list(project.id,
-                                                                section=section.id,
-                                                                dtype='video')
+            media_kwargs = {'section': section.id,
+                            'dtype': 'video'}
+            if args.archive_lifecycle:
+                media_kwargs['archive_lifecycle'] = args.archive_lifecycle
+            medias[project.id][section.id] = api.get_media_list(project.id, **media_kwargs)
             for media in medias[project.id][section.id]:
                 if media.media_files:
                     if media.media_files.streaming:
@@ -93,6 +97,6 @@ if __name__ == '__main__':
     args = parse_args()
     api = tator.get_api(host=args.host, token=args.token)
     projects = api.get_project_list(organization=args.organization)
-    medias, s3_keys = get_media(projects)
+    medias, s3_keys = get_media(args, projects)
     clone_ids = find_clones(s3_keys)
     sum_hours(projects, medias, clone_ids, args.out_dir)
