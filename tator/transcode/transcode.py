@@ -52,6 +52,28 @@ def parse_args():
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     return parser.parse_args()
 
+def get_length_of_file(path):
+    cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream",
+        "-print_format", "json",
+        "-select_streams", "v",
+        path,
+    ]
+    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    video_info = json.loads(output)
+    stream_idx=0
+    if size is None or size <= 0:
+        size = os.stat(path).st_size
+    for idx, stream in enumerate(video_info["streams"]):
+        if stream["codec_type"] == "video":
+            stream_idx=idx
+            break
+    stream = video_info["streams"][stream_idx]
+    fps, length = get_length_info(stream)
+    return fps, length
+
 def make_video_definition(path, size=None):
     cmd = [
         "ffprobe",
@@ -138,6 +160,14 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
+
+    for ridx, resolution in enumerate(resolutions):
+        output_file = os.path.join(outpath, f"{resolution}.mp4")
+        _, orig_length = get_length_of_file(path)
+        _, res_length = get_length_of_file(output_file)
+        length_delta = abs(orig_length - res_length)
+        assert length_delta < 5 # generous threshold here to account for any start biases in weird input formats
+
     api = get_api(host, token)
     media_obj = api.get_media(media)
 
