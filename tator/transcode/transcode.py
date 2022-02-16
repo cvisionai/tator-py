@@ -161,15 +161,16 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     subprocess.run(cmd, check=True)
 
-    for ridx, resolution in enumerate(resolutions):
-        output_file = os.path.join(outpath, f"{resolution}.mp4")
-        _, orig_length = get_length_of_file(path)
-        _, res_length = get_length_of_file(output_file)
-        length_delta = abs(orig_length - res_length)
-        assert length_delta < 5 # generous threshold here to account for any start biases in weird input formats
-
     api = get_api(host, token)
     media_obj = api.get_media(media)
+
+    for ridx, resolution in enumerate(resolutions):
+        output_file = os.path.join(outpath, f"{resolution}.mp4")
+        _, res_length = get_length_of_file(output_file)
+        length_delta = abs(media_obj.num_frames - res_length)
+        assert length_delta < 5 # generous threshold here to account for any start biases in weird input formats
+
+    
 
     for resolution in resolutions:
         output_file = os.path.join(outpath, f"{resolution}.mp4")
