@@ -64,8 +64,6 @@ def get_length_of_file(path):
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     stream_idx=0
-    if size is None or size <= 0:
-        size = os.stat(path).st_size
     for idx, stream in enumerate(video_info["streams"]):
         if stream["codec_type"] == "video":
             stream_idx=idx
