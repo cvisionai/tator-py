@@ -166,6 +166,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         _, res_length = get_length_of_file(output_file)
         length_delta = abs(media_obj.num_frames - res_length)
+        length_delta /= media_obj.fps # convert to seconds
         assert length_delta < 5 # generous threshold here to account for any start biases in weird input formats
 
     
