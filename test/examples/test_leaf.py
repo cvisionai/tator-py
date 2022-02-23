@@ -14,14 +14,17 @@ def test_leaf(host, token, project, leaf_type, video_type):
     subprocess.run(cmd, check=True)
     # Apply the label tree to string fields for media types
     api = tator.get_api(host, token)
+    video_type_obj = api.get_media_type(video_type)
+    attribute_type = {}
+    for elem in video_type_obj.attribute_types:
+        if elem.name == 'test_string':
+            attribute_type = elem
+            break
+    attribute_type.autocomplete = {'serviceUrl': f'/rest/Leaves/Suggestion/GoT/{project}'}
     api.rename_attribute(video_type, {
         'entity_type': 'MediaType',
         'global': 'true',
         'old_attribute_type_name': 'test_string',
-        'new_attribute_type': {
-            'name': 'test_string',
-            'dtype': 'string',
-            'autocomplete': {'serviceUrl': f'/rest/Leaves/Suggestion/GoT/{project}'}
-        },
+        'new_attribute_type': attribute_type,
     })
     
