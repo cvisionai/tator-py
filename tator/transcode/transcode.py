@@ -132,10 +132,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     per_res = ["-an",
         "-metadata:s", "handler_name=tator",
         "-g", "25",
-        "-preset", "fast",
         "-movflags",
-        "faststart+frag_keyframe+empty_moov+default_base_moof",
-        "-tune", "fastdecode",]
+        "faststart+frag_keyframe+empty_moov+default_base_moof"]
 
     print(f"Transcoding to {resolutions}")
     for ridx, resolution in enumerate(resolutions):
@@ -147,6 +145,11 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         if codec.find("qsv") >= 0:
             quality_flag = "-global_quality"
             pixel_format = "nv12"
+
+        if codec.find('264') > 0:
+            per_res.extend(["-preset", "fast",
+                            "-tune", "fastdecode"])
+
         cmd.extend([*per_res,
                     "-vcodec", codec,
                     "-pix_fmt", pixel_format,
