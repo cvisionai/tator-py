@@ -25,7 +25,8 @@ def find_best_encoder(codec):
     if encoder_lookup is None:
         # Default codecs
         encoder_lookup={"hevc": "libsvt_hevc",
-                        "h264": "libx264"}
+                        "h264": "libx264",
+                        "av1": "libsvtav1"}
         cmd = [
             "ffmpeg",
             "-encoders" ]
