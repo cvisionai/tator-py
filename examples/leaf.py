@@ -66,15 +66,15 @@ if __name__ == '__main__':
         - name: Lyanna
 
     Once leaves are created, the autocomplete service will be available at:
-    https://<domain>/rest/Leaves/Suggestion/GoT/<project>
+    https://<domain>/rest/Leaves/Suggestion/<project_name>.GoT/<project>
 
     To narrow scope of the autocomplete service (for example just Starks):
-    https://<domain>/rest/Leaves/Suggestion/GoT.Stark/<project>
+    https://<domain>/rest/Leaves/Suggestion/<project_name>.GoT.Stark/<project>
 
     To use an autocomplete service on a string attribute type, set the autocomplete field
     as follows:
     {...
-     'autocomplete': {'serviceUrl': 'https://<domain>/rest/Leaves/Suggestion/GoT/<project>'},
+     'autocomplete': {'serviceUrl': 'https://<domain>/rest/Leaves/Suggestion/<project_name>.GoT/<project>'},
      ...}
 
     '''), formatter_class=argparse.RawTextHelpFormatter)
