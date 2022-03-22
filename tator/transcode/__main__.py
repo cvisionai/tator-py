@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('path', type=str, help='Path to directory containing video files, or a video file.')
     parser.add_argument('--extension', type=str, default='mp4', help='File extension to upload. '
                                                                      'Ignored if path is a file.')
-    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
+    parser.add_argument('--host', type=str, default='https://cloud.tator.io', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')

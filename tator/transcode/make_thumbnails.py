@@ -20,7 +20,7 @@ logger.setLevel(logging.INFO)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Makes thumbnails for a video.')
-    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
+    parser.add_argument('--host', type=str, default='https://cloud.tator.io', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--media', type=int, help='Unique integer identifying a media.')
     parser.add_argument('input', type=str, help='Path to input file.')

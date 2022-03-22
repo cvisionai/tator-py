@@ -42,7 +42,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
     parser.add_argument('--url', type=str, help='URL where original file is hosted.')
     parser.add_argument('--work_dir', type=str, help='Directory where info should be saved.')
-    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
+    parser.add_argument('--host', type=str, default='https://cloud.tator.io', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--media', type=int, help='Unique integer identifying a media.')
     parser.add_argument('--category', required=True, help='One of streaming, archival, or audio.')

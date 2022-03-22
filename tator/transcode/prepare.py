@@ -24,7 +24,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
     parser.add_argument('--url', type=str, help='URL where original file is hosted.')
     parser.add_argument('--work_dir', type=str, help='Directory where info should be saved.')
-    parser.add_argument('--host', type=str, default='https://www.tatorapp.com', help='Host URL.')
+    parser.add_argument('--host', type=str, default='https://cloud.tator.io', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
