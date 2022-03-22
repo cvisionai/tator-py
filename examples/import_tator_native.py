@@ -22,7 +22,7 @@ def parse_args():
     base name as JSON file.
 
     Example:
-    python3 import_tator_native.py --host https://www.tatorapp.com --token asdf --project 1 
+    python3 import_tator_native.py --host https://cloud.tator.io --token asdf --project 1 
     /path/to/directory/with/json
     '''), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--host', help='Host containing source project.', required=True)

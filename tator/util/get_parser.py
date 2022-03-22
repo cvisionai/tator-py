@@ -7,6 +7,6 @@ def get_parser(parser=None, description=None):
     """
     if parser is None:
         parser = argparse.ArgumentParser(description=description if description else "A tator-py utility.")
-    parser.add_argument('--host', default='https://www.tatorapp.com')
+    parser.add_argument('--host', default='https://cloud.tator.io')
     parser.add_argument('--token', help="Your API token.")
     return parser

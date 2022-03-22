@@ -33,10 +33,10 @@ def parse_args():
 
     Examples:
     Delete duplicate media with latest edit date
-    python3 delete_dupes.py --host https://tatorapp.com --token asdf --project 1
+    python3 delete_dupes.py --host https://cloud.tator.io --token asdf --project 1
 
     Delete duplicate media if it contains no annotations
-    python3 delete_dupes.py --host https://tatorapp.com --token asdf --project 1
+    python3 delete_dupes.py --host https://cloud.tator.io --token asdf --project 1
     --preserve_annotations
     """), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--host', help='Tator host.', required=True)

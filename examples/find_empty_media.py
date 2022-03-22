@@ -15,7 +15,7 @@ def parse_args():
     Finds media that contains no streaming, no archival, or neither media.
 
     Example:
-    python3 find_empty_media.py --host https://tatorapp.com --token asdf --project 1 --section 1
+    python3 find_empty_media.py --host https://cloud.tator.io --token asdf --project 1 --section 1
     '''), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--host', help='Host containing source project.', required=True)
     parser.add_argument('--token', help='Token for host containing source project.', required=True)

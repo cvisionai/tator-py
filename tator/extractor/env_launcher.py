@@ -4,7 +4,7 @@
 
 Generic TATOR workflow env variables this module expects:
 
-TATOR_API_SERVICE : URL to host, e.g. https://www.tatorapp.com
+TATOR_API_SERVICE : URL to host, e.g. https://cloud.tator.io
 TATOR_AUTH_TOKEN : Token to use for authentication
 TATOR_PROJECT_ID : numerical id of the project this algorithm is being run
 TATOR_MEDIA_IDS : Comma-seperated list of media ids to process

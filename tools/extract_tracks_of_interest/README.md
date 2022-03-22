@@ -9,7 +9,7 @@ graphics of the filtered states.
 
 ```
 $ python3 extract_tracks_of_interest.py \
-    --host https://www.tatorapp.com \
+    --host https://cloud.tator.io \
     --token <token> \
     --project 23 \
     --state-type 44 \

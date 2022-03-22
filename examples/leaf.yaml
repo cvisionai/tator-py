@@ -54,6 +54,6 @@ children:
       - name: Tommen
     - name: Tyrion
 
-# Example service URL: https://www.tatorapp.com/rest/Leaves/Suggestion/GoT/<project>
-# Just the Lannisters: https://www.tatorapp.com/rest/Leaves/Suggestion/GoT.Lannister/<project>
+# Example service URL: https://cloud.tator.io/rest/Leaves/Suggestion/GoT/<project>
+# Just the Lannisters: https://cloud.tator.io/rest/Leaves/Suggestion/GoT.Lannister/<project>
 

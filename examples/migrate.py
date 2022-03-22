@@ -44,20 +44,20 @@ def parse_args():
 
     Examples:
     Duplicate a project on same host
-    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --new_project_name
+    python3 migrate.py --host https://cloud.tator.io --token asdf --project 1 --new_project_name
     'My Cloned Project'
 
     Migrate project settings on same host
-    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --dest_project 2
+    python3 migrate.py --host https://cloud.tator.io --token asdf --project 1 --dest_project 2
     --skip_sections --skip_media
 
     Migrate media only to existing project
-    python3 migrate.py --host https://tatorapp.com --token asdf --project 1 --dest_project 2
+    python3 migrate.py --host https://cloud.tator.io --token asdf --project 1 --dest_project 2
     --skip_localizations --skip_states
 
     Migrate to another host
-    python3 migrate.py --host https://tatorapp.com --token asdf --project 1
-    --dest_host https://other.tatorapp.com --dest_token asdf --dest_project 2
+    python3 migrate.py --host https://cloud.tator.io --token asdf --project 1
+    --dest_host https://other.tator.io --dest_token asdf --dest_project 2
     '''), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--host', help='Host containing source project.', required=True)
     parser.add_argument('--token', help='Token for host containing source project.', required=True)

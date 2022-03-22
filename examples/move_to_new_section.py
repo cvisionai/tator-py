@@ -19,7 +19,7 @@ section. It is safe to run repeatedly and will not make any changes to media sto
 """
 
 # Hostname of tator cloud instance, do not change
-host = "https://www.tatorapp.com"
+host = "https://cloud.tator.io"
 
 # Your user token
 token = "your-token-here"

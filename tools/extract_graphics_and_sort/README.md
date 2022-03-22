@@ -7,7 +7,7 @@ The python script `extract_graphics_and_sort.py` gathers a set of localizations,
 
 ```
 $ python3 extract_graphics_and_sort.py \
-    --host https://www.tatorapp.com \
+    --host https://cloud.tator.io \
     --token 548212020384e3510e1bd49dccd65e688aa4467f \
     --project 28 \
     --localization-type 61

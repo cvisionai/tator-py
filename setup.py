@@ -36,12 +36,12 @@ class NoAliasDumper(yaml.Dumper):
         return True
 
 def codegen():
-    """ Fetches a schema from tatorapp.com if one does not exist, then 
+    """ Fetches a schema from cloud.tator.io if one does not exist, then 
         use openapi-generator to generate openapi code from it.
     """
     # Retrieve schema if it does not exist.
     if not os.path.exists(SCHEMA_FILENAME):
-        response = requests.get("https://www.tatorapp.com/schema")
+        response = requests.get("https://cloud.tator.io/schema")
         assert response.status_code == 200
         with open(SCHEMA_FILENAME, 'wb') as f:
             f.write(response.content)
