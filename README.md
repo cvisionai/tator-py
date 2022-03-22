@@ -23,7 +23,7 @@ python3 setup.py install --user
 ```
 import tator
 
-api = tator.get_api('https://www.tatorapp.com', 'MY_TOKEN')
+api = tator.get_api('https://cloud.tator.io', 'MY_TOKEN')
 api.get_media_list(1) # Pass a project ID
 ```
 
@@ -31,7 +31,7 @@ Visit the [examples](examples) for more.
 
 ## API documentation
 
-Documentation for all API functions and models can be found in the [OpenAPI documentation](https://tatorapp.com/docs/tator-py/api.html).
+Documentation for all API functions and models can be found in the [OpenAPI documentation](https://tator.io/api/0).
 
 ## Authors
 
