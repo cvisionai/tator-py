@@ -136,7 +136,7 @@ if __name__ == '__main__':
         gid = str(uuid1())
     else:
         gid = args.gid
-    if os.path.isdir(args.path):
+    if args.path and os.path.isdir(args.path):
         file_list = []
         for root, dirs, files in os.walk(args.path):
             for fname in files:
