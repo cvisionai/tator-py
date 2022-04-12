@@ -2,8 +2,10 @@
 
 import argparse
 import os
+import sys
 from uuid import uuid1
 import logging
+import subprocess
 
 from progressbar import progressbar
 
@@ -21,16 +23,28 @@ logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
-    parser.add_argument('path', type=str, help='Path to directory containing video files, or a video file.')
+    parser.add_argument('path', nargs='?', type=str,
+                        help='Path to directory containing video files, or a video file. '
+                             'Ignored if --url is given.')
     parser.add_argument('--extension', type=str, default='mp4', help='File extension to upload. '
                                                                      'Ignored if path is a file.')
+    parser.add_argument('--work_dir', type=str, help='Path to working directory. If not given, '
+                                                     'the path containing videos will be used.')
+    parser.add_argument('--url', type=str, help='URL where original file is hosted.')
     parser.add_argument('--host', type=str, default='https://cloud.tator.io', help='Host URL.')
     parser.add_argument('--token', type=str, help='REST API token.')
     parser.add_argument('--project', type=int, help='Unique integer specifying project ID.')
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
+    parser.add_argument('--name', type=str, help='Name of the media.')
     parser.add_argument('--section', type=str, help='Media section name.')
-    parser.add_argument('--work_dir', type=str, help='Path to working directory. If not given, '
-                                                     'the path containing videos will be used.')
+    parser.add_argument('--attributes', type=str, help="Attributes for media")
+    parser.add_argument('--media_id', type=int, help="Existing media ID, if applicable",
+                        default=-1)
+    parser.add_argument('--gid', type=str, help="Upload group ID.")
+    parser.add_argument('--uid', type=str, help="Upload unique ID.")
+    parser.add_argument('--group_to', type=int, default=1080,
+                         help='Vertical resolutions below this will be transcoded with '
+                              'multi-headed ffmpeg.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -46,6 +60,15 @@ def get_file_paths(path, base):
 def transcode_single(path, args, gid):
     """Transcodes a single file.
     """
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
+    # If a URL is given and path doesn't exist, download the file to path.
+    if args.url:
+        path = os.path.join(args.work_dir, args.name)
+        subprocess.run(['wget', args.url, '-O', path], check=True)
+    elif path is None:
+        raise ValueError(f"Must provide one of --url or path!")
+
     # Get file paths.
     if args.work_dir:
         base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
@@ -57,14 +80,23 @@ def transcode_single(path, args, gid):
     md5 = md5sum(paths['original'])
 
     # Get base filename.
-    name = os.path.basename(paths['original'])
+    if args.name:
+        name = args.name
+    else:
+        name = os.path.basename(paths['original'])
 
-    # Generate a UID for this file.
-    uid = str(uuid1())
+    # Create a uid if not set.
+    if args.uid is None:
+        uid = str(uuid1())
+    else:
+        uid = args.uid
 
     # Create the media object.
-    media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5,
-                            gid, uid)
+    if args.media_id == -1:
+        media_id = create_media(args.host, args.token, args.project, args.type, args.section,
+                                name, md5, gid, uid, args.attributes, args.url)
+    else:
+        media_id = args.media_id
 
     try:
         # Make thumbnails.
@@ -72,7 +104,7 @@ def transcode_single(path, args, gid):
                         paths['thumbnail_gif'])
 
         # Determine transcodes that need to be done.
-        workloads = determine_transcode(args.host, args.token, args.type, path, group_to=1080)
+        workloads = determine_transcode(args.host, args.token, args.type, path, group_to=args.group_to)
 
         # Transcode the video file.
         for workload in workloads:
@@ -94,12 +126,16 @@ def transcode_single(path, args, gid):
                               outpath=paths['transcoded'])
     except:
         logging.exception('')
-        delete_media(args.host, args.token, media_id)
+        if args.media_id == -1:
+            delete_media(args.host, args.token, media_id)
         raise RuntimeError(f"Transcode of file {path} failed!")
     
 if __name__ == '__main__':
     args = parse_args()
-    gid = str(uuid1())
+    if args.gid is None:
+        gid = str(uuid1())
+    else:
+        gid = args.gid
     if os.path.isdir(args.path):
         file_list = []
         for root, dirs, files in os.walk(args.path):
