@@ -585,7 +585,7 @@ def test_change_log_util(host, token, project, attribute_video_type):
     )
     assert found_change == changes[0]
 
-    # Change `test_int` value
+    # Change `test_int` value (tests attribute change)
     new_test_int = random.randint(0, 100)
     tator_api.update_media(media_id, {"attributes": {"test_int": new_test_int}})
 
@@ -613,3 +613,19 @@ def test_change_log_util(host, token, project, attribute_video_type):
         tator_api, project, media_id, "test_int", old_value=new_test_int
     )
     assert found_change is None
+
+    # Delete media object (tests media property change)
+    tator_api.delete_media(media_id)
+
+    # Get all changes for comparison
+    changes = tator_api.get_change_log_list(
+        project=project, entity_id=media_id, entity_type="media"
+    )
+    assert len(changes) == 3
+
+    # Look for change that should be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "_deleted", old_value=False, new_value=True
+    )
+    assert found_change is not None
+    assert found_change == changes[-1]
