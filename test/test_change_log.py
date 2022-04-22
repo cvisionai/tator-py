@@ -544,3 +544,72 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
             assert change.value == None
+
+
+def test_change_log_util(host, token, project, attribute_video_type):
+    # Tests `tator.util.find_single_change`
+    tator_api = tator.get_api(host, token)
+
+    # Define media spec.
+    num_media = 3
+    fname = "MediaChangeLogTest.mp4"
+    test_int = random.randint(0, 100)
+    media_spec = {
+        "type": attribute_video_type,
+        "uid": str(uuid.uuid1()),
+        "gid": str(uuid.uuid1()),
+        "name": fname,
+        "md5": str(uuid.uuid1())[:32],
+        "section": "Test media change log",
+        "attributes": {"test_int": test_int},
+    }
+
+    # Create the media.
+    media_id = tator_api.create_media(project=project, media_spec=media_spec).id
+
+    # Look for change that shouldn't be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "test_int", new_value=test_int - 1
+    )
+    assert found_change is None
+
+    # Get all changes for comparison
+    changes = tator_api.get_change_log_list(
+        project=project, entity_id=media_id, entity_type="media"
+    )
+    assert len(changes) == 1
+
+    # Look for change that should be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "test_int", new_value=test_int
+    )
+    assert found_change == changes[0]
+
+    # Change `test_int` value
+    new_test_int = random.randint(0, 100)
+    tator_api.update_media(media_id, {"attributes": {"test_int": new_test_int}})
+
+    # Get all changes for comparison
+    changes = tator_api.get_change_log_list(
+        project=project, entity_id=media_id, entity_type="media"
+    )
+    assert len(changes) == 2
+
+    # Look for change that should be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "test_int", old_value=test_int, new_value=new_test_int
+    )
+    assert found_change is not None
+    assert found_change == changes[-1]
+
+    # Look for change that shouldn't be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "test_int", old_value=new_test_int, new_value=test_int
+    )
+    assert found_change is None
+
+    # Look for change that shouldn't be there
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "test_int", old_value=new_test_int
+    )
+    assert found_change is None
