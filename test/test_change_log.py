@@ -227,7 +227,7 @@ def change_log_helper(
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
-            assert change.value == None
+            assert change.value == True
 
 
 def test_attribute_box_type_change_log(host, token, project, attribute_video, attribute_box_type):
@@ -371,7 +371,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
         changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
                                                 entity_type='media')
 
-        # Assert two changes returned
+        # Assert three changes returned
         assert len(changes) == 3
         for new_change_log in changes:
             if new_change_log.id not in [patch_change.id, create_change.id]:
@@ -400,7 +400,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
         changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
                                                 entity_type='media')
 
-        # Assert three changes returned
+        # Assert four changes returned
         assert len(changes) == 4
         for new_change_log in changes:
             if new_change_log.id not in [
@@ -417,7 +417,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
-            assert change.value == None
+            assert change.value == True
 
 
 def test_leaf_type_change_log(host, token, project, leaf_type):
@@ -543,7 +543,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
 
         # Assert all new values are None for deletion
         for change in new_change_log.description_of_change.new:
-            assert change.value == None
+            assert change.value == True
 
 
 def test_change_log_util(host, token, project, attribute_video_type):
