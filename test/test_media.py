@@ -1,6 +1,7 @@
+import os
 import tempfile
 from time import sleep
-import os
+from uuid import uuid1
 
 import tator
 
@@ -115,3 +116,39 @@ def test_archive(host, token, project, video):
     tator_api.update_media(video, {"archive_state": "to_live"})
     video_obj = tator_api.get_media(video)
     assert video_obj.archive_state == "live"
+
+def test_section(host, token, project, video):
+    tator_api = tator.get_api(host, token)
+
+    # Create test section
+    section_spec = {"name": "Test Section", "tator_user_sections": str(uuid1())}
+    response = tator_api.create_section(project, section_spec=section_spec)
+
+    # Update media `tator_user_sections` attribute
+    update_spec = {"attributes": {"tator_user_sections": section_spec["tator_user_sections"]}}
+    response = tator_api.update_media(
+        video, update_spec
+    )
+    media = tator_api.get_media(video)
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
+
+    # Unset media `tator_user_sections` attribute
+    response = tator_api.update_media(
+        video, {"attributes": {"tator_user_sections": ""}}
+    )
+    media = tator_api.get_media(video)
+    assert media.attributes["tator_user_sections"] == ""
+
+    # Update media `tator_user_sections` attribute with a bulk update
+    response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec)
+    media = tator_api.get_media(video)
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
+
+    # Unset media `tator_user_sections` attribute with a bulk update
+    response = tator_api.update_media_list(
+        project,
+        media_id=[video],
+        media_bulk_update={"attributes": {"tator_user_sections": ""}},
+    )
+    media = tator_api.get_media(video)
+    assert media.attributes["tator_user_sections"] == ""
