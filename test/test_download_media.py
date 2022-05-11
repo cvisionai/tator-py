@@ -52,7 +52,8 @@ def test_download_image(host, token, image):
                     image_obj,
                     image_path,
                     quality=image_file.resolution[0],
-                    media_type=None):
+                    media_type=None,
+                    codec_or_mime=image_file.mime):
                 print(f"Media download progress: {progress}%")
             assert os.path.exists(image_path)
             assert os.stat(image_path).st_size == image_file.size
