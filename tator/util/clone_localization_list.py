@@ -121,7 +121,7 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
         dest_api = src_api
 
     # Start by getting list of localizations to be cloned.
-    locs = src_api.get_localization_list(**query_params)
+    locs = src_api.get_localization_list_by_id(**query_params)
 
     # Find parent localizations.
     parent_ids = [int(loc.parent) for loc in locs if loc.parent]

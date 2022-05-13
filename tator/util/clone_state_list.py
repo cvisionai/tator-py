@@ -117,7 +117,7 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
         dest_api = src_api
 
     # Start by getting list of states to be cloned.
-    states = src_api.get_state_list(**query_params)
+    states = src_api.get_state_list_by_id(**query_params)
 
     # Convert to new spec.
     spec = [_convert_for_post(state, version_mapping, media_mapping, localization_mapping,
