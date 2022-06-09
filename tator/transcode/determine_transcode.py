@@ -40,7 +40,7 @@ def determine_transcode(host, token, media_type, path, group_to):
     cmd = [
         "ffprobe",
         "-v","error",
-        "-show_entries", "stream",
+        "-show_entries", "stream:format=duration",
         "-print_format", "json",
         "-count_frames",
         "-skip_frame", "nokey",
@@ -57,6 +57,7 @@ def determine_transcode(host, token, media_type, path, group_to):
             logger.info("Found Audio Track")
             audio=True
     stream = video_info["streams"][stream_idx]
+    stream = {**video_info.get("format", {}), **stream}
     fps, num_frames = get_length_info(stream)
 
     # Handle up to but not exceeding FHD

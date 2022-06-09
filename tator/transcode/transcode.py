@@ -57,7 +57,7 @@ def get_length_of_file(path):
     cmd = [
         "ffprobe",
         "-v","error",
-        "-show_entries", "stream",
+        "-show_entries", "stream:format=duration",
         "-print_format", "json",
         "-select_streams", "v",
         path,
@@ -70,6 +70,7 @@ def get_length_of_file(path):
             stream_idx=idx
             break
     stream = video_info["streams"][stream_idx]
+    stream = {**video_info.get("format", {}), **stream}
     fps, length = get_length_info(stream)
     return fps, length
 
@@ -345,12 +346,11 @@ def get_length_info(stream):
     start_time = float(stream["start_time"])
     if 'duration' in stream:
         seconds = float(stream["duration"])
-    elif 'tags' in stream:
-        if 'DURATION' in stream['tags']:
-            length = stream['tags']['DURATION'].split(':')
-            seconds = float(length[0])*3600
-            seconds += float(length[1])*60
-            seconds += float(length[2])
+    elif 'tags' in stream and 'DURATION' in stream['tags']:
+        length = stream['tags']['DURATION'].split(':')
+        seconds = float(length[0])*3600
+        seconds += float(length[1])*60
+        seconds += float(length[2])
     else:
         raise Exception('No way to determine file length!')
 

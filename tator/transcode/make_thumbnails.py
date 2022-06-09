@@ -32,7 +32,7 @@ def get_metadata(path):
     cmd = [
         "ffprobe",
         "-v","error",
-        "-show_entries", "stream",
+        "-show_entries", "stream:format=duration",
         "-print_format", "json",
         "-select_streams", "v",
         "{}".format(path)
@@ -41,7 +41,13 @@ def get_metadata(path):
 
     logger.info("Got info = {}".format(output))
     video_info = json.loads(output)
-    stream = video_info["streams"][0]
+    stream_idx=0
+    for idx, stream in enumerate(video_info["streams"]):
+        if stream["codec_type"] == "video":
+            stream_idx=idx
+            break
+    stream = video_info["streams"][stream_idx]
+    stream = {**video_info.get("format", {}), **stream}
 
     fps, num_frames = get_length_info(stream)
     # Fill in object information based on probe
