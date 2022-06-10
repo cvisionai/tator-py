@@ -278,5 +278,11 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     boxes = tator_api.get_localization_list(project, **params)
     assert boxes == []
 
+    boxes = tator_api.get_localization_list(project, **params, show_deleted=1)
+    assert boxes != []
+
+    response = tator_api.delete_localization_list(project, **params, show_deleted=1, merge=0, localization_bulk_delete={'prune':1})
+    assert isinstance(response, tator.models.MessageResponse)
+
     # Clean up test version
     tator_api.delete_version(new_version)
