@@ -32,4 +32,7 @@ from tator.util.clone_section import clone_section
 from tator.util.clone_version import clone_version
 from tator.util.clone_membership import clone_membership
 from tator.util.concat import make_concat
-from tator.util.find_single_change import find_single_change
+try:
+  from tator.util.find_single_change import find_single_change
+except Exception as e:
+  print("Couldn't import find_single_change")
