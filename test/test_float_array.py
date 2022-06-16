@@ -32,7 +32,8 @@ def _create_localization(project, box_type, video_obj, float_array_val):
     out = {**out, **attributes}
     return out
 
-def test_float_array(host, token, project, box_type, video):
+def test_float_array(host, token, project, box_type, empty_video):
+    video = empty_video
     api = tator.get_api(host, token)
     video_obj = api.get_media(video)
 
