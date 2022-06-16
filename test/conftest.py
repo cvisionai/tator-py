@@ -295,6 +295,19 @@ def video(request, project, video_type, video_file):
     # If all is kosher return the video_id
     yield video_id
 
+## This is an empty video to make tests run faster
+@pytest.fixture(scope='session')
+def empty_video(request, project, video_type):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media(project,
+    {"name": 'empty.mp4',
+    'num_frames': 30000,
+    'fps': 20, 'section': 'empty_media', 'md5': '', 'type': video_type})
+    yield response.id
+
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
     import tator

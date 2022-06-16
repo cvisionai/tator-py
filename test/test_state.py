@@ -132,7 +132,8 @@ def comparison_query(tator_api, project, state_ids, exclude):
         assert(psql.attributes['test_enum'] == enum_value)
     return psql_time, es_time
 
-def test_state_crud(host, token, project, video_type, video, state_type):
+def test_state_crud(host, token, project, video_type, empty_video, state_type):
+    video = empty_video
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
