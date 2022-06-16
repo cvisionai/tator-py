@@ -117,7 +117,7 @@ def test_float_array(host, token, project, box_type, empty_video):
         'upper_bound': 1.0,
     }
     search = {'float_array': [search]}
-    response = api.delete_localization_list(project, localization_id_query=search)
+    response = api.delete_localization_list(project, localization_bulk_delete=search)
     assert(isinstance(response, tator.models.MessageResponse))
 
     # Check we deleted the right boxes.
@@ -131,7 +131,7 @@ def test_float_array(host, token, project, box_type, empty_video):
         'upper_bound': 2.1,
     }
     search = {'float_array': [search]}
-    response = api.delete_localization_list(project, localization_id_query=search)
+    response = api.delete_localization_list(project, localization_bulk_delete=search)
     assert(isinstance(response, tator.models.MessageResponse))
 
     # Check localizations are gone.
