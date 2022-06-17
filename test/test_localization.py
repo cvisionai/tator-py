@@ -146,6 +146,7 @@ def test_localization_crud(host, token, project, video_type, empty_video, box_ty
 
     # These fields will not be checked for object equivalence after patch.
     exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
+    mapping = {'new_version': 'version'}
 
     # Test bulk create.
     num_localizations = random.randint(2000, 10000)
@@ -243,9 +244,9 @@ def test_localization_crud(host, token, project, video_type, empty_video, box_ty
     assert(len(boxes)==len(dataframe))
     for box in boxes:
         if box.id in update_ids:
-            assert_close_enough(id_bulk_patch, box, exclude)
+            assert_close_enough(id_bulk_patch, box, exclude, mapping)
         else:
-            assert_close_enough(bulk_patch, box, exclude)
+            assert_close_enough(bulk_patch, box, exclude, mapping)
 
     # Do random queries using psql and elasticsearch and compare results.
     assert wait_for_parity(tator_api, project, id_bulk_patch, update_ids)
