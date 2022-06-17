@@ -161,7 +161,7 @@ def test_localization_crud(host, token, project, video_type, empty_video, box_ty
     print(f"Created {len(box_ids)} boxes!")
 
     # Verify list is the right length
-    response = tator_api.get_localization_list(project,type=box_type)
+    response = tator_api.get_localization_list(project,type=box_type, media_id=[empty_video])
     assert len(response) == num_localizations
 
     # Test media retrieval by localization ID.
@@ -218,7 +218,7 @@ def test_localization_crud(host, token, project, video_type, empty_video, box_ty
     )
     new_version = response.id
     bulk_patch = random_localization(project, box_type, video_obj)
-    bulk_patch = {"attributes": bulk_patch["attributes"], "version": new_version}
+    bulk_patch = {"attributes": bulk_patch["attributes"], "new_version": new_version}
     response = tator_api.update_localization_list(project, **params,
                                                   localization_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
@@ -230,7 +230,7 @@ def test_localization_crud(host, token, project, video_type, empty_video, box_ty
     id_bulk_patch = {
         "attributes": id_bulk_patch["attributes"],
         "ids": update_ids,
-        "version": new_version,
+        "new_version": new_version,
     }
     response = tator_api.update_localization_list(project, **params,
                                                   localization_bulk_update=id_bulk_patch)
