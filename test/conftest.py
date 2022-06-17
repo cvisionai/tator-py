@@ -296,7 +296,7 @@ def video(request, project, video_type, video_file):
     yield video_id
 
 ## This is an empty video to make tests run faster
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def empty_video(request, project, video_type):
     import tator
     host = request.config.option.host
