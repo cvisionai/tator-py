@@ -248,7 +248,7 @@ def test_algorithm_launch(
     # Add some media to the project
     paths = glob.glob(image_set + '/**/*.jpg', recursive=True)
     paths = [os.path.join(image_set, path) for path in paths]
-    paths = paths[:number_of_media]
+    paths = paths[:10]
 
     for image_file in paths:
         for progress, response in tator.util.upload_media(tator_api, image_type, image_file):
