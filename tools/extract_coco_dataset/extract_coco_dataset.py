@@ -36,7 +36,14 @@ def process_section(args : argparse.Namespace,
   category_lookup = {x['name']: x['id'] for x in categories}
   image_lookup = {x['id']: x for x in images}
   
-  localizations = api.get_localization_list(section.project, section=section.id)
+  localization_count = api.get_localization_count(section.project, type=args.localization_type_id, section=section.id)
+  localizations = []
+  print(f"Fetching {localization_count} boxes")
+  page_size = 5000
+  localizations = api.get_localization_list(section.project, section=section.id, type=args.localization_type_id, stop=page_size)
+  for _ in tqdm.tqdm(range(page_size,localization_count, page_size), desc='Batches'):
+    localizations.extend(api.get_localization_list(section.project, section=section.id, type=args.localization_type_id, after=localizations[-1].id, stop=page_size))
+  assert len(localizations) == localization_count
   media_objs = api.get_media_list_by_id(section.project, media_id_query={'ids': [x.media for x in localizations]})
   media_type_objs = api.get_media_type_list(section.project)
   media_type_lookup = {x.id: x for x in media_type_objs}
@@ -67,7 +74,10 @@ def process_section(args : argparse.Namespace,
     """ Lambda to download and add images """
     image_info = image_lookup.get(image_id, None)
     height, width, name, date_captured, media_type = get_image_info(localization)
-    filename = os.path.join(args.image_dir, name, f"{image_id}.png")
+    if args.include_image_dir:
+      filename = os.path.join(args.image_dir, f"{name}_{image_id}.png")
+    else:
+      filename = f"{name}_{image_id}.png"
     if image_info is None:
       image_info = {'id': image_id,
                   'height': height,
@@ -191,6 +201,7 @@ def main():
   parser.add_argument("--default-super-category", type=str, default='vessel', help='If a category is assumed, use this super category')
   parser.add_argument("--class-name", type=str, help='Attribute to use for classification')
   parser.add_argument("--indent", type=int, default=2, help='Indent to use on JSON file')
+  parser.add_argument("--include-image-dir", action='store_true', help='Include "image-dir" path in COCO file_name property of image, else it is excluded.')
   parser.add_argument("output_file", type=str, help='Output filepath for generated JSON file')
   parser.add_argument("section",
                       type=str,
