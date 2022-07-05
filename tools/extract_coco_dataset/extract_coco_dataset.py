@@ -76,8 +76,10 @@ def process_section(args : argparse.Namespace,
     height, width, name, date_captured, media_type = get_image_info(localization)
     if args.include_image_dir:
       filename = os.path.join(args.image_dir, f"{name}_{image_id}.png")
+      on_disk_filename = filename
     else:
       filename = f"{name}_{image_id}.png"
+      on_disk_filename = os.path.join(args.image_dir, filename)
     if image_info is None:
       image_info = {'id': image_id,
                   'height': height,
@@ -91,21 +93,21 @@ def process_section(args : argparse.Namespace,
 
     # Handle images regardless of whether it is present in case dataset needs to be
     # recreated locally
-    if not args.skip_download and os.path.exists(filename) == False:
+    if not args.skip_download and os.path.exists(on_disk_filename) == False:
       if media_type == 'video':
         media_object = media_lookup[localization.media]
         print(f"\n\rDownloading {media_object.name} frame={localization.frame}")
         temp_path = api.get_frame(localization.media, frames=[localization.frame])
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        shutil.move(temp_path, filename)
+        os.makedirs(os.path.dirname(on_disk_filename), exist_ok=True)
+        shutil.move(temp_path, on_disk_filename)
       elif media_type == 'image':
         # Download the none AVIF source file as local tools likely don't support that
         media_object = media_lookup[localization.media]
         image_types = [x.mime for x in media_object.media_files.image]
         images_types = [x for x in image_types if x != 'image/avif']
         print(f"\n\rDownloading {media_object.name}")
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        for _ in tator.util.download_media(api, media_object, filename, None, 'image', images_types[0]):
+        os.makedirs(os.path.dirname(on_disk_filename), exist_ok=True)
+        for _ in tator.util.download_media(api, media_object, on_disk_filename, None, 'image', images_types[0]):
           pass
 
   def get_image_id(localization: tator.models.Localization):
