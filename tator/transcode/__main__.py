@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import shutil
 import sys
 from uuid import uuid1
 import logging
@@ -45,6 +46,9 @@ def parse_args():
     parser.add_argument('--group_to', type=int, default=1080,
                          help='Vertical resolutions below this will be transcoded with '
                               'multi-headed ffmpeg.')
+    parser.add_argument('--cleanup', action='store_true',
+                        help="Deletes working files after each file is transcoded and "
+                             "uploaded.")
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -53,7 +57,6 @@ def get_file_paths(path, base):
         'transcoded': base + '_transcoded',
         'thumbnail': base + '_thumbnail.jpg',
         'thumbnail_gif': base + '_thumbnail_gif.gif',
-        'segments': base + '_segments.json',
     }
     return paths
 
@@ -129,6 +132,14 @@ def transcode_single(path, args, gid):
         if args.media_id == -1:
             delete_media(args.host, args.token, media_id)
         raise RuntimeError(f"Transcode of file {path} failed!")
+
+    # Clean up after the transcode is finished (if enabled).
+    if args.cleanup:
+        for path in paths.values():
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
     
 if __name__ == '__main__':
     args = parse_args()
