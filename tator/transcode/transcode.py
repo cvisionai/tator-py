@@ -130,14 +130,13 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
 
-    per_res = ["-an",
-        "-metadata:s", "handler_name=tator",
-        "-g", "25",
-        "-movflags",
-        "faststart+frag_keyframe+empty_moov+default_base_moof"]
-
     print(f"Transcoding to {resolutions}")
     for ridx, resolution in enumerate(resolutions):
+        per_res = ["-an",
+            "-metadata:s", "handler_name=tator",
+            "-g", "25",
+            "-movflags",
+            "faststart+frag_keyframe+empty_moov+default_base_moof"]
         logger.info(f"Generating resolution @ {resolution}")
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         codec = find_best_encoder(codecs[ridx])
