@@ -11,7 +11,6 @@ def test_local_transcode(host, token, project, video_type, video_file):
         '--project', str(project),
         '--type', str(video_type),
         '--section', 'Locally transcoded',
-        '--cleanup',
     ]
     subprocess.run(cmd, check=True)
 
