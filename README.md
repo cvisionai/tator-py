@@ -15,8 +15,7 @@ pip install tator
 
 ### From source
 ```
-pip3 install -r requirements.txt --user
-python3 setup.py install --user
+poetry install
 ```
 
 ## Example usage
@@ -36,4 +35,3 @@ Documentation for all API functions and models can be found in the [OpenAPI docu
 ## Authors
 
 Tator and tator-py are developed by [CVision AI](https://www.cvisionai.com).
-

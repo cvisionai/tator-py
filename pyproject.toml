@@ -3,13 +3,22 @@ line-length = 100
 include = '\.pyi?$'
 
 [tool.poetry]
-name = "tator-py"
-version = "0.1.0"
-description = ""
+name = "tator"
+version = "0.10.22"
+description = "Python client for Tator"
+license = "Proprietary"
 authors = ["CVision AI, Inc. <info@cvisionai.com>"]
+maintainers = ["CVision AI, Inc. <info@cvisionai.com>"]
+readme = "README.md"
+repository = "https://github.com/cvisionai/tator-py"
+documentation = "https://www.tator.io/docs/references/tator-py"
+keywords = ["OpenAPI", "OpenAPI-Generator", "Tator"]
+packages = [
+    { include = "tator" }
+]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 certifi = ">= 14.05.14"
 six = ">=1.10"
 python-dateutil = ">= 2.5.3"
@@ -25,6 +34,7 @@ pandas = "^1.4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
