@@ -89,6 +89,7 @@ def determine_transcode(host, token, media_type, path, group_to):
     available_resolutions = STREAMING_RESOLUTIONS
     crf_map = defaultdict(lambda: 23)
     codec_map = defaultdict(lambda: 'libx264')
+    preset_map = defaultdict(lambda: '')
     try:
         if media_type_obj.streaming_config:
             available_resolutions = []
@@ -96,6 +97,7 @@ def determine_transcode(host, token, media_type, path, group_to):
                 available_resolutions.append(config.resolution)
                 crf_map[config.resolution] = config.crf
                 codec_map[config.resolution] = config.vcodec
+                preset_map[config.resolution] = config.preset
     except Exception as e:
         # Likely an old version of the server
         # TODO: Remove me someday
@@ -113,7 +115,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"
+        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}:{preset_map[resolution]}"
                     for resolution in resolutions if resolution <= group_to],
     }]
 

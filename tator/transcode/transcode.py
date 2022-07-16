@@ -109,6 +109,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     resolutions = [int(config.split(':')[0]) for config in configs]
     crfs = [config.split(':')[1] for config in configs]
     codecs = [config.split(':')[2] for config in configs]
+    presets = [config.split(':')[3] for config in configs]
 
     # Need to get avg_framerate
     cmd = [
@@ -142,13 +143,18 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         codec = find_best_encoder(codecs[ridx])
         quality_flag = "-crf"
         pixel_format = "yuv420p"
+        preset = presets[ridx]
         if codec.find("qsv") >= 0:
             quality_flag = "-global_quality"
             pixel_format = "nv12"
 
         if codec.find('264') > 0:
-            per_res.extend(["-preset", "fast",
+            preset = preset if preset else 'fast'
+            per_res.extend(["-preset", preset,
                             "-tune", "fastdecode"])
+        if codec.find('av1') >= 0:
+            preset = preset if preset else '5'
+            per_res.extend(['-preset', preset])
 
         cmd.extend([*per_res,
                     "-vcodec", codec,
@@ -247,6 +253,8 @@ def convert_archival(host,
                 pixel_format = "yuv420p"
                 tune_settings = ["-preset", archive_config.encode.preset,
                                  "-tune", archive_config.encode.tune]
+                if archive_config.encode.movflags:
+                    tune_settings.extend(['-movflags', archive_config.encode.movflags])
                 if codec.find("qsv") >= 0:
                     quality_flag = "-global_quality"
                     pixel_format = "nv12"
