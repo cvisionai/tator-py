@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 import shutil
 
@@ -53,14 +54,16 @@ def codegen():
     cmd = ["git", "rev-parse", "HEAD"]
     git_rev = subprocess.check_output(cmd).strip().decode("utf-8")
 
-    # Update the package version in the config file
+    # Generate the config file containing the version info for openapi
     pyproject = toml.load(PYPROJECT_TOML)
     version = pyproject["tool"]["poetry"]["version"]
-    with open(CONFIG_FILENAME, "r") as fp:
-        lines = fp.readlines()
+    config_json = {
+        "packageName": "tator_openapi",
+        "projectName": "tator_openapi",
+        "packageVersion": version,
+    }
     with open(CONFIG_FILENAME, "w") as fp:
-        for line in lines:
-            fp.write(re.sub(r'("packageVersion": ).*$', r'\1"{}"'.format(version), line))
+        json.dump(config_json, fp, sort_keys=True, indent=4)
 
     # Generate code using openapi generator docker image.
     pwd = os.path.dirname(os.path.abspath(__file__))
@@ -88,8 +91,9 @@ def codegen():
     ]
     subprocess.run(cmd, check=True)
 
-    # Remove the schema.
+    # Remove the schema and config
     os.remove(SCHEMA_FILENAME)
+    os.remove(CONFIG_FILENAME)
 
     # Copy relevant directories into openapi.
     out_dir = os.path.join(pwd, "tator/openapi")
