@@ -125,7 +125,7 @@ def determine_transcode(host, token, media_type, path, group_to):
         'path': path,
         'raw_height': height,
         'raw_width': width,
-        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}"],
+        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}:{preset_map[resolution]}"],
     } for resolution in resolutions if resolution > group_to]
 
     # Archival workloads
