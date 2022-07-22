@@ -14,7 +14,14 @@ repository = "https://github.com/cvisionai/tator-py"
 documentation = "https://www.tator.io/docs/references/tator-py"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Tator"]
 packages = [
-    { include = "tator" }
+    { include = "tator" },
+    { include = "tator/extractor" },
+    { include = "tator/transcode" },
+    { include = "tator/util" },
+    { include = "tator/openapi" },
+    { include = "tator/openapi/tator_openapi" },
+    { include = "tator/openapi/tator_openapi/api" },
+    { include = "tator/openapi/tator_openapi/models" }
 ]
 
 [tool.poetry.dependencies]
