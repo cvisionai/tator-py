@@ -75,25 +75,12 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
     with tempfile.TemporaryDirectory() as d:
         for pos, media_id in enumerate(media_ids):
             media = media_lookup[media_id]
-            thumbnails = media.media_files.thumbnail
-            if thumbnails:
-                thumb = thumbnails[0].path
             thumbnail_gifs = media.media_files.thumbnail_gif
             if thumbnail_gifs:
                 thumb_gif = thumbnail_gifs[0].path
-            for _ in _download_file(api, media.project, thumb,
-                                    os.path.join(d, f"thumb_{pos:09d}.jpg")):
-                pass
             for _ in _download_file(api, media.project, thumb_gif,
                                     os.path.join(d, f"gif_{pos:09d}.gif")):
                 pass
-
-        cmd = ["ffmpeg",
-               "-y",
-               "-i", "thumb_%09d.jpg",
-               "-vf",f"tile={layout[1]}x{layout[0]},scale=256:-1",
-               os.path.join(d,"tiled_thumb.jpg")]
-        subprocess.run(cmd,cwd=d,check=True)
 
         input_files=[]
         rows=layout[0]
@@ -116,6 +103,8 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
         print(filter_graph)
         for pos,_ in enumerate(media_ids):
             input_files.extend(['-i', f'gif_{pos:09d}.gif'])
+
+        # Create GIF
         cmd = ["ffmpeg",
                "-y",
                *input_files,
@@ -123,8 +112,16 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
                "-map", "[final]",
                "-shortest",
                "tiled_gif.gif"]
-
         subprocess.run(cmd, cwd=d, check=True)
+
+        # Create thumbnail from first frame of GIF
+        cmd = ["ffmpeg",
+               "-y",
+               "-i", "tiled_gif.gif",
+               "-vf",f"select=eq(n\,0)",
+               "-q:v", "3",
+               os.path.join(d,"tiled_thumb.jpg")]
+        subprocess.run(cmd,cwd=d,check=True)
 
         md5=md5sum(os.path.join(d,'tiled_gif.gif'))
 
