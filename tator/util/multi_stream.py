@@ -15,7 +15,8 @@ from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
 
-def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=None):
+def make_multi_stream(api, type_id, layout, name, media_ids, section,
+                      quality=None, frame_offset=None):
     """ Uploads a single media file.
 
     :param api: :class:`tator.TatorApi` object.
@@ -25,6 +26,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
     :param media_ids: List of media_ids to multi-stream
     :param section: Section name. If this section does not exist it will be created.
     :param quality: [Optional] Media section to upload to.
+    :param frame_offset: [Optional] Frame offsets to apply to each stream.
     :returns: Response from media object creation.
     """
 
@@ -168,6 +170,9 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                      "ids": media_ids}
         if quality:
             multi_def.update({"quality": quality})
+        if frame_offset:
+            assert(len(frame_offset) == len(media_ids), "Length of frame offsets did not match length of media IDs!")
+            multi_def.update({"frameOffset": frame_offset})
         api.update_media(resp.id, {"multi": multi_def})
 
         return resp
