@@ -397,6 +397,8 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
     localization_media_ids = []
     if args.skip_localizations:
         logger.info("Skipping localizations due to --skip_localizations")
+        localizations = []
+        localization_mapping = {}
     else:
         # Get existing localizations.
         dest_media_ids = list(media_mapping.values())
@@ -466,6 +468,8 @@ def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
     state_media_ids = []
     if args.skip_states:
         logger.info("Skipping states due to --skip_states")
+        states = []
+        state_mapping = {}
     else:
         # Get existing states.
         dest_media_ids = list(media_mapping.values())
