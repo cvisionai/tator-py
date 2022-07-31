@@ -24,13 +24,15 @@ def find_best_encoder(codec):
     global encoder_lookup
     if encoder_lookup is None:
         # Default codecs
-        encoder_lookup={"hevc": "libsvt_hevc",
+        encoder_lookup={"hevc": "libx265",
                         "h264": "libx264",
                         "av1": "libsvtav1"}
         cmd = [
             "ffmpeg",
             "-encoders" ]
         output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
+        if output.find("libsvt_hevc") >= 0:
+            encoder_lookup["hevc"] = "libsvt_hevc"
         if output.find("hevc_qsv") >= 0:
             encoder_lookup["hevc"] = "hevc_qsv"
         if output.find("h264_qsv") >= 0:
