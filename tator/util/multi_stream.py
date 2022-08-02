@@ -15,7 +15,8 @@ from ..openapi.tator_openapi.models import MessageResponse
 
 logger = logging.getLogger(__name__)
 
-def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=None):
+def make_multi_stream(api, type_id, layout, name, media_ids, section,
+                      quality=None, frame_offset=None):
     """ Uploads a single media file.
 
     :param api: :class:`tator.TatorApi` object.
@@ -25,6 +26,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
     :param media_ids: List of media_ids to multi-stream
     :param section: Section name. If this section does not exist it will be created.
     :param quality: [Optional] Media section to upload to.
+    :param frame_offset: [Optional] Frame offsets to apply to each stream.
     :returns: Response from media object creation.
     """
 
@@ -73,25 +75,12 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
     with tempfile.TemporaryDirectory() as d:
         for pos, media_id in enumerate(media_ids):
             media = media_lookup[media_id]
-            thumbnails = media.media_files.thumbnail
-            if thumbnails:
-                thumb = thumbnails[0].path
             thumbnail_gifs = media.media_files.thumbnail_gif
             if thumbnail_gifs:
                 thumb_gif = thumbnail_gifs[0].path
-            for _ in _download_file(api, media.project, thumb,
-                                    os.path.join(d, f"thumb_{pos:09d}.jpg")):
-                pass
             for _ in _download_file(api, media.project, thumb_gif,
                                     os.path.join(d, f"gif_{pos:09d}.gif")):
                 pass
-
-        cmd = ["ffmpeg",
-               "-y",
-               "-i", "thumb_%09d.jpg",
-               "-vf",f"tile={layout[1]}x{layout[0]},scale=256:-1",
-               os.path.join(d,"tiled_thumb.jpg")]
-        subprocess.run(cmd,cwd=d,check=True)
 
         input_files=[]
         rows=layout[0]
@@ -114,6 +103,8 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
         print(filter_graph)
         for pos,_ in enumerate(media_ids):
             input_files.extend(['-i', f'gif_{pos:09d}.gif'])
+
+        # Create GIF
         cmd = ["ffmpeg",
                "-y",
                *input_files,
@@ -121,8 +112,16 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                "-map", "[final]",
                "-shortest",
                "tiled_gif.gif"]
-
         subprocess.run(cmd, cwd=d, check=True)
+
+        # Create thumbnail from first frame of GIF
+        cmd = ["ffmpeg",
+               "-y",
+               "-i", "tiled_gif.gif",
+               "-vf",f"select=eq(n\,0)",
+               "-q:v", "3",
+               os.path.join(d,"tiled_thumb.jpg")]
+        subprocess.run(cmd,cwd=d,check=True)
 
         md5=md5sum(os.path.join(d,'tiled_gif.gif'))
 
@@ -168,6 +167,9 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section, quality=No
                      "ids": media_ids}
         if quality:
             multi_def.update({"quality": quality})
+        if frame_offset:
+            assert(len(frame_offset) == len(media_ids), "Length of frame offsets did not match length of media IDs!")
+            multi_def.update({"frameOffset": frame_offset})
         api.update_media(resp.id, {"multi": multi_def})
 
         return resp
