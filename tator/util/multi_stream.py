@@ -118,7 +118,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
         cmd = ["ffmpeg",
                "-y",
                "-i", "tiled_gif.gif",
-               "-vf",f"select=eq(n\,0)",
+               "-vf",f"select=eq(n\\,0)",
                "-q:v", "3",
                os.path.join(d,"tiled_thumb.jpg")]
         subprocess.run(cmd,cwd=d,check=True)
@@ -168,7 +168,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
         if quality:
             multi_def.update({"quality": quality})
         if frame_offset:
-            assert(len(frame_offset) == len(media_ids), "Length of frame offsets did not match length of media IDs!")
+            assert len(frame_offset) == len(media_ids), "Length of frame offsets did not match length of media IDs!"
             multi_def.update({"frameOffset": frame_offset})
         api.update_media(resp.id, {"multi": multi_def})
 
