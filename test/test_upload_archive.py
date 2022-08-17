@@ -5,6 +5,7 @@ import tempfile
 import random
 import uuid
 import datetime
+import time
 
 import tator
 from .test_localization import random_localization
@@ -67,11 +68,11 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
                         box_type, state_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
-    video_base = os.path.basename(video_file)
+    video_base = f"archive_{os.path.basename(video_file)}"
 
     # Add images to tar file.
     paths = glob.glob(os.path.join(image_set, '**/*.jpg'), recursive=True)
-    paths = paths[:1000] # Only upload the first 10 files.
+    paths = paths[:10] # Only upload the first 10 files.
     tar_buf = tempfile.NamedTemporaryFile()
     tar_file = tarfile.TarFile(mode='w', fileobj=tar_buf)
     for idx,fp in enumerate(paths):
@@ -110,4 +111,19 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
         print(f"Archive upload progress: {progress}%")
     assert isinstance(response, tator.models.Transcode)
     print(response.message)
+
+    # Wait for video upload to finish transcoding.
+    while True:
+        response = tator_api.get_media_list(project, name=video_base)
+        print("Waiting for archive transcode...")
+        time.sleep(2.5)
+        if len(response) == 0:
+            continue
+        if response[0].media_files is None:
+            continue
+        streaming = response[0].media_files.streaming
+        have_archival = response[0].media_files.archival is not None
+        if streaming and have_archival and len(streaming) == 4:
+            video_id = response[0].id
+            break
     
