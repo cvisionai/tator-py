@@ -108,6 +108,12 @@ def determine_transcode(host, token, media_type, path, group_to):
     resolutions = [resolution for resolution in available_resolutions if resolution < height]
     if height <= max(available_resolutions) and not height in resolutions:
         resolutions.append(height)
+        higher_resolutions = [r for r in available_resolutions if r > height]
+        higher_resolutions.sort()
+        # copy personality form the nearest higher resolution
+        crf_map[height] = crf_map[higher_resolutions[0]]
+        codec_map[height] = codec_map[higher_resolutions[0]]
+        preset_map[height] = preset_map[higher_resolutions[0]]
 
     # Streaming workloads (low res)
     workloads = [{
