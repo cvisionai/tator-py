@@ -105,8 +105,8 @@ def determine_transcode(host, token, media_type, path, group_to):
         print("Defaulting to STREAMING_RESOLUTIONS")
     print(f"Selected Resolutions {available_resolutions}")
     # Make a list of resolutions needed
-    resolutions = [resolution for resolution in available_resolutions if resolution < height]
-    if height <= max(available_resolutions) and not height in resolutions:
+    resolutions = [resolution for resolution in available_resolutions if resolution <= height]
+    if height < max(available_resolutions) and not height in resolutions:
         resolutions.append(height)
         higher_resolutions = [r for r in available_resolutions if r > height]
         higher_resolutions.sort()
