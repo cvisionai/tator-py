@@ -107,7 +107,9 @@ def transcode_single(path, args, gid):
                         paths['thumbnail_gif'])
 
         # Determine transcodes that need to be done.
-        workloads = determine_transcode(args.host, args.token, args.type, path, group_to=args.group_to)
+        workloads = determine_transcode(
+            args.host, args.token, args.type, media_id, path, group_to=args.group_to
+        )
 
         # Transcode the video file.
         for workload in workloads:

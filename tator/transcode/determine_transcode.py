@@ -26,6 +26,7 @@ def parse_args():
                          help='Vertical resolutions below this will be transcoded with '
                               'multi-headed ffmpeg.')
     parser.add_argument('--output', help='Path to output json file.')
+    parser.add_argument('--media-id', type=int, help="Existing media ID, if applicable", default=-1)
     return parser.parse_args()
 
 def determine_transcode(host, token, media_type, media_id, path, group_to):
@@ -90,32 +91,39 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     assert isinstance(media_type_obj, MediaType)
 
     # Get media object
-    media_obj = api.get_media(media_id)
+    try:
+        media_obj = api.get_media(media_id)
+    except:
+        media_obj = None
 
-    # Get existing streaming/archival/audio file info
-    if media_obj.media_files and media_obj.media_files.streaming:
-        existing_streaming_resolutions = set(
-            [
-                (stream_info.resolution[0], find_best_encoder(stream_info.codec))
-                for stream_info in media_obj.media_files.streaming
-            ]
-        )
+    if media_obj:
+        # Get existing streaming/archival/audio file info
+        if media_obj.media_files and media_obj.media_files.streaming:
+            existing_streaming_resolutions = set(
+                [
+                    (stream_info.resolution[0], find_best_encoder(stream_info.codec))
+                    for stream_info in media_obj.media_files.streaming
+                ]
+            )
+        else:
+            existing_streaming_resolutions = []
+
+        if media_obj.media_files and media_obj.media_files.archival:
+            existing_archival_resolutions = set(
+                [
+                    (archival_info.resolution[0], find_best_encoder(archival_info.codec))
+                    for archival_info in media_obj.media_files.archival
+                ]
+            )
+        else:
+            existing_archival_resolutions = []
+
+        # If at least one audio track exists, don't retranscode it
+        if audio and media_obj.media_files and media_obj.media_files.audio:
+            audio = False
     else:
-        existing_streaming_resolutions = []
-
-    if media_obj.media_files and media_obj.media_files.archival:
-        existing_archival_resolutions = set(
-            [
-                (archival_info.resolution[0], find_best_encoder(archival_info.codec))
-                for archival_info in media_obj.media_files.archival
-            ]
-        )
-    else:
-        existing_archival_resolutions = []
-
-    # If at least one audio track exists, don't retranscode it
-    if audio and media_obj.media_files and media_obj.media_files.audio:
-        audio = False
+        existing_streaming_resolutions = set()
+        existing_archival_resolutions = set()
 
     available_resolutions = STREAMING_RESOLUTIONS
     crf_map = defaultdict(lambda: 23)
@@ -223,8 +231,9 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
 
 if __name__ == '__main__':
     args = parse_args()
-    workloads = determine_transcode(args.host, args.token, args.media_type, args.path,
-                                    args.group_to)
+    workloads = determine_transcode(
+        args.host, args.token, args.media_type, args.media_id, args.path, args.group_to
+    )
     for workload in workloads:
         workload['configs'] = ','.join(workload['configs'])
     with open(args.output, 'w') as f:
