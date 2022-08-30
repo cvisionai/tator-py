@@ -9,7 +9,7 @@ import os
 from ..openapi.tator_openapi.models import MediaType
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
-from .transcode import get_length_info
+from .transcode import find_best_encoder, get_length_info
 from collections import defaultdict
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
@@ -94,18 +94,22 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
 
     # Get existing streaming/archival/audio file info
     if media_obj.media_files and media_obj.media_files.streaming:
-        existing_streaming_resolutions = [
-            (stream_info.resolution[0], stream_info.codec)
-            for stream_info in media_obj.media_files.streaming
-        ]
+        existing_streaming_resolutions = set(
+            [
+                (stream_info.resolution[0], find_best_encoder(stream_info.codec))
+                for stream_info in media_obj.media_files.streaming
+            ]
+        )
     else:
         existing_streaming_resolutions = []
 
     if media_obj.media_files and media_obj.media_files.archival:
-        existing_archival_resolutions = [
-            (archival_info.resolution[0], archival_info.codec)
-            for archival_info in media_obj.media_files.archival
-        ]
+        existing_archival_resolutions = set(
+            [
+                (archival_info.resolution[0], find_best_encoder(archival_info.codec))
+                for archival_info in media_obj.media_files.archival
+            ]
+        )
     else:
         existing_archival_resolutions = []
 
