@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
     parser.add_argument('--name', type=str, help='Name of the media.')
     parser.add_argument('--section', type=str, help='Media section name.')
-    parser.add_argument('--attributes', type=str, help="Attributes for media")
+    parser.add_argument('--attributes', type=str, help="Attributes for media as a JSON string.")
     parser.add_argument('--media_id', type=int, help="Existing media ID, if applicable",
                         default=-1)
     parser.add_argument('--gid', type=str, help="Upload group ID.")
