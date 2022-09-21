@@ -259,10 +259,10 @@ def test_video_and_image_type_name_change(
     # No attributes should have the old name
     assert all(attr.name != source_name for attr in entity_type.attribute_types)
 
-    # The image_type attribute should also have the new name
+    # The image_type attribute should not have the new name
     entity_type = tator_api.get_media_type(image_type)
-    assert any(attr.name == dest_name for attr in entity_type.attribute_types)
-    assert all(attr.name != source_name for attr in entity_type.attribute_types)
+    assert all(attr.name != dest_name for attr in entity_type.attribute_types)
+    assert any(attr.name == source_name for attr in entity_type.attribute_types)
 
     # Delete the attribute to keep clean for other tests
     attribute_delete = {
@@ -270,6 +270,10 @@ def test_video_and_image_type_name_change(
         "attribute_to_delete": dest_name,
     }
     tator_api.delete_attribute(id=attribute_video_type, attribute_type_delete=attribute_delete)
+    attribute_delete = {
+        "entity_type": "MediaType",
+        "attribute_to_delete": source_name,
+    }
     tator_api.delete_attribute(id=image_type, attribute_type_delete=attribute_delete)
 
 
