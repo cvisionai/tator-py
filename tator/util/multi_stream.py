@@ -73,74 +73,77 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
 
     # Download the thumbnails into a temporary
     with tempfile.TemporaryDirectory() as d:
-        for pos, media_id in enumerate(media_ids):
-            media = media_lookup[media_id]
-            thumbnail_gifs = media.media_files.thumbnail_gif
-            if thumbnail_gifs:
-                thumb_gif = thumbnail_gifs[0].path
-            for _ in _download_file(api, media.project, thumb_gif,
-                                    os.path.join(d, f"gif_{pos:09d}.gif")):
-                pass
+        try:
+            for pos, media_id in enumerate(media_ids):
+                media = media_lookup[media_id]
+                md5=media.md5
+                thumbnail_gifs = media.media_files.thumbnail_gif
+                if thumbnail_gifs:
+                    thumb_gif = thumbnail_gifs[0].path
+                for _ in _download_file(api, media.project, thumb_gif,
+                                        os.path.join(d, f"gif_{pos:09d}.gif")):
+                    pass
 
-        input_files=[]
-        rows=layout[0]
-        cols=layout[1]
-        filter_graph=""
-        for row in range(rows):
-            # Resize each input to a square prior to grid
-            for col in range(cols):
-                filter_graph += f"[{col}:v]scale=256:256[resize{col}];"
-            for col in range(cols):
-                filter_graph += f"[resize{col}]"
-                if cols > 1 and col + 1 == cols:
-                    filter_graph += f"hstack=inputs={cols}[r{row}];"
-        for row in range(rows):
-            if cols > 1:
-                filter_graph += f"[r{row}]"
-        if rows > 1 and row + 1 == rows:
-            filter_graph+=f'vstack=inputs={rows}[tiled_gif];[tiled_gif]'
-        filter_graph+=f'scale=256:-1[raw];[raw]split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse[final]'
-        print(filter_graph)
-        for pos,_ in enumerate(media_ids):
-            input_files.extend(['-i', f'gif_{pos:09d}.gif'])
+            input_files=[]
+            rows=layout[0]
+            cols=layout[1]
+            filter_graph=""
+            for row in range(rows):
+                # Resize each input to a square prior to grid
+                for col in range(cols):
+                    filter_graph += f"[{col}:v]scale=256:256[resize{col}];"
+                for col in range(cols):
+                    filter_graph += f"[resize{col}]"
+                    if cols > 1 and col + 1 == cols:
+                        filter_graph += f"hstack=inputs={cols}[r{row}];"
+            for row in range(rows):
+                if cols > 1:
+                    filter_graph += f"[r{row}]"
+            if rows > 1 and row + 1 == rows:
+                filter_graph+=f'vstack=inputs={rows}[tiled_gif];[tiled_gif]'
+            filter_graph+=f'scale=256:-1[raw];[raw]split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse[final]'
+            print(filter_graph)
+            for pos,_ in enumerate(media_ids):
+                input_files.extend(['-i', f'gif_{pos:09d}.gif'])
 
-        # Create GIF
-        cmd = ["ffmpeg",
-               "-y",
-               *input_files,
-               "-filter_complex", filter_graph,
-               "-map", "[final]",
-               "-shortest",
-               "tiled_gif.gif"]
-        subprocess.run(cmd, cwd=d, check=True)
+            # Create GIF
+            cmd = ["ffmpeg",
+                "-y",
+                *input_files,
+                "-filter_complex", filter_graph,
+                "-map", "[final]",
+                "-shortest",
+                "tiled_gif.gif"]
+            subprocess.run(cmd, cwd=d, check=True)
 
-        # Create thumbnail from first frame of GIF
-        cmd = ["ffmpeg",
-               "-y",
-               "-i", "tiled_gif.gif",
-               "-vf",f"select=eq(n\\,0)",
-               "-q:v", "3",
-               os.path.join(d,"tiled_thumb.jpg")]
-        subprocess.run(cmd,cwd=d,check=True)
+            # Create thumbnail from first frame of GIF
+            cmd = ["ffmpeg",
+                "-y",
+                "-i", "tiled_gif.gif",
+                "-vf",f"select=eq(n\\,0)",
+                "-q:v", "3",
+                os.path.join(d,"tiled_thumb.jpg")]
+            subprocess.run(cmd,cwd=d,check=True)
 
-        md5=md5sum(os.path.join(d,'tiled_gif.gif'))
+            thumb_path = os.path.join(d,'tiled_thumb.jpg')
+            thumb_gif_path = os.path.join(d,'tiled_gif.gif')
+        except:
+            thumb_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tator-symbol.png")
+            thumb_gif_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tator-symbol.gif")
 
         media_spec = {'attributes': attributes,
-                      'name': name,
-                      'md5': md5,
-                      'section': section_obj.name,
-                      'type': type_id}
-
+                'name': name,
+                'md5': md5,
+                'section': section_obj.name,
+                'type': type_id}
         resp = api.create_media(project, media_spec)
         print(f"Created {resp.id}")
-
-        thumb_path = os.path.join(d,'tiled_thumb.jpg')
-        thumb_gif_path = os.path.join(d,'tiled_gif.gif')
+        
         for progress, thumbnail_info in _upload_file(api, project, thumb_path,
-                                                     media_id=resp.id, filename='tiled_thumb.jpg'):
-            logger.info(f"Thumbnail upload progress: {progress}%")
+                                                        media_id=resp.id, filename='tiled_thumb.jpg'):
+                logger.info(f"Thumbnail upload progress: {progress}%")
         for progress, thumbnail_gif_info in _upload_file(api, project, thumb_gif_path,
-                                                         media_id=resp.id, filename='tiled_gif.gif'):
+                                                        media_id=resp.id, filename='tiled_gif.gif'):
             logger.info(f"Thumbnail gif upload progress: {progress}%")
 
         # Open images to get output resolution.
