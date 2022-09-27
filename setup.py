@@ -61,7 +61,7 @@ def codegen():
     # Generate code using openapi generator docker image.
     pwd = os.path.dirname(os.path.abspath(__file__))
     cmd = [
-        'docker', 'run', '-it', '--rm',
+        'docker', 'run', '--rm',
         '-v', f"{pwd}:/pwd",
         '-v', f"{pwd}/out:/out",
         'openapitools/openapi-generator-cli:v4.3.1', 'generate',
@@ -92,7 +92,7 @@ def codegen():
 
     # need to delete from within docker
     cmd = [
-        'docker', 'run', '-it', '--rm',
+        'docker', 'run', '--rm',
         '-v', f"{pwd}/out:/out",
          'openapitools/openapi-generator-cli:v4.3.1',
         'rm', '-fr',
