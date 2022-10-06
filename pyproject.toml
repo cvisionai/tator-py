@@ -4,7 +4,7 @@ include = '\.pyi?$'
 
 [tool.poetry]
 name = "tator"
-version = "0.10.22"
+version = "0.10.25"
 description = "Python client for Tator"
 license = "Proprietary"
 authors = ["CVision AI, Inc. <info@cvisionai.com>"]
