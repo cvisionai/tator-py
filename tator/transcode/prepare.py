@@ -70,20 +70,21 @@ if __name__ == '__main__':
     else:
         name = os.path.basename(paths['original'])
 
-    # Determine transcodes that need to be done.
-    workloads = determine_transcode(args.host, args.token, args.type, paths['original'],
-                                    args.group_to)
-    for workload in workloads:
-        workload['configs'] = ','.join(workload['configs'])
-    with open(paths['workloads'], 'w') as f:
-        json.dump(workloads, f)
-
     # Create the media object.
     if args.media_id == -1:
         media_id = create_media(args.host, args.token, args.project, args.type, args.section,
                                 name, md5, args.gid, args.uid, args.attributes, args.url)
     else:
         media_id = args.media_id
+
+    # Determine transcodes that need to be done.
+    workloads = determine_transcode(
+        args.host, args.token, args.type, media_id, paths['original'], args.group_to
+    )
+    for workload in workloads:
+        workload['configs'] = ','.join(workload['configs'])
+    with open(paths['workloads'], 'w') as f:
+        json.dump(workloads, f)
 
     with open(paths['media_id'], 'w') as f:
         f.write(str(media_id))

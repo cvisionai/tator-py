@@ -9,7 +9,7 @@ import os
 from ..openapi.tator_openapi.models import MediaType
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
-from .transcode import get_length_info
+from .transcode import find_best_encoder, get_length_info
 from collections import defaultdict
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
@@ -26,14 +26,17 @@ def parse_args():
                          help='Vertical resolutions below this will be transcoded with '
                               'multi-headed ffmpeg.')
     parser.add_argument('--output', help='Path to output json file.')
+    parser.add_argument('--media-id', type=int, help="Existing media ID, if applicable", default=-1)
     return parser.parse_args()
 
-def determine_transcode(host, token, media_type, path, group_to):
+def determine_transcode(host, token, media_type, media_id, path, group_to):
     """ Determine transcode workloads to be performed.
 
     :param host: URL of host.
     :param token: API token.
     :param media_type: Unique integer identifying a media type.
+    :param media_id: Unique integer identifying the media object for which the transcode workloads
+                     need to be determined.
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
@@ -84,7 +87,43 @@ def determine_transcode(host, token, media_type, path, group_to):
                 break
     else:
         media_type_obj = api.get_media_type(media_type)
+
     assert isinstance(media_type_obj, MediaType)
+
+    # Get media object
+    try:
+        media_obj = api.get_media(media_id)
+    except:
+        media_obj = None
+
+    if media_obj:
+        # Get existing streaming/archival/audio file info
+        if media_obj.media_files and media_obj.media_files.streaming:
+            existing_streaming_resolutions = set(
+                [
+                    (stream_info.resolution[0], find_best_encoder(stream_info.codec))
+                    for stream_info in media_obj.media_files.streaming
+                ]
+            )
+        else:
+            existing_streaming_resolutions = []
+
+        if media_obj.media_files and media_obj.media_files.archival:
+            existing_archival_resolutions = set(
+                [
+                    (archival_info.resolution[0], find_best_encoder(archival_info.codec))
+                    for archival_info in media_obj.media_files.archival
+                ]
+            )
+        else:
+            existing_archival_resolutions = []
+
+        # If at least one audio track exists, don't retranscode it
+        if audio and media_obj.media_files and media_obj.media_files.audio:
+            audio = False
+    else:
+        existing_streaming_resolutions = set()
+        existing_archival_resolutions = set()
 
     available_resolutions = STREAMING_RESOLUTIONS
     crf_map = defaultdict(lambda: 23)
@@ -104,47 +143,75 @@ def determine_transcode(host, token, media_type, path, group_to):
         print(e)
         print("Defaulting to STREAMING_RESOLUTIONS")
     print(f"Selected Resolutions {available_resolutions}")
-    # Make a list of resolutions needed
-    resolutions = [resolution for resolution in available_resolutions if resolution < height]
-    if height <= max(available_resolutions) and not height in resolutions:
-        resolutions.append(height)
-        higher_resolutions = [r for r in available_resolutions if r > height]
-        higher_resolutions.sort()
-        # copy personality form the nearest higher resolution
-        crf_map[height] = crf_map[higher_resolutions[0]]
-        codec_map[height] = codec_map[higher_resolutions[0]]
-        preset_map[height] = preset_map[higher_resolutions[0]]
 
-    # Streaming workloads (low res)
-    workloads = [{
-        'category': 'streaming',
-        'path': path,
-        'raw_height': height,
-        'raw_width': width,
-        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}:{preset_map[resolution]}"
-                    for resolution in resolutions if resolution <= group_to],
-    }]
+    # Returns `True` if the resolution is smaller than the source video and it does not exist
+    # already in the media object
+    def _is_resolution_needed(resolution):
+        if resolution > height:
+            return False
+        if (resolution, codec_map[resolution]) in existing_streaming_resolutions:
+            return False
+        return True
+
+    # Make a list of resolutions needed
+    resolutions = [res for res in available_resolutions if _is_resolution_needed(res)]
+    if height < max(available_resolutions) and not height in resolutions:
+        smallest_higher_res = min(r for r in available_resolutions if r > height)
+
+        if not (height, codec_map[smallest_higher_res]) in existing_streaming_resolutions:
+            # copy personality form the nearest higher resolution
+            crf_map[height] = crf_map[smallest_higher_res]
+            codec_map[height] = codec_map[smallest_higher_res]
+            preset_map[height] = preset_map[smallest_higher_res]
+            resolutions.append(height)
+
+    # Streaming workloads (lower res)
+    if any(res <= group_to for res in resolutions):
+        workloads = [
+            {
+                "category": "streaming",
+                "path": path,
+                "raw_height": height,
+                "raw_width": width,
+                "configs": [
+                    f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}"
+                    for res in resolutions
+                    if res <= group_to
+                ],
+            }
+        ]
+    else:
+        workloads = []
 
     # Streaming workloads (higher res)
-    workloads += [{
-        'category': 'streaming',
-        'path': path,
-        'raw_height': height,
-        'raw_width': width,
-        'configs': [f"{resolution}:{crf_map[resolution]}:{codec_map[resolution]}:{preset_map[resolution]}"],
-    } for resolution in resolutions if resolution > group_to]
+    workloads.extend(
+        {
+            "category": "streaming",
+            "path": path,
+            "raw_height": height,
+            "raw_width": width,
+            "configs": [
+                f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}"
+            ],
+        }
+        for res in resolutions
+        if res > group_to
+    )
 
     # Archival workloads
     # This will force all transcodes to run `convert_archival` on the raw video,
     # which will fetch the media type and take action based on the returned 
     # archive config.
-    workloads += [{
-        'category': 'archival',
-        'path': path,
-        'raw_height': height,
-        'raw_width': width,
-        'configs': [],
-    }]
+    if not existing_archival_resolutions:
+        workloads.append(
+            {
+                'category': 'archival',
+                'path': path,
+                'raw_height': height,
+                'raw_width': width,
+                'configs': [],
+            }
+        )
 
     # Audio workloads
     if audio:
@@ -164,8 +231,9 @@ def determine_transcode(host, token, media_type, path, group_to):
 
 if __name__ == '__main__':
     args = parse_args()
-    workloads = determine_transcode(args.host, args.token, args.media_type, args.path,
-                                    args.group_to)
+    workloads = determine_transcode(
+        args.host, args.token, args.media_type, args.media_id, args.path, args.group_to
+    )
     for workload in workloads:
         workload['configs'] = ','.join(workload['configs'])
     with open(args.output, 'w') as f:

@@ -70,7 +70,6 @@ def codegen():
     cmd = [
         "docker",
         "run",
-        "-it",
         "--rm",
         "-v",
         f"{pwd}:/pwd",
@@ -113,7 +112,6 @@ def codegen():
     cmd = [
         "docker",
         "run",
-        "-it",
         "--rm",
         "-v",
         f"{pwd}/out:/out",

@@ -67,6 +67,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         with get_data(path) as f:
             for chunk_count, url in enumerate(upload_info.urls):
                 file_part = f.read(chunk_size)
+                default_etag_val = str(chunk_count) if gcp_upload else None
                 for attempt in range(MAX_RETRIES):
                     try:
                         kwargs = {"data": file_part}
@@ -78,9 +79,9 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                                 "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
                             }
                         response = requests.put(url, **kwargs)
-                        etag_str = response.headers.get("ETag", None)
+                        etag_str = response.headers.get("ETag", default_etag_val)
                         if etag_str == None:
-                            raise Exception("No ETag in response!")
+                            raise RuntimeError("No ETag in response!")
                         parts.append(
                             {
                                 "ETag": etag_str,
@@ -92,7 +93,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                         logger.warning(f"Upload of {path} chunk {chunk_count} failed ({e})! Attempt "
                                        f"{attempt + 1}/{MAX_RETRIES}")
                         if attempt == MAX_RETRIES - 1:
-                            raise Exception(f"Upload of {path} failed!")
+                            raise RuntimeError(f"Upload of {path} failed!")
                         else:
                             time.sleep(10 * attempt)
                             logger.warning(f"Backing off for {10 * attempt} seconds...")
@@ -113,12 +114,12 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                     'parts': parts,
                 })
                 if not isinstance(response, tator.models.MessageResponse):
-                    raise Exception(f"Upload completion failed!")
+                    raise RuntimeError(f"Upload completion failed!")
                 completed=True
             except Exception as e:
                 logger.warning(e)
                 if count == MAX_RETRIES - 1:
-                    raise Exception(f"Upload of {path} failed!")
+                    raise RuntimeError(f"Upload of {path} failed!")
                 else:
                     time.sleep(10 * count)
                     logger.warning(f"Backing off for {10 * count} seconds...")
@@ -135,7 +136,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                     logger.warning(f"Upload of {path} failed ({response.text}) size={len(data)}! Attempt "
                                    f"{attempt + 1}/{MAX_RETRIES}")
                     if attempt == MAX_RETRIES - 1:
-                        raise Exception(f"Upload of {path} failed!")
+                        raise RuntimeError(f"Upload of {path} failed!")
                     else:
                         time.sleep(10 * attempt)
                         logger.warning(f"Backing off for {10 * attempt} seconds...")

@@ -149,7 +149,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 def test_box_type_dtype_change(host, token, project, attribute_box_type, source_dtype, dest_dtype):
     tator_api = tator.get_api(host, token)
     params = {
-        "source_name": f"{source_dtype} attribute to modify",
+        "source_name": f"{source_dtype} attribute to modify {uuid4()}",
         "source_dtype": source_dtype,
         "dest_dtype": dest_dtype,
         "expected_asserts": 4,
@@ -161,7 +161,7 @@ def test_box_type_dtype_change(host, token, project, attribute_box_type, source_
 def test_box_type_invalid_dtype_change(host, token, project, attribute_box_type, dtype):
     tator_api = tator.get_api(host, token)
     params = {
-        "source_name": f"{dtype} attribute to modify",
+        "source_name": f"{dtype} attribute to modify {uuid4()}",
         "source_dtype": dtype,
         "dest_dtype": "unknown",
         "expected_asserts": 4,
@@ -173,7 +173,7 @@ def test_box_type_invalid_dtype_change(host, token, project, attribute_box_type,
 def test_box_type_name_change(host, token, project, attribute_box_type, dtype):
     tator_api = tator.get_api(host, token)
     params = {
-        "source_name": f"{dtype} attribute to rename",
+        "source_name": f"{dtype} attribute to rename {uuid4()}",
         "source_dtype": dtype,
         "dest_name": f"renamed {dtype} attribute",
         "expected_asserts": 5,
@@ -185,7 +185,7 @@ def test_box_type_name_change(host, token, project, attribute_box_type, dtype):
 @pytest.mark.parametrize("dest_dtype", allowed_mutations.keys())
 def test_box_type_full_mutation(host, token, project, attribute_box_type, source_dtype, dest_dtype):
     params = {
-        "source_name": f"{source_dtype} attribute to modify",
+        "source_name": f"{source_dtype} attribute to modify {uuid4()}",
         "source_dtype": source_dtype,
         "dest_name": f"renamed {source_dtype} -> {dest_dtype} attribute",
         "dest_dtype": dest_dtype,
@@ -195,6 +195,7 @@ def test_box_type_full_mutation(host, token, project, attribute_box_type, source
     mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
+@pytest.mark.skip(reason="Will be reinstated with the removal of ES")
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
 def test_video_and_image_type_name_change(
     host, token, project, attribute_video_type, image_type, dtype

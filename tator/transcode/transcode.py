@@ -31,12 +31,16 @@ def find_best_encoder(codec):
             "ffmpeg",
             "-encoders" ]
         output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
+        # Look for QSV, but use VAAPI frontend
+        # TODO: Use `vainfo` directly to query available hardware entry points
         if output.find("libsvt_hevc") >= 0:
             encoder_lookup["hevc"] = "libsvt_hevc"
         if output.find("hevc_qsv") >= 0:
-            encoder_lookup["hevc"] = "hevc_qsv"
+            encoder_lookup["hevc"] = "hevc_vaapi"
         if output.find("h264_qsv") >= 0:
-            encoder_lookup["h264"] = "h264_qsv"
+            encoder_lookup["h264"] = "h264_vaapi"
+        if output.find("av1_qsv") >= 0:
+            encoder_lookup["av1"] = "av1_vaapi"
         print(f"encoder_lookup = {encoder_lookup}")
     return encoder_lookup.get(codec,codec)
 
@@ -125,6 +129,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
+    input_pixel_format=video_info['streams'][0]['pix_fmt']
 
     vid_dims = [raw_height, raw_width]
     cmd = [
@@ -132,6 +137,13 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "-i", path,
         "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
+
+    vaapi_present = [c for c in codecs if find_best_encoder(c).find('vaapi') >= 0]
+    print(codecs)
+    print(vaapi_present)
+    if vaapi_present:
+        cmd.extend(['-init_hw_device', 'vaapi=hw',
+                    '-filter_hw_device', 'hw'])
 
     print(f"Transcoding to {resolutions}")
     for ridx, resolution in enumerate(resolutions):
@@ -145,16 +157,19 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         codec = find_best_encoder(codecs[ridx])
         quality_flag = "-crf"
         pixel_format = "yuv420p"
+        hw_upload = ''
         preset = presets[ridx]
-        if codec.find("qsv") >= 0:
+        if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
             pixel_format = "nv12"
+            # add format filter for vaapi + add hwupload to incantation
+            hw_upload=f'[uf{ridx}];[uf{ridx}]format={pixel_format}[format{ridx}];[format{ridx}]hwupload'
 
         if codec.find('264') > 0:
             preset = preset if preset else 'fast'
             per_res.extend(["-preset", preset,
                             "-tune", "fastdecode"])
-        if codec.find('av1') >= 0:
+        if codec.find('libsvtav1') >= 0:
             preset = preset if preset else '5'
             per_res.extend(['-preset', preset])
 
@@ -164,7 +179,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     quality_flag, crfs[ridx],
                     "-filter_complex",
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}[outv{ridx}]",
+                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
                     "-map", f"[outv{ridx}]",
                     output_file])
 
@@ -178,7 +193,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         _, res_length = get_length_of_file(output_file)
         length_delta = abs((media_obj.num_frames - res_length)/media_obj.num_frames)
-        assert length_delta < 1.0 # Assert length delta is less than 1 percent.
+        assert length_delta < 0.1 # Assert length delta is less than 10 percent.
 
     
 

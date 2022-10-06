@@ -14,7 +14,7 @@ def parse_args():
     parser.add_argument('--gid', type=str, help="Upload group ID.")
     parser.add_argument('--uid', type=str, help="Upload unique ID.")
     parser.add_argument('--output', type=str, help="Where to dump media ID.")
-    parser.add_argument('--attributes', type=str, help="Attributes for media")
+    parser.add_argument('--attributes', type=str, help="Attributes for media as a JSON string.")
     return parser.parse_args()
 
 def create_media(host, token, project, media_type, section, name, md5, gid, uid,
