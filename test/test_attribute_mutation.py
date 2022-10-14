@@ -372,3 +372,83 @@ def test_box_type_attribute_mutation_es(host, token, project, attribute_video, a
         "attribute_to_delete": newer_attr_name,
     }
     tator_api.delete_attribute(id=attribute_box_type, attribute_type_delete=attribute_delete)
+
+
+def test_box_type_attribute_mutation_fail(
+        host, token, project, attribute_video, attribute_box_type
+):
+    tator_api = tator.get_api(host, token)
+    video_obj = tator_api.get_media(attribute_video)
+
+    # Create localizations, but less than 100
+    num_localizations = 75
+    boxes = [
+        random_localization(project, attribute_box_type, video_obj, post=True)
+        for _ in range(num_localizations)
+    ]
+    box_ids = [
+        box_id
+        for response in tator.util.chunked_create(
+            tator_api.create_localization_list, project, localization_spec=boxes
+        )
+        for box_id in response.id
+    ]
+
+    assert len(box_ids) == len(boxes)
+
+    # Make sure the new attribute does not exist already
+    value = str(uuid4()).lower()
+    new_attr_name = f"New int {value}"
+    entity_type = tator_api.get_localization_type(attribute_box_type)
+    assert all(attr.name != new_attr_name for attr in entity_type.attribute_types)
+    addition = {
+        "entity_type": "LocalizationType",
+        "addition": {"name": new_attr_name, "dtype": "int", "default": 0},
+    }
+    tator_api.add_attribute(id=attribute_box_type, attribute_type_spec=addition)
+    entity_type = tator_api.get_localization_type(attribute_box_type)
+
+    # Check for added attribute
+    assert any(attr.name == new_attr_name for attr in entity_type.attribute_types)
+
+    # Attempt to change attribute type with low `max_instances`, call to `rename_attribute` should
+    # raise
+    mutation = {
+        "entity_type": "LocalizationType",
+        "old_attribute_type_name": new_attr_name,
+        "new_attribute_type": {"name": new_attr_name, "dtype": "float"},
+        "max_instances": 50,
+    }
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
+        tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
+
+    assert "too many Localizations" in str(excinfo.value)
+
+    # Change attribute type with higher `max_instances` should succeed
+    mutation = {
+        "entity_type": "LocalizationType",
+        "old_attribute_type_name": new_attr_name,
+        "new_attribute_type": {"name": new_attr_name, "dtype": "float"},
+        "max_instances": 100,
+    }
+    tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
+
+    # Check for mutated attribute
+    entity_type = tator_api.get_localization_type(attribute_box_type)
+    for attr in entity_type.attribute_types:
+        if attr.name == new_attr_name:
+            assert attr.dtype == "float"
+            break
+    else:
+        assert False, f"Attribute {new_attr_name} not found"
+
+    # Clean up
+    params = {"media_id": [attribute_video], "type": attribute_box_type}
+    tator_api.delete_localization_list(project, **params)
+
+    # Delete the attribute to keep clean for other tests
+    attribute_delete = {
+        "entity_type": "LocalizationType",
+        "attribute_to_delete": new_attr_name,
+    }
+    tator_api.delete_attribute(id=attribute_box_type, attribute_type_delete=attribute_delete)
