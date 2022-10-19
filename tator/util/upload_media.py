@@ -50,17 +50,15 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     if section is None:
         section="New Files"
 
-    host = api.api_client.configuration.host
-    token = api.api_client.configuration.api_key['Authorization']
-    prefix = api.api_client.configuration.api_key_prefix['Authorization']
-
     mime, _ = mimetypes.guess_type(fname)
     if mime is None:
         ext = os.path.splitext(fname)[1].lower()
-        if ext in ['.mts', '.m2ts']:
-            mime = 'video/MP2T'
-        if ext in ['.avif']:
-            mime = 'image/avif'
+        if ext in [".mts", ".m2ts"]:
+            mime = "video/MP2T"
+        elif ext in [".avif"]:
+            mime = "image/avif"
+        elif ext in [".dng"]:
+            mime = "image/dng"
     response = api.get_media_type(type_id)
     project_id = response.project
 

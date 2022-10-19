@@ -87,9 +87,6 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     if section is None:
         section="Imported Files"
 
-    host = api.api_client.configuration.host
-    token = api.api_client.configuration.api_key['Authorization']
-    prefix = api.api_client.configuration.api_key_prefix['Authorization']
     media_type = api.get_media_type(type_id, _request_timeout=_request_timeout)
     project_id = media_type.project
     spec = {
