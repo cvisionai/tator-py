@@ -3,6 +3,7 @@ import tempfile
 import random
 import uuid
 import datetime
+import pytest
 
 import tator
 
@@ -51,5 +52,32 @@ def test_state_graphic(host, token, project, video, box_type, track_type):
     tracks = api.create_state_list(project, state_spec=[track_spec])
     image = api.get_state_graphic(tracks.id[0])
     images = tator.util.full_state_graphic(api, tracks.id[0])
-    api.delete_state_list(project, media_id=[video])
-    api.delete_localization_list(project, media_id=[video])
+
+    # api.delete_state_list(project, media_id=[video])
+    # api.delete_localization_list(project, media_id=[video])
+
+    state_list = api.get_state_list(project, media_id=[video])
+    state_count = len(state_list)
+    start = 0
+    stop = 10000
+    count = 0
+    kwargs = {"media_id": [video], "start": start, "stop": stop}
+
+    while count < state_count:
+        if count > 0:
+            kwargs["after"] = state_list[count - 1]
+        api.delete_state_list(project, **kwargs)
+        count += stop
+
+    localization_list = api.get_localization_list(project, media_id=[video])
+    localization_count = len(localization_list)
+    start = 0
+    stop = 10000
+    count = 0
+    kwargs = {"media_id": [video], "start": start, "stop": stop}
+
+    while count < localization_count:
+        if count > 0:
+            kwargs["after"] = localization_list[count - 1]
+        api.delete_localization_list(project, **kwargs)
+        count += stop

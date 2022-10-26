@@ -109,3 +109,5 @@ def test_append(host, token, project, video_type, video, track_type, box_type):
     track = tator_api.get_state(state_id)
     assert(len(track.localizations) == num_localizations)
 
+    tator_api.delete_state_list(project, media_id=[video])
+    tator_api.delete_localization_list(project, media_id=[video])

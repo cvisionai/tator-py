@@ -49,3 +49,5 @@ def test_stategraphic(host, token, project, video, box_type, track_type):
         size = (frame_data.height, frame_data.width, len(frame_data.mode))
         assert_vector_equal(size, (224,224,3))
 
+    tator_api.delete_state_list(project, media_id=[video])
+    tator_api.delete_localization_list(project, media_id=[video])

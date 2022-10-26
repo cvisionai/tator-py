@@ -76,3 +76,5 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
     assert(len(states) == len(expected_states))
     assert(collections.Counter([state.id for state in states]) == \
            collections.Counter([state.id for state in all_states]))
+
+    api.delete_state_list(project, media_id=media_ids)

@@ -140,7 +140,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     exclude = ['project', 'type', 'media_ids', 'id', 'meta', 'user', 'frame', 'ids']
 
     # Test bulk create.
-    num_states = random.randint(2000, 10000)
+    num_states = random.randint(1000, 5000)
     states = [
         random_state(project, state_type, video_obj, post=True)
         for _ in range(num_states)

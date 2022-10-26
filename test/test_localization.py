@@ -147,7 +147,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
 
     # Test bulk create.
-    num_localizations = random.randint(2000, 10000)
+    num_localizations = random.randint(1000, 5000)
     boxes = [
         random_localization(project, box_type, video_obj, post=True)
         for _ in range(num_localizations)
