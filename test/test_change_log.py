@@ -3,7 +3,6 @@ from functools import partial
 import pytest
 import random
 import string
-from time import sleep
 import uuid
 
 import tator
@@ -547,7 +546,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
             assert change.value == True
 
 
-def test_change_log_util(host, token, project, attribute_video_type):
+def test_change_log_util(host, token, project, video_type):
     # Tests `tator.util.find_single_change`
     tator_api = tator.get_api(host, token)
 
@@ -625,14 +624,8 @@ def test_change_log_util(host, token, project, attribute_video_type):
     assert len(changes) == 3
 
     # Look for change that should be there
-    for _ in range(5):
-        found_change = tator.util.find_single_change(
-            tator_api, project, media_id, "_deleted", old_value=False, new_value=True
-        )
-        if found_change is None or found_change != changes[-1]:
-            sleep(5)
-        else:
-            break
-
+    found_change = tator.util.find_single_change(
+        tator_api, project, media_id, "_deleted", old_value=False, new_value=True
+    )
     assert found_change is not None
     assert found_change == changes[-1]
