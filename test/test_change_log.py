@@ -555,7 +555,7 @@ def test_change_log_util(host, token, project, video_type):
     fname = "MediaChangeLogTest.mp4"
     test_int = random.randint(0, 100)
     media_spec = {
-        "type": attribute_video_type,
+        "type": video_type,
         "uid": str(uuid.uuid1()),
         "gid": str(uuid.uuid1()),
         "name": fname,
