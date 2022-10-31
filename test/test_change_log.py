@@ -628,4 +628,4 @@ def test_change_log_util(host, token, project, video_type):
         tator_api, project, media_id, "_deleted", old_value=False, new_value=True
     )
     assert found_change is not None
-    assert found_change == changes[-1]
+    assert found_change in changes
