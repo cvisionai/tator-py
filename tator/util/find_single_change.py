@@ -17,8 +17,9 @@ def find_single_change(
     field_name: str,
     old_value: Optional[Any] = None,
     new_value: Optional[Any] = None,
+    find_last_change: bool = False,
 ) -> Optional[ChangeLog]:
-    """Finds the first ChangeLog containing the desired field/value combination.
+    """Finds the ChangeLog containing the desired field/value combination.
 
     Example:
 
@@ -35,14 +36,23 @@ def find_single_change(
     how "_deleted" corresponds to the `Media.deleted` field.
 
     :param api: :class:`tator.TatorApi` object.
+    :type api: tator.TatorApi
     :param project_id: Unique integer identifying a project in tator.
+    :type project_id: int
     :param entity_id: Unique integer identifying an entity with tracked changes, must identify a
                       leaf, localization, media, or state.
+    :type entity_id: int
     :param field_name: The name of the field in which to look for the change(s).
+    :type field_name: str
     :param old_value: [Optional] The desired old value to find
+    :type old_value: Optional[Any]
     :param new_value: [Optional] The desired new value to find
+    :type new_value: Optional[Any]
+    :param find_last_change: If True, finds the last matching ChangeLog, otherwise finds the first.
+    :type find_last_change: bool
     :returns: The changelog corresponding to the desired value(s) to find or `None` if no matches
               are found.
+    :rtype: Optional[ChangeLog]
     """
     if old_value is None and new_value is None:
         raise ValueError(
@@ -64,4 +74,6 @@ def find_single_change(
 
         return matches
 
+    if find_last_change:
+        change_log_list = reversed(change_log_list)
     return next((cl for cl in change_log_list if change_log_is_a_match(cl)), None)

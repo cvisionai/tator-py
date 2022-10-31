@@ -106,7 +106,15 @@ def compare_change_logs(new, old):
 
 
 def change_log_helper(
-    tator_api, random_entity, entity_type, project, create_list, update_one, update_list, delete_one, delete_list
+    tator_api,
+    random_entity,
+    entity_type,
+    project,
+    create_list,
+    update_one,
+    update_list,
+    delete_one,
+    delete_list,
 ):
     num_entities = 2
     entities = [random_entity(post=True) for _ in range(num_entities)]
@@ -118,8 +126,9 @@ def change_log_helper(
     # Creation tests
     create_changes = []
     for entity_id, box in zip(entity_ids, entities):
-        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id,
-                                                entity_type=entity_type)
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=entity_id, entity_type=entity_type
+        )
 
         # Assert one change returned
         assert len(changes) == 1
@@ -146,8 +155,9 @@ def change_log_helper(
     # Update tests
     patch_changes = []
     for entity_id, box, old_change_log in zip(entity_ids, patch_entities, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id,
-                                                entity_type=entity_type)
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=entity_id, entity_type=entity_type
+        )
 
         # Assert two changes returned
         assert len(changes) == 2
@@ -179,8 +189,9 @@ def change_log_helper(
     for entity_id, create_change_log, patch_change_log in zip(
         entity_ids, create_changes, patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id,
-                                                entity_type=entity_type)
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=entity_id, entity_type=entity_type
+        )
 
         # Assert two changes returned
         assert len(changes) == 3
@@ -208,8 +219,9 @@ def change_log_helper(
     for entity_id, create_change_log, patch_change_log, bulk_change_log in zip(
         entity_ids, create_changes, patch_changes, bulk_patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=entity_id,
-                                                entity_type=entity_type)
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=entity_id, entity_type=entity_type
+        )
 
         # Assert three changes returned
         assert len(changes) == 4
@@ -244,7 +256,7 @@ def test_attribute_box_type_change_log(host, token, project, attribute_video, at
     change_log_helper(
         tator_api,
         random_entity,
-        'localization',
+        "localization",
         project,
         create_list,
         update_one,
@@ -267,7 +279,7 @@ def test_state_type_change_log(host, token, project, attribute_video, state_type
     change_log_helper(
         tator_api,
         random_entity,
-        'state',
+        "state",
         project,
         create_list,
         update_one,
@@ -305,8 +317,9 @@ def test_media_change_log(host, token, project, attribute_video_type):
     # Creation tests
     create_changes = []
     for media_id, media_spec in zip(media_ids, media_specs):
-        changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
-                                                entity_type='media')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=media_id, entity_type="media"
+        )
 
         # Assert one change returned
         assert len(changes) == 1
@@ -334,8 +347,9 @@ def test_media_change_log(host, token, project, attribute_video_type):
     # Update tests
     patch_changes = []
     for media_id, media_spec, create_change in zip(media_ids, media_specs, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
-                                                entity_type='media')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=media_id, entity_type="media"
+        )
 
         # Assert two changes returned
         assert len(changes) == 2
@@ -369,8 +383,9 @@ def test_media_change_log(host, token, project, attribute_video_type):
     for media_id, media_spec, create_change, patch_change in zip(
         media_ids, media_specs, create_changes, patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
-                                                entity_type='media')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=media_id, entity_type="media"
+        )
 
         # Assert three changes returned
         assert len(changes) == 3
@@ -398,8 +413,9 @@ def test_media_change_log(host, token, project, attribute_video_type):
     for media_id, media_spec, create_change, patch_change, bulk_change in zip(
         media_ids, media_specs, create_changes, patch_changes, bulk_patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=media_id,
-                                                entity_type='media')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=media_id, entity_type="media"
+        )
 
         # Assert four changes returned
         assert len(changes) == 4
@@ -434,8 +450,9 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
     # Creation tests
     create_changes = []
     for leaf_id, leaf_spec in zip(leaf_ids, leaf_specs):
-        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id,
-                                                entity_type='leaf')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=leaf_id, entity_type="leaf"
+        )
 
         # Assert one change returned
         assert len(changes) == 1
@@ -462,8 +479,9 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
     # Update tests
     patch_changes = []
     for leaf_id, leaf, old_change_log in zip(leaf_ids, patch_leaves, create_changes):
-        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id,
-                                                entity_type='leaf')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=leaf_id, entity_type="leaf"
+        )
 
         # Assert two changes returned
         assert len(changes) == 2
@@ -495,8 +513,9 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
     for leaf_id, leaf, create_change, patch_change in zip(
         leaf_ids, patch_leaves, create_changes, patch_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id,
-                                                entity_type='leaf')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=leaf_id, entity_type="leaf"
+        )
 
         # Assert two changes returned
         assert len(changes) == 3
@@ -524,8 +543,9 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
     for leaf_id, bulk_change, patch_change, create_change in zip(
         leaf_ids, bulk_changes, patch_changes, create_changes
     ):
-        changes = tator_api.get_change_log_list(project=project, entity_id=leaf_id,
-                                                entity_type='leaf')
+        changes = tator_api.get_change_log_list(
+            project=project, entity_id=leaf_id, entity_type="leaf"
+        )
 
         # Assert three changes returned
         assert len(changes) == 4
@@ -622,15 +642,17 @@ def test_change_log_util(host, token, project, video_type):
     changes = tator_api.get_change_log_list(
         project=project, entity_id=media_id, entity_type="media"
     )
-    print("CHANGES HERE")
-    pprint(changes)
     assert len(changes) == 3
 
     # Look for change that should be there
     found_change = tator.util.find_single_change(
-        tator_api, project, media_id, "_deleted", old_value=False, new_value=True
+        tator_api,
+        project,
+        media_id,
+        "_deleted",
+        old_value=False,
+        new_value=True,
+        find_last_change=True,
     )
-    pprint(found_change)
-    print("CHANGES HERE")
     assert found_change is not None
     assert found_change in changes
