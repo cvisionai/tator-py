@@ -1,5 +1,6 @@
 from datetime import datetime
 from functools import partial
+from pprint import pprint
 import pytest
 import random
 import string
@@ -621,11 +622,15 @@ def test_change_log_util(host, token, project, video_type):
     changes = tator_api.get_change_log_list(
         project=project, entity_id=media_id, entity_type="media"
     )
+    print("CHANGES HERE")
+    pprint(changes)
     assert len(changes) == 3
 
     # Look for change that should be there
     found_change = tator.util.find_single_change(
         tator_api, project, media_id, "_deleted", old_value=False, new_value=True
     )
+    pprint(found_change)
+    print("CHANGES HERE")
     assert found_change is not None
     assert found_change in changes
