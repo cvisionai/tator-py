@@ -83,10 +83,9 @@ spec:
             print(f'{host} {token} {project} {media_ids}')
 
             for media in media_ids:
-                name = f'test_media_{media}'
-                dq = f'test_media_id:{media}'
-                spec = tator.models.AnalysisSpec(name=name, data_query=dq)
-                _ = tator_api.create_analysis(project=project, analysis_spec=spec)
+                media=tator_api.get_media(media)
+                increment = media.attributes.get('test_int',0)+1
+                tator_api.update_media(media, {'attributes': {'test_int': increment}})
 
         if __name__ == '__main__':
             main()
@@ -170,7 +169,8 @@ def algorithm_name(request, project: int) -> str:
 def _assert_algorithm_workflow_results(
     tator_api: tator.api,
     project: int,
-    expected_analysis_count: int) -> None:
+    expected_count: int,
+    media_ids: list(int)) -> None:
     """ Polls the tator database waiting for the argo workflow to complete its database inserts
 
     Performs assert on if the count of analysis entries matches the provided expected count
@@ -186,19 +186,17 @@ def _assert_algorithm_workflow_results(
     matched_analysis_count = False
 
     while True:
-
-        analysis_list = tator_api.get_analysis_list(project=project)
+        media = tator_api.get_media_list(media_id=media_ids)
         analysis_count = 0
         log_msg = f'num_retries: {num_retries}'
         print(log_msg)
-        for analysis in analysis_list:
-            if 'test_media_id' in analysis.data_query:
-                print(str(analysis))
-                analysis_count += 1
+        all_good=True
+        for m in media:
+          if m.attributes.get('test_int',0) != expected_count:
+            all_good = False
 
-        matched_analysis_count = analysis_count == expected_analysis_count
-        if matched_analysis_count:
-            break
+        if all_good:
+          break
 
         num_retries += 1
         if num_retries < MAX_RETRIES:
@@ -209,7 +207,8 @@ def _assert_algorithm_workflow_results(
             logger.error('Reached maximum retries')
             break
 
-    assert matched_analysis_count
+    for m in media:
+      assert m.attributes.get('test_int',0) == expected_count
 
 def test_algorithm_launch(
         host: str,
@@ -268,6 +267,7 @@ def test_algorithm_launch(
         time.sleep(0.5)
 
     assert len(medias) == number_of_media
+    all_ids = [m.id for m in medias]
 
     # Now, launch the algorithm using all the media in the project
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name)
@@ -278,11 +278,11 @@ def test_algorithm_launch(
     # that was passed along to it in the data query field. So we assume the workflow
     # will be done soon (tm) and these analysis entries should pop up. Count them up and
     # once we have one entry per media, we're good to go.
-    expected_analysis_count = number_of_media
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
         project=project,
-        expected_analysis_count=expected_analysis_count)
+        expected_count=1,
+        media_ids=media_ids)
 
     # Now, launch the algorithm again with an arbitrary set of media and test the results
     media_ids = [medias[0].id, medias[1].id]
@@ -294,7 +294,8 @@ def test_algorithm_launch(
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
         project=project,
-        expected_analysis_count=expected_analysis_count)
+        expected_count=2,
+        media_ids=media_ids)
 
     # Next, launch the algorithm again with a blank set of media ids and test the results
     # - This shouldn't launch the argo workflow
@@ -303,17 +304,3 @@ def test_algorithm_launch(
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_ids=media_ids)
     response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
     assert len(response.uid) == 0
-
-    # Use the media query to get media of a specific name
-    target_name = os.path.basename(paths[0])
-    medias = tator_api.get_media_list(project=project, name=target_name)
-    print(f"Providing following media name query: {target_name} (Medias matching this name: {len(medias)})")
-
-    spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_query=f"?name={target_name}")
-    response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
-    assert len(response.uid) == 1
-    expected_analysis_count += len(medias)
-    _assert_algorithm_workflow_results(
-        tator_api=tator_api,
-        project=project,
-        expected_analysis_count=expected_analysis_count)
