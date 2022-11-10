@@ -40,14 +40,14 @@ def random_localization(project, box_type, video_obj, post=False):
 
 
 allowed_mutations = {
-    "bool": ["bool", "enum", "string"],
-    "int": ["int", "float", "enum", "string"],
-    "float": ["int", "float", "enum", "string"],
-    "enum": ["enum", "string"],
-    "string": ["enum", "string"],
-    "datetime": ["enum", "string", "datetime"],
-    "geopos": ["enum", "string", "geopos"],
-    "float_array": ["float_array"],
+    'bool': ['bool'],
+    'int': ['int', 'float'],
+    'float': ['int', 'float'],
+    'enum': ['enum', 'string'],
+    'string': ['enum', 'string'],
+    'datetime': [ 'string', 'datetime'],
+    'geopos': ['geopos'],
+    'float_array': ['float_array'],
 }
 
 
