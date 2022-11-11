@@ -317,8 +317,7 @@ def test_box_type_attribute_mutation_es(host, token, project, attribute_video, a
     # Check for default value on existing instances
     params = {
         "type": attribute_box_type,
-        "attribute": [f"{new_attr_name}::{str(value).lower()}"],
-        "force_es": 1,
+        "attribute": [f"{new_attr_name}::{str(value).lower()}"]
     }
     boxes = tator_api.get_localization_list(project, **params)
 
@@ -352,8 +351,7 @@ def test_box_type_attribute_mutation_es(host, token, project, attribute_video, a
     # Check for default value on existing instances
     params = {
         "type": attribute_box_type,
-        "attribute": [f"{newer_attr_name}::{str(value).lower()}"],
-        "force_es": 1,
+        "attribute": [f"{newer_attr_name}::{str(value).lower()}"]
     }
     boxes = tator_api.get_localization_list(project, **params)
 
