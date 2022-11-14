@@ -484,7 +484,7 @@ def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
         print("Retrieving source states...")
         for idx in range(0, len(media), 100):
             source_states += src_api.get_state_list(args.project,
-                                                    media_id=[m.id for m in medias[idx:idx+100]])
+                                                    media_id=[m.id for m in media[idx:idx+100]])
         for idx in range(0, len(src_media_ids), 100):
             source_states += src_api.get_state_list(args.project,
                                                     media_id=src_media_ids[idx:idx+100])
