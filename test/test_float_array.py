@@ -86,17 +86,6 @@ def test_float_array(host, token, project, box_type, video):
     assert(len(boxes) == 1)
     assert(boxes[0].id == ids[4])
 
-    # Test alternative metrics.
-    for metric in ['l1norm']:
-        search = {
-            'name': 'test_float_array',
-            'center': [2.1, 0.0, 0.0],
-            'metric': metric,
-        }
-        search = {'float_array': [search]}
-        boxes = api.get_localization_list_by_id(project, localization_id_query=search)
-        assert(len(boxes) == 8)
-
     # Update localizations.
     search = {
         'name': 'test_float_array',
