@@ -163,7 +163,7 @@ def test_add_same_attribute_twice(host, token, project, line_type):
         tator_api.add_attribute(id=line_type, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
-    assert "but one with that name already exists" in str(excinfo.value)
+    assert "is already an attribute." in str(excinfo.value)
 
 
 # @pytest.mark.skip(reason="Disabled")
