@@ -56,11 +56,14 @@ def get_paginator(api, func_name, batch_size=1000):
     :param int batch_size:
     :returns: Paginator object
     """
+    if not re.search(r"^get_.+_list(_by_id)?$", func_name):
+        raise ValueError(
+            f"Cannot paginate '{func_name}', expected a `get_<entity>_list` or "
+            f"`get_<entity>_list_by_id` method"
+        )
     try:
         fn = getattr(api, func_name)
     except AttributeError:
         similar = get_close_matches(func_name, dir(api), n=1)[0]
         raise ValueError(f"TatorApi has no function '{func_name}', did you mean '{similar}'?")
-    if not re.search(r"^get_.+_list(_by_id)?$", func_name):
-        raise ValueError(f"Cannot paginate '{func_name}', expected a 'get list' type operation")
-    return Paginator(fn, name, batch_size)
+    return Paginator(fn, func_name, batch_size)
