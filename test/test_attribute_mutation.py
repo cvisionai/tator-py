@@ -88,7 +88,6 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         assert False
 
     mutation = {
-        "global": "false",
         "entity_type": addition["entity_type"],
         "old_attribute_type_name": source_name,
         "new_attribute_type": {"name": dest_name},
@@ -234,7 +233,6 @@ def test_video_and_image_type_name_change(
 
     # Mutate attribute on attribute_video_type
     mutation = {
-        "global": "true",
         "entity_type": "MediaType",
         "old_attribute_type_name": source_name,
         "new_attribute_type": {"name": dest_name, "dtype": source_dtype},
@@ -254,7 +252,8 @@ def test_video_and_image_type_name_change(
     # No attributes should have the old name
     assert all(attr.name != source_name for attr in entity_type.attribute_types)
 
-    # The image_type attribute should also have the new name
+    # Update the image type too
+    tator_api.rename_attribute(id=image_type, attribute_type_update=mutation)
     entity_type = tator_api.get_media_type(image_type)
     assert any(attr.name == dest_name for attr in entity_type.attribute_types)
     assert all(attr.name != source_name for attr in entity_type.attribute_types)

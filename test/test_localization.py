@@ -31,14 +31,12 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
         from_es = tator_api.get_localization_list_by_id(
             project,
             localization_id_query=localization_id_query,
-            attribute=attribute_filter,
-            force_es=1,
+            attribute=attribute_filter
         )
         count = tator_api.get_localization_count_by_id(
             project,
             localization_id_query=localization_id_query,
-            attribute=attribute_filter,
-            force_es=1,
+            attribute=attribute_filter
         )
         assert(len(from_es) == count)
         if len(from_es) == len(from_psql):
@@ -117,8 +115,7 @@ def comparison_query(tator_api, project, box_ids, exclude):
         attribute_lte=attribute_lte_filter,
         attribute_gte=attribute_gte_filter,
         attribute_lt=attribute_lt_filter,
-        attribute_gt=attribute_gt_filter,
-        force_es=1,
+        attribute_gt=attribute_gt_filter
     )
     es_time = datetime.datetime.now() - t0
 
@@ -167,14 +164,9 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids})
     assert len(response) == 1
     assert response[0].id == video
-    response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids}, force_es=1)
-    assert len(response) == 1
-    assert response[0].id == video
 
     # Test box retrieval by media ID.
     response = tator_api.get_localization_list_by_id(project, {'media_ids': [video]})
-    assert(len(response) == len(box_ids))
-    response = tator_api.get_localization_list_by_id(project, {'media_ids': [video]}, force_es=1)
     assert(len(response) == len(box_ids))
 
     # Test single create.
@@ -245,20 +237,6 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
             assert_close_enough(id_bulk_patch, box, exclude)
         else:
             assert_close_enough(bulk_patch, box, exclude)
-
-    # Do random queries using psql and elasticsearch and compare results.
-    assert wait_for_parity(tator_api, project, id_bulk_patch, update_ids)
-    es_time = datetime.timedelta(seconds=0)
-    psql_time = datetime.timedelta(seconds=0)
-    localization_ids = [box.id for box in boxes]
-    NUM_QUERIES = 10
-    for _ in range(NUM_QUERIES):
-        psql, es = comparison_query(tator_api, project, localization_ids, exclude)
-        psql_time += psql
-        es_time += es
-    print(f"Over {NUM_QUERIES} random attribute queries:")
-    print(f"  Avg PSQL time: {psql_time / NUM_QUERIES}")
-    print(f"  Avg ES time: {es_time / NUM_QUERIES}")
 
     # Clone boxes to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}

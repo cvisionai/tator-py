@@ -73,5 +73,10 @@ def test_localization_type_delete(host, token, project, video_type, video):
         str(num_localizations) in response.message
     ), "Localization count not found in delete response"
 
-    count = tator_api.get_localization_count(project, type=box_type)
-    assert count == 0
+    try:
+        caught_it = False
+        response = tator_api.get_localization_count(project, type=box_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it

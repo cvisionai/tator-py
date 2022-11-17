@@ -52,5 +52,10 @@ def test_leaf_type_delete(host, token, project):
     assert str(leaf_type) in response.message, "Leaf type id not found in delete response"
     assert "1" in response.message, "Leaf count not found in delete response"
 
-    count = tator_api.get_leaf_count(project, type=leaf_type)
-    assert count == 0
+    try:
+        caught_it = False
+        tator_api.get_leaf_count(project, type=leaf_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it

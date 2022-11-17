@@ -91,5 +91,10 @@ def test_file_type_delete(host: str, token: str, project: int) -> None:
     assert str(file_type) in response.message, "File type id not found in delete response"
     assert "10" in response.message, "File count not found in delete response"
 
-    response = tator_api.get_file_list(project, meta=file_type)
-    assert len(response) == 0
+    try:
+        caught_it = False
+        response = tator_api.get_file_list(project, meta=file_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it
