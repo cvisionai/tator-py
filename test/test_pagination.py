@@ -64,7 +64,7 @@ def _assert_pagination(api, function_name, batch_size, total, **kwargs):
     assert len(all_objects) == num_localizations
 
 
-def test_localization_crud(host, token, project, video_type, video, box_type):
+def test_localization_pagination(host, token, project, video_type, video, box_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
