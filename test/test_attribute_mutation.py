@@ -44,8 +44,8 @@ allowed_mutations = {
     'int': [ 'float'],
     'float': ['int'],
     'enum': ['string'],
-    'string': ['enum'],
-    'datetime': [ 'datetime'],
+    'string': ['enum', ],
+    'datetime': [],
     'geopos': [],
     'float_array': [],
 }
@@ -103,7 +103,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 
     # A type mutation not in the list of allowed mutations will raise an `ApiException` and the
     # expected `dtype` will be the same as `source_dtype`
-    if dest_dtype is None or dest_dtype in allowed_mutations[source_dtype]:
+    if dest_dtype is None or dest_dtype in allowed_mutations[source_dtype] or dest_dtype == source_dtype:
         expected_dtype = dest_dtype if dest_dtype else source_dtype
         expected_name = dest_name
         tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
@@ -117,24 +117,19 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 
     # Check new attribute name
     assert any(attr.name == expected_name for attr in entity_type.attribute_types)
-    assert_cnt += 1
 
     # No attributes should have the old name, if we are expecting a change
     if source_name != expected_name:
         assert all(attr.name != source_name for attr in entity_type.attribute_types)
-        assert_cnt += 1
 
     for attr in entity_type.attribute_types:
         if attr.name == expected_name:
             # Check that the `dtype` has been updated
             assert attr.dtype == expected_dtype
-            assert_cnt += 1
             break
     else:
         # If the new attribute is not found above, we should fail
         assert False
-
-    assert assert_cnt == params["expected_asserts"]
 
     # Delete the attribute to keep clean for other tests
     attribute_delete = {
@@ -195,7 +190,6 @@ def test_box_type_full_mutation(host, token, project, attribute_box_type, source
     mutation_helper(tator_api, tator_api.get_localization_type, attribute_box_type, params)
 
 
-@pytest.mark.skip(reason="Will be reinstated with the removal of ES")
 @pytest.mark.parametrize("dtype", allowed_mutations.keys())
 def test_video_and_image_type_name_change(
     host, token, project, attribute_video_type, image_type, dtype
@@ -273,105 +267,6 @@ def test_video_and_image_type_name_change(
     tator_api.delete_attribute(id=attribute_video_type, attribute_type_delete=attribute_delete)
     tator_api.delete_attribute(id=image_type, attribute_type_delete=attribute_delete)
 
-
-def test_box_type_attribute_mutation_es(host, token, project, attribute_video, attribute_box_type):
-    tator_api = tator.get_api(host, token)
-    video_obj = tator_api.get_media(attribute_video)
-
-    num_localizations = 2
-    boxes = [
-        random_localization(project, attribute_box_type, video_obj, post=True)
-        for _ in range(num_localizations)
-    ]
-    box_ids = [
-        box_id
-        for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, localization_spec=boxes
-        )
-        for box_id in response.id
-    ]
-
-    assert len(box_ids) == len(boxes)
-
-    # ES can be slow at indexing so wait for a bit.
-    sleep(2)
-
-    # Make sure the new attribute does not exist already
-    value = str(uuid4()).lower()
-    new_attr_name = f"New enum {value}"
-    entity_type = tator_api.get_localization_type(attribute_box_type)
-    assert all(attr.name != new_attr_name for attr in entity_type.attribute_types)
-    addition = {
-        "entity_type": "LocalizationType",
-        "addition": {"name": new_attr_name, "dtype": "enum", "default": value, "choices": [value]},
-    }
-    tator_api.add_attribute(id=attribute_box_type, attribute_type_spec=addition)
-    entity_type = tator_api.get_localization_type(attribute_box_type)
-
-    # Check for added attribute
-    assert any(attr.name == new_attr_name for attr in entity_type.attribute_types)
-
-    # ES can be slow at indexing so wait for a bit.
-    sleep(2)
-
-    # Check for default value on existing instances
-    params = {
-        "type": attribute_box_type,
-        "attribute": [f"{new_attr_name}::{str(value).lower()}"]
-    }
-    boxes = tator_api.get_localization_list(project, **params)
-
-    assert len(box_ids) == len(boxes)
-
-    for box in boxes:
-        assert box.attributes[new_attr_name] == value
-
-    # Change attribute type
-    newer_attr_name = f"New string {value}"
-    mutation = {
-        "global": "false",
-        "entity_type": "LocalizationType",
-        "old_attribute_type_name": new_attr_name,
-        "new_attribute_type": {"name": newer_attr_name, "dtype": "string"},
-    }
-    tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
-
-    # Check for mutated attribute
-    entity_type = tator_api.get_localization_type(attribute_box_type)
-    for attr in entity_type.attribute_types:
-        if attr.name == newer_attr_name:
-            assert attr.dtype == "string"
-            break
-    else:
-        assert False, f"Attribute {newer_attr_name} not found"
-
-    # ES can be slow at indexing so wait for a bit.
-    sleep(2)
-
-    # Check for default value on existing instances
-    params = {
-        "type": attribute_box_type,
-        "attribute": [f"{newer_attr_name}::{str(value).lower()}"]
-    }
-    boxes = tator_api.get_localization_list(project, **params)
-
-    assert len(box_ids) == len(boxes)
-
-    for box in boxes:
-        assert box.attributes[newer_attr_name] == value
-
-    # Clean up
-    params = {"media_id": [attribute_video], "type": attribute_box_type}
-    tator_api.delete_localization_list(project, **params)
-
-    # Delete the attribute to keep clean for other tests
-    attribute_delete = {
-        "entity_type": "LocalizationType",
-        "attribute_to_delete": newer_attr_name,
-    }
-    tator_api.delete_attribute(id=attribute_box_type, attribute_type_delete=attribute_delete)
-
-
 def test_box_type_attribute_mutation_fail(
         host, token, project, attribute_video, attribute_box_type
 ):
@@ -409,25 +304,10 @@ def test_box_type_attribute_mutation_fail(
     # Check for added attribute
     assert any(attr.name == new_attr_name for attr in entity_type.attribute_types)
 
-    # Attempt to change attribute type with low `max_instances`, call to `rename_attribute` should
-    # raise
     mutation = {
         "entity_type": "LocalizationType",
         "old_attribute_type_name": new_attr_name,
         "new_attribute_type": {"name": new_attr_name, "dtype": "float"},
-        "max_instances": 50,
-    }
-    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
-
-    assert "too many Localizations" in str(excinfo.value)
-
-    # Change attribute type with higher `max_instances` should succeed
-    mutation = {
-        "entity_type": "LocalizationType",
-        "old_attribute_type_name": new_attr_name,
-        "new_attribute_type": {"name": new_attr_name, "dtype": "float"},
-        "max_instances": 100,
     }
     tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
 
