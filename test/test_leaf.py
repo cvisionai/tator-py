@@ -63,10 +63,12 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
         assert len(leaves) == len(leaves_by_id)
         for leaf, leaf_by_id in zip(leaves, leaves_by_id):
             assert_close_enough(leaf, leaf_by_id)
+        print(f"Cloning Depth {depth}: {leaves}")
         generator = tator.util.clone_leaf_list(tator_api, {'project': project, 'depth': depth},
                                                clone_project, parent_mapping,
                                                {leaf_type: leaf_type})
         created_ids = []
+        num_created = 0
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids += response.id
