@@ -61,17 +61,15 @@ def _assert_pagination(api, function_name, batch_size, total, **kwargs):
             else:
                 assert len(response) == batch_size
 
-    assert len(all_objects) == num_localizations
+    assert len(all_objects) == total
 
 
 def test_localization_pagination(host, token, project, video_type, video, box_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
-    # These fields will not be checked for object equivalence after patch.
-    exclude = ["project", "type", "media_id", "id", "meta", "user", "ids"]
-
-    # Test bulk create.
+    existing_localizations = tator_api.get_localization_list(project, type=box_type)
+    n_existing_loc = len(existing_localizations)
     batch_size = 100
     num_localizations = 2222  # Should not be a multiple of batch_size
     boxes = [
