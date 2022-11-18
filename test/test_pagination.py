@@ -1,34 +1,20 @@
-from types import GeneratorType
-import datetime
+from datetime import datetime
+from pprint import pprint
 import random
-import uuid
+from time import sleep
+from types import GeneratorType
+from uuid import uuid1
 
 import tator
 
 
-def make_video(tator_api, project, video_type, video_file, test_string):
+def make_image(tator_api, project, image_type, image_file, test_string):
     attributes = {"test_string": test_string}
-    for progress, response in tator.util.upload_media(tator_api, video_type, video_file, attributes=attributes):
-        print(f"Upload video progress: {progress}%")
-    print(response.message)
-    while True:
-        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4')
-        print("Waiting for transcode...")
-        time.sleep(2.5)
-        if len(response) == 0:
-            continue
-        if response[0].media_files is None:
-            continue
-        streaming = response[0].media_files.streaming
-        have_archival = response[0].media_files.archival is not None
-        if streaming and have_archival and len(streaming) == 4:
-            video_id = response[0].id
-            break
-    assert response[0].attributes.get("test_string") == attributes.get("test_string")
+    for progress, response in tator.util.upload_media(tator_api, image_type, image_file, attributes=attributes):
+        print(f"Upload image progress: {progress}%")
+    return response.id
 
-    return video_id
-
-def random_localization(project, box_type, video_obj, test_string, post=False):
+def random_localization(project, box_type, image_obj, test_string, post=False):
     x = random.uniform(0.0, 1.0)
     y = random.uniform(0.0, 1.0)
     w = random.uniform(0.0, 1.0 - x)
@@ -39,7 +25,7 @@ def random_localization(project, box_type, video_obj, test_string, post=False):
         "test_float": random.uniform(-1000.0, 1000.0),
         "test_enum": random.choice(["a", "b", "c"]),
         "test_string": test_string,
-        "test_datetime": datetime.datetime.now().isoformat(),
+        "test_datetime": datetime.now().isoformat(),
         "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
         "test_float_array": [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
@@ -50,8 +36,8 @@ def random_localization(project, box_type, video_obj, test_string, post=False):
         "height": h,
         "project": project,
         "type": box_type,
-        "media_id": video_obj.id,
-        "frame": random.randint(0, video_obj.num_frames - 1),
+        "media_id": image_obj.id,
+        "frame": 0,
     }
     if post:
         out = {**out, **attributes}
@@ -86,16 +72,16 @@ def _assert_pagination(api, function_name, batch_size, total, **kwargs):
     assert len(all_objects) == total
 
 
-def test_localization_pagination(host, token, project, video_type, video_file, box_type):
+def test_localization_pagination(host, token, project, image_type, image_file, box_type):
     test_string = str(uuid1())
     tator_api = tator.get_api(host, token)
-    video = make_video(tator_api, project, video_type, video_file, test_string)
-    video_obj = tator_api.get_media(video)
+    image = make_image(tator_api, project, image_type, image_file, test_string)
+    image_obj = tator_api.get_media(image)
 
     batch_size = 100
     num_localizations = 2222  # Should not be a multiple of batch_size
     boxes = [
-        random_localization(project, box_type, video_obj, test_string, post=True)
+        random_localization(project, box_type, image_obj, test_string, post=True)
         for _ in range(num_localizations)
     ]
     box_ids = []
@@ -108,7 +94,7 @@ def test_localization_pagination(host, token, project, video_type, video_file, b
     print(f"Created {len(box_ids)} boxes!")
 
     # Verify list is the right length
-    response = tator_api.get_localization_list(project, type=box_type)
+    response = tator_api.get_localization_list(project, type=box_type, media_id=[image])
     assert len(response) == num_localizations
 
     # Check `get_localization_list`
@@ -119,7 +105,7 @@ def test_localization_pagination(host, token, project, video_type, video_file, b
         num_localizations,
         project=project,
         type=box_type,
-        media_id=[video],
+        media_id=[image],
     )
 
     # Check `get_localization_list_by_id`
@@ -129,7 +115,7 @@ def test_localization_pagination(host, token, project, video_type, video_file, b
         batch_size,
         num_localizations,
         project=project,
-        localization_id_query={"media_ids": [video]},
+        localization_id_query={"media_ids": [image]},
     )
 
-    tator_api.delete_media(video)
+    tator_api.delete_media(image)
