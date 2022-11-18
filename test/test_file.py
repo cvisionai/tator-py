@@ -6,6 +6,8 @@ import tempfile
 import pytest
 import tator
 from tator.util._upload_file import _upload_file
+import json
+import base64
 
 logger = logging.getLogger(__name__)
 
@@ -312,7 +314,8 @@ def test_file_crud(
     files = tator_api.get_file_list(project=project, attribute=["LabelB::seeya"])
     assert len(files) == len(file_a_ids)
 
-    files = tator_api.get_file_list(project=project, search="LabelB:seeya")
+    blob=base64.b64encode(json.dumps({'attribute': 'LabelB', 'operation': 'eq', 'value': 'seeya'}).encode('ascii'))
+    files = tator_api.get_file_list(project=project, encoded_search=blob)
     assert len(files) == len(file_a_ids)
 
     # Update a bunch of the entries and verify the updates are valid and
@@ -337,7 +340,8 @@ def test_file_crud(
 
     assert update_check
 
-    files = tator_api.get_file_list(project=project, search="LabelA:<0")
+    blob=base64.b64encode(json.dumps({'attribute': 'LabelA', 'operation': 'lt', 'value': 0}).encode('ascii'))
+    files = tator_api.get_file_list(project=project, encoded_search=blob)
     assert len(files) == len(file_a_ids)
 
     # Check to see if pagination works
@@ -350,14 +354,12 @@ def test_file_crud(
     files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start, stop=stop)
     for file in files:
         all_files.add(file.id)
-    while page < num_pages:
-        after = max(all_files)
-        files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start, stop=stop, after=after)
-        if len(files) == 0:
-            break
+    files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
+    while files:
         for file in files:
             all_files.add(file.id)
         page += 1
+        files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
 
     files = tator_api.get_file_list(project=project, meta=file_type_b_id)
     blah = [file.id for file in files]
