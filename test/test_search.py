@@ -5,6 +5,7 @@ import uuid
 import glob
 import time
 import json
+import base64
 
 import tator
 
@@ -64,21 +65,25 @@ def random_search(sections=None):
     float_lower = random.uniform(-1000.0, 0.0)
     float_upper = random.uniform(0.0, 1000.0)
     enum_value = random.choice(['a', 'b', 'c'])
-    search = (f"test_bool:{str(bool_value).lower()} AND "
-              f"test_int:>{int_lower} AND "
-              f"test_int:<{int_upper} AND "
-              f"test_float:>{float_lower} AND "
-              f"test_float:<{float_upper} AND "
-              f"test_enum:{enum_value}")
+    search = {"method": 'AND', "operations": [
+        {'attribute': 'test_bool', 'operation': 'eq', 'value': bool_value},
+        {'attribute': 'test_int', 'operation': 'lt', 'value': int_upper},
+        {'attribute': 'test_int', 'operation': 'gt', 'value': int_lower},
+        {'attribute': 'test_float', 'operation': 'gt', 'value': float_lower},
+        {'attribute': 'test_float', 'operation': 'lt', 'value': float_upper},
+        {'attribute': 'test_enum', 'operation': 'eq', 'value': enum_value},
+    ]
+    }
     values = {'bool_value': bool_value,
               'int_lower': int_lower,
               'int_upper': int_upper,
               'float_lower': float_lower,
               'float_upper': float_upper,
-              'enum_value': enum_value}
+              'enum_value': enum_value,
+              }
     if sections:
         section = random.choice(sections)
-        search += f" AND tator_user_sections:{section.tator_user_sections}"
+        search['operations'].append({'attribute':'tator_user_sections', 'operation': 'eq', 'value': section.tator_user_sections})
         values['section'] = section
     return search, values
 
@@ -93,6 +98,7 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (attributes['test_float'] < media_values['float_upper'])
                       and (attributes['test_enum'] == media_values['enum_value'])
                       and (section == media_values['section'].name)]
+    print(f"Expected_media={expected_media}")
     expected_boxes = [box for box in box_specs
                       if (box['media_id'] in expected_media)
                       and (box['test_bool'] == values['bool_value'])
@@ -101,6 +107,7 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (box['test_float'] > values['float_lower'])
                       and (box['test_float'] < values['float_upper'])
                       and (box['test_enum'] == values['enum_value'])]
+    print(f"Expected_boxes={expected_boxes}")
     box_ids = [box['id'] for box in expected_boxes]
     assert(len(expected_boxes) == len(results))
     for result in results:
@@ -152,28 +159,35 @@ def test_search(host, token, project, image_type, image_set, box_type):
     # Test search on localizations.
     print("Performing 100 random searches on localizations...")
     for _ in range(100):
+        print(f"Iteration {_}")
         search, values = random_search()
         media_search, media_values = random_search(sections)
-        response = api.get_localization_list(project, search=search, media_search=media_search)
+        blob=base64.b64encode(json.dumps(search).encode())
+        media_blob=base64.b64encode(json.dumps(media_search).encode())
+        response = api.get_localization_list(project, encoded_search=blob, encoded_related_search=media_blob)
         check_box_result(response, values, media_values, box_specs, medias)
         # Test search with section parameter
         media_search, media_values = random_search()
+        media_blob=base64.b64encode(json.dumps(media_search).encode())
         section = random.choice(sections)
-        response = api.get_localization_list(project, search=search, media_search=media_search,
+        response = api.get_localization_list(project, encoded_search=blob, encoded_related_search=media_blob,
                                              section=section.id)
         media_values['section'] = section
-        check_box_result(response, values, media_values, box_specs, medias)
+        #check_box_result(response, values, media_values, box_specs, medias)
     # Test search on media.
     print("Performing 100 random searches on media...")
     for _ in range(100):
         search, values = random_search(sections)
         annotation_search, annotation_values = random_search()
-        response = api.get_media_list(project, search=search, annotation_search=annotation_search)
+        blob=base64.b64encode(json.dumps(search).encode('ascii'))
+        annotation_blob=base64.b64encode(json.dumps(search).encode('ascii'))
+        response = api.get_media_list(project, encoded_search=blob, encoded_related_search=annotation_blob)
         check_media_result(response, values, annotation_values, box_specs, medias)
         # Test search with section parameter
         search, values = random_search()
         section = random.choice(sections)
-        response = api.get_media_list(project, search=search, annotation_search=annotation_search,
+        blob=base64.b64encode(json.dumps(search).encode('ascii'))
+        response = api.get_media_list(project, encoded_search=blob, encoded_related_search=annotation_blob,
                                       section=section.id)
         values['section'] = section
         check_media_result(response, values, annotation_values, box_specs, medias)
