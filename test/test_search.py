@@ -98,7 +98,6 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (attributes['test_float'] < media_values['float_upper'])
                       and (attributes['test_enum'] == media_values['enum_value'])
                       and (section == media_values['section'].name)]
-    print(f"Expected_media={expected_media}")
     expected_boxes = [box for box in box_specs
                       if (box['media_id'] in expected_media)
                       and (box['test_bool'] == values['bool_value'])
@@ -107,7 +106,6 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (box['test_float'] > values['float_lower'])
                       and (box['test_float'] < values['float_upper'])
                       and (box['test_enum'] == values['enum_value'])]
-    print(f"Expected_boxes={expected_boxes}")
     box_ids = [box['id'] for box in expected_boxes]
     assert(len(expected_boxes) == len(results))
     for result in results:
@@ -173,14 +171,14 @@ def test_search(host, token, project, image_type, image_set, box_type):
         response = api.get_localization_list(project, encoded_search=blob, encoded_related_search=media_blob,
                                              section=section.id)
         media_values['section'] = section
-        #check_box_result(response, values, media_values, box_specs, medias)
+        check_box_result(response, values, media_values, box_specs, medias)
     # Test search on media.
     print("Performing 100 random searches on media...")
     for _ in range(100):
         search, values = random_search(sections)
         annotation_search, annotation_values = random_search()
         blob=base64.b64encode(json.dumps(search).encode('ascii'))
-        annotation_blob=base64.b64encode(json.dumps(search).encode('ascii'))
+        annotation_blob=base64.b64encode(json.dumps(annotation_search).encode('ascii'))
         response = api.get_media_list(project, encoded_search=blob, encoded_related_search=annotation_blob)
         check_media_result(response, values, annotation_values, box_specs, medias)
         # Test search with section parameter
