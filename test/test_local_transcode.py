@@ -32,5 +32,13 @@ def test_bad_file(host, token, project, video_type, image_file):
     time.sleep(2)
     # Make sure media file is gone.
     api = tator.get_api(host, token)
-    medias = api.get_media_list(project, attribute=['tator_user_sections::Bad transcodes'])
+    sections = api.get_section_list(project)
+    section_obj = [s for s in sections if s.name == 'Bad transcodes'][0]
+
+    medias = api.get_media_list(project, attribute=[f'tator_user_sections::{section_obj.tator_user_sections}'])
+    print(medias)
+    assert(len(medias) == 0)
+
+    medias = api.get_media_list(project, section=section_obj.id)
+    print(medias)
     assert(len(medias) == 0)
