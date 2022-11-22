@@ -8,46 +8,6 @@ from collections import Counter
 import tator
 from ._common import assert_close_enough
 
-
-def wait_for_parity(tator_api, project, patch, expected_ids):
-    attribute_filter = [f"test_string::{patch['attributes']['test_string']}"]
-    localization_id_query = {"ids": expected_ids}
-    total_timeout = 60.0 # seconds
-    wait_time = 2.0 # seconds
-
-    print(f"Using attribute filter:\n{pformat(attribute_filter)}")
-    from_psql = tator_api.get_localization_list_by_id(
-        project,
-        localization_id_query=localization_id_query,
-        attribute=attribute_filter,
-    )
-    count = tator_api.get_localization_count_by_id(
-        project,
-        localization_id_query=localization_id_query,
-        attribute=attribute_filter,
-    )
-    assert(len(from_psql) == count)
-    for idx in range(int(total_timeout / wait_time) + 1):
-        from_es = tator_api.get_localization_list_by_id(
-            project,
-            localization_id_query=localization_id_query,
-            attribute=attribute_filter
-        )
-        count = tator_api.get_localization_count_by_id(
-            project,
-            localization_id_query=localization_id_query,
-            attribute=attribute_filter
-        )
-        assert(len(from_es) == count)
-        if len(from_es) == len(from_psql):
-            print(f"Found expected number of results after {idx * wait_time} seconds")
-            return True
-
-        sleep(wait_time)
-
-    print(f"Did not find expected number of results after {idx * wait_time} seconds")
-    return False
-
 def random_localization(project, box_type, video_obj, post=False):
     x = random.uniform(0.0, 1.0)
     y = random.uniform(0.0, 1.0)
@@ -136,9 +96,9 @@ def comparison_query(tator_api, project, box_ids, exclude):
         assert(psql.attributes['test_enum'] == enum_value)
     return psql_time, es_time
 
-def test_localization_crud(host, token, project, video_type, video, box_type):
+def test_localization_crud(host, token, project, video_type, video_temp, box_type):
     tator_api = tator.get_api(host, token)
-    video_obj = tator_api.get_media(video)
+    video_obj = tator_api.get_media(video_temp)
 
     # These fields will not be checked for object equivalence after patch.
     exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
@@ -163,10 +123,10 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Test media retrieval by localization ID.
     response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids})
     assert len(response) == 1
-    assert response[0].id == video
+    assert response[0].id == video_temp
 
     # Test box retrieval by media ID.
-    response = tator_api.get_localization_list_by_id(project, {'media_ids': [video]})
+    response = tator_api.get_localization_list_by_id(project, {'media_ids': [video_temp]})
     assert(len(response) == len(box_ids))
 
     # Test single create.
@@ -196,7 +156,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
-    params = {'media_id': [video], 'type': box_type}
+    params = {'media_id': [video_temp], 'type': box_type}
     assert(tator_api.get_localization_count(project, **params) == len(boxes))
 
     # Bulk update box attributes.
@@ -241,7 +201,7 @@ def test_localization_crud(host, token, project, video_type, video, box_type):
     # Clone boxes to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
     generator = tator.util.clone_localization_list(tator_api, {**params, 'project': project},
-                                                   project, version_mapping, {video:video},
+                                                   project, version_mapping, {video_temp:video_temp},
                                                    {box_type: box_type}, tator_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} localizations...")

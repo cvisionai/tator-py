@@ -32,9 +32,9 @@ def _create_localization(project, box_type, video_obj, float_array_val):
     out = {**out, **attributes}
     return out
 
-def test_float_array(host, token, project, box_type, video):
+def test_float_array(host, token, project, box_type, video_temp):
     api = tator.get_api(host, token)
-    video_obj = api.get_media(video)
+    video_obj = api.get_media(video_temp)
 
     # Create eight boxes in a line.
     spec = [
@@ -58,7 +58,7 @@ def test_float_array(host, token, project, box_type, video):
         'center': [2.1, 0.0, 0.0],
     }
     search = {'float_array': [search]}
-    boxes = api.get_localization_list_by_id(project, localization_id_query=search)
+    boxes = api.get_localization_list_by_id(project, media_id=[video_temp], localization_id_query=search)
     assert(len(boxes) == 8)
 
     # Test bounded search.
@@ -69,9 +69,10 @@ def test_float_array(host, token, project, box_type, video):
         'upper_bound': 3.0,
     }
     search = {'float_array': [search]}
-    boxes = api.get_localization_list_by_id(project, localization_id_query=search, stop=1)
+    boxes = api.get_localization_list_by_id(project, type=box_type, media_id=[video_temp], localization_id_query=search, stop=1)
     assert(len(boxes) == 1)
-    assert(boxes[0].id == ids[5])
+    assert(boxes[0].attributes['test_float_array'][0] == 1.0)
+    boxes = api.get_localization_list_by_id(project, type=box_type, media_id=[video_temp], localization_id_query=search, stop=1)
 
     # Test descending search.
     search = {
@@ -82,9 +83,9 @@ def test_float_array(host, token, project, box_type, video):
         'order': 'desc',
     }
     search = {'float_array': [search]}
-    boxes = api.get_localization_list_by_id(project, localization_id_query=search, stop=1)
+    boxes = api.get_localization_list_by_id(project, type=box_type,media_id=[video_temp],localization_id_query=search, stop=1)
     assert(len(boxes) == 1)
-    assert(boxes[0].id == ids[4])
+    assert(boxes[0].attributes['test_float_array'][0] == 0.0)
 
     # Update localizations.
     search = {
@@ -94,7 +95,7 @@ def test_float_array(host, token, project, box_type, video):
     }
     search = {'float_array': [search]}
     update = {'attributes': {'test_float_array': [1000.0, 0.0, 0.0]}}
-    response = api.update_localization_list(project, 
+    response = api.update_localization_list(project, type=box_type,media_id=[video_temp],
                                             localization_bulk_update={**search, **update})
     assert(isinstance(response, tator.models.MessageResponse))
 
@@ -105,7 +106,7 @@ def test_float_array(host, token, project, box_type, video):
         'upper_bound': 1.0,
     }
     search = {'float_array': [search]}
-    response = api.delete_localization_list(project, localization_id_query=search)
+    response = api.delete_localization_list(project, type=box_type,media_id=[video_temp],localization_id_query=search)
     assert(isinstance(response, tator.models.MessageResponse))
 
     # Check we deleted the right boxes.
@@ -119,7 +120,7 @@ def test_float_array(host, token, project, box_type, video):
         'upper_bound': 2.1,
     }
     search = {'float_array': [search]}
-    response = api.delete_localization_list(project, localization_id_query=search)
+    response = api.delete_localization_list(project, type=box_type,localization_id_query=search,media_id=[video_temp])
     assert(isinstance(response, tator.models.MessageResponse))
 
     # Check localizations are gone.
