@@ -58,7 +58,7 @@ def test_float_array(host, token, project, box_type, video_temp):
         'center': [2.1, 0.0, 0.0],
     }
     search = {'float_array': [search]}
-    boxes = api.get_localization_list_by_id(project, media_id=[video_temp], localization_id_query=search)
+    boxes = api.get_localization_list_by_id(project, type=box_type, media_id=[video_temp], localization_id_query=search)
     assert(len(boxes) == 8)
 
     # Test bounded search.
