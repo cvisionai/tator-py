@@ -105,6 +105,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
 
     # Test bulk create.
     num_localizations = random.randint(2000, 10000)
+    existing = len(tator_api.get_localization_list(project,type=box_type))
     boxes = [
         random_localization(project, box_type, video_obj, post=True)
         for _ in range(num_localizations)
@@ -118,7 +119,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
 
     # Verify list is the right length
     response = tator_api.get_localization_list(project,type=box_type)
-    assert len(response) == num_localizations
+    assert len(response) == num_localizations + existing
 
     # Test media retrieval by localization ID.
     response = tator_api.get_media_list_by_id(project, {'localization_ids': box_ids})
@@ -157,7 +158,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     print(response.message)
 
     params = {'media_id': [video_temp], 'type': box_type}
-    assert(tator_api.get_localization_count(project, **params) == len(boxes))
+    assert(tator_api.get_localization_count(project, **params) == len(boxes) + existing)
 
     # Bulk update box attributes.
     response = tator_api.create_version(
@@ -206,7 +207,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} localizations...")
     print(f"Finished creating {num_created} localizations!")
-    assert(tator_api.get_localization_count(project, **params) == 2 * len(boxes))
+    assert(tator_api.get_localization_count(project, **params) == 2 * (len(boxes)+existing))
 
     # Delete all boxes.
     response = tator_api.delete_localization_list(project, **params)
