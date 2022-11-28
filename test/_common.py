@@ -19,7 +19,7 @@ def assert_vector_equal(a,b):
     for idx,v in enumerate(a):
         assert(a[idx] == b[idx])
 
-def assert_close_enough(a, b, exclude=[]):
+def assert_close_enough(a, b, exclude=[], mapping={}):
     if not isinstance(a, dict):
         a = a.to_dict()
     if not isinstance(b, dict):
@@ -27,10 +27,13 @@ def assert_close_enough(a, b, exclude=[]):
     for key in a:
         if key in exclude:
             continue
-        assert key in b, fail_str(a, b, key)
+        key_b = key
+        if key in mapping:
+            key_b = mapping[key]
+        assert key_b in b, fail_str(a, b, key)
         if is_number(a[key]):
-            diff = abs(a[key] - b[key])
+            diff = abs(a[key] - b[key_b])
             assert diff < 0.0001, fail_str(a, b, key)
         else:
-            assert a[key] == b[key], fail_str(a, b, key)
+            assert a[key] == b[key_b], fail_str(a, b, key)
 

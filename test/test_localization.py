@@ -97,11 +97,13 @@ def comparison_query(tator_api, project, box_ids, exclude):
     return psql_time, es_time
 
 def test_localization_crud(host, token, project, video_type, video_temp, box_type):
+||||||| 1d3a4bf
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video_temp)
 
     # These fields will not be checked for object equivalence after patch.
     exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
+    mapping = {'new_version': 'version'}
 
     # Test bulk create.
     num_localizations = random.randint(2000, 10000)
@@ -118,7 +120,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     print(f"Created {len(box_ids)} boxes!")
 
     # Verify list is the right length
-    response = tator_api.get_localization_list(project,type=box_type)
+    response = tator_api.get_localization_list(project,type=box_type, media_id=[video_temp])
     assert len(response) == num_localizations + existing
 
     # Test media retrieval by localization ID.
@@ -170,7 +172,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     )
     new_version = response.id
     bulk_patch = random_localization(project, box_type, video_obj)
-    bulk_patch = {"attributes": bulk_patch["attributes"], "version": new_version}
+    bulk_patch = {"attributes": bulk_patch["attributes"], "new_version": new_version}
     response = tator_api.update_localization_list(project, **params,
                                                   localization_bulk_update=bulk_patch)
     assert isinstance(response, tator.models.MessageResponse)
@@ -182,7 +184,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     id_bulk_patch = {
         "attributes": id_bulk_patch["attributes"],
         "ids": update_ids,
-        "version": new_version,
+        "new_version": new_version,
     }
     response = tator_api.update_localization_list(project, **params,
                                                   localization_bulk_update=id_bulk_patch)
@@ -195,9 +197,9 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     assert(len(boxes)==len(dataframe))
     for box in boxes:
         if box.id in update_ids:
-            assert_close_enough(id_bulk_patch, box, exclude)
+            assert_close_enough(id_bulk_patch, box, exclude, mapping)
         else:
-            assert_close_enough(bulk_patch, box, exclude)
+            assert_close_enough(bulk_patch, box, exclude, mapping)
 
     # Clone boxes to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
@@ -216,6 +218,12 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     # Verify all boxes are gone.
     boxes = tator_api.get_localization_list(project, **params)
     assert boxes == []
+
+    boxes = tator_api.get_localization_list(project, **params, show_deleted=1)
+    assert boxes != []
+
+    response = tator_api.delete_localization_list(project, **params, show_deleted=1, merge=0, localization_bulk_delete={'prune':1})
+    assert isinstance(response, tator.models.MessageResponse)
 
     # Clean up test version
     tator_api.delete_version(new_version)

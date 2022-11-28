@@ -72,7 +72,69 @@ def random_state(project, state_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
+<<<<<<< HEAD
 def test_state_crud(host, token, project, video_type, video, state_type):
+||||||| 1d3a4bf
+def comparison_query(tator_api, project, state_ids, exclude):
+    """ Runs a random query and compares results with ES enabled and disabled.
+    """
+    bool_value = random.choice([True, False])
+    int_lower = random.randint(-1000, 0)
+    int_upper = random.randint(0, 1000)
+    float_lower = random.uniform(-1000.0, 0.0)
+    float_upper = random.uniform(0.0, 1000.0)
+    enum_value = random.choice(['a', 'b', 'c'])
+    state_id_query = {"ids": state_ids}
+    attribute_filter = [f"test_bool::{'true' if bool_value else 'false'}", f"test_enum::{enum_value}"]
+    attribute_lte_filter = [f"test_int::{int_upper}"]
+    attribute_gte_filter = [f"test_int::{int_lower}"]
+    attribute_lt_filter = [f"test_float::{float_upper}"]
+    attribute_gt_filter = [f"test_float::{float_lower}"]
+    print("Starting PSQL query...")
+    t0 = datetime.datetime.now()
+    from_psql = tator_api.get_state_list_by_id(
+        project,
+        state_id_query=state_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+    )
+    psql_time = datetime.datetime.now() - t0
+    print("Starting ES query...")
+    t0 = datetime.datetime.now()
+    from_es = tator_api.get_state_list_by_id(
+        project,
+        state_id_query=state_id_query,
+        attribute=attribute_filter,
+        attribute_lte=attribute_lte_filter,
+        attribute_gte=attribute_gte_filter,
+        attribute_lt=attribute_lt_filter,
+        attribute_gt=attribute_gt_filter,
+        force_es=1,
+    )
+    es_time = datetime.datetime.now() - t0
+
+    print("Checking PSQL and ES ids...")
+    psql_ids = [ele.id for ele in from_psql]
+    es_ids = [ele.id for ele in from_es]
+    assert(Counter(psql_ids) == Counter(es_ids))
+
+    print("Checking PSQL and ES values...")
+    assert len(from_psql) == len(from_es)
+    for psql, es in zip(from_psql, from_es):
+        assert_close_enough(psql, es, exclude)
+        assert(psql.attributes['test_bool'] == bool_value)
+        assert(psql.attributes['test_int'] <= int_upper)
+        assert(psql.attributes['test_int'] >= int_lower)
+        assert(psql.attributes['test_float'] < float_upper)
+        assert(psql.attributes['test_float'] > float_lower)
+        assert(psql.attributes['test_enum'] == enum_value)
+    return psql_time, es_time
+
+def test_state_crud(host, token, project, video_type, empty_video, state_type):
+    video = empty_video
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
