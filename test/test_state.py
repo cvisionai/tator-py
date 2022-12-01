@@ -72,9 +72,6 @@ def random_state(project, state_type, video_obj, post=False):
         out['attributes'] = attributes
     return out
 
-<<<<<<< HEAD
-def test_state_crud(host, token, project, video_type, video, state_type):
-||||||| 1d3a4bf
 def comparison_query(tator_api, project, state_ids, exclude):
     """ Runs a random query and compares results with ES enabled and disabled.
     """

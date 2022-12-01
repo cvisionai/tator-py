@@ -97,7 +97,6 @@ def comparison_query(tator_api, project, box_ids, exclude):
     return psql_time, es_time
 
 def test_localization_crud(host, token, project, video_type, video_temp, box_type):
-||||||| 1d3a4bf
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video_temp)
 
