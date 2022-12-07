@@ -276,12 +276,13 @@ def video(request, project, video_type, video_file):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    attributes = {"test_string": str(uuid1())}
+    uuid_val = str(uuid1())
+    attributes = {"test_string": uuid_val}
     for progress, response in tator.util.upload_media(tator_api, video_type, video_file, attributes=attributes):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
-        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4')
+        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4', attribute=[f"test_string::{uuid_val}"])
         print("Waiting for transcode...")
         time.sleep(2.5)
         if len(response) == 0:
