@@ -236,7 +236,6 @@ def test_algorithm_launch(
         image_type: Unique identifier of the media type related to images saved to this project
         image_set: List of paths to temporary images that can be uploaded to tator
     """
-    print(f"ALGORITHM NAME: {algorithm_name}")
     tator_api = tator.get_api(host=host, token=token)
     number_of_media = 10
 
