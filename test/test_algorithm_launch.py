@@ -273,7 +273,7 @@ def test_algorithm_launch(
     print(f"Providing following media list: {media_ids}")
     spec = tator.models.JobSpec(algorithm_name=algorithm_name, media_ids=media_ids)
     response = tator_api.create_job_list(project=project, job_spec=spec)
-    assert len(response.ids) == 1
+    assert len(response.id) == 1
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
         project=project,
@@ -285,4 +285,4 @@ def test_algorithm_launch(
     media_ids = []
     spec = tator.models.JobSpec(algorithm_name=algorithm_name, media_ids=media_ids)
     response = tator_api.create_job_list(project=project, job_spec=spec)
-    assert len(response.ids) == 0
+    assert len(response.id) == 0
