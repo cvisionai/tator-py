@@ -217,7 +217,7 @@ def test_algorithm_launch(
         algorithm_name: str,
         image_type: int,
         image_set: str) -> None:
-    """ Unit tests the LaunchAlgorithm endpoint
+    """ Unit tests the Jobs POST method
 
     Performs the following unit tests:
     - Add a bunch of images, register the workflow that writes entries to the Analysis model
@@ -236,7 +236,7 @@ def test_algorithm_launch(
         image_type: Unique identifier of the media type related to images saved to this project
         image_set: List of paths to temporary images that can be uploaded to tator
     """
-
+    print(f"ALGORITHM NAME: {algorithm_name}")
     tator_api = tator.get_api(host=host, token=token)
     number_of_media = 10
 
@@ -272,10 +272,9 @@ def test_algorithm_launch(
     # Now, launch the algorithm again with an arbitrary set of media and test the results
     media_ids = [medias[0].id, medias[1].id]
     print(f"Providing following media list: {media_ids}")
-  
     spec = tator.models.JobSpec(algorithm_name=algorithm_name, media_ids=media_ids)
-    response = tator_api.create_job(project=project, job_spec=spec)
-    assert len(response.uid) == 1
+    response = tator_api.create_job_list(project=project, job_spec=spec)
+    assert len(response.ids) == 1
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
         project=project,
@@ -286,5 +285,5 @@ def test_algorithm_launch(
     # - This shouldn't launch the argo workflow
     media_ids = []
     spec = tator.models.JobSpec(algorithm_name=algorithm_name, media_ids=media_ids)
-    response = tator_api.create_job(project=project, job_spec=spec)
-    assert len(response.uid) == 0
+    response = tator_api.create_job_list(project=project, job_spec=spec)
+    assert len(response.ids) == 0
