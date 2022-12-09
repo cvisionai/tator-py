@@ -274,7 +274,7 @@ def test_algorithm_launch(
     print(f"Providing following media list: {media_ids}")
   
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_ids=media_ids)
-    response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
+    response = tator_api.create_job(project=project, job_spec=spec)
     assert len(response.uid) == 1
     _assert_algorithm_workflow_results(
         tator_api=tator_api,
@@ -286,5 +286,5 @@ def test_algorithm_launch(
     # - This shouldn't launch the argo workflow
     media_ids = []
     spec = tator.models.AlgorithmLaunchSpec(algorithm_name=algorithm_name, media_ids=media_ids)
-    response = tator_api.algorithm_launch(project=project, algorithm_launch_spec=spec)
+    response = tator_api.create_job(project=project, job_spec=spec)
     assert len(response.uid) == 0
