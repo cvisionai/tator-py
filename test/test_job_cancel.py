@@ -47,15 +47,15 @@ spec:
 
     # Launch some workflows.
     tator_api = tator.get_api(host=host, token=token)
-    spec = tator.models.AlgorithmLaunchSpec(
+    spec = tator.models.JobSpec(
         algorithm_name=ALGORITHM_NAME,
         media_ids=[image])
-    responses = [tator_api.algorithm_launch(project=project,
-                                            algorithm_launch_spec=spec)
+    responses = [tator_api.create_job_list(project=project,
+                                            job_spec=spec)
                  for _ in range(10)]
 
     # Cancel by UID.
-    uid = responses[0].uid[0]
+    uid = responses[0].id[0]
     job = tator_api.get_job(uid)
     assert isinstance(job, tator.models.Job)
     print(f"Cancelling job with uid {uid}...")
@@ -69,7 +69,8 @@ spec:
     assert found == False
 
     # Cancel by GID.
-    gid = responses[1].gid
+    job_detail = tator_api.get_job(responses[1].id[0])
+    gid = job_detail.gid
     jobs = tator_api.get_job_list(project, gid=gid)
     assert isinstance(jobs[0], tator.models.Job)
     print(f"Cancelling job with gid {gid}...")
