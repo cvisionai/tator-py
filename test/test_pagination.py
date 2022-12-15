@@ -38,12 +38,10 @@ def random_localization(project, box_type, image_obj, test_string, post=False):
         "type": box_type,
         "media_id": image_obj.id,
         "frame": 0,
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def _assert_pagination(api, function_name, batch_size, total, **kwargs):

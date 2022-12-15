@@ -30,12 +30,10 @@ def random_localization(project, box_type, video_obj, post=False):
         'type': box_type,
         'media_id': video_obj.id,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def test_state_graphic(host, token, project, video, box_type, track_type):
     api = tator.get_api(host, token)

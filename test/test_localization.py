@@ -32,12 +32,10 @@ def random_localization(project, box_type, video_obj, post=False):
         'type': box_type,
         'media_id': video_obj.id,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def comparison_query(tator_api, project, box_ids, exclude):
     """ Runs a random query and compares results with ES enabled and disabled.

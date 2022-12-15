@@ -25,12 +25,10 @@ def random_state(project, state_type, video_obj, post=False):
         "type": state_type,
         "media_ids": [video_obj.id],
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def random_localization(project, box_type, video_obj, post=False):
@@ -57,12 +55,10 @@ def random_localization(project, box_type, video_obj, post=False):
         "type": box_type,
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def random_leaf(project, leaf_type, parent_obj=None, post=False):
@@ -81,14 +77,12 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         "project": project,
         "type": leaf_type,
         "name": name,
+        "attributes": attributes
     }
     if parent_obj:
         out["parent"] = parent_obj.id
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def compare_change_logs(new, old):
@@ -145,7 +139,7 @@ def change_log_helper(
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == box[change.name]
+                assert change.value == box['attributes'][change.name]
         create_changes.append(changes)
 
     patch_entities = [random_entity() for _ in range(num_entities)]
@@ -469,7 +463,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
             elif change.name in ["_project", "_name", "_type"]:
                 assert change.value == leaf_spec[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == leaf_spec[change.name]
+                assert change.value == leaf_spec['attributes'][change.name]
         create_changes.append(changes)
 
     patch_leaves = [random_leaf(project, leaf_type) for _ in range(num_leaves)]

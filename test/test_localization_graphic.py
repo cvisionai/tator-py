@@ -226,7 +226,7 @@ def _perform_specific_box_size_test(
         'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
 
-    datum = {**datum, **attributes}
+    datum = {**datum, 'attributes': {**attributes}}
     response = tator_api.create_localization_list(project, localization_spec=[datum])
 
     # Generate the truth information for unit testing

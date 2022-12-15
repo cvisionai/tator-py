@@ -33,9 +33,10 @@ def random_localization(project, box_type, media_ids):
         'type': box_type,
         'media_id': random.choice(media_ids),
         'frame': 0,
+        'attributes': attributes
     }
-    out = {**out, **attributes}
-    return out
+
+    return {**out}
 
 def random_media(api, project, paths, image_type):
     attributes = {
@@ -100,12 +101,12 @@ def check_box_result(results, values, media_values, box_specs, medias):
                       and (section == media_values['section'].name)]
     expected_boxes = [box for box in box_specs
                       if (box['media_id'] in expected_media)
-                      and (box['test_bool'] == values['bool_value'])
-                      and (box['test_int'] > values['int_lower'])
-                      and (box['test_int'] < values['int_upper'])
-                      and (box['test_float'] > values['float_lower'])
-                      and (box['test_float'] < values['float_upper'])
-                      and (box['test_enum'] == values['enum_value'])]
+                      and (box['attributes']['test_bool'] == values['bool_value'])
+                      and (box['attributes']['test_int'] > values['int_lower'])
+                      and (box['attributes']['test_int'] < values['int_upper'])
+                      and (box['attributes']['test_float'] > values['float_lower'])
+                      and (box['attributes']['test_float'] < values['float_upper'])
+                      and (box['attributes']['test_enum'] == values['enum_value'])]
     box_ids = [box['id'] for box in expected_boxes]
     assert(len(expected_boxes) == len(results))
     for result in results:
@@ -115,12 +116,12 @@ def check_media_result(results, values, annotation_values, box_specs, medias):
     """ Checks search results against values cached locally.
     """
     expected_boxes = [box for box in box_specs
-                      if (box['test_bool'] == annotation_values['bool_value'])
-                      and (box['test_int'] > annotation_values['int_lower'])
-                      and (box['test_int'] < annotation_values['int_upper'])
-                      and (box['test_float'] > annotation_values['float_lower'])
-                      and (box['test_float'] < annotation_values['float_upper'])
-                      and (box['test_enum'] == annotation_values['enum_value'])]
+                      if (box['attributes']['test_bool'] == annotation_values['bool_value'])
+                      and (box['attributes']['test_int'] > annotation_values['int_lower'])
+                      and (box['attributes']['test_int'] < annotation_values['int_upper'])
+                      and (box['attributes']['test_float'] > annotation_values['float_lower'])
+                      and (box['attributes']['test_float'] < annotation_values['float_upper'])
+                      and (box['attributes']['test_enum'] == annotation_values['enum_value'])]
     parent_media = [box['media_id'] for box in expected_boxes]
     expected_media = [media_id for media_id, attributes, section in medias
                       if (media_id in parent_media)
