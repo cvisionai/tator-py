@@ -12,12 +12,10 @@ def random_state(project, state_type, video_obj, post=False):
         "type": state_type,
         "media_ids": [video_obj.id],
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def test_state_type_delete(host, token, project, video_type, video):

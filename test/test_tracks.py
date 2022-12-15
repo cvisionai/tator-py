@@ -28,12 +28,10 @@ def random_localization(project, box_type, video_obj, post=False):
         'type': box_type,
         'media_id': video_obj.id,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def random_state(project, state_type, video_obj, post=False):
     attributes = {
@@ -51,12 +49,10 @@ def random_state(project, state_type, video_obj, post=False):
         'type': state_type,
         'media_ids': [video_obj.id],
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def test_append(host, token, project, video_type, video, track_type, box_type):
     tator_api = tator.get_api(host, token)

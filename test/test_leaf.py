@@ -22,14 +22,11 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         'project': project,
         'type': leaf_type,
         'name': name,
+        'attributes': attributes
     }
     if parent_obj:
         out['parent'] = parent_obj.id
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+    return {**out}
 
 def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_type):
     tator_api = tator.get_api(host, token)

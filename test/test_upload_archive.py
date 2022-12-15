@@ -30,8 +30,9 @@ def random_localization(video_obj):
         'width': w,
         'height': h,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    return {**out, **attributes}
+    return {**out}
 
 def random_state(video_obj):
     attributes = {
@@ -46,8 +47,9 @@ def random_state(video_obj):
     }
     out = {
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    return {**out, **attributes}
+    return {**out}
 
 def test_upload_file_list(host, token, project, image_type, image_set):
     tator_api = tator.get_api(host, token)
@@ -86,7 +88,7 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
         for _ in range(10):
             loc = random_localization(video_obj)
             fp.write(f"{loc['frame']},{loc['x']},{loc['x']},{loc['width']},"
-                     f"{loc['height']},{loc['test_string']}\n")
+                     f"{loc['height']},{loc['attributes']['test_string']}\n")
         arcname = os.path.join(os.path.splitext(video_base)[0], 'localizations',
                                                 f"{box_type}.csv")
         fp.flush()
@@ -97,7 +99,7 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
         fp.write('frame,test_string\n')
         for _ in range(10):
             loc = random_state(video_obj)
-            fp.write(f"{loc['frame']},{loc['test_string']}\n")
+            fp.write(f"{loc['frame']},{loc['attributes']['test_string']}\n")
         arcname = os.path.join(os.path.splitext(video_base)[0], 'states',
                                                 f"{state_type}.csv")
         fp.flush()
