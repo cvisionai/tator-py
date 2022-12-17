@@ -512,7 +512,7 @@ def create_localization_types(
         "description": "A test box type.",
         "dtype": "box",
         "media_types": [image_type, video_type, multi_type],
-        "colorMap": {
+        "color_map": {
           "default": [255, 0, 0],
           "key": "Test Enum",
           "map": {
@@ -638,7 +638,7 @@ def create_localization_types(
         "description": "A test dot type.",
         "dtype": "dot",
         "media_types": [image_type, video_type, multi_type],
-        "colorMap": {
+        "color_map": {
           "default": [255, 0, 0],
           "version": version_color_map
         },
