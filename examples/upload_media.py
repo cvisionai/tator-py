@@ -39,7 +39,7 @@ if __name__ == "__main__":
     # Take a look at transcode progress, wait until complete.
     project = tator_api.get_media_type(args.type_id).project
     while True:
-        transcode = tator_api.get_transcode_list(project, uid=response.id)[0]
+        transcode = tator_api.get_transcode(response.id)
         if transcode.job.status == "Succeeded":
             break
         elif transcode.job.status == "Failed":

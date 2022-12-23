@@ -51,12 +51,10 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
     print(response.message)
     print(response.id)
     while True:
-        transcodes = tator_api.get_transcode_list(project, uid=response.id)
-        assert(len(transcodes) == 1)
-        print(transcodes[0])
-        if transcodes[0].job.status == 'Succeeded':
+        transcode = tator_api.get_transcode(response.id)
+        if transcode.job.status == 'Succeeded':
             break
-        elif transcodes[0].job.status == 'Failed':
+        elif transcode.job.status == 'Failed':
             raise Exception('Transcode of existing media failed!')
         else:
             print("Waiting for transcode of existing media to complete...")

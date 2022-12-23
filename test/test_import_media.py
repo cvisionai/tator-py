@@ -13,7 +13,7 @@ def test_import_video(host, token, project, video_type):
     response = tator.util.import_media(api, video_type, url)
     print(response.message)
     while True:
-        transcode = api.get_transcode_list(project, uid=response.id)[0]
+        transcode = api.get_transcode(response.id)
         if transcode.job.status == 'Succeeded':
             break
         elif transcode.job.status == 'Failed':
@@ -28,7 +28,7 @@ def test_import_video(host, token, project, video_type):
     response = tator.util.import_media(api, video_type, url, media_id=media_id)
     print(response.message)
     while True:
-        transcode = api.get_transcode_list(project, uid=response.id)[0]
+        transcode = api.get_transcode(uid=response.id)
         if transcode.job.status == "Succeeded":
             break
         elif transcode.job.status == "Failed":
