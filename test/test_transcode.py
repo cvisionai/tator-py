@@ -122,4 +122,18 @@ def test_transcode_cancel(host, token, project, video_type, video_file):
     assert(len(transcodes) - len(remaining) == 1)
 
     # Get transcodes by media
+    transcodes = tator_api.get_transcode_list(project, media_id=media_ids)
+    transcode = transcodes[0]
+    media_id = transcode.spec.media_id
+    uid = transcode.spec.uid
+    transcode = tator_api.get_transcode(uid)
+    assert(transcode.spec.media_id == media_id)
+    response = tator_api.delete_transcode_list(project, media_id=[media_id])
+    print(response.message)
+    remaining = tator_api.get_transcode_list(project, media_id=media_ids)
+    assert(len(transcodes) > len(remaining))
+    response = tator_api.delete_transcode_list(project, media_id=media_ids)
+    print(response.message)
+    remaining = tator_api.get_transcode_list(project, media_id=media_ids)
+    assert(len(remaining) == 0)
     
