@@ -37,10 +37,11 @@ if __name__ == "__main__":
     logger.info(response.message)
 
     # Take a look at transcode progress, wait until complete.
+    project = tator_api.get_media_type(args.type_id).project
     while True:
-        job = tator_api.get_job(response.uid)
-        if job.status == "Succeeded":
+        transcode = tator_api.get_transcode(response.id)
+        if transcode.job.status == "Succeeded":
             break
-        elif job.status == "Failed":
+        elif transcode.job.status == "Failed":
             raise ValueError("Upload failed!")
         time.sleep(10)

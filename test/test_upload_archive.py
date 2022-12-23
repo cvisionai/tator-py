@@ -62,7 +62,7 @@ def test_upload_file_list(host, token, project, image_type, image_set):
         for progress, response in tator.util.upload_media_archive(tator_api, project, batch):
             print(f"Archive upload progress: {progress}%")
         batch_num += 1
-        assert isinstance(response, tator.models.Transcode)
+        assert isinstance(response, tator.models.CreateResponse)
         print(response.message)
     
 def test_upload_archive(host, token, project, image_type, image_set, video_type, video_file, video,
@@ -110,6 +110,6 @@ def test_upload_archive(host, token, project, image_type, image_set, video_type,
     # Upload the archive.
     for progress, response in tator.util.upload_media_archive(tator_api, project, tar_buf.name):
         print(f"Archive upload progress: {progress}%")
-    assert isinstance(response, tator.models.Transcode)
+    assert isinstance(response, tator.models.CreateResponse)
     print(response.message)
     
