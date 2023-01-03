@@ -22,7 +22,7 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
             raise ValueError(f"Source localization ID {localization_id} missing from "
                               "localization_mapping!")
     # Swap state type IDs.
-    state_type_id = state.meta
+    state_type_id = state.type
     if state_type_id in state_type_mapping:
         state_type_id = state_type_mapping[state_type_id]
     else:

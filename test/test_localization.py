@@ -99,7 +99,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     video_obj = tator_api.get_media(video_temp)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
+    exclude = ['project', 'type', 'media_id', 'id', 'type', 'user', 'ids']
     mapping = {'new_version': 'version'}
 
     # Test bulk create.

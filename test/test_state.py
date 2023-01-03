@@ -133,7 +133,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_ids', 'id', 'meta', 'user', 'frame', 'ids']
+    exclude = ['project', 'type', 'media_ids', 'id', 'type', 'user', 'frame', 'ids']
 
     # Test bulk create.
     num_states = random.randint(2000, 10000)

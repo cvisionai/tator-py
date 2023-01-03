@@ -36,7 +36,7 @@ def test_poly(host, token, project, video_type, video, poly_type):
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
+    exclude = ['project', 'type', 'media_id', 'id', 'type', 'user', 'ids']
 
     # Test single create.
     poly = random_localization(project, poly_type, video_obj, post=True)

@@ -17,7 +17,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
     else:
         raise ValueError(f"Source media ID {media_id} missing from media_mapping!")
     # Swap localization type IDs.
-    localization_type_id = loc.meta
+    localization_type_id = loc.type
     if localization_type_id in localization_type_mapping:
         localization_type_id = localization_type_mapping[localization_type_id]
     else:

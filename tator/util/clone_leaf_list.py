@@ -7,7 +7,7 @@ def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
         else:
             raise ValueError(f"Source parent ID {parent_id} missing from parent_mapping!")
     # Swap leaf type IDs.
-    leaf_type_id = leaf.meta
+    leaf_type_id = leaf.type
     if leaf_type_id in leaf_type_mapping:
         leaf_type_id = leaf_type_mapping[leaf_type_id]
     else:

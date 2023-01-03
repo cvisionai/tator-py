@@ -116,7 +116,7 @@ def process_localization(
 
     # Grab the dtype information associated with this localization
     df = localization_types_df
-    dtype_matches = df[df['id'] == localization.meta]
+    dtype_matches = df[df['id'] == localization.type]
 
     if len(dtype_matches) != 1:
         log_msg = f'Localization {localization.id} ignored. Unexpected dtype match ({len(dtype_matches)} matches)'
@@ -300,11 +300,11 @@ def process_localization(
             target_filename = ''
             main_basename = f'{media_name_str}_Frame_{localization.frame}_Id_{localization.id}_'
             set_main_basename = False
-            if len(attribute_types_info[localization.meta]) > 0:
+            if len(attribute_types_info[localization.type]) > 0:
                 # Since we have a sorted attribute type dataframe, if the first entry doesn't
                 # have a 'primary attribute flag' (i.e. order == 0), we can just iterate over
                 # the entries.
-                for _, row in attribute_types_info[localization.meta].iterrows():
+                for _, row in attribute_types_info[localization.type].iterrows():
 
                     # Not all of the attributes available for a localization will always be used
                     # If it doesn't exist, skip over it

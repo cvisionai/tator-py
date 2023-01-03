@@ -123,7 +123,7 @@ def process_file(api,
 
         # First get the localization_type id
         random_local = api.get_localization(metadata[0].localizations[0])
-        localization_type = random_local.meta
+        localization_type = random_local.type
         localizations = api.get_localization_list(project,
                                                   media_id=[media_el.id],
                                                   type=localization_type)
@@ -251,7 +251,7 @@ def process_file(api,
                     for metadata in grouped_by_frame[frame]:
                         new_obj = {
                             'frame': 0,
-                            'type': metadata['meta'],
+                            'type': metadata['type'],
                             **metadata['attributes']
                         }
                         if mode == 'state':
