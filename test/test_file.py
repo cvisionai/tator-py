@@ -254,7 +254,7 @@ def test_file_crud(
         response = tator_api.create_file(project=project, file_spec=dict(
             name=f"File_A_{idx}",
             description="hey",
-            meta=file_type_a_id,
+            type=file_type_a_id,
             attributes=dict(
                 LabelA=idx,
                 LabelB="seeya"
@@ -273,7 +273,7 @@ def test_file_crud(
         response = tator_api.create_file(project=project, file_spec=dict(
             name=f"File_B_{idx}",
             description="hey",
-            meta=file_type_b_id,
+            type=file_type_b_id,
             attributes=dict(
                 LabelB="bye"
             )
@@ -305,10 +305,10 @@ def test_file_crud(
     assert file_b_count == len(file_b_ids)
 
     # Grab only the data associated with the FileTypes
-    files = tator_api.get_file_list(project=project, meta=file_type_a_id)
+    files = tator_api.get_file_list(project=project, type=file_type_a_id)
     assert len(files) == len(file_a_ids)
 
-    files = tator_api.get_file_list(project=project, meta=file_type_b_id)
+    files = tator_api.get_file_list(project=project, type=file_type_b_id)
     assert len(files) == len(file_b_ids)
 
     files = tator_api.get_file_list(project=project, attribute=["LabelB::seeya"])
@@ -327,7 +327,7 @@ def test_file_crud(
             "description": "new_description",
             "attributes": {"LabelA": -100}
         })
-    files = tator_api.get_file_list(project=project, meta=file_type_a_id)
+    files = tator_api.get_file_list(project=project, type=file_type_a_id)
     for file_obj in files:
         update_check = \
             file_obj.name == "new_name" and \
@@ -351,17 +351,17 @@ def test_file_crud(
     stop = page_size
     page = 0
     all_files = set()
-    files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start, stop=stop)
+    files = tator_api.get_file_list(project=project, type=file_type_b_id, start=start, stop=stop)
     for file in files:
         all_files.add(file.id)
-    files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
+    files = tator_api.get_file_list(project=project, type=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
     while files:
         for file in files:
             all_files.add(file.id)
         page += 1
-        files = tator_api.get_file_list(project=project, meta=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
+        files = tator_api.get_file_list(project=project, type=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
 
-    files = tator_api.get_file_list(project=project, meta=file_type_b_id)
+    files = tator_api.get_file_list(project=project, type=file_type_b_id)
     blah = [file.id for file in files]
     assert len(all_files) == len(file_b_ids)
 

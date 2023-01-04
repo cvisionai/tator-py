@@ -62,7 +62,7 @@ def test_file_type_delete(host: str, token: str, project: int) -> None:
     assert file_type >= 0
 
     # Verify no files exist to start
-    response = tator_api.get_file_list(project, meta=file_type)
+    response = tator_api.get_file_list(project, type=file_type)
     assert len(response) == 0
 
     file_ids = []
@@ -70,7 +70,7 @@ def test_file_type_delete(host: str, token: str, project: int) -> None:
         file_spec = {
             "name": f"File_A_{idx}",
             "description": "hey",
-            "meta": file_type,
+            "type": file_type,
             "attributes": {"test_bool": True},
         }
         response = tator_api.create_file(project=project, file_spec=file_spec)
@@ -83,7 +83,7 @@ def test_file_type_delete(host: str, token: str, project: int) -> None:
     assert len(file_ids) == 10
 
     # Verify list is the right length
-    response = tator_api.get_file_list(project, meta=file_type)
+    response = tator_api.get_file_list(project, type=file_type)
     assert len(response) == 10
 
     response = tator_api.delete_file_type(file_type)
@@ -93,7 +93,7 @@ def test_file_type_delete(host: str, token: str, project: int) -> None:
 
     try:
         caught_it = False
-        response = tator_api.get_file_list(project, meta=file_type)
+        response = tator_api.get_file_list(project, type=file_type)
     except:
         caught_it=True
     finally:
