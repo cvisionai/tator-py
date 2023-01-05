@@ -14,9 +14,9 @@ def test_import_video(host, token, project, video_type):
     print(response.message)
     while True:
         transcode = api.get_transcode(response.id)
-        if transcode.job.status == 'Succeeded':
+        if transcode.job.status == 'succeeded':
             break
-        elif transcode.job.status == 'Failed':
+        elif transcode.job.status == 'failed':
             raise Exception('Media import failed!')
         else:
             print("Waiting for transcode of imported media to complete...")
@@ -29,9 +29,9 @@ def test_import_video(host, token, project, video_type):
     print(response.message)
     while True:
         transcode = api.get_transcode(uid=response.id)
-        if transcode.job.status == "Succeeded":
+        if transcode.job.status == "succeeded":
             break
-        elif transcode.job.status == "Failed":
+        elif transcode.job.status == "failed":
             raise Exception("Media import failed!")
         else:
             print("Waiting for transcode of imported media to complete...")
