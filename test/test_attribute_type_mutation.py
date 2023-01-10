@@ -68,7 +68,7 @@ def mutation_helper(tator_api, type_getter, type_id, params):
         addition["addition"]["choices"] = ["a", "b", "c"]
     if source_dtype == "float_array":
         addition["addition"]["size"] = 3
-    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check attribute name before changing it
@@ -87,28 +87,28 @@ def mutation_helper(tator_api, type_getter, type_id, params):
 
     mutation = {
         "entity_type": addition["entity_type"],
-        "old_attribute_type_name": source_name,
-        "new_attribute_type": {"name": dest_name},
+        "current_name": source_name,
+        "attribute_type_update": {"name": dest_name},
     }
     if dest_dtype:
-        mutation["new_attribute_type"]["dtype"] = dest_dtype
+        mutation["attribute_type_update"]["dtype"] = dest_dtype
 
         if dest_dtype == "enum":
-            mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
+            mutation["attribute_type_update"]["choices"] = ["a", "b", "c"]
         if dest_dtype == "float_array":
-            mutation["new_attribute_type"]["size"] = 3
+            mutation["attribute_type_update"]["size"] = 3
 
     # A type mutation not in the list of allowed mutations will raise an `ApiException` and the
     # expected `dtype` will be the same as `source_dtype`
     if dest_dtype is None or dest_dtype in allowed_mutations[source_dtype] or dest_dtype == source_dtype:
         expected_dtype = dest_dtype if dest_dtype else source_dtype
         expected_name = dest_name
-        tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
+        tator_api.update_attribute_type(id=type_id, attribute_type_update=mutation)
     else:
         expected_dtype = source_dtype
         expected_name = source_name
         with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-            tator_api.rename_attribute(id=type_id, attribute_type_update=mutation)
+            tator_api.update_attribute_type(id=type_id, attribute_type_update=mutation)
 
     entity_type = type_getter(type_id)
 
@@ -131,9 +131,9 @@ def mutation_helper(tator_api, type_getter, type_id, params):
     # Delete the attribute to keep clean for other tests
     attribute_delete = {
         "entity_type": addition["entity_type"],
-        "attribute_to_delete": expected_name,
+        "name": expected_name,
     }
-    tator_api.delete_attribute(id=type_id, attribute_type_delete=attribute_delete)
+    tator_api.delete_attribute_type(id=type_id, attribute_type_delete=attribute_delete)
 
 
 @pytest.mark.parametrize("source_dtype", allowed_mutations.keys())
@@ -207,7 +207,7 @@ def test_video_and_image_type_name_change(
         addition["addition"]["choices"] = ["a", "b", "c"]
     if source_dtype == "float_array":
         addition["addition"]["size"] = 3
-    tator_api.add_attribute(id=attribute_video_type, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=attribute_video_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(attribute_video_type)
 
     # Check attribute name before changing it
@@ -223,7 +223,7 @@ def test_video_and_image_type_name_change(
         addition["addition"]["choices"] = ["a", "b", "c"]
     if source_dtype == "float_array":
         addition["addition"]["size"] = 3
-    tator_api.add_attribute(id=image_type, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=image_type, attribute_type_spec=addition)
     entity_type = tator_api.get_media_type(image_type)
 
     # Check attribute name before changing it
@@ -232,15 +232,15 @@ def test_video_and_image_type_name_change(
     # Mutate attribute on attribute_video_type
     mutation = {
         "entity_type": "MediaType",
-        "old_attribute_type_name": source_name,
-        "new_attribute_type": {"name": dest_name, "dtype": source_dtype},
+        "current_name": source_name,
+        "attribute_type_update": {"name": dest_name, "dtype": source_dtype},
     }
     if source_dtype == "enum":
-        mutation["new_attribute_type"]["choices"] = ["a", "b", "c"]
+        mutation["attribute_type_update"]["choices"] = ["a", "b", "c"]
     if source_dtype == "float_array":
-        mutation["new_attribute_type"]["size"] = 3
+        mutation["attribute_type_update"]["size"] = 3
 
-    tator_api.rename_attribute(id=attribute_video_type, attribute_type_update=mutation)
+    tator_api.update_attribute_type(id=attribute_video_type, attribute_type_update=mutation)
 
     entity_type = tator_api.get_media_type(attribute_video_type)
 
@@ -251,7 +251,7 @@ def test_video_and_image_type_name_change(
     assert all(attr.name != source_name for attr in entity_type.attribute_types)
 
     # Update the image type too
-    tator_api.rename_attribute(id=image_type, attribute_type_update=mutation)
+    tator_api.update_attribute_type(id=image_type, attribute_type_update=mutation)
     entity_type = tator_api.get_media_type(image_type)
     assert any(attr.name == dest_name for attr in entity_type.attribute_types)
     assert all(attr.name != source_name for attr in entity_type.attribute_types)
@@ -259,10 +259,10 @@ def test_video_and_image_type_name_change(
     # Delete the attribute to keep clean for other tests
     attribute_delete = {
         "entity_type": "MediaType",
-        "attribute_to_delete": dest_name,
+        "name": dest_name,
     }
-    tator_api.delete_attribute(id=attribute_video_type, attribute_type_delete=attribute_delete)
-    tator_api.delete_attribute(id=image_type, attribute_type_delete=attribute_delete)
+    tator_api.delete_attribute_type(id=attribute_video_type, attribute_type_delete=attribute_delete)
+    tator_api.delete_attribute_type(id=image_type, attribute_type_delete=attribute_delete)
 
 def test_box_type_attribute_mutation_fail(
         host, token, project, attribute_video, attribute_box_type
@@ -295,7 +295,7 @@ def test_box_type_attribute_mutation_fail(
         "entity_type": "LocalizationType",
         "addition": {"name": new_attr_name, "dtype": "int", "default": 0},
     }
-    tator_api.add_attribute(id=attribute_box_type, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=attribute_box_type, attribute_type_spec=addition)
     entity_type = tator_api.get_localization_type(attribute_box_type)
 
     # Check for added attribute
@@ -303,10 +303,10 @@ def test_box_type_attribute_mutation_fail(
 
     mutation = {
         "entity_type": "LocalizationType",
-        "old_attribute_type_name": new_attr_name,
-        "new_attribute_type": {"name": new_attr_name, "dtype": "float"},
+        "current_name": new_attr_name,
+        "attribute_type_update": {"name": new_attr_name, "dtype": "float"},
     }
-    tator_api.rename_attribute(id=attribute_box_type, attribute_type_update=mutation)
+    tator_api.update_attribute_type(id=attribute_box_type, attribute_type_update=mutation)
 
     # Check for mutated attribute
     entity_type = tator_api.get_localization_type(attribute_box_type)
@@ -324,6 +324,6 @@ def test_box_type_attribute_mutation_fail(
     # Delete the attribute to keep clean for other tests
     attribute_delete = {
         "entity_type": "LocalizationType",
-        "attribute_to_delete": new_attr_name,
+        "name": new_attr_name,
     }
-    tator_api.delete_attribute(id=attribute_box_type, attribute_type_delete=attribute_delete)
+    tator_api.delete_attribute_type(id=attribute_box_type, attribute_type_delete=attribute_delete)

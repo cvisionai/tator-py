@@ -51,7 +51,7 @@ def add_attribute_helper(tator_api, type_getter, type_id, dtype):
         addition["addition"]["choices"] = ["a", "b", "c"]
     if dtype == "float_array":
         addition["addition"]["size"] = 3
-    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check for added attribute
@@ -71,7 +71,7 @@ def add_invalid_attribute_helper(tator_api, type_getter, type_id):
 
     # Adding an attribute with an invalid `dtype` should raise an exception
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
+        tator_api.create_attribute_type(id=type_id, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
     assert (
@@ -131,7 +131,7 @@ def test_add_enum_without_choices(host, token, project, attribute_video_type):
 
     # Adding an enum attribute without a `choices` field should raise an exception
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.add_attribute(id=attribute_video_type, attribute_type_spec=addition)
+        tator_api.create_attribute_type(id=attribute_video_type, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
     assert "ValueError: enum attribute type definition missing 'choices' field" in str(
@@ -150,7 +150,7 @@ def test_add_same_attribute_twice(host, token, project, line_type):
         "entity_type": "LocalizationType",
         "addition": {"name": new_attr_name, "dtype": "int"},
     }
-    tator_api.add_attribute(id=line_type, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=line_type, attribute_type_spec=addition)
     entity_type = tator_api.get_localization_type(line_type)
 
     # Check for added attribute
@@ -158,7 +158,7 @@ def test_add_same_attribute_twice(host, token, project, line_type):
 
     # Adding the same attribute a second time should raise an exception
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.add_attribute(id=line_type, attribute_type_spec=addition)
+        tator_api.create_attribute_type(id=line_type, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
     assert "is already an attribute." in str(excinfo.value)
@@ -203,7 +203,7 @@ def test_box_type_attribute_addition_es(
         "entity_type": "LocalizationType",
         "addition": {"name": new_attr_name, "dtype": dtype, "default": value},
     }
-    tator_api.add_attribute(id=attribute_box_type, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=attribute_box_type, attribute_type_spec=addition)
 
     entity_type = tator_api.get_localization_type(attribute_box_type)
 
