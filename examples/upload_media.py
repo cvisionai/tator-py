@@ -40,8 +40,9 @@ if __name__ == "__main__":
     project = tator_api.get_media_type(args.type_id).project
     while True:
         transcode = tator_api.get_transcode(response.id)
-        if transcode.job.status == "succeeded":
+        status = transcode.job.status.lower()
+        if status == "succeeded":
             break
-        elif transcode.job.status == "failed":
+        elif status == "failed":
             raise ValueError("Upload failed!")
         time.sleep(10)
