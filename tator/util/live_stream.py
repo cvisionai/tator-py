@@ -43,16 +43,14 @@ def make_live_stream(api, type_id, layout, name, section, feedInfo):
     md5_of_config = digest.hexdigest()
 
 
-    create_resp = api.create_media(
-        project, 
-        {'name': name,
-        'type': type_id,
-        'section': section,
-        'md5': md5_of_config
-        })
+    media_spec = {
+        "name": name,
+        "type": type_id,
+        "section": section,
+        "md5": md5_of_config,
+    }
+    create_resp = api.create_media(project, [media_spec])
 
-    patch_object = {'live': 
-                    {'layout' : layout,
-                    'streams' : feedInfo}}
+    patch_object = {"live": {"layout": layout, "streams": feedInfo}}
     return api.update_media(create_resp.id, patch_object)
 

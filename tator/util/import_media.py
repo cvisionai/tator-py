@@ -107,6 +107,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         response = api.transcode(project_id, transcode_spec=spec,
                                  _request_timeout=_request_timeout)
     else:
-        response = api.create_media(project_id, media_spec=spec,
-                                    _request_timeout=_request_timeout)
+        response = api.create_media(
+            project_id, media_spec=[spec], _request_timeout=_request_timeout
+        )
     return response

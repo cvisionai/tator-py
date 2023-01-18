@@ -84,5 +84,5 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     if mime.find('video') >= 0:
         response = api.transcode(project_id, transcode_spec=spec)
     else:
-        response = api.create_media(project_id, media_spec=spec)
+        response = api.create_media(project_id, media_spec=[spec])
     yield (100, response)

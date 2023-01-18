@@ -304,7 +304,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
 
     # Create the media.
     media_ids = [
-        tator_api.create_media(project=project, media_spec=media_spec).id
+        tator_api.create_media(project=project, media_spec=[media_spec]).id
         for media_spec in media_specs
     ]
 
@@ -569,15 +569,17 @@ def test_change_log_util(host, token, project, video_type):
     num_media = 3
     fname = "MediaChangeLogTest.mp4"
     test_int = random.randint(0, 100)
-    media_spec = {
-        "type": video_type,
-        "uid": str(uuid.uuid1()),
-        "gid": str(uuid.uuid1()),
-        "name": fname,
-        "md5": str(uuid.uuid1())[:32],
-        "section": "Test media change log",
-        "attributes": {"test_int": test_int},
-    }
+    media_spec = [
+        {
+            "type": video_type,
+            "uid": str(uuid.uuid1()),
+            "gid": str(uuid.uuid1()),
+            "name": fname,
+            "md5": str(uuid.uuid1())[:32],
+            "section": "Test media change log",
+            "attributes": {"test_int": test_int},
+        },
+    ]
 
     # Create the media.
     media_id = tator_api.create_media(project=project, media_spec=media_spec).id

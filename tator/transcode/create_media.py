@@ -44,7 +44,7 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid,
         spec.update({'attributes': json.loads(attributes)})
     if url:
         spec.update({'url': url})
-    response = api.create_media(project, media_spec=spec)
+    response = api.create_media(project, media_spec=[spec])
 
     assert isinstance(response, CreateResponse)
     media_id = response.id

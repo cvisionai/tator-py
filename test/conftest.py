@@ -307,10 +307,19 @@ def empty_video(request, project, video_type):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    response = tator_api.create_media(project,
-    {"name": 'empty.mp4',
-    'num_frames': 30000,
-    'fps': 20, 'section': 'empty_media', 'md5': '', 'type': video_type})
+    response = tator_api.create_media(
+        project,
+        [
+            {
+                "name": 'empty.mp4',
+                'num_frames': 30000,
+                'fps': 20,
+                'section': 'empty_media',
+                'md5': '',
+                'type': video_type,
+            }
+        ],
+    )
     yield response.id
 
 @pytest.fixture(scope='function')

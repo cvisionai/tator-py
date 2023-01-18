@@ -38,13 +38,17 @@ def import_media(api,
                  work_dir):
 
     md5sum = tator.util.md5sum(path)
-    response = api.create_media(project,
-                                {'type': media_type_id,
-                                 'section': section,
-                                 'name': fname,
-                                 'md5': md5sum,
-                                 'gid': upload_gid,
-                                 'uid': str(uuid.uuid1())})
+    media_spec = [
+        {
+            "type": media_type_id,
+            "section": section,
+            "name": fname,
+            "md5": md5sum,
+            "gid": upload_gid,
+            "uid": str(uuid.uuid1()),
+        },
+    ]
+    response = api.create_media(project, media_spec)
     assert isinstance(response, CreateResponse)
     media_id = response.id
 
