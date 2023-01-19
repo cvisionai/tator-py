@@ -307,7 +307,7 @@ def empty_video(request, project, video_type):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    response = tator_api.create_media(
+    response = tator_api.create_media_list(
         project,
         [
             {
@@ -317,7 +317,7 @@ def empty_video(request, project, video_type):
                 'section': 'empty_media',
                 'md5': '',
                 'type': video_type,
-            }
+            },
         ],
     )
     yield response.id

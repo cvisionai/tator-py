@@ -48,7 +48,7 @@ def import_media(api,
             "uid": str(uuid.uuid1()),
         },
     ]
-    response = api.create_media(project, media_spec)
+    response = api.create_media_list(project, media_spec)
     assert isinstance(response, CreateResponse)
     media_id = response.id
 

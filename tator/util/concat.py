@@ -66,7 +66,7 @@ def make_concat(api, name, media_ids, section, offsets=None):
                   'width': media_obj.width,
                   'height': media_obj.height}
 
-    resp = api.create_media(project, [media_spec])
+    resp = api.create_media_list(project, [media_spec])
     print(f"Created {resp.id}")
 
     # Copy thumbnails from first media

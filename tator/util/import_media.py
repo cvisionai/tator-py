@@ -72,7 +72,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     :param _request_timeout: [Optional] Timeout setting for API requests in seconds.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
-        is the response object from :meth:`tator.TatorApi.create_media` or 
+        is the response object from :meth:`tator.TatorApi.create_media_list` or
         :meth:`tator.TatorApi.transcode`.
     """
     if md5==None:
@@ -107,7 +107,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         response = api.transcode(project_id, transcode_spec=spec,
                                  _request_timeout=_request_timeout)
     else:
-        response = api.create_media(
+        response = api.create_media_list(
             project_id, media_spec=[spec], _request_timeout=_request_timeout
         )
     return response
