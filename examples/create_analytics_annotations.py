@@ -76,7 +76,7 @@ def create_random_localization(
         spec["width"] = w
         spec["height"] = h
 
-    tator_api.create_localization_list(project=project, localization_spec=[spec])
+    tator_api.create_localization_list(project=project, body=spec)
     return spec
 
 def create_localizations(

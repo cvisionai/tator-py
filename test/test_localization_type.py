@@ -54,7 +54,7 @@ def test_localization_type_delete(host, token, project, video_type, video):
     ]
     box_ids = []
     for response in tator.util.chunked_create(
-        tator_api.create_localization_list, project, localization_spec=boxes
+        tator_api.create_localization_list, project, body=boxes
     ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)

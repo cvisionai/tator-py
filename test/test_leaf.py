@@ -33,7 +33,7 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
 
     # Create root leaf.
     root_spec = random_leaf(project, leaf_type, None, True)
-    response = tator_api.create_leaf_list(project=project, leaf_spec=[root_spec])
+    response = tator_api.create_leaf_list(project=project, body=root_spec)
     assert(isinstance(response, tator.models.CreateListResponse))
     prev_ids = response.id
 
@@ -44,7 +44,7 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
             parent_obj = tator_api.get_leaf(parent_id)
             leaf_spec = [random_leaf(project, leaf_type, parent_obj, True)
                          for _ in range(3)] # 3 children per parent
-            response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_spec)
+            response = tator_api.create_leaf_list(project=project, body=leaf_spec)
             assert(isinstance(response, tator.models.CreateListResponse))
             new_ids += response.id
         prev_ids = list(new_ids)

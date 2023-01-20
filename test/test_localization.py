@@ -110,8 +110,9 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
         for _ in range(num_localizations)
     ]
     box_ids = []
-    for response in tator.util.chunked_create(tator_api.create_localization_list,
-                                         project, localization_spec=boxes):
+    for response in tator.util.chunked_create(
+            tator_api.create_localization_list, project, body=boxes
+    ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)
     print(f"Created {len(box_ids)} boxes!")
@@ -131,7 +132,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
 
     # Test single create.
     box = random_localization(project, box_type, video_obj, post=True)
-    response = tator_api.create_localization_list(project, localization_spec=[box])
+    response = tator_api.create_localization_list(project, body=box)
     assert isinstance(response, tator.models.CreateListResponse)
     box_id = response.id[0]
 

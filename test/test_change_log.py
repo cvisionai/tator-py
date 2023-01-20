@@ -304,7 +304,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
 
     # Create the media.
     media_ids = [
-        tator_api.create_media_list(project=project, media_spec=[media_spec]).id
+        tator_api.create_media_list(project=project, body=[media_spec]).id
         for media_spec in media_specs
     ]
 
@@ -436,7 +436,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
 
     num_leaves = 3
     leaf_specs = [random_leaf(project, leaf_type, None, True) for _ in range(num_leaves)]
-    response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_specs)
+    response = tator_api.create_leaf_list(project=project, body=leaf_specs)
     leaf_ids = response.id
 
     assert len(leaf_ids) == len(leaf_specs)
@@ -582,7 +582,7 @@ def test_change_log_util(host, token, project, video_type):
     ]
 
     # Create the media.
-    media_id = tator_api.create_media_list(project=project, media_spec=media_spec).id
+    media_id = tator_api.create_media_list(project=project, body=media_spec).id
 
     # Look for change that shouldn't be there
     found_change = tator.util.find_single_change(

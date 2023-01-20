@@ -84,7 +84,7 @@ def test_localization_pagination(host, token, project, image_type, image_file, b
     ]
     box_ids = []
     for response in tator.util.chunked_create(
-        tator_api.create_localization_list, project, localization_spec=boxes
+        tator_api.create_localization_list, project, body=boxes
     ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)

@@ -108,6 +108,6 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
                                  _request_timeout=_request_timeout)
     else:
         response = api.create_media_list(
-            project_id, media_spec=[spec], _request_timeout=_request_timeout
+            project_id, body=[spec], _request_timeout=_request_timeout
         )
     return response

@@ -48,7 +48,7 @@ def test_float_array(host, token, project, box_type, video_temp):
         _create_localization(project, box_type, video_obj, [2.0, 0.0, 0.0]),
         _create_localization(project, box_type, video_obj, [3.0, 0.0, 0.0]),
     ]
-    response = api.create_localization_list(project, localization_spec=spec)
+    response = api.create_localization_list(project, spec)
     assert(isinstance(response, tator.models.CreateListResponse))
     assert(len(spec) == len(response.id))
     ids = response.id

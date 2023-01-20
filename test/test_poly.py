@@ -40,7 +40,7 @@ def test_poly(host, token, project, video_type, video, poly_type):
 
     # Test single create.
     poly = random_localization(project, poly_type, video_obj, post=True)
-    response = tator_api.create_localization_list(project, localization_spec=[poly])
+    response = tator_api.create_localization_list(project, poly)
     assert isinstance(response, tator.models.CreateListResponse)
     poly_id = response.id[0]
 
