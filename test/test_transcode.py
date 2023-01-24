@@ -33,16 +33,15 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
     section="Transcoded with Existing Media"
 
     # Define media spec.
-    media_spec = [
-        {
-            'type': video_type,
-            'uid': upload_uid,
-            'gid': upload_gid,
-            'name': fname,
-            'section': section,
-            'md5': md5,
-        },
-    ]
+    media_spec = {
+        "type": video_type,
+        "uid": upload_uid,
+        "gid": upload_gid,
+        "name": fname,
+        "section": section,
+        "md5": md5,
+    }
+
 
     # Create the media.
     response = tator_api.create_media_list(project=project, body=media_spec)
