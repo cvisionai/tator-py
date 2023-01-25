@@ -33,3 +33,5 @@ from tator.util.clone_membership import clone_membership
 from tator.util.concat import make_concat
 from tator.util.find_single_change import find_single_change
 from tator.util.get_paginator import get_paginator
+from tator.util.media_util import MediaUtil
+
