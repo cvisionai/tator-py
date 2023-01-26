@@ -1,13 +1,20 @@
 import datetime
+import io
 import os
 import shutil
 import time
 import tarfile
+import tempfile
 import yaml
 from uuid import uuid1
+import uuid
 
 import pytest
 import requests
+
+from tator.util._upload_file import _upload_file
+from tator.transcode.transcode import make_video_definition
+
 
 def pytest_addoption(parser):
     parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
@@ -71,6 +78,24 @@ def make_attribute_types():
             size=3,
         )
     ]
+
+def upload_media_file(api,project, media_id, media_path, segments_path):
+    """ Handles uploading either archival or streaming format """
+    path = os.path.basename(media_path)
+    filename = os.path.splitext(os.path.basename(path))[0]
+    for _, upload_info in _upload_file(api, project, media_path,
+                                        media_id=media_id, filename=f"{filename}.mp4", chunk_size=0x10000000):
+        pass
+    for _, segment_info in _upload_file(api, project, segments_path,
+                                            media_id=media_id, filename=f"{filename}.json", chunk_size=0x10000000):
+        pass
+    # Construct create video file spec.
+    media_def = {**make_video_definition(media_path),
+                    'path': upload_info.key,
+                    'segment_info': segment_info.key}
+    response = api.create_video_file(media_id, role='streaming',
+                                        video_definition=media_def)
+    return response
 
 @pytest.fixture(scope='session')
 def organization(request):
@@ -294,6 +319,53 @@ def video(request, project, video_type, video_file):
 
     # If all is kosher return the video_id
     yield video_id
+
+@pytest.fixture(scope='session')
+def count_video(request, project, video_type):
+    VIDEO_URL = "https://github.com/cvisionai/rgb_test_videos/raw/v0.0.3/samples/count.mp4"
+    SEGMENT_URL = "https://github.com/cvisionai/rgb_test_videos/raw/v0.0.3/samples/count.json"
+    
+    with tempfile.TemporaryDirectory() as td:
+        r = requests.get(VIDEO_URL)
+        video_path = os.path.join(td, "count.mp4")
+        f = open(video_path, 'wb')
+        for chunk in r.iter_content(chunk_size=1*1024*1024): 
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+        f.close()
+
+        r = requests.get(SEGMENT_URL)
+        segment_path = os.path.join(td, "count.json")
+        f = open(segment_path, 'wb')
+        for chunk in r.iter_content(chunk_size=1*1024*1024): 
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+        f.close()
+
+        import tator
+        host = request.config.option.host
+        token = request.config.option.token
+        api = tator.get_api(host, token)
+        attributes = {"test_string": str(uuid1())}
+        spec ={
+            'type': video_type,
+            'section': "Test",
+            'name': "count.mp4",
+            'md5': 'foo',
+            'gid': str(uuid.uuid1()),
+            'uid': str(uuid.uuid1()),
+            'fps': 30
+        }
+
+        # Make media element to get ID
+        response = api.create_media(project, media_spec=spec)
+
+        media_id = response.id
+        
+        upload_media_file(api, project, media_id, video_path, segment_path)
+        
+        # If all is kosher return the video_id
+        yield media_id
 
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
