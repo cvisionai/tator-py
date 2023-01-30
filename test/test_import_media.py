@@ -1,5 +1,6 @@
 import tator
 import time
+import urllib3
 
 def test_import_image(host, token, project, image_type):
     api = tator.get_api(host, token)
@@ -22,8 +23,15 @@ def wait_for_transcode(api, transcode_id):
 
 def test_import_video(host, token, project, video_type):
     api = tator.get_api(host, token)
-    url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
-    response = tator.util.import_media(api, video_type, url)
+    url = 'https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia.mp4'
+    response = None
+    for attempt in range(3):
+        try:
+            response = tator.util.import_media(api, video_type, url)
+        except urllib3.exceptions.ReadTimeoutError as exception:
+            print(f"Attempt {attempt}: {exception}")
+            time.sleep(10)
+
     print(response.message)
     wait_for_transcode(api, response.id)
 
