@@ -9,7 +9,7 @@ import tator
 
 logger = logging.getLogger(__name__)
 
-def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None):
+def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30):
     """ Uploads a file.
 
     :param api: `tator.TatorApi` object.
@@ -19,6 +19,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     :param filename: [Optional] Filename (only used if media ID is given).
     :param file_id: [Optional] File ID if this is an upload for existing File.
     :param chunk_size: [Optional] Upload chunk size in bytes.
+    :param timeout: [Optional] Request timeout for uploads in seconds. Default is 30.
     """
     MAX_RETRIES = 10 # Maximum retries on a given chunk.
     GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
@@ -70,7 +71,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 default_etag_val = str(chunk_count) if gcp_upload else None
                 for attempt in range(MAX_RETRIES):
                     try:
-                        kwargs = {"data": file_part}
+                        kwargs = {"data": file_part, "timeout": timeout}
                         if gcp_upload:
                             first_byte = chunk_count * chunk_size
                             last_byte = min(first_byte + chunk_size, file_size) - 1
@@ -129,7 +130,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         with get_data(path) as f:
             data = f.read()
             for attempt in range(MAX_RETRIES):
-                response = requests.put(upload_info.urls[0], data=data)
+                response = requests.put(upload_info.urls[0], data=data, timeout=timeout)
                 if response.status_code == 200:
                     break
                 else:
