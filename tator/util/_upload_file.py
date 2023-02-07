@@ -4,12 +4,44 @@ import os
 import logging
 import requests
 import time
+import concurrent.futures
 
 import tator
 
 logger = logging.getLogger(__name__)
 
-def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30):
+MAX_RETRIES = 10 # Maximum retries on a given chunk.
+GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
+
+def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout):
+    for attempt in range(MAX_RETRIES):
+        try:
+            kwargs = {"data": file_part, "timeout": timeout}
+            if gcp_upload:
+                first_byte = chunk_count * chunk_size
+                last_byte = min(first_byte + chunk_size, file_size) - 1
+                kwargs["headers"] = {
+                    "Content-Length": str(last_byte - first_byte),
+                    "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
+                }
+            response = requests.put(url, **kwargs)
+            etag_str = response.headers.get("ETag", default_etag_val)
+            if etag_str == None:
+                raise RuntimeError("No ETag in response!")
+            return {
+                "ETag": etag_str,
+                "PartNumber": chunk_count + 1,
+            }
+        except Exception as e:
+            logger.warning(f"Upload of {path} chunk {chunk_count} failed ({e})! Attempt "
+                           f"{attempt + 1}/{MAX_RETRIES}")
+            if attempt == MAX_RETRIES - 1:
+                raise RuntimeError(f"Upload of {path} failed!")
+            else:
+                time.sleep(10 * attempt)
+                logger.warning(f"Backing off for {10 * attempt} seconds...")
+
+def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30, max_workers=10):
     """ Uploads a file.
 
     :param api: `tator.TatorApi` object.
@@ -20,9 +52,8 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     :param file_id: [Optional] File ID if this is an upload for existing File.
     :param chunk_size: [Optional] Upload chunk size in bytes.
     :param timeout: [Optional] Request timeout for uploads in seconds. Default is 30.
+    :param max_workers: [Optional] Max workers for concurrent requests.
     """
-    MAX_RETRIES = 10 # Maximum retries on a given chunk.
-    GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
 
     # Get number of chunks.
     if file_size is None or file_size <= 0:
@@ -66,42 +97,18 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         yield (last_progress, None)
         gcp_upload = upload_info.upload_id == upload_info.urls[0]
         with get_data(path) as f:
-            for chunk_count, url in enumerate(upload_info.urls):
-                file_part = f.read(chunk_size)
-                default_etag_val = str(chunk_count) if gcp_upload else None
-                for attempt in range(MAX_RETRIES):
-                    try:
-                        kwargs = {"data": file_part, "timeout": timeout}
-                        if gcp_upload:
-                            first_byte = chunk_count * chunk_size
-                            last_byte = min(first_byte + chunk_size, file_size) - 1
-                            kwargs["headers"] = {
-                                "Content-Length": str(last_byte - first_byte),
-                                "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
-                            }
-                        response = requests.put(url, **kwargs)
-                        etag_str = response.headers.get("ETag", default_etag_val)
-                        if etag_str == None:
-                            raise RuntimeError("No ETag in response!")
-                        parts.append(
-                            {
-                                "ETag": etag_str,
-                                "PartNumber": chunk_count + 1,
-                            }
-                        )
-                        break
-                    except Exception as e:
-                        logger.warning(f"Upload of {path} chunk {chunk_count} failed ({e})! Attempt "
-                                       f"{attempt + 1}/{MAX_RETRIES}")
-                        if attempt == MAX_RETRIES - 1:
-                            raise RuntimeError(f"Upload of {path} failed!")
-                        else:
-                            time.sleep(10 * attempt)
-                            logger.warning(f"Backing off for {10 * attempt} seconds...")
-                this_progress = round((chunk_count / num_chunks) *100,1)
-                if this_progress != last_progress:
-                    yield (this_progress, None)
-                    last_progress = this_progress
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+                futures = []
+                for chunk_count, url in enumerate(upload_info.urls):
+                    file_part = f.read(chunk_size)
+                    default_etag_val = str(chunk_count) if gcp_upload else None
+                    futures.append(executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val))
+                for chunk_count, future in enumerate(concurrent.futures.as_completed(futures)):
+                    parts.append(future.result())
+                    this_progress = round((chunk_count / num_chunks) *100,1)
+                    if this_progress != last_progress:
+                        yield (this_progress, None)
+                        last_progress = this_progress
 
         # Complete the upload.
         completed = False

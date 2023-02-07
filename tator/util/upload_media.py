@@ -10,7 +10,7 @@ from .md5sum import md5sum
 
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=10*1024*1024,
-                 attributes=None, media_id=None, timeout=30):
+                 attributes=None, media_id=None, timeout=30, max_workers=10):
     """ Uploads a single media file.
 
     Example:
@@ -35,6 +35,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param attributes: [Optional] Attributes to apply to media object.
     :param media_id: [Optional] Unique ID of existing media object.
     :param timeout: [Optional] Request timeout for each upload chunk in seconds. Default is 30.
+    :param max_workers: [Optional] Max workers for concurrent requests.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
         is the response object from :meth:`tator.TatorApi.create_media` or 
