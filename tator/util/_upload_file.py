@@ -102,7 +102,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 for chunk_count, url in enumerate(upload_info.urls):
                     file_part = f.read(chunk_size)
                     default_etag_val = str(chunk_count) if gcp_upload else None
-                    futures.append(executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val))
+                    futures.append(executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout))
                 for chunk_count, future in enumerate(concurrent.futures.as_completed(futures)):
                     parts.append(future.result())
                     this_progress = round((chunk_count / num_chunks) *100,1)
