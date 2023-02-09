@@ -250,14 +250,17 @@ def convert_archival(host,
                      outpath,
                      raw_width,
                      raw_height,
-                     size=None):
+                     size=None,
+                     explicit_config=None):
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
     media_obj = api.get_media(media)
     media_type = api.get_media_type(media_obj.meta)
-
-    if media_type.archive_config is not None:
-        for idx, archive_config in enumerate(media_type.archive_config):
+    config = media_type.archive_config
+    if explicit_config:
+        config = explicit_config
+    if config is not None:
+        for idx, archive_config in enumerate(config):
             os.makedirs(outpath, exist_ok=True)
             output_file = os.path.join(outpath, f"archival_{idx}.mp4")
             if archive_config.encode.vcodec == 'copy':
