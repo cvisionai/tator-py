@@ -13,8 +13,8 @@ import pytest
 import requests
 
 from tator.util._upload_file import _upload_file
-from tator.transcode.transcode import make_video_definition
-
+from tator.transcode.transcode import make_video_definition, get_length_of_file
+from tator.util.md5sum import md5sum
 
 def pytest_addoption(parser):
     parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
@@ -70,12 +70,6 @@ def make_attribute_types():
             name='test_geopos',
             dtype='geopos',
             default=[-179.0, -89.0],
-        ),
-        dict(
-            name='test_float_array',
-            dtype='float_array',
-            default=[0.0, 0.0, 0.0],
-            size=3,
         )
     ]
 
@@ -347,14 +341,16 @@ def count_video(request, project, video_type):
         token = request.config.option.token
         api = tator.get_api(host, token)
         attributes = {"test_string": str(uuid1())}
+        fps,length = get_length_of_file(video_path)
         spec ={
             'type': video_type,
             'section': "Test",
             'name': "count.mp4",
-            'md5': 'foo',
+            'md5': md5sum(video_path),
             'gid': str(uuid.uuid1()),
             'uid': str(uuid.uuid1()),
-            'fps': 30
+            'fps': fps,
+            'num_frames': length
         }
 
         # Make media element to get ID
