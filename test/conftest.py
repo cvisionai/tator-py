@@ -70,6 +70,12 @@ def make_attribute_types():
             name='test_geopos',
             dtype='geopos',
             default=[-179.0, -89.0],
+        ),
+        dict(
+            name='test_float_array',
+            dtype='float_array',
+            default=[0.0, 0.0, 0.0],
+            size=3,
         )
     ]
 
