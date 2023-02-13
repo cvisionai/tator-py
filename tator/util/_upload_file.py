@@ -110,28 +110,29 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                         yield (this_progress, None)
                         last_progress = this_progress
 
-        # Complete the upload.
-        completed = False
-        count = 0
-        while completed is False and count < MAX_RETRIES:
-            try:
-                count += 1
-                response = api.complete_upload(project, upload_completion_spec={
-                    'key': upload_info.key,
-                    'upload_id': upload_info.upload_id,
-                    'parts': parts,
-                })
-                if not isinstance(response, tator.models.MessageResponse):
-                    raise RuntimeError(f"Upload completion failed!")
-                completed=True
-            except Exception as e:
-                logger.warning(e)
-                if count == MAX_RETRIES - 1:
-                    raise RuntimeError(f"Upload of {path} failed!")
-                else:
-                    time.sleep(10 * count)
-                    logger.warning(f"Backing off for {10 * count} seconds...")
+                # Complete the upload.
                 completed = False
+                count = 0
+                while completed is False and count < MAX_RETRIES:
+                    try:
+                        count += 1
+                        response = api.complete_upload(project, upload_completion_spec={
+                            'key': upload_info.key,
+                            'upload_id': upload_info.upload_id,
+                            'parts': sorted(parts, key=lambda x: x['PartNumber']),
+                        })
+                        if not isinstance(response, tator.models.MessageResponse):
+                            raise RuntimeError(f"Upload completion failed!")
+                        print(response.message)
+                        completed=True
+                    except Exception as e:
+                        logger.warning(e)
+                        if count == MAX_RETRIES - 1:
+                            raise RuntimeError(f"Upload of {path} failed!")
+                        else:
+                            time.sleep(10 * count)
+                            logger.warning(f"Backing off for {10 * count} seconds...")
+                        completed = False
     else:
         # Upload in single request.
         with get_data(path) as f:
