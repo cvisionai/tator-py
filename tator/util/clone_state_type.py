@@ -44,7 +44,8 @@ def clone_state_type(src_api, src_type_id, dest_project, media_type_mapping, des
             'grouping_default': type_obj.grouping_default,
             'delete_child_localizations': type_obj.delete_child_localizations,
             'visible': type_obj.visible,
-            'attribute_types': type_obj.attribute_types}
+            'attribute_types': type_obj.attribute_types,
+            'elemental_id': type_obj.elemental_id}
     dest_media_types = []
     for src_media_type in type_obj.media:
         if src_media_type in media_type_mapping:

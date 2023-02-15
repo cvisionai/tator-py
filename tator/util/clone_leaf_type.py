@@ -35,7 +35,8 @@ def clone_leaf_type(src_api, src_type_id, dest_project, dest_api=None):
     type_obj = src_api.get_leaf_type(src_type_id)
     spec = {'name': type_obj.name,
             'description': type_obj.description,
-            'attribute_types': type_obj.attribute_types}
+            'attribute_types': type_obj.attribute_types,
+            'elemental_id': type_obj.elemental_id}
     if dest_api is None:
         dest_api = src_api
     return dest_api.create_leaf_type(dest_project, leaf_type_spec=spec)

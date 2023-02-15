@@ -37,7 +37,8 @@ def clone_media_type(src_api, src_type_id, dest_project, dest_api=None):
             'description': type_obj.description,
             'dtype': type_obj.dtype,
             'default_volume': type_obj.default_volume,
-            'attribute_types': type_obj.attribute_types}
+            'attribute_types': type_obj.attribute_types,
+            'elemental_id': type_obj.elemental_id}
     if type_obj.file_format:
         spec['file_format'] = type_obj.file_format
     if type_obj.overlay_config:
