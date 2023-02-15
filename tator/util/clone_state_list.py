@@ -30,6 +30,7 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
                           "state_type_mapping!")
     # Fill in required fields for post.
     spec = {'type': state_type_id,
+            'elemental_id': state.elemental_id,
             'version': version_id,
             'media_ids': media_ids,
             'localization_ids': localization_ids,

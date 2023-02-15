@@ -179,6 +179,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                 'height': media.height,
                 'attributes': attributes,
                 'section': dest_section if dest_section else media.section,
+                'elemental_id': media.elemental_id
             }
             if media.gid:
                 media_spec['gid'] = media.gid

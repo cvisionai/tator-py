@@ -35,6 +35,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
             parent_id = None
     # Fill in required fields for post.
     spec = {'type': localization_type_id,
+            'elemental_id': loc.elemental_id,
             'version': version_id,
             'media_id': media_id,
             'x': loc.x,
