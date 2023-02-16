@@ -12,6 +12,11 @@ import:
   token: <TOKEN>
   host: http://local.tator.io
 ```
+
+The sync logic exports a token file which stores the last export and last import time for diagnostic purposes. 
+
+This can be used to avoid re-downloading already synced material. 
+
 """
 
 import tator
@@ -21,6 +26,9 @@ import os
 import json
 import math
 import tqdm
+import datetime
+from dateutil.parser import parse
+import pytz
 
 from tator.util._download_file import _download_file
 
@@ -36,7 +44,7 @@ def response_to_disk(response, path):
     with open(path, 'w') as fp:
       json.dump(response.to_dict(), fp, default=str)
 
-def download_project_info(config, output_dir):
+def download_project_info(config, output_dir, last_sync_time):
   api = tator.get_api(host=config['host'], token=config['token'])
   project_id = config['project']
 
@@ -79,11 +87,11 @@ def download_project_info(config, output_dir):
       print(f"Notice: No registered types for '{name}'")
       response_to_disk([], os.path.join(output_dir, f"{name}s.json"))
     elif count:
-      element_count = count(project_id)
+      element_count = count(project_id, attribute_gt=[f"$modified_datetime::{last_sync_time.isoformat()}"])
       batches = math.ceil(element_count / BATCH_SIZE)
       total_set = []
       for batch_idx in range(batches):
-        response = accessor(project_id, start=batch_idx*BATCH_SIZE, stop=(batch_idx+1)*BATCH_SIZE)
+        response = accessor(project_id, start=batch_idx*BATCH_SIZE, stop=(batch_idx+1)*BATCH_SIZE, attribute_gt=[f"$modified_datetime::{last_sync_time.isoformat()}"])
         total_set.append(*response)
       assert len(total_set) == element_count
       response_to_disk(total_set, os.path.join(output_dir, f"{name}s.json"))
@@ -94,17 +102,17 @@ def download_project_info(config, output_dir):
 
 
 
-def download_media_files(config, project_dir):
+def download_media_files(config, project_dir, last_sync_time):
   api = tator.get_api(host=config['host'], token=config['token'])
   project_id = config['project']
   media_dir = os.path.join(project_dir, "Medias")
   os.makedirs(media_dir, exist_ok=True)
-  element_count = api.get_media_count(project_id)
+  element_count = api.get_media_count(project_id, attribute_gt=[f"$modified_datetime::{last_sync_time.isoformat()}"])
   BATCH_SIZE = 100
   batches = math.ceil(element_count / BATCH_SIZE)
   print(f"Downloading {element_count} medias in {batches} sets")
   for batch_idx in tqdm.tqdm(range(batches)):
-    response = api.get_media_list(project_id, presigned=24*3600,start=batch_idx*BATCH_SIZE, stop=(batch_idx+1)*BATCH_SIZE)
+    response = api.get_media_list(project_id, presigned=24*3600,start=batch_idx*BATCH_SIZE, stop=(batch_idx+1)*BATCH_SIZE, attribute_gt=[f"$modified_datetime::{last_sync_time.isoformat()}"])
     for media in response:
       this_media_dir = os.path.join(media_dir, f"{media.id}")
       os.makedirs(this_media_dir, exist_ok=True)
@@ -169,12 +177,27 @@ def main():
   os.makedirs(args.output_dir, exist_ok=True)
   project_dir = os.path.join(args.output_dir, f"{config['project']}")
   os.makedirs(project_dir, exist_ok=True)
-  download_project_info(config, project_dir)
+
+  last_sync_time = datetime.datetime.fromtimestamp(0)
+  last_sync_time_file = os.path.join(project_dir, "sync_info.json")
+  sync_obj = {}
+  if os.path.exists(last_sync_time_file):
+    with open(last_sync_time_file) as fp:
+      sync_obj = json.load(fp)
+      last_sync_time = pytz.utc.localize(parse(sync_obj.get('last_import', datetime.datetime.fromtimestamp(0).isoformat())))
+
+  print(f"Last sync time to cloud.tator.io = {last_sync_time}")
+  download_project_info(config, project_dir, last_sync_time)
+
 
   if args.skip_media:
     print("NOTICE: Skipping media download")
   else:
-    download_media_files(config, project_dir)
+    download_media_files(config, project_dir, last_sync_time)
+
+  with open(last_sync_time_file, 'w') as fp:
+      sync_obj['last_export']: datetime.datetime.utcnow()
+      json.dump(sync_obj, fp, default=str)
 
 
 
