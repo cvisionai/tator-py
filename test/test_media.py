@@ -134,6 +134,8 @@ def test_section(host, token, project, video):
 def test_import_multiple_images(host, token, project, image_type):
     tator_api = tator.get_api(host, token)
     image_url = "https://www.gstatic.com/webp/gallery/1.jpg"
+    n_images = 5
+    uuid = str(uuid1())
 
     project_media_count = tator_api.get_media_count(project, type=image_type)
 
@@ -141,11 +143,11 @@ def test_import_multiple_images(host, token, project, image_type):
         {
             "type": image_type,
             "section": "Multiple image upload",
-            "name": f"copy_{idx}.jpg",
+            "name": f"{uuid}_{idx}.jpg",
             "url": image_url,
             "md5": "",
         }
-        for idx in range(5)
+        for idx in range(n_images)
     ]
 
     start = datetime.now()
@@ -163,3 +165,14 @@ def test_import_multiple_images(host, token, project, image_type):
         if new_project_media_count == desired_project_media_count:
             break
     assert new_project_media_count == desired_project_media_count
+    for _ in range(30):
+        sleep(1)
+        media_list = tator_api.get_media_list(project, type=image_type)
+
+        n_with_media_files = 0
+        for media in media_list:
+            if media.name.startswith(uuid) and media.media_files is not None:
+                n_with_media_files += 1
+        if n_with_media_files == n_images:
+            break
+    assert n_with_media_files == n_images
