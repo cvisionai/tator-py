@@ -137,7 +137,8 @@ def transcode_single(path, args, gid):
 
     # Clean up after the transcode is finished (if enabled).
     if args.cleanup:
-        for path in paths.values():
+        for key in ['transcoded', 'thumbnail', 'thumbnail_gif']:
+            path = paths[key]
             if os.path.isdir(path):
                 shutil.rmtree(path)
             else:
