@@ -370,7 +370,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
     media_update = {"attributes": {"test_int": random.randint(0, 100)}}
     for media_spec in media_specs:
         media_spec["attributes"]["test_int"] = media_update["attributes"]["test_int"]
-    tator_api.update_media_list(project, media_update)
+    tator_api.update_media_list(project, media_update, type=attribute_video_type)
 
     # Bulk update tests
     bulk_patch_changes = []
