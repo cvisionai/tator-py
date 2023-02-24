@@ -31,14 +31,12 @@ def wait_for_parity(tator_api, project, patch, expected_ids):
         from_es = tator_api.get_state_list_by_id(
             project,
             state_id_query=state_id_query,
-            attribute=attribute_filter,
-            force_es=1,
+            attribute=attribute_filter
         )
         count = tator_api.get_state_count_by_id(
             project,
             state_id_query=state_id_query,
-            attribute=attribute_filter,
-            force_es=1,
+            attribute=attribute_filter
         )
         assert(len(from_es) == count)
 
@@ -67,12 +65,9 @@ def random_state(project, state_type, video_obj, post=False):
         'type': state_type,
         'media_ids': [video_obj.id],
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes':  attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+    return {**out}
 
 def comparison_query(tator_api, project, state_ids, exclude):
     """ Runs a random query and compares results with ES enabled and disabled.
@@ -132,12 +127,13 @@ def comparison_query(tator_api, project, state_ids, exclude):
         assert(psql.attributes['test_enum'] == enum_value)
     return psql_time, es_time
 
-def test_state_crud(host, token, project, video_type, video, state_type):
+def test_state_crud(host, token, project, video_type, empty_video, state_type):
+    video = empty_video
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_ids', 'id', 'meta', 'user', 'frame', 'ids']
+    exclude = ['project', 'type', 'media_ids', 'id', 'type', 'user', 'frame', 'ids']
 
     # Test bulk create.
     num_states = random.randint(2000, 10000)
@@ -146,8 +142,7 @@ def test_state_crud(host, token, project, video_type, video, state_type):
         for _ in range(num_states)
     ]
     state_ids = []
-    for response in tator.util.chunked_create(tator_api.create_state_list,
-                                         project, state_spec=states):
+    for response in tator.util.chunked_create(tator_api.create_state_list, project, body=states):
         state_ids += response.id
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")
@@ -160,19 +155,14 @@ def test_state_crud(host, token, project, video_type, video, state_type):
     response = tator_api.get_media_list_by_id(project, {'state_ids': state_ids})
     assert len(response) == 1
     assert response[0].id == video
-    response = tator_api.get_media_list_by_id(project, {'state_ids': state_ids}, force_es=1)
-    assert len(response) == 1
-    assert response[0].id == video
 
     # Test state retrival by media ID.
     response = tator_api.get_state_list_by_id(project, {'media_ids': [video]})
     assert(len(response) == len(state_ids))
-    response = tator_api.get_state_list_by_id(project, {'media_ids': [video]}, force_es=1)
-    assert(len(response) == len(state_ids))
 
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
-    response = tator_api.create_state_list(project, state_spec=[state])
+    response = tator_api.create_state_list(project, body=state)
     assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]
@@ -228,20 +218,6 @@ def test_state_crud(host, token, project, video_type, video, state_type):
             assert_close_enough(id_bulk_patch, state, exclude)
         else:
             assert_close_enough(bulk_patch, state, exclude)
-
-    # Do random queries using psql and elasticsearch and compare results.
-    assert wait_for_parity(tator_api, project, id_bulk_patch, update_ids)
-    es_time = datetime.timedelta(seconds=0)
-    psql_time = datetime.timedelta(seconds=0)
-    state_ids = [state.id for state in states]
-    NUM_QUERIES = 10
-    for _ in range(NUM_QUERIES):
-        psql, es = comparison_query(tator_api, project, state_ids, exclude)
-        psql_time += psql
-        es_time += es
-    print(f"Over {NUM_QUERIES} random attribute queries:")
-    print(f"  Avg PSQL time: {psql_time / NUM_QUERIES}")
-    print(f"  Avg ES time: {es_time / NUM_QUERIES}")
 
     # Clone states to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}

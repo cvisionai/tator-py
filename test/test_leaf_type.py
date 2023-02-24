@@ -14,14 +14,12 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         "project": project,
         "type": leaf_type,
         "name": name,
+        "attributes": attributes
     }
     if parent_obj:
         out["parent"] = parent_obj.id
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def test_leaf_type_delete(host, token, project):
@@ -43,7 +41,7 @@ def test_leaf_type_delete(host, token, project):
 
     # Create root leaf.
     root_spec = random_leaf(project, leaf_type, None, True)
-    response = tator_api.create_leaf_list(project=project, leaf_spec=[root_spec])
+    response = tator_api.create_leaf_list(project=project, body=root_spec)
     assert isinstance(response, tator.models.CreateListResponse)
     prev_ids = response.id
 
@@ -52,5 +50,10 @@ def test_leaf_type_delete(host, token, project):
     assert str(leaf_type) in response.message, "Leaf type id not found in delete response"
     assert "1" in response.message, "Leaf count not found in delete response"
 
-    count = tator_api.get_leaf_count(project, type=leaf_type)
-    assert count == 0
+    try:
+        caught_it = False
+        tator_api.get_leaf_count(project, type=leaf_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it

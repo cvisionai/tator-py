@@ -27,7 +27,7 @@ def make_concat(api, name, media_ids, section, offsets=None):
     :returns: Response from media object creation.
     """
     media_obj = api.get_media(media_ids[0], presigned=86400)
-    type_id = media_obj.meta;
+    type_id = media_obj.type;
     project = media_obj.project;
     # if offsets aren't supplied make them
     all_media = api.get_media_list_by_id(project, {"ids": media_ids})
@@ -66,7 +66,7 @@ def make_concat(api, name, media_ids, section, offsets=None):
                   'width': media_obj.width,
                   'height': media_obj.height}
 
-    resp = api.create_media(project, media_spec)
+    resp = api.create_media_list(project, [media_spec])
     print(f"Created {resp.id}")
 
     # Copy thumbnails from first media

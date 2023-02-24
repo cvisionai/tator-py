@@ -70,8 +70,9 @@ if __name__ == '__main__':
     # Create one localization per frame.
     localizations = [random_box(video, loc_type_id, frame) for frame in range(video.num_frames)] 
     localization_ids = []
-    for response in tator.util.chunked_create(tator_api.create_localization_list,
-                                         video_type.project, localization_spec=localizations):
+    for response in tator.util.chunked_create(
+        tator_api.create_localization_list, video_type.project, body=localizations
+    ):
         localization_ids += response.id
     logger.info(f"Created {len(localization_ids)} localizations!")
   
@@ -83,8 +84,9 @@ if __name__ == '__main__':
         'Label': f'Track {int(idx / 10)}', # Providing values for attributes is optional
     } for idx in range(0, len(localization_ids), 10)]
     state_ids = []
-    for response in tator.util.chunked_create(tator_api.create_state_list,
-                                         video_type.project, state_spec=states):
+    for response in tator.util.chunked_create(
+            tator_api.create_state_list, video_type.project, body=states
+    ):
         state_ids += response.id
     logger.info(f"Created {len(state_ids)} tracks!")
 

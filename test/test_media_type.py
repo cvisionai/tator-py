@@ -36,5 +36,10 @@ def test_media_type_delete(host, token, project, image_file):
     assert str(image_type) in response.message, "Media type id not found in delete response"
     assert str(n_images) in response.message, "Media count not found in delete response"
 
-    count = tator_api.get_media_count(project, type=image_type)
-    assert count == 0
+    try:
+        caught_it = False
+        tator_api.get_media_count(project, type=image_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it

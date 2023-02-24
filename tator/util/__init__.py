@@ -6,7 +6,6 @@ from tator.util.download_media import download_media
 from tator.util.download_temporary_file import download_temporary_file
 from tator.util.upload_attachment import upload_attachment
 from tator.util.upload_media import upload_media
-from tator.util.upload_media_archive import upload_media_archive
 from tator.util.chunked_file_list import chunked_file_list
 from tator.util.upload_temporary_file import upload_temporary_file
 from tator.util.import_media import import_media

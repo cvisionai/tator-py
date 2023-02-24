@@ -22,7 +22,7 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
             raise ValueError(f"Source localization ID {localization_id} missing from "
                               "localization_mapping!")
     # Swap state type IDs.
-    state_type_id = state.meta
+    state_type_id = state.type
     if state_type_id in state_type_mapping:
         state_type_id = state_type_mapping[state_type_id]
     else:
@@ -130,8 +130,7 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
     created_ids = []
     total_states = len(spec)
     for idx in range(0, total_states, 500):
-        response = dest_api.create_state_list(dest_project,
-                                              state_spec=spec[idx:idx+500])
+        response = dest_api.create_state_list(dest_project, body=spec[idx:idx+500])
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(states[idx:idx+500], response.id)}
         yield (len(created_ids), total_states, response, id_map)

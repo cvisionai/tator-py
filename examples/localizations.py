@@ -51,8 +51,9 @@ if __name__ == '__main__':
     # Create the localizations. A maximum of 500 localizations can be created 
     # per request, so we use `chunked_create` to break up our large list.
     created_ids = []
-    for response in tator.util.chunked_create(tator_api.create_localization_list,
-                                         project, localization_spec=localizations):
+    for response in tator.util.chunked_create(
+        tator_api.create_localization_list, project, body=localizations
+    ):
         created_ids += response.id
     logger.info(f"Created {len(created_ids)} localizations!")
 
@@ -65,23 +66,25 @@ if __name__ == '__main__':
     # Geometry fields are indexed in elasticsearch with a leading underscore
     # appended before their name.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    search="_x:<0.5")
+                                                    attribute_lt=["_x::0.5"])
     logger.info(f"Found {len(localizations)} localizations on left side of video!")
 
     # Get the localizations with normalized width less than 0.25.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    search="_width:<0.25")
+                                                    attribute_lt=["_width::0.25"])
     logger.info(f"Found {len(localizations)} localizations with width < 0.25!")
 
     # Get the localizations between frames 100-200.
     # Frame is also indexed in elasticsearch under the name _frame.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    search="_frame:>=100 AND _frame:<=200")
+                                                    attribute_gte=["_frame::100"],
+                                                    attribute_lte=["_frame::=200"])
     logger.info(f"Found {len(localizations)} localizations between frames 100-200!")
 
     # Delete localizations between frames 100-200.
     response = tator_api.delete_localization_list(project, media_id=[args.video_id],
-                                                  search="_frame:>=100 AND _frame:<=200")
+                                                    attribute_gte=["_frame::100"],
+                                                    attribute_lte=["_frame::=200"])
     logger.info(response.message)
 
     # Suppose we want to shrink the first 10 boxes by 50% in each dimension. This

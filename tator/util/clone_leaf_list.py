@@ -7,7 +7,7 @@ def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
         else:
             raise ValueError(f"Source parent ID {parent_id} missing from parent_mapping!")
     # Swap leaf type IDs.
-    leaf_type_id = leaf.meta
+    leaf_type_id = leaf.type
     if leaf_type_id in leaf_type_mapping:
         leaf_type_id = leaf_type_mapping[leaf_type_id]
     else:
@@ -96,8 +96,7 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
     created_ids = []
     total_leafs = len(spec)
     for idx in range(0, total_leafs, 500):
-        response = dest_api.create_leaf_list(dest_project,
-                                              leaf_spec=spec[idx:idx+500])
+        response = dest_api.create_leaf_list(dest_project, body=spec[idx:idx+500])
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(leafs[idx:idx+500], response.id)}
         yield (len(created_ids), total_leafs, response, id_map)

@@ -28,12 +28,10 @@ def random_localization(project, box_type, video_obj, post=False):
         'type': box_type,
         'media_id': video_obj.id,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def random_state(project, state_type, video_obj, post=False):
     attributes = {
@@ -51,12 +49,10 @@ def random_state(project, state_type, video_obj, post=False):
         'type': state_type,
         'media_ids': [video_obj.id],
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def test_append(host, token, project, video_type, video, track_type, box_type):
     tator_api = tator.get_api(host, token)
@@ -69,15 +65,16 @@ def test_append(host, token, project, video_type, video, track_type, box_type):
         for _ in range(num_localizations)
     ]
     box_ids = []
-    for response in tator.util.chunked_create(tator_api.create_localization_list,
-                                         project, localization_spec=boxes):
+    for response in tator.util.chunked_create(
+            tator_api.create_localization_list, project, body=boxes
+    ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)
     print(f"Created {len(box_ids)} boxes!")
 
     # Create a track.
     track = random_state(project, track_type, video_obj, post=True)
-    response = tator_api.create_state_list(project, state_spec=[track])
+    response = tator_api.create_state_list(project, track)
     assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]

@@ -25,12 +25,10 @@ def random_state(project, state_type, video_obj, post=False):
         "type": state_type,
         "media_ids": [video_obj.id],
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def random_localization(project, box_type, video_obj, post=False):
@@ -57,12 +55,10 @@ def random_localization(project, box_type, video_obj, post=False):
         "type": box_type,
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def random_leaf(project, leaf_type, parent_obj=None, post=False):
@@ -81,14 +77,12 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         "project": project,
         "type": leaf_type,
         "name": name,
+        "attributes": attributes
     }
     if parent_obj:
         out["parent"] = parent_obj.id
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def compare_change_logs(new, old):
@@ -145,7 +139,7 @@ def change_log_helper(
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == box[change.name]
+                assert change.value == box['attributes'][change.name]
         create_changes.append(changes)
 
     patch_entities = [random_entity() for _ in range(num_entities)]
@@ -310,7 +304,7 @@ def test_media_change_log(host, token, project, attribute_video_type):
 
     # Create the media.
     media_ids = [
-        tator_api.create_media(project=project, media_spec=media_spec).id
+        tator_api.create_media_list(project=project, body=[media_spec]).id
         for media_spec in media_specs
     ]
 
@@ -442,7 +436,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
 
     num_leaves = 3
     leaf_specs = [random_leaf(project, leaf_type, None, True) for _ in range(num_leaves)]
-    response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_specs)
+    response = tator_api.create_leaf_list(project=project, body=leaf_specs)
     leaf_ids = response.id
 
     assert len(leaf_ids) == len(leaf_specs)
@@ -469,7 +463,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
             elif change.name in ["_project", "_name", "_type"]:
                 assert change.value == leaf_spec[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == leaf_spec[change.name]
+                assert change.value == leaf_spec['attributes'][change.name]
         create_changes.append(changes)
 
     patch_leaves = [random_leaf(project, leaf_type) for _ in range(num_leaves)]
@@ -585,8 +579,9 @@ def test_change_log_util(host, token, project, video_type):
         "attributes": {"test_int": test_int},
     }
 
+
     # Create the media.
-    media_id = tator_api.create_media(project=project, media_spec=media_spec).id
+    media_id = tator_api.create_media_list(project=project, body=media_spec).id
 
     # Look for change that shouldn't be there
     found_change = tator.util.find_single_change(

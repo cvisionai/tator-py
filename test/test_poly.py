@@ -26,23 +26,21 @@ def random_localization(project, poly_type, video_obj, post=False):
         'type': poly_type,
         'media_id': video_obj.id,
         'frame': random.randint(0, video_obj.num_frames - 1),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def test_poly(host, token, project, video_type, video, poly_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
 
     # These fields will not be checked for object equivalence after patch.
-    exclude = ['project', 'type', 'media_id', 'id', 'meta', 'user', 'ids']
+    exclude = ['project', 'type', 'media_id', 'id', 'type', 'user', 'ids']
 
     # Test single create.
     poly = random_localization(project, poly_type, video_obj, post=True)
-    response = tator_api.create_localization_list(project, localization_spec=[poly])
+    response = tator_api.create_localization_list(project, poly)
     assert isinstance(response, tator.models.CreateListResponse)
     poly_id = response.id[0]
 

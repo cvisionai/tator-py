@@ -7,35 +7,33 @@ def test_import_image(host, token, project, image_type):
     response = tator.util.import_media(api, image_type, url)
     assert(isinstance(response, tator.models.CreateResponse))
 
+
+def wait_for_transcode(api, transcode_id):
+    while True:
+        transcode = api.get_transcode(uid=transcode_id)
+        status = transcode.job.status.lower()
+        if status == "succeeded":
+            break
+        elif status == "failed":
+            raise Exception("Media import failed!")
+        else:
+            print("Waiting for transcode of imported media to complete...")
+            time.sleep(2.5)
+
 def test_import_video(host, token, project, video_type):
     api = tator.get_api(host, token)
     url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
     response = tator.util.import_media(api, video_type, url)
     print(response.message)
-    while True:
-        job = api.get_job(response.uid)
-        if job.status == 'Succeeded':
-            break
-        elif job.status == 'Failed':
-            raise Exception('Media import failed!')
-        else:
-            print("Waiting for transcode of imported media to complete...")
-            time.sleep(2.5)
+    wait_for_transcode(api, response.id)
 
     # Attempt to import the same video to the same media id, no additional transcodes should occur
-    initial_obj = api.get_media(response.media_id)
-    response = tator.util.import_media(api, video_type, url, media_id=response.media_id)
+    media_id = response.object['spec']['media_id']
+    initial_obj = api.get_media(media_id)
+    response = tator.util.import_media(api, video_type, url, media_id=media_id)
     print(response.message)
-    while True:
-        job = api.get_job(response.uid)
-        if job.status == "Succeeded":
-            break
-        elif job.status == "Failed":
-            raise Exception("Media import failed!")
-        else:
-            print("Waiting for transcode of imported media to complete...")
-            time.sleep(2.5)
-    final_obj = api.get_media(response.media_id)
+    wait_for_transcode(api, response.id)
+    final_obj = api.get_media(media_id)
 
     media_fields = ["archival", "_audio", "_streaming", "_thumbnail", "_thumbnail_gif"]
 

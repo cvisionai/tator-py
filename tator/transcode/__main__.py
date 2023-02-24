@@ -143,9 +143,8 @@ def transcode_single(path, args, gid):
                 shutil.rmtree(path)
             else:
                 os.remove(path)
-    
-if __name__ == '__main__':
-    args = parse_args()
+
+def transcode_main(args):
     if args.gid is None:
         gid = str(uuid1())
     else:
@@ -161,3 +160,7 @@ if __name__ == '__main__':
             transcode_single(path, args, gid)
     else:
         transcode_single(args.path, args, gid)
+    
+if __name__ == '__main__':
+    args = parse_args()
+    transcode_main(args)

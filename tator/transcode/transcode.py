@@ -255,10 +255,8 @@ def convert_archival(host,
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
     media_obj = api.get_media(media)
-    media_type = api.get_media_type(media_obj.meta)
-    config = media_type.archive_config
-    if explicit_config:
-        config = explicit_config
+    media_type = api.get_media_type(media_obj.type)
+    config = explicit_config or media_type.archive_config
     if config is not None:
         for idx, archive_config in enumerate(config):
             os.makedirs(outpath, exist_ok=True)

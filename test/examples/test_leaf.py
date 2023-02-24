@@ -22,10 +22,12 @@ def test_leaf(host, token, project, leaf_type, video_type):
             attribute_type = elem
             break
     attribute_type.autocomplete = {'serviceUrl': f'/rest/Leaves/Suggestion/{project_obj.name}.GoT/{project}'}
-    api.rename_attribute(video_type, {
-        'entity_type': 'MediaType',
-        'global': 'true',
-        'old_attribute_type_name': 'test_string',
-        'new_attribute_type': attribute_type,
-    })
+    api.update_attribute_type(
+        video_type,
+        {
+            'entity_type': 'MediaType',
+            'current_name': 'test_string',
+            'attribute_type_update': attribute_type,
+        }
+    )
     

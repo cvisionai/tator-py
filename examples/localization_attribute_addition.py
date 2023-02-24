@@ -52,11 +52,13 @@ def main(
 
     # Create the attribute addition message
     addition = {"entity_type": "LocalizationType", "addition": new_attribute}
-    logger.info(f"Calling add_attribute with id '{localization_type_id}' and "
+    logger.info(f"Calling create_attribute_type with id '{localization_type_id}' and "
                 f"attribute_type_spec\n{pformat(addition)}")
 
     # Add the attribute to the given localization type
-    response = tator_api.add_attribute(id=localization_type_id, attribute_type_spec=addition)
+    response = tator_api.create_attribute_type(
+        id=localization_type_id, attribute_type_spec=addition
+    )
 
     # Get attribute type list after addition
     localization_type = tator_api.get_localization_type(localization_type_id)

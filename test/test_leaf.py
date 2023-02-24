@@ -22,21 +22,18 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         'project': project,
         'type': leaf_type,
         'name': name,
+        'attributes': attributes
     }
     if parent_obj:
         out['parent'] = parent_obj.id
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+    return {**out}
 
 def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_type):
     tator_api = tator.get_api(host, token)
 
     # Create root leaf.
     root_spec = random_leaf(project, leaf_type, None, True)
-    response = tator_api.create_leaf_list(project=project, leaf_spec=[root_spec])
+    response = tator_api.create_leaf_list(project=project, body=root_spec)
     assert(isinstance(response, tator.models.CreateListResponse))
     prev_ids = response.id
 
@@ -47,7 +44,7 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
             parent_obj = tator_api.get_leaf(parent_id)
             leaf_spec = [random_leaf(project, leaf_type, parent_obj, True)
                          for _ in range(3)] # 3 children per parent
-            response = tator_api.create_leaf_list(project=project, leaf_spec=leaf_spec)
+            response = tator_api.create_leaf_list(project=project, body=leaf_spec)
             assert(isinstance(response, tator.models.CreateListResponse))
             new_ids += response.id
         prev_ids = list(new_ids)
@@ -63,10 +60,12 @@ def test_leaf_crud(host, token, project, clone_project, leaf_type, clone_leaf_ty
         assert len(leaves) == len(leaves_by_id)
         for leaf, leaf_by_id in zip(leaves, leaves_by_id):
             assert_close_enough(leaf, leaf_by_id)
+        print(f"Cloning Depth {depth}: {leaves}")
         generator = tator.util.clone_leaf_list(tator_api, {'project': project, 'depth': depth},
                                                clone_project, parent_mapping,
                                                {leaf_type: leaf_type})
         created_ids = []
+        num_created = 0
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} leafs...")
             created_ids += response.id

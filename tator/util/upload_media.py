@@ -38,7 +38,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param max_workers: [Optional] Max workers for concurrent requests.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
-        is the response object from :meth:`tator.TatorApi.create_media` or 
+        is the response object from :meth:`tator.TatorApi.create_media_list` or
         :meth:`tator.TatorApi.transcode`.
     """
     if md5==None:
@@ -86,5 +86,5 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     if mime.find('video') >= 0:
         response = api.transcode(project_id, transcode_spec=spec)
     else:
-        response = api.create_media(project_id, media_spec=spec)
+        response = api.create_media_list(project_id, body=[spec])
     yield (100, response)

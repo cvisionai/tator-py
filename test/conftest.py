@@ -101,6 +101,7 @@ def upload_media_file(api,project, media_id, media_path, segments_path):
 def organization(request):
     """ Organization ID for a created organization. """
     import tator
+    import uuid
     host = request.config.option.host
     token = request.config.option.token
     keep = request.config.option.keep
@@ -108,7 +109,7 @@ def organization(request):
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_organization(organization_spec={
-        'name': f'test_organization_{dt_str}',
+        'name': f'test_organization_{dt_str}_{uuid.uuid4()}',
     })
     organization_id = response.id
     yield organization_id
@@ -119,6 +120,7 @@ def organization(request):
 def project(request, organization):
     """ Project ID for a created project. """
     import tator
+    import uuid
     host = request.config.option.host
     token = request.config.option.token
     bucket = request.config.option.bucket
@@ -127,7 +129,7 @@ def project(request, organization):
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     project_spec = {
-        'name': f'test_project_{dt_str}',
+        'name': f'test_project_{dt_str}_{uuid.uuid4()}',
         'summary': f'Test project created by tator-py unit tests on {current_dt}',
         'organization': organization,
     }
@@ -149,6 +151,7 @@ def project(request, organization):
 def algo_project(request, organization):
     """ Project ID for a created project. """
     import tator
+    import uuid
     host = request.config.option.host
     token = request.config.option.token
     keep = request.config.option.keep
@@ -156,7 +159,7 @@ def algo_project(request, organization):
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_project(project_spec={
-        'name': f'algo_test_project_{dt_str}',
+        'name': f'algo_test_project_{dt_str}_{uuid.uuid4()}',
         'summary': f'Algo test project created by tator-py unit tests on {current_dt}',
         'organization': organization,
     })
@@ -218,10 +221,11 @@ def image(request, project, image_type, image_file):
 
     yield image_id
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def image_set(request):
+    import uuid
     out_path = '/tmp/lfw.tgz'
-    extract_path = '/tmp/lfw'
+    extract_path = f'/tmp/lfw_{uuid.uuid4()}'
 
     # Download Labeled Faces in the Wild dataset.
     if not os.path.exists(out_path):
@@ -297,12 +301,13 @@ def video(request, project, video_type, video_file):
     host = request.config.option.host
     token = request.config.option.token
     tator_api = tator.get_api(host, token)
-    attributes = {"test_string": str(uuid1())}
+    uuid_val = str(uuid1())
+    attributes = {"test_string": uuid_val}
     for progress, response in tator.util.upload_media(tator_api, video_type, video_file, attributes=attributes):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     while True:
-        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4')
+        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4', attribute=[f"test_string::{uuid_val}"])
         print("Waiting for transcode...")
         time.sleep(2.5)
         if len(response) == 0:
@@ -368,6 +373,28 @@ def count_video(request, project, video_type):
         
         # If all is kosher return the video_id
         yield media_id
+
+## This is an empty video to make tests run faster
+@pytest.fixture(scope='function')
+def empty_video(request, project, video_type):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_list(
+        project,
+        [
+            {
+                "name": 'empty.mp4',
+                'num_frames': 30000,
+                'fps': 20,
+                'section': 'empty_media',
+                'md5': '',
+                'type': video_type,
+            },
+        ],
+    )
+    yield response.id
 
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
@@ -541,6 +568,7 @@ def leaf_type(request, project):
 def clone_project(request, organization):
     """ Project ID for a created project. """
     import tator
+    import uuid
     host = request.config.option.host
     token = request.config.option.token
     keep = request.config.option.keep
@@ -548,7 +576,7 @@ def clone_project(request, organization):
     current_dt = datetime.datetime.now()
     dt_str = current_dt.strftime('%Y_%m_%d__%H_%M_%S')
     response = tator_api.create_project(project_spec={
-        'name': f'test_clone_project_{dt_str}',
+        'name': f'test_clone_project_{dt_str}_{uuid.uuid4()}',
         'summary': f'Test clone project created by tator-py unit tests on {current_dt}',
         'organization': organization,
     })

@@ -17,7 +17,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
     else:
         raise ValueError(f"Source media ID {media_id} missing from media_mapping!")
     # Swap localization type IDs.
-    localization_type_id = loc.meta
+    localization_type_id = loc.type
     if localization_type_id in localization_type_mapping:
         localization_type_id = localization_type_mapping[localization_type_id]
     else:
@@ -141,8 +141,7 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
     total_localizations = len(locs)
     parent_mapping = {}
     for idx in range(0, len(parent_locs), 500):
-        response = dest_api.create_localization_list(dest_project,
-                                                     localization_spec=parent_spec[idx:idx+500])
+        response = dest_api.create_localization_list(dest_project, body=parent_spec[idx:idx+500])
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(parent_locs[idx:idx+500], response.id)}
         parent_mapping = {**parent_mapping, **id_map}
@@ -155,8 +154,7 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
 
     # Create the localizations.
     for idx in range(0, len(child_locs), 500):
-        response = dest_api.create_localization_list(dest_project,
-                                                     localization_spec=child_spec[idx:idx+500])
+        response = dest_api.create_localization_list(dest_project, body=child_spec[idx:idx+500])
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(locs[idx:idx+500], response.id)}
         yield (len(created_ids), total_localizations, response, id_map)

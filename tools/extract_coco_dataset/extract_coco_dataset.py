@@ -113,7 +113,7 @@ def process_section(args : argparse.Namespace,
   def get_image_id(localization: tator.models.Localization):
     """ Return image information based on a localization's source media """
     media = media_lookup[localization.media]
-    media_type = media_type_lookup[media.meta]
+    media_type = media_type_lookup[media.type]
     if media_type.dtype == 'image':
       image_id = media.id
     elif media_type.dtype == 'video':
@@ -130,7 +130,7 @@ def process_section(args : argparse.Namespace,
   def get_image_info(localization: tator.models.Localization):
     """ Return image information based on a localization's source media """
     media = media_lookup[localization.media]
-    media_type = media_type_lookup[media.meta]
+    media_type = media_type_lookup[media.type]
     if media_type.dtype == 'image':
       name = media.name
       date_captured =str(media.modified_datetime)

@@ -38,13 +38,17 @@ def import_media(api,
                  work_dir):
 
     md5sum = tator.util.md5sum(path)
-    response = api.create_media(project,
-                                {'type': media_type_id,
-                                 'section': section,
-                                 'name': fname,
-                                 'md5': md5sum,
-                                 'gid': upload_gid,
-                                 'uid': str(uuid.uuid1())})
+    media_spec = [
+        {
+            "type": media_type_id,
+            "section": section,
+            "name": fname,
+            "md5": md5sum,
+            "gid": upload_gid,
+            "uid": str(uuid.uuid1()),
+        },
+    ]
+    response = api.create_media_list(project, media_spec)
     assert isinstance(response, CreateResponse)
     media_id = response.id
 
@@ -123,7 +127,7 @@ def process_file(api,
 
         # First get the localization_type id
         random_local = api.get_localization(metadata[0].localizations[0])
-        localization_type = random_local.meta
+        localization_type = random_local.type
         localizations = api.get_localization_list(project,
                                                   media_id=[media_el.id],
                                                   type=localization_type)
@@ -251,7 +255,7 @@ def process_file(api,
                     for metadata in grouped_by_frame[frame]:
                         new_obj = {
                             'frame': 0,
-                            'type': metadata['meta'],
+                            'type': metadata['type'],
                             **metadata['attributes']
                         }
                         if mode == 'state':

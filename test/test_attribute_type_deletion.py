@@ -14,7 +14,7 @@ def delete_attribute_helper(tator_api, type_getter, type_id, dtype):
     }
     if dtype == "enum":
         addition["addition"]["choices"] = ["a", "b", "c"]
-    tator_api.add_attribute(id=type_id, attribute_type_spec=addition)
+    tator_api.create_attribute_type(id=type_id, attribute_type_spec=addition)
     entity_type = type_getter(type_id)
 
     # Check for added attribute
@@ -23,9 +23,9 @@ def delete_attribute_helper(tator_api, type_getter, type_id, dtype):
     # Delete attribute
     deletion = {
         "entity_type": f"{type(entity_type).__name__}",
-        "attribute_to_delete": new_attr_name,
+        "name": new_attr_name,
     }
-    tator_api.delete_attribute(id=type_id, attribute_type_delete=deletion)
+    tator_api.delete_attribute_type(id=type_id, attribute_type_delete=deletion)
     entity_type = type_getter(type_id)
 
     # Check that the attribute is gone
@@ -42,10 +42,10 @@ def delete_invalid_attribute_helper(tator_api, type_getter, type_id):
     # Delete attribute
     deletion = {
         "entity_type": f"{type(entity_type).__name__}",
-        "attribute_to_delete": new_attr_name,
+        "name": new_attr_name,
     }
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
-        tator_api.delete_attribute(id=type_id, attribute_type_delete=deletion)
+        tator_api.delete_attribute_type(id=type_id, attribute_type_delete=deletion)
 
     # Check the exeption message for expected content
     assert "Could not find attribute name" in str(excinfo.value)

@@ -34,12 +34,8 @@ def clone_section(src_api, src_section_id, dest_project, dest_api=None):
     """
     section_obj = src_api.get_section(src_section_id)
     spec = {'name': section_obj.name}
-    if section_obj.annotation_bools:
-        spec['annotation_bools'] = section_obj.annotation_bools
-    if section_obj.media_bools:
-        spec['media_bools'] = section_obj.media_bools
-    if section_obj.lucene_string:
-        spec['lucene_string'] = section_obj.lucene_string
+    if section_obj.object_search:
+        spec['object_search'] = section_obj.object_search
     if section_obj.tator_user_sections:
         spec['tator_user_sections'] = section_obj.tator_user_sections
     if dest_api is None:

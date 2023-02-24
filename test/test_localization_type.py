@@ -20,12 +20,10 @@ def random_localization(project, box_type, video_obj, post=False):
         "type": box_type,
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def test_localization_type_delete(host, token, project, video_type, video):
@@ -56,7 +54,7 @@ def test_localization_type_delete(host, token, project, video_type, video):
     ]
     box_ids = []
     for response in tator.util.chunked_create(
-        tator_api.create_localization_list, project, localization_spec=boxes
+        tator_api.create_localization_list, project, body=boxes
     ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)
@@ -73,5 +71,10 @@ def test_localization_type_delete(host, token, project, video_type, video):
         str(num_localizations) in response.message
     ), "Localization count not found in delete response"
 
-    count = tator_api.get_localization_count(project, type=box_type)
-    assert count == 0
+    try:
+        caught_it = False
+        response = tator_api.get_localization_count(project, type=box_type)
+    except:
+        caught_it=True
+    finally:
+        assert caught_it

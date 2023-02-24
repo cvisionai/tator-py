@@ -38,12 +38,10 @@ def random_localization(project, box_type, image_obj, test_string, post=False):
         "type": box_type,
         "media_id": image_obj.id,
         "frame": 0,
+        "attributes": attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out["attributes"] = attributes
-    return out
+
+    return {**out}
 
 
 def _assert_pagination(api, function_name, batch_size, total, **kwargs):
@@ -86,7 +84,7 @@ def test_localization_pagination(host, token, project, image_type, image_file, b
     ]
     box_ids = []
     for response in tator.util.chunked_create(
-        tator_api.create_localization_list, project, localization_spec=boxes
+        tator_api.create_localization_list, project, body=boxes
     ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)

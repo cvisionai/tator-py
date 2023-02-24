@@ -76,7 +76,7 @@ def create_random_localization(
         spec["width"] = w
         spec["height"] = h
 
-    tator_api.create_localization_list(project=project, localization_spec=[spec])
+    tator_api.create_localization_list(project=project, body=spec)
     return spec
 
 def create_localizations(
@@ -110,9 +110,9 @@ def create_localizations(
 
         analytics_data[media.id] = []
         count = None
-        if media.meta == image_type_id:
+        if media.type == image_type_id:
             count = max_number_of_locs_per_image
-        elif media.meta == video_type_id:
+        elif media.type == video_type_id:
             count = max_number_of_locs_per_video
         else:
             count = None

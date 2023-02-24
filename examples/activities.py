@@ -50,8 +50,9 @@ if __name__ == '__main__':
         'Something in view': (frame % 20) == 0,
     } for frame in range(0, video.num_frames, 10)]
     state_ids = []
-    for response in tator.util.chunked_create(tator_api.create_state_list,
-                                         video_type.project, state_spec=states):
+    for response in tator.util.chunked_create(
+            tator_api.create_state_list, video_type.project, body=states
+    ):
         state_ids += response.id
     logger.info(f"Created {len(state_ids)} activity changes!")
 

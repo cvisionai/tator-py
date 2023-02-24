@@ -42,12 +42,10 @@ def random_state(project, collection_type, media_ids, post=False):
         'project': project,
         'type': collection_type,
         'media_ids': list(set(random.choices(media_ids, k=5))),
+        'attributes': attributes
     }
-    if post:
-        out = {**out, **attributes}
-    else:
-        out['attributes'] = attributes
-    return out
+
+    return {**out}
 
 def test_media_states(host, token, project, image_type, image_set, collection_type):
     api = tator.get_api(host, token)
@@ -65,14 +63,19 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
     for idx, state_id in enumerate(response.id):
         state_specs[idx]['id'] = state_id
     # Do a search on all states.
-    expected_states = [spec for spec in state_specs if spec['test_bool'] == False]
-    all_states = api.get_state_list(project, type=collection_type, search='test_bool:false')
+    expected_states = [spec for spec in state_specs if spec['attributes']['test_bool'] == False]
+    all_states = api.get_state_list(project, type=collection_type, attribute=["test_bool::false"])
     assert(len(all_states) == len(expected_states))
+
+    # Do a search on all states.
+    expected_states = [spec for spec in state_specs if spec['attributes']['test_bool'] == False]
+    all_states = api.get_state_list_by_id(project,{'object_search':{"attribute": 'test_bool', 'operation': 'eq', 'value': False}}, type=collection_type)
+    assert(len(all_states) == len(expected_states))
+
     # Do a search on paginated states.
     states = []
     for start in [0, 100, 200, 300, 400]:
-        states += api.get_state_list(project, type=collection_type, search='test_bool:false',
-                                     start=start, stop=start+100)
+        states += api.get_state_list(project, type=collection_type, attribute=["test_bool::false"],start=start, stop=start+100)
     assert(len(states) == len(expected_states))
     assert(collections.Counter([state.id for state in states]) == \
            collections.Counter([state.id for state in all_states]))

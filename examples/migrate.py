@@ -369,7 +369,7 @@ def _same_localization(a, b, localization_type_mapping, version_mapping):
     """ Returns true if two localizations have nearly identical geometry.
         a is a source localization, b is a dest localization
     """
-    ok = localization_type_mapping.get(a.meta) == b.meta
+    ok = localization_type_mapping.get(a.type) == b.type
     ok = ok and version_mapping.get(a.version) == b.version
     ok = ok and a.frame == b.frame
     for key in a.attributes:
@@ -458,7 +458,7 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
 def _same_state(a, b, state_type_mapping, version_mapping):
     """ Returns true if two states have same version and type.
     """
-    ok = state_type_mapping.get(a.meta) == b.meta
+    ok = state_type_mapping.get(a.type) == b.type
     ok = ok and version_mapping.get(a.version) == b.version
     ok = ok and a.frame == b.frame
     for key in a.attributes:
@@ -674,7 +674,7 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
     # Construct dictionary between destination type/destination section and media IDs.
     media_ids = defaultdict(list)
     for single in media:
-        key = (media_type_mapping[single.meta],
+        key = (media_type_mapping[single.type],
                section_mapping[get_tator_user_sections(single)])
         media_ids[key].append(single.id)
     # Sort keys so that multi are created after images/videos.
