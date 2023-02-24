@@ -25,7 +25,7 @@ def supplement_video_to_media(api,
   
   """
   media_object = api.get_media(media_id)
-  media_type_object = api.get_media_type(media_object.meta)
+  media_type_object = api.get_media_type(media_object.type)
   if media_type_object.dtype != 'video':
     raise Exception(f'{media_id} is not a video, its a {media_type_object.dtype}')
   
