@@ -133,7 +133,7 @@ def test_section(host, token, project, video):
 
 def test_import_multiple_images(host, token, project, image_type):
     tator_api = tator.get_api(host, token)
-    image_url = "https://www.gstatic.com/webp/gallery/1.jpg"
+    image_url = "https://s3.amazonaws.com/tator-ci/landscape.jpg"
     n_images = 5
     uuid = str(uuid1())
 

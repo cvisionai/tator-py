@@ -19,7 +19,7 @@ def test_media_manipulation(host: str,
   patch_in_res = media.media_files.streaming[0].resolution[0] - 16
 
   with tempfile.TemporaryDirectory() as td:
-    VIDEO_URL = "https://github.com/cvisionai/rgb_test_videos/raw/v0.0.3/samples/count.mp4"
+    VIDEO_URL = "https://s3.amazonaws.com/tator-ci/count.mp4"
     r = requests.get(VIDEO_URL)
     video_path = os.path.join(td, "count.mp4")
     f = open(video_path, 'wb')

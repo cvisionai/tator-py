@@ -188,7 +188,7 @@ def image_type(request, project):
 def image_file(request):
     out_path = '/tmp/test1.jpg'
     if not os.path.exists(out_path):
-        url = 'https://www.gstatic.com/webp/gallery/1.jpg'
+        url = 'https://s3.amazonaws.com/landscape.jpg'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
@@ -229,7 +229,7 @@ def image_set(request):
 
     # Download Labeled Faces in the Wild dataset.
     if not os.path.exists(out_path):
-        url = 'http://vis-www.cs.umass.edu/lfw/lfw.tgz'
+        url = 'http://s3.amazonaws.com/tator-ci/lfw.tgz'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
@@ -286,7 +286,7 @@ def multi_type(request, project):
 def video_file(request):
     out_path = '/tmp/AudioVideoSyncTest_BallastMedia.mp4'
     if not os.path.exists(out_path):
-        url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
+        url = 'http://s3.amazonaws.com/tator-ci/AudioVideoSyncTest_BallastMedia.mp4'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
@@ -327,8 +327,8 @@ def video(request, project, video_type, video_file):
 
 @pytest.fixture(scope='session')
 def count_video(request, project, video_type):
-    VIDEO_URL = "https://github.com/cvisionai/rgb_test_videos/raw/v0.0.3/samples/count.mp4"
-    SEGMENT_URL = "https://github.com/cvisionai/rgb_test_videos/raw/v0.0.3/samples/count.json"
+    VIDEO_URL = "https://s3.amazonaws.com/tator-ci/count.mp4"
+    SEGMENT_URL = "https://s3.amazonaws.com/tator-ci/count.json"
     
     with tempfile.TemporaryDirectory() as td:
         r = requests.get(VIDEO_URL)
@@ -621,7 +621,7 @@ def attribute_video_type(request, project):
 def attribute_video_file(request):
     out_path = f"/tmp/AudioVideoSyncTest_BallastMedia_attribute.mp4"
     if not os.path.exists(out_path):
-        url = "http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4"
+        url = "http://s3.amazonaws.com/tator-ci/AudioVideoSyncTest_BallastMedia.mp4"
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, "wb") as f:
