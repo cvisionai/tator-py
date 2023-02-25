@@ -11,7 +11,7 @@ from textwrap import dedent
 import yaml
 import tator
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def _create_children(api, tree, project, type_id, parent):
