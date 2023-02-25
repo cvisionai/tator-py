@@ -188,7 +188,7 @@ def image_type(request, project):
 def image_file(request):
     out_path = '/tmp/test1.jpg'
     if not os.path.exists(out_path):
-        url = 'https://s3.amazonaws.com/landscape.jpg'
+        url = 'https://s3.amazonaws.com/tator-ci/landscape.jpg'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
