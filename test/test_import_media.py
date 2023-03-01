@@ -23,14 +23,14 @@ def wait_for_transcode(api, transcode_id):
 def test_import_video(host, token, project, video_type):
     api = tator.get_api(host, token)
     url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
-    response = tator.util.import_media(api, video_type, url)
+    response = tator.util.import_media(api, video_type, url, _request_timeout=30)
     print(response.message)
     wait_for_transcode(api, response.id)
 
     # Attempt to import the same video to the same media id, no additional transcodes should occur
     media_id = response.object['spec']['media_id']
     initial_obj = api.get_media(media_id)
-    response = tator.util.import_media(api, video_type, url, media_id=media_id)
+    response = tator.util.import_media(api, video_type, url, media_id=media_id, _request_timeout=30)
     print(response.message)
     wait_for_transcode(api, response.id)
     final_obj = api.get_media(media_id)
