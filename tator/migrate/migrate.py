@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 
-import argparse
 import logging
-import os
-import shutil
 import sys
-import traceback
-from textwrap import dedent
 from collections import defaultdict
 
 import tator
