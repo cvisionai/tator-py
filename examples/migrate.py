@@ -310,7 +310,7 @@ def find_media(args, src_api, dest_api, dest_project):
         # Set up media paginators
         src_media_paginator = tator.util.get_paginator(src_api, "get_media_list")
         if dest_project is not None:
-            dest_media_paginator = tator.utilPaginator.get_paginator(dest_api, "get_media_list")
+            dest_media_paginator = tator.util.get_paginator(dest_api, "get_media_list")
 
         if args.sections:
             sections = src_api.get_section_list(args.project)
