@@ -281,8 +281,16 @@ def convert_archival(host,
                     # SVT for HEVC does not do tuning or CRF
                     tune_settings=[]
                     quality_flag = "-global_quality"
+
+                hw_preamble = []
+                vaapi_present = codec.find('vaapi') >= 0
+                if vaapi_present:
+                    hw_preamble = ['-init_hw_device', 'vaapi=hw',
+                                   '-filter_hw_device', 'hw']
                 cmd = [
-                    "ffmpeg", "-y",
+                    "ffmpeg",
+                    *hw_preamble,
+                    "-y",
                     "-i", path,
                     "-vcodec", codec,
                     "-vf", "yadif",
@@ -290,6 +298,7 @@ def convert_archival(host,
                     "-pix_fmt", pixel_format,
                     *tune_settings
                 ]
+
                 if archive_config.encode.vcodec == 'hevc':
                     cmd += ["-tag:v", "hvc1"]
                 elif archive_config.encode.vcodec == 'h264':
