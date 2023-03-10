@@ -40,17 +40,34 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
-    cmd = [
+    slow_cmd = [
         "ffprobe",
         "-v","error",
         "-show_entries", "stream:format=duration",
         "-print_format", "json",
         "-count_frames",
         "-skip_frame", "nokey",
+        "-select_streams", "v",
         path,
     ]
-    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    # The magic to reliably getting duration appears to be
+    # the 'format=duration'. Out of an abundance of caution
+    # we will leave the slow command in there in the event duration
+    # slips by this faster method.
+    fast_cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream:format=duration",
+        "-print_format", "json",
+        "-select_streams", "v",
+        path,
+    ]
+    output = subprocess.run(fast_cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
+    if video_info['streams'][0].get('duration', None) is None:
+        logger.info("NOTICE: Duration was null have to resort to slow method.")
+        output = subprocess.run(slow_cmd, stdout=subprocess.PIPE, check=True).stdout
+        video_info = json.loads(output)
     stream_idx=0
     audio=False
     for idx, stream in enumerate(video_info["streams"]):
