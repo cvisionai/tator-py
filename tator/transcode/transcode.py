@@ -7,6 +7,7 @@ import json
 import os
 import sys
 from urllib.parse import urlparse
+import psutil
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
@@ -18,6 +19,26 @@ logger = logging.getLogger(__name__)
 
 # If HW is available, use this as lookup swap
 encoder_lookup=None
+
+def _get_resource_usage():
+    """ Returns an object representing memory + CPU usage """
+    cpu_percentages=psutil.cpu_percent(percpu=True)
+    load_avg = psutil.getloadavg()
+    memory_raw = psutil.virtual_memory()
+    memory_utilization = (memory_raw.used / memory_raw.total) * 100
+    memory_in_gb = memory_raw.used / 1024 / 1024
+    return {'cpu_percentages': cpu_percentages,
+           'load_avg': load_avg,
+           'memory_utilization': memory_utilization,
+           'memory_in_gb': memory_in_gb}
+def _launch_and_monitor_resources(cmd, interval=5):
+    proc = subprocess.Popen(cmd)
+    while proc.returncode == None:
+        try:
+            proc.wait(timeout=interval)
+        except subprocess.TimeoutExpired:
+            pass # we don't care
+        logger.info(f"RESOURCE_INFO = {json.dumps(_get_resource_usage())}")
 
 def find_best_encoder(codec):
     """ Find the best encoder based on what is available on the system """
@@ -184,7 +205,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     output_file])
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
-    subprocess.run(cmd, check=True)
+    _launch_and_monitor_resources(cmd)
 
     api = get_api(host, token)
     media_obj = api.get_media(media)
@@ -306,7 +327,7 @@ def convert_archival(host,
                 cmd.append(output_file)
                     
                 logger.info('ffmpeg cmd = {}'.format(cmd))
-                subprocess.run(cmd, check=True)
+                _launch_and_monitor_resources(cmd)
 
             if archive_config.s3_storage is None:
                 default_archival_upload(api, host, media, output_file, True, size)
