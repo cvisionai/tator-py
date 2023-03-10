@@ -20,6 +20,13 @@ logger = logging.getLogger(__name__)
 # If HW is available, use this as lookup swap
 encoder_lookup=None
 
+SW_TO_HW_PIXEL_FORMAT_CONVERSION = {
+    'yuv420p': 'nv12', # QSV h264 supports this
+    'yuv420p10le': 'p010le', # QSV h264 supports this
+    'yuv422p': 'nv16', # Not sure if any hw encoders actually support this
+    'yuv444p' : 'nv21' # Not sure if any hw encoders actually support this
+}
+
 def _get_resource_usage():
     """ Returns an object representing memory + CPU usage """
     cpu_percentages=psutil.cpu_percent(percpu=True)
@@ -289,14 +296,14 @@ def convert_archival(host,
                 # Encode the media to archival format.
                 codec = find_best_encoder(archive_config.encode.vcodec)
                 quality_flag = "-crf"
-                pixel_format = "yuv420p"
+                pixel_format = archive_config.encode.pixel_format
                 tune_settings = ["-preset", archive_config.encode.preset,
                                  "-tune", archive_config.encode.tune]
                 if archive_config.encode.movflags:
                     tune_settings.extend(['-movflags', archive_config.encode.movflags])
                 if codec.find("qsv") >= 0:
                     quality_flag = "-global_quality"
-                    pixel_format = "nv12"
+                    pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
                     tune_settings=[] #QSV doesn't do tuning
                 elif codec == "libsvt_hevc":
                     # SVT for HEVC does not do tuning or CRF
