@@ -139,11 +139,23 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
 
-    # Convert settings into resolution/crf/codec.
+    # Convert settings into resolution/crf/codec/presets/pixel_formats.
     resolutions = [int(config.split(':')[0]) for config in configs]
     crfs = [config.split(':')[1] for config in configs]
     codecs = [config.split(':')[2] for config in configs]
     presets = [config.split(':')[3] for config in configs]
+
+    # Handle pixel format addition as an optional argument
+    # This will maintain backwards API compatibility to folks using
+    # this function
+    # TODO: It'd be nice if we didn't pass in the config so awkwardly.
+    pixel_formats = []
+    for c in configs:
+        split_comps = c.split(':')
+        if len(split_comps) == 5:
+            pixel_formats.append(split_comps[4])
+        else:
+            pixel_formats.append("yuv420p")
 
     # Need to get avg_framerate
     cmd = [
@@ -184,12 +196,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         codec = find_best_encoder(codecs[ridx])
         quality_flag = "-crf"
-        pixel_format = "yuv420p"
+        pixel_format = pixel_formats[ridx]
         hw_upload = ''
         preset = presets[ridx]
         if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
-            pixel_format = "nv12"
+            pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
             # add format filter for vaapi + add hwupload to incantation
             hw_upload=f'[uf{ridx}];[uf{ridx}]format={pixel_format}[format{ridx}];[format{ridx}]hwupload'
 
