@@ -46,6 +46,8 @@ def _launch_and_monitor_resources(cmd, interval=5):
         except subprocess.TimeoutExpired:
             pass # we don't care
         logger.info(f"RESOURCE_INFO = {json.dumps(_get_resource_usage())}")
+    if proc.returncode != 0:
+        raise("Transcode process failed")
 
 def find_best_encoder(codec):
     """ Find the best encoder based on what is available on the system """
