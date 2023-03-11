@@ -47,7 +47,6 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
         "-print_format", "json",
         "-count_frames",
         "-skip_frame", "nokey",
-        "-select_streams", "v",
         path,
     ]
     # The magic to reliably getting duration appears to be
@@ -59,7 +58,6 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
         "-v","error",
         "-show_entries", "stream:format=duration",
         "-print_format", "json",
-        "-select_streams", "v",
         path,
     ]
     output = subprocess.run(fast_cmd, stdout=subprocess.PIPE, check=True).stdout
