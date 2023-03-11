@@ -8,6 +8,7 @@ import os
 import sys
 from urllib.parse import urlparse
 import psutil
+import time
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
@@ -40,6 +41,7 @@ def _get_resource_usage():
            'memory_in_gb': memory_in_gb}
 def _launch_and_monitor_resources(cmd, interval=5):
     proc = subprocess.Popen(cmd)
+    start = time.time()
     while proc.returncode == None:
         try:
             proc.wait(timeout=interval)
@@ -48,6 +50,9 @@ def _launch_and_monitor_resources(cmd, interval=5):
         logger.info(f"RESOURCE_INFO = {json.dumps(_get_resource_usage())}")
     if proc.returncode != 0:
         raise("Transcode process failed")
+    end = time.time()
+    logger.info(f"cmd={cmd}")
+    logger.info(f"time={end-start}")
 
 def find_best_encoder(codec):
     """ Find the best encoder based on what is available on the system """

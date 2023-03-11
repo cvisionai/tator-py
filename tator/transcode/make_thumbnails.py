@@ -81,7 +81,7 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
     if needs_thumb_gif:
         # Create gif thumbnail in a single pass
         # This logic makes a max(video_length,60) second summary video than speeds it up 4 times and saves as a gif
-        video_duration = fps*num_frames
+        video_duration = num_frames/fps
 
         # Max thumbnail duration is 60 seconds
         thumb_duration = min(60, video_duration)
@@ -95,9 +95,10 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
                 "-i",
                 video_path,
                 "-vf",
-                f"select='not(mod(n\,{round(num_frames/frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
+                f"select='not(mod(n\,{round(frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
                 thumb_gif_path,
         ]
+        logger.info(f"cmd={cmd}")
         subprocess.run(cmd, check=True)
 
     # Upload thumbnail and thumbnail gif.
