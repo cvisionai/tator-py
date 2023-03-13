@@ -7,6 +7,8 @@ import json
 import os
 import sys
 from urllib.parse import urlparse
+import psutil
+import time
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
@@ -18,6 +20,39 @@ logger = logging.getLogger(__name__)
 
 # If HW is available, use this as lookup swap
 encoder_lookup=None
+
+SW_TO_HW_PIXEL_FORMAT_CONVERSION = {
+    'yuv420p': 'nv12', # QSV h264 supports this
+    'yuv420p10le': 'p010le', # QSV h264 supports this
+    'yuv422p': 'nv16', # Not sure if any hw encoders actually support this
+    'yuv444p' : 'nv21' # Not sure if any hw encoders actually support this
+}
+
+def _get_resource_usage():
+    """ Returns an object representing memory + CPU usage """
+    cpu_percentages=psutil.cpu_percent(percpu=True)
+    load_avg = psutil.getloadavg()
+    memory_raw = psutil.virtual_memory()
+    memory_utilization = (memory_raw.used / memory_raw.total) * 100
+    memory_in_gb = memory_raw.used / 1024 / 1024
+    return {'cpu_percentages': cpu_percentages,
+           'load_avg': load_avg,
+           'memory_utilization': memory_utilization,
+           'memory_in_gb': memory_in_gb}
+def _launch_and_monitor_resources(cmd, interval=5):
+    proc = subprocess.Popen(cmd)
+    start = time.time()
+    while proc.returncode == None:
+        try:
+            proc.wait(timeout=interval)
+        except subprocess.TimeoutExpired:
+            pass # we don't care
+        logger.info(f"RESOURCE_INFO = {json.dumps(_get_resource_usage())}")
+    if proc.returncode != 0:
+        raise("Transcode process failed")
+    end = time.time()
+    logger.info(f"cmd={cmd}")
+    logger.info(f"time={end-start}")
 
 def find_best_encoder(codec):
     """ Find the best encoder based on what is available on the system """
@@ -111,11 +146,23 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
 
-    # Convert settings into resolution/crf/codec.
+    # Convert settings into resolution/crf/codec/presets/pixel_formats.
     resolutions = [int(config.split(':')[0]) for config in configs]
     crfs = [config.split(':')[1] for config in configs]
     codecs = [config.split(':')[2] for config in configs]
     presets = [config.split(':')[3] for config in configs]
+
+    # Handle pixel format addition as an optional argument
+    # This will maintain backwards API compatibility to folks using
+    # this function
+    # TODO: It'd be nice if we didn't pass in the config so awkwardly.
+    pixel_formats = []
+    for c in configs:
+        split_comps = c.split(':')
+        if len(split_comps) == 5:
+            pixel_formats.append(split_comps[4])
+        else:
+            pixel_formats.append("yuv420p")
 
     # Need to get avg_framerate
     cmd = [
@@ -156,12 +203,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         codec = find_best_encoder(codecs[ridx])
         quality_flag = "-crf"
-        pixel_format = "yuv420p"
+        pixel_format = pixel_formats[ridx]
         hw_upload = ''
         preset = presets[ridx]
         if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
-            pixel_format = "nv12"
+            pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
             # add format filter for vaapi + add hwupload to incantation
             hw_upload=f'[uf{ridx}];[uf{ridx}]format={pixel_format}[format{ridx}];[format{ridx}]hwupload'
 
@@ -184,7 +231,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     output_file])
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
-    subprocess.run(cmd, check=True)
+    _launch_and_monitor_resources(cmd)
 
     api = get_api(host, token)
     media_obj = api.get_media(media)
@@ -268,21 +315,29 @@ def convert_archival(host,
                 # Encode the media to archival format.
                 codec = find_best_encoder(archive_config.encode.vcodec)
                 quality_flag = "-crf"
-                pixel_format = "yuv420p"
+                pixel_format = archive_config.encode.pixel_format
                 tune_settings = ["-preset", archive_config.encode.preset,
                                  "-tune", archive_config.encode.tune]
                 if archive_config.encode.movflags:
                     tune_settings.extend(['-movflags', archive_config.encode.movflags])
                 if codec.find("qsv") >= 0:
                     quality_flag = "-global_quality"
-                    pixel_format = "nv12"
+                    pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
                     tune_settings=[] #QSV doesn't do tuning
                 elif codec == "libsvt_hevc":
                     # SVT for HEVC does not do tuning or CRF
                     tune_settings=[]
                     quality_flag = "-global_quality"
+
+                hw_preamble = []
+                vaapi_present = codec.find('vaapi') >= 0
+                if vaapi_present:
+                    hw_preamble = ['-init_hw_device', 'vaapi=hw',
+                                   '-filter_hw_device', 'hw']
                 cmd = [
-                    "ffmpeg", "-y",
+                    "ffmpeg",
+                    *hw_preamble,
+                    "-y",
                     "-i", path,
                     "-vcodec", codec,
                     "-vf", "yadif",
@@ -290,6 +345,7 @@ def convert_archival(host,
                     "-pix_fmt", pixel_format,
                     *tune_settings
                 ]
+
                 if archive_config.encode.vcodec == 'hevc':
                     cmd += ["-tag:v", "hvc1"]
                 elif archive_config.encode.vcodec == 'h264':
@@ -297,7 +353,7 @@ def convert_archival(host,
                 cmd.append(output_file)
                     
                 logger.info('ffmpeg cmd = {}'.format(cmd))
-                subprocess.run(cmd, check=True)
+                _launch_and_monitor_resources(cmd)
 
             if archive_config.s3_storage is None:
                 default_archival_upload(api, host, media, output_file, True, size)

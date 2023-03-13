@@ -10,7 +10,7 @@ import yaml
 import json
 
 REQUIRES = ["urllib3 >= 1.26", "six >= 1.10", "certifi", "python-dateutil",
-            "requests >= 2.25", "pyyaml", "progressbar2", "pillow"]
+            "requests >= 2.25", "pyyaml", "progressbar2", "pillow", "psutil"]
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'

@@ -40,7 +40,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
-    cmd = [
+    slow_cmd = [
         "ffprobe",
         "-v","error",
         "-show_entries", "stream:format=duration",
@@ -49,8 +49,23 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
         "-skip_frame", "nokey",
         path,
     ]
-    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    # The magic to reliably getting duration appears to be
+    # the 'format=duration'. Out of an abundance of caution
+    # we will leave the slow command in there in the event duration
+    # slips by this faster method.
+    fast_cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream:format=duration",
+        "-print_format", "json",
+        path,
+    ]
+    output = subprocess.run(fast_cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
+    if video_info['streams'][0].get('duration', None) is None:
+        logger.info("NOTICE: Duration was null have to resort to slow method.")
+        output = subprocess.run(slow_cmd, stdout=subprocess.PIPE, check=True).stdout
+        video_info = json.loads(output)
     stream_idx=0
     audio=False
     for idx, stream in enumerate(video_info["streams"]):
@@ -129,6 +144,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     crf_map = defaultdict(lambda: 23)
     codec_map = defaultdict(lambda: 'libx264')
     preset_map = defaultdict(lambda: '')
+    pixel_format_map = defaultdict(lambda: 'yuv420p')
     try:
         if media_type_obj.streaming_config:
             available_resolutions = []
@@ -137,6 +153,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
                 crf_map[config.resolution] = config.crf
                 codec_map[config.resolution] = config.vcodec
                 preset_map[config.resolution] = config.preset
+                pixel_format_map[config.resolution] = config.pixel_format
     except Exception as e:
         # Likely an old version of the server
         # TODO: Remove me someday
@@ -163,6 +180,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
             crf_map[height] = crf_map[smallest_higher_res]
             codec_map[height] = codec_map[smallest_higher_res]
             preset_map[height] = preset_map[smallest_higher_res]
+            pixel_format_map[height] = pixel_format_map[smallest_higher_res]
             resolutions.append(height)
 
     # Streaming workloads (lower res)
@@ -174,7 +192,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
                 "raw_height": height,
                 "raw_width": width,
                 "configs": [
-                    f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}"
+                    f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}:{pixel_format_map[res]}"
                     for res in resolutions
                     if res <= group_to
                 ],

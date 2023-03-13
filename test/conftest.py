@@ -267,6 +267,24 @@ def video_type(request, project):
     yield video_type_id
 
 @pytest.fixture(scope='session')
+def yuv444p_video_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'video_type',
+        'description': 'Test video type',
+        'project': project,
+        'dtype': 'video',
+        'attribute_types': make_attribute_types(),
+        'archive_config': [{'encode': {'vcodec': 'hevc', 'crf': 30, 'pixel_format': 'yuv444p'}}],
+        'streaming_config' : [{'resolution': 720, 'crf': 30, 'pixel_format': 'yuv444p'}]
+    })
+    video_type_id = response.id
+    yield video_type_id
+
+@pytest.fixture(scope='session')
 def multi_type(request, project):
     import tator
     host = request.config.option.host

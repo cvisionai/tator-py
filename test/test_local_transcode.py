@@ -2,8 +2,24 @@ import time
 import subprocess
 
 import tator
+import uuid
+import json
+import subprocess
+
+def _get_stream_info(path):
+    cmd = [
+        "ffprobe",
+        "-v","error",
+        "-show_entries", "stream",
+        "-print_format", "json",
+        "-select_streams", "v",
+        path,
+    ]
+    p = subprocess.run(cmd, stdout=subprocess.PIPE)
+    return json.loads(p.stdout.decode())['streams'][0]
 
 def test_local_transcode(host, token, project, video_type, video_file):
+    unique_name = f"{uuid.uuid4()}.mp4"
     cmd = [
         'python3', '-m', 'tator.transcode', video_file,
         '--host', host,
@@ -11,8 +27,37 @@ def test_local_transcode(host, token, project, video_type, video_file):
         '--project', str(project),
         '--type', str(video_type),
         '--section', 'Locally transcoded',
+        '--name', unique_name
     ]
     subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True)
+    api = tator.get_api(host, token)
+    media_obj = api.get_media_list(project, name=unique_name, presigned=3600)[0]
+
+    stream_info = _get_stream_info(media_obj.media_files.archival[0].path)
+    assert stream_info['pix_fmt'] == 'yuv420p'
+    stream_info = _get_stream_info(media_obj.media_files.streaming[0].path)
+    assert stream_info['pix_fmt'] == 'yuv420p'
+
+def test_local_transcode_yuv444p(host, token, project, yuv444p_video_type, video_file):
+    unique_name = f"{uuid.uuid4()}.mp4"
+    cmd = [
+        'python3', '-m', 'tator.transcode', video_file,
+        '--host', host,
+        '--token', token,
+        '--project', str(project),
+        '--type', str(yuv444p_video_type),
+        '--section', 'Locally transcoded (yuv444p)',
+        '--name', unique_name
+    ]
+    subprocess.run(cmd, check=True)
+    api = tator.get_api(host, token)
+    media_obj = api.get_media_list(project, name=unique_name, presigned=3600)[0]
+
+    stream_info = _get_stream_info(media_obj.media_files.archival[0].path)
+    assert stream_info['pix_fmt'] == 'yuv444p'
+    stream_info = _get_stream_info(media_obj.media_files.streaming[0].path)
+    assert stream_info['pix_fmt'] == 'yuv444p'
 
 def test_bad_file(host, token, project, video_type, image_file):
     failed = False
