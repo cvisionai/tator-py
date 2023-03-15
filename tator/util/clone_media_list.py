@@ -86,7 +86,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                                      dest_type, dest_section, dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
-            created_ids.append(response.id)
+            created_ids.append(response.id[0])
         print(f"Finished creating {num_created} files!")
 
     Example for same host:
@@ -100,7 +100,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         generator = clone_media_list(src_api, query_params, dest_project)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
-            created_ids += response.id # This response is from the CloneMedia endpoint.
+            created_ids += response.id[0] # This response is from the CloneMedia endpoint.
         print(f"Finished creating {num_created} files!")
 
     :param src_api: :class:`tator.TatorApi` object corresponding to source host or only
@@ -200,7 +200,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                             media_def = {k: v for k, v in item.items()
                                          if v is not None}
                             src_path = media_def.pop('path', None)
-                            media_def['path'] = transfer(src_path, media_id=response.id)[0]
+                            media_def['path'] = transfer(src_path, media_id=response.id[0])
                             if key == 'streaming':
                                 src_segments = media_def.pop('segment_info', None)
                                 media_def['segment_info'] = transfer(src_segments, media_id=response.id[0])

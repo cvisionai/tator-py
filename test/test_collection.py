@@ -25,7 +25,7 @@ def random_media(api, project, paths, image_type):
                                                       attributes=attributes,
                                                       section=section):
         pass
-    return response.id, attributes, section
+    return response.id[0], attributes, section
 
 def random_state(project, collection_type, media_ids, post=False):
     attributes = {

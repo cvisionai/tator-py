@@ -64,7 +64,7 @@ def test_clone_multi_util_same_host(host, token, project, multi_type, multi):
                                             section)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     assert len(created_ids) == 1
 
@@ -77,7 +77,7 @@ def test_clone_videos_util_same_host(host, token, project, video_type, video):
                                             section)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     assert len(created_ids) == 1
 
@@ -90,7 +90,7 @@ def test_clone_images_util_same_host(host, token, project, image_type, image):
                                             section)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     assert len(created_ids) == 1
 
@@ -105,7 +105,7 @@ def test_clone_multi_util_different_host(host, token, project, multi_type, multi
                                             multi_type, section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     tator.util.clone_media_list(tator_api, query_params, project, multi_type,
                                 'Cloned media util different host', tator_api)
@@ -122,7 +122,7 @@ def test_clone_videos_util_different_host(host, token, project, video_type, vide
                                             section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     tator.util.clone_media_list(tator_api, query_params, project, video_type,
                                 'Cloned media util different host', tator_api)
@@ -139,6 +139,6 @@ def test_clone_images_util_different_host(host, token, project, image_type, imag
                                             section, dest_api)
     for num_created, num_total, response, id_map in generator:
         print(f"Created {num_created} of {num_total} files...")
-        created_ids.append(response.id)
+        created_ids.append(response.id[0])
     print(f"Finished creating {num_created} files!")
     assert len(created_ids) == 1

@@ -47,7 +47,7 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
     response = tator_api.create_media_list(project=project, body=media_spec)
     print(f"Transcoding video with existing media ID {response.id[0]}...")
     for progress, response in tator.util.upload_media(tator_api, video_type, video_file,
-                                                      media_id=response.id):
+                                                      media_id=response.id[0]):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     print(response.id)
@@ -98,7 +98,7 @@ def test_transcode_cancel(host, token, project, video_type, video_file):
         for progress, response in tator.util.upload_media(tator_api, video_type, video_file,
                                                           upload_uid=media_spec['uid'],
                                                           upload_gid=media_spec['gid'],
-                                                          media_id=response.id):
+                                                          media_id=response.id[0]):
             print(f"Upload video progress: {progress}%")
         uids.append(response.id)
 
