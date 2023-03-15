@@ -67,7 +67,7 @@ def make_concat(api, name, media_ids, section, offsets=None):
                   'height': media_obj.height}
 
     resp = api.create_media_list(project, [media_spec])
-    print(f"Created {resp.id}")
+    print(f"Created {resp.id[0]}")
 
     # Copy thumbnails from first media
     with tempfile.TemporaryDirectory() as d:
@@ -80,10 +80,10 @@ def make_concat(api, name, media_ids, section, offsets=None):
             pass
 
         for progress, thumbnail_info in _upload_file(api, project, thumb_path,
-                                                     media_id=resp.id, filename='tiled_thumb.jpg'):
+                                                     media_id=resp.id[0], filename='tiled_thumb.jpg'):
             logger.info(f"Thumbnail upload progress: {progress}%")
         for progress, thumbnail_gif_info in _upload_file(api, project, thumb_gif_path,
-                                                         media_id=resp.id, filename='tiled_gif.gif'):
+                                                         media_id=resp.id[0], filename='tiled_gif.gif'):
             logger.info(f"Thumbnail gif upload progress: {progress}%")
 
         # Open images to get output resolution.
@@ -100,13 +100,13 @@ def make_concat(api, name, media_ids, section, offsets=None):
                          'resolution': [thumb_gif_image.height, thumb_gif_image.width],
                          'mime': f'image/{thumb_gif_image.format.lower()}'}
 
-        response = api.create_image_file(resp.id, role='thumbnail', image_definition=thumb_def)
+        response = api.create_image_file(resp.id[0], role='thumbnail', image_definition=thumb_def)
         assert isinstance(response, MessageResponse)
-        response = api.create_image_file(resp.id, role='thumbnail_gif', image_definition=thumb_gif_def)
+        response = api.create_image_file(resp.id[0], role='thumbnail_gif', image_definition=thumb_gif_def)
         assert isinstance(response, MessageResponse)
 
     concat_def = [{"id": media_id, "timestampOffset": offset} for media_id,offset in zip(media_ids, offsets)]
-    api.update_media(resp.id, {"concat": concat_def})
+    api.update_media(resp.id[0], {"concat": concat_def})
 
     return resp
 

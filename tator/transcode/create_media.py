@@ -47,7 +47,7 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid,
     response = api.create_media_list(project, body=[spec])
 
     assert isinstance(response, CreateResponse)
-    media_id = response.id
+    media_id = response.id[0]
 
     return media_id
 

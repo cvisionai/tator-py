@@ -385,7 +385,7 @@ def count_video(request, project, video_type):
         # Make media element to get ID
         response = api.create_media(project, media_spec=spec)
 
-        media_id = response.id
+        media_id = response.id[0]
         
         upload_media_file(api, project, media_id, video_path, segment_path)
         
@@ -412,7 +412,7 @@ def empty_video(request, project, video_type):
             },
         ],
     )
-    yield response.id
+    yield response.id[0]
 
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
