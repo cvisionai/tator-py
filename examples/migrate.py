@@ -195,19 +195,19 @@ def find_versions(args, src_api, dest_api, dest_project):
     """ Finds existing versions in destination project. Returns ID mapping between source
         and destination versions and versions that need to be created.
     """
-    versions = []
     version_mapping = {}
+    versions = src_api.get_version_list(args.project)
+    if dest_project is not None:
+        existing = dest_api.get_version_list(dest_project.id)
+        existing_names = [version.name for version in existing]
+        for version in versions:
+            if version.name in existing_names:
+                version_mapping[version.id] = existing[existing_names.index(version.name)].id
+        versions = [version for version in versions if version.name not in existing_names]
     if args.skip_versions:
+        versions = []
         logger.info(f"Skipping versions due to --skip_versions.")
     else:
-        versions = src_api.get_version_list(args.project)
-        if dest_project is not None:
-            existing = dest_api.get_version_list(dest_project.id)
-            existing_names = [version.name for version in existing]
-            for version in versions:
-                if version.name in existing_names:
-                    version_mapping[version.id] = existing[existing_names.index(version.name)].id
-            versions = [version for version in versions if version.name not in existing_names]
         logger.info(f"{len(versions)} versions will be created ({len(version_mapping.values())} "
                      "already exist).")
     return versions, version_mapping
@@ -448,8 +448,6 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
                         found = True
                         localization_mapping[src_loc.id] = dest_loc.id
                 if not found:
-                    print(f"NOT FOUND: SRC ID {src_loc.id}, DEST IDS {[loc.id for loc in existing_grouped[key]]}")
-                    raise Exception("Shouldn't be missing any...")
                     localizations.append(src_loc)
         logger.info(f"{len(localizations)} localizations will be created ({len(localization_mapping.keys())} "
                      "already exist).")
