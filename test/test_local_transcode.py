@@ -4,7 +4,12 @@ import subprocess
 import tator
 import uuid
 import json
-import subprocess
+
+
+def _assert_subprocess(cmd):
+    out = subprocess.run(cmd, capture_output=True)
+    assert out.returncode == 0, out.stderr
+
 
 def _get_stream_info(path):
     cmd = [
@@ -29,8 +34,8 @@ def test_local_transcode(host, token, project, video_type, video_file):
         '--section', 'Locally transcoded',
         '--name', unique_name
     ]
-    subprocess.run(cmd, check=True)
-    subprocess.run(cmd, check=True)
+    _assert_subprocess(cmd)
+    _assert_subprocess(cmd)
     api = tator.get_api(host, token)
     media_obj = api.get_media_list(project, name=unique_name, presigned=3600)[0]
 
@@ -50,7 +55,7 @@ def test_local_transcode_yuv444p(host, token, project, yuv444p_video_type, video
         '--section', 'Locally transcoded (yuv444p)',
         '--name', unique_name
     ]
-    subprocess.run(cmd, check=True)
+    _assert_subprocess(cmd)
     api = tator.get_api(host, token)
     media_obj = api.get_media_list(project, name=unique_name, presigned=3600)[0]
 
@@ -60,20 +65,15 @@ def test_local_transcode_yuv444p(host, token, project, yuv444p_video_type, video
     assert stream_info['pix_fmt'] == 'yuv444p'
 
 def test_bad_file(host, token, project, video_type, image_file):
-    failed = False
-    try:
-        cmd = [
-            'python3', '-m', 'tator.transcode', image_file,
-            '--host', host,
-            '--token', token,
-            '--project', str(project),
-            '--type', str(video_type),
-            '--section', 'Bad transcodes',
-        ]
-        subprocess.run(cmd, check=True)
-    except subprocess.CalledProcessError as cpe:
-        failed = True
-    assert(failed)
+    cmd = [
+        'python3', '-m', 'tator.transcode', image_file,
+        '--host', host,
+        '--token', token,
+        '--project', str(project),
+        '--type', str(video_type),
+        '--section', 'Bad transcodes',
+    ]
+    _assert_subprocess(cmd)
     time.sleep(2)
     # Make sure media file is gone.
     api = tator.get_api(host, token)
