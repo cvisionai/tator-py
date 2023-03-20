@@ -40,16 +40,14 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid,
         'gid': gid,
         'uid': uid
     }
+
     if attributes:
         spec.update({'attributes': json.loads(attributes)})
     if url:
         spec.update({'url': url})
-    response = api.create_media_list(project, body=[spec])
 
-    assert isinstance(response, CreateResponse)
-    media_id = response.id[0]
+    return api.create_media_list(project, body=[spec]).id[0] # pylint: disable=E1101
 
-    return media_id
 
 if __name__ == '__main__':
     args = parse_args()
