@@ -6,9 +6,13 @@ import uuid
 import json
 
 
-def _assert_subprocess(cmd):
+def _assert_subprocess(cmd, desired_result=True):
     out = subprocess.run(cmd, capture_output=True)
-    assert out.returncode == 0, out.stderr
+
+    if desired_result:
+        assert out.returncode == 0, out.stderr
+    else:
+        assert out.returncode != 0, out.stdout
 
 
 def _get_stream_info(path):
@@ -73,7 +77,7 @@ def test_bad_file(host, token, project, video_type, image_file):
         '--type', str(video_type),
         '--section', 'Bad transcodes',
     ]
-    _assert_subprocess(cmd)
+    _assert_subprocess(cmd, False)
     time.sleep(2)
     # Make sure media file is gone.
     api = tator.get_api(host, token)
