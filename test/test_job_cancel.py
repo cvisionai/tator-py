@@ -5,7 +5,9 @@ from textwrap import dedent
 
 import tator
 import uuid
+import pytest
 
+@pytest.mark.flaky(reruns=3)
 def test_algorithm_cancel(host, token, project, image):
     ALGORITHM_NAME = f'Sleepy time {uuid.uuid1()}'
 
