@@ -93,22 +93,26 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     if num_chunks > 1:
         # Upload parts.
         parts = []
-        last_progress = 0
-        yield (last_progress, None)
+        yield (0, None)
         gcp_upload = upload_info.upload_id == upload_info.urls[0]
         with get_data(path) as f:
             with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+                def complete_chunk(fs):
+                    parts.append(fs.result())
+                    progress = round((len(parts) / num_chunks) *100,1)
+                    return (progress, None)
                 futures = []
                 for chunk_count, url in enumerate(upload_info.urls):
                     file_part = f.read(chunk_size)
                     default_etag_val = str(chunk_count) if gcp_upload else None
-                    futures.append(executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout))
-                for chunk_count, future in enumerate(concurrent.futures.as_completed(futures)):
-                    parts.append(future.result())
-                    this_progress = round((chunk_count / num_chunks) *100,1)
-                    if this_progress != last_progress:
-                        yield (this_progress, None)
-                        last_progress = this_progress
+                    future = executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout)
+                    futures.append(future)
+                    if len(futures) > max_workers:
+                        done, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)
+                        for future in done:
+                            yield complete_chunk(future)
+                for future in concurrent.futures.as_completed(futures):
+                    yield complete_chunk(future)
 
                 # Complete the upload.
                 completed = False
