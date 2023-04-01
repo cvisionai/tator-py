@@ -150,7 +150,11 @@ def transcode_single(path, args, gid):
     # Send an email.
     if args.email_spec:
         api = get_api(args.host, args.token)
-        response = api.send_email(args.project, email_spec=json.loads(args.email_spec))
+        if isinstance(args.email_spec, str):
+            email_spec = json.loads(args.email_spec)
+        else:
+            email_spec = args.email_spec
+        response = api.send_email(args.project, email_spec=email_spec)
         logger.info(response.message)
 
 def transcode_main(args):
