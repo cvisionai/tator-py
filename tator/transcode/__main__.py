@@ -7,10 +7,12 @@ import sys
 from uuid import uuid1
 import logging
 import subprocess
+import json
 
 from progressbar import progressbar
 
 from ..util import md5sum
+from ..util.get_api import get_api
 
 from .create_media import create_media
 from .determine_transcode import determine_transcode
@@ -46,6 +48,7 @@ def parse_args():
     parser.add_argument('--group_to', type=int, default=1080,
                          help='Vertical resolutions below this will be transcoded with '
                               'multi-headed ffmpeg.')
+    parser.add_argument('--email_spec', type=str, help="Optional email spec as a JSON string. The email will be sent upon completion of the transcode (see Email rest endpoint docs).")
     parser.add_argument('--cleanup', action='store_true',
                         help="Deletes working files after each file is transcoded and "
                              "uploaded.")
@@ -143,6 +146,12 @@ def transcode_single(path, args, gid):
                 shutil.rmtree(path)
             else:
                 os.remove(path)
+
+    # Send an email.
+    if args.email_spec:
+        api = get_api(args.host, args.token)
+        response = api.send_email(args.project, email_spec=json.loads(args.email_spec))
+        logger.info(response.message)
 
 def transcode_main(args):
     if args.gid is None:
