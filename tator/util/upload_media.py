@@ -10,7 +10,8 @@ from .md5sum import md5sum
 
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=10*1024*1024,
-                 attributes=None, media_id=None, timeout=30, max_workers=10):
+                 attributes=None, email_spec=None, media_id=None, timeout=30,
+                 max_workers=10):
     """ Uploads a single media file.
 
     Example:
@@ -33,6 +34,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param upload_uid: [Optional] Unique ID of the upload.
     :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
     :param attributes: [Optional] Attributes to apply to media object.
+    :param email_spec: [Optional] Spec for email to be sent upon transcode completion.
     :param media_id: [Optional] Unique ID of existing media object.
     :param timeout: [Optional] Request timeout for each upload chunk in seconds. Default is 30.
     :param max_workers: [Optional] Max workers for concurrent requests.
@@ -84,6 +86,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     }
     # Initiate transcode or save image.
     if mime.find('video') >= 0:
+        spec['email_spec'] = email_spec
         response = api.transcode(project_id, transcode_spec=spec)
     else:
         response = api.create_media_list(project_id, body=[spec])
