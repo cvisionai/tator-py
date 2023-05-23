@@ -1,7 +1,9 @@
 from datetime import datetime
 import os
+from random import randint
 import tempfile
 from time import sleep
+from urllib.parse import parse_qs, urlparse
 from uuid import uuid1
 
 import tator
@@ -178,3 +180,84 @@ def test_import_multiple_images(host, token, project, image_type):
         if n_with_media_files == n_images:
             break
     assert n_with_media_files == n_images
+
+
+def parse_url(url):
+    parsed_url = urlparse(url)
+    return parsed_url.path, parse_qs(parsed_url.query)
+
+
+def parse_media_files(media):
+    return dict(
+        parse_url(spec["path"])
+        for file_type, file_specs in media.media_files.to_dict().items()
+        if file_specs is not None
+        for spec in file_specs
+        if "path" in spec
+    )
+
+
+def test_presigned_no_cache(host, token, project, video_type, video_file):
+    expires_key = "X-Amz-Expires"
+
+    # Set up new video to ensure a clean cache
+    tator_api = tator.get_api(host, token)
+    uuid_val = str(uuid1())
+    attributes = {"test_string": uuid_val}
+    for progress, response in tator.util.upload_media(
+            tator_api, video_type, video_file, attributes=attributes
+    ):
+        print(f"Upload video progress: {progress}%")
+    print(response.message)
+
+    while True:
+        response = tator_api.get_media_list(
+            project,
+            name='AudioVideoSyncTest_BallastMedia.mp4',
+            attribute=[f"test_string::{uuid_val}"],
+        )
+        print("Waiting for transcode...")
+        sleep(2.5)
+        if len(response) == 0:
+            continue
+        if response[0].media_files is None:
+            continue
+        streaming = response[0].media_files.streaming
+        have_archival = response[0].media_files.archival is not None
+        if streaming and have_archival and len(streaming) == 4:
+            video_id = response[0].id
+            break
+
+    # Get initial presigned url
+    original_presigned_duration = new_presigned_duration = randint(9000, 90000)
+    while new_presigned_duration == original_presigned_duration:
+        new_presigned_duration = randint(9000, 90000)
+
+    video_obj = tator_api.get_media(video_id, presigned=original_presigned_duration)
+
+    init_presigned_url = parse_media_files(video_obj)
+
+    # Request a new duration without the `no_cache` flag and assert it returns the same urls
+    video_obj = tator_api.get_media(video_id, presigned=new_presigned_duration, no_cache=False)
+    no_cache_false_presigned_url = parse_media_files(video_obj)
+
+    for path, query_params in no_cache_false_presigned_url.items():
+        assert path in init_presigned_url
+        assert int(query_params[expires_key][0]) == original_presigned_duration
+
+    # Request a new duration with the `no_cache` flag and assert it returns new urls
+    video_obj = tator_api.get_media(video_id, presigned=new_presigned_duration, no_cache=True)
+    no_cache_false_presigned_url = parse_media_files(video_obj)
+
+    for path, query_params in no_cache_false_presigned_url.items():
+        assert path in init_presigned_url
+        assert int(query_params[expires_key][0]) == new_presigned_duration
+
+    # Request a new duration without the `no_cache` flag again and assert it returns the original
+    # cached urls and not the ones from the new duration
+    video_obj = tator_api.get_media(video_id, presigned=original_presigned_duration, no_cache=False)
+    no_cache_false_presigned_url = parse_media_files(video_obj)
+
+    for path, query_params in no_cache_false_presigned_url.items():
+        assert path in init_presigned_url
+        assert int(query_params[expires_key][0]) == original_presigned_duration
