@@ -101,12 +101,12 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                     parts.append(fs.result())
                     progress = round((len(parts) / num_chunks) *100,1)
                     return (progress, None)
-                futures = []
+                futures = set()
                 for chunk_count, url in enumerate(upload_info.urls):
                     file_part = f.read(chunk_size)
                     default_etag_val = str(chunk_count) if gcp_upload else None
                     future = executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout)
-                    futures.append(future)
+                    futures.add(future)
                     if len(futures) > max_workers:
                         done, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)
                         for future in done:
