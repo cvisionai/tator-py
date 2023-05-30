@@ -51,11 +51,11 @@ def random_media(api, project, paths, image_type):
     }
     section = random.choice(['Search Section A', 'Search Section B'])
     path = random.choice(paths)
-    for progress, response in tator.util.upload_media(api, image_type, path,
-                                                      attributes=attributes,
-                                                      section=section):
+    for _, response in tator.util.upload_media(
+        api, image_type, path, attributes=attributes, section=section
+    ):
         pass
-    return response.id, attributes, section
+    return response.id[0], attributes, section
 
 def random_search(sections=None):
     """ Runs a random query and compares results with ES enabled and disabled.

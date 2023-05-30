@@ -52,5 +52,5 @@ def make_live_stream(api, type_id, layout, name, section, feedInfo):
     create_resp = api.create_media_list(project, [media_spec])
 
     patch_object = {"live": {"layout": layout, "streams": feedInfo}}
-    return api.update_media(create_resp.id, patch_object)
+    return api.update_media(create_resp.id[0], patch_object)
 

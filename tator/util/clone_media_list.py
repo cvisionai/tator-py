@@ -86,7 +86,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                                      dest_type, dest_section, dest_api)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
-            created_ids.append(response.id)
+            created_ids.append(response.id[0])
         print(f"Finished creating {num_created} files!")
 
     Example for same host:
@@ -100,7 +100,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
         generator = clone_media_list(src_api, query_params, dest_project)
         for num_created, num_total, response, id_map in generator:
             print(f"Created {num_created} of {num_total} files...")
-            created_ids += response.id # This response is from the CloneMedia endpoint.
+            created_ids += response.id[0] # This response is from the CloneMedia endpoint.
         print(f"Finished creating {num_created} files!")
 
     :param src_api: :class:`tator.TatorApi` object corresponding to source host or only
@@ -187,7 +187,7 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
 
             # Create the media object.
             response = dest_api.create_media_list(dest_project, body=[media_spec])
-            id_map = {media.id: response.id}
+            id_map = {media.id: response.id[0]}
 
             # Transfer videos.
             if media.media_files:
@@ -200,18 +200,18 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                             media_def = {k: v for k, v in item.items()
                                          if v is not None}
                             src_path = media_def.pop('path', None)
-                            media_def['path'] = transfer(src_path, media_id=response.id)
+                            media_def['path'] = transfer(src_path, media_id=response.id[0])
                             if key == 'streaming':
                                 src_segments = media_def.pop('segment_info', None)
-                                media_def['segment_info'] = transfer(src_segments, media_id=response.id)
+                                media_def['segment_info'] = transfer(src_segments, media_id=response.id[0])
                             if key in ['streaming', 'archival']:
-                                dest_api.create_video_file(response.id, role=key,
+                                dest_api.create_video_file(response.id[0], role=key,
                                                            video_definition=media_def)
                             elif key in ['image', 'thumbnail', 'thumbnail_gif']:
-                                dest_api.create_image_file(response.id, role=key,
+                                dest_api.create_image_file(response.id[0], role=key,
                                                            image_definition=media_def)
                             elif key in ['audio']:
-                                dest_api.create_audio_file(response.id, role=key,
+                                dest_api.create_audio_file(response.id[0], role=key,
                                                            audio_definition=media_def)
                 if media.media_files.ids:
                     dest_ids = []
@@ -227,6 +227,6 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                         update['multi']['layout'] = media.media_files.layout
                     if media.media_files.quality:
                         update['multi']['quality'] = media.media_files.quality
-                    dest_api.update_media(response.id, media_update=update)
-            created_ids.append(response.id)
+                    dest_api.update_media(response.id[0], media_update=update)
+            created_ids.append(response.id[0])
             yield (len(created_ids), total_files, response, id_map)

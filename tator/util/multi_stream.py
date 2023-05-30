@@ -137,13 +137,13 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
                 'section': section_obj.name,
                 'type': type_id}
         resp = api.create_media_list(project, [media_spec])
-        print(f"Created {resp.id}")
+        print(f"Created {resp.id[0]}")
         
         for progress, thumbnail_info in _upload_file(api, project, thumb_path,
-                                                        media_id=resp.id, filename='tiled_thumb.jpg'):
+                                                        media_id=resp.id[0], filename='tiled_thumb.jpg'):
                 logger.info(f"Thumbnail upload progress: {progress}%")
         for progress, thumbnail_gif_info in _upload_file(api, project, thumb_gif_path,
-                                                        media_id=resp.id, filename='tiled_gif.gif'):
+                                                        media_id=resp.id[0], filename='tiled_gif.gif'):
             logger.info(f"Thumbnail gif upload progress: {progress}%")
 
         # Open images to get output resolution.
@@ -160,9 +160,9 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
                          'resolution': [thumb_gif_image.height, thumb_gif_image.width],
                          'mime': f'image/{thumb_gif_image.format.lower()}'}
 
-        response = api.create_image_file(resp.id, role='thumbnail', image_definition=thumb_def)
+        response = api.create_image_file(resp.id[0], role='thumbnail', image_definition=thumb_def)
         assert isinstance(response, MessageResponse)
-        response = api.create_image_file(resp.id, role='thumbnail_gif', image_definition=thumb_gif_def)
+        response = api.create_image_file(resp.id[0], role='thumbnail_gif', image_definition=thumb_gif_def)
         assert isinstance(response, MessageResponse)
 
         # Add the multi definition.
@@ -173,7 +173,7 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
         if frame_offset:
             assert len(frame_offset) == len(media_ids), "Length of frame offsets did not match length of media IDs!"
             multi_def.update({"frameOffset": frame_offset})
-        api.update_media(resp.id, {"multi": multi_def})
+        api.update_media(resp.id[0], {"multi": multi_def})
 
         return resp
 

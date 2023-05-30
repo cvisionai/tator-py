@@ -152,10 +152,12 @@ def test_import_multiple_images(host, token, project, image_type):
 
     start = datetime.now()
     response = tator_api.create_media_list(project, body=media_specs)
+    created_ids = response.id
     duration = (datetime.now() - start).total_seconds()
     assert duration < 5
 
     assert str(len(media_specs)) in response.message
+    assert len(media_specs) == len(created_ids)
 
     new_project_media_count = -1
     desired_project_media_count = project_media_count + len(media_specs)
@@ -167,7 +169,7 @@ def test_import_multiple_images(host, token, project, image_type):
     assert new_project_media_count == desired_project_media_count
     for _ in range(30):
         sleep(1)
-        media_list = tator_api.get_media_list(project, type=image_type)
+        media_list = tator_api.get_media_list(project, type=image_type, media_id=created_ids)
 
         n_with_media_files = 0
         for media in media_list:

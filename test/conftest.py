@@ -267,6 +267,24 @@ def video_type(request, project):
     yield video_type_id
 
 @pytest.fixture(scope='session')
+def yuv444p_video_type(request, project):
+    import tator
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    response = tator_api.create_media_type(project, media_type_spec={
+        'name': 'video_type',
+        'description': 'Test video type',
+        'project': project,
+        'dtype': 'video',
+        'attribute_types': make_attribute_types(),
+        'archive_config': [{'encode': {'vcodec': 'hevc', 'crf': 30, 'pixel_format': 'yuv444p'}}],
+        'streaming_config' : [{'resolution': 720, 'crf': 30, 'pixel_format': 'yuv444p'}]
+    })
+    video_type_id = response.id
+    yield video_type_id
+
+@pytest.fixture(scope='session')
 def multi_type(request, project):
     import tator
     host = request.config.option.host
@@ -367,7 +385,7 @@ def count_video(request, project, video_type):
         # Make media element to get ID
         response = api.create_media(project, media_spec=spec)
 
-        media_id = response.id
+        media_id = response.id[0]
         
         upload_media_file(api, project, media_id, video_path, segment_path)
         
@@ -394,7 +412,7 @@ def empty_video(request, project, video_type):
             },
         ],
     )
-    yield response.id
+    yield response.id[0]
 
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
@@ -428,7 +446,7 @@ def multi(request, project, multi_type, video):
     tator_api = tator.get_api(host, token)
     response = tator.util.make_multi_stream(tator_api, multi_type, [1, 1], 
                                             'Test multi', [video], 'Multi Videos')
-    multi_id = response.id
+    multi_id = response.id[0]
     yield multi_id
 
 @pytest.fixture(scope='session')

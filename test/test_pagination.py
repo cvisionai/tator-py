@@ -12,7 +12,7 @@ def make_image(tator_api, project, image_type, image_file, test_string):
     attributes = {"test_string": test_string}
     for progress, response in tator.util.upload_media(tator_api, image_type, image_file, attributes=attributes):
         print(f"Upload image progress: {progress}%")
-    return response.id
+    return response.id[0]
 
 def random_localization(project, box_type, image_obj, test_string, post=False):
     x = random.uniform(0.0, 1.0)

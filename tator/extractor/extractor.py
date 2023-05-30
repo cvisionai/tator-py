@@ -50,7 +50,7 @@ def import_media(api,
     ]
     response = api.create_media_list(project, media_spec)
     assert isinstance(response, CreateResponse)
-    media_id = response.id
+    media_id = response.id[0]
 
     # Peel apart api to get host/token combo (TODO: not great)
     host = api.api_client.configuration.host

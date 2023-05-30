@@ -14,7 +14,6 @@ from ..util._upload_file import _upload_file
 
 from .transcode import get_length_info
 from ..openapi.tator_openapi.models import MessageResponse
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -80,40 +79,27 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
         subprocess.run(cmd, check=True)
 
     if needs_thumb_gif:
-        with tempfile.TemporaryDirectory() as dirname:
-            pts_scale = (fps / 3) * (10 / num_frames)
+        # Create gif thumbnail in a single pass
+        # This logic makes a max(video_length,60) second summary video than speeds it up 4 times and saves as a gif
+        video_duration = num_frames/fps
 
-            # Create gif thumbnail.
-            cmd1 = ["ffmpeg", "-y"]
-            if only_keyframes or num_frames > 10000:
-                cmd2 = ["-skip_frame", "nokey"]
-            else:
-                cmd2 = []
-            cmd3 = [
+        # Max thumbnail duration is 60 seconds
+        thumb_duration = min(60, video_duration)
+
+        # We either select every Nth second based on how much longer than 60 seconds we are
+        frame_select = max(fps, (video_duration/thumb_duration)*fps)
+
+        # We play each 1 second sample at 4x
+        speed_up = 4*max(1,round(video_duration/thumb_duration))
+        cmd = ["ffmpeg", "-y",
                 "-i",
                 video_path,
                 "-vf",
-                f"scale=256:-1:flags=lanczos,setpts={pts_scale}*PTS",
-                "-r",
-                "3",
-                os.path.join(dirname, "%09d.jpg"),
-            ]
-            cmd = cmd1 + cmd2 + cmd3
-            subprocess.run(cmd, check=True)
-            cmd = [
-                "ffmpeg",
-                "-y",
-                "-r",
-                "3",
-                "-i",
-                os.path.join(dirname, "%09d.jpg"),
-                "-vf",
-                "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
-                "-r",
-                "3",
+                f"select='not(mod(n\,{round(frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
                 thumb_gif_path,
-            ]
-            subprocess.run(cmd, check=True)
+        ]
+        logger.info(f"cmd={cmd}")
+        subprocess.run(cmd, check=True)
 
     # Upload thumbnail and thumbnail gif.
     if needs_thumb_img:
