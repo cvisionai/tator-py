@@ -9,7 +9,7 @@ import os
 
 import tator
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
