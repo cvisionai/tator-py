@@ -229,9 +229,9 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
             break
 
     # Get initial presigned url
-    original_presigned_duration = new_presigned_duration = randint(9000, 90000)
+    original_presigned_duration = new_presigned_duration = randint(8640, 86400)
     while new_presigned_duration == original_presigned_duration:
-        new_presigned_duration = randint(9000, 90000)
+        new_presigned_duration = randint(8640, 86400)
 
     video_obj = tator_api.get_media(video_id, presigned=original_presigned_duration)
 
