@@ -218,7 +218,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                             "-tune", "fastdecode"])
         if codec.find('libsvtav1') >= 0:
             preset = preset if preset else '5'
-            per_res.extend(['-preset', preset])
+            per_res.extend(['-preset', preset, "-tune", "fastdecode"])
 
         cmd.extend([*per_res,
                     "-vcodec", codec,
