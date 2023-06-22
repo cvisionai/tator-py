@@ -55,6 +55,7 @@ class MediaUtil:
 
   def load_from_url(self, video_url, segment_url, height, width, fps):
     """ Setup the MediaUtil instance with primitive types
+
     :param video_url: Publically accessible URL to the raw segmented mp4 file to use
     :param segment_url: Publically accessible URL for the segmentation map file. 
     :param height: The vertical resolution of the video
@@ -227,6 +228,7 @@ class MediaUtil:
 
   def get_animation(self, frames, fps, roi=None, render_format='mp4', force_scale=None):
     """ Return an animation of frames at a given FPS.
+
         :param  frames: list of frames
         :param fps: FPS of output animation """
     if not self._generate_frame_images(frames, roi,
