@@ -1,15 +1,10 @@
 import os
-import math
-from uuid import uuid1
-
-from urllib.parse import urljoin
-from urllib.parse import urlsplit
 
 from ._upload_file import _upload_file
-from .md5sum import md5sum
 
-def upload_temporary_file(api, project, path, lookup=None, hours=24,
-                          name=None, chunk_size=100*1024*1024):
+def upload_temporary_file(
+    api, project, path, lookup=None, hours=24, name=None, chunk_size=100*1024*1024
+):
     """ Upload a file to the temporary file storage location.
 
     Example:
@@ -38,15 +33,11 @@ def upload_temporary_file(api, project, path, lookup=None, hours=24,
     if lookup is None:
         lookup = name
 
-    for progress, upload_info in _upload_file(api, project, path):
+    for progress, upload_info in _upload_file(api, project, path, chunk_size=chunk_size):
         yield (progress, None)
     url = api.get_download_info(project, {'keys': [upload_info.key]})[0].url
 
-    response = api.create_temporary_file(project, temporary_file_spec={
-        "url": url,
-        "name": name,
-        "lookup": lookup,
-        "hours": 24,
-    })
+    response = api.create_temporary_file(
+        project, temporary_file_spec={"url": url, "name": name, "lookup": lookup, "hours": hours}
+    )
     yield (100, response)
-
