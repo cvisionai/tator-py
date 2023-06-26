@@ -390,7 +390,7 @@ def test_file_crud(
 
 
 def test_upload_generic_file(host, token, project):
-    TEST_STR = "foo"
+    TEST_STR = b"foo"
     # Setup the interface to Tator
     tator_api = tator.get_api(host=host, token=token)
 
@@ -412,7 +412,7 @@ def test_upload_generic_file(host, token, project):
         path = temp_file.name
         fname = os.path.basename(path)
 
-        temp_file.write(f"{TEST_STR}\n")
+        temp_file.write(TEST_STR)
 
         for progress, response in tator.util.upload_generic_file(tator_api, type_id, path, fname):
             print(f"Progress: {progress}%")
@@ -422,4 +422,4 @@ def test_upload_generic_file(host, token, project):
     assert len(download_info) == 1
     assert download_info[0].key == response.path
     response = requests.get(download_info[0].url, stream=True)
-    assert response.content.decode() == TEST_STR
+    assert response.content == TEST_STR
