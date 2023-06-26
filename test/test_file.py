@@ -1,6 +1,7 @@
 
 import logging
 import os
+import requests
 import tempfile
 
 import pytest
@@ -386,3 +387,39 @@ def test_file_crud(
 
     assert file_a_count == len(file_a_ids) - 2
     assert file_b_count == len(file_b_ids) - 2
+
+
+def test_upload_generic_file(host, token, project):
+    TEST_STR = "foo"
+    # Setup the interface to Tator
+    tator_api = tator.get_api(host=host, token=token)
+
+    # Create a FileType
+    response = tator_api.create_file_type(
+        project=project,
+        file_type_spec={
+            "name": "generic_upload_file_type",
+            "project": project,
+            "attribute_types": [
+                {"name": "test", "dtype": "int", "default": 0, "minimum": -1000, "maximum": 1000}
+            ],
+        },
+    )
+    type_id = response.id
+
+    # Create a file locally and test uploading/downloading
+    with tempfile.NamedTemporaryFile() as temp_file:
+        path = temp_file.name
+        fname = os.path.basename(path)
+
+        temp_file.write(f"{TEST_STR}\n")
+
+        for progress, response in tator.util.upload_generic_file(tator_api, type_id, path, fname):
+            print(f"Progress: {progress}%")
+    assert response.name == fname
+    download_info = tator_api.get_download_info(project=project, download_info_spec={"keys": [response.path]})
+
+    assert len(download_info) == 1
+    assert download_info[0].key == response.path
+    response = requests.get(download_info[0].url, stream=True)
+    assert response.content.decode() == TEST_STR

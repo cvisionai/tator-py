@@ -34,4 +34,4 @@ from tator.util.find_single_change import find_single_change
 from tator.util.get_paginator import get_paginator
 from tator.util.media_util import MediaUtil
 from tator.util.media_manipulation import supplement_video_to_media
-
+from tator.util.upload_generic_file import upload_generic_file
