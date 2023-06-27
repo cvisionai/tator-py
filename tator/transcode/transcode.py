@@ -181,6 +181,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
+        "-noautorotate",
         "-i", path,
         "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
