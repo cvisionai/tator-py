@@ -414,7 +414,7 @@ def test_upload_generic_file(host, token, project):
 
         temp_file.write(TEST_STR)
 
-        for progress, response in tator.util.upload_generic_file(tator_api, type_id, path, fname):
+        for progress, response in tator.util.upload_generic_file(tator_api, type_id, path, "File description", fname):
             print(f"Progress: {progress}%")
     assert response.name == fname
     download_info = tator_api.get_download_info(project=project, download_info_spec={"keys": [response.path]})
