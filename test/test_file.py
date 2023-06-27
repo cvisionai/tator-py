@@ -413,6 +413,7 @@ def test_upload_generic_file(host, token, project):
         fname = os.path.basename(path)
 
         temp_file.write(TEST_STR)
+        temp_file.flush()
 
         for progress, response in tator.util.upload_generic_file(tator_api, type_id, path, "File description", fname):
             print(f"Progress: {progress}%")
