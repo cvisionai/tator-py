@@ -87,3 +87,43 @@ def test_localization_chunked_create(host, token, project, image_type, image_fil
     assert len(box_ids) == len(boxes)
 
     tator_api.delete_media(image)
+
+
+def helper(api, project, boxes, chunk_size=None):
+    kwargs = {}
+    if chunk_size:
+        kwargs["chunk_size"] = chunk_size
+    box_ids = []
+    for response in tator.util.chunked_create(
+        api.create_localization_list, project, body=boxes, **kwargs
+    ):
+        box_ids += response.id
+        print(f"Created {len(response.id)} boxes")
+    assert len(box_ids) == len(boxes)
+
+
+def test_localization_chunked_create(host, token, project, image_type, image_file, box_type):
+    test_string = str(uuid1())
+    tator_api = tator.get_api(host, token)
+    image = make_image(tator_api, image_type, image_file, test_string)
+    image_obj = tator_api.get_media(image)
+
+    num_localizations = 1111
+    boxes = [
+        random_localization(project, box_type, image_obj, test_string)
+        for _ in range(num_localizations)
+    ]
+
+    # Default chunk_size
+    print("using default chunk size")
+    helper(tator_api, project, boxes)
+
+    # Small chunk_size
+    print("using small chunk size (100)")
+    helper(tator_api, project, boxes, chunk_size=100)
+
+    # Huge chunk_size
+    print("using huge chunk size (1000)")
+    helper(tator_api, project, boxes, chunk_size=1000)
+
+    tator_api.delete_media(image)

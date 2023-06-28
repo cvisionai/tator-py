@@ -33,8 +33,8 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
 
     key = list(kwargs.keys())[0]
     spec = kwargs[key]
-    n_created = 0
     while chunk_size > 0 and spec:
+        n_created = 0
         try:
             for idx in range(0, len(spec), chunk_size):
                 response = func(project, **{key: spec[idx : idx + chunk_size]})
@@ -43,4 +43,4 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
         except Exception:
             chunk_size = floor(chunk_size / 2)
             logger.warning("Caught exception, halving chunk size to %d", chunk_size, exc_info=True)
-            spec = spec[n_created:]
+        spec = spec[n_created:]
