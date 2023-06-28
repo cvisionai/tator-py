@@ -1,20 +1,21 @@
 from datetime import datetime
-from pprint import pprint
 import random
-from time import sleep
 from types import GeneratorType
 from uuid import uuid1
 
 import tator
 
 
-def make_image(tator_api, project, image_type, image_file, test_string):
+def make_image(tator_api, image_type, image_file, test_string):
     attributes = {"test_string": test_string}
-    for progress, response in tator.util.upload_media(tator_api, image_type, image_file, attributes=attributes):
+    for progress, response in tator.util.upload_media(
+        tator_api, image_type, image_file, attributes=attributes
+    ):
         print(f"Upload image progress: {progress}%")
     return response.id[0]
 
-def random_localization(project, box_type, image_obj, test_string, post=False):
+
+def random_localization(project, box_type, image_obj, test_string):
     x = random.uniform(0.0, 1.0)
     y = random.uniform(0.0, 1.0)
     w = random.uniform(0.0, 1.0 - x)
@@ -38,7 +39,7 @@ def random_localization(project, box_type, image_obj, test_string, post=False):
         "type": box_type,
         "media_id": image_obj.id,
         "frame": 0,
-        "attributes": attributes
+        "attributes": attributes,
     }
 
     return {**out}
@@ -73,13 +74,13 @@ def _assert_pagination(api, function_name, batch_size, total, **kwargs):
 def test_localization_pagination(host, token, project, image_type, image_file, box_type):
     test_string = str(uuid1())
     tator_api = tator.get_api(host, token)
-    image = make_image(tator_api, project, image_type, image_file, test_string)
+    image = make_image(tator_api, image_type, image_file, test_string)
     image_obj = tator_api.get_media(image)
 
     batch_size = 100
     num_localizations = 2222  # Should not be a multiple of batch_size
     boxes = [
-        random_localization(project, box_type, image_obj, test_string, post=True)
+        random_localization(project, box_type, image_obj, test_string)
         for _ in range(num_localizations)
     ]
     box_ids = []
