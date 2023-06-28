@@ -33,6 +33,7 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
 
     key = list(kwargs.keys())[0]
     spec = kwargs[key]
+    n_specs = len(spec)
     while chunk_size > 0 and spec:
         n_created = 0
         try:
@@ -44,3 +45,5 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
             chunk_size = floor(chunk_size / 2)
             logger.warning("Caught exception, halving chunk size to %d", chunk_size, exc_info=True)
         spec = spec[n_created:]
+    if spec:
+        raise RuntimeError(f"Was not able to create {len(spec)} of {n_specs} objects")

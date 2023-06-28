@@ -2,6 +2,7 @@ from datetime import datetime
 import random
 from uuid import uuid1
 
+import pytest
 import tator
 
 
@@ -125,5 +126,13 @@ def test_localization_chunked_create(host, token, project, image_type, image_fil
     # Huge chunk_size
     print("using huge chunk size (1000)")
     helper(tator_api, project, boxes, chunk_size=1000)
+
+    # Give bad func to force a failure to create
+    with pytest.raises(RuntimeError) as exc:
+        for _ in tator.util.chunked_create(lambda _: True, project, body=boxes):
+            pass
+
+    n_boxes = len(boxes)
+    assert str(exc.value) == f"Was not able to create {n_boxes} of {n_boxes} objects"
 
     tator_api.delete_media(image)
