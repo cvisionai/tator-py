@@ -177,13 +177,23 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     video_info = json.loads(output)
     avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
     input_pixel_format=video_info['streams'][0]['pix_fmt']
+    tags=video_info['streams'][0].get('tags')
+    rotation = 0
+    if tags is not None:
+        rotation = int(tags.get('rotate', "0")) % 360
+    transpose = "null"
+    if rotation == 90:
+        transpose = "transpose=2"
+    elif rotation == 180:
+        transpose = "hflip,vflip"
+    elif rotation == 270:
+        transpose = "transpose=1"
 
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
-        "-noautorotate",
-        "-i", path,
-        "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
+        "-noautorotate", "-i", path,
+        "-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
 
     vaapi_present = [c for c in codecs if find_best_encoder(c).find('vaapi') >= 0]
@@ -227,7 +237,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     quality_flag, crfs[ridx],
                     "-filter_complex",
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                    f"[0:v:0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
+                    f"[0:v:0]{transpose}[rot0];[rot0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
+                    "-metadata:s:v:0", "rotate=0",
                     "-map", f"[outv{ridx}]",
                     output_file])
 
