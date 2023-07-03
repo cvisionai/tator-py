@@ -93,8 +93,8 @@ def test_localization_pagination(host, token, project, image_type, image_file, b
     print(f"Created {len(box_ids)} boxes!")
 
     # Verify list is the right length
-    response = tator_api.get_localization_list(project, type=box_type, media_id=[image])
-    assert len(response) == num_localizations
+    response = tator_api.get_localization_count(project, type=box_type, media_id=[image])
+    assert response == num_localizations
 
     # Check `get_localization_list`
     _assert_pagination(
@@ -106,6 +106,44 @@ def test_localization_pagination(host, token, project, image_type, image_file, b
         type=box_type,
         media_id=[image],
     )
+
+    # Check `get_localization_list_by_id`
+    _assert_pagination(
+        tator_api,
+        "get_localization_list_by_id",
+        batch_size,
+        num_localizations,
+        project=project,
+        localization_id_query={"media_ids": [image]},
+    )
+
+    tator_api.delete_media(image)
+
+
+def test_big_list_pagination(host, token, project, image_type, image_file, box_type):
+    test_string = str(uuid1())
+    tator_api = tator.get_api(host, token)
+    image = make_image(tator_api, image_type, image_file, test_string)
+    image_obj = tator_api.get_media(image)
+
+    batch_size = 1000
+    num_localizations = 11111
+    boxes = [
+        random_localization(project, box_type, image_obj, test_string)
+        for _ in range(num_localizations)
+    ]
+    box_ids = []
+    for response in tator.util.chunked_create(
+        tator_api.create_localization_list, project, body=boxes
+    ):
+        box_ids += response.id
+    assert len(box_ids) == len(boxes)
+    assert len(box_ids) % 100 != 0
+    print(f"Created {len(box_ids)} boxes!")
+
+    # Verify list is the right length
+    response = tator_api.get_localization_count(project, type=box_type, media_id=[image])
+    assert response == num_localizations
 
     # Check `get_localization_list_by_id`
     _assert_pagination(
