@@ -5,7 +5,6 @@ import subprocess
 import os
 import json
 import logging
-import tempfile
 
 from PIL import Image
 
@@ -56,7 +55,7 @@ def get_metadata(path):
 
     return (codec, fps, num_frames, width, height)
 
-def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path, only_keyframes=False):
+def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path):
     """ Makes thumbnails and gets metadata for original file.
     """
     # Check for the existence of thumbnails
