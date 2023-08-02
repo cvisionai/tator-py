@@ -46,14 +46,6 @@ def codegen():
         with open(SCHEMA_FILENAME, 'wb') as f:
             f.write(response.content)
 
-    # Remove any oneOf entries from the schema, as they are not handled
-    # well by openapi generator.
-    with open(SCHEMA_FILENAME, 'r') as f:
-        schema = yaml.safe_load(f)
-    schema = remove_oneof(schema)
-    with open(SCHEMA_FILENAME, 'w') as f:
-        yaml.dump(schema, f, Dumper=NoAliasDumper)
-
     # Get the git SHA ID.
     cmd = ['git', 'rev-parse', 'HEAD']
     git_rev = subprocess.check_output(cmd).strip().decode('utf-8')
@@ -64,7 +56,7 @@ def codegen():
         'docker', 'run', '--rm',
         '-v', f"{pwd}:/pwd",
         '-v', f"{pwd}/out:/out",
-        'openapitools/openapi-generator-cli:v4.3.1', 'generate',
+        'openapitools/openapi-generator-cli:v6.6.0', 'generate',
         '-c', f'/pwd/{CONFIG_FILENAME}',
         '-i', f'/pwd/{SCHEMA_FILENAME}',
         '-g', 'python',
