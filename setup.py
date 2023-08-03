@@ -2,9 +2,7 @@ import os
 import subprocess
 import shutil
 
-from distutils.cmd import Command
 from setuptools import setup, find_packages  # noqa: H301
-from setuptools.command.dist_info import dist_info
 import requests
 import yaml
 import json
@@ -21,19 +19,8 @@ def get_version():
         config = json.load(f)
     return config['packageVersion']
 
-def remove_oneof(data):
-    """ Removes oneOf key from a dict and recursively calls this function on
-        other dict values.
-    """
-    if 'oneOf' in data:
-        del data['oneOf']
-    for key in data:
-        if isinstance(data[key], dict):
-            remove_oneof(data[key])
-    return data
-
 class NoAliasDumper(yaml.Dumper):
-    def ignore_aliases(self, data):
+    def ignore_aliases(self, _):
         return True
 
 def codegen():
