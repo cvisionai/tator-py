@@ -12,8 +12,8 @@ def get_api(host='https://cloud.tator.io', token=os.getenv('TATOR_TOKEN')):
     config = tator_openapi.Configuration()
     config.host = host
     if token:
-        config.api_key['Authorization'] = token
-        config.api_key_prefix['Authorization'] = 'Token'
+        config.api_key['TokenAuth'] = token
+        config.api_key_prefix['TokenAuth'] = 'Token'
 
     api = tator_openapi.TatorApi(tator_openapi.ApiClient(config))
 

@@ -5,7 +5,7 @@ from typing import Any, Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     import tator.TatorApi
 
-from tator.openapi.tator_openapi import ChangeLog, ChangeLogDescriptionOfChangeNew
+from tator.openapi.tator_openapi import ChangeLog, ChangeLogDescriptionOfChangeNewInner
 
 logger = logging.getLogger(__name__)
 
@@ -65,11 +65,11 @@ def find_single_change(
         matches = True
 
         if old_value is not None:
-            old_change = ChangeLogDescriptionOfChangeNew(name=field_name, value=old_value)
+            old_change = ChangeLogDescriptionOfChangeNewInner(name=field_name, value=old_value)
             matches = matches and old_change in cl.description_of_change.old
 
         if new_value is not None:
-            new_change = ChangeLogDescriptionOfChangeNew(name=field_name, value=new_value)
+            new_change = ChangeLogDescriptionOfChangeNewInner(name=field_name, value=new_value)
             matches = matches and new_change in cl.description_of_change.new
 
         return matches

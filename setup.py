@@ -14,6 +14,7 @@ REQUIRES = ["urllib3 >= 1.26", "six >= 1.10", "certifi", "python-dateutil",
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
+OPENAPI_GENERATOR_VERSION = "v6.6.0"
 
 def get_version():
     with open(CONFIG_FILENAME, 'r') as f:
@@ -56,12 +57,13 @@ def codegen():
         'docker', 'run', '--rm',
         '-v', f"{pwd}:/pwd",
         '-v', f"{pwd}/out:/out",
-        'openapitools/openapi-generator-cli:v6.6.0', 'generate',
+        f'openapitools/openapi-generator-cli:{OPENAPI_GENERATOR_VERSION}', 'generate',
         '-c', f'/pwd/{CONFIG_FILENAME}',
         '-i', f'/pwd/{SCHEMA_FILENAME}',
         '-g', 'python-nextgen',
         '-o', f'/out/tator-py-{git_rev}',
         '-t', '/pwd/templates',
+        '--additional-properties=library=asyncio',
     ]
     subprocess.run(cmd, check=True)
 
@@ -80,13 +82,12 @@ def codegen():
             if os.path.exists(dst):
                 shutil.rmtree(dst)
             shutil.copytree(src, dst)
-    pwd = os.path.dirname(os.path.abspath(__file__))
 
     # need to delete from within docker
     cmd = [
         'docker', 'run', '--rm',
         '-v', f"{pwd}/out:/out",
-         'openapitools/openapi-generator-cli:v4.3.1',
+         f'openapitools/openapi-generator-cli:{OPENAPI_GENERATOR_VERSION}',
         'rm', '-fr',
         '/out/*'
     ]
