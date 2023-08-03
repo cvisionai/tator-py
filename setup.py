@@ -59,7 +59,7 @@ def codegen():
         'openapitools/openapi-generator-cli:v6.6.0', 'generate',
         '-c', f'/pwd/{CONFIG_FILENAME}',
         '-i', f'/pwd/{SCHEMA_FILENAME}',
-        '-g', 'python',
+        '-g', 'python-nextgen',
         '-o', f'/out/tator-py-{git_rev}',
         '-t', '/pwd/templates',
     ]
