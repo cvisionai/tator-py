@@ -46,7 +46,7 @@ def create_media(host, token, project, media_type, section, name, md5, gid, uid,
     if url:
         spec.update({'url': url})
 
-    return api.create_media_list(project, body=[spec]).id[0] # pylint: disable=E1101
+    return api.create_media_list(project, create_media_list_request=[spec]).id[0] # pylint: disable=E1101
 
 
 if __name__ == '__main__':

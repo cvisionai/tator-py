@@ -42,7 +42,7 @@ def test_state_type_delete(host, token, project, video_type, video):
     num_states = random.randint(20, 100)
     states = [random_state(project, state_type, video_obj, post=True) for _ in range(num_states)]
     state_ids = []
-    for response in tator.util.chunked_create(tator_api.create_state_list, project, body=states):
+    for response in tator.util.chunked_create(tator_api.create_state_list, project, create_state_list_request=states):
         state_ids += response.id
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")

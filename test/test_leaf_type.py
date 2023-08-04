@@ -41,7 +41,7 @@ def test_leaf_type_delete(host, token, project):
 
     # Create root leaf.
     root_spec = random_leaf(project, leaf_type, None, True)
-    response = tator_api.create_leaf_list(project=project, body=root_spec)
+    response = tator_api.create_leaf_list(project=project, create_leaf_list_request=root_spec)
     assert isinstance(response, tator.models.CreateListResponse)
     prev_ids = response.id
 

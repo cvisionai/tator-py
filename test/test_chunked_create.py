@@ -61,7 +61,7 @@ def test_localization_chunked_create(host, token, project, image_type, image_fil
     box_ids = [
         new_id
         for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, body=boxes
+            tator_api.create_localization_list, project, create_localization_list_request=boxes
         )
         for new_id in response.id
     ]
@@ -71,7 +71,7 @@ def test_localization_chunked_create(host, token, project, image_type, image_fil
     box_ids = [
         new_id
         for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, chunk_size=100, body=boxes
+            tator_api.create_localization_list, project, chunk_size=100, create_localization_list_request=boxes
         )
         for new_id in response.id
     ]
@@ -81,7 +81,7 @@ def test_localization_chunked_create(host, token, project, image_type, image_fil
     box_ids = [
         new_id
         for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, chunk_size=1000, body=boxes
+            tator_api.create_localization_list, project, chunk_size=1000, create_localization_list_request=boxes
         )
         for new_id in response.id
     ]
@@ -96,7 +96,7 @@ def helper(api, project, boxes, chunk_size=None):
         kwargs["chunk_size"] = chunk_size
     box_ids = []
     for response in tator.util.chunked_create(
-        api.create_localization_list, project, body=boxes, **kwargs
+        api.create_localization_list, project, create_localization_list_request=boxes, **kwargs
     ):
         box_ids += response.id
         print(f"Created {len(response.id)} boxes")

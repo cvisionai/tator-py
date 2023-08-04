@@ -153,7 +153,7 @@ def test_import_multiple_images(host, token, project, image_type):
     ]
 
     start = datetime.now()
-    response = tator_api.create_media_list(project, body=media_specs)
+    response = tator_api.create_media_list(project, create_media_list_request=media_specs)
     created_ids = response.id
     duration = (datetime.now() - start).total_seconds()
     assert duration < 5

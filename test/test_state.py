@@ -142,7 +142,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
         for _ in range(num_states)
     ]
     state_ids = []
-    for response in tator.util.chunked_create(tator_api.create_state_list, project, body=states):
+    for response in tator.util.chunked_create(tator_api.create_state_list, project, create_state_list_request=states):
         state_ids += response.id
     assert len(state_ids) == len(states)
     print(f"Created {len(state_ids)} states!")
@@ -162,7 +162,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
 
     # Test single create.
     state = random_state(project, state_type, video_obj, post=True)
-    response = tator_api.create_state_list(project, body=state)
+    response = tator_api.create_state_list(project, create_state_list_request=state)
     assert isinstance(response, tator.models.CreateListResponse)
     print(response.message)
     state_id = response.id[0]

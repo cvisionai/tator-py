@@ -130,7 +130,9 @@ def clone_state_list(src_api, query_params, dest_project, version_mapping, media
     created_ids = []
     total_states = len(spec)
     for idx in range(0, total_states, 500):
-        response = dest_api.create_state_list(dest_project, body=spec[idx:idx+500])
+        response = dest_api.create_state_list(
+            dest_project, create_state_list_request=spec[idx:idx+500]
+        )
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(states[idx:idx+500], response.id)}
         yield (len(created_ids), total_states, response, id_map)

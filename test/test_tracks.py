@@ -66,7 +66,7 @@ def test_append(host, token, project, video_type, video, track_type, box_type):
     ]
     box_ids = []
     for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, body=boxes
+            tator_api.create_localization_list, project, create_localization_list_request=boxes
     ):
         box_ids += response.id
     assert len(box_ids) == len(boxes)

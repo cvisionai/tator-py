@@ -89,5 +89,5 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         spec['email_spec'] = email_spec
         response = api.transcode(project_id, transcode_spec=spec)
     else:
-        response = api.create_media_list(project_id, body=[spec])
+        response = api.create_media_list(project_id, create_media_list_request=[spec])
     yield (100, response)

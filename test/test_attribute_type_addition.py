@@ -180,7 +180,7 @@ def test_box_type_attribute_addition_es(
     box_ids = [
         box_id
         for response in tator.util.chunked_create(
-            tator_api.create_localization_list, project, body=boxes
+            tator_api.create_localization_list, project, create_localization_list_request=boxes
         )
         for box_id in response.id
     ]

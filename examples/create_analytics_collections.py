@@ -158,7 +158,9 @@ def main(
 
     # Finally create the states
     for idx in range(0, len(new_state_specs), 500):
-        response = tator_api.create_state_list(project=project, body=new_state_specs[idx:idx+500])
+        response = tator_api.create_state_list(
+            project=project, create_state_list_request=new_state_specs[idx:idx+500]
+        )
         created_media_ids += response.id
 
     media_id_map = {}
@@ -192,7 +194,7 @@ def main(
 
         for idx in range(0, len(new_loc_specs), 500):
             response = tator_api.create_localization_list(
-                project=project, body=new_loc_specs[idx:idx+500]
+                project=project, create_localization_list_request=new_loc_specs[idx:idx+500]
             )
             localization_ids += response.id
 
@@ -207,7 +209,9 @@ def main(
 
     # Finally create the states
     for idx in range(0, len(new_state_specs), 500):
-        response = tator_api.create_state_list(project=project, body=new_state_specs[idx:idx+500])
+        response = tator_api.create_state_list(
+            project=project, create_state_list_request=new_state_specs[idx:idx+500]
+        )
 
     logger.info(f"{len(new_state_specs)} localization-associated {media_state_type.name} states created")
 

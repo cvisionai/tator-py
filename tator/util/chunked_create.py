@@ -16,7 +16,9 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
         created_ids = [
             new_id
             for response in tator.util.chunked_create(
-                api.create_localization_list, chunk_size=100, body=my_long_list
+                api.create_localization_list,
+                chunk_size=100,
+                create_localization_list_request=my_long_list,
             )
             for new_id in response.id
         ]

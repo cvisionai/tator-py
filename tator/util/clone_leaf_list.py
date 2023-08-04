@@ -96,7 +96,9 @@ def clone_leaf_list(src_api, query_params, dest_project, parent_mapping,
     created_ids = []
     total_leafs = len(spec)
     for idx in range(0, total_leafs, 500):
-        response = dest_api.create_leaf_list(dest_project, body=spec[idx:idx+500])
+        response = dest_api.create_leaf_list(
+            dest_project, create_leaf_list_request=spec[idx:idx+500]
+        )
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(leafs[idx:idx+500], response.id)}
         yield (len(created_ids), total_leafs, response, id_map)

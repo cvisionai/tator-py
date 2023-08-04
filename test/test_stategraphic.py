@@ -31,7 +31,7 @@ def test_stategraphic(host, token, project, video, box_type, track_type):
     # Make track.
     response = tator_api.create_state_list(
         project,
-        body={
+        create_state_list_request={
             'project': project,
             'type': track_type,
             'media_ids': [video],

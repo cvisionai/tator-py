@@ -46,7 +46,7 @@ def test_state_graphic(host, token, project, video, box_type, track_type):
         'localization_ids': localization_ids,
         'media_ids': [video],
     }
-    tracks = api.create_state_list(project, body=track_spec)
+    tracks = api.create_state_list(project, create_state_list_request=track_spec)
     image = api.get_state_graphic(tracks.id[0])
     images = tator.util.full_state_graphic(api, tracks.id[0])
     api.delete_state_list(project, media_id=[video])

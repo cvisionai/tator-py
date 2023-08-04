@@ -21,7 +21,7 @@ def _create_children(api, tree, project, type_id, parent):
                   'type': type_id,
                   'name': child['name'],
                   'parent': parent} for child in children]
-        response = api.create_leaf_list(project, body=specs)
+        response = api.create_leaf_list(project, create_leaf_list_request=specs)
         for child_id, child in zip(response.id, children):
             _create_children(api, child, project, type_id, child_id)
 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         'type': leaf_type.id,
         'name': tree['name'],
     }
-    response = tator_api.create_leaf_list(project=project, body=root_spec)
+    response = tator_api.create_leaf_list(project=project, create_leaf_list_request=root_spec)
 
     # Create children recursively.
     _create_children(tator_api, tree, project, leaf_type.id, response.id[0])

@@ -141,7 +141,9 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
     total_localizations = len(locs)
     parent_mapping = {}
     for idx in range(0, len(parent_locs), 500):
-        response = dest_api.create_localization_list(dest_project, body=parent_spec[idx:idx+500])
+        response = dest_api.create_localization_list(
+            dest_project, create_localization_list_request=parent_spec[idx:idx+500]
+        )
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(parent_locs[idx:idx+500], response.id)}
         parent_mapping = {**parent_mapping, **id_map}
@@ -154,7 +156,9 @@ def clone_localization_list(src_api, query_params, dest_project, version_mapping
 
     # Create the localizations.
     for idx in range(0, len(child_locs), 500):
-        response = dest_api.create_localization_list(dest_project, body=child_spec[idx:idx+500])
+        response = dest_api.create_localization_list(
+            dest_project, create_localization_list_request=child_spec[idx:idx+500]
+        )
         created_ids += response.id
         id_map = {src.id: dest_id for src, dest_id in zip(locs[idx:idx+500], response.id)}
         yield (len(created_ids), total_localizations, response, id_map)

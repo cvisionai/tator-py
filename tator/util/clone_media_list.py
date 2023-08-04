@@ -186,7 +186,9 @@ def clone_media_list(src_api, query_params, dest_project, media_mapping={}, dest
                 media_spec['uid'] = media.uid
 
             # Create the media object.
-            response = dest_api.create_media_list(dest_project, body=[media_spec])
+            response = dest_api.create_media_list(
+                dest_project, create_media_list_request=[media_spec]
+            )
             id_map = {media.id: response.id[0]}
 
             # Transfer videos.

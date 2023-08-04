@@ -44,7 +44,7 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
 
 
     # Create the media.
-    response = tator_api.create_media_list(project=project, body=media_spec)
+    response = tator_api.create_media_list(project=project, create_media_list_request=media_spec)
     print(f"Transcoding video with existing media ID {response.id[0]}...")
     for progress, response in tator.util.upload_media(tator_api, video_type, video_file,
                                                       media_id=response.id[0]):
@@ -92,7 +92,9 @@ def test_transcode_cancel(host, token, project, video_type, video_file):
         if idx > 2:
             # On last two transcodes, change the group ID
             media_spec['gid'] = other_gid
-        response = tator_api.create_media_list(project=project, body=[media_spec])
+        response = tator_api.create_media_list(
+            project=project, create_media_list_request=[media_spec]
+        )
         media_ids.append(response.id[0])
         print(f"Transcoding video with existing media ID {response.id[0]}...")
         for progress, response in tator.util.upload_media(tator_api, video_type, video_file,

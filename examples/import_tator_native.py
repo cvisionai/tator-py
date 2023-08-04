@@ -85,7 +85,7 @@ def _import_data(api, project, media, loc_types, state_types, attribute_mapping,
                          for det in detections]
     localization_ids = []
     for response in tator.util.chunked_create(
-        api.create_localization_list, project, body=localization_spec
+        api.create_localization_list, project, create_localization_list_request=localization_spec
     ):
         localization_ids += response.id
         logger.info(f"Imported {len(localization_ids)} of {len(localization_spec)} localizations...")
@@ -96,7 +96,9 @@ def _import_data(api, project, media, loc_types, state_types, attribute_mapping,
     track_spec = [_convert_track(state, state_types, media, attribute_mapping, localizations)
                   for state in tracks]
     track_ids = []
-    for response in tator.util.chunked_create(api.create_state_list, project, body=track_spec):
+    for response in tator.util.chunked_create(
+            api.create_state_list, project, create_state_list_request=track_spec
+    ):
         track_ids += response.id
         logger.info(f"Imported {len(track_ids)} of {len(track_spec)} tracks...")
     state_ids = []
