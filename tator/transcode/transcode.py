@@ -6,7 +6,6 @@ import subprocess
 import json
 import os
 import sys
-from urllib.parse import urlparse
 import psutil
 import time
 
@@ -49,7 +48,7 @@ def _launch_and_monitor_resources(cmd, interval=5):
             pass # we don't care
         logger.info(f"RESOURCE_INFO = {json.dumps(_get_resource_usage())}")
     if proc.returncode != 0:
-        raise("Transcode process failed")
+        raise RuntimeError("Transcode process failed")
     end = time.time()
     logger.info(f"cmd={cmd}")
     logger.info(f"time={end-start}")
@@ -176,7 +175,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
-    input_pixel_format=video_info['streams'][0]['pix_fmt']
     tags=video_info['streams'][0].get('tags')
     rotation = 0
     if tags is not None:
@@ -436,7 +434,6 @@ def get_length_info(stream):
     fps_fractional = stream["avg_frame_rate"].split("/")
     fps = float(fps_fractional[0]) / float(fps_fractional[1])
 
-    start_time = float(stream["start_time"])
     if 'duration' in stream:
         seconds = float(stream["duration"])
     elif 'tags' in stream and 'DURATION' in stream['tags']:
