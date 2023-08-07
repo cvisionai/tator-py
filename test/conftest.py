@@ -371,7 +371,7 @@ def count_video(request, project, video_type):
         api = tator.get_api(host, token)
         attributes = {"test_string": str(uuid1())}
         fps,length = get_length_of_file(video_path)
-        spec = {
+        spec ={
             'type': video_type,
             'section': "Test",
             'name': "count.mp4",
@@ -379,11 +379,11 @@ def count_video(request, project, video_type):
             'gid': str(uuid.uuid1()),
             'uid': str(uuid.uuid1()),
             'fps': fps,
-            'num_frames': length,
+            'num_frames': length
         }
 
         # Make media element to get ID
-        response = api.create_media_list(project, body=[spec])
+        response = api.create_media(project, media_spec=spec)
 
         media_id = response.id[0]
         
