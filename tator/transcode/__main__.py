@@ -148,12 +148,19 @@ def transcode_single(path, args, gid):
                 os.remove(path)
 
     # Send an email.
-    if args.email_spec:
-        api = get_api(args.host, args.token)
-        if isinstance(args.email_spec, str):
+    if isinstance(args.email_spec, str):
+        try:
             email_spec = json.loads(args.email_spec)
-        else:
-            email_spec = args.email_spec
+        except json.JSONDecodeError:
+            logger.warning(
+                "Could not decode email_spec string '%s'", args.email_spec, exc_info=True
+            )
+            email_spec = None
+    else:
+        email_spec = args.email_spec
+
+    if email_spec:
+        api = get_api(args.host, args.token)
         response = api.send_email(args.project, email_spec=email_spec)
         logger.info(response.message)
 
