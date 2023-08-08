@@ -24,18 +24,20 @@ from tator.transcode.transcode import make_video_definition
 from tator.transcode.transcode import convert_streaming
 from tator.transcode.transcode import default_archival_upload
 
-from tator.openapi.tator_openapi.models import CreateResponse
+from tator.openapi.tator_openapi.models import CreateListResponse
 
 
 
-def import_media(api,
-                 project,
-                 media_type_id,
-                 path,
-                 fname,
-                 section,
-                 upload_gid,
-                 work_dir):
+def import_media(
+    api,
+    project,
+    media_type_id,
+    path,
+    fname,
+    section,
+    upload_gid,
+    work_dir,
+):
 
     md5sum = tator.util.md5sum(path)
     media_spec = [
@@ -49,7 +51,7 @@ def import_media(api,
         },
     ]
     response = api.create_media_list(project, media_spec)
-    assert isinstance(response, CreateResponse)
+    assert isinstance(response, CreateListResponse)
     media_id = response.id[0]
 
     # Peel apart api to get host/token combo (TODO: not great)
@@ -67,20 +69,18 @@ def import_media(api,
             video_width = video_definition["resolution"][1]
 
             # Now transcode to streaming at a fixed resolution
-            convert_streaming(host,
-                              token,
-                              media_id,
-                              path,
-                              td,
-                              video_width,
-                              video_height,
-                              [f"{video_height}:23:h264"])
+            convert_streaming(
+                host,
+                token,
+                media_id,
+                path,
+                td,
+                video_width,
+                video_height,
+                [f"{video_height}:23:h264"],
+            )
 
-            default_archival_upload(api,
-                                    host,
-                                    media_id,
-                                    path,
-                                    True)
+            default_archival_upload(api, host, media_id, path, True, os.stat(path).st_size)
         except Exception as e:
             print(f"Error {e}")
             api.delete_media(media_id)

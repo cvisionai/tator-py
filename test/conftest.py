@@ -385,11 +385,11 @@ def count_video(request, project, video_type):
         # Make media element to get ID
         response = api.create_media(project, media_spec=spec)
 
-        media_id = response.id[0]
+        media_id = response.id
         
         upload_media_file(api, project, media_id, video_path, segment_path)
         
-        # If all is kosher return the video_id
+        # Return the video_id
         yield media_id
 
 ## This is an empty video to make tests run faster
