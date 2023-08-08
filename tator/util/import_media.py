@@ -43,21 +43,9 @@ def _hosted_md5(url):
                 raise RuntimeError(f"Reached maximum retries on media download!")
     return md5
 
-def import_media(
-    api,
-    type_id,
-    url,
-    md5=None,
-    section=None,
-    fname=None,
-    upload_gid=None,
-    upload_uid=None,
-    chunk_size=2*1024*1024,
-    attributes=None,
-    media_id=None,
-    size=None,
-    _request_timeout=10,
-):
+def import_media(api, type_id, url, md5=None, section=None, fname=None,
+                 upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
+                 attributes=None, media_id=None, size=None, _request_timeout=10):
     """ Imports a hosted media file.
 
     Example:
@@ -76,7 +64,7 @@ def import_media(
     :param fname: [Optional] Filename to use for upload.
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
-    :param chunk_size: [DEPRECATED] Unused; the chunk size in bytes. Default is 2MB.
+    :param chunk_size: [Optional] Chunk size in bytes. Default is 2MB.
     :param attributes: [Optional] Attributes to apply to media object.
     :param media_id: [Optional] Unique ID of existing media object.
     :param size: [Optional] Size of the file in bytes. Required if the

@@ -1,6 +1,5 @@
 import os
 from ..openapi import tator_openapi
-from ..openapi.tator_openapi.models import CreateResponse
 
 
 def get_api(host='https://cloud.tator.io', token=os.getenv('TATOR_TOKEN')):
@@ -19,16 +18,7 @@ def get_api(host='https://cloud.tator.io', token=os.getenv('TATOR_TOKEN')):
     api = tator_openapi.TatorApi(tator_openapi.ApiClient(config))
 
     def legacy_create_media(project, media_spec, **kwargs):
-        """
-        Provides a matching legacy interface to the create media endpoint that returns a
-        :class:`tator.openapi.tator_openapi.models.CreateResponse` object instead of
-        :class:`tator.openapi.tator_openapi.models.CreateListResponse`
-        """
-
-        response = api.create_media_list(project, [media_spec], **kwargs)
-        return CreateResponse(
-            id=response.id[0], message=response.message, object=response.object[0]
-        )
+        return api.create_media_list(project, [media_spec], **kwargs)
 
     api.create_media = legacy_create_media
     return api
