@@ -581,7 +581,7 @@ def test_change_log_util(host, token, project, video_type):
 
 
     # Create the media.
-    media_id = tator_api.create_media_list(project=project, body=media_spec).id[0]
+    media_id = tator_api.create_media_list(project=project, body=media_spec).id
 
     # Look for change that shouldn't be there
     found_change = tator.util.find_single_change(
