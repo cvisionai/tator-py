@@ -45,7 +45,7 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
 
     # Create the media.
     response = tator_api.create_media_list(project=project, body=media_spec)
-    print(f"Transcoding video with existing media ID {response.id[0]}...")
+    print(f"Transcoding video with existing media ID {response.id}...")
     for progress, response in tator.util.upload_media(
             tator_api, video_type, video_file, media_id=response.id
     ):

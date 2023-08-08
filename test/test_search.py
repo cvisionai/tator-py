@@ -55,7 +55,7 @@ def random_media(api, project, paths, image_type):
         api, image_type, path, attributes=attributes, section=section
     ):
         pass
-    return response.id[0], attributes, section
+    return response.id, attributes, section
 
 def random_search(sections=None):
     """ Runs a random query and compares results with ES enabled and disabled.
