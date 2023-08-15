@@ -1,3 +1,54 @@
+[tool.poetry]
+name = "tator"
+version = "DEVELOPMENT_VERSION"
+description = "Python client for Tator."
+authors = ["CVision AI, Inc. <info@cvisionai.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/cvisionai/tator-py"
+repository = "https://github.com/cvisionai/tator-py"
+documentation = "https://www.tator.io/docs/references/tator-py"
+keywords = ["OpenAPI", "OpenAPI-Generator", "Tator"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+]
+packages = [
+    { include = "tator" },
+    { include = "tator/extractor" },
+    { include = "tator/transcode" },
+    { include = "tator/util" },
+    { include = "tator/openapi" },
+    { include = "tator/openapi/tator_openapi" },
+    { include = "tator/openapi/tator_openapi/api" },
+    { include = "tator/openapi/tator_openapi/models" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+certifi = "^2023.7.22"
+python-dateutil = "^2.8.2"
+requests = "^2.31.0"
+pillow = "^10.0.0"
+progressbar2 = "^4.2.0"
+psutil = "^5.9.5"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+ipython = "^8.13.2"
+pylint = "^2.17.4"
+pyyaml = "^6.0.1"
+setuptools = "^68.1.0"
+toml = "^0.10.2"
+
+
+[tool.poetry.group.extractor.dependencies]
+opencv-python = "^4.8.0.76"
+numpy = "^1.25.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 100
 include = '\.pyi?$'

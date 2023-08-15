@@ -11,6 +11,7 @@ tator.egg-info/
 *~
 *#
 out/
+config.json
 
 # Dev files
 tags
