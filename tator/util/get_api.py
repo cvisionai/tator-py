@@ -33,7 +33,7 @@ def get_api(host='https://cloud.tator.io', token=os.getenv('TATOR_TOKEN')):
 
     api.create_media_list = create_media_list_wrapper
     def legacy_create_media(project, media_spec, **kwargs):
-        return api.create_media_list(project, [media_spec], **kwargs)
+        return api.create_media_list(project, media_spec, **kwargs)
 
     api.create_media = legacy_create_media
     return api
