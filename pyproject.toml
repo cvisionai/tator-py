@@ -39,6 +39,8 @@ pylint = "^2.17.4"
 pyyaml = "^6.0.1"
 setuptools = "^68.1.0"
 toml = "^0.10.2"
+pytest = "^7.4.0"
+pytesseract = "^0.3.10"
 
 
 [tool.poetry.group.extractor.dependencies]
