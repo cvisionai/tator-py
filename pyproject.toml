@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tator"
-version = "DEVELOPMENT_VERSION"
+version = "248.434.5508"
 description = "Python client for Tator."
 authors = ["CVision AI, Inc. <info@cvisionai.com>"]
 license = "MIT"
