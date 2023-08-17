@@ -137,7 +137,6 @@ def make_multi_stream(api, type_id, layout, name, media_ids, section,
                 'section': section_obj.name,
                 'type': type_id}
         resp = api.create_media_list(project, [media_spec])
-        print(f"Created {resp.id[0]}")
         
         for progress, thumbnail_info in _upload_file(api, project, thumb_path,
                                                         media_id=resp.id[0], filename='tiled_thumb.jpg'):
