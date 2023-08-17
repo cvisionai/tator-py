@@ -127,7 +127,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                         })
                         if not isinstance(response, tator.models.MessageResponse):
                             raise RuntimeError(f"Upload completion failed!")
-                        print(response.message)
+                        logger.info(response.message)
                         completed=True
                     except Exception as e:
                         logger.warning(e)
