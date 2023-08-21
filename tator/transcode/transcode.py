@@ -75,8 +75,8 @@ def find_best_encoder(codec):
             encoder_lookup["h264"] = "h264_vaapi"
         if output.find("av1_qsv") >= 0:
             encoder_lookup["av1"] = "av1_vaapi"
-        print(f"encoder_lookup = {encoder_lookup}")
-    return encoder_lookup.get(codec,codec)
+        logger.info("encoder_lookup = %s", encoder_lookup)
+    return encoder_lookup.get(codec, codec)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
@@ -141,7 +141,7 @@ def make_video_definition(path, size=None):
     return video_def
 
 def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs):
-    print(f"Transcoding {path} to {outpath}...")
+    logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
 
@@ -195,13 +195,11 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     ]
 
     vaapi_present = [c for c in codecs if find_best_encoder(c).find('vaapi') >= 0]
-    print(codecs)
-    print(vaapi_present)
     if vaapi_present:
         cmd.extend(['-init_hw_device', 'vaapi=hw',
                     '-filter_hw_device', 'hw'])
 
-    print(f"Transcoding to {resolutions}")
+    logger.info("Transcoding to %s", resolutions)
     for ridx, resolution in enumerate(resolutions):
         per_res = ["-an",
             "-metadata:s", "handler_name=tator",

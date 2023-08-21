@@ -2,7 +2,6 @@
 
 import subprocess
 import json
-import argparse
 import logging
 import os
 
@@ -88,7 +87,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
             if stream["tags"]["rotate"] == "90":
                 height = int(stream["width"])
                 width = int(stream["height"])
-    print(f"Height of video is : {height}")
+    logger.info(f"Height of video is : {height}")
 
     # Generate output path
     base, ext = os.path.splitext(path)
@@ -157,16 +156,16 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     except Exception as e:
         # Likely an old version of the server
         # TODO: Remove me someday
-        print(e)
-        print("Defaulting to STREAMING_RESOLUTIONS")
-    print(f"Selected Resolutions {available_resolutions}")
+        logger.info(e)
+        logger.info("Defaulting to STREAMING_RESOLUTIONS")
+    logger.info(f"Selected Resolutions {available_resolutions}")
 
     # Returns `True` if the resolution is smaller than the source video and it does not exist
     # already in the media object
     def _is_resolution_needed(resolution):
         if resolution > height:
             return False
-        if (resolution, codec_map[resolution]) in existing_streaming_resolutions:
+        if (resolution, find_best_encoder(codec_map[resolution])) in existing_streaming_resolutions:
             return False
         return True
 
