@@ -10,6 +10,7 @@ import json
 
 from progressbar import progressbar
 import requests
+from tator.openapi.tator_openapi.models import MessageResponse
 
 from ..util import md5sum
 from ..util.get_api import get_api
@@ -23,6 +24,7 @@ from .delete_media import delete_media
 from .make_thumbnails import make_thumbnails
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
@@ -137,11 +139,11 @@ def transcode_single(path, args, gid):
                 del workload['raw_height']
                 convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                               outpath=paths['transcoded'])
-    except:
-        logging.exception('')
+    except Exception as exc:
+        logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:
             delete_media(args.host, args.token, media_id)
-        raise RuntimeError(f"Transcode of file {path} failed!")
+        raise RuntimeError(f"Transcode of file {path} failed!") from exc
 
     # Clean up after the transcode is finished (if enabled).
     if args.cleanup:
@@ -167,7 +169,8 @@ def transcode_single(path, args, gid):
     if email_spec:
         api = get_api(args.host, args.token)
         response = api.send_email(args.project, email_spec=email_spec)
-        logger.info(response.message)
+        if isinstance(response, MessageResponse):
+            logger.info(response.message)
 
 def transcode_main(args):
     if args.gid is None:

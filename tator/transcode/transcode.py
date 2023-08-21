@@ -16,6 +16,7 @@ from ..openapi.tator_openapi.models import MessageResponse
 from .make_fragment_info import make_fragment_info
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # If HW is available, use this as lookup swap
 encoder_lookup=None
