@@ -1,5 +1,4 @@
 import datetime
-import io
 import os
 import shutil
 import time
@@ -16,9 +15,33 @@ from tator.util._upload_file import _upload_file
 from tator.transcode.transcode import make_video_definition, get_length_of_file
 from tator.util.md5sum import md5sum
 
+
+def validate_string_argument(arg: str) -> str:
+    """Validates string arguments that should not be empty"""
+    if arg:
+        return arg
+    raise RuntimeError(f"Expected a non-empty string, received {arg=}")
+
+
 def pytest_addoption(parser):
-    parser.addoption('--host', help='Tator host', default='https://adamant.duckdns.org')
-    parser.addoption('--token', help='API token', default='')
+    parser.addoption(
+        "--host",
+        type=validate_string_argument,
+        default=os.getenv("TATOR_HOST", "https://adamant.duckdns.org"),
+        help=(
+            "The Tator host to connect to; if no host is provided on the command line, this will "
+            "fall back to the environment variable `TATOR_HOST`."
+        ),
+    )
+    parser.addoption(
+        "--token",
+        type=validate_string_argument,
+        default=os.getenv("TATOR_TOKEN", ""),
+        help=(
+            "The authentication token to use; if no token is provided on the command line, this "
+            "will fall back to the environment variable `TATOR_TOKEN`."
+        ),
+    )
     parser.addoption('--bucket', help='Optional path to yaml file containing bucket spec. If '
                                       'given, the project will use this bucket.')
     parser.addoption('--keep', help='Do not delete project when done', action='store_true')

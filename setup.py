@@ -2,15 +2,22 @@ import os
 import subprocess
 import shutil
 
-from distutils.cmd import Command
-from setuptools import setup, find_packages  # noqa: H301
-from setuptools.command.dist_info import dist_info
+from setuptools import setup, find_packages
 import requests
 import yaml
 import json
 
-REQUIRES = ["urllib3 >= 1.26", "six >= 1.10", "certifi", "python-dateutil",
-            "requests >= 2.25", "pyyaml", "progressbar2", "pillow", "psutil"]
+REQUIRES = [
+    "certifi >= 14.05.14",
+    "Pillow >= 8.1.0",
+    "progressbar2 >= 3.51.4",
+    "psutil >= 5.9.5",
+    "python-dateutil >= 2.5.3",
+    "pyyaml >= 5.3.1",
+    "requests >= 2.25",
+    "six >= 1.10",
+    "urllib3 >= 1.26",
+]
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
