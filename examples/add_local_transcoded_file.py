@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--media-id", type=int, required=True, help="Destination media ID to place media file in.")
     parser.add_argument("--transcoded-file", type=str, required=True, help="Locally transcoded file")
     parser.add_argument("--description", type=str, help="Description of transcode", default="Locally transcoded file")
-    parser.add_argument("--resolution", type=int, required="Resolution to add as")
+    parser.add_argument("--resolution", type=int, required=True, description="Resolution to add as")
     args = parser.parse_args()
     return args
 
