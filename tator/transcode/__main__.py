@@ -6,10 +6,10 @@ import shutil
 import sys
 from uuid import uuid1
 import logging
-import subprocess
 import json
 
 from progressbar import progressbar
+import requests
 
 from ..util import md5sum
 from ..util.get_api import get_api
@@ -71,7 +71,11 @@ def transcode_single(path, args, gid):
     # If a URL is given and path doesn't exist, download the file to path.
     if args.url:
         path = os.path.join(args.work_dir, args.name)
-        subprocess.run(['wget', args.url, '-qO', path], check=True)
+        response = requests.get(args.url)
+        response.raise_for_status()
+        with open(path, "w") as fp:
+            for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
+                fp.write(chunk)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
@@ -171,7 +175,7 @@ def transcode_main(args):
         gid = args.gid
     if args.path and os.path.isdir(args.path):
         file_list = []
-        for root, dirs, files in os.walk(args.path):
+        for root, _, files in os.walk(args.path):
             for fname in files:
                 if fname.endswith(args.extension):
                     path = os.path.join(root, fname)
