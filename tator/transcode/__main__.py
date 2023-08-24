@@ -71,11 +71,12 @@ def transcode_single(path, args, gid):
     # If a URL is given and path doesn't exist, download the file to path.
     if args.url:
         path = os.path.join(args.work_dir, args.name)
-        response = requests.get(args.url)
+        response = requests.get(args.url, stream=True)
         response.raise_for_status()
         with open(path, "w") as fp:
             for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
-                fp.write(chunk)
+                if chunk:
+                    fp.write(chunk)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
