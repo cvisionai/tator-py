@@ -73,7 +73,7 @@ def transcode_single(path, args, gid):
         path = os.path.join(args.work_dir, args.name)
         response = requests.get(args.url, stream=True)
         response.raise_for_status()
-        with open(path, "w") as fp:
+        with open(path, "wb") as fp:
             for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
                 if chunk:
                     fp.write(chunk)
