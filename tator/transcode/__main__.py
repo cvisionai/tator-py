@@ -71,7 +71,7 @@ def transcode_single(path, args, gid):
     # If a URL is given and path doesn't exist, download the file to path.
     if args.url:
         path = os.path.join(args.work_dir, args.name)
-        subprocess.run(['wget', args.url, '-O', path], check=True)
+        subprocess.run(['wget', args.url, '-qO', path], check=True)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
