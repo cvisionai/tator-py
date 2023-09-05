@@ -118,6 +118,7 @@ setup(
     keywords=["OpenAPI", "OpenAPI-Generator", "Tator"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
+    package_data={"tator": ["tator/util/tator-symbol.png", "tator/util/tator-symbol.gif"]},
     include_package_data=True,
     long_description="""\
     Python client for Tator.
