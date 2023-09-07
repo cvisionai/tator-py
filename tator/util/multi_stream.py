@@ -23,20 +23,20 @@ PLACEHOLDER_THUMB_GIF_PATH = os.path.join(
 
 def _crop_and_resize(image):
     # Determine largest square crop
-    width, height = image.size
-    if width > height:
-        left = (width - height) / 2
-        right = width - left
-        top = 0
-        bottom = height
-    else:
-        top = (height - width) / 2
-        bottom = height - top
-        left = 0
-        right = width
+    # width, height = image.size
+    # if width > height:
+    #     left = (width - height) / 2
+    #     right = width - left
+    #     top = 0
+    #     bottom = height
+    # else:
+    #     top = (height - width) / 2
+    #     bottom = height - top
+    #     left = 0
+    #     right = width
 
     # Crop and resize the image
-    image = image.crop((left, top, right, bottom))
+    # image = image.crop((left, top, right, bottom))
     image = image.resize((GIF_SZ, GIF_SZ), Image.LANCZOS)
 
     return image
