@@ -1,10 +1,9 @@
-from math import inf
 import os
 import tempfile
 import logging
 from uuid import uuid1
 
-from PIL import Image
+from PIL import Image, ImageSequence
 
 from ._upload_file import _upload_file
 from ._download_file import _download_file
@@ -13,72 +12,48 @@ from ..openapi.tator_openapi.models import MessageResponse
 logger = logging.getLogger(__name__)
 GIF_SZ = 256
 
-PLACEHOLDER_THUMB_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "tator-symbol.png"
-)
-PLACEHOLDER_THUMB_GIF_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "tator-symbol.gif"
-)
-
-
-def _crop_and_resize(image):
-    # Determine largest square crop
-    # width, height = image.size
-    # if width > height:
-    #     left = (width - height) / 2
-    #     right = width - left
-    #     top = 0
-    #     bottom = height
-    # else:
-    #     top = (height - width) / 2
-    #     bottom = height - top
-    #     left = 0
-    #     right = width
-
-    # Crop and resize the image
-    # image = image.crop((left, top, right, bottom))
-    image = image.resize((GIF_SZ, GIF_SZ), Image.LANCZOS)
-
-    return image
+PLACEHOLDER_DIR = os.path.dirname(os.path.abspath(__file__))
+PLACEHOLDER_THUMB_PATH = os.path.join(PLACEHOLDER_DIR, "tator-symbol.png")
+PLACEHOLDER_THUMB_GIF_PATH = os.path.join(PLACEHOLDER_DIR, "tator-symbol.gif")
 
 
 def _merge_gifs(layout, gif_list, output_filename) -> bool:
     # Calculate the dimensions of the merged GIF
-    merged_height = 256 * layout[0]
-    merged_width = 256 * layout[1]
-
-    # Create a new image for the merged GIF
-    merged = Image.new("RGB", (merged_width, merged_height))
-
-    # Resize and paste the GIFs into the merged image
-    duration = inf  # in milliseconds
-    for i, gif_path in enumerate(gif_list):
-        gif = Image.open(gif_path)
-        duration = min(duration, gif.info.get("duration", duration))
-
-        # Crop and resize to 256x256 while maintaining aspect ratio
-        gif = _crop_and_resize(gif)
-
-        x = (i % layout[0]) * 256
-        y = (i // layout[0]) * 256
-        merged.paste(gif, (x, y))
-
-    if duration == inf:
-        return False
-
-    # Save the merged GIF
+    gifs = []
     try:
-        merged.save(
-            output_filename,
-            save_all=True,
-            append_images=gif_list,
-            duration=duration,
-        )
-    except Exception:
-        logger.warning(
-            "Could not save merged gif '%s', using placeholder", output_filename, exc_info=True
-        )
-        return False
+        # Open all
+        frame_iters = []
+        for gif_path in gif_list:
+            gifs.append(Image.open(gif_path))
+            frame_iters.append(ImageSequence.Iterator(gifs[-1]))
+
+        merged_frames = []
+        rows, columns = layout
+        merged_height = 256 * rows
+        merged_width = 256 * columns
+        for single_frames in zip(*frame_iters):
+            merged_frames.append(Image.new("RGB", (merged_width, merged_height)))
+            for idx, single_frame in enumerate(single_frames):
+                y_offset = GIF_SZ * (idx // rows)
+                x_offset = 2 * GIF_SZ * (idx % rows)
+                merged_frames[-1].paste(
+                    single_frame.resize((2 * GIF_SZ, GIF_SZ), Image.LANCZOS), (x_offset, y_offset)
+                )
+        # Save the merged GIF
+        try:
+            merged_frames[0].save(
+                output_filename,
+                save_all=True,
+                append_images=merged_frames[1:],
+            )
+        except Exception:
+            logger.warning(
+                "Could not save merged gif '%s', using placeholder", output_filename, exc_info=True
+            )
+            return False
+    finally:
+        for gif in gifs:
+            gif.close()
     return True
 
 
@@ -87,14 +62,22 @@ def make_multi_stream(
 ):
     """Creates a multiview from the given arguments
 
-    :param api: :class:`tator.TatorApi` object.
+    :param api: The Tator client
+    :type api: tator.openapi.TatorApi
     :param type_id: Unique integer identifying a multi-stream media type.
+    :type type_id: int
     :param layout: 2 element list of integers defining layout as [rows, cols].
+    :type layout: List[int]
     :param name: Name of the file to use
+    :type name: str
     :param media_ids: List of media_ids to multi-stream
-    :param section: Section name. If this section does not exist it will be created.
-    :param quality: [Optional] Media section to upload to.
+    :type media_ids: List[int]
+    :param section: Section name; if it does not exist, it will be created.
+    :type section: str
+    :param quality: [Optional] The desired resolution to pull from the single media
+    :type quality: List[int]
     :param frame_offset: [Optional] Frame offsets to apply to each stream.
+    :type frame_offset: List[int]
     :returns: Response from media object creation.
     """
     tiled_thumb_filename = "tiled_thumb.jpg"
@@ -133,7 +116,7 @@ def make_multi_stream(
 
     attributes = {}
     if section:
-        attributes.update({"tator_user_sections": section_obj.tator_user_sections})
+        attributes["tator_user_sections"] = section_obj.tator_user_sections
 
     # Download the thumbnails into a temporary directory
     with tempfile.TemporaryDirectory() as d:
@@ -204,36 +187,35 @@ def make_multi_stream(
         thumb_gif_image = Image.open(thumb_gif_path)
 
         # Create image definitions for thumbnails.
-        thumb_def = {
-            "path": thumbnail_info.key,
-            "size": os.stat(thumb_path).st_size,
-            "resolution": [thumb_image.height, thumb_image.width],
-            "mime": f"image/{thumb_image.format.lower()}",
-        }
-        thumb_gif_def = {
-            "path": thumbnail_gif_info.key,
-            "size": os.stat(thumb_gif_path).st_size,
-            "resolution": [thumb_gif_image.height, thumb_gif_image.width],
-            "mime": f"image/{thumb_gif_image.format.lower()}",
-        }
+        defs = [
+            {
+                "path": thumbnail_info.key,
+                "size": os.stat(thumb_path).st_size,
+                "resolution": [thumb_image.height, thumb_image.width],
+                "mime": f"image/{thumb_image.format.lower()}",
+            },
+            {
+                "path": thumbnail_gif_info.key,
+                "size": os.stat(thumb_gif_path).st_size,
+                "resolution": [thumb_gif_image.height, thumb_gif_image.width],
+                "mime": f"image/{thumb_gif_image.format.lower()}",
+            },
+        ]
+        roles = ["thumbnail", "thumbnail_gif"]
 
-        response = api.create_image_file(resp.id[0], role="thumbnail", image_definition=thumb_def)
-        if not isinstance(response, MessageResponse):
-            raise RuntimeError(f"Unexpected response type '{type(response)}'")
-        response = api.create_image_file(
-            resp.id[0], role="thumbnail_gif", image_definition=thumb_gif_def
-        )
-        if not isinstance(response, MessageResponse):
-            raise RuntimeError(f"Unexpected response type '{type(response)}'")
+        for img_def, role in zip(defs, roles):
+            response = api.create_image_file(resp.id[0], role=role, image_definition=img_def)
+            if not isinstance(response, MessageResponse):
+                raise RuntimeError(f"Unexpected response type '{type(response)}'")
 
         # Add the multi definition.
         multi_def = {"layout": layout, "ids": media_ids}
         if quality:
-            multi_def.update({"quality": quality})
+            multi_def["quality"] = quality
         if frame_offset:
             if len(frame_offset) != n_ids:
                 raise RuntimeError("Length of frame offsets did not match length of media IDs!")
-            multi_def.update({"frameOffset": frame_offset})
+            multi_def["frameOffset"] = frame_offset
         api.update_media(resp.id[0], {"multi": multi_def})
 
         return resp
