@@ -336,17 +336,18 @@ def video_file(request):
                         f.write(chunk)
     yield out_path
 
-@pytest.fixture(scope='session')
-def video(request, project, video_type, video_file):
+def video_helper(host: str, token: str, project: int, video_type: int, video_file: str):
     import tator
-    host = request.config.option.host
-    token = request.config.option.token
     tator_api = tator.get_api(host, token)
     uuid_val = str(uuid1())
     attributes = {"test_string": uuid_val}
+    response = None
     for progress, response in tator.util.upload_media(tator_api, video_type, video_file, attributes=attributes):
         print(f"Upload video progress: {progress}%")
-    print(response.message)
+
+    if response:
+        print(response.message)
+
     while True:
         response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4', attribute=[f"test_string::{uuid_val}"])
         print("Waiting for transcode...")
@@ -362,9 +363,13 @@ def video(request, project, video_type, video_file):
             break
     # Check for proper attribute setting via upload_file
     assert response[0].attributes.get("test_string") == attributes.get("test_string")
+    return video_id
 
-    # If all is kosher return the video_id
-    yield video_id
+@pytest.fixture(scope='session')
+def video(request, project, video_type, video_file):
+    host = request.config.option.host
+    token = request.config.option.token
+    yield video_helper(host, token, project, video_type, video_file)
 
 @pytest.fixture(scope='session')
 def count_video(request, project, video_type):
@@ -439,27 +444,9 @@ def empty_video(request, project, video_type):
 
 @pytest.fixture(scope='function')
 def video_temp(request, project, video_type, video_file):
-    import tator
     host = request.config.option.host
     token = request.config.option.token
-    tator_api = tator.get_api(host, token)
-    for progress, response in tator.util.upload_media(tator_api, video_type, video_file):
-        print(f"Upload video progress: {progress}%")
-    print(response.message)
-    while True:
-        response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4')
-        print("Waiting for transcode...")
-        time.sleep(2.5)
-        if len(response) == 0:
-            continue
-        if response[0].media_files is None:
-            continue
-        have_streaming = response[0].media_files.streaming is not None
-        have_archival = response[0].media_files.archival is not None
-        if have_streaming and have_archival:
-            video_id = response[0].id
-            break
-    yield video_id
+    yield video_helper(host, token, project, video_type, video_file)
 
 @pytest.fixture(scope='session')
 def multi(request, project, multi_type, video):
