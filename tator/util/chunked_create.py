@@ -1,7 +1,7 @@
 import logging
 from math import floor
 from typing import Callable
-
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -38,9 +38,17 @@ def chunked_create(func: Callable, project: int, chunk_size: int = 500, **kwargs
         n_created = 0
         try:
             for idx in range(0, len(spec), chunk_size):
-                response = func(project, **{key: spec[idx : idx + chunk_size]})
-                n_created += len(response.id)
-                yield response
+                try:
+                    response = func(project, **{key: spec[idx : idx + chunk_size]})
+                    n_created += len(response.id)
+                    yield response
+                except Exception:
+                    # Back-off once, wait 5 seconds, and try again. This helps work around
+                    # if we trip a DDOS firewall in a bulk import
+                    time.sleep(5)
+                    response = func(project, **{key: spec[idx : idx + chunk_size]})
+                    n_created += len(response.id)
+                    yield response
         except Exception:
             chunk_size = floor(chunk_size / 2)
             logger.warning("Caught exception, halving chunk size to %d", chunk_size, exc_info=True)
