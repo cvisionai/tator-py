@@ -25,7 +25,7 @@ def random_state(project, state_type, video_obj, post=False):
         "type": state_type,
         "media_ids": [video_obj.id],
         "frame": random.randint(0, video_obj.num_frames - 1),
-        "attributes": attributes
+        "attributes": attributes,
     }
 
     return {**out}
@@ -55,7 +55,7 @@ def random_localization(project, box_type, video_obj, post=False):
         "type": box_type,
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
-        "attributes": attributes
+        "attributes": attributes,
     }
 
     return {**out}
@@ -73,12 +73,7 @@ def random_leaf(project, leaf_type, parent_obj=None, post=False):
         "test_float_array": [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     name = "".join(random.choice(string.ascii_letters) for _ in range(10))
-    out = {
-        "project": project,
-        "type": leaf_type,
-        "name": name,
-        "attributes": attributes
-    }
+    out = {"project": project, "type": leaf_type, "name": name, "attributes": attributes}
     if parent_obj:
         out["parent"] = parent_obj.id
 
@@ -139,10 +134,12 @@ def change_log_helper(
             elif change.name in ["_x", "_y", "_width", "_height", "_frame"]:
                 assert change.value == box[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == box['attributes'][change.name]
+                assert change.value == box["attributes"][change.name]
         create_changes.append(changes)
 
     patch_entities = [random_entity() for _ in range(num_entities)]
+    for p in patch_entities:
+        p["in_place"] = 1
     for entity_id, patch_entity in zip(entity_ids, patch_entities):
         update_one(entity_id, patch_entity)
 
@@ -175,7 +172,7 @@ def change_log_helper(
         patch_changes.append(new_change_log)
 
     bulk_patch_entity = random_entity()
-    bulk_patch_entity = {"attributes": bulk_patch_entity["attributes"]}
+    bulk_patch_entity = {"attributes": bulk_patch_entity["attributes"], "in_place": 1}
     update_list(bulk_patch_entity)
 
     # Bulk update tests
@@ -463,7 +460,7 @@ def test_leaf_type_change_log(host, token, project, leaf_type):
             elif change.name in ["_project", "_name", "_type"]:
                 assert change.value == leaf_spec[change.name.replace("_", "")]
             elif change.name.startswith("test_"):
-                assert change.value == leaf_spec['attributes'][change.name]
+                assert change.value == leaf_spec["attributes"][change.name]
         create_changes.append(changes)
 
     patch_leaves = [random_leaf(project, leaf_type) for _ in range(num_leaves)]
@@ -578,7 +575,6 @@ def test_change_log_util(host, token, project, video_type):
         "section": "Test media change log",
         "attributes": {"test_int": test_int},
     }
-
 
     # Create the media.
     media_id = tator_api.create_media_list(project=project, body=media_spec).id
