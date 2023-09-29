@@ -9,7 +9,7 @@ import json
 
 REQUIRES = [
     "certifi >= 14.05.14",
-    "Pillow >= 10.1.0",
+    "Pillow >= 10.0.1",
     "progressbar2 >= 3.51.4",
     "psutil >= 5.9.5",
     "python-dateutil >= 2.5.3",
