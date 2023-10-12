@@ -95,6 +95,8 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         parts = []
         yield (0, None)
         gcp_upload = upload_info.upload_id == upload_info.urls[0]
+        if gcp_upload:
+            max_workers = 1 # GCP does not handle parallel workers
         with get_data(path) as f:
             with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
                 def complete_chunk(fs):
