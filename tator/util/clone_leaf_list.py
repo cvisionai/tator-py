@@ -17,7 +17,7 @@ def _convert_for_post(leaf, leaf_type_mapping, parent_mapping):
     spec = {'name': leaf.name,
             'type': leaf_type_id,
             'parent': parent_id,
-            **leaf.attributes}
+            'attributes': leaf.attributes}
     spec = {key:spec[key] for key in spec if spec[key] is not None}
     return spec
 

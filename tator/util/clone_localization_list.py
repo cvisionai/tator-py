@@ -44,7 +44,7 @@ def _convert_for_post(loc, localization_type_mapping, version_mapping, media_map
             'u': loc.u,
             'v': loc.v,
             'frame': loc.frame,
-            **loc.attributes}
+            'attributes': loc.attributes}
     if parent_id:
         spec['parent'] = parent_id
     spec = {key:spec[key] for key in spec if spec[key] is not None}
