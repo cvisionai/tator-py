@@ -33,7 +33,7 @@ def _convert_for_post(state, version_mapping, media_mapping, localization_mappin
             'version': version_id,
             'media_ids': media_ids,
             'localization_ids': localization_ids,
-            **state.attributes}
+            'attributes': state.attributes}
     if state.frame is not None:
         spec['frame'] = state.frame
     spec = {key:spec[key] for key in spec if spec[key] is not None}
