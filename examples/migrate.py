@@ -698,6 +698,15 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
                     raise ValueError("Error cloning media!")
                 logger.info(f"Created {total_created} of {num_total} files...")
                 media_mapping = {**media_mapping, **id_map}
+    # Fix multi media IDs in destination project.
+    logger.info(f"Updating components media IDs of cloned multis...")
+    multi_medias = dest_api.get_media_list(dest_project, dtype="multi")
+    for multi in multi_medias:
+        updated_ids = [media_mapping[id_] if id_ in media_mapping else id_ for id_ in multi.media_files.ids]
+        if updated_ids != multi.media_files.ids:
+            media_update_spec = {"multi": {"ids": updated_ids}}
+            response = dest_api.update_media(id=multi.id, media_update=media_update_spec)
+            logger.info(response.message)
     logger.info(f"Created {num_total} media.")
     return media_mapping
 
