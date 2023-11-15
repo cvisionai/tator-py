@@ -15,3 +15,4 @@ out/
 # Dev files
 tags
 tags.lock
+migrate.log
