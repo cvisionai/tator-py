@@ -14,6 +14,7 @@ import sys
 import tator
 import tqdm
 import shutil
+import traceback
 
 from collections import defaultdict
 from pprint import pprint
@@ -78,14 +79,23 @@ def process_section(
     media_lookup = {x.id: x for x in media_objs}
     print(f"Processing {len(localizations)} across {len(media_objs)} Media.")
 
+    # We need to handle media with no annotations that are images
+    maybe_empty = api.get_media_list(section.project, section=section.id)
+    empties = []
+    for media in maybe_empty:
+        if media.id not in media_lookup:
+            media_type = media_type_lookup[media.type]
+            if media_type.dtype == "image":
+                empties.append(media)
+
+    print(f"Also included are {len(empties)} empty images")
+
     # Helper lambdas to help with loop iteration
     def find_category_id(category_name: str):
         """Lambda to find and insert if required, insert a new category."""
         category_id = category_lookup.get(category_name, None)
         if category_id is None:
-            print(
-                f"Notice: Couldn't get category id for {category_name} given {category_lookup}"
-            )
+            print(f"Notice: Couldn't get category id for {category_name} given {category_lookup}")
             if category_lookup.values():
                 existing_ids = [x for x in category_lookup.values()]
                 new_category_id = max(existing_ids) + 1
@@ -103,9 +113,7 @@ def process_section(
         # finally return the category_id
         return category_id
 
-    def handle_media_if_not_present(
-        localization: tator.models.Localization, image_id: int
-    ):
+    def handle_media_if_not_present(localization: tator.models.Localization, image_id: int):
         """Lambda to download and add images"""
         image_info = image_lookup.get(image_id, None)
         height, width, name, date_captured, media_type = get_image_info(localization)
@@ -127,9 +135,44 @@ def process_section(
             image_lookup[image_id] = image_info
             new_images.append(image_info)
 
-    def download_media_if_not_present(
-        localization: tator.models.Localization, image_id: int
-    ):
+    def download_empty(media: tator.models.Media):
+        assert media_type_lookup[media.type].dtype == "image"
+        name = media.name
+        height = media.height
+        width = media.width
+        date_captured = str(media.modified_datetime)
+        image_id = media.id
+        image_info = image_lookup.get(image_id, None)
+
+        if args.include_image_dir:
+            filename = os.path.join(args.image_dir, f"{name}_{image_id}.png")
+            on_disk_filename = filename
+        else:
+            filename = f"{name}_{image_id}.png"
+            on_disk_filename = os.path.join(args.image_dir, filename)
+        # Download the none AVIF source file as local tools likely don't support that
+        image_types = [x.mime for x in media.media_files.image]
+        images_types = [x for x in image_types if x != "image/avif"]
+        os.makedirs(os.path.dirname(on_disk_filename), exist_ok=True)
+
+        for _ in tator.util.download_media(
+            api, media, on_disk_filename, None, "image", images_types[0]
+        ):
+            pass
+
+        if image_info is None:
+            image_info = {
+                "id": image_id,
+                "height": height,
+                "width": width,
+                "name": name,
+                "date_captured": date_captured,
+                "file_name": filename,
+            }
+            image_lookup[image_id] = image_info
+            new_images.append(image_info)
+
+    def download_media_if_not_present(localization: tator.models.Localization, image_id: int):
         height, width, name, date_captured, media_type = get_image_info(localization)
         if args.include_image_dir:
             filename = os.path.join(args.image_dir, f"{name}_{image_id}.png")
@@ -143,9 +186,7 @@ def process_section(
             if media_type == "video":
                 media_object = media_lookup[localization.media]
                 # print(f"\n\rDownloading {media_object.name} frame={localization.frame}")
-                temp_path = api.get_frame(
-                    localization.media, frames=[localization.frame]
-                )
+                temp_path = api.get_frame(localization.media, frames=[localization.frame])
                 os.makedirs(os.path.dirname(on_disk_filename), exist_ok=True)
                 shutil.move(temp_path, on_disk_filename)
             elif media_type == "image":
@@ -173,9 +214,7 @@ def process_section(
             # (roughly 18.5 quintillion records)
             image_id = (media.id << 64) | localization.frame
         else:
-            print(
-                f"{localization.id} In {media.id} which has unsupported dtype {media_type.dtype}"
-            )
+            print(f"{localization.id} In {media.id} which has unsupported dtype {media_type.dtype}")
             sys.exit(-1)
         return image_id
 
@@ -200,9 +239,7 @@ def process_section(
                 height = media.height
                 width = media.width
         else:
-            print(
-                f"{localization.id} In {media.id} which has unsupported dtype {media_type.dtype}"
-            )
+            print(f"{localization.id} In {media.id} which has unsupported dtype {media_type.dtype}")
             sys.exit(-1)
         return height, width, name, date_captured, media_type.dtype
 
@@ -218,9 +255,7 @@ def process_section(
         height = round(localization.height * image_info["height"])
         return [x_coord, y_coord, width, height]
 
-    def localization_to_segments(
-        localization: tator.models.Localization, image_id: int
-    ):
+    def localization_to_segments(localization: tator.models.Localization, image_id: int):
         """Given a localization and its COCO image_id generate the bbox in COCO terms
 
         NOTE: COCO uses whole absolute pixels"""
@@ -254,35 +289,30 @@ def process_section(
 
     executor = ThreadPoolExecutor()
     futures = []
+    if empties and args.skip_download == False:
+        for media in tqdm.tqdm(empties, desc="Requesting Empty Images"):
+            futures.append(executor.submit(download_empty, media))
     for localization in tqdm.tqdm(localizations, desc="Localizations"):
         # Always handle media in case we are downloading
         image_id = get_image_id(localization)
         handle_media_if_not_present(localization, image_id)
-        futures.append(
-            executor.submit(download_media_if_not_present, localization, image_id)
-        )
+        futures.append(executor.submit(download_media_if_not_present, localization, image_id))
         # Only add as a new localization if it isn't present
         if localization.id in annotation_ids:
             continue
         coco_annotation = {
             "iscrowd": 0,  # required top-level for most training libraries
             "id": localization.id,  # use the tator-id for consistency
-            "category_id": find_category_id(
-                localization.attributes.get(args.class_name)
-            ),
+            "category_id": find_category_id(localization.attributes.get(args.class_name)),
             "image_id": image_id,
         }
         if localization_type.dtype == "box":
             coco_annotation["bbox"] = localization_to_bbox(localization, image_id)
             new_annotations.append(coco_annotation)
         elif localization_type.dtype == "poly":
-            coco_annotation["segmentation"] = localization_to_segments(
-                localization, image_id
-            )
+            coco_annotation["segmentation"] = localization_to_segments(localization, image_id)
             if len(coco_annotation["segmentation"]) > 0:
-                coco_annotation["bbox"] = bounding_box_from_points(
-                    coco_annotation["segmentation"]
-                )
+                coco_annotation["bbox"] = bounding_box_from_points(coco_annotation["segmentation"])
                 new_annotations.append(coco_annotation)
             else:
                 pass
@@ -295,8 +325,16 @@ def process_section(
         while len(waiting) > 0:
             pbar.update(this_completed)
             completed_jobs, waiting = wait(futures, timeout=1)
+
             this_completed = len(completed_jobs) - last_completed
             last_completed = len(completed_jobs)
+    completed_jobs, waiting = wait(futures, timeout=1)
+    for job in completed_jobs:
+        exp = job.exception()
+        # print traceback if exception occured
+        if exp:
+            traceback.print_exc()
+
     executor.shutdown(wait=True)
     return new_images, new_categories, new_annotations
 
@@ -329,20 +367,14 @@ def main():
         default="vessel",
         help="If a category is assumed, use this super category",
     )
-    parser.add_argument(
-        "--class-name", type=str, help="Attribute to use for classification"
-    )
-    parser.add_argument(
-        "--indent", type=int, default=2, help="Indent to use on JSON file"
-    )
+    parser.add_argument("--class-name", type=str, help="Attribute to use for classification")
+    parser.add_argument("--indent", type=int, default=2, help="Indent to use on JSON file")
     parser.add_argument(
         "--include-image-dir",
         action="store_true",
         help='Include "image-dir" path in COCO file_name property of image, else it is excluded.',
     )
-    parser.add_argument(
-        "output_file", type=str, help="Output filepath for generated JSON file"
-    )
+    parser.add_argument("output_file", type=str, help="Output filepath for generated JSON file")
     parser.add_argument(
         "section",
         type=str,
