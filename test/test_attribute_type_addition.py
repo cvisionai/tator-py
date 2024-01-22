@@ -20,7 +20,7 @@ def random_localization(project, box_type, video_obj, post=False):
         "test_string": str(uuid4()),
         "test_datetime": datetime.now().isoformat(),
         "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
-        'test_float_array': [random.uniform(-1.0, 1.0) for _ in range(3)],
+        "test_float_array": [random.uniform(-1.0, 1.0) for _ in range(3)],
     }
     out = {
         "x": x,
@@ -31,7 +31,7 @@ def random_localization(project, box_type, video_obj, post=False):
         "type": box_type,
         "media_id": video_obj.id,
         "frame": random.randint(0, video_obj.num_frames - 1),
-        "attributes": attributes
+        "attributes": attributes,
     }
 
     return {**out}
