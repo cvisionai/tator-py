@@ -75,7 +75,7 @@ def add_invalid_attribute_helper(tator_api, type_getter, type_id):
 
     # Check the exeption message for expected content
     assert (
-        "ValidationError: \\\"'unknown' is not one of ['bool', 'int', 'float', 'enum', 'string', 'datetime', 'geopos', 'float_array']\\\""
+        "ValidationError: \\\"'unknown' is not one of ['bool', 'int', 'float', 'enum', 'string', 'datetime', 'geopos', 'float_array', 'blob']\\\""
         in str(excinfo.value)
     )
 
