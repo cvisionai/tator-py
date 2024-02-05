@@ -34,6 +34,7 @@ def assert_close_enough(a, b, exclude=[], mapping={}):
         if is_number(a[key]):
             diff = abs(a[key] - b[key_b])
             assert diff < 0.0001, fail_str(a, b, key)
+        elif isinstance(a[key], dict):
+            assert_close_enough(a[key], b[key_b])
         else:
             assert a[key] == b[key_b], fail_str(a, b, key)
-
