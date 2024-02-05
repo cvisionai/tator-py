@@ -104,7 +104,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
 
     # Test bulk create.
     num_localizations = random.randint(2000, 10000)
-    existing = len(tator_api.get_localization_list(project,type=box_type))
+    existing = len(tator_api.get_localization_list(project, type=box_type, media_id=[video_temp]))
     boxes = [
         random_localization(project, box_type, video_obj, post=True)
         for _ in range(num_localizations)
