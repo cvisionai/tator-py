@@ -34,4 +34,18 @@ def test_algo_template(host, token, organization, project, video):
         elif response.status == 'Failed':
             raise RuntimeError("Workflow template failed!")
           
+def test_applet_template(host, token, organization, project):
+    api = tator.get_api(host, token)
+    response = api.create_hosted_template(organization, {
+        "name": "echo",
+        "url": "https://raw.githubusercontent.com/cvisionai/tator/dev/500-hosted-workflows-applets/doc/examples/applet_template/echo.html",
+        "headers": {},
+        "tparams": {"message": "Hello from the tator-py tests"}
+    })
+
+    response = api.register_applet(project, {
+        "name": "echo",
+        "description": "test for templated applets",
+        "template": response.id,
+    })
 
