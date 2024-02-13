@@ -7,8 +7,8 @@ def test_algo_template(host, token, organization, project, video):
     response = api.create_hosted_template(organization, {
         "name": "echo",
         "url": "https://raw.githubusercontent.com/cvisionai/tator/dev/500-hosted-workflows-applets/doc/examples/workflow_template/echo.yaml",
-        "headers": {},
-        "tparams": {"message": "Hello from the tator-py tests"}
+        "headers": [],
+        "tparams": [{"name": "message", "value": "Hello from the tator-py tests"}]
     })
     
     response = api.register_algorithm(project, {
@@ -39,8 +39,8 @@ def test_applet_template(host, token, organization, project):
     response = api.create_hosted_template(organization, {
         "name": "echo",
         "url": "https://raw.githubusercontent.com/cvisionai/tator/dev/500-hosted-workflows-applets/doc/examples/applet_template/echo.html",
-        "headers": {},
-        "tparams": {"message": "Hello from the tator-py tests"}
+        "headers": [],
+        "tparams": [{"name": "message", "value": "Hello from the tator-py tests"}]
     })
 
     response = api.register_applet(project, {
