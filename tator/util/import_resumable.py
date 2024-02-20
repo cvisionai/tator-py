@@ -40,7 +40,7 @@ def import_resumable(api, media_id, work_dir=None, explicit_config=None, streami
                 )
 
         components = [x["path"] for x in media.media_files.to_dict().get("archival", [])]
-        print(f"Joining {len(components)} components.")
+        components.sort(key=lambda x: int(os.path.splitext(x)[0].split("_")[-2]))
         _, ext = os.path.splitext(components[0])
         ext = ext.split("?")[0]
 
