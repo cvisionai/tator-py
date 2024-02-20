@@ -41,7 +41,7 @@ def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_
                 time.sleep(10 * attempt)
                 logger.warning(f"Backing off for {10 * attempt} seconds...")
 
-def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30, max_workers=10):
+def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30, max_workers=10, gcp_compat=True):
     """ Uploads a file.
 
     :param api: `tator.TatorApi` object.
@@ -53,6 +53,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     :param chunk_size: [Optional] Upload chunk size in bytes.
     :param timeout: [Optional] Request timeout for uploads in seconds. Default is 30.
     :param max_workers: [Optional] Max workers for concurrent requests.
+    :param gcp_compat: [Optional] If True, chunk size will be rounded up to the nearest multiple of 256KB for Google Cloud Storage compatibility.
     """
 
     # Get number of chunks.
@@ -65,7 +66,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
             f"Number of chunks exceeds maximum of 10,000. Increasing chunk size to {chunk_size}."
         )
 
-    if chunk_size % GCP_CHUNK_MOD:
+    if gcp_compat and chunk_size % GCP_CHUNK_MOD:
         logger.warning(
             f"Chunk size must be a multiple of 256KB for Google Cloud Storage compatibility"
         )
