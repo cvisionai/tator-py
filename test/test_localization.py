@@ -4,6 +4,7 @@ import random
 from time import sleep
 import uuid
 from collections import Counter
+import pytest
 
 import tator
 from ._common import assert_close_enough
@@ -192,8 +193,12 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     new_version = response.id
     bulk_patch = random_localization(project, box_type, video_obj)
     bulk_patch = {"attributes": bulk_patch["attributes"], "new_version": new_version, "in_place": 1}
+    count = tator_api.get_localization_count(project, **params)
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.update_localization_list(
+            project, **params, localization_bulk_update=bulk_patch, count=count + 1)
     response = tator_api.update_localization_list(
-        project, **params, localization_bulk_update=bulk_patch
+        project, **params, localization_bulk_update=bulk_patch, count=count
     )
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
@@ -242,7 +247,10 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     assert tator_api.get_localization_count(project, **params) == 2 * (len(boxes) + existing)
 
     # Delete all boxes.
-    response = tator_api.delete_localization_list(project, **params)
+    count = tator_api.get_localization_count(project, **params)
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.delete_localization_list(project, **params, count=count + 1)
+    response = tator_api.delete_localization_list(project, **params, count=count)
     assert isinstance(response, tator.models.MessageResponse)
 
     # Verify all boxes are gone.

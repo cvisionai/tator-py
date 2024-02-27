@@ -5,6 +5,7 @@ import tempfile
 from time import sleep
 from urllib.parse import parse_qs, urlparse
 from uuid import uuid1
+import pytest
 
 import tator
 
@@ -119,7 +120,9 @@ def test_section(host, token, project, video):
     assert media.attributes["tator_user_sections"] == ""
 
     # Update media `tator_user_sections` attribute with a bulk update
-    response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec)
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec, count=2)
+    response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec, count=1)
     media = tator_api.get_media(video)
     assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
 

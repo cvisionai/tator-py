@@ -4,6 +4,7 @@ import random
 from time import sleep
 import uuid
 from collections import Counter
+import pytest
 
 import tator
 from ._common import assert_close_enough
@@ -214,7 +215,10 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
     # Bulk update state attributes.
     bulk_patch = random_state(project, state_type, video_obj)
     bulk_patch = {"attributes": bulk_patch["attributes"], "in_place": 1}
-    response = tator_api.update_state_list(project, **params, state_bulk_update=bulk_patch)
+    count = tator_api.get_state_count(project, **params)
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.update_state_list(project, **params, state_bulk_update=bulk_patch, count=count+1)
+    response = tator_api.update_state_list(project, **params, state_bulk_update=bulk_patch, count=count)
     assert isinstance(response, tator.models.MessageResponse)
     print(response.message)
 
@@ -254,7 +258,10 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
     assert tator_api.get_state_count(project, **params) == 2 * len(states)
 
     # Delete all states.
-    response = tator_api.delete_state_list(project, **params)
+    count = tator_api.get_state_count(project, **params)
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.delete_state_list(project, **params, count=count+1)
+    response = tator_api.delete_state_list(project, **params, count=count)
     assert isinstance(response, tator.models.MessageResponse)
 
     # Verify all states are gone.
