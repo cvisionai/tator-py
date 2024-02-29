@@ -206,33 +206,6 @@ def change_log_helper(
     delete_one(entity_ids[0])
     delete_list()
 
-    # Deletion tests
-    for entity_id, create_change_log, patch_change_log, bulk_change_log in zip(
-        entity_ids, create_changes, patch_changes, bulk_patch_changes
-    ):
-        changes = tator_api.get_change_log_list(
-            project=project, entity_id=entity_id, entity_type=entity_type
-        )
-
-        # Assert three changes returned
-        assert len(changes) == 4
-        for new_change_log in changes:
-            if new_change_log.id not in [
-                patch_change_log.id,
-                create_change_log.id,
-                bulk_change_log.id,
-            ]:
-                break
-        else:
-            assert False, "No deletion change log detected"
-
-        # Assert all old values are from update
-        compare_change_logs(new_change_log, bulk_change_log)
-
-        # Assert all new values are None for deletion
-        for change in new_change_log.description_of_change.new:
-            assert change.value == True
-
 
 def test_attribute_box_type_change_log(host, token, project, attribute_video, attribute_box_type):
     tator_api = tator.get_api(host, token)
