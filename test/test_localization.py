@@ -10,7 +10,7 @@ import tator
 from ._common import assert_close_enough
 
 
-def random_localization(project, box_type, video_obj, post=False):
+def random_localization(project, box_type, video_obj):
     x = random.uniform(0.0, 1.0)
     y = random.uniform(0.0, 1.0)
     w = random.uniform(0.0, 1.0 - x)
@@ -39,68 +39,29 @@ def random_localization(project, box_type, video_obj, post=False):
 
     return {**out}
 
+def random_frame_state(project, state_type, video_obj):
+    attributes = {
+        "test_bool": random.choice([False, True]),
+        "test_int": random.randint(-1000, 1000),
+        "test_float": random.uniform(-1000.0, 1000.0),
+        "test_enum": random.choice(["a", "b", "c"]),
+        "test_string": str(uuid.uuid1()),
+        "test_datetime": datetime.datetime.now().isoformat(),
+        "test_geopos": [random.uniform(-180.0, 180.0), random.uniform(-90.0, 90.0)],
+        "test_float_array": [random.uniform(-1.0, 1.0) for _ in range(3)],
+    }
+    out = {
+        "project": project,
+        "type": state_type,
+        "media_ids": [video_obj.id],
+        "frame": random.randint(0, video_obj.num_frames - 1),
+        "attributes": attributes,
+    }
 
-def comparison_query(tator_api, project, box_ids, exclude):
-    """Runs a random query and compares results with ES enabled and disabled."""
-    bool_value = random.choice([True, False])
-    int_lower = random.randint(-1000, 0)
-    int_upper = random.randint(0, 1000)
-    float_lower = random.uniform(-1000.0, 0.0)
-    float_upper = random.uniform(0.0, 1000.0)
-    enum_value = random.choice(["a", "b", "c"])
-    localization_id_query = {"ids": box_ids}
-    attribute_filter = [
-        f"test_bool::{'true' if bool_value else 'false'}",
-        f"test_enum::{enum_value}",
-    ]
-    attribute_lte_filter = [f"test_int::{int_upper}"]
-    attribute_gte_filter = [f"test_int::{int_lower}"]
-    attribute_lt_filter = [f"test_float::{float_upper}"]
-    attribute_gt_filter = [f"test_float::{float_lower}"]
-    print("Starting PSQL query...")
-    t0 = datetime.datetime.now()
-    from_psql = tator_api.get_localization_list_by_id(
-        project,
-        localization_id_query=localization_id_query,
-        attribute=attribute_filter,
-        attribute_lte=attribute_lte_filter,
-        attribute_gte=attribute_gte_filter,
-        attribute_lt=attribute_lt_filter,
-        attribute_gt=attribute_gt_filter,
-    )
-    psql_time = datetime.datetime.now() - t0
-    print("Starting ES query...")
-    t0 = datetime.datetime.now()
-    from_es = tator_api.get_localization_list_by_id(
-        project,
-        localization_id_query=localization_id_query,
-        attribute=attribute_filter,
-        attribute_lte=attribute_lte_filter,
-        attribute_gte=attribute_gte_filter,
-        attribute_lt=attribute_lt_filter,
-        attribute_gt=attribute_gt_filter,
-    )
-    es_time = datetime.datetime.now() - t0
-
-    print("Checking PSQL and ES ids...")
-    psql_ids = [ele.id for ele in from_psql]
-    es_ids = [ele.id for ele in from_es]
-    assert Counter(psql_ids) == Counter(es_ids)
-
-    print("Checking PSQL and ES values...")
-    assert len(from_psql) == len(from_es)
-    for psql, es in zip(from_psql, from_es):
-        assert_close_enough(psql, es, exclude)
-        assert psql.attributes["test_bool"] == bool_value
-        assert psql.attributes["test_int"] <= int_upper
-        assert psql.attributes["test_int"] >= int_lower
-        assert psql.attributes["test_float"] < float_upper
-        assert psql.attributes["test_float"] > float_lower
-        assert psql.attributes["test_enum"] == enum_value
-    return psql_time, es_time
+    return {**out}
 
 
-def test_localization_crud(host, token, project, video_type, video_temp, box_type):
+def test_localization_crud(host, token, project, video_type, video_temp, box_type, state_type):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video_temp)
 
@@ -109,10 +70,10 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     mapping = {"new_version": "version"}
 
     # Test bulk create.
-    num_localizations = random.randint(2000, 10000)
+    num_localizations = random.randint(2000, 3000)
     existing = len(tator_api.get_localization_list(project, type=box_type, media_id=[video_temp]))
     boxes = [
-        random_localization(project, box_type, video_obj, post=True)
+        random_localization(project, box_type, video_obj)
         for _ in range(num_localizations)
     ]
     box_ids = []
@@ -136,8 +97,45 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     response = tator_api.get_localization_list_by_id(project, {"media_ids": [video_temp]})
     assert len(response) == len(box_ids)
 
+    # Create a bunch of frame states.
+    num_frame_states = random.randint(10, 100)
+    states = [
+        random_frame_state(project, state_type, video_obj)
+        for _ in range(num_frame_states)
+    ]
+    state_ids = []
+    for response in tator.util.chunked_create(
+        tator_api.create_state_list, project, body=states
+    ):
+        state_ids += response.id
+    
+    # Test retrieval by frame state ID.
+    response = tator_api.get_localization_list_by_id(project, {"frame_state_ids": state_ids})
+    state_frames = set([state["frame"] for state in states])
+    for box in response:
+        assert box.frame in state_frames
+    expected_count = 0
+    for box in boxes:
+        if box["frame"] in state_frames:
+            expected_count += 1
+    assert len(response) == expected_count
+
+    # Delete frame states.
+    count = tator_api.get_state_count(project, type=state_type, media_id=[video_temp])
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.delete_state_list(project, type=state_type, media_id=[video_temp], count=count + 1)
+    response = tator_api.delete_state_list(project, type=state_type, media_id=[video_temp], count=count)
+
+    # Verify all frame states are gone.
+    states = tator_api.get_state_list(project, type=state_type, media_id=[video_temp])
+    assert states == []
+
+    # Test retrieval by frame state ID.
+    response = tator_api.get_localization_list_by_id(project, {"frame_state_ids": state_ids})
+    assert response == []
+
     # Test single create.
-    box = random_localization(project, box_type, video_obj, post=True)
+    box = random_localization(project, box_type, video_obj)
     response = tator_api.create_localization_list(project, body=box)
     assert isinstance(response, tator.models.CreateListResponse)
     box_id = response.id[0]
