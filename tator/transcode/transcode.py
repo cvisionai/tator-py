@@ -54,7 +54,7 @@ def _launch_and_monitor_resources(cmd, interval=5):
     logger.info(f"cmd={cmd}")
     logger.info(f"time={end-start}")
 
-def find_best_encoder(codec):
+def find_best_encoder(codec, hwaccel=False):
     """ Find the best encoder based on what is available on the system """
     global encoder_lookup
     if encoder_lookup is None:
@@ -62,20 +62,21 @@ def find_best_encoder(codec):
         encoder_lookup={"hevc": "libx265",
                         "h264": "libx264",
                         "av1": "libsvtav1"}
-        cmd = [
-            "ffmpeg",
-            "-encoders" ]
-        output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
-        # Look for QSV, but use VAAPI frontend
-        # TODO: Use `vainfo` directly to query available hardware entry points
-        if output.find("libsvt_hevc") >= 0:
-            encoder_lookup["hevc"] = "libsvt_hevc"
-        if output.find("hevc_qsv") >= 0:
-            encoder_lookup["hevc"] = "hevc_vaapi"
-        if output.find("h264_qsv") >= 0:
-            encoder_lookup["h264"] = "h264_vaapi"
-        if output.find("av1_qsv") >= 0:
-            encoder_lookup["av1"] = "av1_vaapi"
+        if hwaccel:
+            cmd = [
+                "ffmpeg",
+                "-encoders" ]
+            output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
+            # Look for QSV, but use VAAPI frontend
+            # TODO: Use `vainfo` directly to query available hardware entry points
+            if output.find("libsvt_hevc") >= 0:
+                encoder_lookup["hevc"] = "libsvt_hevc"
+            if output.find("hevc_qsv") >= 0:
+                encoder_lookup["hevc"] = "hevc_vaapi"
+            if output.find("h264_qsv") >= 0:
+                encoder_lookup["h264"] = "h264_vaapi"
+            if output.find("av1_qsv") >= 0:
+                encoder_lookup["av1"] = "av1_vaapi"
         logger.info("encoder_lookup = %s", encoder_lookup)
     return encoder_lookup.get(codec, codec)
 
@@ -92,6 +93,7 @@ def parse_args():
     parser.add_argument('--configs', type=str, help='Comma separated list of output configs, '
                                                     'format is resolution:crf:codec.')
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
+    parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     return parser.parse_args()
 
 def get_length_of_file(path):
@@ -141,7 +143,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -195,7 +197,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
 
-    vaapi_present = [c for c in codecs if find_best_encoder(c).find('vaapi') >= 0]
+    vaapi_present = [c for c in codecs if find_best_encoder(c, hwaccel).find('vaapi') >= 0]
     if vaapi_present:
         cmd.extend(['-init_hw_device', 'vaapi=hw',
                     '-filter_hw_device', 'hw'])
@@ -209,7 +211,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             "faststart+frag_keyframe+empty_moov+default_base_moof"]
         logger.info(f"Generating resolution @ {resolution}")
         output_file = os.path.join(outpath, f"{resolution}.mp4")
-        codec = find_best_encoder(codecs[ridx])
+        codec = find_best_encoder(codecs[ridx], hwaccel)
         quality_flag = "-crf"
         pixel_format = pixel_formats[ridx]
         hw_upload = ''
@@ -306,6 +308,7 @@ def convert_archival(host,
                      outpath,
                      raw_width,
                      raw_height,
+                     hwaccel,
                      size=None,
                      explicit_config=None):
     # Retrieve this media's type to inspect archive config.
@@ -322,7 +325,7 @@ def convert_archival(host,
                 output_file = path
             else:
                 # Encode the media to archival format.
-                codec = find_best_encoder(archive_config.encode.vcodec)
+                codec = find_best_encoder(archive_config.encode.vcodec, hwaccel)
                 quality_flag = "-crf"
                 pixel_format = archive_config.encode.pixel_format
                 tune_settings = ["-preset", archive_config.encode.preset,

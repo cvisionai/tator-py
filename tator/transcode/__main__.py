@@ -54,6 +54,7 @@ def parse_args():
     parser.add_argument('--cleanup', action='store_true',
                         help="Deletes working files after each file is transcoded and "
                              "uploaded.")
+    parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -128,11 +129,11 @@ def transcode_single(path, args, gid):
             del workload['id']
             if category == 'streaming':
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                                  outpath=paths['transcoded'])
+                                  outpath=paths['transcoded'], hwaccel=args.hwaccel)
             elif category == 'archival':
                 del workload['configs']
                 convert_archival(**workload, host=args.host, token=args.token, media=media_id,
-                                 outpath=paths['transcoded'])
+                                 outpath=paths['transcoded'], hwaccel=args.hwaccel)
             elif category == 'audio':
                 del workload['configs']
                 del workload['raw_width']
