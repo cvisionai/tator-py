@@ -308,9 +308,9 @@ def convert_archival(host,
                      outpath,
                      raw_width,
                      raw_height,
-                     hwaccel=False,
                      size=None,
-                     explicit_config=None):
+                     explicit_config=None,
+                     hwaccel=False):
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
     media_obj = api.get_media(media)
