@@ -68,9 +68,9 @@ def test_local_transcode_yuv444p(host, token, project, yuv444p_video_type, video
     stream_info = _get_stream_info(media_obj.media_files.streaming[0].path)
     assert stream_info['pix_fmt'] == 'yuv444p'
 
-def test_bad_file(host, token, project, video_type, image_file):
+def test_bad_file(host, token, project, video_type, corrupted_video_file):
     cmd = [
-        'python3', '-m', 'tator.transcode', image_file,
+        'python3', '-m', 'tator.transcode', corrupted_video_file,
         '--host', host,
         '--token', token,
         '--project', str(project),

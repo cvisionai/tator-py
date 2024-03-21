@@ -324,10 +324,23 @@ def multi_type(request, project):
     yield multi_type_id
 
 @pytest.fixture(scope='session')
+def corrupted_video_file(request):
+    out_path = '/tmp/AudioVideoSyncTest_BallastMedia_corrupted.mp4'
+    if not os.path.exists(out_path):
+        url = 'https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia_corrupted.mp4'
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            with open(out_path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+    yield out_path
+
+@pytest.fixture(scope='session')
 def video_file(request):
     out_path = '/tmp/AudioVideoSyncTest_BallastMedia.mp4'
     if not os.path.exists(out_path):
-        url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
+        url = 'https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia.mp4'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
@@ -649,7 +662,7 @@ def attribute_video_type(request, project):
 def attribute_video_file(request):
     out_path = f"/tmp/AudioVideoSyncTest_BallastMedia_attribute.mp4"
     if not os.path.exists(out_path):
-        url = "http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4"
+        url = "https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia.mp4"
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, "wb") as f:
