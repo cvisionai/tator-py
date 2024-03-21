@@ -143,7 +143,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -308,7 +308,7 @@ def convert_archival(host,
                      outpath,
                      raw_width,
                      raw_height,
-                     hwaccel,
+                     hwaccel=False,
                      size=None,
                      explicit_config=None):
     # Retrieve this media's type to inspect archive config.
