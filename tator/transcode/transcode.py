@@ -193,6 +193,9 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
+        "-loglevel", "warning",
+        "-progress", "-",
+        "-stats_period", "10",
         "-noautorotate", "-i", path,
         "-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
     ]
@@ -348,6 +351,9 @@ def convert_archival(host,
                                    '-filter_hw_device', 'hw']
                 cmd = [
                     "ffmpeg",
+                    "-loglevel", "warning",
+                    "-progress", "-",
+                    "-stats_period", "10",
                     *hw_preamble,
                     "-y",
                     "-i", path,
@@ -410,6 +416,9 @@ def convert_audio(host, token, media, path, outpath):
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
     audio_extraction=["ffmpeg", "-y",
+                      "-loglevel", "warning",
+                      "-progress", "-",
+                      "-stats_period", "10",
                       "-i", path,
                       "-vn", # Strip video
                       "-c:a", "aac",
