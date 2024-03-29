@@ -74,7 +74,13 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
 
     # Create thumbnail.
     if needs_thumb_img:
-        cmd = ["ffmpeg", "-y", "-i", video_path, "-vf", "scale=256:-1", "-vframes", "1", thumb_path]
+        cmd = ["ffmpeg", "-y", 
+               "-loglevel", "warning",
+               "-progress", "-",
+               "-stats_period", "10",
+               "-i", video_path,
+               "-vf", "scale=256:-1",
+               "-vframes", "1", thumb_path]
         subprocess.run(cmd, check=True)
 
     if needs_thumb_gif:
@@ -91,6 +97,9 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
         # We play each 1 second sample at 4x
         speed_up = 4*max(1,round(video_duration/thumb_duration))
         cmd = ["ffmpeg", "-y",
+                "-loglevel", "warning",
+                "-progress", "-",
+                "-stats_period", "10",
                 "-i",
                 video_path,
                 "-vf",
