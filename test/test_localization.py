@@ -257,11 +257,16 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     boxes = tator_api.get_localization_list(project, **params)
     assert boxes == []
 
-    boxes = tator_api.get_localization_list(project, **params, show_deleted=1)
+    boxes = tator_api.get_localization_list(project, **params, show_deleted=1, show_all_marks=1)
     assert boxes != []
 
     response = tator_api.delete_localization_list(
-        project, **params, show_deleted=1, merge=0, localization_bulk_delete={"prune": 1}
+        project,
+        **params,
+        show_deleted=1,
+        merge=0,
+        show_all_marks=1,
+        localization_bulk_delete={"prune": 1},
     )
     assert isinstance(response, tator.models.MessageResponse)
 
