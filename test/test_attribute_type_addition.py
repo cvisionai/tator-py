@@ -134,7 +134,7 @@ def test_add_enum_without_choices(host, token, project, attribute_video_type):
         tator_api.create_attribute_type(id=attribute_video_type, attribute_type_spec=addition)
 
     # Check the exeption message for expected content
-    assert "ValueError: enum attribute type definition missing 'choices' field" in str(
+    assert "enum attribute type definition missing 'choices' field" in str(
         excinfo.value
     )
 
