@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import ddtrace.auto
 import argparse
 import os
 import shutil
@@ -25,6 +24,7 @@ from .delete_media import delete_media
 from .make_thumbnails import make_thumbnails
 
 if os.getenv("DD_LOGS_INJECTION"):
+    import ddtrace.auto
     FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
               '[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] '
               '- %(message)s')
