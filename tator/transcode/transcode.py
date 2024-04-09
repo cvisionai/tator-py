@@ -193,7 +193,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
-        "-loglevel", "warning",
+        "-loglevel", "error",
         "-progress", "-",
         "-stats_period", "10",
         "-noautorotate", "-i", path,
@@ -351,7 +351,7 @@ def convert_archival(host,
                                    '-filter_hw_device', 'hw']
                 cmd = [
                     "ffmpeg",
-                    "-loglevel", "warning",
+                    "-loglevel", "error",
                     "-progress", "-",
                     "-stats_period", "10",
                     *hw_preamble,
@@ -416,7 +416,7 @@ def convert_audio(host, token, media, path, outpath):
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
     audio_extraction=["ffmpeg", "-y",
-                      "-loglevel", "warning",
+                      "-loglevel", "error",
                       "-progress", "-",
                       "-stats_period", "10",
                       "-i", path,
