@@ -264,3 +264,18 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
     for path, query_params in no_cache_false_presigned_url.items():
         assert path in init_presigned_url
         assert int(query_params[expires_key][0]) == original_presigned_duration
+
+def test_upload_to_section_id(host, token, project, image_type, image_file):
+    tator_api = tator.get_api(host, token)
+    section_id = tator_api.create_section(project, {"name": "Section ID test"}).id
+    attributes = {"test_string": str(uuid1())}
+    for progress, response in tator.util.upload_media(
+            tator_api, image_type, image_file, section_id=section_id, attributes=attributes
+    ):
+        print(f"Upload image to section by ID progress: {progress}%")
+    print(response.message)
+    media_list = tator_api.get_media_list(
+        project,
+        section=section_id,
+    )
+    assert(len(media_list) == 1)

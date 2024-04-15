@@ -51,6 +51,7 @@ def parse_args():
     parser.add_argument('--type', type=int, help='Unique integer specifying a media type.')
     parser.add_argument('--name', type=str, help='Name of the media.')
     parser.add_argument('--section', type=str, help='Media section name.')
+    parser.add_argument('--section_id', type=int, help='Media section ID. If given `--section` is ignored.')
     parser.add_argument('--attributes', type=str, help="Attributes for media as a JSON string.")
     parser.add_argument('--media_id', type=int, help="Existing media ID, if applicable",
                         default=-1)
@@ -116,8 +117,12 @@ def transcode_single(path, args, gid):
 
     # Create the media object.
     if args.media_id == -1:
+        kwargs = {}
+        if args.section_id:
+            kwargs['section_id'] = args.section_id
+            args.section = None
         media_id = create_media(args.host, args.token, args.project, args.type, args.section,
-                                name, md5, gid, uid, args.attributes, args.url)
+                                name, md5, gid, uid, args.attributes, args.url, **kwargs)
     else:
         media_id = args.media_id
 

@@ -45,7 +45,7 @@ def _hosted_md5(url):
 
 def import_media(api, type_id, url, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None,chunk_size=2*1024*1024,
-                 attributes=None, media_id=None, size=None, _request_timeout=10):
+                 attributes=None, media_id=None, size=None, _request_timeout=10, section_id=None):
     """ Imports a hosted media file.
 
     Example:
@@ -61,6 +61,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     :param url: URL of the hosted media file.
     :param md5: [Optional] md5 sum of the media.
     :param section: [Optional] Media section to upload to.
+    :param section_id: [Optional] Unique integer identifying a section. If given `section` is ignored.
     :param fname: [Optional] Filename to use for upload.
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
@@ -84,18 +85,19 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
         upload_gid = str(uuid1())
     if fname is None:
         fname = os.path.basename(urlsplit(url).path)
-    if section is None:
-        section="Imported Files"
+    if section is None and section_id is None:
+        section="New Files"
 
     media_type = api.get_media_type(type_id, _request_timeout=_request_timeout)
     project_id = media_type.project
+    section_blob = {"section": section} if section is not None else {"section_id": section_id}
     spec = {
         'type': type_id,
         'uid': upload_uid,
         'gid': upload_gid,
         'url': url,
         'name': fname,
-        'section': section,
+        **section_blob,
         'md5': md5,
         'attributes': attributes,
         'media_id': media_id,

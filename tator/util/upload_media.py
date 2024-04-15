@@ -11,7 +11,7 @@ from .md5sum import md5sum
 def upload_media(api, type_id, path, md5=None, section=None, fname=None,
                  upload_gid=None, upload_uid=None, chunk_size=10*1024*1024,
                  attributes=None, email_spec=None, media_id=None, timeout=30,
-                 max_workers=10):
+                 max_workers=10, section_id=None):
     """ Uploads a single media file.
 
     Example:
@@ -29,6 +29,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
     :param md5: [Optional] md5 sum of the media.
     :param section: [Optional] Section name. If a section with this name does
         not exist it will be created.
+    :param section_id: [Optional] Unique integer identifying a section. If given `section` is ignored.
     :param fname: [Optional] Filename to use for upload.
     :param upload_gid: [Optional] Group ID of the upload.
     :param upload_uid: [Optional] Unique ID of the upload.
@@ -51,7 +52,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         upload_gid = str(uuid1())
     if fname is None:
         fname=os.path.basename(path)
-    if section is None:
+    if section is None and section_id is None:
         section="New Files"
 
     ext = os.path.splitext(fname)[1].lower()
@@ -71,6 +72,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
 
     url = api.get_download_info(project_id, download_info_spec={'keys': [upload_info.key]},
                                 expiration=86400)[0].url
+    section_blob = {"section": section} if section is not None else {"section_id": section_id}
 
     spec = {
         'type': type_id,
@@ -78,7 +80,7 @@ def upload_media(api, type_id, path, md5=None, section=None, fname=None,
         'gid': upload_gid,
         'url': url,
         'name': fname,
-        'section': section,
+        **section_blob,
         'md5': md5,
         'attributes': attributes,
         'media_id': media_id,
