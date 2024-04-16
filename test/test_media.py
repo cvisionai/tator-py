@@ -267,7 +267,11 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
 
 def test_upload_to_section_id(host, token, project, image_type, image_file):
     tator_api = tator.get_api(host, token)
-    section_id = tator_api.create_section(project, {"name": "Section ID test"}).id
+    section_spec = {
+        "name": "Section ID test",
+        "tator_user_sections": str(uuid1()),
+    }
+    section_id = tator_api.create_section(project, section_spec).id
     attributes = {"test_string": str(uuid1())}
     for progress, response in tator.util.upload_media(
             tator_api, image_type, image_file, section_id=section_id, attributes=attributes
