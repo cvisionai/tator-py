@@ -252,7 +252,7 @@ def image_set(request):
 
     # Download Labeled Faces in the Wild dataset.
     if not os.path.exists(out_path):
-        url = 'http://vis-www.cs.umass.edu/lfw/lfw.tgz'
+        url = 'https://tator-ci.s3.amazonaws.com/lfw.tgz'
         with requests.get(url, stream=True) as r:
             r.raise_for_status()
             with open(out_path, 'wb') as f:
