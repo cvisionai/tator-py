@@ -12,7 +12,7 @@ from .md5sum import md5sum
 
 logger = logging.getLogger(__name__)
 
-def _hosted_md5(url):
+def _hosted_md5(url, _request_timeout):
     """ Downloads only enough of file to compute md5 of first part of file
         to a temporary path, then returns md5.
     """
@@ -21,7 +21,7 @@ def _hosted_md5(url):
     MAX_RETRIES = 10
     for attempt in range(MAX_RETRIES):
         try:
-            with requests.get(url, stream=True) as r:
+            with requests.get(url, stream=True, timeout=_request_timeout) as r:
                 r.raise_for_status()
                 total_size = int(r.headers['Content-Length'])
                 total_chunks = math.ceil(total_size / CHUNK_SIZE)
@@ -78,7 +78,7 @@ def import_media(api, type_id, url, md5=None, section=None, fname=None,
     """
     if md5==None:
         # To compute md5, download the first 10MB to temporary file.
-        md5 = _hosted_md5(url)
+        md5 = _hosted_md5(url, _request_timeout)
     if upload_uid is None:
         upload_uid = str(uuid1())
     if upload_gid is None:
