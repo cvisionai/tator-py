@@ -149,7 +149,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     patch = random_localization(project, box_type, video_obj)
     update_msg = {**patch, "in_place": 1}
     response = tator_api.update_localization(box_id, localization_update=update_msg)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Get single box.
@@ -167,7 +167,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     response = tator_api.update_localization_by_elemental_id(
         version_id, elemental_id, localization_update=patch
     )
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Get single box.
@@ -176,7 +176,7 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
 
     # Delete single box.
     response = tator_api.delete_localization_by_elemental_id(version_id, elemental_id)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     params = {"media_id": [video_temp], "type": box_type}

@@ -53,7 +53,7 @@ def test_poly(host, token, project, video_type, video, poly_type):
     patch = random_localization(project, poly_type, video_obj)
     patch_obj = {**patch, "in_place": 1}
     response = tator_api.update_localization(poly_id, localization_update=patch_obj)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Get single poly.
@@ -68,5 +68,5 @@ def test_poly(host, token, project, video_type, video, poly_type):
 
     # Delete single poly.
     response = tator_api.delete_localization(poly_id)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)

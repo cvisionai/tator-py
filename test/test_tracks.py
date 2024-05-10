@@ -92,22 +92,22 @@ def test_append(host, token, project, video_type, video, track_type, box_type):
             response = tator_api.update_state_by_elemental_id(
                 version, elemental_id, state_update=update
             )
-            assert isinstance(response, tator.models.MessageResponse)
+            assert "message" in response.to_dict()
 
     # Add boxes to track.
     update = {"localization_ids_add": box_ids}
     response = tator_api.update_state_by_elemental_id(version, elemental_id, state_update=update)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
 
     # Try adding boxes to track again.
     response = tator_api.update_state_by_elemental_id(version, elemental_id, state_update=update)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Try adding boxes to track with repeated entries.
     update = {"localization_ids_add": box_ids + box_ids}
     response = tator_api.update_state_by_elemental_id(version, elemental_id, state_update=update)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Make sure we have the expected number of added localizations.
