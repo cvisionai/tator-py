@@ -173,11 +173,13 @@ def test_save_algorithm_manifest(
 
     response_1 = _upload_test_algorithm_manifest(
         host=host, token=token, project=project, manifest_name='test_nodupe.yaml')
-    assert os.path.basename(response_1.url) == 'test_nodupe.yaml'
-
+    assert os.path.basename(response_1.url) != "test_nodupe.yaml"
+    url_1 = os.path.basename(response_1.url)
     response_2 = _upload_test_algorithm_manifest(
         host=host, token=token, project=project, manifest_name='test_nodupe.yaml')
-    assert os.path.basename(response_2.url) == 'test_nodupe_0.yaml'
+    assert os.path.basename(response_2.url) != "test_nodupe.yaml"
+    url_2 = os.path.basename(response_2.url)
+    assert url_1 != url_2
 
 def test_register_algorithm(host: str, token: str, project: int, algo_project: int) -> None:
     """ Unit test for the RegisterAlgorithm endpoint

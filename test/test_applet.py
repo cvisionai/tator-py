@@ -99,11 +99,13 @@ def test_save_html_file(
 
     response_1 = _upload_test_html_file(
         host=host, token=token, project=project, html_file='test_nodupe.html')
-    assert os.path.basename(response_1.url) == 'test_nodupe.html'
-
+    assert os.path.basename(response_1.url) != "test_nodupe.html"
+    url_1 = os.path.basename(response_1.url)
     response_2 = _upload_test_html_file(
         host=host, token=token, project=project, html_file='test_nodupe.html')
-    assert os.path.basename(response_2.url) == 'test_nodupe_0.html'
+    assert os.path.basename(response_2.url) != "test_nodupe.html"
+    url_2 = os.path.basename(response_2.url)
+    assert url_1 != url_2
 
 def test_dashboard_endpoint(host: str, token: str, project: int) -> None:
     """ Unit tests for the dashboard endpoint
