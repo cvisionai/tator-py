@@ -50,7 +50,7 @@ def create_media_types(
               "default": False
           },
           {
-              "name": "Trip Date":,
+              "name": "Trip Date",
               "dtype": "datetime"
           }
       ]

@@ -173,7 +173,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
     patch = random_state(project, state_type, video_obj)
     patch_in_place = {**patch, "in_place": 1}
     response = tator_api.update_state(state_id, state_update=patch_in_place)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Get single state.
@@ -190,7 +190,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
     # Patch single state.
     patch = random_state(project, state_type, video_obj)
     response = tator_api.update_state(state_id, state_update=patch)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     # Get single state.
@@ -206,7 +206,7 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
 
     # Delete single state.
     response = tator_api.delete_state_by_elemental_id(version, elemental_id)
-    assert isinstance(response, tator.models.MessageResponse)
+    assert "message" in response.to_dict()
     print(response.message)
 
     params = {"media_id": [video], "type": state_type}

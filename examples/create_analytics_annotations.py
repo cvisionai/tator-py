@@ -43,11 +43,13 @@ def create_random_localization(
         "frame": frame,
         "media_id": media.id,
         "version": version.id,
-        "Species": random.choice(["Herring, Atlantic", "Herring, Blueback", "Lobster", "Scallop"]),
-        "Algorithm Confidence": random.uniform(0, 1),
-        "Count": random.randint(0, 5),
-        "Valid": random.choice([True, False]),
-        "Sighting Date": sighting_date
+        "attributes": {
+            "Species": random.choice(["Herring, Atlantic", "Herring, Blueback", "Lobster", "Scallop"]),
+            "Algorithm Confidence": random.uniform(0, 1),
+            "Count": random.randint(0, 5),
+            "Valid": random.choice([True, False]),
+            "Sighting Date": sighting_date
+        }
     }
 
     if selected_loc_type.dtype == "dot":
@@ -253,7 +255,7 @@ def main(
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if loc["Species"] == "Lobster" and version_map[loc["version"]].name == "Algorithm Results":
+            if loc["attributes"]["Species"] == "Lobster" and version_map[loc["version"]].name == "Algorithm Results":
                 loc_count += 1
     logger.info(f"Count of localizations whose Species:Lobster AND version:Algorithm Results -> {loc_count}")
 
@@ -261,7 +263,7 @@ def main(
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if loc["Species"] == "Scallop" and not loc["Valid"]:
+            if loc["attributes"]["Species"] == "Scallop" and not loc["attributes"]["Valid"]:
                 loc_count += 1
     logger.info(f"Count of localizations whose Species:Scallop AND Valid:false -> {loc_count}")
 
@@ -269,7 +271,7 @@ def main(
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if loc["Count"] > 2 and loc["Algorithm Confidence"] < 0.5 and loc_type_label[loc["type"]] == "line":
+            if loc["attributes"]["Count"] > 2 and loc["attributes"]["Algorithm Confidence"] < 0.5 and loc_type_label[loc["type"]] == "line":
                 loc_count += 1
     logger.info(f"Count of localizations whose Count:>2 AND Algorithm Confidence:<0.5 AND dtype:line -> {loc_count}")
 
@@ -277,7 +279,7 @@ def main(
     loc_count = 0
     for media_id in analytics_data:
         for loc in analytics_data[media_id]:
-            if "Herring" in loc["Species"] and loc["Algorithm Confidence"] > 0.25:
+            if "Herring" in loc["attributes"]["Species"] and loc["attributes"]["Algorithm Confidence"] > 0.25:
                 loc_count += 1
     logger.info(f"Count of localizations whose Species:*Herring* AND Algorithm Confidence:>0.25 -> {loc_count}")
 
@@ -288,7 +290,7 @@ def main(
         attrs = media.attributes
         if attrs["Media Reviewed"]:
             for loc in analytics_data[media_id]:
-                if loc["Algorithm Confidence"] > 0.5:
+                if loc["attributes"]["Algorithm Confidence"] > 0.5:
                     loc_count += 1
     logger.info(f"Count of localizations whose Algorithm Confidence:>0.5 AND in media whose Media Reviewed:true -> {loc_count}")
 
@@ -310,7 +312,7 @@ def main(
         attrs = media.attributes
         if attrs["Media Reviewed"]:
             for loc in analytics_data[media_id]:
-                if loc["Species"] == "Scallop":
+                if loc["attributes"]["Species"] == "Scallop":
                     loc_count += 1
     logger.info(f"Count of localizations whose Species:Scallop AND in media whose Media Reviewed:true -> {loc_count}")
 
@@ -358,7 +360,7 @@ def main(
     for media_id in analytics_data:
         media = media_id_map[media_id]
         for loc in analytics_data[media_id]:
-            sighting_date = loc["Sighting Date"]
+            sighting_date = loc["attributes"]["Sighting Date"]
             if sighting_date >= start_date and sighting_date <= end_date:
                 loc_count += 1
     logger.info(f"Count of localizations whose Sighting Date is:{{{start_date.isoformat()} TO {end_date.isoformat()}}} -> {loc_count}")
@@ -369,7 +371,7 @@ def main(
     for media_id in analytics_data:
         media = media_id_map[media_id]
         for loc in analytics_data[media_id]:
-            sighting_date = loc["Sighting Date"]
+            sighting_date = loc["attributes"]["Sighting Date"]
             if sighting_date <= end_date:
                 loc_count += 1
     logger.info(f"Count of localizations whose Sighting Date is:{{* TO {end_date.isoformat()}}} -> {loc_count}")
@@ -380,7 +382,7 @@ def main(
     for media_id in analytics_data:
         media = media_id_map[media_id]
         for loc in analytics_data[media_id]:
-            sighting_date = loc["Sighting Date"]
+            sighting_date = loc["attributes"]["Sighting Date"]
             if sighting_date >= start_date:
                 loc_count += 1
     logger.info(f"Count of localizations whose Sighting Date is:{{{start_date.isoformat()} TO *}} -> {loc_count}")
