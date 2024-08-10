@@ -246,7 +246,7 @@ def image(request, project, image_type, image_file):
     media_obj = tator_api.get_media(image_id).to_dict()
     while (
         media_obj["media_files"] is None
-        or len(media_obj.get("media_files", {}).get("image", [])) < 2
+        or len(media_obj.get("media_files", {}).get("image", [])) < 1
     ):
         time.sleep(1)
         print("waiting for image file to be available...")
