@@ -244,10 +244,17 @@ def image(request, project, image_type, image_file):
 
     # wait for image to be ingested before yielding
     media_obj = tator_api.get_media(image_id).to_dict()
-    while (
-        media_obj["media_files"] is None
-        or len(media_obj.get("media_files", {}).get("image", [])) < 1
-    ):
+    def is_image_ready(media_obj):
+        if media_obj["media_files"] is None:
+            return False
+        elif media_obj.get("media_files", {}).get("image", []) is None:
+            return False
+        elif len(media_obj.get("media_files", {}).get("image", [])) < 1:
+            return False
+        else:
+            return True
+
+    while not is_image_ready(media_obj):
         time.sleep(1)
         print("waiting for image file to be available...")
         print(media_obj["media_files"])
