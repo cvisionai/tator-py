@@ -144,8 +144,11 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         # Upload in single request.
         with get_data(path) as f:
             data = f.read()
+            headers = {}
+            if 'blob.core.windows.net' in upload_info.urls[0]:
+                headers = {'x-ms-blob-type': 'BlockBlob'}
             for attempt in range(MAX_RETRIES):
-                response = requests.put(upload_info.urls[0], data=data, timeout=timeout)
+                response = requests.put(upload_info.urls[0], data=data, timeout=timeout, headers=headers)
                 if response.status_code == 200:
                     break
                 else:
