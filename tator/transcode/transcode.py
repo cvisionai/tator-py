@@ -167,13 +167,19 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             pixel_formats.append("yuv420p")
 
     # Need to get avg_framerate
+    if type(path == list):
+        # Assume that files are the same frame rate and resolution
+        ffprobe_path = path[0]
+    else:
+        ffprobe_path = path
+
     cmd = [
         "ffprobe",
         "-v","error",
         "-show_entries", "stream",
         "-print_format", "json",
         "-select_streams", "v",
-        path,
+        ffprobe_path,
     ]
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
@@ -261,10 +267,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             filter_string = ""
             for seg_idx in range(num_segments):
                 filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}_{ridx}];[a{seg_idx}_{ridx}]setsar=1[vid{seg_idx}_{ridx}];"
-                filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];"
-                filter_string += "".join([f"[vid{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
-                filter_string += f"[bv{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]"
                 
+            filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];"
+            filter_string += "".join([f"[vid{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
+                
+            filter_string += f"[bv{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]"
+
             cmd.extend([filter_string,
                         "-metadata:s:v:0", "rotate=0",
                         "-map", f"[outv{ridx}]",
