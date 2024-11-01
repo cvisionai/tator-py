@@ -195,10 +195,19 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "ffmpeg", "-y",
         "-loglevel", "error",
         "-progress", "-",
-        "-stats_period", "10",
-        "-noautorotate", "-i", path,
-        "-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4"),
+        "-stats_period", "10"
     ]
+    # We are going to concatenate multiple segments together
+    if type(path) == list:
+        num_segments = len(path)
+        for segment in path:
+            cmd.extend(["-noautorotate", "-i", segment])
+    else:
+        num_segments = 1
+        cmd.extend(["-noautorotate", "-i", path])
+
+    cmd.extend(["-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4")])
+    
 
     vaapi_present = [c for c in codecs if find_best_encoder(c, hwaccel).find('vaapi') >= 0]
     if vaapi_present:
@@ -237,12 +246,29 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     "-vcodec", codec,
                     "-pix_fmt", pixel_format,
                     quality_flag, crfs[ridx],
-                    "-filter_complex",
+                    "-filter_complex"
+                    ])
+        
+        # Construct the complex filter
+        if num_segments == 1:
+            cmd.extend([
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
                     f"[0:v:0]{transpose}[rot0];[rot0]yadif[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
                     "-metadata:s:v:0", "rotate=0",
                     "-map", f"[outv{ridx}]",
                     output_file])
+        else:
+            filter_string = ""
+            for seg_idx in range(num_segments):
+                filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}_{ridx}];[a{seg_idx}_{ridx}]setsar=1[vid{seg_idx}_{ridx}];"
+                filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];"
+                filter_string += "".join([f"[vid{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
+                filter_string += f"[bv{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]"
+                
+            cmd.extend([filter_string,
+                        "-metadata:s:v:0", "rotate=0",
+                        "-map", f"[outv{ridx}]",
+                        output_file])
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     _launch_and_monitor_resources(cmd)
