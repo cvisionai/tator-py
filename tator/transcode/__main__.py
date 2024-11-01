@@ -21,7 +21,7 @@ from .transcode import convert_streaming
 from .transcode import convert_archival
 from .transcode import convert_audio
 from .delete_media import delete_media
-from .make_thumbnails import make_thumbnails
+from .make_thumbnails import make_thumbnail_image, make_thumbnail_gif
 
 if os.getenv("DD_LOGS_INJECTION"):
     import ddtrace.auto
@@ -128,8 +128,7 @@ def transcode_single(path, args, gid):
 
     try:
         # Make thumbnails.
-        make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
-                        paths['thumbnail_gif'])
+        make_thumbnail_image(args.host, args.token, media_id, paths['original'], paths['thumbnail'])
 
         # Determine transcodes that need to be done.
         workloads = determine_transcode(
@@ -154,6 +153,7 @@ def transcode_single(path, args, gid):
                 del workload['raw_height']
                 convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                               outpath=paths['transcoded'])
+        make_thumbnail_gif(args.host, args.token, media_id, paths['original'], paths['thumbnail_gif'])
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:

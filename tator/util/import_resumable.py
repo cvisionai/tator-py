@@ -7,7 +7,7 @@ import tator
 import os
 import tempfile
 from tator.transcode.transcode import convert_archival, convert_streaming, convert_audio
-from tator.transcode.make_thumbnails import make_thumbnails
+from tator.transcode.make_thumbnails import make_thumbnail_image, make_thumbnail_gif
 
 from pprint import pprint
 import argparse
@@ -55,12 +55,18 @@ def import_resumable(api, media_id, work_dir=None, explicit_config=None, streami
         thumb_path = os.path.join(work_dir, "thumb.jpg")
         thumb_gif_path = os.path.join(work_dir, "thumb.gif")
 
-        make_thumbnails(
+        make_thumbnail_image(
             host=args.host,
             token=args.token,
             video_path=temp_path,
             media_id=media_id,
             thumb_path=thumb_path,
+        )
+        make_thumbnail_gif(
+            host=args.host,
+            token=args.token,
+            video_path=temp_path,
+            media_id=media_id,
             thumb_gif_path=thumb_gif_path,
         )
         print("Completed Thumbnail Processing.")
