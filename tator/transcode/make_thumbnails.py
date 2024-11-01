@@ -55,107 +55,108 @@ def get_metadata(path):
 
     return (codec, fps, num_frames, width, height)
 
-def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path, only_keyframes=False):
+def make_thumbnail_image(host, token, media_id, video_path, thumb_path):
+    # Check for the existence of thumbnails
+    api = get_api(host, token)
+    media_obj = api.get_media(media_id)
+
+    if (media_obj.media_files and media_obj.media_files.thumbnail):
+        logger.info(f"Thumbnail upload skipped for media '{media_id}', they already exist")
+        return
+
+    # Create thumbnail.
+    cmd = ["ffmpeg", "-y", 
+            "-loglevel", "error",
+            "-progress", "-",
+            "-stats_period", "10",
+            "-i", video_path,
+            "-vf", "scale=256:-1",
+            "-vframes", "1", thumb_path]
+    subprocess.run(cmd, check=True)
+
+    for progress, thumbnail_info in _upload_file(
+        api,
+        media_obj.project,
+        thumb_path,
+        media_id=media_id,
+        filename=os.path.basename(thumb_path),
+    ):
+        pass
+
+    thumb_image = Image.open(thumb_path)
+    thumb_def = {
+        "path": thumbnail_info.key,
+        "size": os.stat(thumb_path).st_size,
+        "resolution": [thumb_image.height, thumb_image.width],
+        "mime": f"image/{thumb_image.format.lower()}",
+    }
+
+    response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def)
+    assert isinstance(response, MessageResponse)
+
+def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_keyframes=False):
     """ Makes thumbnails and gets metadata for original file.
     """
     # Check for the existence of thumbnails
     api = get_api(host, token)
     media_obj = api.get_media(media_id)
 
-    needs_thumb_img = not (media_obj.media_files and media_obj.media_files.thumbnail)
     needs_thumb_gif = not (media_obj.media_files and media_obj.media_files.thumbnail_gif)
 
-    if not (needs_thumb_img or needs_thumb_gif):
+    if not needs_thumb_gif:
         logger.info(f"Thumbnail upload skipped for media '{media_id}', they already exist")
         return
 
     # Get metadata for original file.
     codec, fps, num_frames, width, height = get_metadata(video_path)
 
-    # Create thumbnail.
-    if needs_thumb_img:
-        cmd = ["ffmpeg", "-y", 
-               "-loglevel", "error",
-               "-progress", "-",
-               "-stats_period", "10",
-               "-i", video_path,
-               "-vf", "scale=256:-1",
-               "-vframes", "1", thumb_path]
-        subprocess.run(cmd, check=True)
+    # Create gif thumbnail in a single pass
+    # This logic makes a max(video_length,60) second summary video than speeds it up 4 times and saves as a gif
+    video_duration = num_frames/fps
 
-    if needs_thumb_gif:
-        # Create gif thumbnail in a single pass
-        # This logic makes a max(video_length,60) second summary video than speeds it up 4 times and saves as a gif
-        video_duration = num_frames/fps
+    # Max thumbnail duration is 60 seconds
+    thumb_duration = min(60, video_duration)
 
-        # Max thumbnail duration is 60 seconds
-        thumb_duration = min(60, video_duration)
+    # We either select every Nth second based on how much longer than 60 seconds we are
+    frame_select = max(fps, (video_duration/thumb_duration)*fps)
 
-        # We either select every Nth second based on how much longer than 60 seconds we are
-        frame_select = max(fps, (video_duration/thumb_duration)*fps)
-
-        # We play each 1 second sample at 4x
-        speed_up = 4*max(1,round(video_duration/thumb_duration))
-        cmd = ["ffmpeg", "-y",
-                "-loglevel", "error",
-                "-progress", "-",
-                "-stats_period", "10",
-                "-i",
-                video_path,
-                "-vf",
-                f"select='not(mod(n\,{round(frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
-                thumb_gif_path,
-        ]
-        logger.info(f"cmd={cmd}")
-        subprocess.run(cmd, check=True)
-
-    # Upload thumbnail and thumbnail gif.
-    if needs_thumb_img:
-        for progress, thumbnail_info in _upload_file(
-            api,
-            media_obj.project,
-            thumb_path,
-            media_id=media_id,
-            filename=os.path.basename(thumb_path),
-        ):
-            pass
-
-    if needs_thumb_gif:
-        for progress, thumbnail_gif_info in _upload_file(
-            api,
-            media_obj.project,
+    # We play each 1 second sample at 4x
+    speed_up = 4*max(1,round(video_duration/thumb_duration))
+    cmd = ["ffmpeg", "-y",
+            "-loglevel", "error",
+            "-progress", "-",
+            "-stats_period", "10",
+            "-i",
+            video_path,
+            "-vf",
+            f"select='not(mod(n\,{round(frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
             thumb_gif_path,
-            media_id=media_id,
-            filename=os.path.basename(thumb_gif_path),
-        ):
-            pass
+    ]
+    logger.info(f"cmd={cmd}")
+    subprocess.run(cmd, check=True)
 
-    # Open images to get output resolution and create image definitions for thumbnails.
-    if needs_thumb_img:
-        thumb_image = Image.open(thumb_path)
-        thumb_def = {
-            "path": thumbnail_info.key,
-            "size": os.stat(thumb_path).st_size,
-            "resolution": [thumb_image.height, thumb_image.width],
-            "mime": f"image/{thumb_image.format.lower()}",
-        }
+    # Upload thumbnail gif.
+    for progress, thumbnail_gif_info in _upload_file(
+        api,
+        media_obj.project,
+        thumb_gif_path,
+        media_id=media_id,
+        filename=os.path.basename(thumb_gif_path),
+    ):
+        pass
 
-        response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def)
-        assert isinstance(response, MessageResponse)
+    thumb_gif_image = Image.open(thumb_gif_path)
+    thumb_gif_def = {
+        "path": thumbnail_gif_info.key,
+        "size": os.stat(thumb_gif_path).st_size,
+        "resolution": [thumb_gif_image.height, thumb_gif_image.width],
+        "mime": f"image/{thumb_gif_image.format.lower()}",
+    }
 
-    if needs_thumb_gif:
-        thumb_gif_image = Image.open(thumb_gif_path)
-        thumb_gif_def = {
-            "path": thumbnail_gif_info.key,
-            "size": os.stat(thumb_gif_path).st_size,
-            "resolution": [thumb_gif_image.height, thumb_gif_image.width],
-            "mime": f"image/{thumb_gif_image.format.lower()}",
-        }
-
-        response = api.create_image_file(
-            media_id, role="thumbnail_gif", image_definition=thumb_gif_def
-        )
-        assert isinstance(response, MessageResponse)
+    response = api.create_image_file(
+        media_id, role="thumbnail_gif", image_definition=thumb_gif_def
+    )
+    assert isinstance(response, MessageResponse)
 
     # Update the media object.
     response = api.update_media(media_id, media_update={
@@ -170,4 +171,5 @@ def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_pat
 
 if __name__ == '__main__':
     args = parse_args()
-    make_thumbnails(args.host, args.token, args.media, args.input, args.output, args.gif)
+    make_thumbnail_image(args.host, args.token, args.media, args.input, args.output)
+    make_thumbnail_gif(args.host, args.token, args.media, args.input, args.gif)
