@@ -38,7 +38,7 @@ logger.setLevel(logging.INFO)
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
     parser.add_argument('path', nargs='?', type=str,
-                        help='Path to directory containing video files, or a video file. '
+                        help='Path to directory containing video files, or a video file, or text file with list of video files to be concatenated. '
                              'Ignored if --url is given.')
     parser.add_argument('--extension', type=str, default='mp4', help='File extension to upload. '
                                                                      'Ignored if path is a file.')
@@ -76,6 +76,39 @@ def get_file_paths(path, base):
     }
     return paths
 
+def compare_workloads(workloads_list):
+    """
+    Compare the parameters of workloads across multiple lists to ensure consistency.
+    
+    :param workloads_list: List of workload lists to compare.
+    :return: True if all workloads are consistent, False otherwise.
+    """
+    if not workloads_list:
+        return True  # No workloads to compare, considered consistent
+
+    # Extract the first workload list as the reference
+    reference_workloads = workloads_list[0]
+
+    # Define a helper function to extract relevant parameters from a workload
+    def extract_params(workload):
+        return (
+            workload['category'],
+            workload['raw_height'],
+            workload['raw_width'],
+            tuple(workload['configs'])
+        )
+
+    # Extract parameters from the reference workloads
+    reference_params = [extract_params(workload) for workload in reference_workloads]
+
+    # Compare parameters with other workload lists
+    for workloads in workloads_list[1:]:
+        current_params = [extract_params(workload) for workload in workloads]
+        if current_params != reference_params:
+            return False  # Inconsistent parameters found
+
+    return True  # All parameters are consistent
+
 def transcode_single(path, args, gid):
     """Transcodes a single file.
     """
@@ -92,15 +125,33 @@ def transcode_single(path, args, gid):
                     fp.write(chunk)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
+    
+    # Check if path is a json file with multiple paths
+    fnames = None
+    if os.path.splitext(args.path)[-1] == '.json':
+        # This transcode will concat multiple files
+        with open(args.path,'r') as fp:
+            fnames = json.load(fp)
+        assert args.name is not None, "args.name must be provided"
 
-    # Get file paths.
-    if args.work_dir:
-        base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
+        # Get file paths.
+        if args.work_dir:
+            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(args.name))[0])
+        else:
+            base, _ = os.path.splitext(args.name)
+        
+        # Use the first input file
+        paths = get_file_paths(fnames[0], base)
+    
     else:
-        base, _ = os.path.splitext(path)
-    paths = get_file_paths(path, base)
+        # Get file paths.
+        if args.work_dir:
+            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
+        else:
+            base, _ = os.path.splitext(path)
+        paths = get_file_paths(path, base)
 
-    # Get md5 for the file.
+        # Get md5 for the file.
     md5 = md5sum(paths['original'])
 
     # Get base filename.
@@ -121,8 +172,7 @@ def transcode_single(path, args, gid):
         if args.section_id:
             kwargs['section_id'] = args.section_id
             args.section = None
-        media_id = create_media(args.host, args.token, args.project, args.type, args.section,
-                                name, md5, gid, uid, args.attributes, args.url, **kwargs)
+        media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5, gid, uid, args.attributes, args.url, **kwargs)
     else:
         media_id = args.media_id
 
@@ -130,10 +180,24 @@ def transcode_single(path, args, gid):
         # Make thumbnails.
         make_thumbnail_image(args.host, args.token, media_id, paths['original'], paths['thumbnail'])
 
-        # Determine transcodes that need to be done.
-        workloads = determine_transcode(
-            args.host, args.token, args.type, media_id, path, group_to=args.group_to
-        )
+        if fnames:
+            workloads_list = []
+            for fname in fnames:
+                # Determine transcodes that need to be done.
+                workloads = determine_transcode(
+                    args.host, args.token, args.type, media_id, fname, group_to=args.group_to
+                )
+                workloads_list.append(workloads)
+                if compare_workloads(workloads_list):
+                    # Use the first workload, but update path
+                    workloads = workloads_list[0]
+                    for workload in workloads:
+                        workload['path'] = fnames
+        else:
+            # Determine transcodes that need to be done.
+            workloads = determine_transcode(
+                args.host, args.token, args.type, media_id, path, group_to=args.group_to
+            )
 
         # Transcode the video file.
         for workload in workloads:
