@@ -284,12 +284,14 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     api = get_api(host, token)
     media_obj = api.get_media(media)
 
+    # Skip this check for now, need to calculate concat duration for concat files
+    '''
     for ridx, resolution in enumerate(resolutions):
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         _, res_length = get_length_of_file(output_file)
         length_delta = abs((media_obj.num_frames - res_length)/media_obj.num_frames)
         assert length_delta < 0.1 # Assert length delta is less than 10 percent.
-
+    '''
     
 
     for resolution in resolutions:

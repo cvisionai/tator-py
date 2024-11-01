@@ -177,7 +177,7 @@ def transcode_single(path, args, gid):
         media_id = args.media_id
 
     try:
-        # Make thumbnails.
+        # Make thumbnails. 
         make_thumbnail_image(args.host, args.token, media_id, paths['original'], paths['thumbnail'])
 
         if fnames:
@@ -217,7 +217,13 @@ def transcode_single(path, args, gid):
                 del workload['raw_height']
                 convert_audio(**workload, host=args.host, token=args.token, media=media_id,
                               outpath=paths['transcoded'])
-        make_thumbnail_gif(args.host, args.token, media_id, paths['original'], paths['thumbnail_gif'])
+        
+        #Get lowest resolution output for making the gif
+        outputs = os.listdir(paths['transcoded'])
+        # Files are resolution height names, sort by lowest
+        min_file = min(outputs, key=lambda x: int(os.path.splitext(x)[0]))
+
+        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'],min_file), paths['thumbnail_gif'])
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:
