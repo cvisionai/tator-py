@@ -223,7 +223,7 @@ def transcode_single(path, args, gid):
         # Files are resolution height names, sort by lowest
         min_file = min(outputs, key=lambda x: int(os.path.splitext(x)[0]))
 
-        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'],os.path.splitext(min_file) +'.mp4'), paths['thumbnail_gif'])
+        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'],os.path.splitext(min_file)[0] +'.mp4'), paths['thumbnail_gif'])
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:
