@@ -58,7 +58,7 @@ def _merge_gifs(layout, gif_list, output_filename) -> bool:
 
 
 def make_multi_stream(
-    api, type_id, layout, name, media_ids, section, quality=None, frame_offset=None
+    api, type_id, layout, name, media_ids, section=None, quality=None, frame_offset=None, section_id=None
 ):
     """Creates a multiview from the given arguments
 
@@ -72,12 +72,14 @@ def make_multi_stream(
     :type name: str
     :param media_ids: List of media_ids to multi-stream
     :type media_ids: List[int]
-    :param section: Section name; if it does not exist, it will be created.
+    :param section: [Optional] Section name; if it does not exist, it will be created. Either section or section_id must be provided.
     :type section: str
     :param quality: [Optional] The desired resolution to pull from the single media
     :type quality: List[int]
     :param frame_offset: [Optional] Frame offsets to apply to each stream.
     :type frame_offset: List[int]
+    :param section_id: [Optional] Section ID to use instead of creating a new section.
+    :type section_id: int
     :returns: Response from media object creation.
     """
     tiled_thumb_filename = "tiled_thumb.jpg"
@@ -93,13 +95,18 @@ def make_multi_stream(
     project = multi_stream_type.project
 
     # Fetch the section. If it does not exist, create it.
-    sections = api.get_section_list(project, name=section)
-    if len(sections) == 0:
-        section_spec = {"name": section, "tator_user_sections": str(uuid1())}
-        response = api.create_section(project, section_spec=section_spec)
-        section_obj = api.get_section_list(project, name=section)[0]
+    if section_id:
+        section_obj = api.get_section(section_id)
+    elif section:
+        sections = api.get_section_list(project, name=section)
+        if len(sections) == 0:
+            section_spec = {"name": section, "tator_user_sections": str(uuid1())}
+            response = api.create_section(project, section_spec=section_spec)
+            section_obj = api.get_section_list(project, name=section)[0]
+        else:
+            section_obj = sections[0]
     else:
-        section_obj = sections[0]
+        raise RuntimeError("Either section or section_id must be provided")
 
     n_ids = len(media_ids)
     n_spots = layout[0] * layout[1]
