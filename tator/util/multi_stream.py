@@ -132,6 +132,8 @@ def make_multi_stream(
         for pos, media_id in enumerate(media_ids):
             media = media_lookup[media_id]
             md5 = media.md5
+            if media.media_files is None:
+                continue
             thumbnail_gifs = media.media_files.thumbnail_gif
             if thumbnail_gifs:
                 thumb_gif = thumbnail_gifs[0].path
