@@ -128,9 +128,9 @@ def transcode_single(path, args, gid):
     
     # Check if path is a json file with multiple paths
     fnames = None
-    if os.path.splitext(args.path)[-1] == '.json':
+    if os.path.splitext(path)[-1] == '.json':
         # This transcode will concat multiple files
-        with open(args.path,'r') as fp:
+        with open(path,'r') as fp:
             fnames = json.load(fp)
         assert args.name is not None, "args.name must be provided"
 
