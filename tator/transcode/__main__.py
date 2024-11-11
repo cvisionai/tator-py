@@ -224,11 +224,14 @@ def transcode_single(path, args, gid):
         pattern = re.compile(r'^\d+\.mp4$')
         outputs = [os.path.basename(f) for f in glob.glob(os.path.join(paths['transcoded'], '*.mp4'))]
         outputs = list(filter(pattern.match, outputs))
+        resolutions = [int(os.path.splitext(f)[0]) for f in outputs]
+        if any([res > 256 for res in resolutions]):
+            resolutions = [res for res in resolutions if res > 256]
 
         # Files are resolution height names, sort by lowest
-        min_file = min(outputs, key=lambda x: int(os.path.splitext(x)[0]))
+        input_res = min(resolutions)
 
-        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'],os.path.splitext(min_file)[0] +'.mp4'), paths['thumbnail_gif'])
+        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'], f"{input_res}.mp4"), paths['thumbnail_gif'])
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:
