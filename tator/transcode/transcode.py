@@ -167,7 +167,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             pixel_formats.append("yuv420p")
 
     # Need to get avg_framerate
-    if type(path == list):
+    if isinstance(path, list):
         # Assume that files are the same frame rate and resolution
         ffprobe_path = path[0]
     else:
