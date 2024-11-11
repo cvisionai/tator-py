@@ -8,6 +8,7 @@ from uuid import uuid1
 import logging
 import json
 import glob
+import re
 
 from progressbar import progressbar
 import requests
@@ -220,7 +221,10 @@ def transcode_single(path, args, gid):
                               outpath=paths['transcoded'])
         
         #Get lowest resolution output for making the gif
+        pattern = re.compile(r'^\d+\.mp4$')
         outputs = [os.path.basename(f) for f in glob.glob(os.path.join(paths['transcoded'], '*.mp4'))]
+        outputs = list(filter(pattern.match, outputs))
+
         # Files are resolution height names, sort by lowest
         min_file = min(outputs, key=lambda x: int(os.path.splitext(x)[0]))
 
