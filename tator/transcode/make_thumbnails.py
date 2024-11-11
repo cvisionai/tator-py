@@ -158,15 +158,6 @@ def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_k
     )
     assert isinstance(response, MessageResponse)
 
-    # Update the media object.
-    response = api.update_media(media_id, media_update={
-        'num_frames': num_frames,
-        'fps': fps,
-        'codec': codec,
-        'width': width,
-        'height': height,
-    })
-    assert isinstance(response, MessageResponse)
     logger.info(f'Thumbnail upload done! {response.message}')
 
 if __name__ == '__main__':
