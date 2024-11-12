@@ -16,7 +16,7 @@ from ..util import md5sum
 
 from .create_media import create_media
 from .determine_transcode import determine_transcode
-from .make_thumbnails import make_thumbnails
+from .make_thumbnails import make_thumbnail_image, make_thumbnail_gif
 
 logger = logging.getLogger(__name__)
 
@@ -90,6 +90,6 @@ if __name__ == '__main__':
         f.write(str(media_id))
 
     # Make thumbnails.
-    make_thumbnails(args.host, args.token, media_id, paths['original'], paths['thumbnail'],
-                    paths['thumbnail_gif'])
+    make_thumbnail_image(args.host, args.token, media_id, paths['original'], paths['thumbnail'])
+    make_thumbnail_gif(args.host, args.token, media_id, paths['original'], paths['thumbnail_gif'])
 

@@ -6,6 +6,7 @@ import logging
 import os
 
 from ..openapi.tator_openapi.models import MediaType
+from ..openapi.tator_openapi.models import MessageResponse
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
 from .transcode import find_best_encoder, get_length_info
@@ -89,11 +90,20 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
                 width = int(stream["height"])
     logger.info(f"Height of video is : {height}")
 
+    # Update the media object.
+    api = get_api(host, token)
+    response = api.update_media(media_id, media_update={
+        'num_frames': num_frames,
+        'fps': fps,
+        'width': width,
+        'height': height,
+    })
+    assert isinstance(response, MessageResponse)
+
     # Generate output path
     base, ext = os.path.splitext(path)
 
     # Get media type object.
-    api = get_api(host, token)
     if media_type == -1:
         media_types = api.get_media_type_list(args.project)
         for media_type_obj in media_types:

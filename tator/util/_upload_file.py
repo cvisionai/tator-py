@@ -96,6 +96,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         parts = []
         yield (0, None)
         gcp_upload = upload_info.upload_id == upload_info.urls[0]
+        ms_upload = 'blob.core.windows.net' in upload_info.urls[0]
         if gcp_upload:
             max_workers = 1 # GCP does not handle parallel workers
         with get_data(path) as f:
@@ -107,7 +108,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 futures = set()
                 for chunk_count, url in enumerate(upload_info.urls):
                     file_part = f.read(chunk_size)
-                    default_etag_val = str(chunk_count) if gcp_upload else None
+                    default_etag_val = str(chunk_count) if (gcp_upload or ms_upload) else None
                     future = executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout)
                     futures.add(future)
                     if len(futures) > max_workers:
@@ -144,9 +145,12 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         # Upload in single request.
         with get_data(path) as f:
             data = f.read()
+            headers = {}
+            if 'blob.core.windows.net' in upload_info.urls[0]:
+                headers = {'x-ms-blob-type': 'BlockBlob'}
             for attempt in range(MAX_RETRIES):
-                response = requests.put(upload_info.urls[0], data=data, timeout=timeout)
-                if response.status_code == 200:
+                response = requests.put(upload_info.urls[0], data=data, timeout=timeout, headers=headers)
+                if response.status_code in [200, 201]:
                     break
                 else:
                     logger.warning(f"Upload of {path} failed ({response.text}) size={len(data)}! Attempt "

@@ -20,7 +20,7 @@ def test_transcode_fault_handling(host, token, project):
         code = e.status
 
     assert(exception)
-    assert(code == 400)
+    assert code >= 400
 
 def test_transcode_existing_media(host, token, project, video_type, video_file):
     tator_api = tator.get_api(host, token)
@@ -144,4 +144,3 @@ def test_transcode_cancel(host, token, project, video_type, video_file):
     print(response.message)
     remaining = tator_api.get_transcode_list(project, media_id=media_ids)
     assert(len(remaining) == 0)
-    

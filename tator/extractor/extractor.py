@@ -19,7 +19,7 @@ except:
 
 
 import tator
-from tator.transcode.make_thumbnails import make_thumbnails
+from tator.transcode.make_thumbnails import make_thumbnail_image, make_thumbnail_gif
 from tator.transcode.transcode import make_video_definition
 from tator.transcode.transcode import convert_streaming
 from tator.transcode.transcode import default_archival_upload
@@ -59,8 +59,8 @@ def import_media(api,
         try:
             thumb_path = os.path.join(td, f"{uuid.uuid4()}.jpg")
             thumb_gif_path = os.path.join(td, f"{uuid.uuid4()}.gif")
-            make_thumbnails(host, token, media_id,
-                            path, thumb_path, thumb_gif_path)
+            make_thumbnail_image(host, token, media_id,
+                            path, thumb_path)
 
             video_definition = make_video_definition(path)
             video_height = video_definition["resolution"][0]
@@ -75,6 +75,9 @@ def import_media(api,
                               video_width,
                               video_height,
                               [f"{video_height}:23:h264"])
+            
+            make_thumbnail_gif(host, token, media_id,
+                            path, thumb_gif_path)
 
             default_archival_upload(api,
                                     host,
