@@ -79,10 +79,10 @@ def _get_video_info(path):
                 height = int(stream["width"])
                 width = int(stream["height"])
     logger.info(f"Height of video is : {height}")
-    return fps, num_frames, width, height
+    return fps, num_frames, width, height, audio
 
 def update_media(host, token, media_type, media_id, path):
-    fps, num_frames, width, height = _get_video_info(path)
+    fps, num_frames, width, height, _ = _get_video_info(path)
     # Update the media object.
     api = get_api(host, token)
     response = api.update_media(media_id, media_update={
@@ -104,7 +104,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
-    fps, num_frames, width, height = _get_video_info(path)
+    fps, num_frames, width, height, audio = _get_video_info(path)
     api = get_api(host, token)
 
     # Generate output path
