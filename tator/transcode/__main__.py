@@ -236,7 +236,7 @@ def transcode_single(path, args, gid):
 
         # Patch the media with the concatenated file
         max_res = max(resolutions)
-        update_media(args.host, arg.token, args.type, media_id, os.path.join(paths['transcoded'], f"{max_res}.mp4"))
+        update_media(args.host, args.token, args.type, media_id, os.path.join(paths['transcoded'], f"{max_res}.mp4"))
 
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
