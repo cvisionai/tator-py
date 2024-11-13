@@ -18,7 +18,7 @@ from ..util import md5sum
 from ..util.get_api import get_api
 
 from .create_media import create_media
-from .determine_transcode import determine_transcode
+from .determine_transcode import determine_transcode, update_media
 from .transcode import convert_streaming
 from .transcode import convert_archival
 from .transcode import convert_audio
