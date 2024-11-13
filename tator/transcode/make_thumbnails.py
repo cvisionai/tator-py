@@ -160,7 +160,10 @@ def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_k
 
     logger.info(f'Thumbnail upload done! {response.message}')
 
+def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path, only_keyframes=False):
+    make_thumbnail_image(host, token, media_id, video_path, thumb_path)
+    make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_keyframes)
+
 if __name__ == '__main__':
     args = parse_args()
-    make_thumbnail_image(args.host, args.token, args.media, args.input, args.output)
-    make_thumbnail_gif(args.host, args.token, args.media, args.input, args.gif)
+    make_thumbnails(args.host, args.token, args.media, args.input, args.output, args.gif)
