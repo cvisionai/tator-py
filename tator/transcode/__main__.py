@@ -231,7 +231,13 @@ def transcode_single(path, args, gid):
         # Files are resolution height names, sort by lowest
         input_res = min(resolutions)
 
+        # Make gif thumbnail
         make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'], f"{input_res}.mp4"), paths['thumbnail_gif'])
+
+        # Patch the media with the concatenated file
+        max_res = max(resolutions)
+        determine_transcode(args.host, arg.token, args.type, media_id, os.path.join(paths['transcoded'], f"{max_res}.mp4"), group_to=args.group_to)
+
     except Exception as exc:
         logging.error("Encountered exception!", exc_info=True)
         if args.media_id == -1:
