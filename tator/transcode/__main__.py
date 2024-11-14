@@ -228,6 +228,10 @@ def transcode_single(path, args, gid):
         if any([res > 256 for res in resolutions]):
             resolutions = [res for res in resolutions if res > 256]
 
+        if len(resolutions) == 0:
+            logger.info(f"No transcodes of streaming files was performed, skipping gif creation and media update.")
+            return
+
         # Files are resolution height names, sort by lowest
         input_res = min(resolutions)
 

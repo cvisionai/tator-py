@@ -22,7 +22,7 @@ def wait_for_transcode(api, transcode_id):
 
 def test_import_video(host, token, project, video_type):
     api = tator.get_api(host, token)
-    url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
+    url = 'https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia.mp4'
     response = tator.util.import_media(api, video_type, url, _request_timeout=30)
     print(response.message)
     wait_for_transcode(api, response.id)
@@ -45,7 +45,7 @@ def test_import_video(host, token, project, video_type):
 
 def test_import_video_to_section_id(host, token, project, video_type):
     api = tator.get_api(host, token)
-    url = 'http://www.ballastmedia.com/wp-content/uploads/AudioVideoSyncTest_BallastMedia.mp4'
+    url = 'https://tator-ci.s3.amazonaws.com/AudioVideoSyncTest_BallastMedia.mp4'
     section_id = api.create_section(project, {"name":"Video import to section ID"}).id
     response = tator.util.import_media(api, video_type, url, _request_timeout=30, section_id=section_id)
     print(response.message)
