@@ -6,7 +6,7 @@ def test_algo_template(host, token, organization, project, video):
     api = tator.get_api(host, token)
     response = api.create_hosted_template(organization, {
         "name": "echo",
-        "url": "https://raw.githubusercontent.com/cvisionai/tator/dev/500-hosted-workflows-applets/doc/examples/workflow_template/echo.yaml",
+        "url": "https://raw.githubusercontent.com/cvisionai/tator/dev/fix-concat-duration/doc/examples/workflow_template/echo.yaml",
         "headers": [],
         "tparams": [{"name": "message", "value": "Hello from the tator-py tests"}]
     })
