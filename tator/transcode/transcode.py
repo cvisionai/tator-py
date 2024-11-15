@@ -94,6 +94,7 @@ def parse_args():
                                                     'format is resolution:crf:codec.')
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
+    parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
     return parser.parse_args()
 
 def get_length_of_file(path):
@@ -143,7 +144,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, force_fps=-1):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -183,7 +184,10 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     ]
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
-    avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
+    if force_fps < 0:
+        avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
+    else:
+        avg_frame_rate=force_fps
     tags=video_info['streams'][0].get('tags')
     rotation = 0
     if tags is not None:
@@ -506,7 +510,7 @@ if __name__ == '__main__':
         else:
             configs = [res for res in args.configs.split(',')]
         convert_streaming(args.host, args.token, args.media, args.url, args.work_dir,
-                          args.raw_width, args.raw_height, configs)
+                          args.raw_width, args.raw_height, configs, args.hwaccel, args.force_fps)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.url, args.work_dir,
                          args.raw_width, args.raw_height, args.size)
