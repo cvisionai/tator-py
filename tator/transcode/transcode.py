@@ -448,6 +448,9 @@ def make_audio_definition(disk_file):
     return audio_def
 
 def convert_audio(host, token, media, path, outpath):
+    if isinstance(path, list):
+        logger.info("Concatenation with audio not supported yet")
+        return
     os.makedirs(outpath, exist_ok=True)
     logger.info("Extracting audio")
     output_file = os.path.join(outpath, f"audio.m4a")
