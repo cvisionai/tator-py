@@ -184,6 +184,9 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
     video_info = json.loads(output)
     avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
+    fps_fractional = avg_frame_rate.split("/")
+    avg_frame_rate = float(fps_fractional[0]) / float(fps_fractional[1])
+    avg_frame_rate = round(avg_frame_rate, 4)
     tags=video_info['streams'][0].get('tags')
     rotation = 0
     if tags is not None:
