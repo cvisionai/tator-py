@@ -219,6 +219,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         pixel_format = pixel_formats[ridx]
         hw_upload = ''
         preset = presets[ridx]
+        if codec.find("qsv") >= 0:
+            quality_flag = "-global_quality"
         if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
             pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
