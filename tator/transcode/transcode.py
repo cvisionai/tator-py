@@ -143,7 +143,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -295,6 +295,9 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         assert length_delta < 0.1 # Assert length delta is less than 10 percent.
     '''
     
+    # if we are inhibiting upload, we are done!
+    if inhibit_upload:
+        return
 
     for resolution in resolutions:
         output_file = os.path.join(outpath, f"{resolution}.mp4")
