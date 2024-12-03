@@ -59,9 +59,9 @@ def find_best_encoder(codec, hwaccel=False):
     global encoder_lookup
     if encoder_lookup is None:
         # Default codecs
-        encoder_lookup={"hevc": "libx265",
-                        "h264": "libx264",
-                        "av1": "libsvtav1"}
+        encoder_lookup={"hevc": os.getenv("TATOR_HEVC_ENCODER", "libx265"),
+                        "h264": os.getenv("TATOR_H264_ENCODER", "libx264"),
+                        "av1": os.getenv("TATOR_AV1_ENCODER", "libsvtav1")}
         if hwaccel:
             cmd = [
                 "ffmpeg",
