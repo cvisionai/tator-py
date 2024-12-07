@@ -67,6 +67,7 @@ def parse_args():
                         help="Deletes working files after each file is transcoded and "
                              "uploaded.")
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
+    parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
