@@ -68,6 +68,7 @@ def parse_args():
                              "uploaded.")
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
+    parser.add_argument('--force_gop', type=int, default=-1, help='Force a specific gop size for the video.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -209,7 +210,7 @@ def transcode_single(path, args, gid):
             del workload['id']
             if category == 'streaming':
                 convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                                  outpath=paths['transcoded'], hwaccel=args.hwaccel, force_fps=args.force_fps)
+                                  outpath=paths['transcoded'], hwaccel=args.hwaccel, force_fps=args.force_fps, force_gop=args.force_gop)
             elif category == 'archival':
                 del workload['configs']
                 convert_archival(**workload, host=args.host, token=args.token, media=media_id,

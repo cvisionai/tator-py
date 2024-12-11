@@ -144,7 +144,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1, force_gop=-1):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -154,6 +154,10 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     crfs = [config.split(':')[1] for config in configs]
     codecs = [config.split(':')[2] for config in configs]
     presets = [config.split(':')[3] for config in configs]
+    if args.force_fps > 0:
+        gop_value = int(args.force_fps)
+    else:
+        gop_value = 25
 
     # Handle pixel format addition as an optional argument
     # This will maintain backwards API compatibility to folks using
@@ -231,7 +235,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     for ridx, resolution in enumerate(resolutions):
         per_res = ["-an",
             "-metadata:s", "handler_name=tator",
-            "-g", "25",
+            "-g", str(gop_value),
             "-movflags",
             "faststart+frag_keyframe+empty_moov+default_base_moof"]
         logger.info(f"Generating resolution @ {resolution}")
