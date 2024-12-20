@@ -352,16 +352,20 @@ def default_archival_upload(api, host, media, path, encoded, size):
     response = api.create_video_file(media, role='archival', video_definition=video_def)
     assert isinstance(response, MessageResponse)
 
-def convert_archival(host,
-                     token,
-                     media,
-                     path,
-                     outpath,
-                     raw_width,
-                     raw_height,
-                     size=None,
-                     explicit_config=None,
-                     hwaccel=False):
+
+def convert_archival(
+    host,
+    token,
+    media,
+    path,
+    outpath,
+    raw_width,
+    raw_height,
+    size=None,
+    explicit_config=None,
+    hwaccel=False,
+    inhibit_upload=False,
+):
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
     media_obj = api.get_media(media)
@@ -417,10 +421,12 @@ def convert_archival(host,
                 elif archive_config.encode.vcodec == 'h264':
                     cmd += ["-tag:v", "avc1"]
                 cmd.append(output_file)
-                    
+
                 logger.info('ffmpeg cmd = {}'.format(cmd))
                 _launch_and_monitor_resources(cmd)
 
+            if inhibit_upload:
+                continue
             if archive_config.s3_storage is None:
                 default_archival_upload(api, host, media, output_file, True, size)
             else:
@@ -435,6 +441,7 @@ def convert_archival(host,
                 client = boto3.client('s3', aws_access_key_id=aws_access_key,
                                       aws_secret_access_key=aws_secret_access_key)
                 client.upload_file(output_file, bucket_name, os.path.basename(output_file))
+
 
 def make_audio_definition(disk_file):
     cmd = [
@@ -459,7 +466,8 @@ def make_audio_definition(disk_file):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return audio_def
 
-def convert_audio(host, token, media, path, outpath):
+
+def convert_audio(host, token, media, path, outpath, inhibit_upload=False):
     if isinstance(path, list):
         logger.info("Concatenation with audio not supported yet")
         return
@@ -477,19 +485,23 @@ def convert_audio(host, token, media, path, outpath):
                       output_file]
     subprocess.run(audio_extraction, check=True)
     logger.info("Finished extracting audio!")
-  
-    # Upload audio. 
+
+    if inhibit_upload:
+        return
+
+    # Upload audio.
     api = get_api(host, token)
     media_obj = api.get_media(media)
     for progress, upload_info in _upload_file(api, media_obj.project, output_file,
                                               media_id=media, filename=os.path.basename(output_file)):
         logger.info(f"Progress: {progress}%")
-   
+
     # Patch in audio file with the api.
     audio_def = {**make_audio_definition(output_file),
                  'path': upload_info.key}
     response = api.create_audio_file(media, role='audio', audio_definition=audio_def)
     assert isinstance(response, MessageResponse)
+
 
 def get_length_info(stream):
     """ Given a json dump of the stream return the length of the video """
@@ -527,4 +539,3 @@ if __name__ == '__main__':
                          args.raw_width, args.raw_height, args.size)
     elif args.category == 'audio':
         convert_audio(args.host, args.token, args.media, args.url, args.work_dir)
-

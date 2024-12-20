@@ -55,7 +55,8 @@ def get_metadata(path):
 
     return (codec, fps, num_frames, width, height)
 
-def make_thumbnail_image(host, token, media_id, video_path, thumb_path):
+
+def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_upload=False):
     # Check for the existence of thumbnails
     api = get_api(host, token)
     media_obj = api.get_media(media_id)
@@ -73,6 +74,9 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path):
             "-vf", "scale=256:-1",
             "-vframes", "1", thumb_path]
     subprocess.run(cmd, check=True)
+
+    if inhibit_upload:
+        return
 
     for progress, thumbnail_info in _upload_file(
         api,
@@ -94,7 +98,10 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path):
     response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def)
     assert isinstance(response, MessageResponse)
 
-def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_keyframes=False):
+
+def make_thumbnail_gif(
+    host, token, media_id, video_path, thumb_gif_path, only_keyframes=False, inhibit_upload=False
+):
     """ Makes thumbnails and gets metadata for original file.
     """
     # Check for the existence of thumbnails
@@ -135,6 +142,9 @@ def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_k
     logger.info(f"cmd={cmd}")
     subprocess.run(cmd, check=True)
 
+    if inhibit_upload:
+        return
+
     # Upload thumbnail gif.
     for progress, thumbnail_gif_info in _upload_file(
         api,
@@ -159,6 +169,7 @@ def make_thumbnail_gif(host, token, media_id, video_path, thumb_gif_path, only_k
     assert isinstance(response, MessageResponse)
 
     logger.info(f'Thumbnail upload done! {response.message}')
+
 
 def make_thumbnails(host, token, media_id, video_path, thumb_path, thumb_gif_path, only_keyframes=False):
     make_thumbnail_image(host, token, media_id, video_path, thumb_path)

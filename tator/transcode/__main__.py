@@ -68,6 +68,9 @@ def parse_args():
                              "uploaded.")
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
+    parser.add_argument(
+        "--inhibit-upload", action="store_true", help="Do not upload the transcoded files to Tator."
+    )
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -128,7 +131,7 @@ def transcode_single(path, args, gid):
                     fp.write(chunk)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
-    
+
     # Check if path is a json file with multiple paths
     fnames = None
     if os.path.splitext(path)[-1] == '.json':
@@ -142,10 +145,10 @@ def transcode_single(path, args, gid):
             base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(args.name))[0])
         else:
             base, _ = os.path.splitext(args.name)
-        
+
         # Use the first input file
         paths = get_file_paths(fnames[0], base)
-    
+
     else:
         # Get file paths.
         if args.work_dir:
@@ -180,8 +183,15 @@ def transcode_single(path, args, gid):
         media_id = args.media_id
 
     try:
-        # Make thumbnails. 
-        make_thumbnail_image(args.host, args.token, media_id, paths['original'], paths['thumbnail'])
+        # Make thumbnails.
+        make_thumbnail_image(
+            args.host,
+            args.token,
+            media_id,
+            paths["original"],
+            paths["thumbnail"],
+            inhibit_upload=args.inhibit_upload,
+        )
 
         if fnames:
             workloads_list = []
@@ -208,20 +218,41 @@ def transcode_single(path, args, gid):
             del workload['category']
             del workload['id']
             if category == 'streaming':
-                convert_streaming(**workload, host=args.host, token=args.token, media=media_id,
-                                  outpath=paths['transcoded'], hwaccel=args.hwaccel, force_fps=args.force_fps)
+                convert_streaming(
+                    **workload,
+                    host=args.host,
+                    token=args.token,
+                    media=media_id,
+                    outpath=paths["transcoded"],
+                    hwaccel=args.hwaccel,
+                    force_fps=args.force_fps,
+                    inhibit_upload=args.inhibit_upload,
+                )
             elif category == 'archival':
                 del workload['configs']
-                convert_archival(**workload, host=args.host, token=args.token, media=media_id,
-                                 outpath=paths['transcoded'], hwaccel=args.hwaccel)
+                convert_archival(
+                    **workload,
+                    host=args.host,
+                    token=args.token,
+                    media=media_id,
+                    outpath=paths["transcoded"],
+                    hwaccel=args.hwaccel,
+                    inhibit_upload=args.inhibit_upload,
+                )
             elif category == 'audio':
                 del workload['configs']
                 del workload['raw_width']
                 del workload['raw_height']
-                convert_audio(**workload, host=args.host, token=args.token, media=media_id,
-                              outpath=paths['transcoded'])
-        
-        #Get lowest resolution output for making the gif
+                convert_audio(
+                    **workload,
+                    host=args.host,
+                    token=args.token,
+                    media=media_id,
+                    outpath=paths["transcoded"],
+                    inhibit_upload=args.inhibit_upload,
+                )
+
+        # Get lowest resolution output for making the gif
         pattern = re.compile(r'^\d+\.mp4$')
         outputs = [os.path.basename(f) for f in glob.glob(os.path.join(paths['transcoded'], '*.mp4'))]
         outputs = list(filter(pattern.match, outputs))
@@ -237,7 +268,14 @@ def transcode_single(path, args, gid):
         input_res = min(resolutions)
 
         # Make gif thumbnail
-        make_thumbnail_gif(args.host, args.token, media_id, os.path.join(paths['transcoded'], f"{input_res}.mp4"), paths['thumbnail_gif'])
+        make_thumbnail_gif(
+            args.host,
+            args.token,
+            media_id,
+            os.path.join(paths["transcoded"], f"{input_res}.mp4"),
+            paths["thumbnail_gif"],
+            inhibit_upload=args.inhibit_upload,
+        )
 
         # Patch the media with the concatenated file
         max_res = max(resolutions)
@@ -292,7 +330,7 @@ def transcode_main(args):
             transcode_single(path, args, gid)
     else:
         transcode_single(args.path, args, gid)
-    
+
 if __name__ == '__main__':
     args = parse_args()
     transcode_main(args)
