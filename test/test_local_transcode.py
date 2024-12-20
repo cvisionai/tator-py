@@ -48,6 +48,35 @@ def test_local_transcode(host, token, project, video_type, video_file):
     stream_info = _get_stream_info(media_obj.media_files.streaming[0].path)
     assert stream_info['pix_fmt'] == 'yuv420p'
 
+
+def test_local_transcode_inhibit(host, token, project, video_type, video_file):
+    unique_name = f"{uuid.uuid4()}.mp4"
+    cmd = [
+        "python3",
+        "-m",
+        "tator.transcode",
+        video_file,
+        "--host",
+        host,
+        "--token",
+        token,
+        "--project",
+        str(project),
+        "--type",
+        str(video_type),
+        "--section",
+        "Locally transcoded",
+        "--name",
+        unique_name,
+        "--inhibit-upload",
+    ]
+    _assert_subprocess(cmd)
+    api = tator.get_api(host, token)
+    media_obj = api.get_media_list(project, name=unique_name, presigned=3600)[0]
+
+    assert media_obj.media_files is None
+
+
 def test_local_transcode_yuv444p(host, token, project, yuv444p_video_type, video_file):
     unique_name = f"{uuid.uuid4()}.mp4"
     cmd = [
