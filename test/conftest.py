@@ -42,9 +42,32 @@ def pytest_addoption(parser):
             "will fall back to the environment variable `TATOR_TOKEN`."
         ),
     )
+    parser.addoption(
+        "--run-alt-bucket",
+        action="store_true",
+        default=False,
+        help="Run alt-bucket-test",
+    )
+
     parser.addoption('--bucket', help='Optional path to yaml file containing bucket spec. If '
                                       'given, the project will use this bucket.')
     parser.addoption('--keep', help='Do not delete project when done', action='store_true')
+
+
+def pytest_collection_modifyitems(config, items):
+    if not config.getoption("--run-alt-bucket"):
+        # Skip tests marked as slow
+        alt_bucket = pytest.mark.skip(reason="Need --run-alt-bucket to run")
+        for item in items:
+            found_it = False
+            for key in item.keywords:
+                print(f"Key = {key}")
+                if key == "test_alt_bucket_upload":
+                    found_it = True
+            if found_it:
+                print("ADDING SKIP")
+                item.add_marker(alt_bucket)
+
 
 def pytest_generate_tests(metafunc):
     if 'host' in metafunc.fixturenames:
@@ -749,3 +772,67 @@ def attribute_box_type(request, project, attribute_video_type, attribute_image_t
     })
     box_type_id = response.id
     yield box_type_id
+
+
+def are_we_in_compose(request):
+    import subprocess
+
+    if (
+        request.config.option.host.find("localhost") != -1
+        or request.config.option.host.find("127.0.0.`") != -1
+    ):
+        proc = subprocess.run(
+            "docker compose ls", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
+        if proc.returncode == 0 and proc.stdout.decode().find("tator") >= 0:
+            return True
+
+    return False
+
+
+def get_env_vars():
+    import subprocess
+
+    gunicorn_proc = subprocess.run(
+        "docker exec gunicorn env".split(),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    print(f"Return code = {gunicorn_proc.returncode}")
+    if gunicorn_proc.returncode == 0:
+        gunicorn_env = gunicorn_proc.stdout.decode().split("\n")
+        env_map = {a[0]: a[1] for a in [x.split("=") for x in gunicorn_env if x != ""]}
+        return env_map
+    return None
+
+
+@pytest.fixture(scope="session")
+def alt_bucket(request, organization):
+
+    import tator
+
+    host = request.config.option.host
+    token = request.config.option.token
+    tator_api = tator.get_api(host, token)
+    # Test only runs in OSS
+    assert are_we_in_compose(request)
+    env_map = get_env_vars()
+    assert env_map
+    access_key = env_map["DEFAULT_LIVE_ACCESS_KEY"]
+    secret_key = env_map["DEFAULT_LIVE_SECRET_KEY"]
+
+    bucket_spec = {
+        "name": "tator-alt",
+        "external_host": env_map["DEFAULT_LIVE_EXTERNAL_HOST"],
+        "config": {
+            "region_name": "us-east-1",
+            "endpoint_url": env_map["DEFAULT_LIVE_ENDPOINT_URL"],
+            "aws_access_key_id": access_key,
+            "aws_secret_access_key": secret_key,
+        },
+        "store_type": "MINIO",
+        "archive_sc": "STANDARD",
+        "live_sc": "STANDARD",
+    }
+    bucket_resp = tator_api.create_bucket(organization, bucket_spec=bucket_spec)
+    yield bucket_resp.id
