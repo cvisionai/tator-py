@@ -41,8 +41,22 @@ def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_
                 time.sleep(10 * attempt)
                 logger.warning(f"Backing off for {10 * attempt} seconds...")
 
-def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=1024*1024*10, file_size=None, file_id=None, timeout=30, max_workers=10, gcp_compat=True):
-    """ Uploads a file.
+
+def _upload_file(
+    api,
+    project,
+    path,
+    media_id=None,
+    filename=None,
+    chunk_size=1024 * 1024 * 10,
+    file_size=None,
+    file_id=None,
+    timeout=30,
+    max_workers=10,
+    gcp_compat=True,
+    bucket_id=None,
+):
+    """Uploads a file.
 
     :param api: `tator.TatorApi` object.
     :param project: Unique integer identifying a project.
@@ -54,6 +68,7 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
     :param timeout: [Optional] Request timeout for uploads in seconds. Default is 30.
     :param max_workers: [Optional] Max workers for concurrent requests.
     :param gcp_compat: [Optional] If True, chunk size will be rounded up to the nearest multiple of 256KB for Google Cloud Storage compatibility.
+    :param bucket_id: [Optional] Bucket ID for upload, will default to project bucket if not provided.
     """
 
     # Get number of chunks.
@@ -83,6 +98,8 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
         upload_kwargs['file_id'] = file_id
     if filename is not None:
         upload_kwargs['filename'] = filename
+    if bucket_id is not None:
+        upload_kwargs["bucket_id"] = bucket_id
     upload_info = api.get_upload_info(project, **upload_kwargs)
 
     # Functor to wrap around file versus URL
@@ -124,11 +141,15 @@ def _upload_file(api, project, path, media_id=None, filename=None, chunk_size=10
                 while completed is False and count < MAX_RETRIES:
                     try:
                         count += 1
-                        response = api.complete_upload(project, upload_completion_spec={
-                            'key': upload_info.key,
-                            'upload_id': upload_info.upload_id,
-                            'parts': sorted(parts, key=lambda x: x['PartNumber']),
-                        })
+                        response = api.complete_upload(
+                            project,
+                            upload_completion_spec={
+                                "key": upload_info.key,
+                                "upload_id": upload_info.upload_id,
+                                "parts": sorted(parts, key=lambda x: x["PartNumber"]),
+                                "bucket_id": bucket_id,
+                            },
+                        )
                         if not isinstance(response, tator.models.MessageResponse):
                             raise RuntimeError(f"Upload completion failed!")
                         logger.info(response.message)
