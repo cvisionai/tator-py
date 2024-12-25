@@ -5,6 +5,7 @@ import logging
 import requests
 import time
 import concurrent.futures
+from urllib.parse import urlparse, parse_qs
 
 import tator
 
@@ -108,12 +109,17 @@ def _upload_file(
             return requests.get(path, stream=True).raw
         else:
             return open(path, 'rb')
+
+    # Determine if we need the microsoft header
+    parsed_url = urlparse(upload_info.urls[0])
+    query_params = parse_qs(parsed_url.query)
+    ms_upload = 'sig' in query_params
+
     if num_chunks > 1:
         # Upload parts.
         parts = []
         yield (0, None)
         gcp_upload = upload_info.upload_id == upload_info.urls[0]
-        ms_upload = 'blob.core.windows.net' in upload_info.urls[0]
         if gcp_upload:
             max_workers = 1 # GCP does not handle parallel workers
         with get_data(path) as f:
@@ -167,7 +173,7 @@ def _upload_file(
         with get_data(path) as f:
             data = f.read()
             headers = {}
-            if 'blob.core.windows.net' in upload_info.urls[0]:
+            if ms_upload:
                 headers = {'x-ms-blob-type': 'BlockBlob'}
             for attempt in range(MAX_RETRIES):
                 response = requests.put(upload_info.urls[0], data=data, timeout=timeout, headers=headers)
