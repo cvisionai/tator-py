@@ -61,11 +61,9 @@ def pytest_collection_modifyitems(config, items):
         for item in items:
             found_it = False
             for key in item.keywords:
-                print(f"Key = {key}")
                 if key == "test_alt_bucket_upload":
                     found_it = True
             if found_it:
-                print("ADDING SKIP")
                 item.add_marker(alt_bucket)
 
 
