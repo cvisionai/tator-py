@@ -534,7 +534,7 @@ def find_leaves(args, src_api, dest_api, dest_project):
     if args.skip_leaves:
         logger.info("Skipping leaves due to --skip_leaves")
     else:
-        depth = 0
+        depth = 2
         while True:
             src_leaves = src_api.get_leaf_list(args.project, depth=depth)
             if len(src_leaves) == 0:
