@@ -34,6 +34,7 @@ def parse_args():
     - Localization types (idempotent, based on localization type name)
     - State types (idempotent, based on state type name)
     - Leaf types (idempotent, based on leaf type name)
+    - File types (idempoent, based on file type name)
     - Media (idempotent, based on section name and media name)
     - Localizations (only migrated if destination media has no localizations)
     - States (only migrated if destination media has no states)
@@ -93,6 +94,8 @@ def parse_args():
     parser.add_argument('--skip_state_types', help='If given, state types will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_leaf_types', help='If given, leaf types will not be migrated.',
+                        action='store_true')
+    parser.add_argument('--skip_file_types', help='If given, file types will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_media', help='If given, media will not be migrated. Use this to '
                                              'only migrate a project configuration.',
@@ -297,6 +300,27 @@ def find_leaf_types(args, src_api, dest_api, dest_project):
         logger.info(f"{len(leaf_types)} leaf types will be created ({len(leaf_type_mapping.values())} "
                      "already exist).")
     return leaf_types, leaf_type_mapping
+
+def find_file_types(args, src_api, dest_api, dest_project):
+    """ Finds existing file types in destination project. Returns ID mapping between source
+        and destination file types and file types that need to be created.
+    """
+    file_types = []
+    file_type_mapping = {}
+    if args.skip_file_types:
+        logger.info(f"Skipping file types due to --skip_file_types.")
+    else:
+        file_types = src_api.get_file_type_list(args.project)
+        if dest_project is not None:
+            existing = dest_api.get_file_type_list(dest_project.id)
+            existing_names = [file_type.name for file_type in existing]
+            for file_type in file_types:
+                if file_type.name in existing_names:
+                    file_type_mapping[file_type.id] = existing[existing_names.index(file_type.name)].id
+            file_types = [file_type for file_type in file_types if file_type.name not in existing_names]
+        logger.info(f"{len(file_types)} file types will be created ({len(file_type_mapping.values())} "
+                     "already exist).")
+    return file_types, file_type_mapping
 
 def find_media(args, src_api, dest_api, dest_project):
     """ Finds existing media in destination project. Returns media that need to be created and ID
@@ -658,6 +682,16 @@ def create_leaf_types(src_api, dest_api, dest_project, leaf_types, leaf_type_map
     logger.info(f"Created {len(leaf_types)} leaf types.")
     return leaf_type_mapping
 
+def create_file_types(src_api, dest_api, dest_project, file_types, file_type_mapping):
+    """ Creates file types. Returns updated file type mapping.
+    """
+    for file_type in file_types:
+        response = tator.util.clone_file_type(src_api, file_type.id, dest_project, dest_api)
+        assert(isinstance(response, tator.models.CreateResponse))
+        file_type_mapping[file_type.id] = response.id
+    logger.info(f"Created {len(file_types)} file types.")
+    return file_type_mapping
+
 def create_media(args, src_api, dest_api, dest_project, media, media_type_mapping, media_mapping, ignore_media_transfer):
     """ Creates media. Returns media mapping.
     """
@@ -781,6 +815,7 @@ if __name__ == '__main__':
                                                                             dest_project)
     state_types, state_type_mapping = find_state_types(args, src_api, dest_api, dest_project)
     leaf_types, leaf_type_mapping = find_leaf_types(args, src_api, dest_api, dest_project)
+    file_types, file_type_mapping = find_file_types(args, src_api, dest_api, dest_project)
     media, media_mapping = find_media(args, src_api, dest_api, dest_project)
     localizations, localization_mapping = find_localizations(args, src_api, dest_api, dest_project, media,
                                                              media_mapping, localization_type_mapping,
@@ -811,6 +846,7 @@ if __name__ == '__main__':
                                                 state_type_mapping, media_type_mapping)
         leaf_type_mapping = create_leaf_types(src_api, dest_api, dest_project, leaf_types,
                                               leaf_type_mapping)
+        file_type_mapping = create_file_types(src_api, dest_api, dest_project, file_types, file_type_mapping)
         media_mapping = create_media(args, src_api, dest_api, dest_project, media,
                                      media_type_mapping, media_mapping, ignore_media_transfer)
         localization_mapping = create_localizations(args, src_api, dest_api, dest_project,
