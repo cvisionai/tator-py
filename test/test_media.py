@@ -112,6 +112,7 @@ def test_section(host, token, project, video):
     )
     media = tator_api.get_media(video)
     assert media.primary_section == section_id
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
 
     # Unset media `primary_section` attribute
     response = tator_api.update_media(
@@ -119,6 +120,8 @@ def test_section(host, token, project, video):
     )
     media = tator_api.get_media(video)
     assert media.primary_section == None
+    assert media.attributes["tator_user_sections"] == ""
+
 
     # Update media `primary_section` attribute with a bulk update
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
@@ -126,8 +129,9 @@ def test_section(host, token, project, video):
     response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec, count=1)
     media = tator_api.get_media(video)
     assert media.primary_section == section_id
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
 
-    # Unset media `tator_user_sections` attribute with a bulk update
+    # Unset media `primary_section` attribute with a bulk update
     response = tator_api.update_media_list(
         project,
         media_id=[video],
@@ -135,6 +139,42 @@ def test_section(host, token, project, video):
     )
     media = tator_api.get_media(video)
     assert media.primary_section == None
+    assert media.attributes["tator_user_sections"] == ""
+
+    # Update media `tator_user_sections` attribute
+    update_spec = {"attributes": {"tator_user_sections": section_spec["tator_user_sections"]}}
+    response = tator_api.update_media(
+        video, update_spec
+    )
+    media = tator_api.get_media(video)
+    assert media.primary_section == section_id
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
+
+    # Unset media `tator_user_sections` attribute
+    response = tator_api.update_media(
+        video, {"attributes": {"tator_user_sections": ""}}
+    )
+    media = tator_api.get_media(video)
+    assert media.primary_section == None
+    assert media.attributes["tator_user_sections"] == ""
+
+    # Update media `tator_user_sections` attribute with a bulk update
+    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec, count=2)
+    response = tator_api.update_media_list(project, media_id=[video], media_bulk_update=update_spec, count=1)
+    media = tator_api.get_media(video)
+    assert media.primary_section == section_id
+    assert media.attributes["tator_user_sections"] == section_spec["tator_user_sections"]
+
+    # Unset media `primary_section` attribute with a bulk update
+    response = tator_api.update_media_list(
+        project,
+        media_id=[video],
+        media_bulk_update={"attributes": {"tator_user_sections": ""}},
+    )
+    media = tator_api.get_media(video)
+    assert media.primary_section == None
+    assert media.attributes["tator_user_sections"] == ""
 
 
 def test_import_multiple_images(host, token, project, image_type):
