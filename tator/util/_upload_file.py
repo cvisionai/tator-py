@@ -26,6 +26,8 @@ def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_
                     "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
                 }
             response = requests.put(url, **kwargs)
+            if response.status_code not in [200, 201]:
+                raise RuntimeError(f"Upload of {path} chunk {chunk_count} failed ({response.text})!")
             etag_str = response.headers.get("ETag", default_etag_val)
             if etag_str == None:
                 raise RuntimeError("No ETag in response!")
