@@ -167,7 +167,7 @@ def make_multi_stream(
             "attributes": attributes,
             "name": name,
             "md5": md5,
-            "section": section_obj.name,
+            "section_id": section_obj.id,
             "type": type_id,
         }
         try:
