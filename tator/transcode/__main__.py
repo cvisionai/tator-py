@@ -71,7 +71,7 @@ def parse_args():
     parser.add_argument(
         "--inhibit-upload", action="store_true", help="Do not upload the transcoded files to Tator."
     )
-    parser.add_argument('--filter_complex', type=str, help='Allows override of filter_complex argument to ffmpeg for streaming files.')
+    parser.add_argument('--filter_complex', type=str, help='Allows (optionally templated) override of filter_complex argument to ffmpeg for streaming files. Substitutes {fps}, {resolution}, {hw_upload}, and {ridx} if those patterns are present.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -133,7 +133,23 @@ def transcode_single(path, args, gid):
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
-    if isinstance(path, list):
+    fnames = None
+    if os.path.splitext(path)[-1] == '.json':
+        # This transcode will concat multiple files
+        with open(path,'r') as fp:
+            fnames = json.load(fp)
+        assert args.name is not None, "args.name must be provided"
+
+        # Get file paths.
+        if args.work_dir:
+            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(args.name))[0])
+        else:
+            base, _ = os.path.splitext(args.name)
+
+        # Use the first input file
+        paths = get_file_paths(fnames[0], base)
+
+    elif isinstance(path, list):
         if args.name is None:
             raise ValueError(f"Must provide --name when path is a list!")
         if args.work_dir:
@@ -186,10 +202,24 @@ def transcode_single(path, args, gid):
             inhibit_upload=args.inhibit_upload,
         )
 
-        # Determine transcodes that need to be done.
-        workloads = determine_transcode(
-            args.host, args.token, args.type, media_id, path, group_to=args.group_to
-        )
+        if fnames:
+            workloads_list = []
+            for fname in fnames:
+                # Determine transcodes that need to be done.
+                workloads = determine_transcode(
+                    args.host, args.token, args.type, media_id, fname, group_to=args.group_to
+                )
+                workloads_list.append(workloads)
+                if compare_workloads(workloads_list):
+                    # Use the first workload, but update path
+                    workloads = workloads_list[0]
+                    for workload in workloads:
+                        workload['path'] = fnames
+        else:
+            # Determine transcodes that need to be done.
+            workloads = determine_transcode(
+                args.host, args.token, args.type, media_id, path, group_to=args.group_to
+            )
 
         # Transcode the video file.
         for workload in workloads:
