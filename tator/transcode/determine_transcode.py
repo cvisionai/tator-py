@@ -104,11 +104,12 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
     """
-    fps, num_frames, width, height, audio = _get_video_info(path)
+    info_path = path[0] if isinstance(path, list) else path
+    fps, num_frames, width, height, audio = _get_video_info(info_path)
     api = get_api(host, token)
 
     # Generate output path
-    base, ext = os.path.splitext(path)
+    base, ext = os.path.splitext(info_path)
 
     # Get media type object.
     if media_type == -1:
