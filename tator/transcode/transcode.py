@@ -292,7 +292,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                             "-map", f"[outv{ridx}]",
                             output_file])
         else:
-            cmd.extend([filter_complex.format(ridx=ridx, resolution=resolution, fps=avg_frame_rate, hw_upload=hw_upload),
+            width = round(raw_width * resolution / raw_height)
+            cmd.extend([filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload),
                         "-metadata:s:v:0", "rotate=0",
                         "-map", f"[outv{ridx}]",
                         output_file])

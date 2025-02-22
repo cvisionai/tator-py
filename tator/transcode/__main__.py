@@ -71,7 +71,7 @@ def parse_args():
     parser.add_argument(
         "--inhibit-upload", action="store_true", help="Do not upload the transcoded files to Tator."
     )
-    parser.add_argument('--filter_complex', type=str, help='Allows (optionally templated) override of filter_complex argument to ffmpeg for streaming files. Substitutes {fps}, {resolution}, {hw_upload}, and {ridx} if those patterns are present.')
+    parser.add_argument('--filter_complex', type=str, help='Allows (optionally templated) override of filter_complex argument to ffmpeg for streaming files. Substitutes {fps}, {width}, {height}, {hw_upload}, and {ridx} if those patterns are present, where width and height correspond to the output resolutions.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -134,7 +134,16 @@ def transcode_single(path, args, gid):
         raise ValueError(f"Must provide one of --url or path!")
 
     fnames = None
-    if os.path.splitext(path)[-1] == '.json':
+    if isinstance(path, list):
+        if args.name is None:
+            raise ValueError(f"Must provide --name when path is a list!")
+        if args.work_dir:
+            base = os.path.join(args.work_dir, args.name)
+        else:
+            base = args.name
+        paths = get_file_paths(path[0], base)
+
+    elif os.path.splitext(path)[-1] == '.json':
         # This transcode will concat multiple files
         with open(path,'r') as fp:
             fnames = json.load(fp)
@@ -148,15 +157,6 @@ def transcode_single(path, args, gid):
 
         # Use the first input file
         paths = get_file_paths(fnames[0], base)
-
-    elif isinstance(path, list):
-        if args.name is None:
-            raise ValueError(f"Must provide --name when path is a list!")
-        if args.work_dir:
-            base = os.path.join(args.work_dir, args.name)
-        else:
-            base = args.name
-        paths = get_file_paths(path[0], base)
 
     else:
         # Get file paths.
