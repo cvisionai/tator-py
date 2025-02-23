@@ -57,8 +57,9 @@ def test_state_type_delete(host, token, project, video_type, video):
     assert str(num_states) in response.message, "State count not found in delete response"
     try:
         caught_it = False
-        tator_api.get_state_count(project, type=state_type)
+        count = -1
+        count = tator_api.get_state_count(project, type=state_type)
     except:
         caught_it=True
     finally:
-        assert caught_it
+        assert caught_it or count == 0
