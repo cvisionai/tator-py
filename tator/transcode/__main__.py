@@ -236,7 +236,7 @@ def transcode_single(path, args, gid):
                     hwaccel=args.hwaccel,
                     force_fps=args.force_fps,
                     inhibit_upload=args.inhibit_upload,
-                    filter_complex=args.filter_complex,
+                    filter_complex=getattr(args, "filter_complex", None)
                 )
             elif category == 'archival':
                 del workload['configs']
