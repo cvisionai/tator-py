@@ -179,7 +179,7 @@ def _upload_file(
                 headers = {'x-ms-blob-type': 'BlockBlob'}
             for attempt in range(MAX_RETRIES):
                 response = requests.put(upload_info.urls[0], data=data, timeout=timeout, headers=headers)
-                if response.status_code >= 400:
+                if response.status_code < 400:
                     break
                 else:
                     logger.warning(f"Upload of {path} failed ({response.text}) size={len(data)}! Attempt "
