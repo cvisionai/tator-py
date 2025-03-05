@@ -203,7 +203,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     elif rotation == 270:
         transpose = "transpose=1"
 
-    if video_info['streams'][0]['field_order'] == "progressive":
+    if video_info['streams'][0].get('field_order') == "progressive":
         yadif = "null"
     else:
         yadif = "yadif"
