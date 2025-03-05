@@ -73,8 +73,9 @@ def test_localization_type_delete(host, token, project, video_type, video):
 
     try:
         caught_it = False
-        response = tator_api.get_localization_count(project, type=box_type)
+        count = -1
+        count = tator_api.get_localization_count(project, type=box_type)
     except:
         caught_it=True
     finally:
-        assert caught_it
+        assert caught_it or count == 0

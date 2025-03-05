@@ -410,7 +410,7 @@ def video_helper(host: str, token: str, project: int, video_type: int, video_fil
             continue
         streaming = response[0].media_files.streaming
         have_archival = response[0].media_files.archival is not None
-        if streaming and have_archival and len(streaming) == 4:
+        if streaming and have_archival and len(streaming) == 4 and response[0].num_frames:
             video_id = response[0].id
             break
     # Check for proper attribute setting via upload_file

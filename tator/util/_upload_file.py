@@ -26,7 +26,7 @@ def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_
                     "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
                 }
             response = requests.put(url, **kwargs)
-            if response.status_code not in [200, 201]:
+            if response.status_code >= 400:
                 raise RuntimeError(f"Upload of {path} chunk {chunk_count} failed ({response.text})!")
             etag_str = response.headers.get("ETag", default_etag_val)
             if etag_str == None:
@@ -179,7 +179,7 @@ def _upload_file(
                 headers = {'x-ms-blob-type': 'BlockBlob'}
             for attempt in range(MAX_RETRIES):
                 response = requests.put(upload_info.urls[0], data=data, timeout=timeout, headers=headers)
-                if response.status_code in [200, 201]:
+                if response.status_code < 400:
                     break
                 else:
                     logger.warning(f"Upload of {path} failed ({response.text}) size={len(data)}! Attempt "

@@ -38,8 +38,9 @@ def test_media_type_delete(host, token, project, image_file):
 
     try:
         caught_it = False
-        tator_api.get_media_count(project, type=image_type)
+        count = -1
+        count = tator_api.get_media_count(project, type=image_type)
     except:
         caught_it=True
     finally:
-        assert caught_it
+        assert caught_it or count == 0

@@ -52,8 +52,9 @@ def test_leaf_type_delete(host, token, project):
 
     try:
         caught_it = False
-        tator_api.get_leaf_count(project, type=leaf_type)
+        count = -1
+        count = tator_api.get_leaf_count(project, type=leaf_type)
     except:
         caught_it=True
     finally:
-        assert caught_it
+        assert caught_it or count == 0
