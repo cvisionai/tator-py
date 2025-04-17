@@ -153,7 +153,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     resolutions = [int(config.split(':')[0]) for config in configs]
     crfs = [config.split(':')[1] for config in configs]
     codecs = [config.split(':')[2] for config in configs]
-    presets = [config.split(':')[3] for config in configs]
+    presets = [config.split(':')[3] for config in configs] # Presets must be the same for all outputs in a multiheaded transcode
 
     # Handle pixel format addition as an optional argument
     # This will maintain backwards API compatibility to folks using
@@ -225,16 +225,60 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         cmd.extend(["-noautorotate", "-i", path])
         cmd.extend(["-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4")])
     
-
+    hw_upload = ''
     vaapi_present = [c for c in codecs if find_best_encoder(c, hwaccel).find('vaapi') >= 0]
     if vaapi_present:
         cmd.extend(['-init_hw_device', 'vaapi=hw',
                     '-filter_hw_device', 'hw'])
 
     logger.info("Transcoding to %s", resolutions)
+
+    # Construct the complex filter
+    if filter_complex is None:
+        if num_segments == 1:
+            if vaapi_present:
+                seg_idx = 0
+                hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
+            cmd.extend(
+                    # Scale the black mp4 to the input resolution prior to concating and scaling back down.
+                    f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[vid_fps][bv]concat=n=2:v=1:a=0[concatenated];"
+            )
+        else:
+            filter_string = ""
+            if vaapi_present:
+                hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
+            for seg_idx in range(num_segments):
+                filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}];[a{seg_idx}]setsar=1[vid{seg_idx}];[vid{seg_idx}]fps={avg_frame_rate}{hw_upload}[vid_fps{seg_idx}];"
+                
+            filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];"
+            filter_string += "".join([f"[vid_fps{seg_idx}]" for seg_idx in range(num_segments)]) 
+                
+            filter_string += f"[bv]concat=n={num_segments+1}:v=1:a=0[concatenated];"
+
+    else:
+        width = round(raw_width * resolution / raw_height)
+        cmd.extend([filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload)])
+
+    # Add split parameters for each resolution
+    cmd.extend(f"[concatenated] split={len(resolutions)}")
+    [cmd.extend([f"[split{ridx}]"]) for ridx in range(len(resolutions))]
+    cmd.extend(";")
+    [cmd.extend(f"[split{ridx}] scale=-2:{resolution}, pad=ceil(iw/2)*2:ceil(ih/2)*2 [outv{ridx}];") for ridx,resolution in enumerate(resolutions)]
     for ridx, resolution in enumerate(resolutions):
+        # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
+        # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
+        '''
+        cmd.extend([filter_string,
+                        "-metadata:s:v:0", "rotate=0",
+                        "-map", f"[outv{ridx}]",
+                        output_file])
+        "-metadata:s:v:0", "rotate=0",
+                    "-map", f"[outv{ridx}]",
+                    output_file])
+        '''
         per_res = ["-an",
             "-metadata:s", "handler_name=tator",
+            "-metadata:s", "rotate=0",
             "-g", "25",
             "-movflags",
             "faststart+frag_keyframe+empty_moov+default_base_moof"]
@@ -243,7 +287,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         codec = find_best_encoder(codecs[ridx], hwaccel)
         quality_flag = "-crf"
         pixel_format = pixel_formats[ridx]
-        hw_upload = ''
+        
         preset = presets[ridx]
         if codec.find("qsv") >= 0:
             quality_flag = "-global_quality"
@@ -251,7 +295,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             quality_flag = "-global_quality"
             pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
             # add format filter for vaapi + add hwupload to incantation
-            hw_upload=f'[uf{ridx}];[uf{ridx}]format={pixel_format}[format{ridx}];[format{ridx}]hwupload'
+            
 
         if codec.find('264') > 0:
             preset = preset if preset else 'fast'
@@ -261,42 +305,15 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             preset = preset if preset else '5'
             per_res.extend(['-preset', preset, "-tune", "fastdecode"])
 
-        cmd.extend([*per_res,
+        cmd.extend([f"-map", f"[outv{ridx}]",
+                    *per_res,
                     "-vcodec", codec,
                     "-pix_fmt", pixel_format,
                     quality_flag, crfs[ridx],
-                    "-filter_complex"
+                    output_file
                     ])
         
-        # Construct the complex filter
-        if filter_complex is None:
-            if num_segments == 1:
-                cmd.extend([
-                        # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                        f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
-                        "-metadata:s:v:0", "rotate=0",
-                        "-map", f"[outv{ridx}]",
-                        output_file])
-            else:
-                filter_string = ""
-                for seg_idx in range(num_segments):
-                    filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}_{ridx}];[a{seg_idx}_{ridx}]setsar=1[vid{seg_idx}_{ridx}];"
-                    
-                filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];"
-                filter_string += "".join([f"[vid{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
-                    
-                filter_string += f"[bv{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]"
-
-                cmd.extend([filter_string,
-                            "-metadata:s:v:0", "rotate=0",
-                            "-map", f"[outv{ridx}]",
-                            output_file])
-        else:
-            width = round(raw_width * resolution / raw_height)
-            cmd.extend([filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload),
-                        "-metadata:s:v:0", "rotate=0",
-                        "-map", f"[outv{ridx}]",
-                        output_file])
+        
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     _launch_and_monitor_resources(cmd)
