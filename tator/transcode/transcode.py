@@ -260,13 +260,14 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     else:
         #width = round(raw_width * resolution / raw_height)
-        filter_parts.append(filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload))
+        filter_string = filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload)
+        #filter_parts.append(filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload))
 
     # Add split parameters for each resolution
-    filter_parts.append(f"[concatenated] split={len(resolutions)}")
-    [filter_parts.append([f"[split{ridx}]"]) for ridx in range(len(resolutions))]
-    filter_parts.append(";")
-    [filter_parts.append(f"[split{ridx}] scale=-2:{resolution}, pad=ceil(iw/2)*2:ceil(ih/2)*2 [outv{ridx}];") for ridx,resolution in enumerate(resolutions)]
+    split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(resolutions))])
+    scale_parts = "".join([f"[split{ridx}]scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}];" for ridx,resolution in enumerate(resolutions)])
+    filter_string += f"[concatenated] split={len(resolutions)} " + split_output_labels + ";" + scale_parts
+    filter_parts.append(filter_string)
     cmd.extend(filter_parts)
     for ridx, resolution in enumerate(resolutions):
         # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
