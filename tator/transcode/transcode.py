@@ -233,13 +233,15 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     logger.info("Transcoding to %s", resolutions)
 
+    cmd.extend(["-filter_complex"])
     # Construct the complex filter
+    filter_parts = []
     if filter_complex is None:
         if num_segments == 1:
             if vaapi_present:
                 seg_idx = 0
                 hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
-            cmd.extend(
+            filter_parts.append(
                     # Scale the black mp4 to the input resolution prior to concating and scaling back down.
                     f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[vid_fps][bv]concat=n=2:v=1:a=0[concatenated];"
             )
@@ -254,16 +256,18 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             filter_string += "".join([f"[vid_fps{seg_idx}]" for seg_idx in range(num_segments)]) 
                 
             filter_string += f"[bv]concat=n={num_segments+1}:v=1:a=0[concatenated];"
+            filter_parts.append(filter_string)
 
     else:
-        width = round(raw_width * resolution / raw_height)
-        cmd.extend([filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload)])
+        #width = round(raw_width * resolution / raw_height)
+        filter_parts.append(filter_complex.format(ridx=ridx, width=width, height=resolution, fps=avg_frame_rate, hw_upload=hw_upload))
 
     # Add split parameters for each resolution
-    cmd.extend(f"[concatenated] split={len(resolutions)}")
-    [cmd.extend([f"[split{ridx}]"]) for ridx in range(len(resolutions))]
-    cmd.extend(";")
-    [cmd.extend(f"[split{ridx}] scale=-2:{resolution}, pad=ceil(iw/2)*2:ceil(ih/2)*2 [outv{ridx}];") for ridx,resolution in enumerate(resolutions)]
+    filter_parts.append(f"[concatenated] split={len(resolutions)}")
+    [filter_parts.append([f"[split{ridx}]"]) for ridx in range(len(resolutions))]
+    filter_parts.append(";")
+    [filter_parts.append(f"[split{ridx}] scale=-2:{resolution}, pad=ceil(iw/2)*2:ceil(ih/2)*2 [outv{ridx}];") for ridx,resolution in enumerate(resolutions)]
+    cmd.extend(filter_parts)
     for ridx, resolution in enumerate(resolutions):
         # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
         # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
