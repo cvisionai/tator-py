@@ -273,19 +273,19 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             if num_segments == 1:
                 cmd.extend([
                         # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                        f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[vid{ridx}][bv{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]",
+                        f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a{ridx}];[a{ridx}]setsar=1[vid{ridx}];[vid{ridx}]fps={avg_frame_rate}[vid_fps{ridx}];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[bv{ridx}]fps={avg_frame_rate}[bv_fps{ridx}];[vid_fps{ridx}][bv_fps{ridx}]concat=n=2:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2{hw_upload}[outv{ridx}]",
                         "-metadata:s:v:0", "rotate=0",
                         "-map", f"[outv{ridx}]",
                         output_file])
             else:
                 filter_string = ""
                 for seg_idx in range(num_segments):
-                    filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}_{ridx}];[a{seg_idx}_{ridx}]setsar=1[vid{seg_idx}_{ridx}];"
+                    filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}_{ridx}];[a{seg_idx}_{ridx}]setsar=1[vid{seg_idx}_{ridx}];[vid{seg_idx}_{ridx}]fps={avg_frame_rate}[vid_fps{seg_idx}_{ridx}]"
                     
-                filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];"
-                filter_string += "".join([f"[vid{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
+                filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv{ridx}];[bv{ridx}]fps={avg_frame_rate}[bv_fps{ridx}];"
+                filter_string += "".join([f"[vid_fps{seg_idx}_{ridx}]" for seg_idx in range(num_segments)]) 
                     
-                filter_string += f"[bv{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]"
+                filter_string += f"[bv_fps{ridx}]concat=n={num_segments+1}:v=1:a=0[rv{ridx}];[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2{hw_upload}[outv{ridx}]"
 
                 cmd.extend([filter_string,
                             "-metadata:s:v:0", "rotate=0",
