@@ -242,7 +242,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                 seg_idx = 0
                 hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
             # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-            filter_string=f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[bv]fps={avg_frame_rate}[bv_fps];[vid_fps][bv]concat=n=2:v=1:a=0[concatenated];"
+            filter_string=f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[bv]fps={avg_frame_rate}[bv_fps];[vid_fps][bv_fps]concat=n=2:v=1:a=0[concatenated];"
         else:
             filter_string = ""
             if vaapi_present:
