@@ -241,10 +241,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             if vaapi_present:
                 seg_idx = 0
                 hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
-            filter_parts.append(
-                    # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-                    f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[vid_fps][bv]concat=n=2:v=1:a=0[concatenated];"
-            )
+            # Scale the black mp4 to the input resolution prior to concating and scaling back down.
+            filter_string=f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[vid_fps][bv]concat=n=2:v=1:a=0[concatenated];"
         else:
             filter_string = ""
             if vaapi_present:
@@ -270,17 +268,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     filter_parts.append(filter_string)
     cmd.extend(filter_parts)
     for ridx, resolution in enumerate(resolutions):
-        # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
-        # ;[rv{ridx}]scale=-2:{resolution}[catv{ridx}];[catv{ridx}]pad=ceil(iw/2)*2:ceil(ih/2)*2[norate{ridx}];[norate{ridx}]fps={avg_frame_rate}{hw_upload}[outv{ridx}]
-        '''
-        cmd.extend([filter_string,
-                        "-metadata:s:v:0", "rotate=0",
-                        "-map", f"[outv{ridx}]",
-                        output_file])
-        "-metadata:s:v:0", "rotate=0",
-                    "-map", f"[outv{ridx}]",
-                    output_file])
-        '''
         per_res = ["-an",
             "-metadata:s", "handler_name=tator",
             "-metadata:s", "rotate=0",
@@ -299,9 +286,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
             pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
-            # add format filter for vaapi + add hwupload to incantation
-            
-
         if codec.find('264') > 0:
             preset = preset if preset else 'fast'
             per_res.extend(["-preset", preset,
