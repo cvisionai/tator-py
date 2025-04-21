@@ -75,7 +75,21 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
     # Do a search on paginated states.
     states = []
     for start in [0, 100, 200, 300, 400]:
-        states += api.get_state_list(project, type=collection_type, attribute=["test_bool::false"],start=start, stop=start+100)
+        got_exception = False
+        try:
+            states += api.get_state_list(project, type=collection_type, attribute=["test_bool::false"],start=start, stop=start+100)
+        except tator.openapi.tator_openapi.exceptions.ApiException as e:
+            got_exception = True
+            if e.status >= 400:
+                # This is expected if we have less than page_size files left
+                break
+            else:
+                raise e
+        if start > len(all_states):
+            assert(got_exception)
+        else:
+            assert(not got_exception)
+
     assert(len(states) == len(expected_states))
     assert(collections.Counter([state.id for state in states]) == \
            collections.Counter([state.id for state in all_states]))
