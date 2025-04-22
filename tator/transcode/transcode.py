@@ -264,6 +264,9 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     # Add split parameters for each resolution
     split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(resolutions))])
     scale_parts = "".join([f"[split{ridx}]scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}];" for ridx,resolution in enumerate(resolutions)])
+    # Last part of scale parts should now be ";" and needs to be removed
+    if scale_parts.endswith(";"):
+        scale_parts = scale_parts[:-1]
     filter_string += f"[concatenated] split={len(resolutions)} " + split_output_labels + ";" + scale_parts
     filter_parts.append(filter_string)
     cmd.extend(filter_parts)
