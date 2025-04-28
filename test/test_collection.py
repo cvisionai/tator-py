@@ -77,7 +77,8 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
     for start in [0, 100, 200, 300, 400]:
         got_exception = False
         try:
-            states += api.get_state_list(project, type=collection_type, attribute=["test_bool::false"],start=start, stop=start+100)
+            this_states = api.get_state_list(project, type=collection_type, attribute=["test_bool::false"],start=start, stop=start+100)
+            states.extend(this_states)
         except tator.openapi.tator_openapi.exceptions.ApiException as e:
             got_exception = True
             if e.status >= 400:
@@ -86,7 +87,7 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
             else:
                 raise e
         if start > len(all_states):
-            assert(got_exception | len(states) == 0)
+            assert(got_exception | len(this_states) == 0)
         else:
             assert(not got_exception)
 
