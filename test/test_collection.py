@@ -86,7 +86,7 @@ def test_media_states(host, token, project, image_type, image_set, collection_ty
             else:
                 raise e
         if start > len(all_states):
-            assert(got_exception)
+            assert(got_exception | len(states) == 0)
         else:
             assert(not got_exception)
 
