@@ -109,166 +109,167 @@ def test_localization_crud(host, token, project, video_type, video_temp, box_typ
     mapping = {"new_version": "version"}
 
     # Test bulk create.
-    num_localizations = random.randint(2000, 10000)
-    existing = len(tator_api.get_localization_list(project, type=box_type, media_id=[video_temp]))
-    boxes = [
-        random_localization(project, box_type, video_obj, post=True)
-        for _ in range(num_localizations)
-    ]
-    box_ids = []
-    for response in tator.util.chunked_create(
-        tator_api.create_localization_list, project, body=boxes
-    ):
-        box_ids += response.id
-    assert len(box_ids) == len(boxes)
-    print(f"Created {len(box_ids)} boxes!")
+    num_localization_randoms = [2424,8342,11231] # Pick a few random numbers to test bulk create.
+    for num_localizations in num_localization_randoms:
+        existing = len(tator_api.get_localization_list(project, type=box_type, media_id=[video_temp]))
+        boxes = [
+            random_localization(project, box_type, video_obj, post=True)
+            for _ in range(num_localizations)
+        ]
+        box_ids = []
+        for response in tator.util.chunked_create(
+            tator_api.create_localization_list, project, body=boxes
+        ):
+            box_ids += response.id
+        assert len(box_ids) == len(boxes)
+        print(f"Created {len(box_ids)} boxes!")
 
-    # Verify list is the right length
-    response = tator_api.get_localization_list(project, type=box_type, media_id=[video_temp])
-    assert len(response) == num_localizations + existing
+        # Verify list is the right length
+        response = tator_api.get_localization_list(project, type=box_type, media_id=[video_temp])
+        assert len(response) == num_localizations + existing
 
-    # Test media retrieval by localization ID.
-    response = tator_api.get_media_list_by_id(project, {"localization_ids": box_ids})
-    assert len(response) == 1
-    assert response[0].id == video_temp
+        # Test media retrieval by localization ID.
+        response = tator_api.get_media_list_by_id(project, {"localization_ids": box_ids})
+        assert len(response) == 1
+        assert response[0].id == video_temp
 
-    # Test box retrieval by media ID.
-    response = tator_api.get_localization_list_by_id(project, {"media_ids": [video_temp]})
-    assert len(response) == len(box_ids)
+        # Test box retrieval by media ID.
+        response = tator_api.get_localization_list_by_id(project, {"media_ids": [video_temp]})
+        assert len(response) == len(box_ids)
 
-    # Test single create.
-    box = random_localization(project, box_type, video_obj, post=True)
-    response = tator_api.create_localization_list(project, body=box)
-    assert isinstance(response, tator.models.CreateListResponse)
-    box_id = response.id[0]
-    response = tator_api.get_localization(box_id)
-    version_id = response.version
-    elemental_id = response.elemental_id
+        # Test single create.
+        box = random_localization(project, box_type, video_obj, post=True)
+        response = tator_api.create_localization_list(project, body=box)
+        assert isinstance(response, tator.models.CreateListResponse)
+        box_id = response.id[0]
+        response = tator_api.get_localization(box_id)
+        version_id = response.version
+        elemental_id = response.elemental_id
 
-    # Patch single box (in-place)
-    patch = random_localization(project, box_type, video_obj)
-    update_msg = {**patch, "in_place": 1}
-    response = tator_api.update_localization(box_id, localization_update=update_msg)
-    assert "message" in response.to_dict()
-    print(response.message)
+        # Patch single box (in-place)
+        patch = random_localization(project, box_type, video_obj)
+        update_msg = {**patch, "in_place": 1}
+        response = tator_api.update_localization(box_id, localization_update=update_msg)
+        assert "message" in response.to_dict()
+        print(response.message)
 
-    # Get single box.
-    updated_box = tator_api.get_localization(box_id)
-    assert_close_enough(patch, updated_box, exclude)
+        # Get single box.
+        updated_box = tator_api.get_localization(box_id)
+        assert_close_enough(patch, updated_box, exclude)
 
-    # Get box by ID.
-    box_by_id = tator_api.get_localization_list_by_id(project, {"ids": [box_id]})
-    assert len(box_by_id) == 1
-    box_by_id = box_by_id[0]
-    assert_close_enough(updated_box, box_by_id, exclude)
+        # Get box by ID.
+        box_by_id = tator_api.get_localization_list_by_id(project, {"ids": [box_id]})
+        assert len(box_by_id) == 1
+        box_by_id = box_by_id[0]
+        assert_close_enough(updated_box, box_by_id, exclude)
 
-    # Patch single box via eid
-    patch = random_localization(project, box_type, video_obj)
-    response = tator_api.update_localization_by_elemental_id(
-        version_id, elemental_id, localization_update=patch
-    )
-    assert "message" in response.to_dict()
-    print(response.message)
+        # Patch single box via eid
+        patch = random_localization(project, box_type, video_obj)
+        response = tator_api.update_localization_by_elemental_id(
+            version_id, elemental_id, localization_update=patch
+        )
+        assert "message" in response.to_dict()
+        print(response.message)
 
-    # Get single box.
-    updated_box = tator_api.get_localization_by_elemental_id(version_id, elemental_id)
-    assert_close_enough(patch, updated_box, exclude)
+        # Get single box.
+        updated_box = tator_api.get_localization_by_elemental_id(version_id, elemental_id)
+        assert_close_enough(patch, updated_box, exclude)
 
-    # Delete single box.
-    response = tator_api.delete_localization_by_elemental_id(version_id, elemental_id)
-    assert "message" in response.to_dict()
-    print(response.message)
+        # Delete single box.
+        response = tator_api.delete_localization_by_elemental_id(version_id, elemental_id)
+        assert "message" in response.to_dict()
+        print(response.message)
 
-    params = {"media_id": [video_temp], "type": box_type}
-    assert tator_api.get_localization_count(project, **params) == len(boxes) + existing
+        params = {"media_id": [video_temp], "type": box_type}
+        assert tator_api.get_localization_count(project, **params) == len(boxes) + existing
 
-    # Bulk update box attributes.
-    response = tator_api.create_version(
-        project,
-        version_spec={
-            "name": "Test Version",
-            "description": "A version for testing",
-        },
-    )
-    new_version = response.id
-    bulk_patch = random_localization(project, box_type, video_obj)
-    bulk_patch = {"attributes": bulk_patch["attributes"], "new_version": new_version, "in_place": 1}
-    count = tator_api.get_localization_count(project, **params)
-    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+        # Bulk update box attributes.
+        response = tator_api.create_version(
+            project,
+            version_spec={
+                "name": "Test Version",
+                "description": "A version for testing",
+            },
+        )
+        new_version = response.id
+        bulk_patch = random_localization(project, box_type, video_obj)
+        bulk_patch = {"attributes": bulk_patch["attributes"], "new_version": new_version, "in_place": 1}
+        count = tator_api.get_localization_count(project, **params)
+        with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+            response = tator_api.update_localization_list(
+                project, **params, localization_bulk_update=bulk_patch, count=count + 1)
         response = tator_api.update_localization_list(
-            project, **params, localization_bulk_update=bulk_patch, count=count + 1)
-    response = tator_api.update_localization_list(
-        project, **params, localization_bulk_update=bulk_patch, count=count
-    )
-    assert isinstance(response, tator.models.MessageResponse)
-    print(response.message)
+            project, **params, localization_bulk_update=bulk_patch, count=count
+        )
+        assert isinstance(response, tator.models.MessageResponse)
+        print(response.message)
 
-    # Bulk update specified boxes by ID.
-    boxes = tator_api.get_localization_list(project, type=box_type, media_id=[video_obj.id])
-    id_bulk_patch = random_localization(project, box_type, video_obj)
-    box_ids = [x.id for x in boxes]
-    update_ids = random.choices(box_ids, k=100)
-    id_bulk_patch = {
-        "attributes": id_bulk_patch["attributes"],
-        "ids": update_ids,
-        "new_version": new_version,
-        "in_place": 1,
-    }
-    response = tator_api.update_localization_list(
-        project, **params, localization_bulk_update=id_bulk_patch
-    )
-    assert isinstance(response, tator.models.MessageResponse)
-    print(response.message)
+        # Bulk update specified boxes by ID.
+        boxes = tator_api.get_localization_list(project, type=box_type, media_id=[video_obj.id])
+        id_bulk_patch = random_localization(project, box_type, video_obj)
+        box_ids = [x.id for x in boxes]
+        update_ids = random.choices(box_ids, k=100)
+        id_bulk_patch = {
+            "attributes": id_bulk_patch["attributes"],
+            "ids": update_ids,
+            "new_version": new_version,
+            "in_place": 1,
+        }
+        response = tator_api.update_localization_list(
+            project, **params, localization_bulk_update=id_bulk_patch
+        )
+        assert isinstance(response, tator.models.MessageResponse)
+        print(response.message)
 
-    # Verify all boxes have been updated.
-    boxes = tator_api.get_localization_list(project, **params, version=[new_version])
-    dataframe = tator.util.to_dataframe(boxes)
-    assert len(boxes) == len(dataframe)
-    for box in boxes:
-        if box.id in update_ids:
-            assert_close_enough(id_bulk_patch, box, exclude, mapping)
-        else:
-            assert_close_enough(bulk_patch, box, exclude, mapping)
+        # Verify all boxes have been updated.
+        boxes = tator_api.get_localization_list(project, **params, version=[new_version])
+        dataframe = tator.util.to_dataframe(boxes)
+        assert len(boxes) == len(dataframe)
+        for box in boxes:
+            if box.id in update_ids:
+                assert_close_enough(id_bulk_patch, box, exclude, mapping)
+            else:
+                assert_close_enough(bulk_patch, box, exclude, mapping)
 
-    # Clone boxes to same media.
-    version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
-    generator = tator.util.clone_localization_list(
-        tator_api,
-        {**params, "project": project},
-        project,
-        version_mapping,
-        {video_temp: video_temp},
-        {box_type: box_type},
-        tator_api,
-    )
-    for num_created, num_total, response, id_map in generator:
-        print(f"Created {num_created} of {num_total} localizations...")
-    print(f"Finished creating {num_created} localizations!")
-    assert tator_api.get_localization_count(project, **params) == 2 * (len(boxes) + existing)
+        # Clone boxes to same media.
+        version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
+        generator = tator.util.clone_localization_list(
+            tator_api,
+            {**params, "project": project},
+            project,
+            version_mapping,
+            {video_temp: video_temp},
+            {box_type: box_type},
+            tator_api,
+        )
+        for num_created, num_total, response, id_map in generator:
+            print(f"Created {num_created} of {num_total} localizations...")
+        print(f"Finished creating {num_created} localizations!")
+        assert tator_api.get_localization_count(project, **params) == 2 * (len(boxes) + existing)
 
-    # Delete all boxes.
-    count = tator_api.get_localization_count(project, **params)
-    with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
-        response = tator_api.delete_localization_list(project, **params, count=count + 1)
-    response = tator_api.delete_localization_list(project, **params, count=count)
-    assert isinstance(response, tator.models.MessageResponse)
+        # Delete all boxes.
+        count = tator_api.get_localization_count(project, **params)
+        with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
+            response = tator_api.delete_localization_list(project, **params, count=count + 1)
+        response = tator_api.delete_localization_list(project, **params, count=count)
+        assert isinstance(response, tator.models.MessageResponse)
 
-    # Verify all boxes are gone.
-    boxes = tator_api.get_localization_list(project, **params)
-    assert boxes == []
+        # Verify all boxes are gone.
+        boxes = tator_api.get_localization_list(project, **params)
+        assert boxes == []
 
-    boxes = tator_api.get_localization_list(project, **params, show_deleted=1, show_all_marks=1)
-    assert boxes != []
+        boxes = tator_api.get_localization_list(project, **params, show_deleted=1, show_all_marks=1)
+        assert boxes != []
 
-    response = tator_api.delete_localization_list(
-        project,
-        **params,
-        show_deleted=1,
-        merge=0,
-        show_all_marks=1,
-        localization_bulk_delete={"prune": 1},
-    )
-    assert isinstance(response, tator.models.MessageResponse)
+        response = tator_api.delete_localization_list(
+            project,
+            **params,
+            show_deleted=1,
+            merge=0,
+            show_all_marks=1,
+            localization_bulk_delete={"prune": 1},
+        )
+        assert isinstance(response, tator.models.MessageResponse)
 
-    # Clean up test version
-    tator_api.delete_version(new_version)
+        # Clean up test version
+        tator_api.delete_version(new_version)
