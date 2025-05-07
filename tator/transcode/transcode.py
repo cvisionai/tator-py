@@ -95,6 +95,7 @@ def parse_args():
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
+    parser.add_argument('--bucket_id', type=int, help='Bucket ID if not default.')
     return parser.parse_args()
 
 def get_length_of_file(path):
@@ -144,7 +145,7 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1, filter_complex=None):
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1, filter_complex=None, bucket_id=None):
     logger.info("Transcoding %s to %s...", path, outpath)
     # Get workload parameters.
     os.makedirs(outpath, exist_ok=True)
@@ -334,12 +335,12 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
         logger.info("Uploading transcoded file...")
         for progress, upload_info in _upload_file(api, media_obj.project, output_file,
-                                                  media_id=media, filename=os.path.basename(output_file)):
+                                                  media_id=media, filename=os.path.basename(output_file), bucket_id=bucket_id):
             logger.info(f"Progress: {progress}%")
 
         logger.info("Uploading segments file...")
         for progress, segment_info in _upload_file(api, media_obj.project, segments_file,
-                                                  media_id=media, filename=os.path.basename(segments_file)):
+                                                  media_id=media, filename=os.path.basename(segments_file), bucket_id=bucket_id):
             logger.info(f"Progress: {progress}%")
 
         # Construct video definition.
@@ -350,15 +351,15 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         }
 
         # Patch in video file with the api.
-        response = api.create_video_file(media, role='streaming', video_definition=video_def)
+        response = api.create_video_file(media, role='streaming', video_definition=video_def, bucket_id=bucket_id)
         assert isinstance(response, MessageResponse)
 
-def default_archival_upload(api, host, media, path, encoded, size):
+def default_archival_upload(api, host, media, path, encoded, size, bucket_id=None):
     # Default action if no archive config is upload raw video.
     media_obj = api.get_media(media)
     logger.info(f"Uploading original file as archival...")
     for progress, upload_info in _upload_file(api, media_obj.project, path,
-                                              media_id=media, filename=os.path.basename(path), file_size=size):
+                                              media_id=media, filename=os.path.basename(path), file_size=size, bucket_id=bucket_id):
         logger.info(f"Progress: {progress}%")
     video_def = make_video_definition(path, size)
 
@@ -369,7 +370,7 @@ def default_archival_upload(api, host, media, path, encoded, size):
 
     # Patch in video file with the api.
     video_def['path'] = upload_info.key
-    response = api.create_video_file(media, role='archival', video_definition=video_def)
+    response = api.create_video_file(media, role='archival', video_definition=video_def, bucket_id=bucket_id)
     assert isinstance(response, MessageResponse)
 
 
@@ -385,6 +386,7 @@ def convert_archival(
     explicit_config=None,
     hwaccel=False,
     inhibit_upload=False,
+    bucket_id=None
 ):
     # Retrieve this media's type to inspect archive config.
     api = get_api(host, token)
@@ -448,7 +450,7 @@ def convert_archival(
             if inhibit_upload:
                 continue
             if archive_config.s3_storage is None:
-                default_archival_upload(api, host, media, output_file, True, size)
+                default_archival_upload(api, host, media, output_file, True, size, bucket_id=bucket_id)
             else:
                 import boto3
                 # Get credentials from config object.
@@ -487,7 +489,7 @@ def make_audio_definition(disk_file):
     return audio_def
 
 
-def convert_audio(host, token, media, path, outpath, inhibit_upload=False):
+def convert_audio(host, token, media, path, outpath, inhibit_upload=False, bucket_id=None):
     if isinstance(path, list):
         logger.info("Concatenation with audio not supported yet")
         return
@@ -513,13 +515,13 @@ def convert_audio(host, token, media, path, outpath, inhibit_upload=False):
     api = get_api(host, token)
     media_obj = api.get_media(media)
     for progress, upload_info in _upload_file(api, media_obj.project, output_file,
-                                              media_id=media, filename=os.path.basename(output_file)):
+                                              media_id=media, filename=os.path.basename(output_file), bucket_id=bucket_id):
         logger.info(f"Progress: {progress}%")
 
     # Patch in audio file with the api.
     audio_def = {**make_audio_definition(output_file),
                  'path': upload_info.key}
-    response = api.create_audio_file(media, role='audio', audio_definition=audio_def)
+    response = api.create_audio_file(media, role='audio', audio_definition=audio_def, bucket_id=bucket_id)
     assert isinstance(response, MessageResponse)
 
 
@@ -553,9 +555,9 @@ if __name__ == '__main__':
         else:
             configs = [res for res in args.configs.split(',')]
         convert_streaming(args.host, args.token, args.media, args.url, args.work_dir,
-                          args.raw_width, args.raw_height, configs, args.hwaccel, False, args.force_fps)
+                          args.raw_width, args.raw_height, configs, args.hwaccel, False, args.force_fps, bucket_id=args.bucket_id)
     elif args.category == 'archival':
         convert_archival(args.host, args.token, args.media, args.url, args.work_dir,
-                         args.raw_width, args.raw_height, args.size)
+                         args.raw_width, args.raw_height, args.size, bucket_id=args.bucket_id)
     elif args.category == 'audio':
-        convert_audio(args.host, args.token, args.media, args.url, args.work_dir)
+        convert_audio(args.host, args.token, args.media, args.url, args.work_dir, bucket_id=args.bucket_id)

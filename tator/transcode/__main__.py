@@ -72,6 +72,7 @@ def parse_args():
         "--inhibit-upload", action="store_true", help="Do not upload the transcoded files to Tator."
     )
     parser.add_argument('--filter_complex', type=str, help='Allows (optionally templated) override of filter_complex argument to ffmpeg for streaming files. Substitutes {fps}, {width}, {height}, {hw_upload}, and {ridx} if those patterns are present, where width and height correspond to the output resolutions.')
+    parser.add_argument('--bucket_id', type=int, help='Bucket ID if not default.')
     return parser.parse_args()
 
 def get_file_paths(path, base):
@@ -200,6 +201,7 @@ def transcode_single(path, args, gid):
             paths["original"],
             paths["thumbnail"],
             inhibit_upload=args.inhibit_upload,
+            bucket_id=args.bucket_id,
         )
 
         if fnames:
@@ -236,7 +238,8 @@ def transcode_single(path, args, gid):
                     hwaccel=args.hwaccel,
                     force_fps=args.force_fps,
                     inhibit_upload=args.inhibit_upload,
-                    filter_complex=getattr(args, "filter_complex", None)
+                    filter_complex=getattr(args, "filter_complex", None),
+                    bucket_id=args.bucket_id,
                 )
             elif category == 'archival':
                 del workload['configs']
@@ -248,6 +251,7 @@ def transcode_single(path, args, gid):
                     outpath=paths["transcoded"],
                     hwaccel=args.hwaccel,
                     inhibit_upload=args.inhibit_upload,
+                    bucket_id=args.bucket_id,
                 )
             elif category == 'audio':
                 del workload['configs']
@@ -260,6 +264,7 @@ def transcode_single(path, args, gid):
                     media=media_id,
                     outpath=paths["transcoded"],
                     inhibit_upload=args.inhibit_upload,
+                    bucket_id=args.bucket_id,
                 )
 
         # Get lowest resolution output for making the gif
@@ -285,6 +290,7 @@ def transcode_single(path, args, gid):
             os.path.join(paths["transcoded"], f"{input_res}.mp4"),
             paths["thumbnail_gif"],
             inhibit_upload=args.inhibit_upload,
+            bucket_id=args.bucket_id,
         )
 
         # Patch the media with the concatenated file

@@ -56,7 +56,7 @@ def get_metadata(path):
     return (codec, fps, num_frames, width, height)
 
 
-def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_upload=False):
+def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_upload=False, bucket_id=None):
     # Check for the existence of thumbnails
     api = get_api(host, token)
     media_obj = api.get_media(media_id)
@@ -84,6 +84,7 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
         thumb_path,
         media_id=media_id,
         filename=os.path.basename(thumb_path),
+        bucket_id=bucket_id,
     ):
         pass
 
@@ -95,12 +96,12 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
         "mime": f"image/{thumb_image.format.lower()}",
     }
 
-    response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def)
+    response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def, bucket_id=bucket_id)
     assert isinstance(response, MessageResponse)
 
 
 def make_thumbnail_gif(
-    host, token, media_id, video_path, thumb_gif_path, only_keyframes=False, inhibit_upload=False
+    host, token, media_id, video_path, thumb_gif_path, only_keyframes=False, inhibit_upload=False, bucket_id=None
 ):
     """ Makes thumbnails and gets metadata for original file.
     """
@@ -152,6 +153,7 @@ def make_thumbnail_gif(
         thumb_gif_path,
         media_id=media_id,
         filename=os.path.basename(thumb_gif_path),
+        bucket_id=None,
     ):
         pass
 
@@ -164,7 +166,7 @@ def make_thumbnail_gif(
     }
 
     response = api.create_image_file(
-        media_id, role="thumbnail_gif", image_definition=thumb_gif_def
+        media_id, role="thumbnail_gif", image_definition=thumb_gif_def, bucket_id=bucket_id,
     )
     assert isinstance(response, MessageResponse)
 
