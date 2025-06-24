@@ -344,7 +344,6 @@ def test_file_crud(
     blob=base64.b64encode(json.dumps({'attribute': 'LabelA', 'operation': 'lt', 'value': 0}).encode('ascii'))
     files = tator_api.get_file_list(project=project, encoded_search=blob)
     assert len(files) == len(file_a_ids)
-
     # Check to see if pagination works
     page_size = 10
     num_pages = (len(file_b_ids) / page_size) - 1
@@ -360,7 +359,20 @@ def test_file_crud(
         for file in files:
             all_files.add(file.id)
         page += 1
-        files = tator_api.get_file_list(project=project, type=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
+        got_exception = False
+        try:
+            files = tator_api.get_file_list(project=project, type=file_type_b_id, start=start+(page*page_size), stop=stop+(page*page_size))
+        except tator.openapi.tator_openapi.exceptions.ApiException as e:
+            got_exception = True
+            if e.status >= 400:
+                # This is expected if we have less than page_size files left
+                break
+            else:
+                raise e
+        if page > num_pages:
+            assert(got_exception)
+        else:
+            assert not got_exception
 
     files = tator_api.get_file_list(project=project, type=file_type_b_id)
     blah = [file.id for file in files]
