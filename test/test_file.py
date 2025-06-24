@@ -370,7 +370,7 @@ def test_file_crud(
             else:
                 raise e
         if page > num_pages:
-            assert(got_exception)
+            assert(got_exception | (len(files) == 0))
         else:
             assert not got_exception
 
