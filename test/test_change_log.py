@@ -538,7 +538,7 @@ def test_change_log_util(host, token, project, video_type):
     # Define media spec.
     num_media = 3
     fname = "MediaChangeLogTest.mp4"
-    test_int = random.randint(0, 100)
+    test_int = 42
     media_spec = {
         "type": video_type,
         "uid": str(uuid.uuid1()),
@@ -571,7 +571,7 @@ def test_change_log_util(host, token, project, video_type):
     assert found_change == changes[0]
 
     # Change `test_int` value (tests attribute change)
-    new_test_int = random.randint(0, 100)
+    new_test_int = 54
     tator_api.update_media(media_id, {"attributes": {"test_int": new_test_int}})
 
     # Get all changes for comparison
