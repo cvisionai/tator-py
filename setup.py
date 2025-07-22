@@ -14,9 +14,9 @@ REQUIRES = [
     "psutil >= 5.9.5",
     "python-dateutil >= 2.5.3",
     "pyyaml >= 5.4",
-    "requests >= 2.31",
+    "requests >= 2.32.4",
     "six >= 1.10",
-    "urllib3 >= 1.26.4",
+    "urllib3 >= 2.5.0",
 ]
 
 SCHEMA_FILENAME = 'schema.yaml'
