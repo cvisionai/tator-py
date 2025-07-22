@@ -9,14 +9,14 @@ import json
 
 REQUIRES = [
     "certifi >= 14.05.14",
-    "Pillow >= 10.0.1",
+    "Pillow >= 10.3.0",
     "progressbar2 >= 3.51.4",
     "psutil >= 5.9.5",
     "python-dateutil >= 2.5.3",
-    "pyyaml >= 5.3.1",
-    "requests >= 2.25",
+    "pyyaml >= 5.4",
+    "requests >= 2.31",
     "six >= 1.10",
-    "urllib3 >= 1.26",
+    "urllib3 >= 1.26.4",
 ]
 
 SCHEMA_FILENAME = 'schema.yaml'
