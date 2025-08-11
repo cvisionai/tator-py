@@ -3,7 +3,7 @@ import time
 
 def test_import_image(host, token, project, image_type):
     api = tator.get_api(host, token)
-    url = 'https://www.cvisionai.com/static/74822662b430b97b6d86bb74beab1666/fb5f3/open-em-image.png'
+    url = 'https://tator-ci.s3.us-east-1.amazonaws.com/hubble.jpg'
     response = tator.util.import_media(api, image_type, url)
     assert(isinstance(response, tator.models.CreateListResponse))
 
