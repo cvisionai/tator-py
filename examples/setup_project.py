@@ -702,6 +702,7 @@ def parse_args() -> argparse.Namespace:
     """
     parser = tator.get_parser()
     parser.add_argument("--name", type=str, required=True, help="New project's name")
+    parser.add_argument("--organization", type=int, default=-1, help="Specify an organization id if you have one")
     parser.add_argument("--create-state-latest-type", action="store_true", help="Create a state type with latest interpolation/frame association attributes")
     parser.add_argument("--create-state-range-type", action="store_true", help="Create state types with attr_style_range interpolation/frame association")
     parser.add_argument("--create-track-type", action="store_true", help="Create a state type with localization association")
@@ -716,17 +717,20 @@ def main() -> None:
     args = parse_args()
 
     tator_api = tator.get_api(args.host, args.token)
-
-    # Create test organization (reuse project name)
-    result = tator_api.create_organization(organization_spec={
-        'name': args.name,
-    })
+    if args.organization == -1:
+        # Create test organization (reuse project name)
+        result = tator_api.create_organization(organization_spec={
+            'name': args.name,
+        })
+        org_id = result.id
+    else:
+        org_id = args.organization
 
     # Create the test project
     result = tator_api.create_project(project_spec={
         'name': args.name,
         'summary': 'A test project.',
-        'organization': result.id
+        'organization': org_id
     })
     project = result.id
     logger.info(result.message)
