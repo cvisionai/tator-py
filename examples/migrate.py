@@ -603,6 +603,7 @@ def create_memberships(src_api, dest_api, dest_project, memberships, users):
     """
     num_skipped = 0
     num_created = 0
+    self_user = src_api.whoami()
     for membership, user in zip(memberships, users):
         # Look up user by username.
         dest_users = dest_api.get_user_list(username=user.username)
@@ -610,9 +611,10 @@ def create_memberships(src_api, dest_api, dest_project, memberships, users):
             num_skipped += 1
         else:
             dest_user = dest_users[0]
-            spec = {'user': dest_user.id, 'permission': membership.permission}
-            response = dest_api.create_membership(dest_project, membership_spec=spec)
-            assert(isinstance(response, tator.models.CreateResponse))
+            if dest_user.id != self_user.id:
+                spec = {'user': dest_user.id, 'permission': membership.permission}
+                response = dest_api.create_membership(dest_project, membership_spec=spec)
+                assert(isinstance(response, tator.models.CreateResponse))
             num_created += 1
     msg = f"Created {num_created} memberships."
     if num_skipped > 0:
