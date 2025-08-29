@@ -19,8 +19,8 @@ def test_ssrf_protection_transcode(host, token, project):
     """Test that transcode endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to transcode from an unauthorized domain
-    unauthorized_url = "https://evil-site.com/malicious-video.mp4"
+    # Try to transcode from an unauthorized domain (using a real URL that exists)
+    unauthorized_url = "https://www.w3schools.com/html/mov_bbb.mp4"
     
     # Attempt to create a transcode with an unauthorized URL
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
@@ -46,8 +46,8 @@ def test_ssrf_protection_import_media(host, token, project, image_type):
     """Test that import media endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to import from an unauthorized domain
-    unauthorized_url = "https://malicious-cdn.com/evil-image.jpg"
+    # Try to import from an unauthorized domain (using a real image that exists)
+    unauthorized_url = "https://www.w3schools.com/css/img_lights.jpg"
     
     # Attempt to import media with an unauthorized URL using the utility function
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
@@ -63,8 +63,8 @@ def test_ssrf_protection_temporary_file(host, token, project):
     """Test that temporary file endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to create a temporary file from an unauthorized domain
-    unauthorized_url = "https://attacker-server.com/payload.txt"
+    # Try to create a temporary file from an unauthorized domain (using a real file that exists)
+    unauthorized_url = "https://www.w3schools.com/xml/note.xml"
     
     # Attempt to create a temporary file with an unauthorized URL
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
@@ -88,8 +88,8 @@ def test_ssrf_protection_hosted_template(host, token, organization):
     """Test that hosted template endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to create a hosted template from an unauthorized domain
-    unauthorized_url = "https://evil-templates.com/malicious.yaml"
+    # Try to create a hosted template from an unauthorized domain (using a real YAML file that exists)
+    unauthorized_url = "https://www.w3schools.com/xml/simple.xml"
     
     # Attempt to create a hosted template with an unauthorized URL
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
