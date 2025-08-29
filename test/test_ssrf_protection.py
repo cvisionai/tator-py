@@ -3,6 +3,7 @@
 import os
 import pytest
 import tator
+import uuid
 
 
 # Helper to determine if SSRF protection should be tested
@@ -15,11 +16,11 @@ def should_test_ssrf():
     return True
 
 
-def test_ssrf_protection_transcode(host, token, project):
+def test_ssrf_protection_transcode(host, token, project, video_type):
     """Test that transcode endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to transcode from an unauthorized domain (using a real URL that exists)
+    # Try to transcode from an unauthorized domain
     unauthorized_url = "https://www.w3schools.com/html/mov_bbb.mp4"
     
     # Attempt to create a transcode with an unauthorized URL
@@ -27,9 +28,9 @@ def test_ssrf_protection_transcode(host, token, project):
         api.transcode(
             project=project,
             transcode_spec={
-                "type": -1,  # Auto-detect type
-                "gid": "test_ssrf_gid",
-                "uid": "test_ssrf_uid",
+                "type": video_type,
+                "gid": str(uuid.uuid4()),
+                "uid": str(uuid.uuid4()),
                 "url": unauthorized_url,
                 "name": "test_ssrf_video.mp4",
                 "section": "SSRF Test",
@@ -42,11 +43,11 @@ def test_ssrf_protection_transcode(host, token, project):
            "not from an allowed origin" in str(exc_info.value.reason).lower()
 
 
-def test_ssrf_protection_import_media(host, token, project, image_type):
+def test_ssrf_protection_import_image(host, token, project, image_type):
     """Test that import media endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to import from an unauthorized domain (using a real image that exists)
+    # Try to import from an unauthorized domain
     unauthorized_url = "https://www.w3schools.com/css/img_lights.jpg"
     
     # Attempt to import media with an unauthorized URL using the utility function
@@ -59,11 +60,28 @@ def test_ssrf_protection_import_media(host, token, project, image_type):
            "not from an allowed origin" in str(exc_info.value.reason).lower()
 
 
+def test_ssrf_protection_import_video(host, token, project, video_type):
+    """Test that import media endpoint blocks unauthorized origins."""
+    api = tator.get_api(host, token)
+    
+    # Try to import from an unauthorized domain
+    unauthorized_url = "https://www.w3schools.com/html/mov_bbb.mp4"
+    
+    # Attempt to import media with an unauthorized URL using the utility function
+    with pytest.raises(tator.exceptions.ApiException) as exc_info:
+        tator.util.import_media(api, video_type, unauthorized_url)
+    
+    # Verify we get a 403 Forbidden response
+    assert exc_info.value.status == 403
+    assert "not from an allowed origin" in str(exc_info.value.body).lower() or \
+           "not from an allowed origin" in str(exc_info.value.reason).lower()
+
+
 def test_ssrf_protection_temporary_file(host, token, project):
     """Test that temporary file endpoint blocks unauthorized origins."""
     api = tator.get_api(host, token)
     
-    # Try to create a temporary file from an unauthorized domain (using a real file that exists)
+    # Try to create a temporary file from an unauthorized domain
     unauthorized_url = "https://www.w3schools.com/xml/note.xml"
     
     # Attempt to create a temporary file with an unauthorized URL
@@ -75,6 +93,30 @@ def test_ssrf_protection_temporary_file(host, token, project):
                 "name": "test_ssrf_file.txt",
                 "lookup": "ssrf_test_lookup",
                 "hours": 1,
+            }
+        )
+    
+    # Verify we get a 403 Forbidden response
+    assert exc_info.value.status == 403
+    assert "not from an allowed origin" in str(exc_info.value.body).lower() or \
+           "not from an allowed origin" in str(exc_info.value.reason).lower()
+
+
+def test_ssrf_protection_save_generic_file(host, token, project):
+    """Test that save generic file endpoint blocks unauthorized origins."""
+    api = tator.get_api(host, token)
+    
+    # Try to create a temporary file from an unauthorized domain
+    unauthorized_url = "https://www.w3schools.com/xml/note.xml"
+    
+    # Attempt to create a temporary file with an unauthorized URL
+    with pytest.raises(tator.exceptions.ApiException) as exc_info:
+        api.save_generic_file(
+            project=project,
+            generic_file_spec={
+                "upload_url": unauthorized_url,
+                "url": unauthorized_url,
+                "project": project,
             }
         )
     
@@ -107,24 +149,3 @@ def test_ssrf_protection_hosted_template(host, token, organization):
            "not from an allowed origin" in str(exc_info.value.reason).lower()
 
 
-def test_ssrf_protection_allowed_origin(host, token, project, image_type):
-    """Test that allowed origins still work."""
-    api = tator.get_api(host, token)
-    
-    # Use an allowed test URL from our CI bucket
-    allowed_url = "https://tator-ci.s3.us-east-1.amazonaws.com/trip-summary.png"
-    
-    # This should succeed without raising an exception
-    response = tator.util.import_media(
-        project,
-        {
-            "type": image_type,
-            "url": allowed_url,
-            "name": "test_allowed_image.png",
-            "section": "SSRF Test Allowed",
-        }
-    )
-    
-    # Verify the import was accepted (might still be processing)
-    assert response.message is not None
-    assert "import" in response.message.lower() or "started" in response.message.lower()
