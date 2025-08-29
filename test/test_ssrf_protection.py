@@ -115,9 +115,9 @@ def test_ssrf_protection_allowed_origin(host, token, project, image_type):
     allowed_url = "https://tator-ci.s3.us-east-1.amazonaws.com/trip-summary.png"
     
     # This should succeed without raising an exception
-    response = api.import_media(
-        project=project,
-        import_media_spec={
+    response = tator.util.import_media(
+        project,
+        {
             "type": image_type,
             "url": allowed_url,
             "name": "test_allowed_image.png",
