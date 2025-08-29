@@ -1,8 +1,18 @@
 """Test SSRF protection for server-side requests."""
 
+import os
 import pytest
 import tator
-from rest_framework import status
+
+
+# Helper to determine if SSRF protection should be tested
+# Since we're setting SERVER_SIDE_REQUEST_ORIGINS in our test configurations,
+# we expect these tests to pass unless explicitly disabled
+def should_test_ssrf():
+    """Check if SSRF protection tests should run."""
+    # You could add logic here to skip tests in certain environments
+    # For now, we always test since our test configs include the setting
+    return True
 
 
 def test_ssrf_protection_transcode(host, token, project):
@@ -39,17 +49,9 @@ def test_ssrf_protection_import_media(host, token, project, image_type):
     # Try to import from an unauthorized domain
     unauthorized_url = "https://malicious-cdn.com/evil-image.jpg"
     
-    # Attempt to import media with an unauthorized URL
+    # Attempt to import media with an unauthorized URL using the utility function
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
-        api.import_media(
-            project=project,
-            import_media_spec={
-                "type": image_type,
-                "url": unauthorized_url,
-                "name": "test_ssrf_image.jpg",
-                "section": "SSRF Test",
-            }
-        )
+        tator.util.import_media(api, image_type, unauthorized_url)
     
     # Verify we get a 403 Forbidden response
     assert exc_info.value.status == 403
