@@ -240,8 +240,8 @@ def test_algorithm_launch(
     number_of_media = 10
 
     # Get the media that's already in the project (perhaps added from other tests)
-    medias = tator_api.get_media_list(project=project)
-    number_of_media += len(medias)
+    media_count = tator_api.get_media_count(project=project)
+    number_of_media += media_count
 
     # Add some media to the project
     paths = glob.glob(image_set + '/**/*.jpg', recursive=True)
@@ -256,8 +256,8 @@ def test_algorithm_launch(
     num_retries = 0
     max_retries = 30
     while True:
-        medias = tator_api.get_media_list(project=project)
-        if len(medias) == number_of_media:
+        media_count = tator_api.get_media_count(project=project)
+        if media_count == number_of_media:
             break
 
         num_retries += 1
@@ -265,10 +265,10 @@ def test_algorithm_launch(
             break
         time.sleep(0.5)
 
-    assert len(medias) == number_of_media
-    all_ids = [m.id for m in medias]
+    assert media_count == number_of_media
 
     # Now, launch the algorithm again with an arbitrary set of media and test the results
+    medias = tator_api.get_media_list(project, stop=2)
     media_ids = [medias[0].id, medias[1].id]
     print(f"Providing following media list: {media_ids}")
     spec = tator.models.JobSpec(algorithm_name=algorithm_name, media_ids=media_ids)
