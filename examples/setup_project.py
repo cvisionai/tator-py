@@ -718,10 +718,16 @@ def main() -> None:
 
     tator_api = tator.get_api(args.host, args.token)
     if args.organization == -1:
-        # Create test organization (reuse project name)
-        result = tator_api.create_organization(organization_spec={
-            'name': args.name,
-        })
+        organization_list = tator_api.get_organization_list()
+        result = None
+        for organization in organization_list:
+            if organization.name == args.name:
+                result = organization
+                break
+        if result is None:
+            result = tator_api.create_organization(organization_spec={
+                'name': args.name,
+            })
         org_id = result.id
     else:
         org_id = args.organization
