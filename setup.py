@@ -66,9 +66,16 @@ def codegen():
     git_rev = subprocess.check_output(cmd).strip().decode('utf-8')
 
     # Generate code using openapi generator docker image.
+    # On ARM64, we need to explicitly request the amd64 platform and use emulation
+    import platform
     pwd = os.path.dirname(os.path.abspath(__file__))
-    cmd = [
-        'docker', 'run', '--rm',
+    docker_cmd = ['docker', 'run', '--rm']
+    
+    # Add platform flag to force x86_64 emulation on ARM
+    if platform.machine() in ['aarch64', 'arm64']:
+        docker_cmd.extend(['--platform', 'linux/amd64'])
+    
+    docker_cmd.extend([
         '-v', f"{pwd}:/pwd",
         '-v', f"{pwd}/out:/out",
         'openapitools/openapi-generator-cli:v4.3.1', 'generate',
@@ -77,8 +84,8 @@ def codegen():
         '-g', 'python',
         '-o', f'/out/tator-py-{git_rev}',
         '-t', '/pwd/templates',
-    ]
-    subprocess.run(cmd, check=True)
+    ])
+    subprocess.run(docker_cmd, check=True)
 
     # Remove the schema.
     os.remove(SCHEMA_FILENAME)
@@ -98,14 +105,19 @@ def codegen():
     pwd = os.path.dirname(os.path.abspath(__file__))
 
     # need to delete from within docker
-    cmd = [
-        'docker', 'run', '--rm',
+    docker_cmd = ['docker', 'run', '--rm']
+    
+    # Add platform flag to force x86_64 emulation on ARM
+    if platform.machine() in ['aarch64', 'arm64']:
+        docker_cmd.extend(['--platform', 'linux/amd64'])
+    
+    docker_cmd.extend([
         '-v', f"{pwd}/out:/out",
-         'openapitools/openapi-generator-cli:v4.3.1',
+        'openapitools/openapi-generator-cli:v4.3.1',
         'rm', '-fr',
         '/out/*'
-    ]
-    subprocess.run(cmd, check=True)
+    ])
+    subprocess.run(docker_cmd, check=True)
 
 codegen()
 setup(
