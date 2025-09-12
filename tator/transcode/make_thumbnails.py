@@ -69,7 +69,7 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
     cmd = ["ffmpeg", "-y", 
             "-loglevel", "error",
             "-progress", "-",
-            "-stats_period", "10",
+            "-stats_period", "60",
             "-i", video_path,
             "-vf", "scale=256:-1",
             "-vframes", "1", thumb_path]
@@ -133,7 +133,7 @@ def make_thumbnail_gif(
     cmd = ["ffmpeg", "-y",
             "-loglevel", "error",
             "-progress", "-",
-            "-stats_period", "10",
+            "-stats_period", "60",
             "-i",
             video_path,
             "-vf",

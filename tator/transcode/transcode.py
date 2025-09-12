@@ -39,7 +39,7 @@ def _get_resource_usage():
            'load_avg': load_avg,
            'memory_utilization': memory_utilization,
            'memory_in_gb': memory_in_gb}
-def _launch_and_monitor_resources(cmd, interval=5):
+def _launch_and_monitor_resources(cmd, interval=300):
     proc = subprocess.Popen(cmd)
     start = time.time()
     while proc.returncode == None:
@@ -214,7 +214,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "ffmpeg", "-y",
         "-loglevel", "error",
         "-progress", "-",
-        "-stats_period", "10"
+        "-stats_period", "300"
     ]
     # We are going to concatenate multiple segments together
     if isinstance(path, list):
@@ -427,7 +427,7 @@ def convert_archival(
                     "ffmpeg",
                     "-loglevel", "error",
                     "-progress", "-",
-                    "-stats_period", "10",
+                    "-stats_period", "300",
                     *hw_preamble,
                     "-y",
                     "-i", path,
@@ -499,7 +499,7 @@ def convert_audio(host, token, media, path, outpath, inhibit_upload=False, bucke
     audio_extraction=["ffmpeg", "-y",
                       "-loglevel", "error",
                       "-progress", "-",
-                      "-stats_period", "10",
+                      "-stats_period", "300",
                       "-i", path,
                       "-vn", # Strip video
                       "-c:a", "aac",
