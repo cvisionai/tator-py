@@ -16,3 +16,6 @@ out/
 tags
 tags.lock
 migrate.log
+
+# OpenAPI Generator JAR
+openapi-generator-cli-*.jar

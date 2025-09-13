@@ -1,6 +1,7 @@
 import os
 import subprocess
 import shutil
+import urllib.request
 
 from setuptools import setup, find_packages
 import requests
@@ -21,6 +22,9 @@ REQUIRES = [
 
 SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
+OPENAPI_GENERATOR_VERSION = '4.3.1'
+OPENAPI_GENERATOR_JAR = f'openapi-generator-cli-{OPENAPI_GENERATOR_VERSION}.jar'
+OPENAPI_GENERATOR_URL = f'https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/{OPENAPI_GENERATOR_VERSION}/{OPENAPI_GENERATOR_JAR}'
 
 def get_version():
     with open(CONFIG_FILENAME, 'r') as f:
@@ -42,10 +46,44 @@ class NoAliasDumper(yaml.Dumper):
     def ignore_aliases(self, data):
         return True
 
+def ensure_java():
+    """Check if Java is installed, if not, provide instructions."""
+    try:
+        result = subprocess.run(['java', '-version'], capture_output=True, text=True)
+        if result.returncode != 0:
+            raise RuntimeError("Java is not installed")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("ERROR: Java is required to run OpenAPI Generator")
+        print("Please install Java 8 or later:")
+        print("  Ubuntu/Debian: sudo apt-get install openjdk-11-jre")
+        print("  macOS: brew install openjdk@11")
+        print("  Or download from: https://adoptium.net/")
+        return False
+
+def download_openapi_generator():
+    """Download the OpenAPI Generator JAR if it doesn't exist."""
+    if not os.path.exists(OPENAPI_GENERATOR_JAR):
+        print(f"Downloading OpenAPI Generator {OPENAPI_GENERATOR_VERSION}...")
+        urllib.request.urlretrieve(OPENAPI_GENERATOR_URL, OPENAPI_GENERATOR_JAR)
+        print(f"Downloaded {OPENAPI_GENERATOR_JAR}")
+
 def codegen():
     """ Fetches a schema from cloud.tator.io if one does not exist, then 
         use openapi-generator to generate openapi code from it.
     """
+    # Check Java is available
+    if not ensure_java():
+        raise RuntimeError("Java is required but not found")
+    
+    # Download OpenAPI Generator JAR if needed
+    pwd = os.path.dirname(os.path.abspath(__file__))
+    jar_path = os.path.join(pwd, OPENAPI_GENERATOR_JAR)
+    if not os.path.exists(jar_path):
+        print(f"Downloading OpenAPI Generator {OPENAPI_GENERATOR_VERSION}...")
+        urllib.request.urlretrieve(OPENAPI_GENERATOR_URL, jar_path)
+        print(f"Downloaded {OPENAPI_GENERATOR_JAR}")
+    
     # Retrieve schema if it does not exist.
     if not os.path.exists(SCHEMA_FILENAME):
         response = requests.get("https://cloud.tator.io/schema")
@@ -65,59 +103,46 @@ def codegen():
     cmd = ['git', 'rev-parse', 'HEAD']
     git_rev = subprocess.check_output(cmd).strip().decode('utf-8')
 
-    # Generate code using openapi generator docker image.
-    # On ARM64, we need to explicitly request the amd64 platform and use emulation
-    import platform
-    pwd = os.path.dirname(os.path.abspath(__file__))
-    docker_cmd = ['docker', 'run', '--rm']
+    # Generate code using OpenAPI Generator JAR (works natively on all architectures)
+    # Use temp directory to avoid permission issues
+    import tempfile
+    temp_out = tempfile.mkdtemp(prefix='tator-py-')
+    out_dir = os.path.join(temp_out, f'tator-py-{git_rev}')
     
-    # Add platform flag to force x86_64 emulation on ARM
-    if platform.machine() in ['aarch64', 'arm64']:
-        docker_cmd.extend(['--platform', 'linux/amd64'])
+    # Ensure output directory exists
+    os.makedirs(out_dir, exist_ok=True)
     
-    docker_cmd.extend([
-        '-v', f"{pwd}:/pwd",
-        '-v', f"{pwd}/out:/out",
-        'openapitools/openapi-generator-cli:v4.3.1', 'generate',
-        '-c', f'/pwd/{CONFIG_FILENAME}',
-        '-i', f'/pwd/{SCHEMA_FILENAME}',
+    cmd = [
+        'java', '-jar', jar_path, 'generate',
+        '-c', CONFIG_FILENAME,
+        '-i', SCHEMA_FILENAME,
         '-g', 'python',
-        '-o', f'/out/tator-py-{git_rev}',
-        '-t', '/pwd/templates',
-    ])
-    subprocess.run(docker_cmd, check=True)
+        '-o', out_dir,
+        '-t', os.path.join(pwd, 'templates'),
+    ]
+    
+    import platform
+    print(f"Running OpenAPI Generator on {platform.machine()} architecture...")
+    subprocess.run(cmd, check=True, cwd=pwd)
 
     # Remove the schema.
     os.remove(SCHEMA_FILENAME)
 
     # Copy relevant directories into openapi.
-    out_dir = os.path.join(pwd, 'tator/openapi')
-    os.makedirs(out_dir, exist_ok=True)
+    openapi_dir = os.path.join(pwd, 'tator/openapi')
+    os.makedirs(openapi_dir, exist_ok=True)
     for subpath in ['README.md', 'tator_openapi', 'docs']:
-        src = f'{pwd}/out/tator-py-{git_rev}/{subpath}'
-        dst = os.path.join(out_dir, f'{subpath}')
+        src = os.path.join(out_dir, subpath)
+        dst = os.path.join(openapi_dir, subpath)
         if os.path.isfile(src):
             shutil.copy(src, dst)
         else:
             if os.path.exists(dst):
                 shutil.rmtree(dst)
             shutil.copytree(src, dst)
-    pwd = os.path.dirname(os.path.abspath(__file__))
-
-    # need to delete from within docker
-    docker_cmd = ['docker', 'run', '--rm']
     
-    # Add platform flag to force x86_64 emulation on ARM
-    if platform.machine() in ['aarch64', 'arm64']:
-        docker_cmd.extend(['--platform', 'linux/amd64'])
-    
-    docker_cmd.extend([
-        '-v', f"{pwd}/out:/out",
-        'openapitools/openapi-generator-cli:v4.3.1',
-        'rm', '-fr',
-        '/out/*'
-    ])
-    subprocess.run(docker_cmd, check=True)
+    # Clean up temp directory
+    shutil.rmtree(temp_out)
 
 codegen()
 setup(
