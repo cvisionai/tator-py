@@ -16,6 +16,7 @@ from tator.openapi.tator_openapi.models import MessageResponse
 
 from ..util import md5sum
 from ..util.get_api import get_api
+from ..util._download_file import _download_file
 
 from .create_media import create_media
 from .determine_transcode import determine_transcode, update_media
@@ -125,12 +126,11 @@ def transcode_single(path, args, gid):
     # If a URL is given and path doesn't exist, download the file to path.
     if args.url:
         path = os.path.join(args.work_dir, args.name)
-        response = requests.get(args.url, stream=True)
-        response.raise_for_status()
-        with open(path, "wb") as fp:
-            for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
-                if chunk:
-                    fp.write(chunk)
+        # Use the existing _download_file function for robust downloading with retry logic
+        logger.info(f"Downloading file from {args.url} to {path}")
+        for progress in _download_file(None, None, args.url, path):
+            if progress % 10 == 0 or progress == 100:  # Log every 10% to avoid spam
+                logger.info(f"Download progress: {progress}%")
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 

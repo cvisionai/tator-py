@@ -17,6 +17,8 @@ def _download_file(api, project, url, out_path):
     # URL and headers resolution - same as before
     original_url = url
     if url.startswith('/'):
+        if api is None:
+            raise ValueError("API object required for relative URLs (starting with '/')")
         config = api.api_client.configuration
         host = config.host
         token = config.api_key['Authorization']
@@ -34,6 +36,8 @@ def _download_file(api, project, url, out_path):
         supports_range = True  # Most HTTP servers support range requests
     # If this is a S3 object key, get a download url.
     else:
+        if api is None:
+            raise ValueError("API object required for S3 object keys (non-HTTP URLs)")
         url = api.get_download_info(project, {'keys': [url]})[0].url
         headers = {}
         supports_range = True  # S3 presigned URLs support range requests
@@ -174,7 +178,7 @@ def _download_file(api, project, url, out_path):
                 # Continue with existing resume_byte_pos
 
             # Regenerate S3 URL if needed (presigned URLs may have expired)
-            if not original_url.startswith(('/', 'http')):
+            if not original_url.startswith(('/', 'http')) and api is not None:
                 try:
                     new_download_info = api.get_download_info(project, {'keys': [original_url]})
                     if not new_download_info:
