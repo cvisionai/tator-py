@@ -128,9 +128,17 @@ def transcode_single(path, args, gid):
         path = os.path.join(args.work_dir, args.name)
         # Use the existing _download_file function for robust downloading with retry logic
         logger.info(f"Downloading file from {args.url} to {path}")
+        response = requests.get(args.url, stream=True)
+        response.raise_for_status()
+        with open(path, "wb") as fp:
+            for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
+                if chunk:
+                    fp.write(chunk)
+        '''
         for progress in _download_file(None, None, args.url, path):
             if progress % 10 == 0 or progress == 100:  # Log every 10% to avoid spam
                 logger.info(f"Download progress: {progress}%")
+        '''    
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
