@@ -24,7 +24,7 @@ SCHEMA_FILENAME = 'schema.yaml'
 CONFIG_FILENAME = 'config.json'
 OPENAPI_GENERATOR_VERSION = '4.3.1'
 OPENAPI_GENERATOR_JAR = f'openapi-generator-cli-{OPENAPI_GENERATOR_VERSION}.jar'
-OPENAPI_GENERATOR_URL = f'https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/{OPENAPI_GENERATOR_VERSION}/{OPENAPI_GENERATOR_JAR}'
+OPENAPI_GENERATOR_URL = f'https://tator-ci.s3.us-east-1.amazonaws.com/{OPENAPI_GENERATOR_JAR}'
 
 def get_version():
     with open(CONFIG_FILENAME, 'r') as f:
