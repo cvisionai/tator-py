@@ -9,6 +9,7 @@ import logging
 import json
 import glob
 import re
+import subprocess
 
 from progressbar import progressbar
 import requests
@@ -36,6 +37,30 @@ else:
 logging.basicConfig(format=FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+def download_file(url, output_path):
+    """
+    Download a file using wget if available, otherwise use requests.
+
+    Args:
+        url: URL to download from
+        output_path: Local path where file should be saved
+    """
+    # Try wget for simple HTTP/HTTPS URLs if available
+    if url.startswith('http') and shutil.which('wget'):
+        try:
+            subprocess.run(['wget', '-c', '-O', output_path, url], check=True, capture_output=True)
+            return
+        except subprocess.CalledProcessError:
+            pass  # Fall back to requests
+
+    # Fall back to requests
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+    with open(output_path, "wb") as fp:
+        for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
+            if chunk:
+                fp.write(chunk)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
@@ -125,12 +150,8 @@ def transcode_single(path, args, gid):
     # If a URL is given and path doesn't exist, download the file to path.
     if args.url:
         path = os.path.join(args.work_dir, args.name)
-        response = requests.get(args.url, stream=True)
-        response.raise_for_status()
-        with open(path, "wb") as fp:
-            for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
-                if chunk:
-                    fp.write(chunk)
+        logger.info(f"Downloading file from {args.url} to {path}")
+        download_file(args.url, path)
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
