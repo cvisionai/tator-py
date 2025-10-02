@@ -78,8 +78,8 @@ def parse_args():
                                                    'is omitted.', type=str)
     parser.add_argument('--dest_organization', help='Destination organization. Required if using '
                                                     '--new_project_name.', type=int)
-    parser.add_argument('--sections', help='Specific sections to migrate. If not given, all media '
-                                           'in the source project will be migrated.', nargs='+')
+    parser.add_argument('--section_ids', help='IDs of Specific sections to migrate. If not given, all media '
+                                           'in the source project will be migrated. If the sections identified in this list are nested, parent and child sections will also be migrated and the folder structure will be preserved in the destination project.', nargs='+')
     parser.add_argument('--skip_memberships', help='If given, membership objects will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_sections', help='If given, section objects will not be migrated.',
@@ -116,6 +116,25 @@ def get_tator_user_sections(media):
     if media.attributes:
         tator_user_sections = media.attributes.get('tator_user_sections', None)
     return tator_user_sections
+
+def get_section_list_from_ids(api, args):
+    sections = api.get_section_list(args.project)
+    for section in sections:
+        if section.path == "None":
+            section.path = section.name.replace(' ', '_')
+    id_set = set([int(s) for s in args.section_ids])
+    selected_sections = [s for s in sections if s.id in id_set]
+    ancestors = []
+    descendents = []
+    for selected_section in selected_sections:
+        ancestors += [section for section in sections if selected_section.path.startswith(section.path) and section.id != selected_section.id]
+        print(ancestors)
+        descendents += [section for section in sections if section.path.startswith(selected_section.path) and section.id != selected_section.id]
+        print(descendents)
+    selected_sections += ancestors + descendents
+    # Remove duplicates
+    selected_sections = list({s.id: s for s in selected_sections}.values())
+    return selected_sections
 
 def setup_apis(args):
     """ Sets up API objects.
@@ -184,8 +203,8 @@ def find_sections(args, src_api, dest_api, dest_project):
     else:
         sections = src_api.get_section_list(args.project)
         num_src = len(sections)
-        if args.sections:
-            sections = [section for section in sections if section.name in args.sections]
+        if args.section_ids:
+            sections = get_section_list_from_ids(src_api, args)
         if dest_project is not None:
             existing = dest_api.get_section_list(dest_project.id)
             existing_names = [section.name for section in existing]
@@ -336,9 +355,8 @@ def find_media(args, src_api, dest_api, dest_project):
         if dest_project is not None:
             dest_media_paginator = tator.util.get_paginator(dest_api, "get_media_list")
 
-        if args.sections:
-            sections = src_api.get_section_list(args.project)
-            sections = [section for section in sections if section.name in args.sections]
+        if args.section_ids:
+            sections = get_section_list_from_ids(src_api, args)
             for section in sections:
                 page_iter = src_media_paginator.paginate(project=args.project, section=section.id)
                 section_media = [m for page in page_iter for m in page]
@@ -700,9 +718,10 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
     num_total = len(media)
     # Look up sections in destination project, create a dict between tator_user_sections and
     # section name.
-    sections = src_api.get_section_list(args.project)
-    if args.sections:
-        sections = [section for section in sections if section.name in args.sections]
+    if args.section_ids:
+        sections = get_section_list_from_ids(src_api, args)
+    else:
+        sections = src_api.get_section_list(args.project)
     section_mapping = {s.tator_user_sections: s.name for s in sections}
     section_mapping[None] = None
     # Construct dictionary between destination type/destination section and media IDs.

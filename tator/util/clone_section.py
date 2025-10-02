@@ -38,6 +38,9 @@ def clone_section(src_api, src_section_id, dest_project, dest_api=None):
         spec['object_search'] = section_obj.object_search
     if section_obj.tator_user_sections:
         spec['tator_user_sections'] = section_obj.tator_user_sections
+    if section_obj.path:
+        spec['path'] = section_obj.path
+        print(f"SECTION PATH: {section_obj.path}")
     if dest_api is None:
         dest_api = src_api
     return dest_api.create_section(dest_project, section_spec=spec)
