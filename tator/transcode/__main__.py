@@ -46,12 +46,25 @@ def download_file(url, output_path):
         url: URL to download from
         output_path: Local path where file should be saved
     """
-    # Try wget for simple HTTP/HTTPS URLs if available
-    if url.startswith('http') and shutil.which('wget'):
+    # Try wget if available
+    if shutil.which('wget'):
         try:
-            subprocess.run(['wget', '-c', '-O', output_path, url], check=True, capture_output=True)
+            wget_cmd = [
+                'wget',
+                '-c',                       # Continue/resume partial downloads
+                '--tries=10',               # Retry up to 10 times
+                '--retry-connrefused',      # Retry even if connection refused
+                '--timeout=60',             # DNS/connect timeout (1 minute)
+                '--read-timeout=600',       # Read timeout only if no data received (10 minutes)
+                '-nv',                      # Quiet mode (suppress most wget output)
+                '-O', output_path,          # Output file path
+                url
+            ]
+            subprocess.run(wget_cmd, check=True, capture_output=True)
+            logger.info(f"Successfully downloaded with wget: {output_path}")
             return
-        except subprocess.CalledProcessError:
+        except subprocess.CalledProcessError as e:
+            logger.warning(f"wget download failed: {e}, falling back to requests")
             pass  # Fall back to requests
 
     # Fall back to requests
