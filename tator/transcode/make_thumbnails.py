@@ -72,6 +72,7 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
             "-stats_period", "60",
             "-i", video_path,
             "-vf", "scale=256:-1",
+            "-pix_fmt", "yuv420p",
             "-vframes", "1", thumb_path]
     subprocess.run(cmd, check=True)
 
