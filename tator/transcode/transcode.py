@@ -234,7 +234,11 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     logger.info("Transcoding to %s", resolutions)
 
-    cmd.extend(["-filter_complex"])
+    cmd.extend([
+        "-max_muxing_queue_size", "1024",
+        "-filter_complex_threads", "1",
+        "-filter_complex"
+    ])
     # Construct the complex filter
     filter_parts = []
     if filter_complex is None:
