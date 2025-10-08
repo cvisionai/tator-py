@@ -128,9 +128,7 @@ def get_section_list_from_ids(api, args):
     descendents = []
     for selected_section in selected_sections:
         ancestors += [section for section in sections if selected_section.path.startswith(section.path) and section.id != selected_section.id]
-        print(ancestors)
         descendents += [section for section in sections if section.path.startswith(selected_section.path) and section.id != selected_section.id]
-        print(descendents)
     selected_sections += ancestors + descendents
     # Remove duplicates
     selected_sections = list({s.id: s for s in selected_sections}.values())
@@ -350,24 +348,15 @@ def find_media(args, src_api, dest_api, dest_project):
     if args.skip_media:
         logger.info(f"Skipping media due to --skip_media.")
     else:
-        # Set up media paginators
-        src_media_paginator = tator.util.get_paginator(src_api, "get_media_list")
-        if dest_project is not None:
-            dest_media_paginator = tator.util.get_paginator(dest_api, "get_media_list")
-
         if args.section_ids:
             sections = get_section_list_from_ids(src_api, args)
             for section in sections:
-                page_iter = src_media_paginator.paginate(project=args.project, section=section.id)
-                section_media = [m for page in page_iter for m in page]
+                section_media = src_api.get_media_list(project=args.project, section=section.id)
                 num_src_media = len(section_media)
                 if dest_project is not None:
                     existing_section = dest_api.get_section_list(dest_project.id, name=section.name)
                     if existing_section:
-                        page_iter = dest_media_paginator.paginate(
-                            project=dest_project.id, section=existing_section[0].id
-                        )
-                        existing = [m for page in page_iter for m in page]
+                        existing = dest_api.get_media_list(project=dest_project.id, section=existing_section[0].id)
                         existing_names = [m.name for m in existing]
                         for m in section_media:
                             if m.name in existing_names:
@@ -377,8 +366,7 @@ def find_media(args, src_api, dest_api, dest_project):
                             f"created ({num_src_media - len(section_media)} already exist).")
                 media += section_media
         else:
-            page_iter = src_media_paginator.paginate(project=args.project)
-            media = [m for page in page_iter for m in page]
+            media = src_api.get_media_list(project=args.project)
             num_src_media = len(media)
             if dest_project is not None:
                 src_sections = src_api.get_section_list(args.project)
@@ -387,8 +375,7 @@ def find_media(args, src_api, dest_api, dest_project):
                 dest_section_names = {s.tator_user_sections: s.name for s in dest_sections}
                 src_section_names[None] = None
                 dest_section_names[None] = None
-                page_iter = dest_media_paginator.paginate(project=dest_project.id)
-                existing = [m for page in page_iter for m in page]
+                existing = dest_api.get_media_list(project=dest_project.id)
                 existing_name_section = [
                     (m.name, dest_section_names[get_tator_user_sections(m)])
                     for m in existing
