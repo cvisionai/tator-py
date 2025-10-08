@@ -71,8 +71,7 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
             "-progress", "-",
             "-stats_period", "60",
             "-i", video_path,
-            "-vf", "scale=256:-1",
-            "-pix_fmt", "yuv420p",
+            "-vf", "zscale=w=256:h=-1:filter=lanczos,format=yuv420p",
             "-vframes", "1", thumb_path]
     subprocess.run(cmd, check=True)
 
@@ -138,7 +137,7 @@ def make_thumbnail_gif(
             "-i",
             video_path,
             "-vf",
-            f"select='not(mod(n\,{round(frame_select)}))',scale=256:-1:flags=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
+            f"select='not(mod(n\,{round(frame_select)}))',zscale=w=256:h=-1:filter=lanczos,setpts=PTS/{speed_up},split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",
             thumb_gif_path,
     ]
     logger.info(f"cmd={cmd}")

@@ -54,6 +54,90 @@ def _launch_and_monitor_resources(cmd, interval=300):
     logger.info(f"cmd={cmd}")
     logger.info(f"time={end-start}")
 
+def get_svtav1_color_params(primaries, transfer, space):
+    """
+    Convert color metadata strings to SVT-AV1 numeric values.
+    Returns SVT-AV1 params string or None if not svtav1.
+    """
+    # Color Primaries lookup
+    primaries_map = {
+        'bt709': 1,
+        'unspecified': 2,
+        'bt470m': 4,
+        'bt470bg': 5,
+        'bt601': 6,
+        'smpte240': 7,
+        'smpte240m': 7,
+        'film': 8,
+        'bt2020': 9,
+        'xyz': 10,
+        'smpte431': 11,
+        'smpte432': 12,
+        'ebu3213': 22,
+        'unknown': 2,
+        'reserved': 2,
+    }
+    
+    # Transfer Characteristics lookup
+    transfer_map = {
+        'bt709': 1,
+        'unspecified': 2,
+        'bt470m': 4,
+        'bt470bg': 5,
+        'bt601': 6,
+        'smpte240': 7,
+        'smpte240m': 7,
+        'linear': 8,
+        'log100': 9,
+        'log100-sqrt10': 10,
+        'iec61966': 11,
+        'iec61966-2-1': 11,
+        'bt1361': 12,
+        'srgb': 13,
+        'bt2020-10': 14,
+        'bt2020-12': 15,
+        'smpte2084': 16,
+        'smpte428': 17,
+        'arib-std-b67': 18,
+        'hlg': 18,
+        'unknown': 2,
+        'reserved': 2,
+    }
+    
+    # Matrix Coefficients lookup
+    matrix_map = {
+        'identity': 0,
+        'rgb': 0,
+        'bt709': 1,
+        'unspecified': 2,
+        'fcc': 4,
+        'bt470bg': 5,
+        'bt601': 6,
+        'smpte170m': 6,
+        'smpte240': 7,
+        'smpte240m': 7,
+        'ycgco': 8,
+        'bt2020-ncl': 9,
+        'bt2020nc': 9,
+        'bt2020-cl': 10,
+        'bt2020c': 10,
+        'smpte2085': 11,
+        'chroma-ncl': 12,
+        'chroma-derived-ncl': 12,
+        'chroma-cl': 13,
+        'chroma-derived-cl': 13,
+        'ictcp': 14,
+        'unknown': 2,
+        'reserved': 2,
+    }
+    
+    # Get numeric values with defaults to unspecified (2)
+    prim_val = primaries_map.get(primaries.lower() if primaries else '', 2)
+    trc_val = transfer_map.get(transfer.lower() if transfer else '', 2)
+    matrix_val = matrix_map.get(space.lower() if space else '', 2)
+    
+    return f"color-primaries={prim_val}:transfer-characteristics={trc_val}:matrix-coefficients={matrix_val}"
+
 def find_best_encoder(codec, hwaccel=False):
     """ Find the best encoder based on what is available on the system """
     global encoder_lookup
@@ -209,12 +293,31 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     else:
         yadif = "yadif"
 
+    # Get color space metadata. Important for edge cases
+    color_data = {
+        'primaries': video_info['streams'][0].get('color_primaries', 'unknown'),
+        'transfer': video_info['streams'][0].get('color_transfer', 'unknown'),
+        'space': video_info['streams'][0].get('color_space', 'unknown')
+    }
+    primaries = color_data['primaries']
+    transfer = color_data['transfer']
+    space = color_data['space']
+    
+    # Default to bt709 if unknown/reserved
+    if primaries in ['unknown', 'reserved', 'unspecified', '']:
+        primaries = 'bt709'
+    if transfer in ['unknown', 'reserved', 'unspecified', '']:
+        transfer = 'bt709'
+    if space in ['unknown', 'reserved', 'unspecified', '']:
+        space = 'bt709'
+
     vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
         "-loglevel", "error",
         "-progress", "-",
-        "-stats_period", "300"
+        "-stats_period", "300",
+        '-apply_cropping', '0',
     ]
     # We are going to concatenate multiple segments together
     if isinstance(path, list):
@@ -243,13 +346,13 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                 seg_idx = 0
                 hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
             # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-            filter_string=f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[bv]fps={avg_frame_rate}[bv_fps];[vid_fps][bv_fps]concat=n=2:v=1:a=0[concatenated];"
+            filter_string=f"[0:v:0]zscale,format=yuv420p[col0];[col0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[bv]fps={avg_frame_rate}[bv_fps];[vid_fps][bv_fps]concat=n=2:v=1:a=0[concatenated];"
         else:
             filter_string = ""
             if vaapi_present:
                 hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
             for seg_idx in range(num_segments):
-                filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}];[a{seg_idx}]setsar=1[vid{seg_idx}];[vid{seg_idx}]fps={avg_frame_rate}{hw_upload}[vid_fps{seg_idx}];"
+                filter_string += f"[{seg_idx}:v:0]zscale,format=yuv420p[col{seg_idx}];[col{seg_idx}]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}];[a{seg_idx}]setsar=1[vid{seg_idx}];[vid{seg_idx}]fps={avg_frame_rate}{hw_upload}[vid_fps{seg_idx}];"
                 
             filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];"
             filter_string += "".join([f"[vid_fps{seg_idx}]" for seg_idx in range(num_segments)]) 
@@ -275,12 +378,22 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         per_res = ["-an",
             "-metadata:s", "handler_name=tator",
             "-metadata:s", "rotate=0",
+            "-color_primaries",f"{primaries}",
+            "-color_trc", f"{transfer}",
+            "-colorspace", f"{space}", 
             "-g", "25",
             "-movflags",
             "faststart+frag_keyframe+empty_moov+default_base_moof"]
+
+
         logger.info(f"Generating resolution @ {resolution}")
         output_file = os.path.join(outpath, f"{resolution}.mp4")
         codec = find_best_encoder(codecs[ridx], hwaccel)
+
+        if codec.find('libsvtav1') >= 0:
+            svtav1_params = get_svtav1_color_params(primaries, transfer, space)
+            per_res.extend(["-svtav1-params", svtav1_params])
+
         quality_flag = "-crf"
         pixel_format = pixel_formats[ridx]
         
