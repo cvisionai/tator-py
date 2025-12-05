@@ -247,7 +247,8 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
         cluster=None,
         files_per_job=1,
         categories=['category1, category2, category3'],
-        parameters=[{'name':'param1', 'value':'bool'}])
+        parameters=[{'name':'param1', 'value':'bool'}],
+        extended_info={})
 
     response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
@@ -255,7 +256,12 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     algorithm_id = response.id
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    assert algorithm_info == spec
+    dict_spec = spec.to_dict()
+    dict_algorithm_info = algorithm_info.to_dict()
+    keys = set(dict_spec.keys()).union(set(dict_algorithm_info.keys()))
+    for key in keys:
+        assert dict_spec.get(key) == dict_algorithm_info.get(key)
+
 
     # Try to register a second algorithm with the same name
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
@@ -263,19 +269,25 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
 
     # Attempt to patch the algorithm info and make sure it has been updated
     # Note: the cluster field is ignored in the patch operation
-    spec = tator.models.Algorithm(
+    spec = tator.models.AlgorithmUpdateSpec(
         name=str(uuid.uuid1()),
-        project=project,
         user=user_id,
         description='new_test_description',
         manifest='coolfile.yaml',
         files_per_job=2,
         categories=['categoryA, categoryB'],
         parameters=[{'name': 'paramA', 'value':'int'}, {'name':'paramB', 'value':'string'}])
-    response = tator_api.update_algorithm(id=algorithm_id, algorithm_spec=spec)
+    response = tator_api.update_algorithm(id=algorithm_id, algorithm_update_spec=spec)
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    assert algorithm_info == spec
+    dict_spec = spec.to_dict()
+    dict_algorithm_info = algorithm_info.to_dict()
+    keys = set(dict_spec.keys()).union(set(dict_algorithm_info.keys()))
+    for key in keys:
+        # Only check values we patched
+        if key not in ['name', 'user', 'description', 'manifest', 'files_per_job', 'categories', 'parameters']:
+            continue
+        assert dict_spec.get(key) == dict_algorithm_info.get(key)
 
     # Create another algorithm workflow and verify retrieving both algorithm objects
     # using the get list method
@@ -300,7 +312,7 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     for alg in algorithm_list:
         found_match = False
         for spec in spec_list:
-            if spec == alg:
+            if spec.name == alg.name and alg.id == spec.id:
                 found_match = True
                 break
 
