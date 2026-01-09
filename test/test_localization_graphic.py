@@ -57,8 +57,13 @@ def _random_localization(
     elif dtype == 'line':
         width = 0.0
         height = 0.0
-        u = random.uniform(0.0, 1.0)
-        v = random.uniform(0.0, 1.0)
+        # u and v are vector magnitudes, so endpoint is (x+u, y+v)
+        # Generate lines from the middle region with vectors in all directions
+        # to test different orientations while keeping ROI within frame
+        x = random.uniform(0.25, 0.75)
+        y = random.uniform(0.25, 0.75)
+        u = random.uniform(-0.25, 0.25)
+        v = random.uniform(-0.25, 0.25)
 
     elif dtype == 'dot':
         width = 0.0
