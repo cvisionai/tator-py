@@ -11,6 +11,19 @@ from tator.util._upload_file import _upload_file
 
 logger = logging.getLogger(__name__)
 
+def _algorithms_equal(alg1, alg2) -> bool:
+    """Compare two algorithm objects, treating None and [] as equivalent for list fields."""
+    dict1 = alg1.to_dict() if hasattr(alg1, 'to_dict') else dict(alg1)
+    dict2 = alg2.to_dict() if hasattr(alg2, 'to_dict') else dict(alg2)
+    # Normalize None vs empty list for list fields
+    for d in [dict1, dict2]:
+        for key, val in d.items():
+            if val is None:
+                d[key] = []
+            elif val == []:
+                pass  # already normalized
+    return dict1 == dict2
+
 def _create_yaml_file_str() -> str:
     """ Creates a argo manifest file used by the unit tests in this file
     """
@@ -255,19 +268,8 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     algorithm_id = response.id
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    # Compare as dicts to get better diff output on failure
-    info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
-    spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
-    # Normalize None vs empty list for list fields (API returns [] where spec has None)
-    for key in info_dict:
-        if info_dict.get(key) == [] and spec_dict.get(key) is None:
-            spec_dict[key] = []
-    # Show differences for debugging
-    if info_dict != spec_dict:
-        for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
-            if info_dict.get(key) != spec_dict.get(key):
-                print(f"DIFF: {key}: API={info_dict.get(key)!r} vs Spec={spec_dict.get(key)!r}")
-    assert info_dict == spec_dict, f"Algorithm mismatch. API: {info_dict}, Spec: {spec_dict}"
+    assert _algorithms_equal(algorithm_info, spec), \
+        f"Algorithm mismatch. API: {algorithm_info}, Spec: {spec}"
 
     # Try to register a second algorithm with the same name
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
@@ -287,18 +289,8 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     response = tator_api.update_algorithm(id=algorithm_id, algorithm_spec=spec)
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    # Compare as dicts to get better diff output on failure
-    info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
-    spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
-    # Normalize None vs empty list for list fields (API returns [] where spec has None)
-    for key in info_dict:
-        if info_dict.get(key) == [] and spec_dict.get(key) is None:
-            spec_dict[key] = []
-    if info_dict != spec_dict:
-        for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
-            if info_dict.get(key) != spec_dict.get(key):
-                print(f"DIFF: {key}: API={info_dict.get(key)!r} vs Spec={spec_dict.get(key)!r}")
-    assert info_dict == spec_dict, f"Algorithm mismatch after update. API: {info_dict}, Spec: {spec_dict}"
+    assert _algorithms_equal(algorithm_info, spec), \
+        f"Algorithm mismatch after update. API: {algorithm_info}, Spec: {spec}"
 
     # Create another algorithm workflow and verify retrieving both algorithm objects
     # using the get list method
@@ -323,7 +315,7 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     for alg in algorithm_list:
         found_match = False
         for spec in spec_list:
-            if spec == alg:
+            if _algorithms_equal(spec, alg):
                 found_match = True
                 break
 
