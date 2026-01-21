@@ -255,7 +255,15 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     algorithm_id = response.id
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    assert algorithm_info == spec
+    # Compare as dicts to get better diff output on failure
+    info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
+    spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
+    # Show differences for debugging
+    if info_dict != spec_dict:
+        for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
+            if info_dict.get(key) != spec_dict.get(key):
+                print(f"DIFF: {key}: API={info_dict.get(key)!r} vs Spec={spec_dict.get(key)!r}")
+    assert info_dict == spec_dict, f"Algorithm mismatch. API: {info_dict}, Spec: {spec_dict}"
 
     # Try to register a second algorithm with the same name
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException):
@@ -275,7 +283,14 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     response = tator_api.update_algorithm(id=algorithm_id, algorithm_spec=spec)
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
-    assert algorithm_info == spec
+    # Compare as dicts to get better diff output on failure
+    info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
+    spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
+    if info_dict != spec_dict:
+        for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
+            if info_dict.get(key) != spec_dict.get(key):
+                print(f"DIFF: {key}: API={info_dict.get(key)!r} vs Spec={spec_dict.get(key)!r}")
+    assert info_dict == spec_dict, f"Algorithm mismatch after update. API: {info_dict}, Spec: {spec_dict}"
 
     # Create another algorithm workflow and verify retrieving both algorithm objects
     # using the get list method
