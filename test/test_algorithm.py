@@ -258,6 +258,10 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     # Compare as dicts to get better diff output on failure
     info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
     spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
+    # Normalize None vs empty list for list fields (API returns [] where spec has None)
+    for key in info_dict:
+        if info_dict.get(key) == [] and spec_dict.get(key) is None:
+            spec_dict[key] = []
     # Show differences for debugging
     if info_dict != spec_dict:
         for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
@@ -286,6 +290,10 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
     # Compare as dicts to get better diff output on failure
     info_dict = algorithm_info.to_dict() if hasattr(algorithm_info, 'to_dict') else algorithm_info
     spec_dict = spec.to_dict() if hasattr(spec, 'to_dict') else spec
+    # Normalize None vs empty list for list fields (API returns [] where spec has None)
+    for key in info_dict:
+        if info_dict.get(key) == [] and spec_dict.get(key) is None:
+            spec_dict[key] = []
     if info_dict != spec_dict:
         for key in set(list(info_dict.keys()) + list(spec_dict.keys())):
             if info_dict.get(key) != spec_dict.get(key):
