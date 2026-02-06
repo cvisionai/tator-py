@@ -235,7 +235,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     logger.info("Transcoding to %s", resolutions)
 
     cmd.extend([
-        "-max_muxing_queue_size", "1024",
+        "-max_muxing_queue_size", "9999",
         "-filter_complex_threads", "1",
         "-filter_complex"
     ])
@@ -266,13 +266,18 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         filter_string = filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload)
         #filter_parts.append(filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload))
 
-    # Add split parameters for each resolution
-    split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(resolutions))])
-    scale_parts = "".join([f"[split{ridx}]scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}];" for ridx,resolution in enumerate(resolutions)])
-    # Last part of scale parts should now be ";" and needs to be removed
-    if scale_parts.endswith(";"):
-        scale_parts = scale_parts[:-1]
-    filter_string += f"[concatenated] split={len(resolutions)} " + split_output_labels + ";" + scale_parts
+    if len(resolutions) == 1:
+        # Single resolution - no split needed, pipe directly from [concatenated]
+        resolution = resolutions[0]
+        filter_string += f"[concatenated] scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv0]"
+    else:
+        # Multiple resolutions - need split filter
+        split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(resolutions))])
+        scale_parts = "".join([f"[split{ridx}]scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}];" for ridx,resolution in enumerate(resolutions)])
+        if scale_parts.endswith(";"):
+            scale_parts = scale_parts[:-1]
+        filter_string += f"[concatenated] split={len(resolutions)} " + split_output_labels + ";" + scale_parts
+
     filter_parts.append(filter_string)
     cmd.extend(filter_parts)
     for ridx, resolution in enumerate(resolutions):
