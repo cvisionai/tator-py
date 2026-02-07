@@ -777,7 +777,7 @@ def are_we_in_compose(request):
 
     if (
         request.config.option.host.find("localhost") != -1
-        or request.config.option.host.find("127.0.0.`") != -1
+        or request.config.option.host.find("127.0.0.1") != -1
     ):
         proc = subprocess.run(
             "docker compose ls", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
