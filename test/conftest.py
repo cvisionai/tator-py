@@ -1,6 +1,7 @@
 import datetime
 import os
 import shutil
+import subprocess
 import time
 import tarfile
 import tempfile
@@ -386,6 +387,17 @@ def video_file(request):
                 for chunk in r.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
+    yield out_path
+
+@pytest.fixture(scope='session')
+def large_video_file(video_file):
+    """Create a larger video by looping the base video, for transcode cancel tests."""
+    out_path = '/tmp/LargeTranscodeCancelTest.mp4'
+    if not os.path.exists(out_path):
+        subprocess.run(
+            ['ffmpeg', '-stream_loop', '10', '-i', video_file, '-c', 'copy', out_path],
+            check=True, capture_output=True,
+        )
     yield out_path
 
 def video_helper(host: str, token: str, project: int, video_type: int, video_file: str):

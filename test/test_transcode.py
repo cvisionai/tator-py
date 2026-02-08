@@ -63,11 +63,11 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
             print("Waiting for transcode of existing media to complete...")
             time.sleep(2.5)
 
-def test_transcode_cancel(host, token, project, video_type, video_file):
+def test_transcode_cancel(host, token, project, video_type, large_video_file):
     tator_api = tator.get_api(host, token)
 
     # Compute parameters needed to create media.
-    md5 = tator.util.md5sum(video_file)
+    md5 = tator.util.md5sum(large_video_file)
     upload_uid = str(uuid1())
     upload_gid = str(uuid1())
     fname='CancelTranscodeTest.mp4'
@@ -99,7 +99,7 @@ def test_transcode_cancel(host, token, project, video_type, video_file):
         for progress, response in tator.util.upload_media(
             tator_api,
             video_type,
-            video_file,
+            large_video_file,
             upload_uid=media_spec['uid'],
             upload_gid=media_spec['gid'],
             media_id=response.id[0],
