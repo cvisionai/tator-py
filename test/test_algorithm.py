@@ -260,7 +260,8 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
         cluster=None,
         files_per_job=1,
         categories=['category1, category2, category3'],
-        parameters=[{'name':'param1', 'value':'bool'}])
+        parameters=[{'name':'param1', 'value':'bool'}],
+        extended_info={})
 
     response = tator_api.register_algorithm(project=project, algorithm_spec=spec)
 
@@ -277,16 +278,15 @@ def test_register_algorithm(host: str, token: str, project: int, algo_project: i
 
     # Attempt to patch the algorithm info and make sure it has been updated
     # Note: the cluster field is ignored in the patch operation
-    spec = tator.models.Algorithm(
+    spec = tator.models.AlgorithmUpdateSpec(
         name=str(uuid.uuid1()),
-        project=project,
         user=user_id,
         description='new_test_description',
         manifest='coolfile.yaml',
         files_per_job=2,
         categories=['categoryA, categoryB'],
         parameters=[{'name': 'paramA', 'value':'int'}, {'name':'paramB', 'value':'string'}])
-    response = tator_api.update_algorithm(id=algorithm_id, algorithm_spec=spec)
+    response = tator_api.update_algorithm(id=algorithm_id, algorithm_update_spec=spec)
     algorithm_info = tator_api.get_algorithm(id=algorithm_id)
     spec.id = algorithm_id
     assert _algorithms_equal(algorithm_info, spec), \
