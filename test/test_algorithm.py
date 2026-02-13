@@ -12,17 +12,19 @@ from tator.util._upload_file import _upload_file
 logger = logging.getLogger(__name__)
 
 def _algorithms_equal(alg1, alg2) -> bool:
-    """Compare two algorithm objects, treating None and [] as equivalent for list fields."""
+    """Compare two algorithm objects on their shared keys,
+    treating None, [], and {} as equivalent empty values."""
     dict1 = alg1.to_dict() if hasattr(alg1, 'to_dict') else dict(alg1)
     dict2 = alg2.to_dict() if hasattr(alg2, 'to_dict') else dict(alg2)
-    # Normalize None vs empty list for list fields
-    for d in [dict1, dict2]:
-        for key, val in d.items():
-            if val is None:
-                d[key] = []
-            elif val == []:
-                pass  # already normalized
-    return dict1 == dict2
+    _empty = (None, [], {})
+    shared_keys = set(dict1.keys()) & set(dict2.keys())
+    for key in shared_keys:
+        v1, v2 = dict1[key], dict2[key]
+        if v1 in _empty and v2 in _empty:
+            continue
+        if v1 != v2:
+            return False
+    return True
 
 def _create_yaml_file_str() -> str:
     """ Creates a argo manifest file used by the unit tests in this file
