@@ -63,28 +63,27 @@ if __name__ == '__main__':
     logger.info(f"Found {len(localizations)} localizations in this video!")
 
     # Get the localizations with left edge on the left side of the image.
-    # Geometry fields are indexed in elasticsearch with a leading underscore
-    # appended before their name.
+    # Built-in geometry fields are referenced with a leading $ before their name.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    attribute_lt=["_x::0.5"])
+                                                    attribute_lt=["$x::0.5"])
     logger.info(f"Found {len(localizations)} localizations on left side of video!")
 
     # Get the localizations with normalized width less than 0.25.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    attribute_lt=["_width::0.25"])
+                                                    attribute_lt=["$width::0.25"])
     logger.info(f"Found {len(localizations)} localizations with width < 0.25!")
 
     # Get the localizations between frames 100-200.
-    # Frame is also indexed in elasticsearch under the name _frame.
+    # Frame is also a built-in field referenced with $frame.
     localizations = tator_api.get_localization_list(project, media_id=[args.video_id],
-                                                    attribute_gte=["_frame::100"],
-                                                    attribute_lte=["_frame::=200"])
+                                                    attribute_gte=["$frame::100"],
+                                                    attribute_lte=["$frame::200"])
     logger.info(f"Found {len(localizations)} localizations between frames 100-200!")
 
     # Delete localizations between frames 100-200.
     response = tator_api.delete_localization_list(project, media_id=[args.video_id],
-                                                    attribute_gte=["_frame::100"],
-                                                    attribute_lte=["_frame::=200"])
+                                                    attribute_gte=["$frame::100"],
+                                                    attribute_lte=["$frame::200"])
     logger.info(response.message)
 
     # Suppose we want to shrink the first 10 boxes by 50% in each dimension. This

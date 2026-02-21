@@ -73,11 +73,9 @@ def add_invalid_attribute_helper(tator_api, type_getter, type_id):
     with pytest.raises(tator.openapi.tator_openapi.exceptions.ApiException) as excinfo:
         tator_api.create_attribute_type(id=type_id, attribute_type_spec=addition)
 
-    # Check the exeption message for expected content
-    assert (
-        "ValidationError: \\\"'unknown' is not one of ['bool', 'int', 'float', 'enum', 'string', 'datetime', 'geopos', 'float_array', 'blob']\\\""
-        in str(excinfo.value)
-    )
+    # Check the exception message for expected content
+    exc_str = str(excinfo.value)
+    assert "Input should be" in exc_str and "literal_error" in exc_str
 
 
 def test_box_type_add_invalid_attribute(host, token, project, attribute_box_type):
