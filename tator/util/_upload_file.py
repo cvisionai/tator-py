@@ -12,19 +12,11 @@ import tator
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 10 # Maximum retries on a given chunk.
-GCP_CHUNK_MOD = 256 * 1024 # Chunk size must be a multiple of 256KB for Google Cloud Storage
 
-def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout):
+def _upload_chunk(file_part, chunk_count, chunk_size, file_size, url, path, default_etag_val, timeout):
     for attempt in range(MAX_RETRIES):
         try:
             kwargs = {"data": file_part, "timeout": timeout}
-            if gcp_upload:
-                first_byte = chunk_count * chunk_size
-                last_byte = min(first_byte + chunk_size, file_size) - 1
-                kwargs["headers"] = {
-                    "Content-Length": str(last_byte - first_byte),
-                    "Content-Range": f"bytes {first_byte}-{last_byte}/{file_size}",
-                }
             response = requests.put(url, **kwargs)
             if response.status_code >= 400:
                 raise RuntimeError(f"Upload of {path} chunk {chunk_count} failed ({response.text})!")
@@ -70,7 +62,7 @@ def _upload_file(
     :param chunk_size: [Optional] Upload chunk size in bytes.
     :param timeout: [Optional] Request timeout for uploads in seconds. Default is 30.
     :param max_workers: [Optional] Max workers for concurrent requests.
-    :param gcp_compat: [Optional] If True, chunk size will be rounded up to the nearest multiple of 256KB for Google Cloud Storage compatibility.
+    :param gcp_compat: [Deprecated] This parameter is no longer used and will be removed in a future version.
     :param bucket_id: [Optional] Bucket ID for upload, will default to project bucket if not provided.
     """
 
@@ -83,12 +75,6 @@ def _upload_file(
         logger.warning(
             f"Number of chunks exceeds maximum of 10,000. Increasing chunk size to {chunk_size}."
         )
-
-    if gcp_compat and chunk_size % GCP_CHUNK_MOD:
-        logger.warning(
-            f"Chunk size must be a multiple of 256KB for Google Cloud Storage compatibility"
-        )
-        chunk_size = math.ceil(chunk_size / GCP_CHUNK_MOD) * GCP_CHUNK_MOD
 
     if path.startswith('https://') or path.startswith('http://') and filename:
         filename = filename.split('?')[0]
@@ -121,9 +107,6 @@ def _upload_file(
         # Upload parts.
         parts = []
         yield (0, None)
-        gcp_upload = upload_info.upload_id == upload_info.urls[0]
-        if gcp_upload:
-            max_workers = 1 # GCP does not handle parallel workers
         with get_data(path) as f:
             with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
                 def complete_chunk(fs):
@@ -133,8 +116,8 @@ def _upload_file(
                 futures = set()
                 for chunk_count, url in enumerate(upload_info.urls):
                     file_part = f.read(chunk_size)
-                    default_etag_val = str(chunk_count) if (gcp_upload or ms_upload) else None
-                    future = executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, gcp_upload, default_etag_val, timeout)
+                    default_etag_val = str(chunk_count) if ms_upload else None
+                    future = executor.submit(_upload_chunk, file_part, chunk_count, chunk_size, file_size, url, path, default_etag_val, timeout)
                     futures.add(future)
                     if len(futures) > max_workers:
                         done, futures = concurrent.futures.wait(futures, return_when=concurrent.futures.FIRST_COMPLETED)

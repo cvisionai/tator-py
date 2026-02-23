@@ -840,7 +840,7 @@ def alt_bucket(request, organization):
             "aws_access_key_id": access_key,
             "aws_secret_access_key": secret_key,
         },
-        "store_type": "MINIO",
+        "store_type": "S3BASIC",
         "archive_sc": "STANDARD",
         "live_sc": "STANDARD",
     }
