@@ -70,6 +70,7 @@ def _upload_file(
     if file_size is None or file_size <= 0:
         file_size = os.stat(path).st_size
 
+    chunk_size = int(chunk_size)
     if math.ceil(file_size / chunk_size) > 10000:
         chunk_size = math.ceil(file_size / 9000)
         logger.warning(
