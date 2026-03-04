@@ -7,7 +7,7 @@ from PIL import Image, ImageSequence
 
 from ._upload_file import _upload_file
 from ._download_file import _download_file
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 
 logger = logging.getLogger(__name__)
 GIF_SZ = 256
@@ -214,7 +214,7 @@ def make_multi_stream(
 
         for img_def, role in zip(defs, roles):
             response = api.create_image_file(resp.id[0], role=role, image_definition=img_def)
-            if not isinstance(response, MessageResponse):
+            if not isinstance(response, tator.models.MessageResponse):
                 raise RuntimeError(f"Unexpected response type '{type(response)}'")
 
         # Add the multi definition.

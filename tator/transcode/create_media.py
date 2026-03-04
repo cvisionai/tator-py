@@ -1,6 +1,6 @@
 import json
 
-from ..openapi.tator_openapi.models import CreateResponse
+import tator
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
 

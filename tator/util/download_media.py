@@ -3,8 +3,8 @@ import math
 
 import requests
 
+import tator
 from ._download_file import _download_file
-from ..openapi.tator_openapi.models import ImageDefinition, VideoDefinition
 
 def _is_none_or_eq(variable, match):
     """  :returns: True if `variable` is None or equals `match` """
@@ -30,9 +30,9 @@ def _find_best_match(media_list, quality, codec_or_mime=None):
         # Bounce out of any non matching codecs
         if codec_or_mime:
             media_info = media_list[idx]
-            if type(media_info) == ImageDefinition and media_info.mime != codec_or_mime:
+            if type(media_info) == tator.models.ImageDefinition and media_info.mime != codec_or_mime:
                 continue
-            if type(media_info) == VideoDefinition and media_info.codec != codec_or_mime:
+            if type(media_info) == tator.models.VideoDefinition and media_info.codec != codec_or_mime:
                 continue
         distance = abs(val-quality)
         if distance < best_distance:

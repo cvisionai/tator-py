@@ -3,21 +3,20 @@ Python Bindings and associated utilities for tator
 online platform
 """
 
-# import submodule to top-level first
-import tator.openapi as openapi
+from .openapi.client import OpenAPIClient, get_api
+from .openapi.api_object import APIObject
+from .openapi.models import ModelFactory
+from .version import __version__
+from . import exceptions
+import tator.util as util
 
 # Shortcuts
-from .util.get_api import get_api
 from .util.get_parser import get_parser
 from .util.download_media import download_media
 
-from .version import __version__ as __version__
+# Backward compat: tator.api points to OpenAPIClient class
+api = OpenAPIClient
 
-# Generated code imports to top-level
-import tator.openapi.tator_openapi.models as models
-import tator.openapi.tator_openapi.exceptions as exceptions
-from tator.openapi.tator_openapi import TatorApi as api
-
-
-# Finally import utility functions
-import tator.util as util
+# tator.models is set dynamically when get_api() is called
+# (ModelFactory instance attached to module)
+models = None

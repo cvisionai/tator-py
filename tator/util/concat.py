@@ -12,7 +12,7 @@ from .md5sum import md5sum
 from .download_media import download_media
 from ._upload_file import _upload_file
 from ._download_file import _download_file
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 
 logger = logging.getLogger(__name__)
 
@@ -101,9 +101,9 @@ def make_concat(api, name, media_ids, section, offsets=None):
                          'mime': f'image/{thumb_gif_image.format.lower()}'}
 
         response = api.create_image_file(resp.id[0], role='thumbnail', image_definition=thumb_def)
-        assert isinstance(response, MessageResponse)
+        assert isinstance(response, tator.models.MessageResponse)
         response = api.create_image_file(resp.id[0], role='thumbnail_gif', image_definition=thumb_gif_def)
-        assert isinstance(response, MessageResponse)
+        assert isinstance(response, tator.models.MessageResponse)
 
     concat_def = [{"id": media_id, "timestampOffset": offset} for media_id,offset in zip(media_ids, offsets)]
     api.update_media(resp.id[0], {"concat": concat_def})

@@ -13,7 +13,7 @@ import subprocess
 
 from progressbar import progressbar
 import requests
-from tator.openapi.tator_openapi.models import MessageResponse
+import tator
 
 from ..util import md5sum
 from ..util.get_api import get_api
@@ -355,7 +355,7 @@ def transcode_single(path, args, gid):
     if email_spec:
         api = get_api(args.host, args.token)
         response = api.send_email(args.project, email_spec=email_spec)
-        if isinstance(response, MessageResponse):
+        if isinstance(response, tator.models.MessageResponse):
             logger.info(response.message)
 
 def transcode_main(args):

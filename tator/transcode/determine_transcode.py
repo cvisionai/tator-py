@@ -5,8 +5,7 @@ import json
 import logging
 import os
 
-from ..openapi.tator_openapi.models import MediaType
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
 from .transcode import find_best_encoder, get_length_info
@@ -91,7 +90,7 @@ def update_media(host, token, media_type, media_id, path):
         'width': width,
         'height': height,
     })
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
 def determine_transcode(host, token, media_type, media_id, path, group_to):
     """ Determine transcode workloads to be performed.
@@ -120,7 +119,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     else:
         media_type_obj = api.get_media_type(media_type)
 
-    assert isinstance(media_type_obj, MediaType)
+    assert isinstance(media_type_obj, tator.models.MediaType)
 
     # Get media object
     try:

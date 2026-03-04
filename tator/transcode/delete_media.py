@@ -1,7 +1,7 @@
 import logging
 import os
 
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
 
@@ -21,7 +21,7 @@ def delete_media(host, token, media_id):
     """
     api = get_api(host, token)
     response = api.delete_media(media_id)
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
 if __name__ == '__main__':
     args = parse_args()

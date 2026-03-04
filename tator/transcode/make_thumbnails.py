@@ -12,7 +12,7 @@ from ..util import get_api
 from ..util._upload_file import _upload_file
 
 from .transcode import get_length_info
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -97,7 +97,7 @@ def make_thumbnail_image(host, token, media_id, video_path, thumb_path, inhibit_
     }
 
     response = api.create_image_file(media_id, role="thumbnail", image_definition=thumb_def, bucket_id=bucket_id)
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
 
 def make_thumbnail_gif(
@@ -168,7 +168,7 @@ def make_thumbnail_gif(
     response = api.create_image_file(
         media_id, role="thumbnail_gif", image_definition=thumb_gif_def, bucket_id=bucket_id,
     )
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
     logger.info(f'Thumbnail upload done! {response.message}')
 

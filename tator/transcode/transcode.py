@@ -11,7 +11,7 @@ import time
 
 from ..util.get_api import get_api
 from ..util._upload_file import _upload_file
-from ..openapi.tator_openapi.models import MessageResponse
+import tator
 
 from .make_fragment_info import make_fragment_info
 
@@ -361,7 +361,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
         # Patch in video file with the api.
         response = api.create_video_file(media, role='streaming', video_definition=video_def, bucket_id=bucket_id)
-        assert isinstance(response, MessageResponse)
+        assert isinstance(response, tator.models.MessageResponse)
 
 def default_archival_upload(api, host, media, path, encoded, size, bucket_id=None):
     # Default action if no archive config is upload raw video.
@@ -380,7 +380,7 @@ def default_archival_upload(api, host, media, path, encoded, size, bucket_id=Non
     # Patch in video file with the api.
     video_def['path'] = upload_info.key
     response = api.create_video_file(media, role='archival', video_definition=video_def, bucket_id=bucket_id)
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
 
 def convert_archival(
@@ -531,7 +531,7 @@ def convert_audio(host, token, media, path, outpath, inhibit_upload=False, bucke
     audio_def = {**make_audio_definition(output_file),
                  'path': upload_info.key}
     response = api.create_audio_file(media, role='audio', audio_definition=audio_def, bucket_id=bucket_id)
-    assert isinstance(response, MessageResponse)
+    assert isinstance(response, tator.models.MessageResponse)
 
 
 def get_length_info(stream):

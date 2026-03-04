@@ -24,7 +24,6 @@ from tator.transcode.transcode import make_video_definition
 from tator.transcode.transcode import convert_streaming
 from tator.transcode.transcode import default_archival_upload
 
-from tator.openapi.tator_openapi.models import CreateResponse
 
 
 
@@ -49,7 +48,7 @@ def import_media(api,
         },
     ]
     response = api.create_media_list(project, media_spec)
-    assert isinstance(response, CreateResponse)
+    assert isinstance(response, tator.models.CreateResponse)
     media_id = response.id[0]
 
     # Peel apart api to get host/token combo (TODO: not great)
