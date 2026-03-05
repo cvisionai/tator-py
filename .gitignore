@@ -1,6 +1,5 @@
 build/
 dist/
-tator/openapi/tator_openapi/
 tator/openapi/docs/
 tator/openapi/README.md
 schema.yaml
