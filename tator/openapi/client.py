@@ -59,33 +59,48 @@ class _ApiClientShim:
 
 
 # Module-level cache: parsed schema + derived data keyed by schema URL.
-# Avoids re-downloading and re-parsing the ~1 MB YAML on every get_api() call.
+# Uses ETag-based conditional requests so that repeated get_api() calls
+# skip the ~1 MB download + YAML parse when the schema hasn't changed.
 _schema_cache = {}
 
 
 class OpenAPIClient:
     def __init__(self, schema_url: str, base_url: str):
-        if schema_url in _schema_cache:
-            cached = _schema_cache[schema_url]
-            self.schema = cached["schema"]
-            self._endpoints = cached["endpoints"]
-            self._factory = cached["factory"]
+        cached = _schema_cache.get(schema_url)
+        if cached:
+            # Conditional request — only re-download if schema changed
+            headers = {}
+            if cached.get("etag"):
+                headers["If-None-Match"] = cached["etag"]
+            resp = requests.get(schema_url, headers=headers)
+            if resp.status_code == 304:
+                self.schema = cached["schema"]
+                self._endpoints = cached["endpoints"]
+                self._factory = cached["factory"]
+            else:
+                resp.raise_for_status()
+                self._load_schema(schema_url, resp)
         else:
             resp = requests.get(schema_url)
             resp.raise_for_status()
-            self.schema = yaml.safe_load(resp.text) or {}
-            self._endpoints = self._parse_schema()
-            self._factory = ModelFactory(self.schema)
-            _schema_cache[schema_url] = {
-                "schema": self.schema,
-                "endpoints": self._endpoints,
-                "factory": self._factory,
-            }
+            self._load_schema(schema_url, resp)
         self.base_url = base_url.rstrip("/")
         self.session = requests.Session()
         self._cache = {}
         self._debug = False
         self.api_client = _ApiClientShim(self)
+
+    def _load_schema(self, schema_url, resp):
+        """Parse a schema response and update the module-level cache."""
+        self.schema = yaml.safe_load(resp.text) or {}
+        self._endpoints = self._parse_schema()
+        self._factory = ModelFactory(self.schema)
+        _schema_cache[schema_url] = {
+            "schema": self.schema,
+            "endpoints": self._endpoints,
+            "factory": self._factory,
+            "etag": resp.headers.get("ETag"),
+        }
 
     def _parse_schema(self):
         endpoints = {}
