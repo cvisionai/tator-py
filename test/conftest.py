@@ -745,7 +745,8 @@ def attribute_video(request, project, attribute_video_type, attribute_video_file
             continue
         have_streaming = response[0].media_files.streaming is not None
         have_archival = response[0].media_files.archival is not None
-        if have_streaming and have_archival:
+        have_num_frames = response[0].num_frames is not None
+        if have_streaming and have_archival and have_num_frames:
             video_id = response[0].id
             break
     yield video_id
