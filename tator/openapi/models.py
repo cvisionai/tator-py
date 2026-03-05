@@ -45,7 +45,9 @@ class ModelFactory:
         props = schema_def.get("properties", {})
 
         # Build a map of property_name -> ref class name for nested objects
+        # and collect schema defaults
         nested_refs = {}
+        defaults = {}
         for prop_name, prop_def in props.items():
             ref = prop_def.get("$ref")
             if ref:
@@ -54,11 +56,15 @@ class ModelFactory:
             items = prop_def.get("items", {})
             if isinstance(items, dict) and "$ref" in items:
                 nested_refs[prop_name] = _resolve_ref(items["$ref"], self._schemas)
+            # Collect schema defaults
+            if "default" in prop_def:
+                defaults[prop_name] = prop_def["default"]
 
         # Get-or-create from the global registry, then update in-place
         cls = get_or_create_model_class(name)
         cls._schema_properties = set(props.keys())
         cls._nested_refs = nested_refs
+        cls._schema_defaults = defaults
         cls._factory = self
         return cls
 

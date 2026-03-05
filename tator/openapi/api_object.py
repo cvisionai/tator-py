@@ -4,6 +4,7 @@ class APIObject(dict):
     # Subclasses created by ModelFactory will have these set:
     _schema_properties = None  # set of known property names
     _nested_refs = None        # dict of prop_name -> ref class name
+    _schema_defaults = None    # dict of prop_name -> default value from schema
     _factory = None            # back-reference to ModelFactory
 
     def _wrap(self, item, value):
@@ -39,6 +40,10 @@ class APIObject(dict):
                 stripped = item[1:]
                 if stripped in self:
                     return self._wrap(stripped, self[stripped])
+            # Return schema default if one exists for this property.
+            defaults = self.__class__._schema_defaults
+            if defaults and item in defaults:
+                return defaults[item]
             # Return None for missing keys — matches generated model behavior
             # where unset fields default to None.
             return None
