@@ -58,17 +58,33 @@ class _ApiClientShim:
         self.configuration = _Configuration(client)
 
 
+# Module-level cache: parsed schema + derived data keyed by schema URL.
+# Avoids re-downloading and re-parsing the ~1 MB YAML on every get_api() call.
+_schema_cache = {}
+
+
 class OpenAPIClient:
     def __init__(self, schema_url: str, base_url: str):
-        resp = requests.get(schema_url)
-        resp.raise_for_status()
-        self.schema = yaml.safe_load(resp.text) or {}
+        if schema_url in _schema_cache:
+            cached = _schema_cache[schema_url]
+            self.schema = cached["schema"]
+            self._endpoints = cached["endpoints"]
+            self._factory = cached["factory"]
+        else:
+            resp = requests.get(schema_url)
+            resp.raise_for_status()
+            self.schema = yaml.safe_load(resp.text) or {}
+            self._endpoints = self._parse_schema()
+            self._factory = ModelFactory(self.schema)
+            _schema_cache[schema_url] = {
+                "schema": self.schema,
+                "endpoints": self._endpoints,
+                "factory": self._factory,
+            }
         self.base_url = base_url.rstrip("/")
         self.session = requests.Session()
-        self._endpoints = self._parse_schema()
         self._cache = {}
         self._debug = False
-        self._factory = ModelFactory(self.schema)
         self.api_client = _ApiClientShim(self)
 
     def _parse_schema(self):
