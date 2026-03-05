@@ -25,6 +25,39 @@ def pythonify_operation_id(op_id: str) -> str:
     words = re.findall(r"[A-Z][a-z0-9]*", op_id)
     return "_".join(w.lower() for w in words) if words else op_id.lower()
 
+class _Configuration:
+    """Backward-compatible shim for code that accesses api.api_client.configuration."""
+
+    def __init__(self, client):
+        self._client = client
+
+    @property
+    def host(self):
+        return self._client.base_url
+
+    @property
+    def api_key(self):
+        auth = self._client.session.headers.get("Authorization", "")
+        # "Token <value>" -> extract <value>
+        parts = auth.split(" ", 1)
+        token = parts[1] if len(parts) == 2 else auth
+        return {"Authorization": token}
+
+    @property
+    def api_key_prefix(self):
+        auth = self._client.session.headers.get("Authorization", "")
+        parts = auth.split(" ", 1)
+        prefix = parts[0] if len(parts) == 2 else ""
+        return {"Authorization": prefix}
+
+
+class _ApiClientShim:
+    """Backward-compatible shim for code that accesses api.api_client."""
+
+    def __init__(self, client):
+        self.configuration = _Configuration(client)
+
+
 class OpenAPIClient:
     def __init__(self, schema_url: str, base_url: str):
         resp = requests.get(schema_url)
@@ -36,6 +69,7 @@ class OpenAPIClient:
         self._cache = {}
         self._debug = False
         self._factory = ModelFactory(self.schema)
+        self.api_client = _ApiClientShim(self)
 
     def _parse_schema(self):
         endpoints = {}
@@ -77,6 +111,32 @@ class OpenAPIClient:
                 }
         return endpoints
 
+    def _resolve_oneof(self, oneof_list, obj):
+        """Pick the best matching class from a oneOf list based on response keys."""
+        schemas = self.schema.get("components", {}).get("schemas", {})
+        if isinstance(obj, dict):
+            obj_keys = set(obj.keys())
+            for option in oneof_list:
+                ref = option.get("$ref", "")
+                if not ref:
+                    continue
+                class_name = ref.split("/")[-1]
+                schema_def = schemas.get(class_name, {})
+                required = set(schema_def.get("required", []))
+                # Match if all required fields are present in the response
+                if required and required.issubset(obj_keys):
+                    cls = self._factory._getObject(class_name)
+                    if cls:
+                        return cls
+            # Fallback: return the first ref class
+            for option in oneof_list:
+                ref = option.get("$ref", "")
+                if ref:
+                    cls = self._factory._getObject(ref.split("/")[-1])
+                    if cls:
+                        return cls
+        return APIObject
+
     def __getattr__(self, name):
         if name not in self._endpoints:
             raise AttributeError(f"No such API operation: {name}")
@@ -111,8 +171,15 @@ class OpenAPIClient:
 
         def _impl(*args, **kwargs):
             path = endpoint["path"]
+            n_path = len(endpoint["path_params"])
+            # Consume positional args: first N are path params, next is body
             for arg_name, arg_value in zip(endpoint["path_params"], args):
                 path = path.replace(f"{{{arg_name}}}", str(arg_value))
+            remaining_args = args[n_path:]
+            # Also handle path params passed as kwargs
+            for param_name in endpoint["path_params"]:
+                if param_name in kwargs:
+                    path = path.replace(f"{{{param_name}}}", str(kwargs.pop(param_name)))
 
             query = {
                 qp["name"]: kwargs.pop(qp["name"], None)
@@ -123,6 +190,9 @@ class OpenAPIClient:
             # Support a "format" kwarg
             if kwargs.get("format", None):
                 query["format"] = kwargs.pop("format")
+
+            # Strip legacy kwargs from the old generated client
+            kwargs.pop("_request_timeout", None)
 
             # Verify all kwargs are part of the schema for this endpoint
             for key, value in kwargs.items():
@@ -137,7 +207,11 @@ class OpenAPIClient:
 
             body = None
             if endpoint["body_param"]:
-                body = kwargs.pop(endpoint["body_param"], None)
+                # Body can come from remaining positional args or kwargs
+                if remaining_args:
+                    body = remaining_args[0]
+                else:
+                    body = kwargs.pop(endpoint["body_param"], None)
 
             is_streaming = query.get("format", "json") == "jsonl"
 
@@ -199,6 +273,8 @@ class OpenAPIClient:
             elif response_class.get("type") == "array" and "$ref" in response_class.get("items", {}):
                 class_name = response_class["items"]["$ref"].split("/")[-1]
                 class_constructor = self._factory._getObject(class_name) or APIObject
+            elif "oneOf" in response_class:
+                class_constructor = self._resolve_oneof(response_class["oneOf"], obj)
             else:
                 class_constructor = APIObject
 
@@ -241,5 +317,5 @@ def get_api(host: str, token: Optional[str] = None) -> OpenAPIClient:
         client.session.headers.update({"Authorization": f"Token {token}"})
     # Set module-level models
     import tator
-    tator.models = client._factory
+    tator.models._set_factory(client._factory)
     return client
