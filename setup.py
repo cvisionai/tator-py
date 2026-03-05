@@ -2,14 +2,11 @@ import json
 from setuptools import setup, find_packages
 
 REQUIRES = [
-    "certifi >= 14.05.14",
     "Pillow >= 10.3.0",
     "progressbar2 >= 3.51.4",
     "psutil >= 5.9.5",
-    "python-dateutil >= 2.5.3",
     "pyyaml >= 5.4",
     "requests >= 2.32.4",
-    "urllib3 >= 2.5.0",
 ]
 
 CONFIG_FILENAME = 'config.json'
