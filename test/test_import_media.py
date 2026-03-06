@@ -9,6 +9,8 @@ def test_import_image(host, token, project, image_type):
 
 
 def wait_for_transcode(api, transcode_id):
+    MAX_TRANSCODE_WAIT = 900  # 15 minutes (serial queue with parallel workers)
+    elapsed = 0
     while True:
         transcode = api.get_transcode(uid=transcode_id)
         status = transcode.job.status.lower()
@@ -19,6 +21,9 @@ def wait_for_transcode(api, transcode_id):
         else:
             print("Waiting for transcode of imported media to complete...")
             time.sleep(2.5)
+            elapsed += 2.5
+            if elapsed > MAX_TRANSCODE_WAIT:
+                raise TimeoutError(f"Transcode did not complete within {MAX_TRANSCODE_WAIT}s")
 
 def test_import_video(host, token, project, video_type):
     api = tator.get_api(host, token)

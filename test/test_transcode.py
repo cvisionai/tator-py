@@ -52,6 +52,8 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
     print(response.id)
+    MAX_TRANSCODE_WAIT = 900  # 15 minutes (serial queue with parallel workers)
+    elapsed = 0
     while True:
         transcode = tator_api.get_transcode(response.id)
         status = transcode.job.status.lower()
@@ -62,6 +64,9 @@ def test_transcode_existing_media(host, token, project, video_type, video_file):
         else:
             print("Waiting for transcode of existing media to complete...")
             time.sleep(2.5)
+            elapsed += 2.5
+            if elapsed > MAX_TRANSCODE_WAIT:
+                raise TimeoutError(f"Transcode did not complete within {MAX_TRANSCODE_WAIT}s")
 
 def test_transcode_cancel(host, token, project, video_type, large_video_file):
     tator_api = tator.get_api(host, token)

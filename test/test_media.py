@@ -192,7 +192,7 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
 
-    MAX_TRANSCODE_WAIT = 300  # 5 minutes
+    MAX_TRANSCODE_WAIT = 900  # 15 minutes (serial queue with parallel workers)
     elapsed = 0
     while True:
         response = tator_api.get_media_list(
