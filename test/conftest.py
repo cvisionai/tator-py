@@ -412,10 +412,15 @@ def video_helper(host: str, token: str, project: int, video_type: int, video_fil
     if response:
         print(response.message)
 
+    MAX_TRANSCODE_WAIT = 300  # 5 minutes
+    elapsed = 0
     while True:
         response = tator_api.get_media_list(project, name='AudioVideoSyncTest_BallastMedia.mp4', attribute=[f"test_string::{uuid_val}"])
         print("Waiting for transcode...")
         time.sleep(2.5)
+        elapsed += 2.5
+        if elapsed > MAX_TRANSCODE_WAIT:
+            raise TimeoutError(f"Transcode did not complete within {MAX_TRANSCODE_WAIT}s")
         if len(response) == 0:
             continue
         if response[0].media_files is None:
@@ -733,12 +738,17 @@ def attribute_video(request, project, attribute_video_type, attribute_video_file
     for progress, response in tator.util.upload_media(tator_api, attribute_video_type, attribute_video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
+    MAX_TRANSCODE_WAIT = 300  # 5 minutes
+    elapsed = 0
     while True:
         response = tator_api.get_media_list(
             project, name="AudioVideoSyncTest_BallastMedia_attribute.mp4"
         )
         print("Waiting for transcode...")
         time.sleep(2.5)
+        elapsed += 2.5
+        if elapsed > MAX_TRANSCODE_WAIT:
+            raise TimeoutError(f"Transcode did not complete within {MAX_TRANSCODE_WAIT}s")
         if len(response) == 0:
             continue
         if response[0].media_files is None:

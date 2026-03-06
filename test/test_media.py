@@ -192,6 +192,8 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
 
+    MAX_TRANSCODE_WAIT = 300  # 5 minutes
+    elapsed = 0
     while True:
         response = tator_api.get_media_list(
             project,
@@ -200,6 +202,9 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
         )
         print("Waiting for transcode...")
         sleep(2.5)
+        elapsed += 2.5
+        if elapsed > MAX_TRANSCODE_WAIT:
+            raise TimeoutError(f"Transcode did not complete within {MAX_TRANSCODE_WAIT}s")
         if len(response) == 0:
             continue
         if response[0].media_files is None:
