@@ -207,6 +207,15 @@ class OpenAPIClient:
             for arg_name, arg_value in zip(endpoint["path_params"], args):
                 path = path.replace(f"{{{arg_name}}}", str(arg_value))
             remaining_args = args[n_path:]
+            max_positional = n_path + (1 if endpoint["body_param"] else 0)
+            if len(args) > max_positional:
+                query_names = [qp["name"] for qp in endpoint["query_params"]]
+                raise TypeError(
+                    f"{name}() takes {max_positional} positional argument(s) "
+                    f"but {len(args)} were given. "
+                    f"Query parameters must be passed as keyword arguments"
+                    + (f": {', '.join(query_names)}" if query_names else "")
+                )
             # Also handle path params passed as kwargs
             for param_name in endpoint["path_params"]:
                 if param_name in kwargs:

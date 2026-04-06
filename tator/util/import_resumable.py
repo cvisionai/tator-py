@@ -116,7 +116,7 @@ def import_resumable(api, media_id, work_dir=None, explicit_config=None, streami
             if info["codec"] == "fragment":
                 break
 
-        api.delete_video_file(media_id, "archival", frag_index)
+        api.delete_video_file(media_id, role="archival", index=frag_index)
         media = api.get_media(media_id)
         archival_files = media.media_files.to_dict().get("archival", [])
         fragments = [x for x in archival_files if x["codec"] == "fragment"]
