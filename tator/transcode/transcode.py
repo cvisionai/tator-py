@@ -54,19 +54,51 @@ def _launch_and_monitor_resources(cmd, interval=300):
     logger.info(f"cmd={cmd}")
     logger.info(f"time={end-start}")
 
+
+# NVENC and similar hardware encoders can be selected via env, e.g.:
+#   TATOR_H264_ENCODER=h264_nvenc
+#   TATOR_HEVC_ENCODER=hevc_nvenc
+# Project streaming configs typically use ffmpeg names (libx264, libx265). Map
+# those to lookup keys h264/hevc/av1 so env-based encoders apply without
+# changing every media type in the API.
+def _encoder_lookup_key(codec):
+    if not codec:
+        return codec
+    c = codec.lower()
+    aliases = {
+        "libx264": "h264",
+        "h264": "h264",
+        "avc": "h264",
+        "avc1": "h264",
+        "libx265": "hevc",
+        "hevc": "hevc",
+        "h265": "hevc",
+        "hvc1": "hevc",
+        "libsvtav1": "av1",
+        "av1": "av1",
+    }
+    return aliases.get(c, c)
+
+
 def find_best_encoder(codec, hwaccel=False):
-    """ Find the best encoder based on what is available on the system """
+    """Resolve ffmpeg encoder from API/streaming config and optional hardware.
+
+    Baseline defaults come from ``TATOR_H264_ENCODER``, ``TATOR_HEVC_ENCODER``,
+    ``TATOR_AV1_ENCODER`` (see GPU worker Dockerfile). With ``hwaccel=True``,
+    ``ffmpeg -encoders`` may further prefer Intel QSV→VAAPI-style encoders.
+    """
     global encoder_lookup
     if encoder_lookup is None:
-        # Default codecs
-        encoder_lookup={"hevc": os.getenv("TATOR_HEVC_ENCODER", "libx265"),
-                        "h264": os.getenv("TATOR_H264_ENCODER", "libx264"),
-                        "av1": os.getenv("TATOR_AV1_ENCODER", "libsvtav1")}
+        encoder_lookup = {
+            "hevc": os.getenv("TATOR_HEVC_ENCODER", "libx265"),
+            "h264": os.getenv("TATOR_H264_ENCODER", "libx264"),
+            "av1": os.getenv("TATOR_AV1_ENCODER", "libsvtav1"),
+        }
         if hwaccel:
-            cmd = [
-                "ffmpeg",
-                "-encoders" ]
-            output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
+            cmd = ["ffmpeg", "-encoders"]
+            output = subprocess.run(
+                cmd, stdout=subprocess.PIPE, check=True
+            ).stdout.decode()
             # Look for QSV, but use VAAPI frontend
             # TODO: Use `vainfo` directly to query available hardware entry points
             if output.find("libsvt_hevc") >= 0:
@@ -78,7 +110,9 @@ def find_best_encoder(codec, hwaccel=False):
             if output.find("av1_qsv") >= 0:
                 encoder_lookup["av1"] = "av1_vaapi"
         logger.info("encoder_lookup = %s", encoder_lookup)
-    return encoder_lookup.get(codec, codec)
+    key = _encoder_lookup_key(codec)
+    chosen = encoder_lookup.get(key)
+    return chosen if chosen is not None else codec
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
@@ -156,6 +190,44 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
     codecs = [config.split(':')[2] for config in configs]
     presets = [config.split(':')[3] for config in configs] # Presets must be the same for all outputs in a multiheaded transcode
 
+    api = get_api(host, token)
+    media_obj = api.get_media(media)
+
+    # Avoid duplicating streaming jobs that were already processed for this media.
+    # If some renditions are missing, only generate/upload the missing ones.
+    try:
+        existing = api.get_video_file_list(media, role="streaming")
+    except Exception:
+        logger.warning(
+            "Could not query existing streaming video files for media=%s; proceeding with transcode.",
+            media,
+            exc_info=True,
+        )
+        existing = []
+
+    existing_heights = set()
+    for vf in existing or []:
+        res = getattr(vf, "resolution", None)
+        if isinstance(res, (list, tuple)) and len(res) >= 1:
+            try:
+                existing_heights.add(int(res[0]))
+            except Exception:
+                pass
+
+    if existing_heights:
+        keep_indices = [i for i, r in enumerate(resolutions) if r not in existing_heights]
+        if not keep_indices:
+            logger.info(
+                "Streaming renditions already exist for media=%s (heights=%s). Skipping streaming transcode.",
+                media,
+                sorted(existing_heights),
+            )
+            return
+        resolutions = [resolutions[i] for i in keep_indices]
+        crfs = [crfs[i] for i in keep_indices]
+        codecs = [codecs[i] for i in keep_indices]
+        presets = [presets[i] for i in keep_indices]
+
     # Handle pixel format addition as an optional argument
     # This will maintain backwards API compatibility to folks using
     # this function
@@ -167,6 +239,8 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
             pixel_formats.append(split_comps[4])
         else:
             pixel_formats.append("yuv420p")
+    if existing_heights:
+        pixel_formats = [pixel_formats[i] for i in keep_indices]
 
     # Need to get avg_framerate
     if isinstance(path, list):
@@ -299,7 +373,11 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         if codec.find("vaapi") >= 0:
             quality_flag = "-global_quality"
             pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
-        if codec.find('264') > 0:
+        if "nvenc" in codec:
+            quality_flag = "-cq"
+            preset = preset if preset else "fast"
+            per_res.extend(["-preset", preset])
+        elif "libx264" in codec or codec == "h264":
             preset = preset if preset else 'fast'
             per_res.extend(["-preset", preset,
                             "-tune", "fastdecode"])
@@ -319,9 +397,6 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
 
     logger.info('ffmpeg cmd = {}'.format(cmd))
     _launch_and_monitor_resources(cmd)
-
-    api = get_api(host, token)
-    media_obj = api.get_media(media)
 
     # Skip this check for now, need to calculate concat duration for concat files
     '''
@@ -426,6 +501,14 @@ def convert_archival(
                     # SVT for HEVC does not do tuning or CRF
                     tune_settings=[]
                     quality_flag = "-global_quality"
+                elif "nvenc" in codec:
+                    quality_flag = "-cq"
+                    tune_settings = [
+                        "-preset",
+                        archive_config.encode.preset or "fast",
+                    ]
+                    if archive_config.encode.movflags:
+                        tune_settings.extend(['-movflags', archive_config.encode.movflags])
 
                 hw_preamble = []
                 vaapi_present = codec.find('vaapi') >= 0

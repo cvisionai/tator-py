@@ -4,6 +4,7 @@ import argparse
 import os
 import shutil
 import sys
+import tempfile
 from uuid import uuid1
 import logging
 import json
@@ -153,16 +154,36 @@ def transcode_single(path, args, gid):
     """Transcodes a single file.
     """
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+    # Job runners (e.g. RQ) may pass a SimpleNamespace built from JSON without every CLI field.
+    bucket_id = getattr(args, "bucket_id", None)
 
-    # If a URL is given and path doesn't exist, download the file to path.
+    transcode_tmpdir = None
+    fnames = None
+
+    # If a URL is given, use a workspace temp dir and download the raw file into it.
     if args.url:
-        path = os.path.join(args.work_dir, args.name)
+        if args.media_id != -1:
+            api = get_api(args.host, args.token)
+            media_obj = api.get_media(args.media_id)
+            if media_obj is None:
+                raise ValueError(f"Media ID {args.media_id} does not exist!")
+            logger.info(f"Verified media ID {args.media_id} exists: {media_obj.name}")
+        if args.work_dir:
+            os.makedirs(args.work_dir, exist_ok=True)
+            work_parent = args.work_dir
+        else:
+            work_parent = tempfile.gettempdir()
+        transcode_tmpdir = tempfile.mkdtemp(prefix="tator-transcode-", dir=work_parent)
+        path = os.path.join(transcode_tmpdir, os.path.basename(args.name))
         logger.info(f"Downloading file from {args.url} to {path}")
-        download_file(args.url, path)
+        try:
+            download_file(args.url, path)
+        except Exception:
+            shutil.rmtree(transcode_tmpdir, ignore_errors=True)
+            raise
     elif path is None:
         raise ValueError(f"Must provide one of --url or path!")
 
-    fnames = None
     if isinstance(path, list):
         if args.name is None:
             raise ValueError(f"Must provide --name when path is a list!")
@@ -189,13 +210,25 @@ def transcode_single(path, args, gid):
 
     else:
         # Get file paths.
-        if args.work_dir:
+        if args.work_dir and not args.url:
             base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
         else:
             base, _ = os.path.splitext(path)
         paths = get_file_paths(path, base)
 
-        # Get md5 for the file.
+    if transcode_tmpdir is None:
+        if args.work_dir:
+            os.makedirs(args.work_dir, exist_ok=True)
+            work_parent = args.work_dir
+        else:
+            work_parent = os.path.dirname(os.path.abspath(paths["original"])) or os.getcwd()
+        transcode_tmpdir = tempfile.mkdtemp(prefix="tator-transcode-", dir=work_parent)
+
+    paths["transcoded"] = transcode_tmpdir
+    paths["thumbnail"] = os.path.join(transcode_tmpdir, "thumbnail.jpg")
+    paths["thumbnail_gif"] = os.path.join(transcode_tmpdir, "thumbnail_gif.gif")
+    logger.info("Transcode workspace directory: %s", transcode_tmpdir)
+
     md5 = md5sum(paths['original'])
 
     # Get base filename.
@@ -229,7 +262,7 @@ def transcode_single(path, args, gid):
             paths["original"],
             paths["thumbnail"],
             inhibit_upload=args.inhibit_upload,
-            bucket_id=args.bucket_id,
+            bucket_id=bucket_id,
         )
 
         if fnames:
@@ -267,7 +300,7 @@ def transcode_single(path, args, gid):
                     force_fps=args.force_fps,
                     inhibit_upload=args.inhibit_upload,
                     filter_complex=getattr(args, "filter_complex", None),
-                    bucket_id=args.bucket_id,
+                    bucket_id=bucket_id,
                 )
             elif category == 'archival':
                 del workload['configs']
@@ -279,7 +312,7 @@ def transcode_single(path, args, gid):
                     outpath=paths["transcoded"],
                     hwaccel=args.hwaccel,
                     inhibit_upload=args.inhibit_upload,
-                    bucket_id=args.bucket_id,
+                    bucket_id=bucket_id,
                 )
             elif category == 'audio':
                 del workload['configs']
@@ -292,7 +325,7 @@ def transcode_single(path, args, gid):
                     media=media_id,
                     outpath=paths["transcoded"],
                     inhibit_upload=args.inhibit_upload,
-                    bucket_id=args.bucket_id,
+                    bucket_id=bucket_id,
                 )
 
         # Get lowest resolution output for making the gif
@@ -304,7 +337,14 @@ def transcode_single(path, args, gid):
             resolutions = [res for res in resolutions if res > 256]
 
         if len(resolutions) == 0:
-            logger.info(f"No transcodes of streaming files was performed, skipping gif creation and media update.")
+            logger.info(
+                "No streaming transcodes were produced; skipping gif creation and "
+                "updating media metadata from source file."
+            )
+            # Streaming may be skipped when renditions already exist for this media.
+            # We still need to patch key media metadata (num_frames/fps/width/height).
+            update_path = fnames[0] if fnames else paths["original"]
+            update_media(args.host, args.token, args.type, media_id, update_path)
             return
 
         # Files are resolution height names, sort by lowest
@@ -318,7 +358,7 @@ def transcode_single(path, args, gid):
             os.path.join(paths["transcoded"], f"{input_res}.mp4"),
             paths["thumbnail_gif"],
             inhibit_upload=args.inhibit_upload,
-            bucket_id=args.bucket_id,
+            bucket_id=bucket_id,
         )
 
         # Patch the media with the concatenated file
@@ -330,15 +370,9 @@ def transcode_single(path, args, gid):
         if args.media_id == -1:
             delete_media(args.host, args.token, media_id)
         raise RuntimeError(f"Transcode of file {path} failed!") from exc
-
-    # Clean up after the transcode is finished (if enabled).
-    if args.cleanup:
-        for key in ['transcoded', 'thumbnail', 'thumbnail_gif']:
-            path = paths[key]
-            if os.path.isdir(path):
-                shutil.rmtree(path)
-            else:
-                os.remove(path)
+    finally:
+        if transcode_tmpdir and os.path.isdir(transcode_tmpdir):
+            shutil.rmtree(transcode_tmpdir, ignore_errors=True)
 
     # Send an email.
     if isinstance(args.email_spec, str):

@@ -153,7 +153,7 @@ def make_thumbnail_gif(
         thumb_gif_path,
         media_id=media_id,
         filename=os.path.basename(thumb_gif_path),
-        bucket_id=None,
+        bucket_id=bucket_id,
     ):
         pass
 
