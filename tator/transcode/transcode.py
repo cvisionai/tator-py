@@ -312,6 +312,7 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
                     "-vcodec", codec,
                     "-pix_fmt", pixel_format,
                     quality_flag, crfs[ridx],
+                    "-write_tmcd", "0", # Strip off timecode metadata which can cause issues with some players (TODO: should we preserve this in some way?)
                     output_file
                     ])
         
