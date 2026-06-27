@@ -156,6 +156,10 @@ def transcode_single(path, args, gid):
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     # Job runners (e.g. RQ) may pass a SimpleNamespace built from JSON without every CLI field.
     bucket_id = getattr(args, "bucket_id", None)
+    if getattr(args, "media_id", None) is None:
+        args.media_id = -1
+    if not hasattr(args, "inhibit_upload"):
+        args.inhibit_upload = False
 
     transcode_tmpdir = None
     fnames = None
