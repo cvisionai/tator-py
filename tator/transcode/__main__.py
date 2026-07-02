@@ -25,6 +25,7 @@ from .transcode import convert_archival
 from .transcode import convert_audio
 from .delete_media import delete_media
 from .make_thumbnails import make_thumbnail_image, make_thumbnail_gif
+from .tiff import tiff_transcode_logic
 
 FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
           '- %(message)s')
@@ -262,9 +263,6 @@ def video_transcode_logic(args, path, paths, media_id, fnames):
             delete_media(args.host, args.token, media_id)
         raise RuntimeError(f"Transcode of file {path} failed!") from exc
 
-def tiff_transcode_logic(args, path, paths, media_id):
-    pass
-
 def transcode_single(path, args, gid):
     """Transcodes a single file.
     """
@@ -304,9 +302,11 @@ def transcode_single(path, args, gid):
         # Use the first input file
         paths = get_file_paths(fnames[0], base)
 
-    elif os.path.splitext(path)[-1] == '.tiff':
+    elif os.path.splitext(path)[-1].lower() == '.tiff' or os.path.splitext(path)[-1].lower() == '.tif':
         # We are transcoding a tiff file, not a video
         transcode_mode = "tiff"
+        paths = get_file_paths(path, os.path.splitext(path)[0])
+        os.makedirs(paths['transcoded'], exist_ok=True)
     else:
         # Get file paths.
         if args.work_dir:
