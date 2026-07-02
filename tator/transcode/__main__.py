@@ -149,77 +149,8 @@ def compare_workloads(workloads_list):
 
     return True  # All parameters are consistent
 
-def transcode_single(path, args, gid):
-    """Transcodes a single file.
-    """
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-    # If a URL is given and path doesn't exist, download the file to path.
-    if args.url:
-        path = os.path.join(args.work_dir, args.name)
-        logger.info(f"Downloading file from {args.url} to {path}")
-        download_file(args.url, path)
-    elif path is None:
-        raise ValueError(f"Must provide one of --url or path!")
-
-    fnames = None
-    if isinstance(path, list):
-        if args.name is None:
-            raise ValueError(f"Must provide --name when path is a list!")
-        if args.work_dir:
-            base = os.path.join(args.work_dir, args.name)
-        else:
-            base = args.name
-        paths = get_file_paths(path[0], base)
-
-    elif os.path.splitext(path)[-1] == '.json':
-        # This transcode will concat multiple files
-        with open(path,'r') as fp:
-            fnames = json.load(fp)
-        assert args.name is not None, "args.name must be provided"
-
-        # Get file paths.
-        if args.work_dir:
-            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(args.name))[0])
-        else:
-            base, _ = os.path.splitext(args.name)
-
-        # Use the first input file
-        paths = get_file_paths(fnames[0], base)
-
-    else:
-        # Get file paths.
-        if args.work_dir:
-            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
-        else:
-            base, _ = os.path.splitext(path)
-        paths = get_file_paths(path, base)
-
-        # Get md5 for the file.
-    md5 = md5sum(paths['original'])
-
-    # Get base filename.
-    if args.name:
-        name = args.name
-    else:
-        name = os.path.basename(paths['original'])
-
-    # Create a uid if not set.
-    if args.uid is None:
-        uid = str(uuid1())
-    else:
-        uid = args.uid
-
-    # Create the media object.
-    if args.media_id == -1:
-        kwargs = {}
-        if args.section_id:
-            kwargs['section_id'] = args.section_id
-            args.section = None
-        media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5, gid, uid, args.attributes, args.url, **kwargs)
-    else:
-        media_id = args.media_id
-
+def video_transcode_logic(args, path, paths, media_id, fnames):
     try:
         # Make thumbnails.
         make_thumbnail_image(
@@ -330,6 +261,89 @@ def transcode_single(path, args, gid):
         if args.media_id == -1:
             delete_media(args.host, args.token, media_id)
         raise RuntimeError(f"Transcode of file {path} failed!") from exc
+
+def tiff_transcode_logic(args, path, paths, media_id):
+    pass
+
+def transcode_single(path, args, gid):
+    """Transcodes a single file.
+    """
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
+    # If a URL is given and path doesn't exist, download the file to path.
+    if args.url:
+        path = os.path.join(args.work_dir, args.name)
+        logger.info(f"Downloading file from {args.url} to {path}")
+        download_file(args.url, path)
+    elif path is None:
+        raise ValueError(f"Must provide one of --url or path!")
+
+    fnames = None
+    transcode_mode = "video"
+    if isinstance(path, list):
+        if args.name is None:
+            raise ValueError(f"Must provide --name when path is a list!")
+        if args.work_dir:
+            base = os.path.join(args.work_dir, args.name)
+        else:
+            base = args.name
+        paths = get_file_paths(path[0], base)
+
+    elif os.path.splitext(path)[-1] == '.json':
+        # This transcode will concat multiple files
+        with open(path,'r') as fp:
+            fnames = json.load(fp)
+        assert args.name is not None, "args.name must be provided"
+
+        # Get file paths.
+        if args.work_dir:
+            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(args.name))[0])
+        else:
+            base, _ = os.path.splitext(args.name)
+
+        # Use the first input file
+        paths = get_file_paths(fnames[0], base)
+
+    elif os.path.splitext(path)[-1] == '.tiff':
+        # We are transcoding a tiff file, not a video
+        transcode_mode = "tiff"
+    else:
+        # Get file paths.
+        if args.work_dir:
+            base = os.path.join(args.work_dir, os.path.splitext(os.path.basename(path))[0])
+        else:
+            base, _ = os.path.splitext(path)
+        paths = get_file_paths(path, base)
+
+        # Get md5 for the file.
+    md5 = md5sum(paths['original'])
+
+    # Get base filename.
+    if args.name:
+        name = args.name
+    else:
+        name = os.path.basename(paths['original'])
+
+    # Create a uid if not set.
+    if args.uid is None:
+        uid = str(uuid1())
+    else:
+        uid = args.uid
+
+    # Create the media object.
+    if args.media_id == -1:
+        kwargs = {}
+        if args.section_id:
+            kwargs['section_id'] = args.section_id
+            args.section = None
+        media_id = create_media(args.host, args.token, args.project, args.type, args.section, name, md5, gid, uid, args.attributes, args.url, **kwargs)
+    else:
+        media_id = args.media_id
+
+    if transcode_mode == "video":
+        video_transcode_logic(args, path, paths, media_id, fnames)
+    elif transcode_mode == "tiff":
+        tiff_transcode_logic(args, path, paths, media_id)
 
     # Clean up after the transcode is finished (if enabled).
     if args.cleanup:
