@@ -158,7 +158,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
 
     available_resolutions = STREAMING_RESOLUTIONS
     crf_map = defaultdict(lambda: 23)
-    codec_map = defaultdict(lambda: 'libx264')
+    codec_map = defaultdict(lambda: 'h264')
     preset_map = defaultdict(lambda: '')
     pixel_format_map = defaultdict(lambda: 'yuv420p')
     try:
