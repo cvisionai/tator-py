@@ -7,6 +7,7 @@ from ..util._upload_file import _upload_file
 from ..util.get_api import get_api
 
 logger = logging.getLogger(__name__)
+import tator.exceptions
 
 
 def tiff_transcode_logic(args, path, paths, media_id):
@@ -102,5 +103,20 @@ def tiff_transcode_logic(args, path, paths, media_id):
 
     api.create_image_file(media_id, role="image", image_definition=image_def, bucket_id=args.bucket_id)
 
-    # Finally update the media record with the height / width
-    api.update_media(media_id, media_update={"height": height, "width": width})
+    # Fetch the media object to verify it has the required type information
+    media_obj = api.get_media(media_id)
+    media_type_obj = api.get_media_type(media_obj.type)
+
+
+    try:
+        resp = api.create_attribute_type(media_obj.type, {"entity_type": "MediaType", "addition": {"name": "GDALInfo", "dtype": "blob", 'visible': False}})
+    except tator.exceptions.ApiException as e:
+        if e.status == 400 and "already an attribute" in str(e):
+            pass
+        else:
+            raise
+
+    gdal_info = {'cornerCoordinates': gdal_info.get('cornerCoordinates', {}), 'geoTransform': gdal_info.get('geoTransform',[])}
+
+    # Update the media record with the height / width
+    api.update_media(media_id, media_update={"height": height, "width": width, "attributes": {"GDALInfo": gdal_info}})
