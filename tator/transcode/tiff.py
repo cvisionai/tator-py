@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import shutil
 import subprocess
 
 from ..util._upload_file import _upload_file
@@ -24,22 +25,32 @@ def tiff_transcode_logic(args, path, paths, media_id):
 
     api = get_api(args.host, args.token)
 
-    cmd = [
-        "gdal_translate",
-        path,
-        output_path,
-        "-of", "COG",
-        "-co", "COMPRESS=ZSTD",
-        "-co", "BLOCKSIZE=512",
-        "-co", "OVERVIEWS=AUTO",
-        "-co", f"NUM_THREADS={cpu_count}",
-        "-co", "BIGTIFF=yes",
-    ]
+    cmd = ["gdalinfo", "-json", path]
+    output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
+    gdal_info = json.loads(output)
 
-    proc = subprocess.run(cmd, check=True)
+    # SKIP COG if the file is already COG
+    image_structure_format = gdal_info.get('metadata', {}).get('IMAGE_STRUCTURE', {}).get('LAYOUT', '')
+    overview_count = len(gdal_info.get('bands',[])[0].get('overviews', [])) if gdal_info.get('bands',[]) else 0
 
-    if proc.returncode != 0:
-        raise RuntimeError(f"gdal_translate failed with return code {proc.returncode}!")
+    if image_structure_format == 'COG' and overview_count > 0:
+        shutil.copy(path, output_path)
+    else:
+        cmd = [
+            "gdal_translate",
+            path,
+            output_path,
+            "-of", "COG",
+            "-co", "COMPRESS=ZSTD",
+            "-co", "BLOCKSIZE=512",
+            "-co", "OVERVIEWS=AUTO",
+            "-co", f"NUM_THREADS={cpu_count}",
+            "-co", "BIGTIFF=yes",
+        ]
+
+        proc = subprocess.run(cmd, check=True)
+        if proc.returncode != 0:
+            raise RuntimeError(f"gdal_translate failed with return code {proc.returncode}!")
 
     # Use gdal translate to make the thumbnail because we can't use the normal ffmpeg path for TIFF files.
     cmd = [
