@@ -240,6 +240,52 @@ def test_state_crud(host, token, project, video_type, empty_video, state_type):
         else:
             assert_close_enough(bulk_patch, state, exclude)
 
+    # Bulk move a state to a new version. This intentionally omits in_place so it
+    # exercises the clone/new-mark path used by versioned updates.
+    state = random_state(project, state_type, video_obj, post=True)
+    response = tator_api.create_state_list(project, body=state)
+    assert isinstance(response, tator.models.CreateListResponse)
+    version_update_ids = response.id
+    response = tator_api.create_version(
+        project,
+        version_spec={
+            "name": f"Test State Bulk Version {uuid.uuid1()}",
+            "description": "A version for testing state bulk new_version updates",
+        },
+    )
+    new_version = response.id
+    version_bulk_patch = {
+        "attributes": {},
+        "ids": version_update_ids,
+        "new_version": new_version,
+    }
+    response = tator_api.update_state_list(
+        project,
+        **params,
+        state_bulk_update=version_bulk_patch,
+        count=len(version_update_ids),
+    )
+    assert isinstance(response, tator.models.MessageResponse)
+    print(response.message)
+
+    moved_states = tator_api.get_state_list(project, **params, version=[new_version])
+    moved_elemental_ids = {state.elemental_id for state in moved_states}
+    original_states = tator_api.get_state_list_by_id(project, {"ids": version_update_ids})
+    assert len(moved_states) == len(version_update_ids)
+    assert moved_elemental_ids == {state.elemental_id for state in original_states}
+    for state in moved_states:
+        assert state.version == new_version
+    response = tator_api.delete_state_list(
+        project,
+        state_bulk_delete={
+            "ids": [*version_update_ids, *[state.id for state in moved_states]],
+            "prune": 1,
+        },
+        count=len(version_update_ids) + len(moved_states),
+    )
+    assert isinstance(response, tator.models.MessageResponse)
+    tator_api.delete_version(new_version)
+
     # Clone states to same media.
     version_mapping = {version.id: version.id for version in tator_api.get_version_list(project)}
     generator = tator.util.clone_state_list(
