@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import numpy as np
 from osgeo import gdal
+gdal.UseExceptions()  # Enable exceptions for GDAL errors
 
 from ..util._upload_file import _upload_file
 from ..util.get_api import get_api
