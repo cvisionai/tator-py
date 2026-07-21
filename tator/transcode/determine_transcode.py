@@ -55,14 +55,15 @@ def _get_video_info(path):
         logger.info("NOTICE: Duration was null have to resort to slow method.")
         output = subprocess.run(slow_cmd, stdout=subprocess.PIPE, check=True).stdout
         video_info = json.loads(output)
-    stream_idx=0
+    stream_indices = []
     audio=False
     for idx, stream in enumerate(video_info["streams"]):
         if stream["codec_type"] == "video":
-            stream_idx=idx
+            stream_indices.append(idx)
         if stream["codec_type"] == "audio":
             logger.info("Found Audio Track")
             audio=True
+    stream_idx = stream_indices[0]
     stream = video_info["streams"][stream_idx]
     stream = {**video_info.get("format", {}), **stream}
     fps, num_frames = get_length_info(stream)
