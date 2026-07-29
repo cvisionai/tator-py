@@ -25,7 +25,12 @@ from .transcode import convert_archival
 from .transcode import convert_audio
 from .delete_media import delete_media
 from .make_thumbnails import make_thumbnail_image, make_thumbnail_gif
-from .tiff import tiff_transcode_logic
+try:
+    from .tiff import tiff_transcode_logic
+except ImportError:
+    tiff_transcode_logic = None
+    print("Warning: tiff_transcode_logic not available, tiff files will not be supported.")
+    print("\t Install osgeo python package (usually via system packages, e.g. apt install python3-gdal)\n")
 
 FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
           '- %(message)s')
