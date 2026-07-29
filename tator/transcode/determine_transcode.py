@@ -191,7 +191,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     if height < max(available_resolutions) and not height in resolutions:
         smallest_higher_res = min(r for r in available_resolutions if r > height)
 
-        if not (height, codec_map[smallest_higher_res]) in existing_streaming_resolutions:
+        if not (height, find_best_encoder(codec_map[smallest_higher_res])) in existing_streaming_resolutions:
             # copy personality form the nearest higher resolution
             crf_map[height] = crf_map[smallest_higher_res]
             codec_map[height] = codec_map[smallest_higher_res]
