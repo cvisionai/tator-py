@@ -48,7 +48,7 @@ def test_ssrf_protection_import_image(host, token, project, image_type):
     api = tator.get_api(host, token)
     
     # Try to import from an unauthorized domain
-    unauthorized_url = "https://raw.githubusercontent.com/github/explore/main/topics/python/python.png"
+    unauthorized_url = "https://www.w3.org/assets/logos/w3c-2025-transitional/w3c-72x48.png"
     
     # Attempt to import media with an unauthorized URL using the utility function
     with pytest.raises(tator.exceptions.ApiException) as exc_info:
@@ -147,4 +147,3 @@ def test_ssrf_protection_hosted_template(host, token, organization):
     assert exc_info.value.status == 403
     assert "not from an allowed origin" in str(exc_info.value.body).lower() or \
            "not from an allowed origin" in str(exc_info.value.reason).lower()
-
