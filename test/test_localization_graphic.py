@@ -8,6 +8,13 @@ import numpy as np
 
 import tator
 
+DEFAULT_LOCALIZATION_GRAPHIC_MARGINS = {
+    'box': (0, 0),
+    'dot': (50, 50),
+    'line': (50, 50),
+}
+
+
 def _ints_almost_equal(
     a: int,
     b: int,
@@ -127,19 +134,18 @@ def _generate_truth_info(
     if dtype == 'box':
         truth_width = localization_datum['width'] * media_width
         truth_height = localization_datum['height'] * media_height
-        default_margins = (0, 0)
 
     elif dtype == 'line':
         point_a = (localization_datum['x'], localization_datum['y'])
         point_b = (point_a[0] + localization_datum['u'], point_a[1] + localization_datum['v'])
         truth_width = abs(point_a[0] - point_b[0]) * media_width
         truth_height = abs(point_a[1] - point_b[1]) * media_height
-        default_margins = (10, 10)
 
     else: # Dot
         truth_width = 1
         truth_height = 1
-        default_margins = (10, 10)
+
+    default_margins = DEFAULT_LOCALIZATION_GRAPHIC_MARGINS[dtype]
 
     # Apply specific margins if provided. Otherwise use default.
     if margins is not None:
