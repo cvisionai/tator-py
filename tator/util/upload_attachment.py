@@ -3,7 +3,7 @@ import os
 from ._upload_file import _upload_file
 
 
-def upload_attachment(api, media, path, name=None, chunk_size=1 * 1024 * 1024):
+def upload_attachment(api, media, path, name=None, chunk_size=5 * 1024 * 1024):
     """Upload a file as an attachment to a media object.
 
     Example:
@@ -19,7 +19,7 @@ def upload_attachment(api, media, path, name=None, chunk_size=1 * 1024 * 1024):
     :param media: Unique integer identifying a media.
     :param path: Path to the file.
     :param name: [Optional] Name of file in database. Defaults to basename of path.
-    :param chunk_size: [Optional] Chunk size in bytes. Default is 10MB.
+    :param chunk_size: [Optional] Chunk size in bytes. Default is 5MB.
     :returns: Generator that yields tuple containing progress (0-100) and a
         response. The response is `None` until the last yield, when the response
         is the response object from :meth:`tator.util.TatorApi.create_auxiliary_file`.
