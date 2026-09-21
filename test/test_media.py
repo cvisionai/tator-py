@@ -179,6 +179,47 @@ def parse_media_files(media):
     )
 
 
+def _presigned_fixture_complete(files):
+    # Streaming/archival files become visible before thumbnail generation
+    # finishes. Sign only after all outputs of this audio/video fixture exist.
+    return bool(files and files.streaming and len(files.streaming) == 4
+                and files.archival and files.audio
+                and files.thumbnail and files.thumbnail_gif)
+
+
+def test_presigned_no_cache_waits_for_late_gif(monkeypatch):
+    import sys
+    from types import SimpleNamespace
+
+    polls = []
+    signed_requests = []
+    files = SimpleNamespace(streaming=[{}] * 4, archival=[{}], audio=[{}],
+                            thumbnail=[{}], thumbnail_gif=None)
+
+    def get_media_list(*args, **kwargs):
+        polls.append(True)
+        if len(polls) == 2:
+            files.thumbnail_gif = [{}]
+        return [SimpleNamespace(id=1, media_files=files)]
+
+    def get_media(media_id, presigned, no_cache=False):
+        assert files.thumbnail_gif, "Signing must wait for the delayed GIF"
+        signed_requests.append((presigned, no_cache))
+        duration = presigned if no_cache else signed_requests[0][0]
+        inventory = {role: [{"path": f"https://example.test/{role}?X-Amz-Expires={duration}"}]
+                     for role in vars(files)}
+        return SimpleNamespace(media_files=SimpleNamespace(to_dict=lambda: inventory))
+
+    api = SimpleNamespace(get_media_list=get_media_list, get_media=get_media)
+    monkeypatch.setattr(tator, "get_api", lambda *args: api)
+    monkeypatch.setattr(tator.util, "upload_media",
+                        lambda *args, **kwargs: [(100, SimpleNamespace(message="Uploaded"))])
+    monkeypatch.setattr(sys.modules[__name__], "sleep", lambda seconds: None)
+    test_presigned_no_cache("host", "token", 1, 1, "fixture.mp4")
+    assert len(polls) == 2
+    assert len(signed_requests) == 4
+
+
 def test_presigned_no_cache(host, token, project, video_type, video_file):
     expires_key = "X-Amz-Expires"
 
@@ -209,9 +250,7 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
             continue
         if response[0].media_files is None:
             continue
-        streaming = response[0].media_files.streaming
-        have_archival = response[0].media_files.archival is not None
-        if streaming and have_archival and len(streaming) == 4:
+        if _presigned_fixture_complete(response[0].media_files):
             video_id = response[0].id
             break
 
