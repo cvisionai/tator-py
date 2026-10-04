@@ -1,7 +1,6 @@
 """Offline download regression tests; servers and files are disposable."""
 
 import base64
-import importlib.util
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import os
 from pathlib import Path
@@ -11,12 +10,9 @@ import threading
 import unittest
 from unittest.mock import patch
 
-# Load without importing the API client or starting a transcode job.
-spec = importlib.util.spec_from_file_location(
-    "transcode_download", Path(__file__).parents[1] / "tator/transcode/download.py"
-)
-download = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(download)
+# CI copies tests outside the source tree and installs tator from its wheel.
+# Import the package module so the same tests cover both installation layouts.
+from tator.transcode import download
 
 
 class DownloadTests(unittest.TestCase):
