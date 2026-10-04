@@ -46,4 +46,3 @@ def download_file(url, output_path):
         for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
             if chunk:
                 fp.write(chunk)
-
