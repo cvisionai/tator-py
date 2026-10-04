@@ -9,15 +9,14 @@ import logging
 import json
 import glob
 import re
-import subprocess
 
 from progressbar import progressbar
-import requests
 import tator
 
 from ..util import md5sum
 from ..util.get_api import get_api
 
+from .download import download_file
 from .create_media import create_media
 from .determine_transcode import determine_transcode, update_media
 from .transcode import convert_streaming
@@ -37,43 +36,6 @@ FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
 logging.basicConfig(format=FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
-def download_file(url, output_path):
-    """
-    Download a file using wget if available, otherwise use requests.
-
-    Args:
-        url: URL to download from
-        output_path: Local path where file should be saved
-    """
-    # Try wget if available
-    if shutil.which('wget'):
-        try:
-            wget_cmd = [
-                'wget',
-                '-c',                       # Continue/resume partial downloads
-                '--tries=10',               # Retry up to 10 times
-                '--retry-connrefused',      # Retry even if connection refused
-                '--timeout=60',             # DNS/connect timeout (1 minute)
-                '--read-timeout=600',       # Read timeout only if no data received (10 minutes)
-                '-nv',                      # Quiet mode (suppress most wget output)
-                '-O', output_path,          # Output file path
-                url
-            ]
-            subprocess.run(wget_cmd, check=True, capture_output=True)
-            logger.info(f"Successfully downloaded with wget: {output_path}")
-            return
-        except subprocess.CalledProcessError as e:
-            logger.warning(f"wget download failed: {e}, falling back to requests")
-            pass  # Fall back to requests
-
-    # Fall back to requests
-    response = requests.get(url, stream=True)
-    response.raise_for_status()
-    with open(output_path, "wb") as fp:
-        for chunk in response.iter_content(chunk_size=10485760):  # 10 MiB
-            if chunk:
-                fp.write(chunk)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Full transcode pipeline on a directory of files.')
