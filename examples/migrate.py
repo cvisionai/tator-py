@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
+import copy
+from functools import wraps
 import logging
 import os
 import shutil
@@ -10,6 +12,7 @@ from textwrap import dedent
 from collections import defaultdict
 
 import tator
+from migrate_acl import ACLMigration, add_acl_arguments
 
 logging.basicConfig(
     filename='migrate.log',
@@ -18,7 +21,11 @@ logging.basicConfig(
     datefmt='%m/%d/%Y %I:%M:%S %p',
     level=logging.INFO)
 logger = logging.getLogger(__name__)
-logger.addHandler(logging.StreamHandler(sys.stdout))
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
+logging.getLogger('migrate_acl').addHandler(console_handler)
+logging.getLogger('migrate_acl').setLevel(logging.DEBUG)
 
 def parse_args():
     parser = argparse.ArgumentParser(description=dedent('''\
@@ -42,6 +49,12 @@ def parse_args():
 
     If the --dest_project is not specified, a new project will be created with the name
     specified by --new_project_name or with the same name if neither are given.
+
+    By default, organizations/groups and their memberships are selected from the
+    migrated resources' row protections. Existing objects are mapped even when creation is
+    skipped. Users are never created. Use --skip_user_row_protections to omit direct user
+    grants, and --map_organization/--map_group SOURCE_ID:DEST_ID for renamed dependencies.
+    --dest_organization maps the source project owner regardless of its name.
 
     Examples:
     Duplicate a project on same host
@@ -76,10 +89,16 @@ def parse_args():
                                                '--new_project_name.', type=int)
     parser.add_argument('--new_project_name', help='Name to user for new project if --dest_project '
                                                    'is omitted.', type=str)
-    parser.add_argument('--dest_organization', help='Destination organization. Required if using '
-                                                    '--new_project_name.', type=int)
+    parser.add_argument('--dest_organization', help='Destination organization for a new project. '
+                                                    'Unless --skip_acl is set, maps the source owner regardless of name; '
+                                                    'if omitted, the owner is matched or created.', type=int)
     parser.add_argument('--section_ids', help='IDs of Specific sections to migrate. If not given, all media '
-                                           'in the source project will be migrated. If the sections identified in this list are nested, parent and child sections will also be migrated and the folder structure will be preserved in the destination project.', nargs='+')
+                                           'in the source project will be migrated. If the sections identified in this list are nested, parent and child sections will also be migrated and the folder structure will be preserved in the destination project.', nargs='+', type=int)
+    parser.add_argument('--version_ids', type=int, nargs='+',
+                        help='Source version IDs whose annotations and version definitions will be migrated. '
+                             'Required base version definitions are included as dependencies. '
+                             'If omitted, all versions are included. Section and version selections '
+                             'also scope row protection migration.')
     parser.add_argument('--skip_memberships', help='If given, membership objects will not be migrated.',
                         action='store_true')
     parser.add_argument('--skip_sections', help='If given, section objects will not be migrated.',
@@ -109,7 +128,35 @@ def parse_args():
     parser.add_argument('--ignore-media-transfer', help='If given, media will not be transferred but '
                                                         'the media objects will still be created.',
                         action='store_true')
+    add_acl_arguments(parser)
     return parser.parse_args()
+
+def discover_when_skipped(kind):
+    """ACL-only passes still need mappings for previously migrated resources."""
+    def decorate(find):
+        @wraps(find)
+        def wrapped(args, src_api, dest_api, dest_project, *rest, **kwargs):
+            skipped = getattr(args, 'skip_' + kind)
+            if skipped and dest_project is None:
+                logger.info("Skipping %s; new destination project has no existing objects to map", kind)
+                return ({} if kind == 'leaves' else []), {}
+            if getattr(args, 'skip_acl', False) or not skipped:
+                return find(args, src_api, dest_api, dest_project, *rest, **kwargs)
+            discovery_args = copy.copy(args)
+            setattr(discovery_args, 'skip_' + kind, False)
+            discovery_args._mapping_only = True
+            pending, mapping = find(discovery_args, src_api, dest_api, dest_project, *rest, **kwargs)
+            logger.info("Skipping creation of %s; retained %d existing mappings", kind, len(mapping))
+            return ({} if isinstance(pending, dict) else []), mapping
+        return wrapped
+    return decorate
+
+
+def log_discovery(args, message, *values):
+    # The wrapper reports retained mappings separately when creation is disabled.
+    if not getattr(args, '_mapping_only', False):
+        logger.info(message, *values)
+
 
 def get_tator_user_sections(media):
     tator_user_sections = None
@@ -119,20 +166,65 @@ def get_tator_user_sections(media):
 
 def get_section_list_from_ids(api, args):
     sections = api.get_section_list(args.project)
-    for section in sections:
-        if section.path == "None":
-            section.path = section.name.replace(' ', '_')
-    id_set = set([int(s) for s in args.section_ids])
-    selected_sections = [s for s in sections if s.id in id_set]
-    ancestors = []
-    descendents = []
-    for selected_section in selected_sections:
-        ancestors += [section for section in sections if selected_section.path.startswith(section.path) and section.id != selected_section.id]
-        descendents += [section for section in sections if section.path.startswith(selected_section.path) and section.id != selected_section.id]
-    selected_sections += ancestors + descendents
-    # Remove duplicates
-    selected_sections = list({s.id: s for s in selected_sections}.values())
-    return selected_sections
+    id_set = {int(s) for s in args.section_ids}
+    missing = id_set - {section.id for section in sections}
+    if missing:
+        raise ValueError(f'Section IDs not found in source project: {sorted(missing)}')
+    selected_sections = [section for section in sections if section.id in id_set]
+
+    def path(section):
+        return section.path if section.path not in (None, 'None') else section.name.replace(' ', '_')
+
+    def ancestor(parent, child):
+        # Paths use dot-separated components: A.B must not select A.Beta.
+        return path(child).startswith(path(parent) + '.')
+
+    return [section for section in sections if section.id in id_set or any(
+        ancestor(section, selected) or ancestor(selected, section) for selected in selected_sections)]
+
+
+def select_versions(versions, version_ids):
+    """Select definitions in base-first order without silently breaking inheritance."""
+    by_id = {version.id: version for version in versions}
+    requested = list(dict.fromkeys(version_ids)) if version_ids else list(by_id)
+    missing = set(requested) - set(by_id)
+    if missing:
+        raise ValueError(f'Version IDs not found in source project: {sorted(missing)}')
+    result, visited, visiting = [], set(), set()
+
+    def visit(version_id):
+        if version_id in visited:
+            return
+        if version_id in visiting:
+            raise ValueError(f'Cycle in version bases at version {version_id}')
+        if version_id not in by_id:
+            raise ValueError(f'Required base version {version_id} is not visible in source project')
+        visiting.add(version_id)
+        version = by_id[version_id]
+        for base in getattr(version, 'bases', None) or []:
+            visit(base)
+        visiting.remove(version_id)
+        visited.add(version_id)
+        result.append(version)
+
+    for version_id in requested:
+        visit(version_id)
+    dependencies = visited - set(requested)
+    if version_ids and dependencies:
+        logger.info('Including required base version definitions: %s (their annotations are not selected)',
+                    sorted(dependencies))
+    return result
+
+
+def annotation_version_filter(args):
+    selected = getattr(args, 'version_ids', None)
+    return {'version': list(dict.fromkeys(selected))} if selected else {}
+
+
+def selected_annotations(args, objects):
+    # Enforce exact versions locally as well as in the server query.
+    selected = set(getattr(args, 'version_ids', None) or [])
+    return list({obj.id: obj for obj in objects if not selected or obj.version in selected}.values())
 
 def setup_apis(args):
     """ Sets up API objects.
@@ -159,7 +251,14 @@ def find_dest_project(args, src_api, dest_api):
         dest_projects = dest_api.get_project_list()
         dest_project = None
         name = args.new_project_name if args.new_project_name else src_project.name
-        for project_obj in dest_projects:
+        organization = args.dest_organization
+        if not args.skip_acl:
+            organization = organization or dict(args.map_organization).get(src_project.organization)
+        candidates = [p for p in dest_projects if p.name == name and
+                      (args.skip_acl or organization is None or p.organization == organization)]
+        if not args.skip_acl and len(candidates) > 1:
+            raise ValueError('Ambiguous destination project; specify --dest_project')
+        for project_obj in candidates:
             if project_obj.name == name:
                 dest_project = project_obj
                 logger.info(f"Migrating to existing project with ID {project_obj.id}.")
@@ -169,54 +268,73 @@ def find_dest_project(args, src_api, dest_api):
     return dest_project
 
 def find_memberships(args, src_api, dest_api, dest_project):
-    """ Finds existing memberships in destination project. Returns users and memberships
-        corresponding to memberships in source project that need to be created.
-    """
-    memberships = []
-    users = []
+    """Plan memberships only for users that already exist on the destination host."""
+    membership_mapping, user_mapping = {}, {}
+    if args.skip_memberships and (args.skip_acl or dest_project is None):
+        logger.info("Skipping memberships")
+        return [], [], membership_mapping, user_mapping
+    memberships = src_api.get_membership_list(args.project)
+    users = [src_api.get_user(m.user) for m in memberships]
+    existing = dest_api.get_membership_list(dest_project.id) if dest_project else []
+    by_username = {dest_api.get_user(m.user).username: m for m in existing}
+    creator_id = dest_api.whoami().id if dest_project is None and memberships else None
+    pending, pending_users = [], []
+    missing_users, creator_memberships = 0, 0
+    for membership, user in zip(memberships, users):
+        match = by_username.get(user.username)
+        if match:
+            membership_mapping[membership.id] = match.id
+            user_mapping[user.id] = match.user
+        elif not args.skip_memberships:
+            matches = [u for u in dest_api.get_user_list(username=user.username)
+                       if u.username == user.username]
+            if len(matches) > 1:
+                raise ValueError(f'Ambiguous destination username {user.username!r}')
+            if not matches:
+                missing_users += 1
+                continue
+            user_mapping[user.id] = matches[0].id
+            # Retain the creator for mapping after create_project automatically adds it.
+            creator_memberships += matches[0].id == creator_id
+            pending.append(membership)
+            pending_users.append(user)
     if args.skip_memberships:
-        logger.info(f"Skipping memberships due to --skip_memberships.")
+        logger.info("Skipping membership creation; retained %d existing mappings", len(membership_mapping))
     else:
-        memberships = src_api.get_membership_list(args.project)
-        users = [src_api.get_user(membership.user) for membership in memberships]
-        num_src = len(memberships)
-        if dest_project is not None:
-            existing = dest_api.get_membership_list(dest_project.id)
-            existing_users = [dest_api.get_user(membership.user) for membership in existing]
-            existing_usernames = [user.username for user in existing_users]
-            memberships = [membership for user, membership in zip(users, memberships)
-                           if user.username not in existing_usernames]
-            users = [user for user in users if user.username not in existing_usernames]
-        logger.info(f"{len(users)} memberships will be created ({num_src - len(users)} "
-                     "already exist).")
-    return memberships, users
+        logger.info("%d memberships will be created (%d already exist, %d supplied by project creation, "
+                    "%d skipped: no matching destination user)",
+                    len(pending) - creator_memberships, len(membership_mapping), creator_memberships, missing_users)
+    return pending, pending_users, membership_mapping, user_mapping
 
 def find_sections(args, src_api, dest_api, dest_project):
-    """ Finds existing sections in destination project. Returns sections in source project
-        that need to be created and sections for which media should be migrated.
-    """
-    sections = []
-    if args.skip_sections:
-        logger.info(f"Skipping sections due to --skip_sections.")
-    else:
-        sections = src_api.get_section_list(args.project)
-        num_src = len(sections)
-        if args.section_ids:
-            sections = get_section_list_from_ids(src_api, args)
-        if dest_project is not None:
-            existing = dest_api.get_section_list(dest_project.id)
-            existing_names = [section.name for section in existing]
-            sections = [section for section in sections if section.name not in existing_names]
-        logger.info(f"{len(sections)} sections will be created ({num_src - len(sections)} "
-                     "already exist).")
-    return sections
+    """Find sections to create and retain the existing section ID mapping."""
+    if args.skip_sections and (args.skip_acl or dest_project is None):
+        logger.info("Skipping sections")
+        return [], {}
+    sections = (get_section_list_from_ids(src_api, args) if args.section_ids
+                else src_api.get_section_list(args.project))
+    existing = dest_api.get_section_list(dest_project.id) if dest_project else []
+    mapping, pending = {}, []
+    for section in sections:
+        matches = [s for s in existing if s.name == section.name]
+        if len(matches) > 1:
+            matches = [s for s in matches if s.path == section.path]
+        if len(matches) > 1:
+            raise ValueError(f'Ambiguous destination section {section.name!r}')
+        if matches:
+            mapping[section.id] = matches[0].id
+        elif not args.skip_sections:
+            pending.append(section)
+    logger.info("%d sections will be created (%d already exist)", len(pending), len(mapping))
+    return pending, mapping
 
+@discover_when_skipped('versions')
 def find_versions(args, src_api, dest_api, dest_project):
     """ Finds existing versions in destination project. Returns ID mapping between source
         and destination versions and versions that need to be created.
     """
     version_mapping = {}
-    versions = src_api.get_version_list(args.project)
+    versions = select_versions(src_api.get_version_list(args.project), getattr(args, 'version_ids', None))
     if dest_project is not None:
         existing = dest_api.get_version_list(dest_project.id)
         existing_names = [version.name for version in existing]
@@ -226,12 +344,13 @@ def find_versions(args, src_api, dest_api, dest_project):
         versions = [version for version in versions if version.name not in existing_names]
     if args.skip_versions:
         versions = []
-        logger.info(f"Skipping versions due to --skip_versions.")
+        log_discovery(args, f"Skipping versions due to --skip_versions.")
     else:
-        logger.info(f"{len(versions)} versions will be created ({len(version_mapping.values())} "
+        log_discovery(args, f"{len(versions)} versions will be created ({len(version_mapping.values())} "
                      "already exist).")
     return versions, version_mapping
 
+@discover_when_skipped('media_types')
 def find_media_types(args, src_api, dest_api, dest_project):
     """ Finds existing media types in destination project. Returns ID mapping between source
         and destination media types and media types that need to be created.
@@ -239,7 +358,7 @@ def find_media_types(args, src_api, dest_api, dest_project):
     media_types = []
     media_type_mapping = {}
     if args.skip_media_types:
-        logger.info(f"Skipping media types due to --skip_media_types.")
+        log_discovery(args, f"Skipping media types due to --skip_media_types.")
     else:
         media_types = src_api.get_media_type_list(args.project)
         if dest_project is not None:
@@ -249,10 +368,11 @@ def find_media_types(args, src_api, dest_api, dest_project):
                 if media_type.name in existing_names:
                     media_type_mapping[media_type.id] = existing[existing_names.index(media_type.name)].id
             media_types = [media_type for media_type in media_types if media_type.name not in existing_names]
-        logger.info(f"{len(media_types)} media types will be created ({len(media_type_mapping.values())} "
+        log_discovery(args, f"{len(media_types)} media types will be created ({len(media_type_mapping.values())} "
                      "already exist).")
     return media_types, media_type_mapping
 
+@discover_when_skipped('localization_types')
 def find_localization_types(args, src_api, dest_api, dest_project):
     """ Finds existing localization types in destination project. Returns ID mapping between source
         and destination localization types and localization types that need to be created.
@@ -260,7 +380,7 @@ def find_localization_types(args, src_api, dest_api, dest_project):
     localization_types = []
     localization_type_mapping = {}
     if args.skip_localization_types:
-        logger.info(f"Skipping localization types due to --skip_localization_types.")
+        log_discovery(args, f"Skipping localization types due to --skip_localization_types.")
     else:
         localization_types = src_api.get_localization_type_list(args.project)
         if dest_project is not None:
@@ -272,10 +392,11 @@ def find_localization_types(args, src_api, dest_api, dest_project):
                     localization_type_mapping[localization_type.id] = existing_id
             localization_types = [localization_type for localization_type in localization_types
                                   if localization_type.name not in existing_names]
-        logger.info(f"{len(localization_types)} localization types will be created "
+        log_discovery(args, f"{len(localization_types)} localization types will be created "
                     f"({len(localization_type_mapping.values())} already exist).")
     return localization_types, localization_type_mapping
 
+@discover_when_skipped('state_types')
 def find_state_types(args, src_api, dest_api, dest_project):
     """ Finds existing state types in destination project. Returns ID mapping between source
         and destination state types and state types that need to be created.
@@ -283,7 +404,7 @@ def find_state_types(args, src_api, dest_api, dest_project):
     state_types = []
     state_type_mapping = {}
     if args.skip_state_types:
-        logger.info(f"Skipping state types due to --skip_state_types.")
+        log_discovery(args, f"Skipping state types due to --skip_state_types.")
     else:
         state_types = src_api.get_state_type_list(args.project)
         if dest_project is not None:
@@ -293,10 +414,11 @@ def find_state_types(args, src_api, dest_api, dest_project):
                 if state_type.name in existing_names:
                     state_type_mapping[state_type.id] = existing[existing_names.index(state_type.name)].id
             state_types = [state_type for state_type in state_types if state_type.name not in existing_names]
-        logger.info(f"{len(state_types)} state types will be created ({len(state_type_mapping.values())} "
+        log_discovery(args, f"{len(state_types)} state types will be created ({len(state_type_mapping.values())} "
                      "already exist).")
     return state_types, state_type_mapping
 
+@discover_when_skipped('leaf_types')
 def find_leaf_types(args, src_api, dest_api, dest_project):
     """ Finds existing leaf types in destination project. Returns ID mapping between source
         and destination leaf types and leaf types that need to be created.
@@ -304,7 +426,7 @@ def find_leaf_types(args, src_api, dest_api, dest_project):
     leaf_types = []
     leaf_type_mapping = {}
     if args.skip_leaf_types:
-        logger.info(f"Skipping leaf types due to --skip_leaf_types.")
+        log_discovery(args, f"Skipping leaf types due to --skip_leaf_types.")
     else:
         leaf_types = src_api.get_leaf_type_list(args.project)
         if dest_project is not None:
@@ -314,10 +436,11 @@ def find_leaf_types(args, src_api, dest_api, dest_project):
                 if leaf_type.name in existing_names:
                     leaf_type_mapping[leaf_type.id] = existing[existing_names.index(leaf_type.name)].id
             leaf_types = [leaf_type for leaf_type in leaf_types if leaf_type.name not in existing_names]
-        logger.info(f"{len(leaf_types)} leaf types will be created ({len(leaf_type_mapping.values())} "
+        log_discovery(args, f"{len(leaf_types)} leaf types will be created ({len(leaf_type_mapping.values())} "
                      "already exist).")
     return leaf_types, leaf_type_mapping
 
+@discover_when_skipped('file_types')
 def find_file_types(args, src_api, dest_api, dest_project):
     """ Finds existing file types in destination project. Returns ID mapping between source
         and destination file types and file types that need to be created.
@@ -325,7 +448,7 @@ def find_file_types(args, src_api, dest_api, dest_project):
     file_types = []
     file_type_mapping = {}
     if args.skip_file_types:
-        logger.info(f"Skipping file types due to --skip_file_types.")
+        log_discovery(args, f"Skipping file types due to --skip_file_types.")
     else:
         file_types = src_api.get_file_type_list(args.project)
         if dest_project is not None:
@@ -335,10 +458,11 @@ def find_file_types(args, src_api, dest_api, dest_project):
                 if file_type.name in existing_names:
                     file_type_mapping[file_type.id] = existing[existing_names.index(file_type.name)].id
             file_types = [file_type for file_type in file_types if file_type.name not in existing_names]
-        logger.info(f"{len(file_types)} file types will be created ({len(file_type_mapping.values())} "
+        log_discovery(args, f"{len(file_types)} file types will be created ({len(file_type_mapping.values())} "
                      "already exist).")
     return file_types, file_type_mapping
 
+@discover_when_skipped('media')
 def find_media(args, src_api, dest_api, dest_project):
     """ Finds existing media in destination project. Returns media that need to be created and ID
         mapping between source and destination medias.
@@ -346,7 +470,7 @@ def find_media(args, src_api, dest_api, dest_project):
     media = []
     media_mapping = {}
     if args.skip_media:
-        logger.info(f"Skipping media due to --skip_media.")
+        log_discovery(args, f"Skipping media due to --skip_media.")
     else:
         if args.section_ids:
             sections = get_section_list_from_ids(src_api, args)
@@ -362,7 +486,7 @@ def find_media(args, src_api, dest_api, dest_project):
                             if m.name in existing_names:
                                 media_mapping[m.id] = existing[existing_names.index(m.name)].id
                         section_media = [m for m in section_media if m.name not in existing_names]
-                logger.info(f"{len(section_media)} media from section {section.name} will be "
+                log_discovery(args, f"{len(section_media)} media from section {section.name} will be "
                             f"created ({num_src_media - len(section_media)} already exist).")
                 media += section_media
         else:
@@ -387,7 +511,7 @@ def find_media(args, src_api, dest_api, dest_project):
                 media = [m for m in media
                          if (m.name, src_section_names[get_tator_user_sections(m)])
                          not in existing_name_section]
-            logger.info(f"{len(media)} media will be created ({num_src_media - len(media)} "
+            log_discovery(args, f"{len(media)} media will be created ({num_src_media - len(media)} "
                          "already exist).")
     return media, media_mapping
 
@@ -427,6 +551,7 @@ def _same_localization(a, b, localization_type_mapping, version_mapping):
         ok = ok and abs(a.v - b.v) < 0.01
     return ok
 
+@discover_when_skipped('localizations')
 def find_localizations(args, src_api, dest_api, dest_project, media, media_mapping,
                        localization_type_mapping, version_mapping):
     """ Finds existing localizations in destination project. Returns localizations that need to 
@@ -435,7 +560,7 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
     count = 0
     localization_media_ids = []
     if args.skip_localizations:
-        logger.info("Skipping localizations due to --skip_localizations")
+        log_discovery(args, "Skipping localizations due to --skip_localizations")
         localizations = []
         localization_mapping = {}
     else:
@@ -452,10 +577,13 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
         print("Retrieving source localizations...")
         for idx in range(0, len(media), 100):
             source_loc += src_api.get_localization_list(args.project,
-                                                        media_id=[m.id for m in media[idx:idx+100]])
+                                                        media_id=[m.id for m in media[idx:idx+100]],
+                                                        **annotation_version_filter(args))
         for idx in range(0, len(src_media_ids), 100):
             source_loc += src_api.get_localization_list(args.project,
-                                                        media_id=src_media_ids[idx:idx+100])
+                                                        media_id=src_media_ids[idx:idx+100],
+                                                        **annotation_version_filter(args))
+        source_loc = selected_annotations(args, source_loc)
         # Group source and dest localizations by source media ID and frame number.
         print("Building lookups by media/frame...")
         reverse_media = {v:k for k, v in media_mapping.items()}
@@ -478,7 +606,7 @@ def find_localizations(args, src_api, dest_api, dest_project, media, media_mappi
                         localization_mapping[src_loc.id] = dest_loc.id
                 if not found:
                     localizations.append(src_loc)
-        logger.info(f"{len(localizations)} localizations will be created ({len(localization_mapping.keys())} "
+        log_discovery(args, f"{len(localizations)} localizations will be created ({len(localization_mapping.keys())} "
                      "already exist).")
     return localizations, localization_mapping
 
@@ -497,6 +625,7 @@ def _same_state(a, b, state_type_mapping, version_mapping):
             ok = ok and a.attributes.get(key) == b.attributes.get(key)
     return ok
 
+@discover_when_skipped('states')
 def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
                 state_type_mapping, version_mapping):
     """ Finds existing states in destination project. Returns 
@@ -504,7 +633,7 @@ def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
     count = 0
     state_media_ids = []
     if args.skip_states:
-        logger.info("Skipping states due to --skip_states")
+        log_discovery(args, "Skipping states due to --skip_states")
         states = []
         state_mapping = {}
     else:
@@ -521,17 +650,26 @@ def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
         print("Retrieving source states...")
         for idx in range(0, len(media), 100):
             source_states += src_api.get_state_list(args.project,
-                                                    media_id=[m.id for m in media[idx:idx+100]])
+                                                    media_id=[m.id for m in media[idx:idx+100]],
+                                                        **annotation_version_filter(args))
         for idx in range(0, len(src_media_ids), 100):
             source_states += src_api.get_state_list(args.project,
-                                                    media_id=src_media_ids[idx:idx+100])
+                                                    media_id=src_media_ids[idx:idx+100],
+                                                        **annotation_version_filter(args))
+        source_states = selected_annotations(args, source_states)
+        selected_media = set(media_mapping) | {m.id for m in media}
+        spanning_states = [state for state in source_states if not set(state.media) <= selected_media]
+        if spanning_states:
+            logger.warning('Skipping %d states that reference media outside the selected sections', len(spanning_states))
+            source_states = [state for state in source_states if set(state.media) <= selected_media]
         # Group source and dest states by source media ID and frame number.
         print("Building lookups by media/frame...")
         reverse_media = {v:k for k, v in media_mapping.items()}
         existing_grouped = defaultdict(list)
         source_grouped = defaultdict(list)
         for state in existing_states:
-            existing_grouped[(reverse_media[state.media[0]], state.frame)].append(state)
+            if state.media and all(media_id in reverse_media for media_id in state.media):
+                existing_grouped[(reverse_media[state.media[0]], state.frame)].append(state)
         for state in source_states:
             source_grouped[(state.media[0], state.frame)].append(state)
         # Add states to mapping or create list depending on geometry match.
@@ -547,10 +685,11 @@ def find_states(args, src_api, dest_api, dest_project, media, media_mapping,
                         state_mapping[src_state.id] = dest_state.id
                 if not found:
                     states.append(src_state)
-        logger.info(f"{len(states)} states will be created ({len(state_mapping.keys())} "
+        log_discovery(args, f"{len(states)} states will be created ({len(state_mapping.keys())} "
                      "already exist).")
     return states, state_mapping
 
+@discover_when_skipped('leaves')
 def find_leaves(args, src_api, dest_api, dest_project):
     """ Finds existing leaves in destination project. Returns leaves that need to be created,
         grouped in a dictionary by depth and mapping of src and dest leaves for existing
@@ -561,7 +700,7 @@ def find_leaves(args, src_api, dest_api, dest_project):
     num_leaves = 0
     num_skipped = 0
     if args.skip_leaves:
-        logger.info("Skipping leaves due to --skip_leaves")
+        log_discovery(args, "Skipping leaves due to --skip_leaves")
     else:
         depth = 2
         while True:
@@ -582,7 +721,7 @@ def find_leaves(args, src_api, dest_api, dest_project):
             num_leaves += len(leaves[depth])
             num_skipped += len(src_leaves) - len(leaves[depth])
             depth += 1
-        logger.info(f"{num_leaves} leaves will be created ({num_skipped} "
+        log_discovery(args, f"{num_leaves} leaves will be created ({num_skipped} "
                      "already exist).")
     return leaves, leaf_mapping
 
@@ -603,36 +742,39 @@ def create_project(args, src_api, dest_api, dest_project):
         dest_project = dest_project.id
     return dest_project
 
-def create_memberships(src_api, dest_api, dest_project, memberships, users):
-    """ Creates memberships.
-    """
-    num_skipped = 0
-    num_created = 0
-    self_user = src_api.whoami()
+def create_memberships(src_api, dest_api, dest_project, memberships, users,
+                       membership_mapping, user_mapping):
+    """Create memberships for existing users, including mapping automatic creator membership."""
+    if not memberships:
+        return
+    existing = {m.user: m for m in dest_api.get_membership_list(dest_project)}
     for membership, user in zip(memberships, users):
-        # Look up user by username.
-        dest_users = dest_api.get_user_list(username=user.username)
-        if len(dest_users) == 0:
-            num_skipped += 1
+        matches = [u for u in dest_api.get_user_list(username=user.username)
+                   if u.username == user.username]
+        if not matches:
+            logger.warning("Skipping membership for missing destination user %s", user.username)
+            continue
+        if len(matches) > 1:
+            raise ValueError(f'Ambiguous destination username {user.username!r}')
+        dest_user = matches[0]
+        user_mapping[user.id] = dest_user.id
+        if dest_user.id in existing:
+            membership_mapping[membership.id] = existing[dest_user.id].id
         else:
-            dest_user = dest_users[0]
-            if dest_user.id != self_user.id:
-                spec = {'user': dest_user.id, 'permission': membership.permission}
-                response = dest_api.create_membership(dest_project, membership_spec=spec)
-                assert(isinstance(response, tator.models.CreateResponse))
-            num_created += 1
-    msg = f"Created {num_created} memberships."
-    if num_skipped > 0:
-        msg += f" Skipped {num_skipped} (no matching user)."
-    logger.info(msg)
+            response = dest_api.create_membership(dest_project, membership_spec={
+                'user': dest_user.id, 'permission': membership.permission})
+            membership_mapping[membership.id] = response.id
+            existing[dest_user.id] = response
 
-def create_sections(src_api, dest_api, dest_project, sections):
+def create_sections(src_api, dest_api, dest_project, sections, section_mapping):
     """ Creates sections.
     """
     for section in sections:
         response = tator.util.clone_section(src_api, section.id, dest_project, dest_api)
         assert(isinstance(response, tator.models.CreateResponse))
+        section_mapping[section.id] = response.id
     logger.info(f"Created {len(sections)} sections.")
+    return section_mapping
 
 def create_versions(src_api, dest_api, dest_project, versions, version_mapping):
     """ Creates versions. Returns updated version mapping.
@@ -703,6 +845,8 @@ def create_media(args, src_api, dest_api, dest_project, media, media_type_mappin
     """ Creates media. Returns media mapping.
     """
     num_total = len(media)
+    if not media:
+        return media_mapping
     # Look up sections in destination project, create a dict between tator_user_sections and
     # section name.
     if args.section_ids:
@@ -809,14 +953,17 @@ def create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mappi
                 logger.info(f"Created {total_created} of {leaf_count}")
                 leaf_mapping = {**leaf_mapping, **id_map}
     logger.info(f"Created {leaf_count} leaves.")
+    return leaf_mapping
 
-if __name__ == '__main__':
-    args = parse_args()
+def migrate(args):
     src_api, dest_api = setup_apis(args)
     # Find which resources need to be migrated.
     dest_project = find_dest_project(args, src_api, dest_api)
-    memberships, users = find_memberships(args, src_api, dest_api, dest_project)
-    sections = find_sections(args, src_api, dest_api, dest_project)
+    acl = ACLMigration(args, src_api, dest_api) if not args.skip_acl else None
+    if acl:
+        acl.bind_project_organization(dest_project)
+    memberships, users, membership_mapping, user_mapping = find_memberships(args, src_api, dest_api, dest_project)
+    sections, section_mapping = find_sections(args, src_api, dest_api, dest_project)
     versions, version_mapping = find_versions(args, src_api, dest_api, dest_project)
     media_types, media_type_mapping = find_media_types(args, src_api, dest_api, dest_project)
     localization_types, localization_type_mapping = find_localization_types(args, src_api, dest_api,
@@ -835,13 +982,25 @@ if __name__ == '__main__':
     if ignore_media_transfer:
         logger.info("Will not transfer media_files")
 
+    if acl:
+        acl.preview(dest_project, {
+            'user': user_mapping, 'section': section_mapping, 'version': version_mapping,
+            'media': media_mapping, 'localization': localization_mapping, 'state': state_mapping,
+        }, {
+            'section': sections, 'version': versions, 'media': media,
+            'localization': localizations, 'state': states,
+        })
+
     # Confirm migration with user.
     proceed = input("Continue with migration [y/N]? ")
     if proceed == 'y':
         # Perform migration.
+        if acl:
+            acl.prepare_project_organization()
         dest_project = create_project(args, src_api, dest_api, dest_project)
-        create_memberships(src_api, dest_api, dest_project, memberships, users)
-        create_sections(src_api, dest_api, dest_project, sections)
+        create_memberships(src_api, dest_api, dest_project, memberships, users,
+                           membership_mapping, user_mapping)
+        section_mapping = create_sections(src_api, dest_api, dest_project, sections, section_mapping)
         version_mapping = create_versions(src_api, dest_api, dest_project, versions,
                                           version_mapping)
         media_type_mapping = create_media_types(src_api, dest_api, dest_project, media_types,
@@ -857,13 +1016,38 @@ if __name__ == '__main__':
         file_type_mapping = create_file_types(src_api, dest_api, dest_project, file_types, file_type_mapping)
         media_mapping = create_media(args, src_api, dest_api, dest_project, media,
                                      media_type_mapping, media_mapping, ignore_media_transfer)
+        if acl:
+            acl.maps.update({'project': {args.project: dest_project}, 'section': section_mapping,
+                             'media': media_mapping})
+            acl.preserve_master_sections(dest_project)
         localization_mapping = create_localizations(args, src_api, dest_api, dest_project,
                                                     localizations, localization_type_mapping,
                                                     localization_mapping, media_mapping, version_mapping)
-        create_states(args, src_api, dest_api, dest_project, states, state_type_mapping, state_mapping,
+        state_mapping = create_states(args, src_api, dest_api, dest_project, states, state_type_mapping, state_mapping,
                       media_mapping, version_mapping, localization_mapping)
-        create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mapping,
+        leaf_mapping = create_leaves(args, src_api, dest_api, dest_project, leaves, leaf_type_mapping,
                       leaf_mapping)
+        mappings = {
+            'membership': membership_mapping, 'user': user_mapping,
+            'project': {args.project: dest_project}, 'section': section_mapping,
+            'version': version_mapping, 'media_type': media_type_mapping,
+            'localization_type': localization_type_mapping, 'state_type': state_type_mapping,
+            'leaf_type': leaf_type_mapping, 'file_type': file_type_mapping,
+            'media': media_mapping, 'localization': localization_mapping,
+            'state': state_mapping, 'leaf': leaf_mapping,
+        }
+        if acl:
+            acl.maps.update(mappings)
+            return acl.run()
+        return mappings
     else:
         logger.info("Migration cancelled by user.")
+
+
+if __name__ == '__main__':
+    try:
+        migrate(parse_args())
+    except ValueError as exc:
+        logger.error('%s', exc)
+        sys.exit(1)
 
