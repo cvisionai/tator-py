@@ -4,6 +4,7 @@ Turns media type encode configs into ffmpeg arguments for the selected encoder, 
 encoder only receives options it actually understands.
 """
 
+import json
 import logging
 import re
 import subprocess
@@ -131,14 +132,18 @@ def encoder_family(encoder):
 
 @lru_cache(maxsize=None)
 def _pixel_format_depths():
-    """ Maps pixel format names to their largest component bit depth using ``ffmpeg -pix_fmts``. """
-    output = subprocess.run(["ffmpeg", "-hide_banner", "-pix_fmts"], stdout=subprocess.PIPE,
-                            stderr=subprocess.DEVNULL, check=True).stdout.decode()
+    """ Maps pixel format names to their largest component bit depth.
+
+    Uses ``ffprobe -show_pixel_formats``, which reports component depths on every FFmpeg version;
+    ``ffmpeg -pix_fmts`` only gained its BIT_DEPTHS column in FFmpeg 6.
+    """
+    output = subprocess.run(["ffprobe", "-v", "error", "-of", "json", "-show_pixel_formats"],
+                            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True).stdout
     depths = {}
-    for line in output.splitlines():
-        fields = line.split()
-        if len(fields) == 5 and re.fullmatch(r"\d+(-\d+)*", fields[4]):
-            depths[fields[1]] = max(int(depth) for depth in fields[4].split('-'))
+    for pix_fmt in json.loads(output).get("pixel_formats", []):
+        components = pix_fmt.get("components")
+        if components:
+            depths[pix_fmt["name"]] = max(component["bit_depth"] for component in components)
     return depths
 
 
@@ -148,7 +153,9 @@ def source_bit_depth(pix_fmt):
         return 8
     depth = _pixel_format_depths().get(pix_fmt)
     if depth is None:
-        match = re.search(r"(\d{2})(le|be)?$", pix_fmt)
+        # Formats with more than 8 bits per sample end in their depth and byte order, e.g.
+        # p010le. Names such as nv12 end in digits that aren't a depth.
+        match = re.search(r"(9|10|12|14|16)(le|be)$", pix_fmt)
         depth = int(match.group(1)) if match else 8
     return depth
 
