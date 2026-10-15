@@ -14,19 +14,31 @@ from ..util._upload_file import _upload_file
 import tator
 
 from .make_fragment_info import make_fragment_info
+from .encoder_args import (
+    STREAMING_PRESET_DEFAULTS,
+    STREAMING_TUNE_DEFAULTS,
+    SW_TO_HW_PIXEL_FORMAT_CONVERSION, # Re-exported for existing importers
+    encoder_args,
+    encoder_family,
+    hwupload_filter,
+    parse_streaming_config,
+    resolve_pixel_format,
+    source_bit_depth,
+)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-# If HW is available, use this as lookup swap
-encoder_lookup=None
+# If HW is available, use this as lookup swap, keyed by whether hwaccel was requested
+encoder_lookup={}
 
-SW_TO_HW_PIXEL_FORMAT_CONVERSION = {
-    'yuv420p': 'nv12', # QSV h264 supports this
-    'yuv420p10le': 'p010le', # QSV h264 supports this
-    'yuv422p': 'nv16', # Not sure if any hw encoders actually support this
-    'yuv444p' : 'nv21' # Not sure if any hw encoders actually support this
-}
+BLACK_VIDEO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4")
+
+# Only deinterlace frames flagged as interlaced, one output frame per input frame.
+DEINTERLACE_FILTER = "bwdif=mode=send_frame:deint=interlaced"
+
+STREAMING_GOP_SIZE = 25
+STREAMING_MOVFLAGS = "frag_keyframe+empty_moov+default_base_moof"
 
 def _get_resource_usage():
     """ Returns an object representing memory + CPU usage """
@@ -40,7 +52,9 @@ def _get_resource_usage():
            'memory_utilization': memory_utilization,
            'memory_in_gb': memory_in_gb}
 def _launch_and_monitor_resources(cmd, interval=300):
-    proc = subprocess.Popen(cmd)
+    # SVT_LOG=2 keeps SVT-AV1 warnings and errors but drops its per-encoder info banner.
+    env = {"SVT_LOG": "2", **os.environ}
+    proc = subprocess.Popen(cmd, env=env)
     start = time.time()
     while proc.returncode == None:
         try:
@@ -56,12 +70,11 @@ def _launch_and_monitor_resources(cmd, interval=300):
 
 def find_best_encoder(codec, hwaccel=False):
     """ Find the best encoder based on what is available on the system """
-    global encoder_lookup
-    if encoder_lookup is None:
+    if hwaccel not in encoder_lookup:
         # Default codecs
-        encoder_lookup={"hevc": os.getenv("TATOR_HEVC_ENCODER", "libx265"),
-                        "h264": os.getenv("TATOR_H264_ENCODER", "libx264"),
-                        "av1": os.getenv("TATOR_AV1_ENCODER", "libsvtav1")}
+        lookup={"hevc": os.getenv("TATOR_HEVC_ENCODER", "libx265"),
+                "h264": os.getenv("TATOR_H264_ENCODER", "libx264"),
+                "av1": os.getenv("TATOR_AV1_ENCODER", "libsvtav1")}
         if hwaccel:
             cmd = [
                 "ffmpeg",
@@ -69,16 +82,15 @@ def find_best_encoder(codec, hwaccel=False):
             output=subprocess.run(cmd,stdout=subprocess.PIPE,check=True).stdout.decode()
             # Look for QSV, but use VAAPI frontend
             # TODO: Use `vainfo` directly to query available hardware entry points
-            if output.find("libsvt_hevc") >= 0:
-                encoder_lookup["hevc"] = "libsvt_hevc"
             if output.find("hevc_qsv") >= 0:
-                encoder_lookup["hevc"] = "hevc_vaapi"
+                lookup["hevc"] = "hevc_vaapi"
             if output.find("h264_qsv") >= 0:
-                encoder_lookup["h264"] = "h264_vaapi"
+                lookup["h264"] = "h264_vaapi"
             if output.find("av1_qsv") >= 0:
-                encoder_lookup["av1"] = "av1_vaapi"
-        logger.info("encoder_lookup = %s", encoder_lookup)
-    return encoder_lookup.get(codec, codec)
+                lookup["av1"] = "av1_vaapi"
+        logger.info("encoder_lookup = %s", lookup)
+        encoder_lookup[hwaccel] = lookup
+    return encoder_lookup[hwaccel].get(codec, codec)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Transcodes a raw video.')
@@ -90,8 +102,9 @@ def parse_args():
     parser.add_argument('--category', required=True, help='One of streaming, archival, or audio.')
     parser.add_argument('--raw_width', type=int, help='Pixel width of original video.')
     parser.add_argument('--raw_height', type=int, help='Pixel height of original video.')
-    parser.add_argument('--configs', type=str, help='Comma separated list of output configs, '
-                                                    'format is resolution:crf:codec.')
+    parser.add_argument('--configs', type=str, help='Output configs, either a JSON list of '
+                                                    'streaming configs or a comma separated list '
+                                                    'of resolution:crf:codec[:preset[:pixel_format]].')
     parser.add_argument('--size', type=int, help='Size of the file, if not inferrable')
     parser.add_argument('--hwaccel', action='store_true', help="Use hardware acceleration.")
     parser.add_argument('--force_fps', type=float, default=-1, help='Force a specific fps for the video.')
@@ -145,35 +158,36 @@ def make_video_definition(path, size=None):
                  "bit_rate": int(stream.get("bit_rate",-1))}
     return video_def
 
-def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1, filter_complex=None, bucket_id=None):
-    logger.info("Transcoding %s to %s...", path, outpath)
-    # Get workload parameters.
-    os.makedirs(outpath, exist_ok=True)
+def _get_rotation(stream):
+    """ Returns the display rotation of a probed stream in degrees. """
+    for side_data in stream.get("side_data_list", []):
+        if "rotation" in side_data:
+            return int(round(float(side_data["rotation"])))
+    # ffprobe before 5.0 reported rotation as a stream tag
+    return int(stream.get("tags", {}).get("rotate", 0))
 
-    # Convert settings into resolution/crf/codec/presets/pixel_formats.
-    resolutions = [int(config.split(':')[0]) for config in configs]
-    crfs = [config.split(':')[1] for config in configs]
-    codecs = [config.split(':')[2] for config in configs]
-    presets = [config.split(':')[3] for config in configs] # Presets must be the same for all outputs in a multiheaded transcode
+def get_display_dimensions(stream):
+    """ Returns (width, height) of a probed video stream's frames as ffmpeg decodes them.
 
-    # Handle pixel format addition as an optional argument
-    # This will maintain backwards API compatibility to folks using
-    # this function
-    # TODO: It'd be nice if we didn't pass in the config so awkwardly.
-    pixel_formats = []
-    for c in configs:
-        split_comps = c.split(':')
-        if len(split_comps) == 5:
-            pixel_formats.append(split_comps[4])
-        else:
-            pixel_formats.append("yuv420p")
+    ffmpeg autorotates on decode, so a stream with a 90 or 270 degree display matrix comes out
+    with its width and height swapped.
+    """
+    width = int(stream["width"])
+    height = int(stream["height"])
+    if _get_rotation(stream) % 180 == 90:
+        width, height = height, width
+    return width, height
 
-    # Need to get avg_framerate
-    if isinstance(path, list):
-        # Assume that files are the same frame rate and resolution
-        ffprobe_path = path[0]
-    else:
-        ffprobe_path = path
+def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filter_complex=None):
+    """ Builds the multi-output ffmpeg command for a streaming transcode.
+
+    :returns: Tuple of the command and the output resolutions, in config order.
+    """
+    configs = [parse_streaming_config(config) for config in configs]
+    # We are going to concatenate multiple segments together if path is a list.
+    # Assume that files are the same frame rate, resolution and pixel format.
+    paths = path if isinstance(path, list) else [path]
+    num_segments = len(paths)
 
     cmd = [
         "ffprobe",
@@ -181,143 +195,110 @@ def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, 
         "-show_entries", "stream",
         "-print_format", "json",
         "-select_streams", "v",
-        ffprobe_path,
+        paths[0],
     ]
     output = subprocess.run(cmd, stdout=subprocess.PIPE, check=True).stdout
-    video_info = json.loads(output)
+    stream = json.loads(output)['streams'][0]
     if force_fps < 0:
-        avg_frame_rate=video_info['streams'][0]['avg_frame_rate']
-        fps_fractional = avg_frame_rate.split("/")
+        fps_fractional = stream['avg_frame_rate'].split("/")
         avg_frame_rate = float(fps_fractional[0]) / float(fps_fractional[1])
         avg_frame_rate = round(avg_frame_rate, 4)
     else:
         avg_frame_rate=force_fps
-    tags=video_info['streams'][0].get('tags')
-    rotation = 0
-    if tags is not None:
-        rotation = int(tags.get('rotate', "0")) % 360
-    transpose = "null"
-    if rotation == 90:
-        transpose = "transpose=2"
-    elif rotation == 180:
-        transpose = "hflip,vflip"
-    elif rotation == 270:
-        transpose = "transpose=1"
+    width, height = get_display_dimensions(stream)
+    source_depth = source_bit_depth(stream.get("pix_fmt"))
 
-    if video_info['streams'][0].get('field_order') == "progressive":
-        yadif = "null"
-    else:
-        yadif = "yadif"
+    outputs = []
+    for config in configs:
+        encoder = find_best_encoder(config["vcodec"], hwaccel)
+        family = encoder_family(encoder)
+        pixel_format = resolve_pixel_format(encoder, config["pixel_format"],
+                                            config["match_source_bit_depth"], source_depth)
+        preset = config["preset"] or STREAMING_PRESET_DEFAULTS.get(family, "")
+        tune = config["tune"] or STREAMING_TUNE_DEFAULTS.get(family)
+        outputs.append({
+            "resolution": config["resolution"],
+            "upload": hwupload_filter(encoder, pixel_format),
+            "args": encoder_args(encoder, config["crf"], preset, tune, pixel_format,
+                                 config["encoder_params"]),
+        })
 
-    vid_dims = [raw_height, raw_width]
     cmd = [
         "ffmpeg", "-y",
-        "-loglevel", "error",
+        "-loglevel", "warning",
         "-progress", "-",
         "-stats_period", "300"
     ]
-    # We are going to concatenate multiple segments together
-    if isinstance(path, list):
-        num_segments = len(path)
-        for segment in path:
-            cmd.extend(["-noautorotate", "-i", segment])
-    else:
-        num_segments = 1
-        cmd.extend(["-noautorotate", "-i", path])
-        cmd.extend(["-noautorotate", "-i", os.path.join(os.path.dirname(os.path.abspath(__file__)), "black.mp4")])
-    
-    hw_upload = ''
-    vaapi_present = [c for c in codecs if find_best_encoder(c, hwaccel).find('vaapi') >= 0]
-    if vaapi_present:
+    if any(output["upload"] for output in outputs):
         cmd.extend(['-init_hw_device', 'vaapi=hw',
                     '-filter_hw_device', 'hw'])
+    # ffmpeg autorotates each input, so frames come out in display orientation.
+    for segment in paths:
+        cmd.extend(["-i", segment])
+    cmd.extend(["-i", BLACK_VIDEO])
 
-    logger.info("Transcoding to %s", resolutions)
+    logger.info("Transcoding to %s", [output["resolution"] for output in outputs])
 
-    cmd.extend([
-        "-max_muxing_queue_size", "9999",
-        "-filter_complex_threads", "1",
-        "-filter_complex"
-    ])
     # Construct the complex filter
-    filter_parts = []
     if filter_complex is None:
-        if num_segments == 1:
-            if vaapi_present:
-                seg_idx = 0
-                hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
-            # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-            filter_string=f"[0:v:0]{transpose}[rot0];[rot0]{yadif}[a];[a]setsar=1[vid];[vid]fps={avg_frame_rate}{hw_upload}[vid_fps];[1:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];[bv]fps={avg_frame_rate}[bv_fps];[vid_fps][bv_fps]concat=n=2:v=1:a=0[concatenated];"
-        else:
-            filter_string = ""
-            if vaapi_present:
-                hw_upload=f'[uf{seg_idx}];[uf{seg_idx}]format={pixel_format}[format{seg_idx}];[format{seg_idx}]hwupload'
-            for seg_idx in range(num_segments):
-                filter_string += f"[{seg_idx}:v:0]{transpose}[rot{seg_idx}];[rot{seg_idx}]yadif[a{seg_idx}];[a{seg_idx}]setsar=1[vid{seg_idx}];[vid{seg_idx}]fps={avg_frame_rate}{hw_upload}[vid_fps{seg_idx}];"
-                
-            filter_string += f"[{num_segments}:v:0]scale={vid_dims[1]}:{vid_dims[0]},setsar=1[bv];"
-            filter_string += "".join([f"[vid_fps{seg_idx}]" for seg_idx in range(num_segments)]) 
-                
-            filter_string += f"[bv]concat=n={num_segments+1}:v=1:a=0[concatenated];"
-            filter_parts.append(filter_string)
-
+        filter_string = "".join(
+            f"[{seg_idx}:v:0]{DEINTERLACE_FILTER},setsar=1,fps={avg_frame_rate}[vid{seg_idx}];"
+            for seg_idx in range(num_segments))
+        # Scale the black mp4 to the input resolution prior to concating and scaling back down.
+        filter_string += (f"[{num_segments}:v:0]scale={width}:{height},setsar=1,"
+                          f"fps={avg_frame_rate}[bv];")
+        filter_string += "".join(f"[vid{seg_idx}]" for seg_idx in range(num_segments))
+        filter_string += f"[bv]concat=n={num_segments+1}:v=1:a=0[concatenated];"
     else:
-        #width = round(raw_width * resolution / raw_height)
-        filter_string = filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload)
-        #filter_parts.append(filter_complex.format(fps=avg_frame_rate, hw_upload=hw_upload))
+        # Hardware upload now happens per output, so {hw_upload} is always empty.
+        filter_string = filter_complex.format(fps=avg_frame_rate, hw_upload='')
 
-    if len(resolutions) == 1:
+    scale_parts = [
+        f"scale=-2:{output['resolution']},pad=ceil(iw/2)*2:ceil(ih/2)*2{output['upload']}"
+        f"[outv{ridx}]"
+        for ridx, output in enumerate(outputs)
+    ]
+    if len(outputs) == 1:
         # Single resolution - no split needed, pipe directly from [concatenated]
-        resolution = resolutions[0]
-        filter_string += f"[concatenated] scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv0]"
+        filter_string += f"[concatenated]{scale_parts[0]}"
     else:
         # Multiple resolutions - need split filter
-        split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(resolutions))])
-        scale_parts = "".join([f"[split{ridx}]scale=-2:{resolution},pad=ceil(iw/2)*2:ceil(ih/2)*2[outv{ridx}];" for ridx,resolution in enumerate(resolutions)])
-        if scale_parts.endswith(";"):
-            scale_parts = scale_parts[:-1]
-        filter_string += f"[concatenated] split={len(resolutions)} " + split_output_labels + ";" + scale_parts
+        split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(outputs))])
+        filter_string += (f"[concatenated]split={len(outputs)}{split_output_labels};"
+                          + ";".join(f"[split{ridx}]{part}" for ridx, part in enumerate(scale_parts)))
 
-    filter_parts.append(filter_string)
-    cmd.extend(filter_parts)
-    for ridx, resolution in enumerate(resolutions):
-        per_res = ["-an",
-            "-metadata:s", "handler_name=tator",
-            "-metadata:s", "rotate=0",
-            "-g", "25",
-            "-movflags",
-            "faststart+frag_keyframe+empty_moov+default_base_moof"]
-        logger.info(f"Generating resolution @ {resolution}")
-        output_file = os.path.join(outpath, f"{resolution}.mp4")
-        codec = find_best_encoder(codecs[ridx], hwaccel)
-        quality_flag = "-crf"
-        pixel_format = pixel_formats[ridx]
-        
-        preset = presets[ridx]
-        if codec.find("qsv") >= 0:
-            quality_flag = "-global_quality"
-        if codec.find("vaapi") >= 0:
-            quality_flag = "-global_quality"
-            pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
-        if codec.find('264') > 0:
-            preset = preset if preset else 'fast'
-            per_res.extend(["-preset", preset,
-                            "-tune", "fastdecode"])
-        if codec.find('libsvtav1') >= 0:
-            preset = preset if preset else '5'
-            per_res.extend(['-preset', preset, "-tune", "fastdecode"])
-
-        cmd.extend([f"-map", f"[outv{ridx}]",
-                    *per_res,
-                    "-vcodec", codec,
-                    "-pix_fmt", pixel_format,
-                    quality_flag, crfs[ridx],
+    cmd.extend([
+        "-filter_complex_threads", "1",
+        "-filter_complex", filter_string,
+    ])
+    for ridx, output in enumerate(outputs):
+        logger.info(f"Generating resolution @ {output['resolution']}")
+        cmd.extend(["-map", f"[outv{ridx}]",
+                    "-an",
+                    "-metadata:s", "handler_name=tator",
+                    "-g", str(STREAMING_GOP_SIZE),
+                    "-max_muxing_queue_size", "9999",
+                    "-movflags", STREAMING_MOVFLAGS,
+                    *output["args"],
                     "-write_tmcd", "0", # Strip off timecode metadata which can cause issues with some players (TODO: should we preserve this in some way?)
-                    output_file
+                    os.path.join(outpath, f"{output['resolution']}.mp4"),
                     ])
-        
-        
+    return cmd, [output["resolution"] for output in outputs]
 
+def convert_streaming(host, token, media, path, outpath, raw_width, raw_height, configs, hwaccel=False, inhibit_upload=False, force_fps=-1, filter_complex=None, bucket_id=None):
+    """ Transcodes a video into streaming resolutions and uploads them to a media.
+
+    :param configs: List of streaming configs, each a ResolutionConfig-like mapping or a
+                    ``resolution:crf:codec[:preset[:pixel_format]]`` string.
+    :param raw_width: Unused; dimensions are read from the source. Kept for compatibility.
+    :param raw_height: Unused; dimensions are read from the source. Kept for compatibility.
+    """
+    logger.info("Transcoding %s to %s...", path, outpath)
+    # Get workload parameters.
+    os.makedirs(outpath, exist_ok=True)
+
+    cmd, resolutions = _streaming_command(path, outpath, configs, hwaccel, force_fps,
+                                          filter_complex)
     logger.info('ffmpeg cmd = {}'.format(cmd))
     _launch_and_monitor_resources(cmd)
 
@@ -412,41 +393,26 @@ def convert_archival(
                 output_file = path
             else:
                 # Encode the media to archival format.
-                codec = find_best_encoder(archive_config.encode.vcodec, hwaccel)
-                quality_flag = "-crf"
-                pixel_format = archive_config.encode.pixel_format
-                tune_settings = ["-preset", archive_config.encode.preset,
-                                 "-tune", archive_config.encode.tune]
-                if archive_config.encode.movflags:
-                    tune_settings.extend(['-movflags', archive_config.encode.movflags])
-                if codec.find("qsv") >= 0:
-                    quality_flag = "-global_quality"
-                    pixel_format = SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]
-                    tune_settings=[] #QSV doesn't do tuning
-                elif codec == "libsvt_hevc":
-                    # SVT for HEVC does not do tuning or CRF
-                    tune_settings=[]
-                    quality_flag = "-global_quality"
-
+                encode = archive_config.encode
+                codec = find_best_encoder(encode.vcodec, hwaccel)
                 hw_preamble = []
-                vaapi_present = codec.find('vaapi') >= 0
-                if vaapi_present:
+                if encoder_family(codec) == "vaapi":
                     hw_preamble = ['-init_hw_device', 'vaapi=hw',
                                    '-filter_hw_device', 'hw']
                 cmd = [
                     "ffmpeg",
-                    "-loglevel", "error",
+                    "-loglevel", "warning",
                     "-progress", "-",
                     "-stats_period", "300",
                     *hw_preamble,
                     "-y",
                     "-i", path,
-                    "-vcodec", codec,
-                    "-vf", "yadif",
-                    quality_flag, str(archive_config.encode.crf),
-                    "-pix_fmt", pixel_format,
-                    *tune_settings
+                    "-vf", DEINTERLACE_FILTER + hwupload_filter(codec, encode.pixel_format),
+                    *encoder_args(codec, encode.crf, encode.preset, encode.tune,
+                                  encode.pixel_format, encode.encoder_params),
                 ]
+                if encode.movflags:
+                    cmd.extend(['-movflags', encode.movflags])
 
                 if archive_config.encode.vcodec == 'hevc':
                     cmd += ["-tag:v", "hvc1"]
@@ -560,8 +526,10 @@ if __name__ == '__main__':
     args = parse_args()
 
     if args.category == 'streaming':
-        if args.configs == '':
+        if not args.configs:
             configs = []
+        elif args.configs.startswith('['):
+            configs = json.loads(args.configs)
         else:
             configs = [res for res in args.configs.split(',')]
         convert_streaming(args.host, args.token, args.media, args.url, args.work_dir,

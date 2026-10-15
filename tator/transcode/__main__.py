@@ -174,7 +174,8 @@ def video_transcode_logic(args, path, paths, media_id, fnames):
             for fname in fnames:
                 # Determine transcodes that need to be done.
                 workloads = determine_transcode(
-                    args.host, args.token, args.type, media_id, fname, group_to=args.group_to
+                    args.host, args.token, args.type, media_id, fname, group_to=args.group_to,
+                    project=args.project,
                 )
                 workloads_list.append(workloads)
                 if compare_workloads(workloads_list):
@@ -185,7 +186,8 @@ def video_transcode_logic(args, path, paths, media_id, fnames):
         else:
             # Determine transcodes that need to be done.
             workloads = determine_transcode(
-                args.host, args.token, args.type, media_id, path, group_to=args.group_to
+                args.host, args.token, args.type, media_id, path, group_to=args.group_to,
+                project=args.project,
             )
 
         # Transcode the video file.
