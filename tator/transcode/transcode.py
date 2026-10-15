@@ -14,13 +14,14 @@ from ..util._upload_file import _upload_file
 import tator
 
 from .make_fragment_info import make_fragment_info
+from .filtergraph import build_streaming_filtergraph
 from .encoder_args import (
     STREAMING_PRESET_DEFAULTS,
     STREAMING_TUNE_DEFAULTS,
     SW_TO_HW_PIXEL_FORMAT_CONVERSION, # Re-exported for existing importers
     encoder_args,
     encoder_family,
-    hwupload_filter,
+    hwupload_filters,
     parse_streaming_config,
     resolve_pixel_format,
     source_bit_depth,
@@ -218,7 +219,7 @@ def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filt
         tune = config["tune"] or STREAMING_TUNE_DEFAULTS.get(family)
         outputs.append({
             "resolution": config["resolution"],
-            "upload": hwupload_filter(encoder, pixel_format),
+            "filters": hwupload_filters(encoder, pixel_format),
             "args": encoder_args(encoder, config["crf"], preset, tune, pixel_format,
                                  config["encoder_params"]),
         })
@@ -229,7 +230,7 @@ def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filt
         "-progress", "-",
         "-stats_period", "300"
     ]
-    if any(output["upload"] for output in outputs):
+    if any(output["filters"] for output in outputs):
         cmd.extend(['-init_hw_device', 'vaapi=hw',
                     '-filter_hw_device', 'hw'])
     # ffmpeg autorotates each input, so frames come out in display orientation.
@@ -239,34 +240,8 @@ def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filt
 
     logger.info("Transcoding to %s", [output["resolution"] for output in outputs])
 
-    # Construct the complex filter
-    if filter_complex is None:
-        filter_string = "".join(
-            f"[{seg_idx}:v:0]{DEINTERLACE_FILTER},setsar=1,fps={avg_frame_rate}[vid{seg_idx}];"
-            for seg_idx in range(num_segments))
-        # Scale the black mp4 to the input resolution prior to concating and scaling back down.
-        filter_string += (f"[{num_segments}:v:0]scale={width}:{height},setsar=1,"
-                          f"fps={avg_frame_rate}[bv];")
-        filter_string += "".join(f"[vid{seg_idx}]" for seg_idx in range(num_segments))
-        filter_string += f"[bv]concat=n={num_segments+1}:v=1:a=0[concatenated];"
-    else:
-        # Hardware upload now happens per output, so {hw_upload} is always empty.
-        filter_string = filter_complex.format(fps=avg_frame_rate, hw_upload='')
-
-    scale_parts = [
-        f"scale=-2:{output['resolution']},pad=ceil(iw/2)*2:ceil(ih/2)*2{output['upload']}"
-        f"[outv{ridx}]"
-        for ridx, output in enumerate(outputs)
-    ]
-    if len(outputs) == 1:
-        # Single resolution - no split needed, pipe directly from [concatenated]
-        filter_string += f"[concatenated]{scale_parts[0]}"
-    else:
-        # Multiple resolutions - need split filter
-        split_output_labels = "".join([f"[split{ridx}]" for ridx in range(len(outputs))])
-        filter_string += (f"[concatenated]split={len(outputs)}{split_output_labels};"
-                          + ";".join(f"[split{ridx}]{part}" for ridx, part in enumerate(scale_parts)))
-
+    filter_string = build_streaming_filtergraph(num_segments, width, height, avg_frame_rate,
+                                                outputs, DEINTERLACE_FILTER, filter_complex)
     cmd.extend([
         "-filter_complex_threads", "1",
         "-filter_complex", filter_string,
@@ -407,7 +382,8 @@ def convert_archival(
                     *hw_preamble,
                     "-y",
                     "-i", path,
-                    "-vf", DEINTERLACE_FILTER + hwupload_filter(codec, encode.pixel_format),
+                    "-vf", ",".join([DEINTERLACE_FILTER,
+                                     *hwupload_filters(codec, encode.pixel_format)]),
                     *encoder_args(codec, encode.crf, encode.preset, encode.tune,
                                   encode.pixel_format, encode.encoder_params),
                 ]

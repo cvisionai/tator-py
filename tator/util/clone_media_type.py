@@ -42,10 +42,27 @@ def clone_media_type(src_api, src_type_id, dest_project, dest_api=None):
         spec['file_format'] = type_obj.file_format
     if type_obj.overlay_config:
         spec['overlay_config'] = type_obj.overlay_config
-    if type_obj.streaming_config:
+    if _can_share_streaming_profile(src_api, type_obj, dest_project, dest_api):
+        # Keep following the profile, so later profile edits apply to the clone too.
+        spec['streaming_profile'] = type_obj.streaming_profile
+    elif type_obj.streaming_config:
         spec['streaming_config'] = type_obj.streaming_config
     if type_obj.archive_config:
         spec['archive_config'] = type_obj.archive_config
     if dest_api is None:
         dest_api = src_api
     return dest_api.create_media_type(dest_project, media_type_spec=spec)
+
+
+def _can_share_streaming_profile(src_api, type_obj, dest_project, dest_api):
+    """ Whether a same-host clone can use the source type's streaming profile: the source follows
+    a profile, and it's a system profile or one owned by the destination project's organization.
+    """
+    if dest_api is not None or type_obj.streaming_profile is None:
+        return False
+    if type_obj.streaming_config_override is not None:
+        return False
+    profile = src_api.get_streaming_profile(type_obj.streaming_profile)
+    if profile.organization is None:
+        return True
+    return src_api.get_project(dest_project).organization == profile.organization

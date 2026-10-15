@@ -109,7 +109,7 @@ def parse_args():
     parser.add_argument(
         "--inhibit-upload", action="store_true", help="Do not upload the transcoded files to Tator."
     )
-    parser.add_argument('--filter_complex', type=str, help='Allows (optionally templated) override of filter_complex argument to ffmpeg for streaming files. Substitutes {fps}, {width}, {height}, {hw_upload}, and {ridx} if those patterns are present, where width and height correspond to the output resolutions.')
+    parser.add_argument('--filter_complex', type=str, help='Replaces the input stage of the streaming filter graph, which must output [concatenated]. Either a string template that substitutes {fps}, or a JSON list of filter chain dicts ({"inputs": [...], "filters": [...], "outputs": [...]}) that substitutes {fps}, {width}, {height} and {num_segments}. See tator.transcode.filtergraph.')
     parser.add_argument('--bucket_id', type=int, help='Bucket ID if not default.')
     return parser.parse_args()
 
@@ -155,6 +155,12 @@ def compare_workloads(workloads_list):
 
     return True  # All parameters are consistent
 
+
+def _parse_filter_complex(filter_complex):
+    """ Returns --filter_complex as chain dicts if given as JSON, otherwise unchanged. """
+    if filter_complex and filter_complex.lstrip().startswith('[{'):
+        return json.loads(filter_complex)
+    return filter_complex
 
 def video_transcode_logic(args, path, paths, media_id, fnames):
     try:
@@ -205,7 +211,7 @@ def video_transcode_logic(args, path, paths, media_id, fnames):
                     hwaccel=args.hwaccel,
                     force_fps=args.force_fps,
                     inhibit_upload=args.inhibit_upload,
-                    filter_complex=getattr(args, "filter_complex", None),
+                    filter_complex=_parse_filter_complex(getattr(args, "filter_complex", None)),
                     bucket_id=args.bucket_id,
                 )
             elif category == 'archival':

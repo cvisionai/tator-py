@@ -263,8 +263,8 @@ def encoder_args(encoder, crf, preset, tune, pixel_format, encoder_params=None):
     return args
 
 
-def hwupload_filter(encoder, pixel_format):
-    """ Returns the filter suffix that uploads frames for a VAAPI encoder, or an empty string. """
+def hwupload_filters(encoder, pixel_format):
+    """ Returns the filters that upload frames for a VAAPI encoder, or an empty list. """
     if encoder_family(encoder) != "vaapi":
-        return ""
-    return f",format={SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]},hwupload"
+        return []
+    return [f"format={SW_TO_HW_PIXEL_FORMAT_CONVERSION[pixel_format]}", "hwupload"]
