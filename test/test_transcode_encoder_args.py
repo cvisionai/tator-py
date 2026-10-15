@@ -72,6 +72,8 @@ def test_source_bit_depth(pix_fmt, depth):
     ("libsvtav1", "yuv420p10le", False, 8, "yuv420p10le"),
     # H.264 keeps its pixel format; browsers don't decode High 10.
     ("libx264", "yuv420p", True, 10, "yuv420p"),
+    ("h264_vaapi", "yuv420p", True, 10, "yuv420p"),
+    ("h264_qsv", "yuv420p", True, 10, "yuv420p"),
     ("libx265", "yuv422p", True, 10, "yuv422p10le"),
 ])
 def test_resolve_pixel_format(encoder, pixel_format, match, depth, expected):
@@ -268,3 +270,15 @@ def test_streaming_av1_on_ffmpeg_without_svtav1_fails_clearly(tmp_path):
     source = _make_source(tmp_path / "src.mp4", "-c:v", "libx264", "-pix_fmt", "yuv420p")
     with pytest.raises(RuntimeError, match="no libsvtav1 encoder"):
         _streaming_command(str(source), str(tmp_path), LADDER)
+
+
+@requires_ffmpeg
+def test_streaming_keeps_zero_preset_and_tune(tmp_path, monkeypatch):
+    source = _make_source(tmp_path / "src.mp4", "-c:v", "libx264", "-pix_fmt", "yuv420p")
+    monkeypatch.setattr(encoder_args_module, "_available_encoders", lambda: {"libsvtav1"})
+    config = {"resolution": 144, "vcodec": "av1", "crf": 40, "preset": 0, "tune": 0}
+    cmd, _ = _streaming_command(str(source), str(tmp_path), [config])
+    preset = cmd.index("-preset")
+    assert cmd[preset + 1] == "0"
+    assert "tune=0" in cmd[cmd.index("-svtav1-params") + 1].split(":")
+

@@ -157,8 +157,12 @@ def compare_workloads(workloads_list):
 
 
 def _parse_filter_complex(filter_complex):
-    """ Returns --filter_complex as chain dicts if given as JSON, otherwise unchanged. """
-    if filter_complex and filter_complex.lstrip().startswith('[{'):
+    """ Returns --filter_complex as chain dicts if given as JSON, otherwise unchanged.
+
+    A JSON list of chain dicts starts with "[" and then "{", possibly with whitespace between;
+    a string template starts with an input label such as "[0:v]".
+    """
+    if filter_complex and re.match(r"\s*\[\s*\{", filter_complex):
         return json.loads(filter_complex)
     return filter_complex
 

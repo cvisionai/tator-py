@@ -217,8 +217,13 @@ def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filt
         family = encoder_family(encoder)
         pixel_format = resolve_pixel_format(encoder, config["pixel_format"],
                                             config["match_source_bit_depth"], source_depth)
-        preset = config["preset"] or STREAMING_PRESET_DEFAULTS.get(family, "")
-        tune = config["tune"] or STREAMING_TUNE_DEFAULTS.get(family)
+        # Defaults only fill unset values; 0 is a valid SVT-AV1 preset and tune.
+        preset = config["preset"]
+        if preset in (None, ""):
+            preset = STREAMING_PRESET_DEFAULTS.get(family, "")
+        tune = config["tune"]
+        if tune in (None, ""):
+            tune = STREAMING_TUNE_DEFAULTS.get(family)
         outputs.append({
             "resolution": config["resolution"],
             "filters": hwupload_filters(encoder, pixel_format),

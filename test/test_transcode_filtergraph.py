@@ -86,3 +86,18 @@ def test_custom_input_stage_as_string_template():
     with pytest.raises(ValueError, match="must output"):
         build_streaming_filtergraph(1, 640, 360, 30.0, [{"resolution": 360}], DEINTERLACE,
                                     filter_complex="[0:v:0]fps={fps}[out]")
+
+
+@pytest.mark.parametrize("value,expected", [
+    ('[{"inputs": ["0:v"], "filters": ["null"], "outputs": ["concatenated"]}]',
+     [{"inputs": ["0:v"], "filters": ["null"], "outputs": ["concatenated"]}]),
+    # Pretty-printed JSON, as json.dumps(chains, indent=2) writes it
+    ('[\n  {\n    "inputs": ["0:v"],\n    "filters": ["null"],\n    "outputs": ["concatenated"]\n  }\n]',
+     [{"inputs": ["0:v"], "filters": ["null"], "outputs": ["concatenated"]}]),
+    ("[0:v]fps={fps}[concatenated]", "[0:v]fps={fps}[concatenated]"),
+    (None, None),
+])
+def test_parse_filter_complex(value, expected):
+    from tator.transcode.__main__ import _parse_filter_complex
+    assert _parse_filter_complex(value) == expected
+

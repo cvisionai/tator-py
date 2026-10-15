@@ -121,6 +121,11 @@ def parse_streaming_config(config):
     return out
 
 
+def _is_h264(encoder):
+    """ Returns whether an ffmpeg encoder name is an H.264 encoder, software or hardware. """
+    return encoder in ("libx264", "libopenh264") or encoder.startswith("h264_")
+
+
 def encoder_family(encoder):
     """ Returns the argument family for an ffmpeg encoder name. """
     if encoder.endswith("_vaapi"):
@@ -192,7 +197,7 @@ def resolve_pixel_format(encoder, pixel_format, match_source_bit_depth, source_d
     """
     if not match_source_bit_depth:
         return pixel_format
-    if encoder_family(encoder) == "x264":
+    if _is_h264(encoder):
         if source_depth > 8:
             logger.info(f"Keeping {pixel_format} for {encoder} with a {source_depth}-bit source")
         return pixel_format
