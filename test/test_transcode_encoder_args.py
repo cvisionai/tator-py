@@ -7,9 +7,11 @@ import subprocess
 
 import pytest
 
+import tator.transcode.encoder_args as encoder_args_module
 from tator.transcode.encoder_args import (
     encoder_args,
     parse_streaming_config,
+    require_encoder,
     resolve_pixel_format,
     source_bit_depth,
 )
@@ -212,3 +214,57 @@ def test_streaming_av1_key_frames_every_gop(tmp_path):
     flags = output.stdout.split()
     key_frames = [idx for idx, flag in enumerate(flags) if flag.startswith("K")]
     assert key_frames[:5] == [0, 25, 50, 75, 100]
+
+
+ENCODERS_OUTPUT = """Encoders:
+ V..... = Video
+ A..... = Audio
+ ------
+ V....D libx264              libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+ V..... libsvtav1            SVT-AV1(Scalable Video Technology for AV1) encoder (codec av1)
+ A....D aac                  AAC (Advanced Audio Coding)
+"""
+
+
+def test_available_encoders_reads_encoder_names(monkeypatch):
+    def run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, ENCODERS_OUTPUT.encode())
+    monkeypatch.setattr(encoder_args_module, "subprocess",
+                        type("FakeSubprocess", (), {"run": staticmethod(run), "PIPE": None,
+                                                    "DEVNULL": None}))
+    encoder_args_module._available_encoders.cache_clear()
+    try:
+        assert encoder_args_module._available_encoders() == {"libx264", "libsvtav1", "aac"}
+    finally:
+        encoder_args_module._available_encoders.cache_clear()
+
+
+@requires_ffmpeg
+def test_available_encoders_match_ffmpeg():
+    encoders = encoder_args_module._available_encoders()
+    assert "=" not in encoders
+    for name in ("libx264", "libx265", "libsvtav1"):
+        assert (name in encoders) == _ffmpeg_has("encoders", name)
+
+
+def test_require_encoder_names_the_missing_encoder(monkeypatch):
+    monkeypatch.setattr(encoder_args_module, "_available_encoders", lambda: {"libx264"})
+    require_encoder("libx264", "the 720 h264 stream")
+    with pytest.raises(RuntimeError, match="no libsvtav1 encoder, which the 720 av1 stream needs"):
+        require_encoder("libsvtav1", "the 720 av1 stream")
+
+
+@requires_ffmpeg
+def test_streaming_fails_clearly_without_the_encoder(tmp_path, monkeypatch):
+    source = _make_source(tmp_path / "src.mp4", "-c:v", "libx264", "-pix_fmt", "yuv420p")
+    monkeypatch.setattr(encoder_args_module, "_available_encoders", lambda: {"libx264"})
+    with pytest.raises(RuntimeError, match="no libsvtav1 encoder, which the 360 av1 stream needs"):
+        _streaming_command(str(source), str(tmp_path), LADDER)
+
+
+@requires_ffmpeg
+@pytest.mark.skipif(_ffmpeg_has("encoders", "libsvtav1"), reason="ffmpeg has libsvtav1")
+def test_streaming_av1_on_ffmpeg_without_svtav1_fails_clearly(tmp_path):
+    source = _make_source(tmp_path / "src.mp4", "-c:v", "libx264", "-pix_fmt", "yuv420p")
+    with pytest.raises(RuntimeError, match="no libsvtav1 encoder"):
+        _streaming_command(str(source), str(tmp_path), LADDER)

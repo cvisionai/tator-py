@@ -147,6 +147,29 @@ def _pixel_format_depths():
     return depths
 
 
+@lru_cache(maxsize=None)
+def _available_encoders():
+    """ Returns the names of the encoders the installed ffmpeg was built with. """
+    output = subprocess.run(["ffmpeg", "-hide_banner", "-encoders"], stdout=subprocess.PIPE,
+                            stderr=subprocess.DEVNULL, check=True).stdout.decode()
+    # A legend of capability flags comes first, ending in a line of dashes
+    lines = output.splitlines()
+    start = next((idx + 1 for idx, line in enumerate(lines) if line.strip().startswith("---")), 0)
+    return {line.split()[1] for line in lines[start:] if len(line.split()) >= 2}
+
+
+def require_encoder(encoder, purpose):
+    """ Raises a RuntimeError naming the encoder if the installed ffmpeg doesn't have it.
+
+    :param purpose: What the encoder is for, used in the message, e.g. "the 720 av1 stream".
+    """
+    if encoder not in _available_encoders():
+        raise RuntimeError(
+            f"ffmpeg has no {encoder} encoder, which {purpose} needs. Use an FFmpeg built with "
+            f"{encoder} (the cvisionai/svt_transcoder image has one), or a streaming profile "
+            f"with a codec this ffmpeg can encode.")
+
+
 def source_bit_depth(pix_fmt):
     """ Returns the bit depth of a decoded pixel format, e.g. 10 for yuv422p10le. """
     if not pix_fmt:

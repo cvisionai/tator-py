@@ -23,6 +23,7 @@ from .encoder_args import (
     encoder_family,
     hwupload_filters,
     parse_streaming_config,
+    require_encoder,
     resolve_pixel_format,
     source_bit_depth,
 )
@@ -212,6 +213,7 @@ def _streaming_command(path, outpath, configs, hwaccel=False, force_fps=-1, filt
     outputs = []
     for config in configs:
         encoder = find_best_encoder(config["vcodec"], hwaccel)
+        require_encoder(encoder, f"the {config['resolution']} {config['vcodec']} stream")
         family = encoder_family(encoder)
         pixel_format = resolve_pixel_format(encoder, config["pixel_format"],
                                             config["match_source_bit_depth"], source_depth)
@@ -370,6 +372,7 @@ def convert_archival(
                 # Encode the media to archival format.
                 encode = archive_config.encode
                 codec = find_best_encoder(encode.vcodec, hwaccel)
+                require_encoder(codec, f"the {encode.vcodec} archival encode")
                 hw_preamble = []
                 if encoder_family(codec) == "vaapi":
                     hw_preamble = ['-init_hw_device', 'vaapi=hw',
