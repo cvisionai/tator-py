@@ -82,3 +82,23 @@ def assert_close_enough(a, b, exclude=[], mapping={}):
             assert compare_numeric_lists(a[key], b[key_b]), fail_str(a, b, key)
         else:
             assert a[key] == b[key_b], fail_str(a, b, key)
+
+def streaming_resolutions(api, media_type_id):
+    """Returns the rung heights of a media type's streaming ladder."""
+    from tator.transcode.determine_transcode import STREAMING_RESOLUTIONS
+    from tator.transcode.encoder_args import parse_streaming_config
+    ladder = api.get_media_type(media_type_id).streaming_config
+    if not ladder:
+        return set(STREAMING_RESOLUTIONS)
+    return {parse_streaming_config(entry)["resolution"] for entry in ladder}
+
+def expected_streaming_count(resolutions, height):
+    """Returns how many streaming files transcoding a video of this height makes, as
+    determine_transcode chooses them: rungs taller than the video are skipped, and the video's
+    own height is added when it falls between rungs. None until the height is known."""
+    if not height:
+        return None
+    needed = {resolution for resolution in resolutions if resolution <= height}
+    if height < max(resolutions):
+        needed.add(height)
+    return len(needed)

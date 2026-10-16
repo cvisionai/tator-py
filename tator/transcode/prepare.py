@@ -79,10 +79,9 @@ if __name__ == '__main__':
 
     # Determine transcodes that need to be done.
     workloads = determine_transcode(
-        args.host, args.token, args.type, media_id, paths['original'], args.group_to
+        args.host, args.token, args.type, media_id, paths['original'], args.group_to,
+        project=args.project,
     )
-    for workload in workloads:
-        workload['configs'] = ','.join(workload['configs'])
     with open(paths['workloads'], 'w') as f:
         json.dump(workloads, f)
 

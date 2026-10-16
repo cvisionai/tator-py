@@ -51,13 +51,7 @@ def supplement_video_to_media(api,
   if role == 'streaming':
     # In a temporary directory do all the work
     with tempfile.TemporaryDirectory() as td:
-      # To be compatible with the convert_streaming routine need to stringify the configuration
-      resolution = configuration.resolution
-      crf = configuration.crf if configuration.crf else 23
-      codec = configuration.vcodec if configuration.vcodec else 'libx264'
-      preset = configuration.preset if configuration.preset else ''
-      configs = [f"{resolution}:{crf}:{codec}:{preset}"]
-      convert_streaming(host, token, media_id, filepath, td, width, height, configs)
+      convert_streaming(host, token, media_id, filepath, td, width, height, [dict(configuration)])
 
       
 

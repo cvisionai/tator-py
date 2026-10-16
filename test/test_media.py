@@ -9,6 +9,8 @@ import pytest
 
 import tator
 
+from ._common import expected_streaming_count, streaming_resolutions
+
 def test_get_file(host, token, project, video):
     tator_api = tator.get_api(host, token)
     video_obj = tator_api.get_media(video)
@@ -179,10 +181,10 @@ def parse_media_files(media):
     )
 
 
-def _presigned_fixture_complete(files):
+def _presigned_fixture_complete(files, expected_streaming):
     # Streaming/archival files become visible before thumbnail generation
     # finishes. Sign only after all outputs of this audio/video fixture exist.
-    return bool(files and files.streaming and len(files.streaming) == 4
+    return bool(files and files.streaming and len(files.streaming) == expected_streaming
                 and files.archival and files.audio
                 and files.thumbnail and files.thumbnail_gif)
 
@@ -193,14 +195,18 @@ def test_presigned_no_cache_waits_for_late_gif(monkeypatch):
 
     polls = []
     signed_requests = []
-    files = SimpleNamespace(streaming=[{}] * 4, archival=[{}], audio=[{}],
+    files = SimpleNamespace(streaming=[{}] * 3, archival=[{}], audio=[{}],
                             thumbnail=[{}], thumbnail_gif=None)
+
+    def get_media_type(type_id):
+        ladder = [{"resolution": resolution} for resolution in (2160, 1080, 720, 360, 144)]
+        return SimpleNamespace(streaming_config=ladder)
 
     def get_media_list(*args, **kwargs):
         polls.append(True)
         if len(polls) == 2:
             files.thumbnail_gif = [{}]
-        return [SimpleNamespace(id=1, media_files=files)]
+        return [SimpleNamespace(id=1, height=720, media_files=files)]
 
     def get_media(media_id, presigned, no_cache=False):
         assert files.thumbnail_gif, "Signing must wait for the delayed GIF"
@@ -210,7 +216,8 @@ def test_presigned_no_cache_waits_for_late_gif(monkeypatch):
                      for role in vars(files)}
         return SimpleNamespace(media_files=SimpleNamespace(to_dict=lambda: inventory))
 
-    api = SimpleNamespace(get_media_list=get_media_list, get_media=get_media)
+    api = SimpleNamespace(get_media_type=get_media_type, get_media_list=get_media_list,
+                          get_media=get_media)
     monkeypatch.setattr(tator, "get_api", lambda *args: api)
     monkeypatch.setattr(tator.util, "upload_media",
                         lambda *args, **kwargs: [(100, SimpleNamespace(message="Uploaded"))])
@@ -233,6 +240,7 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
         print(f"Upload video progress: {progress}%")
     print(response.message)
 
+    resolutions = streaming_resolutions(tator_api, video_type)
     MAX_TRANSCODE_WAIT = 900  # 15 minutes (serial queue with parallel workers)
     elapsed = 0
     while True:
@@ -250,7 +258,8 @@ def test_presigned_no_cache(host, token, project, video_type, video_file):
             continue
         if response[0].media_files is None:
             continue
-        if _presigned_fixture_complete(response[0].media_files):
+        expected = expected_streaming_count(resolutions, response[0].height)
+        if _presigned_fixture_complete(response[0].media_files, expected):
             video_id = response[0].id
             break
 

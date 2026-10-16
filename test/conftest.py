@@ -16,6 +16,8 @@ from tator.util._upload_file import _upload_file
 from tator.transcode.transcode import make_video_definition, get_length_of_file
 from tator.util.md5sum import md5sum
 
+from ._common import expected_streaming_count, streaming_resolutions
+
 
 def validate_string_argument(arg: str) -> str:
     """Validates string arguments that should not be empty"""
@@ -412,6 +414,7 @@ def video_helper(host: str, token: str, project: int, video_type: int, video_fil
     if response:
         print(response.message)
 
+    resolutions = streaming_resolutions(tator_api, video_type)
     MAX_TRANSCODE_WAIT = 900  # 15 minutes (serial queue with parallel workers)
     elapsed = 0
     while True:
@@ -427,7 +430,8 @@ def video_helper(host: str, token: str, project: int, video_type: int, video_fil
             continue
         streaming = response[0].media_files.streaming
         have_archival = response[0].media_files.archival is not None
-        if streaming and have_archival and len(streaming) == 4 and response[0].num_frames:
+        expected = expected_streaming_count(resolutions, response[0].height)
+        if streaming and have_archival and expected and len(streaming) == expected and response[0].num_frames:
             video_id = response[0].id
             break
     # Check for proper attribute setting via upload_file

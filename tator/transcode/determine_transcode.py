@@ -8,8 +8,8 @@ import os
 import tator
 from ..util.get_api import get_api
 from ..util.get_parser import get_parser
-from .transcode import find_best_encoder, get_length_info
-from collections import defaultdict
+from .transcode import find_best_encoder, get_length_info, get_display_dimensions
+from .encoder_args import parse_streaming_config
 
 STREAMING_RESOLUTIONS=[144, 360, 480, 720, 1080]
 
@@ -68,16 +68,8 @@ def _get_video_info(path):
     stream = {**video_info.get("format", {}), **stream}
     fps, num_frames = get_length_info(stream)
 
-    # Handle up to but not exceeding FHD
-    height = int(stream["height"])
-    width = int(stream["width"])
-
-    # Handle rotated videos
-    if "tags" in stream:
-        if "rotate" in stream["tags"]:
-            if stream["tags"]["rotate"] == "90":
-                height = int(stream["width"])
-                width = int(stream["height"])
+    # Frames are autorotated on decode, so use the displayed dimensions
+    width, height = get_display_dimensions(stream)
     logger.info(f"Height of video is : {height}")
     return fps, num_frames, width, height, audio
 
@@ -93,7 +85,7 @@ def update_media(host, token, media_type, media_id, path):
     })
     assert isinstance(response, tator.models.MessageResponse)
 
-def determine_transcode(host, token, media_type, media_id, path, group_to):
+def determine_transcode(host, token, media_type, media_id, path, group_to, project=None):
     """ Determine transcode workloads to be performed.
 
     :param host: URL of host.
@@ -103,6 +95,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
                      need to be determined.
     :param path: Path to original file.
     :param group_to: Resolutions less or equal to this will be grouped into one workload.
+    :param project: Unique integer identifying a project. Only needed if media_type is -1.
     """
     info_path = path[0] if isinstance(path, list) else path
     fps, num_frames, width, height, audio = _get_video_info(info_path)
@@ -113,7 +106,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
 
     # Get media type object.
     if media_type == -1:
-        media_types = api.get_media_type_list(args.project)
+        media_types = api.get_media_type_list(project)
         for media_type_obj in media_types:
             if media_type_obj.dtype == 'video':
                 break
@@ -157,25 +150,16 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
         existing_streaming_resolutions = set()
         existing_archival_resolutions = set()
 
-    available_resolutions = STREAMING_RESOLUTIONS
-    crf_map = defaultdict(lambda: 23)
-    codec_map = defaultdict(lambda: 'h264')
-    preset_map = defaultdict(lambda: '')
-    pixel_format_map = defaultdict(lambda: 'yuv420p')
-    try:
-        if media_type_obj.streaming_config:
-            available_resolutions = []
-            for config in media_type_obj.streaming_config:
-                available_resolutions.append(config.resolution)
-                crf_map[config.resolution] = config.crf
-                codec_map[config.resolution] = config.vcodec
-                preset_map[config.resolution] = config.preset
-                pixel_format_map[config.resolution] = config.pixel_format
-    except Exception as e:
-        # Likely an old version of the server
-        # TODO: Remove me someday
-        logger.info(e)
+    if media_type_obj.streaming_config:
+        configs = media_type_obj.streaming_config
+    else:
         logger.info("Defaulting to STREAMING_RESOLUTIONS")
+        configs = [{"resolution": resolution} for resolution in STREAMING_RESOLUTIONS]
+    config_map = {}
+    for config in configs:
+        config = parse_streaming_config(config)
+        config_map[config["resolution"]] = config
+    available_resolutions = list(config_map)
     logger.info(f"Selected Resolutions {available_resolutions}")
 
     # Returns `True` if the resolution is smaller than the source video and it does not exist
@@ -183,7 +167,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     def _is_resolution_needed(resolution):
         if resolution > height:
             return False
-        if (resolution, find_best_encoder(codec_map[resolution])) in existing_streaming_resolutions:
+        if (resolution, find_best_encoder(config_map[resolution]["vcodec"])) in existing_streaming_resolutions:
             return False
         return True
 
@@ -192,12 +176,9 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
     if height < max(available_resolutions) and not height in resolutions:
         smallest_higher_res = min(r for r in available_resolutions if r > height)
 
-        if not (height, find_best_encoder(codec_map[smallest_higher_res])) in existing_streaming_resolutions:
+        if not (height, find_best_encoder(config_map[smallest_higher_res]["vcodec"])) in existing_streaming_resolutions:
             # copy personality form the nearest higher resolution
-            crf_map[height] = crf_map[smallest_higher_res]
-            codec_map[height] = codec_map[smallest_higher_res]
-            preset_map[height] = preset_map[smallest_higher_res]
-            pixel_format_map[height] = pixel_format_map[smallest_higher_res]
+            config_map[height] = {**config_map[smallest_higher_res], "resolution": height}
             resolutions.append(height)
 
     # Streaming workloads (lower res)
@@ -208,11 +189,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
                 "path": path,
                 "raw_height": height,
                 "raw_width": width,
-                "configs": [
-                    f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}:{pixel_format_map[res]}"
-                    for res in resolutions
-                    if res <= group_to
-                ],
+                "configs": [config_map[res] for res in resolutions if res <= group_to],
             }
         ]
     else:
@@ -225,9 +202,7 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
             "path": path,
             "raw_height": height,
             "raw_width": width,
-            "configs": [
-                f"{res}:{crf_map[res]}:{codec_map[res]}:{preset_map[res]}"
-            ],
+            "configs": [config_map[res]],
         }
         for res in resolutions
         if res > group_to
@@ -267,9 +242,8 @@ def determine_transcode(host, token, media_type, media_id, path, group_to):
 if __name__ == '__main__':
     args = parse_args()
     workloads = determine_transcode(
-        args.host, args.token, args.media_type, args.media_id, args.path, args.group_to
+        args.host, args.token, args.media_type, args.media_id, args.path, args.group_to,
+        project=args.project,
     )
-    for workload in workloads:
-        workload['configs'] = ','.join(workload['configs'])
     with open(args.output, 'w') as f:
         json.dump(workloads, f)

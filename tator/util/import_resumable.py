@@ -16,7 +16,7 @@ import requests
 import cv2
 
 
-def import_resumable(api, media_id, work_dir=None, explicit_config=None, streaming_configs=[]):
+def import_resumable(api, media_id, work_dir=None, explicit_config=None, streaming_configs=None):
     """Imports a resumable upload into Tator.
     :param api: `tator.TatorApi` object.
     :param media_id: Unique integer identifying a media.
@@ -31,13 +31,9 @@ def import_resumable(api, media_id, work_dir=None, explicit_config=None, streami
             work_dir = td
 
         media = api.get_media(media_id, presigned=60 * 60 * 24)
-        if streaming_configs == []:
+        if not streaming_configs:
             media_type = api.get_media_type(media.type)
-            tator_streaming_config = media_type.to_dict()["streaming_config"]
-            for config in tator_streaming_config:
-                streaming_configs.append(
-                    f"{config['resolution']}:{config['crf']}:{config['vcodec']}:{config.get('preset','fast')}:{config.get('pixel_format','yuv420p')}"
-                )
+            streaming_configs = media_type.to_dict()["streaming_config"]
 
         components = [x["path"] for x in media.media_files.to_dict().get("archival", [])]
         components.sort(key=lambda x: int(os.path.splitext(x)[0].split("_")[-2]))
