@@ -117,6 +117,8 @@ class OpenAPIClient:
                     if param.get("in") == "query":
                         query_params.append(param)
 
+                header_params = [p for p in operation.get("parameters", []) if p.get("in") == "header"]
+
                 body_param = None
                 rb = operation.get("requestBody")
                 if rb:
@@ -136,6 +138,7 @@ class OpenAPIClient:
                     "path": path,
                     "path_params": path_params,
                     "query_params": query_params,
+                    "header_params": header_params,
                     "body_param": body_param,
                     "description": operation.get("description", ""),
                     "responses": operation.get("responses", {}),
@@ -198,6 +201,12 @@ class OpenAPIClient:
                 )
             )
 
+        for hp in endpoint["header_params"]:
+            parameters.append(inspect.Parameter(
+                hp["name"].lower().replace("-", "_"), inspect.Parameter.KEYWORD_ONLY,
+                default=None, annotation=Optional[str],
+            ))
+
         sig = inspect.Signature(parameters)
 
         def _impl(*args, **kwargs):
@@ -226,6 +235,12 @@ class OpenAPIClient:
                 for qp in endpoint["query_params"]
                 if qp["name"] in kwargs
             }
+
+            headers = {}
+            for hp in endpoint["header_params"]:
+                value = kwargs.pop(hp["name"].lower().replace("-", "_"), None)
+                if value is not None:
+                    headers[hp["name"]] = str(value)
 
             # Support a "format" kwarg
             if kwargs.get("format", None):
@@ -262,7 +277,7 @@ class OpenAPIClient:
                     resp = self.session.get(url, params=query, json=body, stream=True)
                 else:
                     resp = self.session.request(
-                        endpoint["method"], url, params=query, json=body
+                        endpoint["method"], url, params=query, json=body, headers=headers
                     )
                 if self._debug:
                     logger.debug("Request URL: %s", url)
@@ -334,6 +349,7 @@ class OpenAPIClient:
             Path: {endpoint['path']}
             Path parameters: {', '.join(endpoint['path_params']) or 'None'}
             Query parameters: {', '.join(qp['name'] for qp in endpoint['query_params']) or 'None'}
+            Header parameters (keyword-only): {", ".join(hp["name"].lower().replace("-", "_") for hp in endpoint["header_params"]) or "None"}
             Body parameter: {endpoint['body_param'] or 'None'}
             """
         )
