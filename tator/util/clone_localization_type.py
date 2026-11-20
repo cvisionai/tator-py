@@ -46,6 +46,8 @@ def clone_localization_type(src_api, src_type_id, dest_project, media_type_mappi
             'visible': type_obj.visible,
             'attribute_types': type_obj.attribute_types}
     dest_media_types = set()
+    if type_obj.dtype == 'raster':
+        spec['raster_schema'] = type_obj.raster_schema
     for src_media_type in type_obj.media:
         if src_media_type in media_type_mapping:
             dest_media_types.add(media_type_mapping[src_media_type])
